@@ -39,14 +39,14 @@
 
     <!-- Fourth digit segment of the package version. First three segments are taken from the 
          <versionNumber> element.  Must be an integer from 0 to 2^16-1 -->
-    <buildId>0</buildId>
+    <buildId>1</buildId>
                  
     <!-- A string value (such as "v1", "2.5", or "Alpha 1") that represents the version of the application, as it should be shown to users. Optional. -->
     <!-- <versionLabel></versionLabel> -->
 
     <!-- Description, displayed in the BlackBerry Tablet OS application installer.
          May have multiple values for each language. See samples or xsd schema file. Optional. -->
-    <description>A Qu'ran application for BB10.</description>
+    <description>A native Qu'ran application for BB10. This app supports multiple languages (Arabic, English, French, Indonesian, Malaysian &amp; more)!</description>
 
     <!-- Copyright information. Optional. -->
     <!-- <copyright></copyright> -->

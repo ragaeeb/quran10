@@ -29,6 +29,7 @@ public:
     Q_INVOKABLE QVariant getValueFor(QString const& objectName);
     Q_INVOKABLE void saveValueFor(QString const& objectName, QVariant const& inputValue);
     Q_INVOKABLE void copyToClipboard(QString const& text);
+    Q_INVOKABLE void showToast(QString const& text);
     Q_INVOKABLE static QString convertToUtf8(QString const& text);
 };
 

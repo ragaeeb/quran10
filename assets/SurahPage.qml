@@ -3,6 +3,7 @@ import bb.cascades 1.0
 Page
 {
     property alias chapter: listView.chapterNumber
+    property int requestedIndex: -1
 
     onChapterChanged: {
         surahNameArabic.text = chapter.arabic_name
@@ -14,6 +15,12 @@ Page
         theDataModel.insertList(values)
         busy.running = false
         listFade.play()
+        
+        if (requestedIndex > 0) {
+            var target = [ requestedIndex - 1, 0 ]
+            listView.scrollToItem(target, ScrollAnimation.Default)
+            listView.select(target,true)
+        }
     }
 
     actions: [
@@ -162,6 +169,11 @@ Page
                 result += qsTr("%1:%2").arg(chapterNumber.surah_id).arg(ListItemData.verse_id)
                 app.copyToClipboard(result)
             }
+            
+            function bookmark(ListItemData) {
+                app.saveValueFor("bookmark", {'surah': chapterNumber.surah_id, 'verse': ListItemData.verse_id})
+                app.showToast( qsTr("Bookmarked %1:%2").arg(chapterNumber.surah_id).arg(ListItemData.verse_id) )
+            }
 
             attachedObjects: [
                 ImagePaintDefinition {
@@ -236,6 +248,15 @@ Page
                                     imageSource: "asset:///images/ic_copy.png"
                                     onTriggered: {
                                         itemRoot.ListItem.view.copyItem(ListItemData)
+                                    }
+                                }
+                                
+                                ActionItem {
+                                    title: qsTr("Set Bookmark") + Retranslate.onLanguageChanged
+                                    imageSource: "file:///usr/share/icons/bb_action_flag.png"
+                                    
+                                    onTriggered: {
+                                        itemRoot.ListItem.view.bookmark(ListItemData)
                                     }
                                 }
                             }

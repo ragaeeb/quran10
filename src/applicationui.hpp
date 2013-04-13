@@ -4,8 +4,6 @@
 #include "LazySceneCover.h"
 #include "Persistance.h"
 
-#include <bb/cascades/SidebarState>
-
 namespace bb {
 	namespace cascades {
 		class Application;

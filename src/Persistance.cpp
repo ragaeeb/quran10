@@ -34,11 +34,17 @@ void Persistance::copyToClipboard(QString const& text)
 
 	clipboard.insert( "text/plain", text.toUtf8() );
 
+	showToast( tr("Copied: %1 to clipboard").arg(text) );
+}
+
+
+void Persistance::showToast(QString const& text)
+{
 	if (m_toast == NULL) {
 		m_toast = new SystemToast(this);
 	}
 
-	m_toast->setBody( tr("Copied: %1 to clipboard").arg(text) );
+	m_toast->setBody(text);
 	m_toast->show();
 }
 

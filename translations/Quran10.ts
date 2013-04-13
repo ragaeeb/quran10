@@ -13,9 +13,9 @@
 Please report all bugs to:
 support@canadainc.org
 
-This app facilitates the reading of Qu&apos;ran for Muslims. It includes both Arabic and English versions and there are plans to include more languages in the future.
+This app facilitates the reading of Qu&apos;ran for Muslims using BB10 to get a smooth and fluid native experience. It includes translations in several languages (Bengali, English, French, Indonesian, Malaysian, Somali, Thai, Turkish, Urdu, and more coming) as well as the original Arabic version. There also is a transliteration version to help you with the pronunciation.
 
-There is also support for transliteration and tafseer associated with the surahs. In addition there is commentary from several scholars of Ahlul Sunnah on the verses.
+There is built-in support for bookmarking a verse and a surah to quickly pick up where you left off reading. There is also easy access to copying certain verses to make it easy for you to share it with your contacts.
 
 </source>
         <translation type="unfinished"></translation>
@@ -239,45 +239,55 @@ There is also support for transliteration and tafseer associated with the surahs
 <context>
     <name>SurahPage</name>
     <message>
-        <location filename="../assets/SurahPage.qml" line="9"/>
+        <location filename="../assets/SurahPage.qml" line="10"/>
         <source>%1 (%2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="20"/>
+        <location filename="../assets/SurahPage.qml" line="28"/>
         <source>Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="31"/>
+        <location filename="../assets/SurahPage.qml" line="39"/>
         <source>Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="103"/>
+        <location filename="../assets/SurahPage.qml" line="111"/>
         <source>%1 ayahs selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="131"/>
+        <location filename="../assets/SurahPage.qml" line="139"/>
         <source>%1:%2-%3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="142"/>
+        <location filename="../assets/SurahPage.qml" line="150"/>
         <source>None selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="161"/>
-        <location filename="../assets/SurahPage.qml" line="192"/>
-        <location filename="../assets/SurahPage.qml" line="231"/>
+        <location filename="../assets/SurahPage.qml" line="169"/>
+        <location filename="../assets/SurahPage.qml" line="205"/>
+        <location filename="../assets/SurahPage.qml" line="244"/>
         <source>%1:%2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="113"/>
-        <location filename="../assets/SurahPage.qml" line="234"/>
+        <location filename="../assets/SurahPage.qml" line="175"/>
+        <source>Bookmarked %1:%2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/SurahPage.qml" line="255"/>
+        <source>Set Bookmark</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/SurahPage.qml" line="121"/>
+        <location filename="../assets/SurahPage.qml" line="247"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
@@ -285,8 +295,21 @@ There is also support for transliteration and tafseer associated with the surahs
 <context>
     <name>canadainc::Persistance</name>
     <message>
-        <location filename="../src/Persistance.cpp" line="41"/>
+        <location filename="../src/Persistance.cpp" line="37"/>
         <source>Copied: %1 to clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>main</name>
+    <message>
+        <location filename="../assets/main.qml" line="52"/>
+        <source>No bookmark</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/main.qml" line="83"/>
+        <source>%1:%2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
