@@ -163,28 +163,14 @@ NavigationPane
                     surahPage = definition.createObject()
                     surahPage.chapter = data
 
-                    reload(data)
+                    surahPage.reload(data)
 
                     navigationPane.push(surahPage)
                 }
                 
-                function reload(data) {
-                    var primary = persist.getValueFor("primaryLanguage")
-                    var translation = persist.getValueFor("translation")
-
-                    if (translation != "") {
-                        translation = "," + translation + " as translation"
-                    }
-
-                    sqlDataSource.query = "SELECT " + primary + ",verse_id" + translation + " FROM quran WHERE surah_id=" + data.surah_id
-                    sqlDataSource.load()
-                }
-                
                 function reloadNeeded(key)
                 {
-                    if ( listView.surahPage && (key == "primaryLanguage" || key == "translation") ) {
-                        reload(listView.surahPage.chapter)
-                    } else if (key == "bookmark") {
+                    if (key == "bookmark") {
                         mainPage.updateBookmark()
                     }
                 }

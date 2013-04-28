@@ -1,5 +1,6 @@
 import bb.cascades 1.0
 import bb.multimedia 1.0
+import com.canadainc.data 1.0
 
 Page
 {
@@ -13,7 +14,18 @@ Page
         surahNameEnglish.text = qsTr("%1 (%2)").arg(chapter.english_name).arg(chapter.english_translation)
     }
     
-    function load(values) {
+    function reloadNeeded(key)
+    {
+        if (key == "primaryLanguage" || key == "translation") {
+            reload(chapter)
+        }
+    }
+    
+    onCreationCompleted: {
+        persist.settingChanged.connect(reloadNeeded)
+    }
+    
+    function render(values) {
         theDataModel.clear()
         theDataModel.insertList(values)
         busy.running = false
@@ -25,6 +37,30 @@ Page
             listView.select(target,true)
         }
     }
+    
+    function reload(data) {
+        var primary = persist.getValueFor("primaryLanguage")
+        var translation = persist.getValueFor("translation")
+
+        if (translation != "") {
+            translation = "," + translation + " as translation"
+        }
+
+        sqlDataSource.query = "SELECT " + primary + ",verse_id" + translation + " FROM quran WHERE surah_id=" + data.surah_id
+        sqlDataSource.load()
+    }
+    
+    attachedObjects: [
+        CustomSqlDataSource {
+            id: sqlDataSource
+            source: "app/native/assets/dbase/quran.db"
+            name: "surah"
+
+            onDataLoaded: {
+                render(data)
+            }
+        }
+    ]
 
     actions: [
         ActionItem {

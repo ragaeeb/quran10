@@ -1,29 +1,31 @@
 import bb.cascades 1.0
 import com.canadainc.data 1.0
 
-Page
+BasePage
 {
-    Container
+    contentContainer: Container
     {
         TextField
         {
+            id: searchField
             hintText: qsTr("Enter text to search...") + Retranslate.onLanguageChanged
             
-            onTextChanging: {
-                if (text.length > 2) {
+            input {
+                submitKey: SubmitKey.Submit
+                
+                onSubmitted: {
                     var translation = persist.getValueFor("translation")
                     var translationClause = ""
                     var translationLike = ""
 
                     if (translation != "") {
-                        translationClause = "," + translation + " as translation"
-                        translationLike = " OR "+translation+" LIKE '%"+text+"%'"
+                        translationClause = ",quran." + translation + " as translation"
+                        translationLike = " OR quran."+translation+" LIKE '%"+text+"%'"
                     }
 
-                    sqlDataSource.query = "SELECT arabic,surah_id,verse_id" + translationClause + " FROM quran WHERE arabic like '%"+text+"%'"+translationLike
+					busy.running = true
+                    sqlDataSource.query = "SELECT chapters.english_name,quran.arabic,quran.surah_id,quran.verse_id" + translationClause + " FROM quran,chapters WHERE arabic like '%"+text+"%'"+translationLike+" AND quran.surah_id=chapters.surah_id"
                     sqlDataSource.load()
-                } else if (text.length == 0) {
-                    theDataModel.clear()
                 }
             }
 
@@ -35,20 +37,36 @@ Page
 
                     onDataLoaded: {
 	                    theDataModel.clear()
-	                    console.log("DATA FOUND", data[0].surah_id, data[0].verse_id, data[0].translation)
 	                    theDataModel.insertList(data)
+	                    busy.running = false
                     }
                 }
             ]
         }
         
+        ActivityIndicator {
+            id: busy
+            running: false
+            visible: running
+            preferredHeight: 250
+            horizontalAlignment: HorizontalAlignment.Center
+        }
+        
         ListView
         {
+        	property alias background: bg
             id: listView
+            
+            attachedObjects: [
+                ImagePaintDefinition {
+                    id: bg
+                    imageSource: "asset:///images/header_bg.png"
+                }
+            ]
 
             dataModel: GroupDataModel {
                 id: theDataModel
-                sortingKeys: ["surah_id","verse_id"]
+                sortingKeys: ["english_name","verse_id"]
                 grouping: ItemGrouping.ByFullValue
             }
             
@@ -61,13 +79,14 @@ Page
                         id: headerRoot
                         horizontalAlignment: HorizontalAlignment.Fill
                         topPadding: 5; bottomPadding: 5; leftPadding: 5
+                        background: ListItem.view.background.imagePaint
                         
                         layout: StackLayout {
                             orientation: LayoutOrientation.LeftToRight
                         }
 
                         Label {
-                            text: qsTr("%1").arg(ListItemData)
+                            text: ListItemData
                             horizontalAlignment: HorizontalAlignment.Fill
                             textStyle.fontSize: FontSize.XXSmall
                             textStyle.color: Color.White
