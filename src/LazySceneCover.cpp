@@ -17,6 +17,11 @@ LazySceneCover::LazySceneCover(QString const& sceneCoverQml)
 }
 
 
+void LazySceneCover::setContext(QString const& key, QObject* value) {
+	m_context.insert(key, value);
+}
+
+
 void LazySceneCover::onThumbnail()
 {
 	LOGGER("Thumbnailed");
@@ -26,6 +31,13 @@ void LazySceneCover::onThumbnail()
 		LOGGER("Creating thumbnail scene cover for first time!");
 
 		QmlDocument* qmlCover = QmlDocument::create( "asset:///"+property("qml").toString() ).parent(this);
+
+		QStringList keys = m_context.keys();
+
+		for (int i = keys.size()-1; i >= 0; i--) {
+			qmlCover->setContextProperty( keys[i], m_context.value(keys[i]) );
+		}
+
 		Control* sceneRoot = qmlCover->createRootObject<Control>();
 		SceneCover* cover = SceneCover::create().content(sceneRoot);
 		Application::instance()->setCover(cover);

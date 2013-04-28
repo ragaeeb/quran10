@@ -3,18 +3,13 @@
 
 #include <bb/data/SqlConnection>
 #include <QFile>
-
-namespace {
-
-const int LOAD_EXECUTION = 0;
-
-}
+#include <QDateTime>
 
 namespace canadainc {
 
 using namespace bb::data;
 
-CustomSqlDataSource::CustomSqlDataSource(QObject *parent) : QObject(parent)
+CustomSqlDataSource::CustomSqlDataSource(QObject *parent) : QObject(parent), m_name("connect"), m_sqlConnector(NULL)
 {
 }
 
@@ -31,8 +26,20 @@ void CustomSqlDataSource::setQuery(QString const& query)
     }
 }
 
-QString CustomSqlDataSource::query() {
+QString CustomSqlDataSource::query() const {
     return m_query;
+}
+
+void CustomSqlDataSource::setName(QString const& name)
+{
+    if (m_name.compare(name) != 0) {
+    	m_name = name;
+        emit nameChanged(m_name);
+    }
+}
+
+QString CustomSqlDataSource::name() const {
+    return m_name;
 }
 
 bool CustomSqlDataSource::checkConnection()
@@ -46,16 +53,16 @@ bool CustomSqlDataSource::checkConnection()
 
             // Remove the old connection if it exists
             if(m_sqlConnector){
-                disconnect( m_sqlConnector, SIGNAL( reply(const bb::data::DataAccessReply&) ), this, SLOT( onLoadAsyncResultData(const bb::data::DataAccessReply&) ) );
+                disconnect( m_sqlConnector, SIGNAL( reply(bb::data::DataAccessReply const&) ), this, SLOT( onLoadAsyncResultData(bb::data::DataAccessReply const&) ) );
                 m_sqlConnector->setParent(NULL);
                 delete m_sqlConnector;
             }
 
             // Set up a connection to the data base
-            m_sqlConnector = new SqlConnection(m_source, "connect", this);
+            m_sqlConnector = new SqlConnection(m_source, m_name, this);
 
             // Connect to the reply function
-            connect(m_sqlConnector, SIGNAL( reply(const bb::data::DataAccessReply&) ), this, SLOT( onLoadAsyncResultData(const bb::data::DataAccessReply&) ) );
+            connect(m_sqlConnector, SIGNAL( reply(bb::data::DataAccessReply const&) ), this, SLOT( onLoadAsyncResultData(bb::data::DataAccessReply const&) ) );
 
             return true;
 
@@ -86,32 +93,31 @@ DataAccessReply CustomSqlDataSource::executeAndWait(QVariant const& criteria, in
 void CustomSqlDataSource::execute(QVariant const& criteria, int id)
 {
     if ( checkConnection() ) {
+    	LOGGER("Starting query" << id << m_query);
+    	m_execTimestamp = QDateTime::currentMSecsSinceEpoch();
         m_sqlConnector->execute(criteria, id);
     }
 }
 
 
-void CustomSqlDataSource::load()
+void CustomSqlDataSource::load(int id)
 {
     if ( !m_query.isEmpty() ) {
-        execute(m_query, LOAD_EXECUTION);
+    	LOGGER("query is not empty..." << m_query);
+        execute(m_query, id);
     }
 }
 
-void CustomSqlDataSource::onLoadAsyncResultData(const bb::data::DataAccessReply& replyData)
+void CustomSqlDataSource::onLoadAsyncResultData(bb::data::DataAccessReply const& replyData)
 {
+	LOGGER("Query took " << QDateTime::currentMSecsSinceEpoch()-m_execTimestamp << replyData.id() );
+
     if ( replyData.hasError() ) {
         LOGGER( replyData.id() << ", SQL error: " << replyData );
     } else {
-        if(replyData.id() == LOAD_EXECUTION) {
-            // The reply belongs to the execution of the query property of the data source
-            // Emit the the data loaded signal so that the model can be populated.
-            QVariantList resultList = replyData.result().toList();
-            emit dataLoaded(resultList);
-        } else {
-            // Forward the reply signal.
-            emit reply(replyData);
-        }
+        QVariantList resultList = replyData.result().toList();
+        LOGGER( "Result list" << resultList.size() << resultList );
+        emit dataLoaded( replyData.id(), resultList );
     }
 }
 

@@ -1,7 +1,7 @@
 APP_NAME = Quran10
 
 CONFIG += qt warn_on cascades10
-LIBS += -lbbdata -lbbsystem
+LIBS += -lbbdata -lbbsystem -lbbcascadespickers -lbbmultimedia
 
 include(config.pri)
 

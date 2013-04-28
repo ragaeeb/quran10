@@ -23,11 +23,24 @@ class CustomSqlDataSource: public QObject
     /** The initial query that will be run on the database. */
     Q_PROPERTY(QString query READ query WRITE setQuery NOTIFY queryChanged)
 
+    /** The name of the database connection. */
+    Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
+
     bool checkConnection();
 
+    QString m_name;
     QString m_query;
     QString m_source;
     SqlConnection* m_sqlConnector;
+    qint64 m_execTimestamp;
+
+private slots:
+    /**
+     * Function that is connected to the SqlConnection reply signal.
+     *
+     * @param reply The reply data delivered from the asynchronous request to the SqlConnection
+     */
+    void onLoadAsyncResultData(bb::data::DataAccessReply const& reply);
 
 public:
     CustomSqlDataSource(QObject *parent = 0);
@@ -57,13 +70,25 @@ public:
      *
      * @return A string containing the query.
      */
-    QString query();
+    QString query() const;
+
+    /**
+     * Sets the name of this database connection.
+     * @param name The name of this connection.
+     */
+    void setName(QString const& name);
+
+    /**
+     * The name of this database connection.
+     * @return The name of this connection.
+     */
+    QString name() const;
 
 
     /**
      * Loads the data from the data source.
      */
-    Q_INVOKABLE void load();
+    Q_INVOKABLE void load(int id=0);
 
     /**
      * Executes a SQL query on the database the execution will block and wait for a result.
@@ -83,8 +108,8 @@ public:
      * @param An id that can be used to match requests
      */
     Q_INVOKABLE void execute(QVariant const& criteria, int id = 1);
-signals:
 
+signals:
     /**
      * Emitted when the source path changes
      *
@@ -100,26 +125,18 @@ signals:
     void queryChanged(QString const& query);
 
     /**
+     * Emitted when the query changes
+     *
+     * @param A string containing the new query
+     */
+    void nameChanged(QString const& name);
+
+    /**
      * Emitted when data has been recieved.
      *
      * @param A variant containing the new data.
      */
-    void dataLoaded(QVariant const& data);
-
-    /**
-     * Emitted when an asynchronous execute operation has completed and has results to return.
-     *
-     * @param replyData The reply data from the execute operation.
-     */
-    void reply(const bb::data::DataAccessReply &replyData);
-
-private slots:
-    /**
-     * Function that is connected to the SqlConnection reply signal.
-     *
-     * @param reply The reply data delivered from the asynchronous request to the SqlConnection
-     */
-    void onLoadAsyncResultData(const bb::data::DataAccessReply& reply);
+    void dataLoaded(int id, QVariant const& data);
 };
 
 }

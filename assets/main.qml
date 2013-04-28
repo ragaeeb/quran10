@@ -45,39 +45,15 @@ NavigationPane
                 navigationPane.push(helpPage);
             }
         }
-        
-        actions: [
-            ActionItem {
-                id: bookmarkAction
-                title: qsTr("No bookmark") + Retranslate.onLanguageChanged
-                imageSource: "file:///usr/share/icons/bb_action_flag.png"
-                enabled: false
-                
-                onTriggered: {
-                    var bookmark = app.getValueFor("bookmark")
-                    var data = theDataModel.value(bookmark.surah - 1) // surahs start at 1
-
-                    listView.process(data)
-                    listView.surahPage.requestedIndex = bookmark.verse
-                }
-            }
-        ]
     }
 
     BasePage
     {
         id: mainPage
         
-        attachedObjects: [
-            ComponentDefinition {
-                id: actionDefinition
-                ActionItem {}
-            }
-        ]
-        
         function updateBookmark()
         {
-            var bookmark = app.getValueFor("bookmark")
+            var bookmark = persist.getValueFor("bookmark")
 
             if (bookmark) {
                 bookmarkAction.title = qsTr("%1:%2").arg(bookmark.surah).arg(bookmark.verse) + Retranslate.onLanguageChanged
@@ -89,6 +65,36 @@ NavigationPane
             updateBookmark()
         }
         
+        actions: [
+            ActionItem {
+                title: qsTr("Search") + Retranslate.onLanguageChanged
+                imageSource: "file:///usr/share/icons/bb_action_searchtwitter.png"
+                ActionBar.placement: ActionBarPlacement.OnBar
+                
+                onTriggered: {
+                    definition.source = "SearchPage.qml"
+                    var searchPage = definition.createObject()
+                    navigationPane.push(searchPage)
+                }
+            },
+            
+            ActionItem {
+                id: bookmarkAction
+                title: qsTr("No bookmark") + Retranslate.onLanguageChanged
+                imageSource: "file:///usr/share/icons/bb_action_flag.png"
+                enabled: false
+                ActionBar.placement: ActionBarPlacement.OnBar
+                
+                onTriggered: {
+                    var bookmark = persist.getValueFor("bookmark")
+                    var data = theDataModel.value(bookmark.surah - 1) // surahs start at 1
+
+                    listView.process(data)
+                    listView.surahPage.requestedIndex = bookmark.verse
+                }
+            }
+        ]
+        
         contentContainer: Container {
 
             ListView {
@@ -97,6 +103,22 @@ NavigationPane
 
                 dataModel: ArrayDataModel {
                     id: theDataModel
+                }
+                
+                leadingVisualSnapThreshold: 1
+                
+                leadingVisual: TextField {
+                    hintText: qsTr("Search surah name...") + Retranslate.onLanguageChanged
+                    
+                    onTextChanging: {
+                        if (text.length > 2) {
+		                    sqlDataSource.query = "SELECT surah_id,arabic_name,english_name,english_translation FROM chapters WHERE english_name like '%"+text+"%'"
+		                    sqlDataSource.load()
+                        } else if (text.length == 0) {
+		                    sqlDataSource.query = "SELECT surah_id,arabic_name,english_name,english_translation FROM chapters"
+		                    sqlDataSource.load()
+                        }
+                    }
                 }
 
                 listItemComponents: [
@@ -122,9 +144,11 @@ NavigationPane
                     CustomSqlDataSource {
                         id: sqlDataSource
                         source: "app/native/assets/dbase/quran.db"
+                        name: "main"
 
                         onDataLoaded: {
                             if (!listView.surahPage) {
+                                theDataModel.clear()
                                 theDataModel.append(data)
                             } else {
                                 listView.surahPage.load(data)
@@ -145,8 +169,8 @@ NavigationPane
                 }
                 
                 function reload(data) {
-                    var primary = app.getValueFor("primaryLanguage")
-                    var translation = app.getValueFor("translation")
+                    var primary = persist.getValueFor("primaryLanguage")
+                    var translation = persist.getValueFor("translation")
 
                     if (translation != "") {
                         translation = "," + translation + " as translation"
@@ -169,7 +193,7 @@ NavigationPane
                     sqlDataSource.query = "SELECT surah_id,arabic_name,english_name,english_translation FROM chapters"
                     sqlDataSource.load()
                     
-                    app.settingChanged.connect(reloadNeeded)
+                    persist.settingChanged.connect(reloadNeeded)
                 }
             }
         }

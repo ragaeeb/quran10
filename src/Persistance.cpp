@@ -1,8 +1,7 @@
+#include "precompiled.h"
+
 #include "Persistance.h"
 #include "Logger.h"
-
-#include <bb/system/Clipboard>
-#include <bb/system/SystemToast>
 
 namespace canadainc {
 
@@ -57,9 +56,13 @@ QString Persistance::convertToUtf8(QString const& text) {
 void Persistance::saveValueFor(const QString &objectName, const QVariant &inputValue)
 {
 	LOGGER("saveValueFor: " << objectName << inputValue);
-	m_settings.setValue(objectName, inputValue);
 
-	emit settingChanged(objectName);
+	if ( m_settings.value(objectName) != inputValue ) {
+		m_settings.setValue(objectName, inputValue);
+		emit settingChanged(objectName);
+	} else {
+		LOGGER("Duplicate value, ignoring");
+	}
 }
 
 
