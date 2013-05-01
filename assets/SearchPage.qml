@@ -3,44 +3,97 @@ import com.canadainc.data 1.0
 
 BasePage
 {
+    paneProperties: NavigationPaneProperties {
+        property variant navPane: navigationPane
+        id: properties
+    }
+    
     contentContainer: Container
     {
         TextField
         {
+		    onCreationCompleted: {
+	            if ( persist.getValueFor("animations") == 1 ) {
+	                translate.play()
+	            } else {
+	                timer.start(250);
+	            }
+          	}
+            
             id: searchField
             hintText: qsTr("Enter text to search...") + Retranslate.onLanguageChanged
+            bottomMargin: 0
+
+	        animations: [
+	            TranslateTransition {
+	                id: translate
+	                fromY: 1000
+	                duration: 500
+	                
+	                onEnded: {
+	                    searchField.requestFocus()
+	                }
+	            }
+	        ]
             
             input {
                 submitKey: SubmitKey.Submit
                 
-                onSubmitted: {
-                    var translation = persist.getValueFor("translation")
-                    var translationClause = ""
-                    var translationLike = ""
-
-                    if (translation != "") {
-                        translationClause = ",quran." + translation + " as translation"
-                        translationLike = " OR quran."+translation+" LIKE '%"+text+"%'"
+                onSubmitted:
+                {
+                    var trimmedText = text.replace(/^\s+|\s+$/g,"");
+                    
+                    if (trimmedText.length > 1)
+                    {
+	                    theDataModel.clear()
+	                    sqlDataSource.translationLoaded = sqlDataSource.arabicLoaded = false
+	                    
+	                    busy.running = true
+	                    
+	                    var translation = persist.getValueFor("translation")
+	
+	                    if (translation != "") {
+	                    	sqlDataSource.query = "select %1.surah_id,%1.verse_id,%1.text,chapters.english_name as name, chapters.english_name, chapters.arabic_name, chapters.english_translation from %1 INNER JOIN chapters on chapters.surah_id=%1.surah_id AND %1.text LIKE '%%2%'".arg(translation).arg(trimmedText)
+	                    	sqlDataSource.load(0)
+	                    }
+	
+						sqlDataSource.query = "select arabic.surah_id,arabic.verse_id,arabic.text,chapters.arabic_name as name, chapters.english_name, chapters.arabic_name, chapters.english_translation from arabic INNER JOIN chapters on chapters.surah_id=arabic.surah_id AND arabic.text LIKE '%%1%'".arg(trimmedText)
+	                    sqlDataSource.load(1)
                     }
-
-					busy.running = true
-                    sqlDataSource.query = "SELECT chapters.english_name,quran.arabic,quran.surah_id,quran.verse_id" + translationClause + " FROM quran,chapters WHERE arabic like '%"+text+"%'"+translationLike+" AND quran.surah_id=chapters.surah_id"
-                    sqlDataSource.load()
                 }
             }
 
             attachedObjects: [
                 CustomSqlDataSource {
+                    property bool translationLoaded: false
+                    property bool arabicLoaded: false
                     id: sqlDataSource
                     source: "app/native/assets/dbase/quran.db"
                     name: "search"
 
                     onDataLoaded: {
-	                    theDataModel.clear()
 	                    theDataModel.insertList(data)
-	                    busy.running = false
+	                    
+	                    if (id == 0) {
+	                        translationLoaded = true
+	                    } else if (id == 1) {
+	                        arabicLoaded = true
+	                    }
+	                    
+	                    if (translationLoaded && arabicLoaded) {
+	                    	busy.running = false   
+	                    }
                     }
-                }
+                },
+                
+		        QTimer {
+		            id: timer
+		            singleShot: true
+		            
+		            onTimeout: {
+		                searchField.requestFocus()
+		            }
+		        }
             ]
         }
         
@@ -61,13 +114,31 @@ BasePage
                 ImagePaintDefinition {
                     id: bg
                     imageSource: "asset:///images/header_bg.png"
-                }
+                },
+                
+		        ComponentDefinition {
+		            id: definition
+		            source: "SurahPage.qml"
+		        }
             ]
 
             dataModel: GroupDataModel {
                 id: theDataModel
-                sortingKeys: ["english_name","verse_id"]
+                sortingKeys: ["name", "verse_id"]
                 grouping: ItemGrouping.ByFullValue
+            }
+            
+            onTriggered: {
+                if (indexPath.length > 1)
+                {
+                    var data = dataModel.data(indexPath)
+                    
+		            var surahPage = definition.createObject()
+		            surahPage.surahId = data.surah_id
+		            surahPage.requestedVerse = data.verse_id
+		            
+		            properties.navPane.push(surahPage)
+                }
             }
             
             listItemComponents: [
@@ -105,26 +176,23 @@ BasePage
                     
                     Container
                     {
-                        topPadding: 5; bottomPadding: 5; leftPadding: 5; rightPadding: 5
+                        id: itemRoot
+                        leftPadding: 5; rightPadding: 5; bottomPadding: 5
                         horizontalAlignment: HorizontalAlignment.Fill
                         preferredWidth: 1280
                         
-                        Label {
-                            id: firstLabel
-                            text: ListItemData.arabic
-                            multiline: true
-                            horizontalAlignment: HorizontalAlignment.Fill
-                            textStyle.color: Color.White
-                            textStyle.textAlign: TextAlign.Center
+                        Divider {
+                            visible: itemRoot.ListItem.indexPath[1] != 0
+                            bottomMargin: 0
                         }
                         
                         Label {
-                            id: translationLabel
-                            text: ListItemData.translation
+                            text: ListItemData.text
                             multiline: true
                             horizontalAlignment: HorizontalAlignment.Fill
                             textStyle.color: Color.White
                             textStyle.textAlign: TextAlign.Center
+                            topMargin: 0
                         }
                     }
                 }

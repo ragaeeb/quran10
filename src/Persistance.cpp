@@ -1,7 +1,7 @@
 #include "precompiled.h"
 
 #include "Persistance.h"
-#include "Logger.h"
+#include "Logger.h">
 
 namespace canadainc {
 
@@ -16,13 +16,19 @@ Persistance::~Persistance()
 }
 
 
-QVariant Persistance::getValueFor(const QString &objectName)
+void Persistance::showToast(QString const& text, QString const& buttonLabel)
 {
-    QVariant value( m_settings.value(objectName) );
+	if (m_toast == NULL) {
+		m_toast = new SystemToast(this);
+		connect( m_toast, SIGNAL( finished(bb::system::SystemUiResult::Type) ), this, SLOT( finished(bb::system::SystemUiResult::Type) ) );
+	}
 
-    LOGGER("getValueFor: " << objectName << value);
+	if ( !buttonLabel.isNull() ) {
+		m_toast->button()->setLabel( tr("OK") );
+	}
 
-    return value;
+	m_toast->setBody(text);
+	m_toast->show();
 }
 
 
@@ -31,25 +37,31 @@ void Persistance::copyToClipboard(QString const& text)
 	Clipboard clipboard;
 	clipboard.clear();
 
-	clipboard.insert( "text/plain", text.toUtf8() );
+	clipboard.insert( "text/plain", convertToUtf8(text) );
 
 	showToast( tr("Copied: %1 to clipboard").arg(text) );
 }
 
 
-void Persistance::showToast(QString const& text)
+void Persistance::finished(bb::system::SystemUiResult::Type value)
 {
-	if (m_toast == NULL) {
-		m_toast = new SystemToast(this);
-	}
-
-	m_toast->setBody(text);
-	m_toast->show();
+	LOGGER("Toast finished()");
+	emit toastFinished(value == SystemUiResult::ButtonSelection);
 }
 
 
-QString Persistance::convertToUtf8(QString const& text) {
-	return QString::fromUtf8( text.toUtf8().constData() );
+QByteArray Persistance::convertToUtf8(QString const& text) {
+	return text.toUtf8();
+}
+
+
+QVariant Persistance::getValueFor(const QString &objectName)
+{
+    QVariant value( m_settings.value(objectName) );
+
+    LOGGER("getValueFor: " << objectName << value);
+
+    return value;
 }
 
 
@@ -63,6 +75,16 @@ void Persistance::saveValueFor(const QString &objectName, const QVariant &inputV
 	} else {
 		LOGGER("Duplicate value, ignoring");
 	}
+}
+
+
+void Persistance::remove(QString const& key) {
+	m_settings.remove(key);
+}
+
+
+void Persistance::clear() {
+	m_settings.clear();
 }
 
 

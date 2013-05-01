@@ -1,53 +1,45 @@
 import bb.cascades 1.0
 import bb.multimedia 1.0
 import com.canadainc.data 1.0
+import bb.system 1.0
 
 Page
 {
-    property alias chapter: listView.chapterNumber
-    property int requestedIndex: -1
+    property variant surahId
+    property int requestedVerse: -1
     property variant playlist
     property int currentTrack: 0
 
-    onChapterChanged: {
-        surahNameArabic.text = chapter.arabic_name
-        surahNameEnglish.text = qsTr("%1 (%2)").arg(chapter.english_name).arg(chapter.english_translation)
+    onSurahIdChanged:
+    {
+        sqlDataSource.query = "SELECT english_name, english_translation, arabic_name FROM chapters WHERE surah_id=%1".arg(surahId)
+        sqlDataSource.load(1)
+        
+        loadVerses()
+    }
+    
+    function loadVerses()
+    {
+        var translation = persist.getValueFor("translation")
+
+        if (translation != "") {
+            sqlDataSource.query = "SELECT arabic.text as arabic,arabic.verse_id,%1.text as translation FROM arabic INNER JOIN %1 on arabic.surah_id=%1.surah_id AND arabic.verse_id=%1.verse_id AND arabic.surah_id=%2".arg(translation).arg(surahId)
+        } else {
+        	sqlDataSource.query = "SELECT text as arabic,verse_id FROM arabic WHERE surah_id=%1".arg(surahId)
+        }
+
+        sqlDataSource.load(0)
     }
     
     function reloadNeeded(key)
     {
-        if (key == "primaryLanguage" || key == "translation") {
-            reload(chapter)
+        if (key == "translation") {
+            loadVerses()
         }
     }
     
     onCreationCompleted: {
         persist.settingChanged.connect(reloadNeeded)
-    }
-    
-    function render(values) {
-        theDataModel.clear()
-        theDataModel.insertList(values)
-        busy.running = false
-        listFade.play()
-        
-        if (requestedIndex > 0) {
-            var target = [ requestedIndex - 1, 0 ]
-            listView.scrollToItem(target, ScrollAnimation.Default)
-            listView.select(target,true)
-        }
-    }
-    
-    function reload(data) {
-        var primary = persist.getValueFor("primaryLanguage")
-        var translation = persist.getValueFor("translation")
-
-        if (translation != "") {
-            translation = "," + translation + " as translation"
-        }
-
-        sqlDataSource.query = "SELECT " + primary + ",verse_id" + translation + " FROM quran WHERE surah_id=" + data.surah_id
-        sqlDataSource.load()
     }
     
     attachedObjects: [
@@ -57,7 +49,21 @@ Page
             name: "surah"
 
             onDataLoaded: {
-                render(data)
+                if (id == 0) {
+			        theDataModel.clear()
+			        theDataModel.insertList(data)
+			        busy.running = false
+			        listFade.play()
+			        
+			        if (requestedVerse > 0) {
+			            var target = [ requestedVerse - 1, 0 ]
+			            listView.scrollToItem(target, ScrollAnimation.Default)
+			            listView.select(target,true)
+			        }
+                } else if (id == 1) {
+			        surahNameArabic.text = data[0].arabic_name
+			        surahNameEnglish.text = qsTr("%1 (%2)").arg(data[0].english_name).arg(data[0].english_translation)
+                }
             }
         }
     ]
@@ -92,7 +98,7 @@ Page
             
             onTriggered:
             {
-                var downloaded = app.fileExists( chapter.surah_id, theDataModel.size() )
+                var downloaded = app.fileExists( surahId, theDataModel.size() )
                 
                 if (!downloaded) {
                     listView.download()
@@ -158,7 +164,7 @@ Page
 
         ListView {
         	property alias background: bg
-        	property variant chapterNumber
+        	property variant chapterNumber: surahId
             id: listView
             opacity: 0
 
@@ -179,7 +185,42 @@ Page
 				}
                 
                 multiSelectHandler.status = qsTr("%1 ayahs selected").arg(n) + Retranslate.onLanguageChanged
-                multiPlayAction.enabled = multiCopyAction.enabled = n > 0
+                multiShareAction.enabled = multiPlayAction.enabled = multiCopyAction.enabled = n > 0
+            }
+            
+            function getSelectedTextualData()
+            {
+                var selectedIndices = selectionList()
+                var result = ""
+                var first
+                var last
+
+				for (var i = 0; i < selectedIndices.length; i ++)
+				{
+				    if (selectedIndices[i].length > 1)
+				    {
+				        var current = dataModel.data(selectedIndices[i])
+				        
+				     	result += renderItem(current)
+					    
+					    if (i < selectedIndices.length-1) {
+					        result += "\n"
+					    }
+					    
+					    if (!first) {
+					        first = current.verse_id
+					    }
+					    
+					    last = current.verse_id
+				    }
+				}
+
+				if (first && last) {
+                    result += qsTr("%1:%2-%3").arg(chapterNumber).arg(first).arg(last)
+                    return result;
+				} else {
+				    return ""
+				}
             }
             
             multiSelectAction: MultiSelectActionItem {}
@@ -188,46 +229,35 @@ Page
                 actions: [
                     ActionItem {
                         id: multiCopyAction
-                        title: qsTr("Copy")
+                        title: qsTr("Copy") + Retranslate.onLanguageChanged
                         enabled: false
                         imageSource: "asset:///images/ic_copy.png"
                         onTriggered: {
-                            var selectedIndices = listView.selectionList()
-                            var result = ""
-                            var first
-                            var last
-
-							for (var i = 0; i < selectedIndices.length; i ++)
-							{
-							    if (selectedIndices[i].length > 1)
-							    {
-							        var current = listView.dataModel.data(selectedIndices[i])
-							        
-							     	result += listView.renderItem(current)
-								    
-								    if (i < selectedIndices.length-1) {
-								        result += "\n"
-								    }
-								    
-								    if (!first) {
-								        first = current.verse_id
-								    }
-								    
-								    last = current.verse_id
-							    }
-							}
-
-							if (first && last) {
-	                            result += qsTr("%1:%2-%3").arg(listView.chapterNumber.surah_id).arg(first).arg(last)
-	                            persist.copyToClipboard(result)
-							}
+                            var result = listView.getSelectedTextualData()
+                            persist.copyToClipboard(result)
                         }
                     },
+                    
+	                InvokeActionItem {
+					    id: multiShareAction
+					    title: qsTr("Share") + Retranslate.onLanguageChanged
+			
+			            query {
+			                mimeType: "text/plain"
+			                invokeActionId: "bb.action.SHARE"
+			            }
+			            
+			            onTriggered: {
+			                var result = listView.getSelectedTextualData()
+			                result = persist.convertToUtf8(result)
+			                multiShareAction.data = result
+			            }
+	                },
                     
                     ActionItem {
                         id: multiPlayAction
                         
-                        title: qsTr("Play")
+                        title: qsTr("Play") + Retranslate.onLanguageChanged
                         imageSource: "asset:///images/ic_play.png"
 
                         onTriggered: {
@@ -254,12 +284,8 @@ Page
                 status: qsTr("None selected") + Retranslate.onLanguageChanged
             }
             
-            function renderPrimary(ListItemData) {
-                return ListItemData.english_transliteration ? ListItemData.english_transliteration.replace(/<(?:.|\n)*?>/gm, '') : ListItemData.arabic
-            }
-            
             function renderItem(ListItemData) {
-                var result = renderPrimary(ListItemData) + "\n"
+                var result = ListItemData.arabic + "\n"
 
                 if (ListItemData.translation && ListItemData.translation.length > 0) {
                     result += ListItemData.translation + "\n"
@@ -268,29 +294,44 @@ Page
                 return result
             }
             
-            function copyItem(ListItemData) {
+            function getTextualData(ListItemData) {
                 var result = renderItem(ListItemData)
-                result += qsTr("%1:%2").arg(chapterNumber.surah_id).arg(ListItemData.verse_id)
+                result += qsTr("%1:%2").arg(chapterNumber).arg(ListItemData.verse_id)
+                return result;
+            }
+            
+            function copyItem(ListItemData) {
+                var result = getTextualData(ListItemData)
                 persist.copyToClipboard(result)
             }
             
+            function shareItem(ListItemData) {
+                var result = getTextualData(ListItemData)
+                result = persist.convertToUtf8(result)
+                return result;
+            }
+            
             function bookmark(ListItemData) {
-                persist.saveValueFor("bookmark", {'surah': chapterNumber.surah_id, 'verse': ListItemData.verse_id})
-                persist.showToast( qsTr("Bookmarked %1:%2").arg(chapterNumber.surah_id).arg(ListItemData.verse_id) )
+                persist.saveValueFor("bookmark", {'surah': chapterNumber, 'verse': ListItemData.verse_id})
+                persist.showToast( qsTr("Bookmarked %1:%2").arg(chapterNumber).arg(ListItemData.verse_id) )
             }
             
             function download() {
-                app.downloadChapter( chapterNumber.surah_id, theDataModel.size() )
+                if ( persist.getValueFor("hideDataWarning") == 0 ) {
+                    prompt.show()
+                } else {
+                    app.downloadChapter( chapterNumber, theDataModel.size() )
+                }
             }
             
             function fileExists(ListItemData) {
-                return app.fileExists( chapterNumber.surah_id, ListItemData.verse_id )
+                return app.fileExists( chapterNumber, ListItemData.verse_id )
             }
             
             function playFile(verseId)
             {
 				player.stop()
-				player.sourceUrl = "file://"+app.generateFilePath(chapterNumber.surah_id, verseId)
+				player.sourceUrl = "file://"+app.generateFilePath(chapterNumber, verseId)
 
 				if (nowPlaying.acquired) {
 		            player.play();
@@ -364,7 +405,22 @@ Page
 		                player.positionChanged(0)
 		                listView.skip(1)
 		            }
-		        }
+		        },
+		        
+                SystemDialog {
+                    id: prompt
+                    title: qsTr("Confirmation") + Retranslate.onLanguageChanged
+                    body: qsTr("We are about to download a whole bunch of MP3 recitations, you should only attempt to do this if you have either an unlimited data plan, or are connected via Wi-Fi. Otherwise you might incur a lot of data charges. Are you sure you want to continue? If you select No you can always attempt to download again later.") + Retranslate.onLanguageChanged
+                    confirmButton.label: qsTr("Yes") + Retranslate.onLanguageChanged
+                    cancelButton.label: qsTr("No") + Retranslate.onLanguageChanged
+                    
+		            onFinished: {
+		                if (result == SystemUiResult.ConfirmButtonSelection) {
+		                    persist.saveValueFor("hideDataWarning", 1)
+		                    app.downloadChapter( surahId, theDataModel.size() )
+		                }
+		            }
+                }
             ]
             
             animations: FadeTransition {
@@ -388,7 +444,7 @@ Page
                         }
 
                         Label {
-                            text: qsTr("%1:%2").arg(headerRoot.ListItem.view.chapterNumber.surah_id).arg(ListItemData)
+                            text: qsTr("%1:%2").arg(headerRoot.ListItem.view.chapterNumber).arg(ListItemData)
                             horizontalAlignment: HorizontalAlignment.Fill
                             textStyle.fontSize: FontSize.XXSmall
                             textStyle.color: Color.White
@@ -442,7 +498,7 @@ Page
                         contextActions: [
                             ActionSet {
                                 title: firstLabel.text
-                                subtitle: labelDelegate.delegateActive ? labelDelegate.control.text : qsTr("%1:%2").arg(itemRoot.ListItem.view.chapterNumber.surah_id).arg(ListItemData.verse_id)
+                                subtitle: labelDelegate.delegateActive ? labelDelegate.control.text : qsTr("%1:%2").arg(itemRoot.ListItem.view.chapterNumber).arg(ListItemData.verse_id)
                                 
                                 ActionItem {
                                     title: qsTr("Copy")
@@ -450,6 +506,20 @@ Page
                                     onTriggered: {
                                         itemRoot.ListItem.view.copyItem(ListItemData)
                                     }
+                                }
+                                
+                                InvokeActionItem {
+								    id: iai
+								    title: qsTr("Share")
+						
+						            query {
+						                mimeType: "text/plain"
+						                invokeActionId: "bb.action.SHARE"
+						            }
+						            
+						            onTriggered: {
+						                iai.data = itemRoot.ListItem.view.shareItem(ListItemData)
+						            }
                                 }
                                 
                                 ActionItem {
@@ -484,7 +554,7 @@ Page
 
                         Label {
                             id: firstLabel
-                            text: itemRoot.ListItem.view.renderPrimary(ListItemData)
+                            text: ListItemData.arabic
                             multiline: true
                             horizontalAlignment: HorizontalAlignment.Fill
                             textStyle.color: selection || active || playing ? Color.White : Color.Black

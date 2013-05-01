@@ -87,10 +87,9 @@ NavigationPane
                 
                 onTriggered: {
                     var bookmark = persist.getValueFor("bookmark")
-                    var data = theDataModel.value(bookmark.surah - 1) // surahs start at 1
 
-                    listView.process(data)
-                    listView.surahPage.requestedIndex = bookmark.verse
+                    listView.process(bookmark.surah)
+                    listView.surahPage.requestedVerse = bookmark.verse
                 }
             }
         ]
@@ -112,7 +111,7 @@ NavigationPane
                     
                     onTextChanging: {
                         if (text.length > 2) {
-		                    sqlDataSource.query = "SELECT surah_id,arabic_name,english_name,english_translation FROM chapters WHERE english_name like '%"+text+"%'"
+		                    sqlDataSource.query = "SELECT surah_id,arabic_name,english_name,english_translation FROM chapters WHERE english_name like '%"+text+"%' OR arabic_name like '%"+text+"%'"
 		                    sqlDataSource.load()
                         } else if (text.length == 0) {
 		                    sqlDataSource.query = "SELECT surah_id,arabic_name,english_name,english_translation FROM chapters"
@@ -134,7 +133,7 @@ NavigationPane
 
                 onTriggered: {
                     var data = listView.dataModel.data(indexPath)
-                    process(data)
+                    process(data.surah_id)
                 }
 
                 horizontalAlignment: HorizontalAlignment.Fill
@@ -161,9 +160,7 @@ NavigationPane
                 {
                     definition.source = "SurahPage.qml"
                     surahPage = definition.createObject()
-                    surahPage.chapter = data
-
-                    surahPage.reload(data)
+                    surahPage.surahId = data
 
                     navigationPane.push(surahPage)
                 }
