@@ -184,7 +184,7 @@ BasePage
 	            Option {
 	                text: qsTr("Hani ar-Rifai") + Retranslate.onLanguageChanged
 	                description: qsTr("High Quality") + Retranslate.onLanguageChanged
-	                value: "Hani_Rifai_128kbps"
+	                value: "Hani_Rifai_192kbps"
 	            }
 	            
 	            Option {
