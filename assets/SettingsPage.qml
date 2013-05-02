@@ -160,7 +160,7 @@ BasePage
 	            Option {
 	                text: qsTr("Ahmed Ibn Ali al-Ajamy") + Retranslate.onLanguageChanged
 	                description: qsTr("Medium Quality") + Retranslate.onLanguageChanged
-	                value: "Ahmed_ibn_Ali_al-Ajamy_128kbps_QuranExplorer.Com"
+	                value: "Ahmed_ibn_Ali_al-Ajamy_128kbps_ketaballah.net"
 	            }
 	            
 	            Option {
