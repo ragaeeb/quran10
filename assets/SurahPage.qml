@@ -416,7 +416,6 @@ Page
                     
 		            onFinished: {
 		                if (result == SystemUiResult.ConfirmButtonSelection) {
-		                    persist.saveValueFor("hideDataWarning", 1)
 		                    app.downloadChapter( surahId, theDataModel.size() )
 		                }
 		            }
@@ -471,28 +470,26 @@ Page
 
                         id: itemRoot
                         
+                        function updateState() {
+                            if (playing) {
+                                background = Color.create("#ffff8c00")
+                            } else if (selection || active) {
+                                background = Color.DarkGreen
+                            } else {
+                                background = undefined
+                            }
+                        }
+                        
                         onPlayingChanged: {
-                            background = playing && !selection && !active ? Color.create("#ffff8c00") : undefined
+                            updateState()
                         }
                         
                         onSelectionChanged: {
-                            if (selection) {
-                                background = Color.DarkGreen
-                            } else if (playing) {
-                                background = Color.create("#ffff8c00")
-                            } else {
-                                background = undefined
-                            }
+                            updateState()
                         }
                         
                         onActiveChanged: {
-                            if (selection || active) {
-                                background = Color.DarkGreen
-                            } else if (playing) {
-                                background = Color.create("#ffff8c00")
-                            } else {
-                                background = undefined
-                            }
+                            updateState()
                         }
 
                         contextActions: [

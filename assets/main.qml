@@ -96,28 +96,27 @@ NavigationPane
         
         contentContainer: Container {
 
+			TextField {
+                hintText: qsTr("Search surah name...") + Retranslate.onLanguageChanged
+                bottomMargin: 0;
+                
+                onTextChanging: {
+                    if (text.length > 2) {
+	                    sqlDataSource.query = "SELECT surah_id,arabic_name,english_name,english_translation FROM chapters WHERE english_name like '%"+text+"%' OR arabic_name like '%"+text+"%'"
+	                    sqlDataSource.load()
+                    } else if (text.length == 0) {
+	                    sqlDataSource.query = "SELECT surah_id,arabic_name,english_name,english_translation FROM chapters"
+	                    sqlDataSource.load()
+                    }
+                }
+            }
+
             ListView {
             	property variant surahPage
                 id: listView
 
                 dataModel: ArrayDataModel {
                     id: theDataModel
-                }
-                
-                leadingVisualSnapThreshold: 1
-                
-                leadingVisual: TextField {
-                    hintText: qsTr("Search surah name...") + Retranslate.onLanguageChanged
-                    
-                    onTextChanging: {
-                        if (text.length > 2) {
-		                    sqlDataSource.query = "SELECT surah_id,arabic_name,english_name,english_translation FROM chapters WHERE english_name like '%"+text+"%' OR arabic_name like '%"+text+"%'"
-		                    sqlDataSource.load()
-                        } else if (text.length == 0) {
-		                    sqlDataSource.query = "SELECT surah_id,arabic_name,english_name,english_translation FROM chapters"
-		                    sqlDataSource.load()
-                        }
-                    }
                 }
 
                 listItemComponents: [
