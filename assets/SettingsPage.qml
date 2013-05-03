@@ -416,6 +416,12 @@ BasePage
 	                description: qsTr("Do not show any additional languages.") + Retranslate.onLanguageChanged
 	                value: ""
 	            }
+	            
+	            Option {
+	                text: qsTr("Arabic") + Retranslate.onLanguageChanged
+	                description: qsTr("King Fahad Quran Complex") + Retranslate.onLanguageChanged
+	                value: "tafsir_arabic_king_fahad"
+	            }
 	
 	            Option {
 	                text: qsTr("Bengali") + Retranslate.onLanguageChanged

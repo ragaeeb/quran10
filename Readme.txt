@@ -119,3 +119,10 @@ CREATE INDEX 'fk_chinese_surah_id' ON 'chinese' ('surah_id' ASC);
 CREATE INDEX 'fk_chinese_verse_id' ON 'chinese' ('verse_id' ASC);
 
 vacuum;
+
+
+
+CREATE TABLE arabic (database_id INTEGER, surah_id INTEGER, verse_id INTEGER, text TEXT);
+.mode csv
+.import Arabic-(Original-Book)-1.csv arabic
+delete from arabic where rowid=1;
