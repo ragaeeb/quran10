@@ -1,7 +1,7 @@
 #ifndef LOGGER_H_
 #define LOGGER_H_
 
-//#define DEBUG 1
+#define DEBUG 1
 //#define TEST 1
 
 #ifdef DEBUG

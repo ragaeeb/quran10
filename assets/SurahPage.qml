@@ -20,12 +20,13 @@ Page
     
     function loadVerses()
     {
+        var primary = persist.getValueFor("primary")
         var translation = persist.getValueFor("translation")
 
         if (translation != "") {
-            sqlDataSource.query = "SELECT arabic.text as arabic,arabic.verse_id,%1.text as translation FROM arabic INNER JOIN %1 on arabic.surah_id=%1.surah_id AND arabic.verse_id=%1.verse_id AND arabic.surah_id=%2".arg(translation).arg(surahId)
+            sqlDataSource.query = "SELECT %1.text as arabic,%1.verse_id,%2.text as translation FROM %1 INNER JOIN %2 on %1.surah_id=%2.surah_id AND %1.verse_id=%2.verse_id AND %1.surah_id=%3".arg(primary).arg(translation).arg(surahId)
         } else {
-        	sqlDataSource.query = "SELECT text as arabic,verse_id FROM arabic WHERE surah_id=%1".arg(surahId)
+        	sqlDataSource.query = "SELECT text as arabic,verse_id FROM %1 WHERE surah_id=%2".arg(primary).arg(surahId)
         }
 
         sqlDataSource.load(0)
@@ -33,7 +34,7 @@ Page
     
     function reloadNeeded(key)
     {
-        if (key == "translation") {
+        if (key == "translation" || key == "primary") {
             loadVerses()
         }
     }

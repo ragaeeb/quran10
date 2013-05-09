@@ -52,6 +52,11 @@ CREATE INDEX 'fk_arabic_surah_id' ON 'arabic' ('surah_id' ASC);
 CREATE INDEX 'fk_arabic_verse_id' ON 'arabic' ('verse_id' ASC);
 CREATE INDEX 'fk_arabic_text' ON 'arabic' ('text' ASC);
 
+CREATE TABLE transliteration (surah_id INTEGER, verse_id INTEGER, text TEXT);
+.import translated.txt transliteration
+CREATE INDEX 'fk_transliteration_surah_id' ON 'transliteration' ('surah_id' ASC);
+CREATE INDEX 'fk_transliteration_verse_id' ON 'transliteration' ('verse_id' ASC);
+
 CREATE TABLE bengali (surah_id INTEGER, verse_id INTEGER, text TEXT);
 .import bn.hoque.txt bengali
 CREATE INDEX 'fk_bengali_surah_id' ON 'bengali' ('surah_id' ASC);
