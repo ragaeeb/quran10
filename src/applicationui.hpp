@@ -37,6 +37,6 @@ public:
     Q_INVOKABLE QString generateFilePath(int chapter, int verse);
 };
 
-} // salat
+} // quran
 
 #endif /* ApplicationUI_HPP_ */

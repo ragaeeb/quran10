@@ -23,8 +23,9 @@ BasePage
             id: searchField
             hintText: qsTr("Enter text to search...") + Retranslate.onLanguageChanged
             bottomMargin: 0
+            horizontalAlignment: HorizontalAlignment.Fill
 
-	        animations: [
+            animations: [
 	            TranslateTransition {
 	                id: translate
 	                fromY: 1000

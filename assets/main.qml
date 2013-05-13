@@ -111,6 +111,7 @@ NavigationPane
 			TextField {
                 hintText: qsTr("Search surah name...") + Retranslate.onLanguageChanged
                 bottomMargin: 0;
+                horizontalAlignment: HorizontalAlignment.Fill
                 
                 onTextChanging: {
                     if (text.length > 2) {
