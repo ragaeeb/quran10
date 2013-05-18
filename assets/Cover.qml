@@ -35,8 +35,15 @@ Container {
     ]
     
     onCreationCompleted: {
+        persist.settingChanged.connect(reloadNeeded);
         updateCover();
         timer.start();
+    }
+
+    function reloadNeeded(key) {
+        if (key == "translation" || key == "primary") {
+            updateCover()
+        }
     }
 
     function updateCover() {

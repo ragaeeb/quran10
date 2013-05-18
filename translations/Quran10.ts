@@ -4,7 +4,7 @@
 <context>
     <name>Cover</name>
     <message>
-        <location filename="../assets/Cover.qml" line="30"/>
+        <location filename="../assets/Cover.qml" line="31"/>
         <source>Quran10</source>
         <translation type="unfinished"></translation>
     </message>
@@ -571,34 +571,32 @@ http://tanzil.ca
 <context>
     <name>SurahPage</name>
     <message>
-        <location filename="../assets/SurahPage.qml" line="47"/>
+        <location filename="../assets/SurahPage.qml" line="45"/>
         <source>Tip: If the font size is too small to read, you can always increase the size by going to your BB10 device settings -&gt; Display -&gt; and increasing the font size from there!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="47"/>
+        <location filename="../assets/SurahPage.qml" line="45"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="72"/>
+        <location filename="../assets/SurahPage.qml" line="70"/>
         <source>%1 (%2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="87"/>
-        <location filename="../assets/SurahPage.qml" line="801"/>
+        <location filename="../assets/SurahPage.qml" line="85"/>
         <source>Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="96"/>
-        <location filename="../assets/SurahPage.qml" line="810"/>
+        <location filename="../assets/SurahPage.qml" line="94"/>
         <source>Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="106"/>
+        <location filename="../assets/SurahPage.qml" line="104"/>
         <source>Play All</source>
         <translation type="unfinished"></translation>
     </message>
@@ -612,84 +610,108 @@ http://tanzil.ca
         <source>Hide Tafsir</source>
         <translation type="unfinished"></translation>
     </message>
+</context>
+<context>
+    <name>TafsirListView</name>
     <message>
-        <location filename="../assets/SurahPage.qml" line="260"/>
-        <source>%1 ayahs selected</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/SurahPage.qml" line="289"/>
-        <source>%1:%2-%3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/SurahPage.qml" line="313"/>
-        <location filename="../assets/SurahPage.qml" line="587"/>
-        <location filename="../assets/SurahPage.qml" line="788"/>
-        <source>Share</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/SurahPage.qml" line="330"/>
-        <location filename="../assets/SurahPage.qml" line="611"/>
-        <source>Play</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/SurahPage.qml" line="354"/>
-        <source>None selected</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/SurahPage.qml" line="369"/>
-        <location filename="../assets/SurahPage.qml" line="524"/>
-        <location filename="../assets/SurahPage.qml" line="575"/>
-        <source>%1:%2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/SurahPage.qml" line="389"/>
-        <source>Bookmarked %1:%2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/SurahPage.qml" line="488"/>
-        <source>Confirmation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/SurahPage.qml" line="489"/>
-        <source>We are about to download a whole bunch of MP3 recitations, you should only attempt to do this if you have either an unlimited data plan, or are connected via Wi-Fi. Otherwise you might incur a lot of data charges. Are you sure you want to continue? If you select No you can always attempt to download again later.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/SurahPage.qml" line="490"/>
-        <source>Yes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/SurahPage.qml" line="491"/>
-        <source>No</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/SurahPage.qml" line="600"/>
-        <source>Set Bookmark</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/SurahPage.qml" line="707"/>
-        <location filename="../assets/SurahPage.qml" line="711"/>
+        <location filename="../assets/TafsirListView.qml" line="19"/>
+        <location filename="../assets/TafsirListView.qml" line="23"/>
         <source>%1
 
 %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="302"/>
-        <location filename="../assets/SurahPage.qml" line="578"/>
-        <location filename="../assets/SurahPage.qml" line="780"/>
+        <location filename="../assets/TafsirListView.qml" line="91"/>
         <source>Copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/TafsirListView.qml" line="99"/>
+        <source>Share</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/TafsirListView.qml" line="112"/>
+        <source>Top</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/TafsirListView.qml" line="121"/>
+        <source>Bottom</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>VersesListView</name>
+    <message>
+        <location filename="../assets/VersesListView.qml" line="27"/>
+        <source>%1 ayahs selected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/VersesListView.qml" line="56"/>
+        <source>%1:%2-%3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/VersesListView.qml" line="70"/>
+        <location filename="../assets/VersesListView.qml" line="346"/>
+        <source>Copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/VersesListView.qml" line="81"/>
+        <location filename="../assets/VersesListView.qml" line="355"/>
+        <source>Share</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/VersesListView.qml" line="98"/>
+        <location filename="../assets/VersesListView.qml" line="379"/>
+        <source>Play</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/VersesListView.qml" line="122"/>
+        <source>None selected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/VersesListView.qml" line="137"/>
+        <location filename="../assets/VersesListView.qml" line="292"/>
+        <location filename="../assets/VersesListView.qml" line="343"/>
+        <source>%1:%2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/VersesListView.qml" line="157"/>
+        <source>Bookmarked %1:%2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/VersesListView.qml" line="256"/>
+        <source>Confirmation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/VersesListView.qml" line="257"/>
+        <source>We are about to download a whole bunch of MP3 recitations, you should only attempt to do this if you have either an unlimited data plan, or are connected via Wi-Fi. Otherwise you might incur a lot of data charges. Are you sure you want to continue? If you select No you can always attempt to download again later.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/VersesListView.qml" line="258"/>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/VersesListView.qml" line="259"/>
+        <source>No</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/VersesListView.qml" line="368"/>
+        <source>Set Bookmark</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
