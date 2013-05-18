@@ -2,6 +2,14 @@
 <!DOCTYPE TS>
 <TS version="2.0">
 <context>
+    <name>Cover</name>
+    <message>
+        <location filename="../assets/Cover.qml" line="30"/>
+        <source>Quran10</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>HelpPage</name>
     <message>
         <location filename="../assets/HelpPage.qml" line="34"/>
@@ -563,114 +571,124 @@ http://tanzil.ca
 <context>
     <name>SurahPage</name>
     <message>
-        <location filename="../assets/SurahPage.qml" line="67"/>
+        <location filename="../assets/SurahPage.qml" line="47"/>
+        <source>Tip: If the font size is too small to read, you can always increase the size by going to your BB10 device settings -&gt; Display -&gt; and increasing the font size from there!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/SurahPage.qml" line="47"/>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/SurahPage.qml" line="72"/>
         <source>%1 (%2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="82"/>
-        <location filename="../assets/SurahPage.qml" line="795"/>
+        <location filename="../assets/SurahPage.qml" line="87"/>
+        <location filename="../assets/SurahPage.qml" line="801"/>
         <source>Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="91"/>
-        <location filename="../assets/SurahPage.qml" line="804"/>
+        <location filename="../assets/SurahPage.qml" line="96"/>
+        <location filename="../assets/SurahPage.qml" line="810"/>
         <source>Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="101"/>
+        <location filename="../assets/SurahPage.qml" line="106"/>
         <source>Play All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="127"/>
+        <location filename="../assets/SurahPage.qml" line="132"/>
         <source>Show Tafsir</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="127"/>
+        <location filename="../assets/SurahPage.qml" line="132"/>
         <source>Hide Tafsir</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="255"/>
+        <location filename="../assets/SurahPage.qml" line="260"/>
         <source>%1 ayahs selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="284"/>
+        <location filename="../assets/SurahPage.qml" line="289"/>
         <source>%1:%2-%3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="308"/>
-        <location filename="../assets/SurahPage.qml" line="582"/>
-        <location filename="../assets/SurahPage.qml" line="782"/>
+        <location filename="../assets/SurahPage.qml" line="313"/>
+        <location filename="../assets/SurahPage.qml" line="587"/>
+        <location filename="../assets/SurahPage.qml" line="788"/>
         <source>Share</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="325"/>
-        <location filename="../assets/SurahPage.qml" line="606"/>
+        <location filename="../assets/SurahPage.qml" line="330"/>
+        <location filename="../assets/SurahPage.qml" line="611"/>
         <source>Play</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="349"/>
+        <location filename="../assets/SurahPage.qml" line="354"/>
         <source>None selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="364"/>
-        <location filename="../assets/SurahPage.qml" line="519"/>
-        <location filename="../assets/SurahPage.qml" line="570"/>
+        <location filename="../assets/SurahPage.qml" line="369"/>
+        <location filename="../assets/SurahPage.qml" line="524"/>
+        <location filename="../assets/SurahPage.qml" line="575"/>
         <source>%1:%2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="384"/>
+        <location filename="../assets/SurahPage.qml" line="389"/>
         <source>Bookmarked %1:%2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="483"/>
+        <location filename="../assets/SurahPage.qml" line="488"/>
         <source>Confirmation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="484"/>
+        <location filename="../assets/SurahPage.qml" line="489"/>
         <source>We are about to download a whole bunch of MP3 recitations, you should only attempt to do this if you have either an unlimited data plan, or are connected via Wi-Fi. Otherwise you might incur a lot of data charges. Are you sure you want to continue? If you select No you can always attempt to download again later.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="485"/>
+        <location filename="../assets/SurahPage.qml" line="490"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="486"/>
+        <location filename="../assets/SurahPage.qml" line="491"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="595"/>
+        <location filename="../assets/SurahPage.qml" line="600"/>
         <source>Set Bookmark</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="701"/>
-        <location filename="../assets/SurahPage.qml" line="705"/>
+        <location filename="../assets/SurahPage.qml" line="707"/>
+        <location filename="../assets/SurahPage.qml" line="711"/>
         <source>%1
 
 %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="297"/>
-        <location filename="../assets/SurahPage.qml" line="573"/>
-        <location filename="../assets/SurahPage.qml" line="774"/>
+        <location filename="../assets/SurahPage.qml" line="302"/>
+        <location filename="../assets/SurahPage.qml" line="578"/>
+        <location filename="../assets/SurahPage.qml" line="780"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
@@ -741,12 +759,12 @@ http://tanzil.ca
 <context>
     <name>quran::ApplicationUI</name>
     <message>
-        <location filename="../src/applicationui.cpp" line="105"/>
+        <location filename="../src/applicationui.cpp" line="102"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="105"/>
+        <location filename="../src/applicationui.cpp" line="102"/>
         <source>Error: Could not create the directory to download the files into. Please try one of the following to fix this:
 
 1) Swipe-down from the top-bezel &amp; go to the app settings and make sure the Download Directory is set to a valid location.
@@ -755,7 +773,7 @@ http://tanzil.ca
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="140"/>
+        <location filename="../src/applicationui.cpp" line="137"/>
         <source>Surah %1, Verse %2 saved!</source>
         <translation type="unfinished"></translation>
     </message>
