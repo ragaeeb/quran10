@@ -5,7 +5,7 @@ Container {
     attachedObjects: [
         ImagePaintDefinition {
             id: back
-            imageSource: "asset:///images/title_bg.png"
+            imageSource: "images/title_bg.png"
         },
 
         QTimer {

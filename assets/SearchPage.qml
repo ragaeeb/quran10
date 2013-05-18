@@ -114,7 +114,7 @@ BasePage
             attachedObjects: [
                 ImagePaintDefinition {
                     id: bg
-                    imageSource: "asset:///images/header_bg.png"
+                    imageSource: "images/header_bg.png"
                 },
                 
 		        ComponentDefinition {

@@ -5,7 +5,7 @@ import bb.system 1.0
 ListView {
     property alias theDataModel: verseModel
     property alias listFade: fader
-    property alias background: bg
+    property alias background: headerBackground
     property variant chapterNumber
     id: listView
     opacity: 0
@@ -70,7 +70,7 @@ ListView {
                 id: multiCopyAction
                 title: qsTr("Copy") + Retranslate.onLanguageChanged
                 enabled: false
-                imageSource: "asset:///images/ic_copy.png"
+                imageSource: "images/ic_copy.png"
                 onTriggered: {
                     var result = listView.getSelectedTextualData()
                     persist.copyToClipboard(result)
@@ -97,7 +97,7 @@ ListView {
                 id: multiPlayAction
 
                 title: qsTr("Play") + Retranslate.onLanguageChanged
-                imageSource: "asset:///images/ic_play.png"
+                imageSource: "images/ic_play.png"
 
                 onTriggered: {
                     var selectedIndices = listView.selectionList()
@@ -209,8 +209,8 @@ ListView {
 
     attachedObjects: [
         ImagePaintDefinition {
-            id: bg
-            imageSource: "asset:///images/header_bg.png"
+            id: headerBackground
+            imageSource: "images/header_bg.png"
         },
 
         LazyMediaPlayer {
@@ -319,7 +319,7 @@ ListView {
 
                         ActionItem {
                             title: qsTr("Copy")
-                            imageSource: "asset:///images/ic_copy.png"
+                            imageSource: "images/ic_copy.png"
                             onTriggered: {
                                 itemRoot.ListItem.view.copyItem(ListItemData)
                             }
@@ -341,7 +341,7 @@ ListView {
 
                         ActionItem {
                             title: qsTr("Set Bookmark") + Retranslate.onLanguageChanged
-                            imageSource: "asset:///images/ic_bookmark.png"
+                            imageSource: "images/ic_bookmark.png"
 
                             onTriggered: {
                                 itemRoot.ListItem.view.bookmark(ListItemData)
@@ -352,7 +352,7 @@ ListView {
                             id: audioAction
 
                             title: qsTr("Play")
-                            imageSource: "asset:///images/ic_play.png"
+                            imageSource: "images/ic_play.png"
 
                             onTriggered: {
                                 if (! itemRoot.ListItem.view.fileExists(ListItemData)) {

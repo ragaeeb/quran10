@@ -66,7 +66,7 @@ NavigationPane
         actions: [
             ActionItem {
                 title: qsTr("Search") + Retranslate.onLanguageChanged
-                imageSource: "asset:///images/ic_search.png"
+                imageSource: "images/ic_search.png"
                 ActionBar.placement: ActionBarPlacement.OnBar
                 
                 onTriggered: {
@@ -79,7 +79,7 @@ NavigationPane
             ActionItem {
                 id: bookmarkAction
                 title: qsTr("No bookmark") + Retranslate.onLanguageChanged
-                imageSource: "asset:///images/ic_bookmark.png"
+                imageSource: "images/ic_bookmark.png"
                 enabled: false
                 ActionBar.placement: ActionBarPlacement.OnBar
                 
@@ -113,6 +113,10 @@ NavigationPane
 
                 onCreationCompleted: {
                     inputRoute.primaryKeyTarget = true;
+
+                    if (persist.getValueFor("animations") == 1) {
+                        translate.play()
+                    }
                 }
                 
                 onTextChanging: {
@@ -124,6 +128,14 @@ NavigationPane
 	                    sqlDataSource.load()
                     }
                 }
+
+                animations: [
+                    TranslateTransition {
+                        id: translate
+                        fromX: 1000
+                        duration: 500
+                    }
+                ]
             }
 
             ListView {
@@ -140,7 +152,7 @@ NavigationPane
                             title: ListItemData.english_name
                             description: ListItemData.arabic_name
                             status: ListItemData.surah_id
-                            imageSource: "asset:///images/ic_quran.png"
+                            imageSource: "images/ic_quran.png"
                         }
                     }
                 ]

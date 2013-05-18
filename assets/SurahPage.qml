@@ -92,7 +92,7 @@ Page
 
         ActionItem {
             title: qsTr("Bottom") + Retranslate.onLanguageChanged
-            imageSource: "asset:///images/ic_scroll_end.png"
+            imageSource: "images/ic_scroll_end.png"
 
             onTriggered: {
                 listView.scrollToPosition(ScrollPosition.End, ScrollAnimation.Default);
@@ -102,7 +102,7 @@ Page
         ActionItem {
             id: playAllAction
             title: qsTr("Play All") + Retranslate.onLanguageChanged
-            imageSource: "asset:///images/ic_play.png"
+            imageSource: "images/ic_play.png"
             ActionBar.placement: ActionBarPlacement.OnBar
             
             onTriggered:
@@ -130,7 +130,7 @@ Page
             property bool tafsirShown: false
             
             title: tafsirShown ? qsTr("Hide Tafsir") : qsTr("Show Tafsir")
-            imageSource: tafsirShown ? "asset:///images/ic_tafsir_hide.png" : "asset:///images/ic_tafsir_show.png"
+            imageSource: tafsirShown ? "images/ic_tafsir_hide.png" : "images/ic_tafsir_show.png"
 
             onTriggered: {
                 tafsirShown = !tafsirShown;
@@ -159,7 +159,7 @@ Page
         Container {
             id: titleBar
             
-            topPadding: 10; bottomPadding: 20
+            topPadding: 10; bottomPadding: 25
 
             horizontalAlignment: HorizontalAlignment.Fill
             verticalAlignment: VerticalAlignment.Top
@@ -168,7 +168,7 @@ Page
             attachedObjects: [
                 ImagePaintDefinition {
                     id: back
-                    imageSource: "asset:///images/title_bg_alt.png"
+                    imageSource: "images/title_bg_alt.png"
                 }
             ]
             
@@ -189,38 +189,38 @@ Page
                 textStyle.fontWeight: FontWeight.Bold
                 topMargin: 0
             }
-        }
-        
-        Slider {
-            id: slider
-            fromValue: 0
-            toValue: 1
-            visible: false
-            horizontalAlignment: HorizontalAlignment.Center
-            topMargin: 0; bottomMargin: 0
 
-            animations: [
-                TranslateTransition {
-                    id: translateSlider
-                    fromX: 1000
-                    duration: 500
-                }
-            ]
+            Slider {
+                id: slider
+                fromValue: 0
+                toValue: 1
+                visible: false
+                horizontalAlignment: HorizontalAlignment.Center
+                topMargin: 0
 
-            onVisibleChanged: {
-                if ( visible && persist.getValueFor("animations") == 1 ) {
-                    translateSlider.play();
+                animations: [
+                    TranslateTransition {
+                        id: translateSlider
+                        fromX: 1000
+                        duration: 500
+                    }
+                ]
+
+                onVisibleChanged: {
+                    if (visible && persist.getValueFor("animations") == 1) {
+                        translateSlider.play();
+                    }
                 }
-            }
-            
-            onImmediateValueChanged: {
-                if (visible && immediateValue == 0) {
-                    tafsirAction.triggered();
-                } else {
-                    if (immediateValue == 0) {
-                        tafsirLayout.spaceQuota = -1;
+
+                onImmediateValueChanged: {
+                    if (visible && immediateValue == 0) {
+                        tafsirAction.triggered();
                     } else {
-                        tafsirLayout.spaceQuota = immediateValue;
+                        if (immediateValue == 0) {
+                            tafsirLayout.spaceQuota = -1;
+                        } else {
+                            tafsirLayout.spaceQuota = immediateValue;
+                        }
                     }
                 }
             }
@@ -247,7 +247,7 @@ Page
             
             ImageView {
                 leftMargin: 0; rightMargin: 0;
-                imageSource: "asset:///images/header_bg.png"
+                imageSource: "images/header_bg.png"
                 horizontalAlignment: HorizontalAlignment.Center
                 verticalAlignment: VerticalAlignment.Fill
             }

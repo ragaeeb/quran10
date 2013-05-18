@@ -1,13 +1,13 @@
 import bb.cascades 1.0
 
 ListView {
-    property variant background: bg2
+    property variant background: headerBackground
     property alias dm: arrayDataModel
 
     attachedObjects: [
         ImagePaintDefinition {
-            id: bg2
-            imageSource: "asset:///images/header_bg.png"
+            id: headerBackground
+            imageSource: "images/header_bg.png"
         }
     ]
 
@@ -89,7 +89,7 @@ ListView {
 
                         ActionItem {
                             title: qsTr("Copy") + Retranslate.onLanguageChanged
-                            imageSource: "asset:///images/ic_copy.png"
+                            imageSource: "images/ic_copy.png"
                             onTriggered: {
                                 tafsirItemRoot.ListItem.view.copyItem(ListItemData)
                             }
@@ -119,7 +119,7 @@ ListView {
 
                         ActionItem {
                             title: qsTr("Bottom") + Retranslate.onLanguageChanged
-                            imageSource: "asset:///images/ic_scroll_end.png"
+                            imageSource: "images/ic_scroll_end.png"
 
                             onTriggered: {
                                 tafsirItemRoot.ListItem.view.scrollToPosition(ScrollPosition.End, ScrollAnimation.Default)

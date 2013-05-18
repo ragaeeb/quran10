@@ -7,7 +7,7 @@ Page {
         attachedObjects: [
             ImagePaintDefinition {
                 id: back
-                imageSource: "asset:///images/background.png"
+                imageSource: "images/background.png"
             }
         ]
         
@@ -24,7 +24,7 @@ Page {
 		    verticalAlignment: VerticalAlignment.Top
 		    
 		    ImageView {
-		        imageSource: "asset:///images/title_bg.png"
+		        imageSource: "images/title_bg.png"
 		        topMargin: 0
 		        leftMargin: 0
 		        rightMargin: 0
@@ -57,7 +57,7 @@ Page {
 		        rightPadding: 50
                 
 			    ImageView {
-			        imageSource: "asset:///images/logo.png"
+			        imageSource: "images/logo.png"
 			        topMargin: 0
 			        leftMargin: 0
 			        rightMargin: 0
@@ -108,7 +108,7 @@ Page {
             }
             
             ImageView {
-                imageSource: "asset:///images/bottomDropShadow.png"
+                imageSource: "images/bottomDropShadow.png"
                 topMargin: 0
                 leftMargin: 0
                 rightMargin: 0
