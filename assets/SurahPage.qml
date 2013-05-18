@@ -40,7 +40,13 @@ Page
     }
     
     onCreationCompleted: {
-        persist.settingChanged.connect(reloadNeeded)
+        persist.settingChanged.connect(reloadNeeded);
+        queue.queueCompleted.connect(playAllAction.triggered);
+        
+        if ( persist.getValueFor("tipFontSize") != 1 ) {
+            persist.showToast( qsTr("Tip: If the font size is too small to read, you can always increase the size by going to your BB10 device settings -> Display -> and increasing the font size from there!"), qsTr("OK") );
+            persist.saveValueFor("tipFontSize", 1);
+        }
     }
     
     attachedObjects: [
@@ -58,8 +64,8 @@ Page
 			        
 			        if (requestedVerse > 0) {
 			            var target = [ requestedVerse - 1, 0 ]
-			            listView.scrollToItem(target, ScrollAnimation.Default)
-			            listView.select(target,true)
+			            listView.scrollToItem(target, ScrollAnimation.Default);
+			            listView.select(target,true);
 			        }
                 } else if (id == 1) {
 			        surahNameArabic.text = data[0].arabic_name
@@ -69,6 +75,8 @@ Page
                     list2Del.control.dm.append(data);
 
                     busy.running = false;
+                    slider.visible = tafsirAction.tafsirShown;
+                    slider.value = 0.5;
                 }
             }
         }
@@ -94,6 +102,7 @@ Page
         },
         
         ActionItem {
+            id: playAllAction
             title: qsTr("Play All") + Retranslate.onLanguageChanged
             imageSource: "asset:///images/ic_play.png"
             ActionBar.placement: ActionBarPlacement.OnBar
@@ -117,19 +126,25 @@ Page
         },
 
         ActionItem {
+            id: tafsirAction
             property bool tafsirShown: false
             
-            title: tafsirShown ? qsTr("Show Tafsir") : qsTr("Hide Tafsir") + Retranslate.onLanguageChanged
-            imageSource: "asset:///images/ic_scroll_end.png"
+            title: tafsirShown ? qsTr("Hide Tafsir") : qsTr("Show Tafsir")
+            imageSource: tafsirShown ? "asset:///images/ic_tafsir_hide.png" : "asset:///images/ic_tafsir_show.png"
 
             onTriggered: {
-                if (!tafsirShown) {
-                    slider.visible = true;
-                    slider.value = 0.5;
+                tafsirShown = !tafsirShown;
+                list2Del.delegateActive = tafsirShown;
 
+                if (tafsirShown) {
                     busy.running = true;
-                    sqlDataSource.query = "SELECT title,body FROM ibn_katheer_english WHERE surah_id=%1".arg(surahId)
+
+                    var chapterId = surahId == 114 ? 113 : surahId;
+                    sqlDataSource.query = "SELECT title,body FROM ibn_katheer_english WHERE surah_id=%1".arg(chapterId)
                     sqlDataSource.load(5)
+                } else {
+                    tafsirLayout.spaceQuota = -1;
+                    slider.visible = false;
                 }
             }
 
@@ -180,13 +195,30 @@ Page
             id: slider
             fromValue: 0
             toValue: 1
-            value: 0
             visible: false
             horizontalAlignment: HorizontalAlignment.Center
             topMargin: 0; bottomMargin: 0
+
+            animations: [
+                TranslateTransition {
+                    id: translateSlider
+                    fromX: 1000
+                    duration: 500
+                }
+            ]
+
+            onVisibleChanged: {
+                if ( visible && persist.getValueFor("animations") == 1 ) {
+                    translateSlider.play();
+                }
+            }
             
             onImmediateValueChanged: {
-                xyz.spaceQuota = immediateValue
+                if (visible && immediateValue == 0) {
+                    tafsirAction.triggered();
+                } else {
+                    tafsirLayout.spaceQuota = immediateValue;
+                }
             }
         }
         
@@ -379,10 +411,15 @@ Page
                         nowPlaying.acquire()
                     }
 
-                    var index = playlist[currentTrack] - 1
-                    var data = theDataModel.data([ index, 0 ])
+                    var index = playlist[currentTrack] - 1;
+                    var target = [index,0];
+                    var data = theDataModel.data(target);
                     data["playing"] = true
-                    theDataModel.updateItem([ index, 0 ], data)
+                    theDataModel.updateItem(target, data);
+
+					if ( persist.getValueFor("follow") == 1 ) {
+                        listView.scrollToItem(target, ScrollAnimation.Default);
+                    }
                 }
 
                 function play(selectedVerses) {
@@ -436,13 +473,13 @@ Page
                         id: player
 
                         onPlaybackCompleted: {
-                            var index = playlist[currentTrack] - 1
-                            var data = theDataModel.data([ index, 0 ])
-                            data.playing = false
-                            theDataModel.updateItem([ index, 0 ], data)
+                            var index = playlist[currentTrack] - 1;
+                            var data = theDataModel.data([ index, 0 ]);
+                            data.playing = false;
+                            theDataModel.updateItem([ index, 0 ], data);
 
-                            player.positionChanged(0)
-                            listView.skip(1)
+                            player.positionChanged(0);
+                            listView.skip(1);
                         }
                     },
 
@@ -561,7 +598,7 @@ Page
 
                                     ActionItem {
                                         title: qsTr("Set Bookmark") + Retranslate.onLanguageChanged
-                                        imageSource: "file:///usr/share/icons/bb_action_flag.png"
+                                        imageSource: "asset:///images/ic_bookmark.png"
 
                                         onTriggered: {
                                             itemRoot.ListItem.view.bookmark(ListItemData)
@@ -599,12 +636,13 @@ Page
                                 horizontalAlignment: HorizontalAlignment.Fill
                                 textStyle.color: selection || active || playing ? Color.White : Color.Black
                                 textStyle.textAlign: TextAlign.Center
+                                textStyle.fontSize: FontSize.Large
                             }
 
                             ControlDelegate {
                                 id: labelDelegate
                                 sourceComponent: labelDefinition
-                                delegateActive: ListItemData.translation && ListItemData.translation.length > 0
+                                delegateActive: ListItemData.translation && ListItemData.translation.length > 0 ? true : false
                                 horizontalAlignment: HorizontalAlignment.Fill
                             }
 
@@ -665,17 +703,31 @@ Page
                             id: arrayDataModel
                         }
 
+                        function copyItem(ListItemData) {
+                            persist.copyToClipboard( qsTr("%1\n\n%2").arg(ListItemData.title).arg(ListItemData.body) );
+                        }
+
+                        function shareItem(ListItemData) {
+                            var result = qsTr("%1\n\n%2").arg(ListItemData.title).arg(ListItemData.body);
+                            result = persist.convertToUtf8(result)
+                            return result;
+                        }
+
                         listItemComponents: [
                             ListItemComponent {
 								Container
 								{
-								    id: itemRoot2
-								    
+								    id: tafsirItemRoot
+
+                                    property bool active: ListItem.active
+                                    property bool selected: ListItem.selected
+
                                     horizontalAlignment: HorizontalAlignment.Fill
                                     verticalAlignment: VerticalAlignment.Fill
+                                    background: active || selected ? Color.DarkGreen : undefined
                                     
                                     Container {
-                                        background: itemRoot2.ListItem.view.background.imagePaint
+                                        background: tafsirItemRoot.ListItem.view.background.imagePaint
                                         horizontalAlignment: HorizontalAlignment.Fill
                                         topPadding: 5
                                         bottomPadding: 5
@@ -686,6 +738,7 @@ Page
                                         }
 
                                         Label {
+                                            id: headerLabel
                                             text: ListItemData.title
                                             horizontalAlignment: HorizontalAlignment.Fill
                                             textStyle.fontSize: FontSize.XXSmall
@@ -709,13 +762,60 @@ Page
                                         preferredWidth: 1280
 
                                         Label {
+                                            id: bodyLabel
                                             text: ListItemData.body
                                             multiline: true
                                             horizontalAlignment: HorizontalAlignment.Fill
-                                            textStyle.color: Color.Black
+                                            textStyle.color: active || selected ? Color.White : Color.Black
                                             textStyle.textAlign: TextAlign.Center
                                         }
                                     }
+
+                                    contextActions: [
+                                        ActionSet {
+                                            title: headerLabel.text
+                                            subtitle: bodyLabel.text
+
+                                            ActionItem {
+                                                title: qsTr("Copy") + Retranslate.onLanguageChanged
+                                                imageSource: "asset:///images/ic_copy.png"
+                                                onTriggered: {
+                                                    tafsirItemRoot.ListItem.view.copyItem(ListItemData)
+                                                }
+                                            }
+
+                                            InvokeActionItem {
+                                                title: qsTr("Share") + Retranslate.onLanguageChanged
+
+                                                query {
+                                                    mimeType: "text/plain"
+                                                    invokeActionId: "bb.action.SHARE"
+                                                }
+
+                                                onTriggered: {
+                                                    data = tafsirItemRoot.ListItem.view.shareItem(ListItemData)
+                                                }
+                                            }
+
+                                            ActionItem {
+                                                title: qsTr("Top") + Retranslate.onLanguageChanged
+                                                imageSource: "file:///usr/share/icons/ic_go.png"
+
+                                                onTriggered: {
+                                                    tafsirItemRoot.ListItem.view.scrollToPosition(ScrollPosition.Beginning, ScrollAnimation.Default)
+                                                }
+                                            }
+
+	                                        ActionItem {
+	                                            title: qsTr("Bottom") + Retranslate.onLanguageChanged
+	                                            imageSource: "asset:///images/ic_scroll_end.png"
+	
+	                                            onTriggered: {
+                                                    tafsirItemRoot.ListItem.view.scrollToPosition(ScrollPosition.End, ScrollAnimation.Default)
+	                                            }
+	                                        }
+	                                    }
+                                    ]
                                 }
                             }
                         ]
@@ -723,8 +823,8 @@ Page
                 }
 
                 layoutProperties: StackLayoutProperties {
-                    id: xyz
-                    spaceQuota: 0
+                    id: tafsirLayout
+                    spaceQuota: -1
                 }
             }
         }

@@ -17,8 +17,6 @@ NavigationPane
 
     Menu.definition: MenuDefinition
     {
-        id: menu
-        
         settingsAction: SettingsActionItem
         {
             property Page settingsPage
@@ -68,7 +66,7 @@ NavigationPane
         actions: [
             ActionItem {
                 title: qsTr("Search") + Retranslate.onLanguageChanged
-                imageSource: "file:///usr/share/icons/bb_action_searchtwitter.png"
+                imageSource: "asset:///images/ic_search.png"
                 ActionBar.placement: ActionBarPlacement.OnBar
                 
                 onTriggered: {
@@ -81,7 +79,7 @@ NavigationPane
             ActionItem {
                 id: bookmarkAction
                 title: qsTr("No bookmark") + Retranslate.onLanguageChanged
-                imageSource: "file:///usr/share/icons/bb_action_flag.png"
+                imageSource: "asset:///images/ic_bookmark.png"
                 enabled: false
                 ActionBar.placement: ActionBarPlacement.OnBar
                 
@@ -112,6 +110,10 @@ NavigationPane
                 hintText: qsTr("Search surah name...") + Retranslate.onLanguageChanged
                 bottomMargin: 0;
                 horizontalAlignment: HorizontalAlignment.Fill
+
+                onCreationCompleted: {
+                    inputRoute.primaryKeyTarget = true;
+                }
                 
                 onTextChanging: {
                     if (text.length > 2) {

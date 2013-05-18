@@ -205,7 +205,7 @@ BasePage
 	        }
 
             SettingPair {
-                topMargin: 20
+                topMargin: 40
                 title: qsTr("Repeat Recitation")
                 toggle.checked: persist.getValueFor("repeat") == 1
 
@@ -216,6 +216,21 @@ BasePage
                         infoText.text = qsTr("Recitations will keep repeating indefinitely.") + Retranslate.onLanguageChanged
                     } else {
                         infoText.text = qsTr("Recitations will only be played once and stopped.") + Retranslate.onLanguageChanged
+                    }
+                }
+            }
+
+            SettingPair {
+                title: qsTr("Follow Recitation")
+                toggle.checked: persist.getValueFor("follow") == 1
+
+                toggle.onCheckedChanged: {
+                    persist.saveValueFor("follow", checked ? 1 : 0)
+
+                    if (checked) {
+                        infoText.text = qsTr("The list will be scrolled to follow the current verse.") + Retranslate.onLanguageChanged
+                    } else {
+                        infoText.text = qsTr("The list will not scroll to reflect the current verse.") + Retranslate.onLanguageChanged
                     }
                 }
             }
@@ -564,6 +579,8 @@ BasePage
 
             Container
 	        {
+	            topMargin: 40;
+	            
 			    attachedObjects: [
 					FilePicker {
 					    id: filePicker

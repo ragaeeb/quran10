@@ -19,6 +19,7 @@ class QueueDownloader : public QObject
 
 signals:
 	void requestComplete(QVariant const& cookie, QByteArray const& data);
+	void queueCompleted();
 
 private slots:
 	void onRequestComplete(QVariant const& cookie, QByteArray const& data);

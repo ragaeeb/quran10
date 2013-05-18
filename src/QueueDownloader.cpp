@@ -47,11 +47,14 @@ void QueueDownloader::queue(QString const& url, QVariant const& cookie, bool get
 
 void QueueDownloader::onRequestComplete(QVariant const& cookie, QByteArray const& data)
 {
+	bool completed = false;
+
 	if ( m_queue.isEmpty() ) {
 		LOGGER("Last request completed, all downloads finished!" << cookie);
 
 		m_progress.cancel();
 		m_progress.setState(SystemUiProgressState::Inactive);
+		completed = true;
 	} else {
 		QVariantMap map = m_queue.dequeue();
 
@@ -67,6 +70,10 @@ void QueueDownloader::onRequestComplete(QVariant const& cookie, QByteArray const
 	}
 
 	emit requestComplete(cookie, data);
+
+	if (completed) {
+		emit queueCompleted();
+	}
 }
 
 
