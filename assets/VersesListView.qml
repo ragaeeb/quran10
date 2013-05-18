@@ -1,5 +1,5 @@
 import bb.cascades 1.0
-import bb.multimedia 1.0
+import com.canadainc.data 1.0
 import bb.system 1.0
 
 ListView {
@@ -170,15 +170,9 @@ ListView {
         return app.fileExists(chapterNumber, ListItemData.verse_id)
     }
 
-    function playFile(verseId) {
-        player.stop()
-        player.sourceUrl = "file://" + app.generateFilePath(chapterNumber, verseId)
-
-        if (nowPlaying.acquired) {
-            player.play();
-        } else {
-            nowPlaying.acquire()
-        }
+    function playFile(verseId)
+    {
+        player.play( "file://" + app.generateFilePath(chapterNumber, verseId) );
 
         var index = playlist[currentTrack] - 1;
         var target = [ index, 0 ];
@@ -196,7 +190,6 @@ ListView {
 
         if (currentTrack != 0) {
             currentTrack = 0;
-            player.reset()
         }
 
         skip(currentTrack)
@@ -220,25 +213,7 @@ ListView {
             imageSource: "asset:///images/header_bg.png"
         },
 
-        NowPlayingConnection {
-            id: nowPlaying
-            connectionName: "quran10"
-
-            onAcquired: {
-                player.reset()
-                player.play()
-            }
-
-            onPause: {
-                player.pause()
-            }
-
-            onRevoked: {
-                player.stop()
-            }
-        },
-
-        MediaPlayer {
+        LazyMediaPlayer {
             id: player
 
             onPlaybackCompleted: {
@@ -247,7 +222,6 @@ ListView {
                 data.playing = false;
                 verseModel.updateItem([ index, 0 ], data);
 
-                player.positionChanged(0);
                 listView.skip(1);
             }
         },

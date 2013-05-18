@@ -1,7 +1,5 @@
 Quran10: make downloading one long one
 If u do a context switch while sound is playing, sound seems to stop playing (maybe needs run backgrounder permissions)
-Add setting to scroll list as verse changing.
--Remove lazy scene cover
 
 
 

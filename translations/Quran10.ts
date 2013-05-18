@@ -25,6 +25,8 @@ This app facilitates the reading of Qu&apos;ran for Muslims using BB10 to get a 
 
 There is built-in support for bookmarking a verse and a surah to quickly pick up where you left off reading. There is also easy access to copying certain verses to make it easy for you to share it with your contacts.
 
+While reading the chapters you can easily show a split-pane view to show the tafsir (Ibn Katheer&apos;s explanation) to understand the interpretation of the verse according to the companions of the Prophet (sallahu alayhi wa&apos;sallam).
+
 Finally, there is built-in support to do efficient and fast lookups for any surah or any text in the surah in any of the languages. Note that the search will only be done on the translation that you are currently on.
 
 Special thanks to:
@@ -645,72 +647,72 @@ http://tanzil.ca
 <context>
     <name>VersesListView</name>
     <message>
-        <location filename="../assets/VersesListView.qml" line="27"/>
+        <location filename="../assets/VersesListView.qml" line="28"/>
         <source>%1 ayahs selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="56"/>
+        <location filename="../assets/VersesListView.qml" line="57"/>
         <source>%1:%2-%3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="70"/>
-        <location filename="../assets/VersesListView.qml" line="346"/>
+        <location filename="../assets/VersesListView.qml" line="71"/>
+        <location filename="../assets/VersesListView.qml" line="321"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="81"/>
-        <location filename="../assets/VersesListView.qml" line="355"/>
+        <location filename="../assets/VersesListView.qml" line="82"/>
+        <location filename="../assets/VersesListView.qml" line="330"/>
         <source>Share</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="98"/>
-        <location filename="../assets/VersesListView.qml" line="379"/>
+        <location filename="../assets/VersesListView.qml" line="99"/>
+        <location filename="../assets/VersesListView.qml" line="354"/>
         <source>Play</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="122"/>
+        <location filename="../assets/VersesListView.qml" line="123"/>
         <source>None selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="137"/>
-        <location filename="../assets/VersesListView.qml" line="292"/>
-        <location filename="../assets/VersesListView.qml" line="343"/>
+        <location filename="../assets/VersesListView.qml" line="138"/>
+        <location filename="../assets/VersesListView.qml" line="267"/>
+        <location filename="../assets/VersesListView.qml" line="318"/>
         <source>%1:%2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="157"/>
+        <location filename="../assets/VersesListView.qml" line="158"/>
         <source>Bookmarked %1:%2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="256"/>
+        <location filename="../assets/VersesListView.qml" line="231"/>
         <source>Confirmation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="257"/>
+        <location filename="../assets/VersesListView.qml" line="232"/>
         <source>We are about to download a whole bunch of MP3 recitations, you should only attempt to do this if you have either an unlimited data plan, or are connected via Wi-Fi. Otherwise you might incur a lot of data charges. Are you sure you want to continue? If you select No you can always attempt to download again later.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="258"/>
+        <location filename="../assets/VersesListView.qml" line="233"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="259"/>
+        <location filename="../assets/VersesListView.qml" line="234"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="368"/>
+        <location filename="../assets/VersesListView.qml" line="343"/>
         <source>Set Bookmark</source>
         <translation type="unfinished"></translation>
     </message>
@@ -781,12 +783,12 @@ http://tanzil.ca
 <context>
     <name>quran::ApplicationUI</name>
     <message>
-        <location filename="../src/applicationui.cpp" line="102"/>
+        <location filename="../src/applicationui.cpp" line="104"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="102"/>
+        <location filename="../src/applicationui.cpp" line="104"/>
         <source>Error: Could not create the directory to download the files into. Please try one of the following to fix this:
 
 1) Swipe-down from the top-bezel &amp; go to the app settings and make sure the Download Directory is set to a valid location.
@@ -795,7 +797,7 @@ http://tanzil.ca
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="137"/>
+        <location filename="../src/applicationui.cpp" line="139"/>
         <source>Surah %1, Verse %2 saved!</source>
         <translation type="unfinished"></translation>
     </message>
