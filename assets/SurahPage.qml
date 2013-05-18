@@ -37,9 +37,13 @@ Page
         }
     }
     
+    function startPlayback() {
+        playAllAction.triggered();
+    }
+    
     onCreationCompleted: {
         persist.settingChanged.connect(reloadNeeded);
-        queue.queueCompleted.connect(playAllAction.triggered);
+        queue.queueCompleted.connect(startPlayback);
         
         if ( persist.getValueFor("tipFontSize") != 1 ) {
             persist.showToast( qsTr("Tip: If the font size is too small to read, you can always increase the size by going to your BB10 device settings -> Display -> and increasing the font size from there!"), qsTr("OK") );
@@ -69,8 +73,8 @@ Page
 			        surahNameArabic.text = data[0].arabic_name
 			        surahNameEnglish.text = qsTr("%1 (%2)").arg(data[0].english_name).arg(data[0].english_translation)
                 } else if (id == 5) {
-                    list2Del.control.dm.clear();
-                    list2Del.control.dm.append(data);
+                    tafsirDelegate.control.dm.clear();
+                    tafsirDelegate.control.dm.append(data);
 
                     busy.running = false;
                     slider.visible = tafsirAction.tafsirShown;
@@ -134,7 +138,7 @@ Page
 
             onTriggered: {
                 tafsirShown = !tafsirShown;
-                list2Del.delegateActive = tafsirShown;
+                tafsirDelegate.delegateActive = tafsirShown;
 
                 if (tafsirShown) {
                     busy.running = true;
@@ -254,7 +258,7 @@ Page
             
             ControlDelegate
             {
-                id: list2Del
+                id: tafsirDelegate
                 delegateActive: slider.value > 0;
                 
                 sourceComponent: ComponentDefinition
