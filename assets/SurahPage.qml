@@ -44,11 +44,6 @@ Page
     onCreationCompleted: {
         persist.settingChanged.connect(reloadNeeded);
         queue.queueCompleted.connect(startPlayback);
-        
-        if ( persist.getValueFor("tipFontSize") != 1 ) {
-            persist.showToast( qsTr("Tip: If the font size is too small to read, you can always increase the size by going to your BB10 device settings -> Display -> and increasing the font size from there!"), qsTr("OK") );
-            persist.saveValueFor("tipFontSize", 1);
-        }
     }
     
     attachedObjects: [

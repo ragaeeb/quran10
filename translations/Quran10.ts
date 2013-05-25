@@ -573,42 +573,32 @@ http://tanzil.ca
 <context>
     <name>SurahPage</name>
     <message>
-        <location filename="../assets/SurahPage.qml" line="49"/>
-        <source>Tip: If the font size is too small to read, you can always increase the size by going to your BB10 device settings -&gt; Display -&gt; and increasing the font size from there!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/SurahPage.qml" line="49"/>
-        <source>OK</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/SurahPage.qml" line="74"/>
+        <location filename="../assets/SurahPage.qml" line="69"/>
         <source>%1 (%2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="89"/>
+        <location filename="../assets/SurahPage.qml" line="84"/>
         <source>Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="98"/>
+        <location filename="../assets/SurahPage.qml" line="93"/>
         <source>Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="108"/>
+        <location filename="../assets/SurahPage.qml" line="103"/>
         <source>Play All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="136"/>
+        <location filename="../assets/SurahPage.qml" line="131"/>
         <source>Show Tafsir</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="136"/>
+        <location filename="../assets/SurahPage.qml" line="131"/>
         <source>Hide Tafsir</source>
         <translation type="unfinished"></translation>
     </message>
@@ -770,7 +760,12 @@ http://tanzil.ca
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="110"/>
+        <location filename="../assets/main.qml" line="113"/>
+        <source>Interpretation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/main.qml" line="121"/>
         <source>Search surah name...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -797,7 +792,7 @@ http://tanzil.ca
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="140"/>
+        <location filename="../src/applicationui.cpp" line="139"/>
         <source>Surah %1, Verse %2 saved!</source>
         <translation type="unfinished"></translation>
     </message>

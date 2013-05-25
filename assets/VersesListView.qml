@@ -379,7 +379,7 @@ ListView {
                     horizontalAlignment: HorizontalAlignment.Fill
                     textStyle.color: selection || active || playing ? Color.White : Color.Black
                     textStyle.textAlign: TextAlign.Center
-                    textStyle.fontSize: FontSize.Large
+                    textStyle.fontSize: FontSize.XXLarge
                 }
 
                 ControlDelegate {

@@ -101,7 +101,18 @@ NavigationPane
 	            title: qsTr("Donate") + Retranslate.onLanguageChanged
 	            imageSource: "file:///usr/share/icons/ic_accept.png"
 	            ActionBar.placement: ActionBarPlacement.OnBar
-	        }
+	        },
+
+            InvokeActionItem {
+                query {
+                    mimeType: "text/html"
+                    uri: "http://abdurrahman.org/qurantafseer/HowWeareobliged-albanee.pdf"
+                    invokeActionId: "bb.action.OPEN"
+                }
+
+                title: qsTr("Interpretation") + Retranslate.onLanguageChanged
+                imageSource: "images/ic_info.png"
+            }
         ]
         
         contentContainer: Container {

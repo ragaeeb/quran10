@@ -52,7 +52,7 @@ sqlite3 quran.db
 .mode csv
 
 CREATE TABLE arabic (surah_id INTEGER, verse_id INTEGER, text TEXT);
-.import ar.muyassar.txt arabic
+.import quran-uthmani.txt arabic
 CREATE INDEX 'fk_arabic_surah_id' ON 'arabic' ('surah_id' ASC);
 CREATE INDEX 'fk_arabic_verse_id' ON 'arabic' ('verse_id' ASC);
 CREATE INDEX 'fk_arabic_text' ON 'arabic' ('text' ASC);
