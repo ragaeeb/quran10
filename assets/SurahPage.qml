@@ -206,7 +206,7 @@ Page
                 ]
 
                 onVisibleChanged: {
-                    if (visible && persist.getValueFor("animations") == 1) {
+                    if (visible) {
                         translateSlider.play();
                     }
                 }

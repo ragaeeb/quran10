@@ -17,22 +17,6 @@ BasePage
 	        
 	        SettingPair {
 	            topMargin: 20
-	            title: qsTr("Animations")
-	        	toggle.checked: persist.getValueFor("animations") == 1
-	    
-	            toggle.onCheckedChanged: {
-	        		persist.saveValueFor("animations", checked ? 1 : 0)
-	        		
-	        		if (checked) {
-	        		    infoText.text = qsTr("Controls will be animated whenever they are loaded.") + Retranslate.onLanguageChanged
-	                } else {
-	        		    infoText.text = qsTr("Controls will be snapped into position without animations.") + Retranslate.onLanguageChanged
-	                }
-	            }
-	        }
-	        
-	        SettingPair {
-	            topMargin: 20
 	            title: qsTr("Hide Data Warning")
 	        	toggle.checked: persist.getValueFor("hideDataWarning") == 1
 	    

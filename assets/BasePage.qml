@@ -42,12 +42,9 @@ Page {
 		            }
 		        ]
 		        
-		        onCreationCompleted:
-		        {
-		            if ( persist.getValueFor("animations") == 1 ) {
-		                translate.play()
-		            }
-		        }
+		        onCreationCompleted: {
+                    translate.play();
+                }
 		    }
 
             Container
@@ -76,12 +73,9 @@ Page {
                         }
                     ]
 			        
-			        onCreationCompleted:
-			        {
-			            if ( persist.getValueFor("animations") == 1 ) {
-                            fadeInLogo.play()
-			            }
-			        }
+			        onCreationCompleted: {
+                        fadeInLogo.play();
+                    }
 			    }
             }
 		}
@@ -126,12 +120,9 @@ Page {
                     }
                 ]
                 
-		        onCreationCompleted:
-		        {
-		            if ( persist.getValueFor("animations") == 1 ) {
-		                translateShadow.play()
-		            }
-		        }
+		        onCreationCompleted: {
+                    translateShadow.play();
+                }
             }
         }
     }

@@ -124,10 +124,7 @@ NavigationPane
 
                 onCreationCompleted: {
                     inputRoute.primaryKeyTarget = true;
-
-                    if (persist.getValueFor("animations") == 1) {
-                        translate.play()
-                    }
+                    translate.play();
                 }
                 
                 onTextChanging: {

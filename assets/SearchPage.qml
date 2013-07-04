@@ -13,12 +13,8 @@ BasePage
         TextField
         {
 		    onCreationCompleted: {
-	            if ( persist.getValueFor("animations") == 1 ) {
-	                translate.play()
-	            } else {
-	                timer.start(250);
-	            }
-          	}
+                translate.play();
+            }
             
             id: searchField
             hintText: qsTr("Enter text to search...") + Retranslate.onLanguageChanged
