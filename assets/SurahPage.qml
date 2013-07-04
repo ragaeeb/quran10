@@ -5,7 +5,6 @@ Page
 {
     property variant surahId
     property int requestedVerse: -1
-    property variant playlist
     property int currentTrack: 0
 
     onSurahIdChanged:

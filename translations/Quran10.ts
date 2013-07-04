@@ -558,32 +558,32 @@ http://tanzil.ca
 <context>
     <name>SurahPage</name>
     <message>
-        <location filename="../assets/SurahPage.qml" line="69"/>
+        <location filename="../assets/SurahPage.qml" line="68"/>
         <source>%1 (%2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="84"/>
+        <location filename="../assets/SurahPage.qml" line="83"/>
         <source>Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="93"/>
+        <location filename="../assets/SurahPage.qml" line="92"/>
         <source>Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="103"/>
+        <location filename="../assets/SurahPage.qml" line="102"/>
         <source>Play All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="131"/>
+        <location filename="../assets/SurahPage.qml" line="130"/>
         <source>Show Tafsir</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="131"/>
+        <location filename="../assets/SurahPage.qml" line="130"/>
         <source>Hide Tafsir</source>
         <translation type="unfinished"></translation>
     </message>
@@ -622,72 +622,72 @@ http://tanzil.ca
 <context>
     <name>VersesListView</name>
     <message>
-        <location filename="../assets/VersesListView.qml" line="28"/>
+        <location filename="../assets/VersesListView.qml" line="29"/>
         <source>%1 ayahs selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="57"/>
+        <location filename="../assets/VersesListView.qml" line="58"/>
         <source>%1:%2-%3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="71"/>
-        <location filename="../assets/VersesListView.qml" line="321"/>
+        <location filename="../assets/VersesListView.qml" line="72"/>
+        <location filename="../assets/VersesListView.qml" line="320"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="82"/>
-        <location filename="../assets/VersesListView.qml" line="330"/>
+        <location filename="../assets/VersesListView.qml" line="83"/>
+        <location filename="../assets/VersesListView.qml" line="329"/>
         <source>Share</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="99"/>
-        <location filename="../assets/VersesListView.qml" line="354"/>
+        <location filename="../assets/VersesListView.qml" line="100"/>
+        <location filename="../assets/VersesListView.qml" line="353"/>
         <source>Play</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="123"/>
+        <location filename="../assets/VersesListView.qml" line="124"/>
         <source>None selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="138"/>
-        <location filename="../assets/VersesListView.qml" line="267"/>
-        <location filename="../assets/VersesListView.qml" line="318"/>
+        <location filename="../assets/VersesListView.qml" line="151"/>
+        <location filename="../assets/VersesListView.qml" line="272"/>
+        <location filename="../assets/VersesListView.qml" line="317"/>
         <source>%1:%2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="158"/>
+        <location filename="../assets/VersesListView.qml" line="171"/>
         <source>Bookmarked %1:%2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="231"/>
+        <location filename="../assets/VersesListView.qml" line="236"/>
         <source>Confirmation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="232"/>
+        <location filename="../assets/VersesListView.qml" line="237"/>
         <source>We are about to download a whole bunch of MP3 recitations, you should only attempt to do this if you have either an unlimited data plan, or are connected via Wi-Fi. Otherwise you might incur a lot of data charges. Are you sure you want to continue? If you select No you can always attempt to download again later.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="233"/>
+        <location filename="../assets/VersesListView.qml" line="238"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="234"/>
+        <location filename="../assets/VersesListView.qml" line="239"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="343"/>
+        <location filename="../assets/VersesListView.qml" line="342"/>
         <source>Set Bookmark</source>
         <translation type="unfinished"></translation>
     </message>
@@ -728,12 +728,12 @@ http://tanzil.ca
 <context>
     <name>quran::ApplicationUI</name>
     <message>
-        <location filename="../src/applicationui.cpp" line="103"/>
+        <location filename="../src/applicationui.cpp" line="102"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="103"/>
+        <location filename="../src/applicationui.cpp" line="102"/>
         <source>Error: Could not create the directory to download the files into. Please try one of the following to fix this:
 
 1) Swipe-down from the top-bezel &amp; go to the app settings and make sure the Download Directory is set to a valid location.
@@ -742,7 +742,7 @@ http://tanzil.ca
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="138"/>
+        <location filename="../src/applicationui.cpp" line="137"/>
         <source>Surah %1, Verse %2 saved!</source>
         <translation type="unfinished"></translation>
     </message>

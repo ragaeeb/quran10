@@ -7,6 +7,7 @@ ListView {
     property alias listFade: fader
     property alias background: headerBackground
     property variant chapterNumber
+    property variant playlist
     id: listView
     opacity: 0
 
@@ -122,6 +123,18 @@ ListView {
 
         status: qsTr("None selected") + Retranslate.onLanguageChanged
     }
+    
+    onCreationCompleted: {
+        persist.settingChanged.connect(settingChanged);
+    }
+
+    function settingChanged(key) {
+        if (key == "repeat") {
+            player.setRepeat(persist.getValueFor("repeat") == 1 );
+        } else if (key == "follow") {
+            player.follow = persist.getValueFor("follow") == 1;
+        }
+    }
 
     function renderItem(ListItemData) {
         var result = ListItemData.arabic + "\n"
@@ -170,41 +183,16 @@ ListView {
         return app.fileExists(chapterNumber, ListItemData.verse_id)
     }
 
-    function playFile(verseId)
+    function play(selectedVerses)
     {
-        player.play( "file://" + app.generateFilePath(chapterNumber, verseId) );
-
-        var index = playlist[currentTrack] - 1;
-        var target = [ index, 0 ];
-        var data = dataModel.data(target);
-        data["playing"] = true
-        verseModel.updateItem(target, data);
-
-        if (persist.getValueFor("follow") == 1) {
-            listView.scrollToItem(target, ScrollAnimation.Default);
+        playlist = selectedVerses;
+        var all = [];
+        
+        for (var i = 0; i < selectedVerses.length; i++) {
+            all.push("file://" + app.generateFilePath(chapterNumber, selectedVerses[i]));
         }
-    }
-
-    function play(selectedVerses) {
-        playlist = selectedVerses
-
-        if (currentTrack != 0) {
-            currentTrack = 0;
-        }
-
-        skip(currentTrack)
-    }
-
-    function skip(n) {
-        var desired = currentTrack + n;
-
-        if (desired >= 0 && desired < playlist.length) {
-            currentTrack = desired
-            playFile(playlist[currentTrack])
-        } else if (persist.getValueFor("repeat") == 1) {
-            currentTrack = 0
-            playFile(playlist[currentTrack])
-        }
+        
+        player.play(all);
     }
 
     attachedObjects: [
@@ -213,16 +201,31 @@ ListView {
             imageSource: "images/header_bg.png"
         },
 
-        LazyMediaPlayer {
+        DualChannelPlayer {
             id: player
+            property bool follow: persist.getValueFor("follow") == 1
+            repeat: persist.getValueFor("repeat") == 1
+
+            onIndexChanged: {
+                if (index >= 0)
+                {
+                    var actual = playlist[index] - 1;
+                    var target = [ actual, 0 ];
+                    var data = dataModel.data(target);
+                    data["playing"] = true
+                    verseModel.updateItem(target, data);
+
+                    if (follow == 1) {
+                        listView.scrollToItem(target, ScrollAnimation.Default);
+                    }
+                }
+            }
 
             onPlaybackCompleted: {
-                var index = playlist[currentTrack] - 1;
-                var data = verseModel.data([ index, 0 ]);
+                var actual = [ playlist[index]-1, 0 ];
+                var data = verseModel.data(actual);
                 data.playing = false;
-                verseModel.updateItem([ index, 0 ], data);
-
-                listView.skip(1);
+                verseModel.updateItem(actual, data);
             }
         },
 
@@ -299,17 +302,11 @@ ListView {
                         background = undefined
                     }
                 }
-
-                onPlayingChanged: {
-                    updateState()
-                }
-
-                onSelectionChanged: {
-                    updateState()
-                }
-
-                onActiveChanged: {
-                    updateState()
+                
+                onCreationCompleted: {
+                    selectionChanged.connect(updateState);
+                    playingChanged.connect(updateState);
+                    activeChanged.connect(updateState);
                 }
 
                 contextActions: [
