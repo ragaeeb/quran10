@@ -8,6 +8,7 @@ ListView {
     property alias background: headerBackground
     property variant chapterNumber
     property variant playlist
+    property alias mediaPlayer: player
     id: listView
     opacity: 0
 

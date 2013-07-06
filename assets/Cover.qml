@@ -1,5 +1,6 @@
 import bb.cascades 1.0
 import com.canadainc.data 1.0
+import QtQuick 1.0
 
 Container {
     attachedObjects: [
@@ -8,12 +9,13 @@ Container {
             imageSource: "images/title_bg.png"
         },
 
-        QTimer {
+        Timer {
             id: timer
-            singleShot: false
+            repeat: true
             interval: 60000
+            running: false
 
-            onTimeout: {
+            onTriggered: {
                 updateCover();
             }
         },

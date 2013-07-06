@@ -39,7 +39,12 @@ Page
     function startPlayback() {
         playAllAction.triggered();
     }
-    
+
+    paneProperties: NavigationPaneProperties {
+        property variant navPane: navigationPane
+        id: properties
+    }
+
     onCreationCompleted: {
         persist.settingChanged.connect(reloadNeeded);
         queue.queueCompleted.connect(startPlayback);
@@ -66,15 +71,12 @@ Page
                 } else if (id == 1) {
 			        surahNameArabic.text = data[0].arabic_name
 			        surahNameEnglish.text = qsTr("%1 (%2)").arg(data[0].english_name).arg(data[0].english_translation)
-                } else if (id == 5) {
-                    tafsirDelegate.control.dm.clear();
-                    tafsirDelegate.control.dm.append(data);
-
-                    busy.running = false;
-                    slider.visible = tafsirAction.tafsirShown;
-                    slider.value = 0.5;
                 }
             }
+        },
+        
+        ComponentDefinition {
+            id: tafsirDelegate
         }
     ]
 
@@ -99,8 +101,8 @@ Page
         
         ActionItem {
             id: playAllAction
-            title: qsTr("Play All") + Retranslate.onLanguageChanged
-            imageSource: "images/ic_play.png"
+            title: listView.mediaPlayer.playing ? qsTr("Pause") : qsTr("Play All")
+            imageSource: listView.mediaPlayer.playing ? "images/ic_pause.png" : "images/ic_play.png"
             ActionBar.placement: ActionBarPlacement.OnBar
             
             onTriggered:
@@ -109,6 +111,10 @@ Page
                 
                 if (!downloaded) {
                     listView.download();
+                } else if (listView.mediaPlayer.playing) {
+                    listView.mediaPlayer.pause();
+                } else if (listView.playlist) {
+                    listView.mediaPlayer.resume();
                 } else {
 	                var result = []
 	                
@@ -125,25 +131,16 @@ Page
 
         ActionItem {
             id: tafsirAction
-            property bool tafsirShown: false
             
-            title: tafsirShown ? qsTr("Hide Tafsir") : qsTr("Show Tafsir")
-            imageSource: tafsirShown ? "images/ic_tafsir_hide.png" : "images/ic_tafsir_show.png"
+            title: qsTr("Ibn Katheer") + Retranslate.onLanguageChanged
+            imageSource: "images/ic_tafsir_show.png"
 
             onTriggered: {
-                tafsirShown = !tafsirShown;
-                tafsirDelegate.delegateActive = tafsirShown;
-
-                if (tafsirShown) {
-                    busy.running = true;
-
-                    var chapterId = surahId == 114 ? 113 : surahId;
-                    sqlDataSource.query = "SELECT title,body FROM ibn_katheer_english WHERE surah_id=%1".arg(chapterId)
-                    sqlDataSource.load(5)
-                } else {
-                    tafsirLayout.spaceQuota = -1;
-                    slider.visible = false;
-                }
+                tafsirDelegate.source = "TafseerIbnKatheer.qml";
+                var page = tafsirDelegate.createObject();
+                page.load(surahNameEnglish.text, surahNameArabic.text, surahId);
+                
+                properties.navPane.push(page);
             }
 
             ActionBar.placement: ActionBarPlacement.OnBar
@@ -187,41 +184,6 @@ Page
                 textStyle.fontWeight: FontWeight.Bold
                 topMargin: 0
             }
-
-            Slider {
-                id: slider
-                fromValue: 0
-                toValue: 1
-                visible: false
-                horizontalAlignment: HorizontalAlignment.Center
-                topMargin: 0
-
-                animations: [
-                    TranslateTransition {
-                        id: translateSlider
-                        fromX: 1000
-                        duration: 500
-                    }
-                ]
-
-                onVisibleChanged: {
-                    if (visible) {
-                        translateSlider.play();
-                    }
-                }
-
-                onImmediateValueChanged: {
-                    if (visible && immediateValue == 0) {
-                        tafsirAction.triggered();
-                    } else {
-                        if (immediateValue == 0) {
-                            tafsirLayout.spaceQuota = -1;
-                        } else {
-                            tafsirLayout.spaceQuota = immediateValue;
-                        }
-                    }
-                }
-            }
         }
         
         ActivityIndicator {
@@ -231,42 +193,10 @@ Page
             preferredHeight: 250
             horizontalAlignment: HorizontalAlignment.Center
         }
-        
-        Container
-        {
-            layout: StackLayout {
-                orientation: LayoutOrientation.LeftToRight
-            }
-            
-            VersesListView {
-                id: listView
-                chapterNumber: surahId
-            }
-            
-            ImageView {
-                leftMargin: 0; rightMargin: 0;
-                imageSource: "images/header_bg.png"
-                horizontalAlignment: HorizontalAlignment.Center
-                verticalAlignment: VerticalAlignment.Fill
-            }
-            
-            ControlDelegate
-            {
-                id: tafsirDelegate
-                delegateActive: slider.value > 0;
-                
-                sourceComponent: ComponentDefinition
-                {
-                    TafsirListView {
-                        id: tafsirListView
-                    }
-                }
 
-                layoutProperties: StackLayoutProperties {
-                    id: tafsirLayout
-                    spaceQuota: -1
-                }
-            }
+        VersesListView {
+            id: listView
+            chapterNumber: surahId
         }
     }
 }

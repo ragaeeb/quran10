@@ -4,7 +4,7 @@
 <context>
     <name>Cover</name>
     <message>
-        <location filename="../assets/Cover.qml" line="31"/>
+        <location filename="../assets/Cover.qml" line="33"/>
         <source>Quran10</source>
         <translation type="unfinished"></translation>
     </message>
@@ -558,136 +558,136 @@ http://tanzil.ca
 <context>
     <name>SurahPage</name>
     <message>
-        <location filename="../assets/SurahPage.qml" line="68"/>
+        <location filename="../assets/SurahPage.qml" line="73"/>
         <source>%1 (%2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="83"/>
+        <location filename="../assets/SurahPage.qml" line="85"/>
         <source>Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="92"/>
+        <location filename="../assets/SurahPage.qml" line="94"/>
         <source>Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="102"/>
+        <location filename="../assets/SurahPage.qml" line="104"/>
         <source>Play All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="130"/>
-        <source>Show Tafsir</source>
+        <location filename="../assets/SurahPage.qml" line="104"/>
+        <source>Pause</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="130"/>
-        <source>Hide Tafsir</source>
+        <location filename="../assets/SurahPage.qml" line="135"/>
+        <source>Ibn Katheer</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
-    <name>TafsirListView</name>
+    <name>TafseerIbnKatheer</name>
     <message>
-        <location filename="../assets/TafsirListView.qml" line="19"/>
-        <location filename="../assets/TafsirListView.qml" line="23"/>
+        <location filename="../assets/TafseerIbnKatheer.qml" line="33"/>
+        <source>Top</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/TafseerIbnKatheer.qml" line="43"/>
+        <source>Bottom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/TafseerIbnKatheer.qml" line="127"/>
+        <location filename="../assets/TafseerIbnKatheer.qml" line="131"/>
         <source>%1
 
 %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/TafsirListView.qml" line="91"/>
+        <location filename="../assets/TafseerIbnKatheer.qml" line="199"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/TafsirListView.qml" line="99"/>
+        <location filename="../assets/TafseerIbnKatheer.qml" line="207"/>
         <source>Share</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/TafsirListView.qml" line="112"/>
-        <source>Top</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/TafsirListView.qml" line="121"/>
-        <source>Bottom</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>VersesListView</name>
     <message>
-        <location filename="../assets/VersesListView.qml" line="29"/>
+        <location filename="../assets/VersesListView.qml" line="30"/>
         <source>%1 ayahs selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="58"/>
+        <location filename="../assets/VersesListView.qml" line="59"/>
         <source>%1:%2-%3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="72"/>
-        <location filename="../assets/VersesListView.qml" line="320"/>
+        <location filename="../assets/VersesListView.qml" line="73"/>
+        <location filename="../assets/VersesListView.qml" line="319"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="83"/>
-        <location filename="../assets/VersesListView.qml" line="329"/>
+        <location filename="../assets/VersesListView.qml" line="84"/>
+        <location filename="../assets/VersesListView.qml" line="328"/>
         <source>Share</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="100"/>
-        <location filename="../assets/VersesListView.qml" line="353"/>
+        <location filename="../assets/VersesListView.qml" line="101"/>
+        <location filename="../assets/VersesListView.qml" line="352"/>
         <source>Play</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="124"/>
+        <location filename="../assets/VersesListView.qml" line="125"/>
         <source>None selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="151"/>
-        <location filename="../assets/VersesListView.qml" line="272"/>
-        <location filename="../assets/VersesListView.qml" line="317"/>
+        <location filename="../assets/VersesListView.qml" line="152"/>
+        <location filename="../assets/VersesListView.qml" line="271"/>
+        <location filename="../assets/VersesListView.qml" line="316"/>
         <source>%1:%2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="171"/>
+        <location filename="../assets/VersesListView.qml" line="172"/>
         <source>Bookmarked %1:%2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="236"/>
+        <location filename="../assets/VersesListView.qml" line="235"/>
         <source>Confirmation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="237"/>
+        <location filename="../assets/VersesListView.qml" line="236"/>
         <source>We are about to download a whole bunch of MP3 recitations, you should only attempt to do this if you have either an unlimited data plan, or are connected via Wi-Fi. Otherwise you might incur a lot of data charges. Are you sure you want to continue? If you select No you can always attempt to download again later.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="238"/>
+        <location filename="../assets/VersesListView.qml" line="237"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="239"/>
+        <location filename="../assets/VersesListView.qml" line="238"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="342"/>
+        <location filename="../assets/VersesListView.qml" line="341"/>
         <source>Set Bookmark</source>
         <translation type="unfinished"></translation>
     </message>

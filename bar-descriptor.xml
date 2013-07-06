@@ -82,6 +82,14 @@
     <icon>
         <image>icon.png</image>
     </icon>
+    
+	<invoke-target id="com.canadainc.Quran10">
+	  <invoke-target-type>application</invoke-target-type>
+	  <invoke-target-name>Quran10</invoke-target-name>
+	  <icon>
+	    <image>icon.png</image>
+	  </icon>
+	</invoke-target>
 
     <asset path="icon.png">icon.png</asset>
     <asset path="assets">assets</asset>
