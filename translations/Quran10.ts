@@ -79,6 +79,19 @@ http://tanzil.ca
     </message>
 </context>
 <context>
+    <name>MushafSheet</name>
+    <message>
+        <location filename="../assets/MushafSheet.qml" line="16"/>
+        <source>Page %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/MushafSheet.qml" line="19"/>
+        <source>Back</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QuranTab</name>
     <message>
         <location filename="../assets/QuranTab.qml" line="25"/>
@@ -612,32 +625,32 @@ http://tanzil.ca
 <context>
     <name>SurahPage</name>
     <message>
-        <location filename="../assets/SurahPage.qml" line="73"/>
+        <location filename="../assets/SurahPage.qml" line="77"/>
         <source>%1 (%2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="85"/>
+        <location filename="../assets/SurahPage.qml" line="104"/>
         <source>Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="94"/>
+        <location filename="../assets/SurahPage.qml" line="113"/>
         <source>Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="104"/>
+        <location filename="../assets/SurahPage.qml" line="123"/>
         <source>Play All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="104"/>
+        <location filename="../assets/SurahPage.qml" line="123"/>
         <source>Pause</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="135"/>
+        <location filename="../assets/SurahPage.qml" line="154"/>
         <source>Ibn Katheer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -749,33 +762,39 @@ http://tanzil.ca
 <context>
     <name>main</name>
     <message>
-        <location filename="../assets/main.qml" line="47"/>
+        <location filename="../assets/main.qml" line="43"/>
         <source>Qu&apos;ran</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="48"/>
+        <location filename="../assets/main.qml" line="44"/>
         <source>القرآن</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="54"/>
+        <location filename="../assets/main.qml" line="50"/>
         <source>Bookmarks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="55"/>
+        <location filename="../assets/main.qml" line="51"/>
         <source>Favourites</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="67"/>
+        <location filename="../assets/main.qml" line="63"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="68"/>
+        <location filename="../assets/main.qml" line="64"/>
         <source>Find</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/main.qml" line="76"/>
+        <location filename="../assets/main.qml" line="77"/>
+        <source>Articles</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

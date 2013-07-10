@@ -91,7 +91,7 @@ Tab
 
                         definition.source = "SurahPage.qml";
                         surahPage = definition.createObject();
-                        surahPage.surahId = data;
+                        surahPage.surahId = data.surah_id;
 
                         navigationPane.push(surahPage);
                     }

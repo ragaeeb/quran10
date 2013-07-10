@@ -3,6 +3,7 @@ import com.canadainc.data 1.0
 
 Page
 {
+    id: surahPage
     property variant surahId
     property int requestedVerse: -1
     property int currentTrack: 0
@@ -11,7 +12,10 @@ Page
     {
         sqlDataSource.query = "SELECT english_name, english_translation, arabic_name FROM chapters WHERE surah_id=%1".arg(surahId);
         sqlDataSource.load(1);
-        
+
+        sqlDataSource.query = "SELECT id,description FROM tafsir_english WHERE surah_id=%1".arg(surahId);
+        sqlDataSource.load(80);
+
         loadVerses();
     }
     
@@ -71,12 +75,37 @@ Page
                 } else if (id == 1) {
 			        surahNameArabic.text = data[0].arabic_name
 			        surahNameEnglish.text = qsTr("%1 (%2)").arg(data[0].english_name).arg(data[0].english_translation)
+                } else if (id == 80) {
+                    for (var i = data.length-1; i >= 0; i--) {
+                        var ai = actionDefinition.createObject();
+                        ai.title = data[i].description;
+                        ai.id = data[i].id;
+                        surahPage.addAction(ai,ActionBarPlacement.Default);
+                    }
                 }
             }
         },
         
         ComponentDefinition {
             id: tafsirDelegate
+        },
+        
+        ComponentDefinition
+        {
+            id: actionDefinition
+            
+            ActionItem {
+                property int id
+                imageSource: "images/ic_tafsir.png"
+                
+                onTriggered: {
+                    tafsirDelegate.source = "TafseerPage.qml";
+                    var tafsirPage = tafsirDelegate.createObject();
+                    tafsirPage.tafsirId = id;
+                    
+                    paneProperties.navPane.push(tafsirPage);
+                }
+            }
         }
     ]
 

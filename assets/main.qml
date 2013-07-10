@@ -42,7 +42,7 @@ TabbedPane {
         id: quranTab
         title: qsTr("Qu'ran") + Retranslate.onLanguageChanged
         description: qsTr("القرآن") + Retranslate.onLanguageChanged
-        imageSource: "images/ic_quran.png"
+        imageSource: "images/ic_quran_open.png"
     }
 
     Tab {
@@ -67,6 +67,19 @@ TabbedPane {
         onTriggered: {
             if (! content) {
                 lazyLoad("SearchPage.qml", search);
+            }
+        }
+    }
+
+    Tab {
+        id: articles
+        title: qsTr("Articles") + Retranslate.onLanguageChanged
+        description: qsTr("Articles") + Retranslate.onLanguageChanged
+        imageSource: "images/ic_info.png"
+
+        onTriggered: {
+            if (! content) {
+                lazyLoad("ArticlesPage.qml", articles);
             }
         }
     }

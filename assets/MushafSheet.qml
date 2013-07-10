@@ -68,11 +68,49 @@ Sheet
                     ImageView
                     {
                         id: root
+                        property variant data: ListItemData
+                        property int downY
                         imageSource: ListItemData
                         scalingMethod: ScalingMethod.AspectFit
+                        
+                        onDataChanged: {
+                            root.scaleX = root.scaleY = 1;
+                            root.translationY = 0;
+                        }
+                        
+                        onTouch: {
+                            if (pincher.pinching) {
+                                return;
+                            }
+                            
+                            if ( event.isMove() ) {
+                                var diff = event.windowY - downY;
+                                
+                                if (diff > 20 || diff < -20) {
+                                    translationY = diff;
+                                }
+                            } else if ( event.isDown() ) {
+                                downY = event.windowY;
+                            }
+                        }
 
                         gestureHandlers: [
                             PinchHandler {
+                                id: pincher
+                                property bool pinching: false
+                                
+                                onPinchStarted: {
+                                    pinching = true;
+                                }
+                                
+                                onPinchEnded: {
+                                    pinching = false;
+                                }
+                                
+                                onPinchCancelled: {
+                                    pinching = false;
+                                }
+                                
                                 onPinchUpdated: {
                                     root.scaleX = root.scaleY = event.pinchRatio;
                                 }
