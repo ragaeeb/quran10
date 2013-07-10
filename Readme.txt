@@ -1,5 +1,7 @@
 Quran10: make downloading one long one
-If u do a context switch while sound is playing, sound seems to stop playing (maybe needs run backgrounder permissions)
+
+sqlite> SELECT COUNT() FROM (select name from sqlite_master where type='table' AND name='bengalix');
+sqlite> SELECT COUNT() FROM (select name from sqlite_master where type='table' AND name='bengali');
 
 
 

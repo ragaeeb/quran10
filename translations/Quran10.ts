@@ -2,6 +2,47 @@
 <!DOCTYPE TS>
 <TS version="2.0">
 <context>
+    <name>ArticlesPage</name>
+    <message>
+        <location filename="../assets/ArticlesPage.qml" line="6"/>
+        <source>Prophetic Commentary on the Qu&apos;ran</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/ArticlesPage.qml" line="14"/>
+        <source>Kitab Al-Tafsir</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/ArticlesPage.qml" line="28"/>
+        <source>Interpretation</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>BookmarksTab</name>
+    <message>
+        <location filename="../assets/BookmarksTab.qml" line="16"/>
+        <source>Donate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/BookmarksTab.qml" line="48"/>
+        <source>You have no favourites. To mark a favourite, press-and-hold on a hadith and choose &apos;Mark Favourite&apos; from the context-menu.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/BookmarksTab.qml" line="82"/>
+        <source>Removed bookmark!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/BookmarksTab.qml" line="102"/>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Cover</name>
     <message>
         <location filename="../assets/Cover.qml" line="33"/>
@@ -38,9 +79,22 @@ http://tanzil.ca
     </message>
 </context>
 <context>
+    <name>QuranTab</name>
+    <message>
+        <location filename="../assets/QuranTab.qml" line="25"/>
+        <source>Mushaf</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/QuranTab.qml" line="42"/>
+        <source>Search surah name...</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SearchPage</name>
     <message>
-        <location filename="../assets/SearchPage.qml" line="20"/>
+        <location filename="../assets/SearchPage.qml" line="26"/>
         <source>Enter text to search...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -695,33 +749,33 @@ http://tanzil.ca
 <context>
     <name>main</name>
     <message>
-        <location filename="../assets/main.qml" line="68"/>
+        <location filename="../assets/main.qml" line="47"/>
+        <source>Qu&apos;ran</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/main.qml" line="48"/>
+        <source>القرآن</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/main.qml" line="54"/>
+        <source>Bookmarks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/main.qml" line="55"/>
+        <source>Favourites</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/main.qml" line="67"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="81"/>
-        <source>No bookmark</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/main.qml" line="101"/>
-        <source>Donate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/main.qml" line="113"/>
-        <source>Interpretation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/main.qml" line="121"/>
-        <source>Search surah name...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/main.qml" line="57"/>
-        <source>%1:%2</source>
+        <location filename="../assets/main.qml" line="68"/>
+        <source>Find</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

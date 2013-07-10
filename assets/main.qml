@@ -1,9 +1,8 @@
 import bb.cascades 1.0
-import com.canadainc.data 1.0
 
-NavigationPane
-{
-    id: navigationPane
+TabbedPane {
+    id: root
+    activeTab: quranTab
 
     attachedObjects: [
         ComponentDefinition {
@@ -11,14 +10,8 @@ NavigationPane
         }
     ]
 
-    onPopTransitionEnded: {
-        page.destroy();
-    }
-
-    Menu.definition: MenuDefinition
-    {
-        settingsAction: SettingsActionItem
-        {
+    Menu.definition: MenuDefinition {
+        settingsAction: SettingsActionItem {
             property Page settingsPage
 
             onTriggered: {
@@ -27,7 +20,7 @@ NavigationPane
                     settingsPage = definition.createObject()
                 }
 
-                navigationPane.push(settingsPage);
+                root.activePane.push(settingsPage);
             }
         }
 
@@ -40,195 +33,50 @@ NavigationPane
                     helpPage = definition.createObject();
                 }
 
-                navigationPane.push(helpPage);
+                root.activePane.push(helpPage);
             }
         }
     }
 
-    BasePage
-    {
-        id: mainPage
-        
-        function updateBookmark()
-        {
-            var bookmark = persist.getValueFor("bookmark")
+    QuranTab {
+        id: quranTab
+        title: qsTr("Qu'ran") + Retranslate.onLanguageChanged
+        description: qsTr("القرآن") + Retranslate.onLanguageChanged
+        imageSource: "images/ic_quran.png"
+    }
 
-            if (bookmark) {
-                bookmarkAction.title = qsTr("%1:%2").arg(bookmark.surah).arg(bookmark.verse) + Retranslate.onLanguageChanged
-                bookmarkAction.enabled = true
+    Tab {
+        id: bookmarks
+        title: qsTr("Bookmarks") + Retranslate.onLanguageChanged
+        description: qsTr("Favourites") + Retranslate.onLanguageChanged
+        imageSource: "images/ic_bookmark.png"
+
+        onTriggered: {
+            if (! content) {
+                lazyLoad("BookmarksTab.qml", bookmarks);
             }
         }
+    }
 
-        onCreationCompleted: {
-            updateBookmark()
-        }
-        
-        actions: [
-            ActionItem {
-                title: qsTr("Search") + Retranslate.onLanguageChanged
-                imageSource: "images/ic_search.png"
-                ActionBar.placement: ActionBarPlacement.OnBar
-                
-                onTriggered: {
-                    definition.source = "SearchPage.qml"
-                    var searchPage = definition.createObject()
-                    navigationPane.push(searchPage)
-                }
-            },
-            
-            ActionItem {
-                id: bookmarkAction
-                title: qsTr("No bookmark") + Retranslate.onLanguageChanged
-                imageSource: "images/ic_bookmark.png"
-                enabled: false
-                ActionBar.placement: ActionBarPlacement.OnBar
-                
-                onTriggered: {
-                    var bookmark = persist.getValueFor("bookmark")
+    Tab {
+        id: search
+        title: qsTr("Search") + Retranslate.onLanguageChanged
+        description: qsTr("Find") + Retranslate.onLanguageChanged
+        imageSource: "images/ic_search.png"
 
-                    listView.process(bookmark.surah)
-                    listView.surahPage.requestedVerse = bookmark.verse
-                }
-            },
-            
-            ActionItem {
-                title: qsTr("Prophetic Commentary on the Qu'ran") + Retranslate.onLanguageChanged
-                
-                onTriggered: {
-                    invoker.invoke("bukhari/6/60");
-                }
-            },
-
-            ActionItem {
-                title: qsTr("Kitab Al-Tafsir") + Retranslate.onLanguageChanged
-
-                onTriggered: {
-                    invoker.invoke("muslim/56");
-                }
-            },
-
-            InvokeActionItem {
-	            query {
-	                mimeType: "text/html"
-	                uri: "https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=dar.as.sahaba@hotmail.com&currency_code=CAD&no_shipping=1&tax=0&lc=CA&bn=PP-DonationsBF&item_name=Da'wah Activities, Rent and Utility Expenses for the Musalla (please do not use credit cards)"
-	                invokeActionId: "bb.action.OPEN"
-	            }
-	            
-	            title: qsTr("Donate") + Retranslate.onLanguageChanged
-	            imageSource: "file:///usr/share/icons/ic_accept.png"
-	            ActionBar.placement: ActionBarPlacement.OnBar
-	        },
-
-            InvokeActionItem {
-                query {
-                    mimeType: "text/html"
-                    uri: "http://abdurrahman.org/qurantafseer/HowWeareobliged-albanee.pdf"
-                    invokeActionId: "bb.action.OPEN"
-                }
-
-                title: qsTr("Interpretation") + Retranslate.onLanguageChanged
-                imageSource: "images/ic_info.png"
-            }
-        ]
-        
-        contentContainer: Container {
-
-			TextField {
-                hintText: qsTr("Search surah name...") + Retranslate.onLanguageChanged
-                bottomMargin: 0;
-                horizontalAlignment: HorizontalAlignment.Fill
-
-                onCreationCompleted: {
-                    inputRoute.primaryKeyTarget = true;
-                    translate.play();
-                }
-                
-                onTextChanging: {
-                    if (text.length > 2) {
-	                    sqlDataSource.query = "SELECT surah_id,arabic_name,english_name,english_translation FROM chapters WHERE english_name like '%"+text+"%' OR arabic_name like '%"+text+"%'"
-	                    sqlDataSource.load()
-                    } else if (text.length == 0) {
-	                    sqlDataSource.query = "SELECT surah_id,arabic_name,english_name,english_translation FROM chapters"
-	                    sqlDataSource.load()
-                    }
-                }
-
-                animations: [
-                    TranslateTransition {
-                        id: translate
-                        fromX: 1000
-                        duration: 500
-                    }
-                ]
-            }
-
-            ListView {
-            	property variant surahPage
-                id: listView
-
-                dataModel: ArrayDataModel {
-                    id: theDataModel
-                }
-
-                listItemComponents: [
-                    ListItemComponent {
-                        StandardListItem {
-                            title: ListItemData.english_name
-                            description: ListItemData.arabic_name
-                            status: ListItemData.surah_id
-                            imageSource: "images/ic_quran.png"
-                        }
-                    }
-                ]
-
-                onTriggered: {
-                    var data = listView.dataModel.data(indexPath)
-                    process(data.surah_id)
-                }
-
-                horizontalAlignment: HorizontalAlignment.Fill
-                verticalAlignment: VerticalAlignment.Fill
-
-                attachedObjects: [
-                    CustomSqlDataSource {
-                        id: sqlDataSource
-                        source: "app/native/assets/dbase/quran.db"
-                        name: "main"
-
-                        onDataLoaded: {
-                            if (!listView.surahPage) {
-                                theDataModel.clear()
-                                theDataModel.append(data)
-                            } else {
-                                listView.surahPage.load(data)
-                            }
-                        }
-                    }
-                ]
-                
-                function process(data)
-                {
-                    definition.source = "SurahPage.qml"
-                    surahPage = definition.createObject()
-                    surahPage.surahId = data
-
-                    navigationPane.push(surahPage)
-                }
-                
-                function reloadNeeded(key)
-                {
-                    if (key == "bookmark") {
-                        mainPage.updateBookmark()
-                    }
-                }
-
-                onCreationCompleted: {
-                    sqlDataSource.query = "SELECT surah_id,arabic_name,english_name,english_translation FROM chapters"
-                    sqlDataSource.load()
-                    
-                    persist.settingChanged.connect(reloadNeeded)
-                }
+        onTriggered: {
+            if (! content) {
+                lazyLoad("SearchPage.qml", search);
             }
         }
+    }
+
+    function lazyLoad(actualSource, tab) {
+        definition.source = actualSource;
+
+        var actual = definition.createObject();
+        tab.content = actual;
+
+        return actual;
     }
 }
