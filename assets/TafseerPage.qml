@@ -87,7 +87,7 @@ Page
         CustomSqlDataSource {
             id: sqlDataSource
             source: "app/native/assets/dbase/quran.db"
-            name: "surah"
+            name: "tafseer"
 
             onDataLoaded: {
                 if (id == 0) {

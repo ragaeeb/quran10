@@ -13,7 +13,7 @@ Page
         sqlDataSource.query = "SELECT english_name, english_translation, arabic_name FROM chapters WHERE surah_id=%1".arg(surahId);
         sqlDataSource.load(1);
 
-        sqlDataSource.query = "SELECT id,description FROM tafsir_english WHERE surah_id=%1".arg(surahId);
+        sqlDataSource.query = "SELECT id,description FROM tafsir_english WHERE surah_id=%1 AND verse_id IS NULL".arg(surahId);
         sqlDataSource.load(80);
 
         loadVerses();
@@ -43,6 +43,15 @@ Page
     function startPlayback() {
         playAllAction.triggered();
     }
+    
+    function showExplanation(id)
+    {
+        tafsirDelegate.source = "TafseerPage.qml";
+        var tafsirPage = tafsirDelegate.createObject();
+        tafsirPage.tafsirId = id;
+
+        paneProperties.navPane.push(tafsirPage);
+    }
 
     paneProperties: NavigationPaneProperties {
         property variant navPane: navigationPane
@@ -71,7 +80,10 @@ Page
 			            var target = [ requestedVerse - 1, 0 ]
 			            listView.scrollToItem(target, ScrollAnimation.Default);
 			            listView.select(target,true);
-			        }
+			        } else {
+                        listView.scrollToPosition(0, ScrollAnimation.None);
+                        listView.scroll(-100, ScrollAnimation.Smooth);
+                    }
                 } else if (id == 1) {
 			        surahNameArabic.text = data[0].arabic_name
 			        surahNameEnglish.text = qsTr("%1 (%2)").arg(data[0].english_name).arg(data[0].english_translation)
@@ -99,11 +111,7 @@ Page
                 imageSource: "images/ic_tafsir.png"
                 
                 onTriggered: {
-                    tafsirDelegate.source = "TafseerPage.qml";
-                    var tafsirPage = tafsirDelegate.createObject();
-                    tafsirPage.tafsirId = id;
-                    
-                    paneProperties.navPane.push(tafsirPage);
+                    showExplanation(id);
                 }
             }
         }
@@ -226,6 +234,11 @@ Page
         VersesListView {
             id: listView
             chapterNumber: surahId
+            chapterName: qsTr("%1 (%2)").arg(surahNameArabic.text).arg(surahNameEnglish.text)
+            
+            onCreationCompleted: {
+                tafsirTriggered.connect(showExplanation);
+            }
         }
     }
 }

@@ -27,12 +27,8 @@ NavigationPane
 
         contentContainer: Container
         {
-            topPadding: 20
-
-            Divider {
-                topMargin: 0
-                bottomMargin: 0
-            }
+            horizontalAlignment: HorizontalAlignment.Fill
+            topPadding: 20;
 
             ControlDelegate {
                 id: noElements
@@ -40,12 +36,19 @@ NavigationPane
                 verticalAlignment: VerticalAlignment.Fill
 
                 sourceComponent: ComponentDefinition {
-                    Label {
+                    
+                    Container
+                    {
                         horizontalAlignment: HorizontalAlignment.Fill
-                        verticalAlignment: VerticalAlignment.Fill
-                        textStyle.textAlign: TextAlign.Center
-                        multiline: true
-                        text: qsTr("You have no favourites. To mark a favourite, press-and-hold on a hadith and choose 'Mark Favourite' from the context-menu.") + Retranslate.onLanguageChanged
+                        leftPadding: 20; rightPadding: 20;
+                        
+                        Label {
+                            horizontalAlignment: HorizontalAlignment.Fill
+                            verticalAlignment: VerticalAlignment.Fill
+                            textStyle.textAlign: TextAlign.Center
+                            multiline: true
+                            text: qsTr("You have no favourites. To mark a favourite, press-and-hold on an ayat or tafsir and choose 'Mark Favourite' from the context-menu.") + Retranslate.onLanguageChanged
+                        }
                     }
                 }
             }
@@ -65,21 +68,20 @@ NavigationPane
                         dataModel: ArrayDataModel {}
 
                         function itemType(data, indexPath) {
-                            return data.table;
+                            return data.type;
                         }
                         
                         function deleteBookmark(indexPath)
                         {
                             var bookmarks = persist.getValueFor("bookmarks");
 
-                            if (! bookmarks) {
-                                bookmarks = [];
-                            }
+                            if (bookmarks && bookmarks.length > 0)
+                            {
+                                bookmarks.splice(indexPath, 1);
 
-                            bookmarks.splice(indexPath, 1);
-                            
-                            persist.saveValueFor("bookmarks", bookmarks);
-                            persist.showToast( qsTr("Removed bookmark!") );
+                                persist.saveValueFor("bookmarks", bookmarks);
+                                persist.showToast(qsTr("Removed bookmark!"));
+                            }
                         }
 
                         listItemComponents: [
@@ -89,7 +91,7 @@ NavigationPane
                                 StandardListItem {
                                     id: sli
                                     title: ListItemData.surah_name
-                                    status: ListItemData.verse
+                                    status: ListItemData.verse_id
                                     description: ListItemData.text
                                     imageSource: "images/ic_quran.png"
 
@@ -121,8 +123,8 @@ NavigationPane
 							definition.source = "SurahPage.qml";
 							var sp = definition.createObject();
                             navigationPane.push(sp);
-                            sp.surahId = data.surah;
-                            sp.requestedVerse = data.verse
+                            sp.surahId = data.surah_id;
+                            sp.requestedVerse = data.verse_id;
                         }
 
                         horizontalAlignment: HorizontalAlignment.Fill

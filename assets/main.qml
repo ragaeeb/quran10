@@ -71,19 +71,6 @@ TabbedPane {
         }
     }
 
-    Tab {
-        id: articles
-        title: qsTr("Articles") + Retranslate.onLanguageChanged
-        description: qsTr("Articles") + Retranslate.onLanguageChanged
-        imageSource: "images/ic_info.png"
-
-        onTriggered: {
-            if (! content) {
-                lazyLoad("ArticlesPage.qml", articles);
-            }
-        }
-    }
-
     function lazyLoad(actualSource, tab) {
         definition.source = actualSource;
 

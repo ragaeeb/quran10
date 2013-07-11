@@ -6,9 +6,12 @@ ListView {
     property alias theDataModel: verseModel
     property alias listFade: fader
     property alias background: headerBackground
-    property variant chapterNumber
+    property int chapterNumber
+    property string chapterName
     property variant playlist
     property alias mediaPlayer: player
+    property ActionSet sourceSet
+    signal tafsirTriggered(int id);
     id: listView
     opacity: 0
 
@@ -16,6 +19,35 @@ ListView {
         id: verseModel
         sortingKeys: [ "verse_id" ]
         grouping: ItemGrouping.ByFullValue
+    }
+    
+    leadingVisual: ControlDelegate
+    {
+        delegateActive: chapterNumber > 1
+        horizontalAlignment: HorizontalAlignment.Fill
+
+        sourceComponent: ComponentDefinition
+        {
+            Container
+            {
+                horizontalAlignment: HorizontalAlignment.Fill
+                layout: StackLayout {
+                    orientation: LayoutOrientation.LeftToRight
+                }
+                
+                Label {
+                    text: "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ"
+                    horizontalAlignment: HorizontalAlignment.Fill
+                    textStyle.textAlign: TextAlign.Center
+                    textStyle.fontSize: FontSize.XXLarge
+                    textStyle.color: Color.Black
+                    
+                    layoutProperties: StackLayoutProperties {
+                        spaceQuota: 1
+                    }
+                }
+            }
+        }
     }
 
     onSelectionChanged: {
@@ -63,8 +95,7 @@ ListView {
         }
     }
 
-    multiSelectAction: MultiSelectActionItem {
-    }
+    multiSelectAction: MultiSelectActionItem {}
 
     multiSelectHandler {
         actions: [
@@ -164,12 +195,24 @@ ListView {
         return result;
     }
 
-    function bookmark(ListItemData) {
-        persist.saveValueFor("bookmark", {
-                'surah': chapterNumber,
-                'verse': ListItemData.verse_id
-            })
-        persist.showToast(qsTr("Bookmarked %1:%2").arg(chapterNumber).arg(ListItemData.verse_id))
+    function bookmark(ListItemData)
+    {
+        var bookmarks = persist.getValueFor("bookmarks");
+
+        if (! bookmarks) {
+            bookmarks = [];
+        }
+
+        bookmarks.push({
+                'surah_name': chapterName,
+                'surah_id': chapterNumber,
+                'verse_id': ListItemData.verse_id,
+                'text': ListItemData.translation ? ListItemData.translation.substr(0,60)+"..." : ListItemData.arabic.substr(0,60)+"...",
+                'type': "verse"
+            });
+
+        persist.saveValueFor("bookmarks", bookmarks);
+        persist.showToast( qsTr("Bookmarked %1:%2").arg(chapterNumber).arg(ListItemData.verse_id) );
     }
 
     function download() {
@@ -194,6 +237,14 @@ ListView {
         }
         
         player.play(all);
+    }
+    
+    function queryExplanationsFor(source, verseId)
+    {
+        sourceSet = source;
+        
+        sqlDataSource.query = "SELECT id,verse_id,description FROM tafsir_english WHERE surah_id=%1 AND verse_id=%2".arg(chapterNumber).arg(verseId);
+        sqlDataSource.load(0);
     }
 
     attachedObjects: [
@@ -242,9 +293,21 @@ ListView {
                     app.downloadChapter(surahId, verseModel.size())
                 }
             }
+        },
+
+        CustomSqlDataSource {
+            id: sqlDataSource
+            source: "app/native/assets/dbase/quran.db"
+            name: "contextMenu"
+            
+            onDataLoaded: {
+                if (id == 0 && sourceSet && data.length > 0) {
+                    sourceSet.appendExplanations(data);
+                }
+            }
         }
     ]
-
+    
     animations: FadeTransition {
         id: fader
         toOpacity: 1
@@ -309,9 +372,30 @@ ListView {
                     playingChanged.connect(updateState);
                     activeChanged.connect(updateState);
                 }
+                
+                onActiveChanged: {
+                    if (active) {
+                        itemRoot.ListItem.view.queryExplanationsFor(actionSet, ListItemData.verse_id);
+                    }
+                }
+                
+                onSelectionChanged: {
+                    if (!selection)
+                    {
+                        for (var i = actionSet.count() - 1; i >= 0; i --) {
+                            var current = actionSet.at(i);
+
+                            if (current.id) {
+                                actionSet.remove(current);
+                                current.destroy();
+                            }
+                        }
+                    }
+                }
 
                 contextActions: [
                     ActionSet {
+                        id: actionSet
                         title: firstLabel.text
                         subtitle: labelDelegate.delegateActive ? labelDelegate.control.text : qsTr("%1:%2").arg(itemRoot.ListItem.view.chapterNumber).arg(ListItemData.verse_id)
 
@@ -338,7 +422,7 @@ ListView {
                         }
 
                         ActionItem {
-                            title: qsTr("Set Bookmark") + Retranslate.onLanguageChanged
+                            title: qsTr("Bookmark") + Retranslate.onLanguageChanged
                             imageSource: "images/ic_bookmark.png"
 
                             onTriggered: {
@@ -360,6 +444,33 @@ ListView {
                                 }
                             }
                         }
+                        
+                        function appendExplanations(data)
+                        {
+                            for (var i = data.length-1; i >= 0; i--)
+                            {
+                                if (data[i].verse_id == ListItemData.verse_id) {
+                                    var action = actionDefinition.createObject();
+                                    action.id = data[i].id;
+                                    action.title = data[i].description;
+                                    add(action);
+                                }
+                            }
+                        }
+                        
+                        attachedObjects: [
+                            ComponentDefinition {
+                                id: actionDefinition
+                                ActionItem {
+                                    property int id
+                                    imageSource: "images/ic_tafsir.png"
+                                    
+                                    onTriggered: {
+                                        itemRoot.ListItem.view.tafsirTriggered(id);
+                                    }
+                                }
+                            }
+                        ]
                     }
                 ]
 
