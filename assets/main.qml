@@ -43,6 +43,8 @@ TabbedPane {
         title: qsTr("Qu'ran") + Retranslate.onLanguageChanged
         description: qsTr("القرآن") + Retranslate.onLanguageChanged
         imageSource: "images/ic_quran_open.png"
+        unreadContentCount: mushafQueue.queued + queue.queued
+        newContentAvailable: unreadContentCount > 0
     }
 
     Tab {
@@ -50,6 +52,23 @@ TabbedPane {
         title: qsTr("Bookmarks") + Retranslate.onLanguageChanged
         description: qsTr("Favourites") + Retranslate.onLanguageChanged
         imageSource: "images/ic_bookmarks.png"
+        
+        function onSettingsChanged(key)
+        {
+            if (key == "bookmarks")
+            {
+                var bookmarks = persist.getValueFor("bookmarks");
+                
+                if (bookmarks && bookmarks.length > 0) {
+                    unreadContentCount = bookmarks.length;
+                }
+            }
+        }
+        
+        onCreationCompleted: {
+            persist.settingChanged.connect(onSettingsChanged);
+            onSettingsChanged("bookmarks");
+        }
 
         onTriggered: {
             if (! content) {
