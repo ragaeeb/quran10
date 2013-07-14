@@ -11,6 +11,8 @@ ListView {
     property variant playlist
     property alias mediaPlayer: player
     property ActionSet sourceSet
+    property int translationSize: persist.getValueFor("translationSize")
+    property int primarySize: persist.getValueFor("primarySize")
     signal tafsirTriggered(int id);
     id: listView
     opacity: 0
@@ -39,8 +41,16 @@ ListView {
                     text: "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ"
                     horizontalAlignment: HorizontalAlignment.Fill
                     textStyle.textAlign: TextAlign.Center
-                    textStyle.fontSize: FontSize.XXLarge
                     textStyle.color: Color.Black
+                    textStyle.fontSize: {
+                        if (primarySize == 1) {
+                            return FontSize.Small;
+                        } else if (primarySize == 2) {
+                            return FontSize.Medium;
+                        } else {
+                            return FontSize.XXLarge;
+                        }
+                    }
                     
                     layoutProperties: StackLayoutProperties {
                         spaceQuota: 1
@@ -91,6 +101,10 @@ ListView {
             player.setRepeat(persist.getValueFor("repeat") == 1 );
         } else if (key == "follow") {
             player.follow = persist.getValueFor("follow") == 1;
+        } else if (key == "primarySize") {
+            primarySize = persist.getValueFor("primarySize");
+        } else if (key == "translationSize") {
+            translationSize = persist.getValueFor("translationSize");
         }
     }
 
@@ -397,7 +411,17 @@ ListView {
                     horizontalAlignment: HorizontalAlignment.Fill
                     textStyle.color: selection || active || playing ? Color.White : Color.Black
                     textStyle.textAlign: TextAlign.Center
-                    textStyle.fontSize: FontSize.XXLarge
+                    textStyle.fontSize: {
+                        var primary = itemRoot.ListItem.view.primarySize;
+                        
+                        if (primary == 1) {
+                            return FontSize.Small;
+                        } else if (primary == 2) {
+                            return FontSize.Medium;
+                        } else {
+                            return FontSize.XXLarge;
+                        }
+                    }
                 }
 
                 ControlDelegate {
@@ -415,7 +439,18 @@ ListView {
                             horizontalAlignment: HorizontalAlignment.Fill
                             textStyle.color: selection || active || playing ? Color.White : Color.Black
                             textStyle.textAlign: TextAlign.Center
-                            visible: text.length > 0
+                            visible: text.length > 0;
+                            textStyle.fontSize: {
+                                var translationSize = itemRoot.ListItem.view.translationSize;
+                                
+                                if (translationSize == 1) {
+                                    return FontSize.Small;
+                                } else if (translationSize == 2) {
+                                    return FontSize.Medium;
+                                } else {
+                                    return FontSize.XXLarge;
+                                }
+                            }
                         }
                     }
                 }

@@ -563,7 +563,7 @@ BasePage
 
             Container
 	        {
-	            topMargin: 40;
+	            topPadding: 40;
 	            
 			    attachedObjects: [
 					FilePicker {
@@ -618,7 +618,40 @@ BasePage
             
             SliderPair {
             	labelValue: qsTr("Primary Font Size") + Retranslate.onLanguageChanged
-            	
+                sliderControl.fromValue: 1
+                sliderControl.toValue: 3
+                sliderControl.value: persist.getValueFor("primarySize");
+                
+                onSliderValueChanged: {
+                    persist.saveValueFor("primarySize", sliderValue);
+                    
+                    if (sliderValue == 1) {
+                        infoText.text = qsTr("The primary font size will be small");   
+                    } else if (sliderValue == 2) {
+                        infoText.text = qsTr("The primary font size will be medium");
+                    } else {
+                        infoText.text = qsTr("The primary font size will be large");
+                    }
+                }
+            }
+            
+            SliderPair {
+                labelValue: qsTr("Translation Font Size") + Retranslate.onLanguageChanged
+                sliderControl.fromValue: 1
+                sliderControl.toValue: 3
+                sliderControl.value: persist.getValueFor("translationSize");
+                
+                onSliderValueChanged: {
+                    persist.saveValueFor("translationSize", sliderValue);
+                    
+                    if (sliderValue == 1) {
+                        infoText.text = qsTr("The translation font size will be small");   
+                    } else if (sliderValue == 2) {
+                        infoText.text = qsTr("The translation font size will be medium");
+                    } else {
+                        infoText.text = qsTr("The translation font size will be large");
+                    }
+                }
             }
 	        
 	        Label {
