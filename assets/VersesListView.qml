@@ -23,7 +23,7 @@ ListView {
     
     leadingVisual: ControlDelegate
     {
-        delegateActive: chapterNumber > 1
+        delegateActive: chapterNumber > 1 && chapterNumber != 9
         horizontalAlignment: HorizontalAlignment.Fill
 
         sourceComponent: ComponentDefinition
@@ -50,82 +50,8 @@ ListView {
         }
     }
 
-    onSelectionChanged: {
-        var n = 0
-        var selectedIndices = listView.selectionList()
-        for (var i = selectedIndices.length - 1; i >= 0; i --) {
-            if (selectedIndices[i].length > 1) {
-                n ++;
-            }
-        }
-
-        multiSelectHandler.status = qsTr("%1 ayahs selected").arg(n) + Retranslate.onLanguageChanged;
-        multiShareAction.enabled = multiPlayAction.enabled = multiCopyAction.enabled = n > 0;
-    }
-
-    function getSelectedTextualData() {
-        var selectedIndices = selectionList()
-        var result = ""
-        var first
-        var last
-
-        for (var i = 0; i < selectedIndices.length; i ++) {
-            if (selectedIndices[i].length > 1) {
-                var current = dataModel.data(selectedIndices[i])
-
-                result += renderItem(current)
-
-                if (i < selectedIndices.length - 1) {
-                    result += "\n"
-                }
-
-                if (! first) {
-                    first = current.verse_id
-                }
-
-                last = current.verse_id
-            }
-        }
-
-        if (first && last) {
-            result += qsTr("%1:%2-%3").arg(chapterNumber).arg(first).arg(last)
-            return result;
-        } else {
-            return ""
-        }
-    }
-
-    multiSelectAction: MultiSelectActionItem {}
-
     multiSelectHandler {
         actions: [
-            ActionItem {
-                id: multiCopyAction
-                title: qsTr("Copy") + Retranslate.onLanguageChanged
-                enabled: false
-                imageSource: "images/ic_copy.png"
-                onTriggered: {
-                    var result = listView.getSelectedTextualData()
-                    persist.copyToClipboard(result)
-                }
-            },
-
-            InvokeActionItem {
-                id: multiShareAction
-                title: qsTr("Share") + Retranslate.onLanguageChanged
-
-                query {
-                    mimeType: "text/plain"
-                    invokeActionId: "bb.action.SHARE"
-                }
-
-                onTriggered: {
-                    var result = listView.getSelectedTextualData()
-                    result = persist.convertToUtf8(result)
-                    multiShareAction.data = result
-                }
-            },
-
             ActionItem {
                 id: multiPlayAction
 
@@ -168,7 +94,8 @@ ListView {
         }
     }
 
-    function renderItem(ListItemData) {
+    function renderItem(ListItemData)
+    {
         var result = ListItemData.arabic + "\n"
 
         if (ListItemData.translation && ListItemData.translation.length > 0) {
@@ -197,21 +124,7 @@ ListView {
 
     function bookmark(ListItemData)
     {
-        var bookmarks = persist.getValueFor("bookmarks");
-
-        if (! bookmarks) {
-            bookmarks = [];
-        }
-
-        bookmarks.push({
-                'surah_name': chapterName,
-                'surah_id': chapterNumber,
-                'verse_id': ListItemData.verse_id,
-                'text': ListItemData.translation ? ListItemData.translation.substr(0,60)+"..." : ListItemData.arabic.substr(0,60)+"...",
-                'type': "verse"
-            });
-
-        persist.saveValueFor("bookmarks", bookmarks);
+        app.bookmarkVerse(chapterName, chapterNumber, ListItemData);
         persist.showToast( qsTr("Bookmarked %1:%2").arg(chapterNumber).arg(ListItemData.verse_id) );
     }
 
@@ -222,29 +135,18 @@ ListView {
             app.downloadChapter(chapterNumber, verseModel.size())
         }
     }
-
-    function fileExists(ListItemData) {
-        return app.fileExists(chapterNumber, ListItemData.verse_id)
-    }
-
-    function play(selectedVerses)
-    {
-        playlist = selectedVerses;
-        var all = [];
-        
-        for (var i = 0; i < selectedVerses.length; i++) {
-            all.push("file://" + app.generateFilePath(chapterNumber, selectedVerses[i]));
-        }
-        
-        player.play(all);
-    }
     
     function queryExplanationsFor(source, verseId)
     {
-        sourceSet = source;
+        var translation = persist.getValueFor("translation");
         
-        sqlDataSource.query = "SELECT id,verse_id,description FROM tafsir_english WHERE surah_id=%1 AND verse_id=%2".arg(chapterNumber).arg(verseId);
-        sqlDataSource.load(0);
+        if (translation == "english")
+        {
+            sourceSet = source;
+            
+            sqlDataSource.query = "SELECT id,verse_id,description FROM tafsir_english WHERE surah_id=%1 AND verse_id=%2".arg(chapterNumber).arg(verseId);
+            sqlDataSource.load(0);   
+        }
     }
 
     attachedObjects: [
@@ -305,6 +207,46 @@ ListView {
                     sourceSet.appendExplanations(data);
                 }
             }
+        },
+        
+        RangeSelector {
+            itemName: qsTr("ayahs")
+        },
+        
+        PlainTextMultiselector
+        {
+            function getSelectedTextualData()
+            {
+                var selectedIndices = selectionList()
+                var result = ""
+                var first
+                var last
+                
+                for (var i = 0; i < selectedIndices.length; i ++) {
+                    if (selectedIndices[i].length > 1) {
+                        var current = dataModel.data(selectedIndices[i])
+                        
+                        result += renderItem(current)
+                        
+                        if (i < selectedIndices.length - 1) {
+                            result += "\n"
+                        }
+                        
+                        if (! first) {
+                            first = current.verse_id
+                        }
+                        
+                        last = current.verse_id
+                    }
+                }
+                
+                if (first && last) {
+                    result += qsTr("%1:%2-%3").arg(chapterNumber).arg(first).arg(last)
+                    return result;
+                } else {
+                    return ""
+                }
+            }
         }
     ]
     
@@ -317,31 +259,10 @@ ListView {
 
         ListItemComponent {
             type: "header"
-
-            Container {
+            
+            CanadaIncHeaderListItem {
                 id: headerRoot
-                background: ListItem.view.background.imagePaint
-                horizontalAlignment: HorizontalAlignment.Fill
-                topPadding: 5
-                bottomPadding: 5
-                leftPadding: 5
-
-                layout: StackLayout {
-                    orientation: LayoutOrientation.LeftToRight
-                }
-
-                Label {
-                    text: qsTr("%1:%2").arg(headerRoot.ListItem.view.chapterNumber).arg(ListItemData)
-                    horizontalAlignment: HorizontalAlignment.Fill
-                    textStyle.fontSize: FontSize.XXSmall
-                    textStyle.color: Color.White
-                    textStyle.fontWeight: FontWeight.Bold
-                    textStyle.textAlign: TextAlign.Center
-
-                    layoutProperties: StackLayoutProperties {
-                        spaceQuota: 1
-                    }
-                }
+                labelValue: qsTr("%1:%2").arg(headerRoot.ListItem.view.chapterNumber).arg(ListItemData)
             }
         },
 
@@ -351,17 +272,19 @@ ListView {
             Container {
                 property bool selection: ListItem.selected
                 property bool active: ListItem.active
+                property bool hasTafsir: ListItemData.hasTafsir ? ListItemData.hasTafsir : false
                 property bool playing: ListItemData.playing ? ListItemData.playing : false
-
-                background: playing ? Color.create("#ffff8c00") : undefined
 
                 id: itemRoot
 
-                function updateState() {
+                function updateState()
+                {
                     if (playing) {
                         background = Color.create("#ffff8c00")
                     } else if (selection || active) {
                         background = Color.DarkGreen
+                    } else if (hasTafsir) {
+                        background = Color.create("#ffe0e0e0")
                     } else {
                         background = undefined
                     }
@@ -371,12 +294,8 @@ ListView {
                     selectionChanged.connect(updateState);
                     playingChanged.connect(updateState);
                     activeChanged.connect(updateState);
-                }
-                
-                onActiveChanged: {
-                    if (active) {
-                        itemRoot.ListItem.view.queryExplanationsFor(actionSet, ListItemData.verse_id);
-                    }
+                    hasTafsirChanged.connect(updateState);
+                    updateState();
                 }
                 
                 onSelectionChanged: {
@@ -390,40 +309,21 @@ ListView {
                                 current.destroy();
                             }
                         }
+                    } else {
+                        itemRoot.ListItem.view.queryExplanationsFor(actionSet, ListItemData.verse_id);
                     }
                 }
 
                 contextActions: [
-                    ActionSet {
+                    PlainTextActionSet {
                         id: actionSet
+                        listItemRoot: itemRoot
                         title: firstLabel.text
                         subtitle: labelDelegate.delegateActive ? labelDelegate.control.text : qsTr("%1:%2").arg(itemRoot.ListItem.view.chapterNumber).arg(ListItemData.verse_id)
 
                         ActionItem {
-                            title: qsTr("Copy")
-                            imageSource: "images/ic_copy.png"
-                            onTriggered: {
-                                itemRoot.ListItem.view.copyItem(ListItemData)
-                            }
-                        }
-
-                        InvokeActionItem {
-                            id: iai
-                            title: qsTr("Share")
-
-                            query {
-                                mimeType: "text/plain"
-                                invokeActionId: "bb.action.SHARE"
-                            }
-
-                            onTriggered: {
-                                iai.data = itemRoot.ListItem.view.shareItem(ListItemData)
-                            }
-                        }
-
-                        ActionItem {
                             title: qsTr("Bookmark") + Retranslate.onLanguageChanged
-                            imageSource: "images/ic_bookmark.png"
+                            imageSource: "images/ic_bookmark_add.png"
 
                             onTriggered: {
                                 itemRoot.ListItem.view.bookmark(ListItemData)
@@ -431,20 +331,29 @@ ListView {
                         }
 
                         ActionItem {
-                            id: audioAction
+                            id: playFromHere
 
-                            title: qsTr("Play")
+                            title: qsTr("Play From Here") + Retranslate.onLanguageChanged
                             imageSource: "images/ic_play.png"
 
                             onTriggered: {
-                                if (! itemRoot.ListItem.view.fileExists(ListItemData)) {
-                                    itemRoot.ListItem.view.download()
+                                var n = itemRoot.ListItem.view.dataModel.size();
+                                var downloaded = itemRoot.ListItem.view.fileExists(n);
+
+                                if (!downloaded) {
+                                    itemRoot.ListItem.view.download();
                                 } else {
-                                    itemRoot.ListItem.view.play([ ListItemData.verse_id ])
+                                    var result = [];
+
+                                    for (var i = ListItemData.verse_id; i <= n; i++) {
+                                        result.push(i);
+                                    }
+                                    
+                                    itemRoot.ListItem.view.play(result);
                                 }
                             }
                         }
-                        
+
                         function appendExplanations(data)
                         {
                             for (var i = data.length-1; i >= 0; i--)
@@ -493,15 +402,12 @@ ListView {
 
                 ControlDelegate {
                     id: labelDelegate
-                    sourceComponent: labelDefinition
-                    delegateActive: ListItemData.translation && ListItemData.translation.length > 0 ? true : false
+                    delegateActive: ListItemData.translation ? true : false
                     horizontalAlignment: HorizontalAlignment.Fill
-                }
-
-                attachedObjects: [
-                    ComponentDefinition {
+                    sourceComponent: ComponentDefinition
+                    {
                         id: labelDefinition
-
+                        
                         Label {
                             id: translationLabel
                             text: ListItemData.translation
@@ -512,15 +418,8 @@ ListView {
                             visible: text.length > 0
                         }
                     }
-                ]
+                }
             }
         }
     ]
-
-    layoutProperties: StackLayoutProperties {
-        spaceQuota: 0.5
-    }
-
-    horizontalAlignment: HorizontalAlignment.Fill
-    verticalAlignment: VerticalAlignment.Fill
 }

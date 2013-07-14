@@ -10,11 +10,9 @@ Page
 
     onSurahIdChanged:
     {
+	    listView.chapterNumber = surahId;
         sqlDataSource.query = "SELECT english_name, english_translation, arabic_name FROM chapters WHERE surah_id=%1".arg(surahId);
         sqlDataSource.load(1);
-
-        sqlDataSource.query = "SELECT id,description FROM tafsir_english WHERE surah_id=%1 AND verse_id IS NULL".arg(surahId);
-        sqlDataSource.load(80);
 
         loadVerses();
     }
@@ -30,7 +28,12 @@ Page
         	sqlDataSource.query = "SELECT text as arabic,verse_id FROM %1 WHERE surah_id=%2".arg(primary).arg(surahId);
         }
 
-        sqlDataSource.load(0)
+        sqlDataSource.load(0);
+        
+        if (translation == "english") {
+            sqlDataSource.query = "SELECT id,description,verse_id FROM tafsir_english WHERE surah_id=%1".arg(surahId);
+            sqlDataSource.load(80);   
+        }
     }
     
     function reloadNeeded(key)
@@ -60,7 +63,7 @@ Page
 
     onCreationCompleted: {
         persist.settingChanged.connect(reloadNeeded);
-        queue.queueCompleted.connect(startPlayback);
+        //queue.queueCompleted.connect(startPlayback);
     }
     
     attachedObjects: [
@@ -80,7 +83,7 @@ Page
 			            var target = [ requestedVerse - 1, 0 ]
 			            listView.scrollToItem(target, ScrollAnimation.Default);
 			            listView.select(target,true);
-			        } else {
+			        } else if (surahId > 1 && surahId != 9) {
                         listView.scrollToPosition(0, ScrollAnimation.None);
                         listView.scroll(-100, ScrollAnimation.Smooth);
                     }
@@ -88,11 +91,23 @@ Page
 			        surahNameArabic.text = data[0].arabic_name
 			        surahNameEnglish.text = qsTr("%1 (%2)").arg(data[0].english_name).arg(data[0].english_translation)
                 } else if (id == 80) {
-                    for (var i = data.length-1; i >= 0; i--) {
-                        var ai = actionDefinition.createObject();
-                        ai.title = data[i].description;
-                        ai.id = data[i].id;
-                        surahPage.addAction(ai,ActionBarPlacement.Default);
+                    var verseModel = listView.dataModel;
+                    
+                    for (var i = data.length-1; i >= 0; i--)
+                    {
+                        var verse = data[i].verse_id;
+                        
+                        if (verse) {
+                            var target = [ verse-1, 0 ];
+                            var verseData = verseModel.data(target);
+                            verseData["hasTafsir"] = true;
+                            verseModel.updateItem(target, verseData);
+                        } else {
+                            var ai = actionDefinition.createObject();
+                            ai.title = data[i].description;
+                            ai.id = data[i].id;
+                            surahPage.addAction(ai, ActionBarPlacement.Default);   
+                        }
                     }
                 }
             }
@@ -144,24 +159,26 @@ Page
             
             onTriggered:
             {
-                var downloaded = app.fileExists( surahId, listView.theDataModel.size() );
-                
-                if (!downloaded) {
-                    listView.download();
-                } else if (listView.mediaPlayer.playing) {
+                if (listView.mediaPlayer.playing) {
                     listView.mediaPlayer.pause();
                 } else if (listView.playlist) {
                     listView.mediaPlayer.resume();
                 } else {
-	                var result = []
-	                
-	                var n = listView.theDataModel.size();
+                    var downloaded = app.fileExists(surahId, listView.theDataModel.size());
 
-                    for (var i = 1; i <= n; i ++) {
-					    result.push(i);
-					}
-					
-					listView.play(result);
+                    if (! downloaded) {
+                        listView.download();
+                    } else {
+                        var result = []
+
+                        var n = listView.theDataModel.size();
+
+                        for (var i = 1; i <= n; i ++) {
+                            result.push(i);
+                        }
+
+                        listView.play(result);
+                    }
                 }
             }
         },
@@ -233,7 +250,6 @@ Page
 
         VersesListView {
             id: listView
-            chapterNumber: surahId
             chapterName: qsTr("%1 (%2)").arg(surahNameArabic.text).arg(surahNameEnglish.text)
             
             onCreationCompleted: {

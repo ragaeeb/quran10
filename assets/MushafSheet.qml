@@ -65,65 +65,26 @@ Sheet
             listItemComponents: [
                 ListItemComponent
                 {
-                    ImageView
-                    {
-                        id: root
+                    ScrollView {
+                        id: rootItem
                         property variant data: ListItemData
-                        property int downY
-                        imageSource: ListItemData
-                        scalingMethod: ScalingMethod.AspectFit
-                        
+                        horizontalAlignment: HorizontalAlignment.Fill
+                        verticalAlignment: VerticalAlignment.Fill
+                        scrollViewProperties.pinchToZoomEnabled: true
+                        scrollViewProperties.overScrollEffectMode: OverScrollEffectMode.OnPinch
+
                         onDataChanged: {
-                            root.scaleX = root.scaleY = 1;
-                            root.translationY = 0;
-                        }
-                        
-                        onTouch: {
-                            if (pincher.pinching) {
-                                return;
-                            }
-                            
-                            if ( event.isMove() ) {
-                                var diff = event.windowY - downY;
-                                
-                                if (diff > 20 || diff < -20) {
-                                    translationY = diff;
-                                }
-                            } else if ( event.isDown() ) {
-                                downY = event.windowY;
-                            }
+                            resetViewableArea();
                         }
 
-                        gestureHandlers: [
-                            PinchHandler {
-                                id: pincher
-                                property bool pinching: false
-                                
-                                onPinchStarted: {
-                                    pinching = true;
-                                }
-                                
-                                onPinchEnded: {
-                                    pinching = false;
-                                }
-                                
-                                onPinchCancelled: {
-                                    pinching = false;
-                                }
-                                
-                                onPinchUpdated: {
-                                    root.scaleX = root.scaleY = event.pinchRatio;
-                                }
-                            },
-                            
-                            DoubleTapHandler {
-                                onDoubleTapped: {
-                                    root.scaleX = root.scaleY = 1;
-                                    root.translationY = 0;
-                                }
-                            }
-                        ]
-                    }
+	                    ImageView {
+                            id: root
+                            imageSource: ListItemData
+                            scalingMethod: ScalingMethod.AspectFit
+                            horizontalAlignment: HorizontalAlignment.Center
+                            verticalAlignment: VerticalAlignment.Fill
+                        }
+	                }
                 }
             ]
             

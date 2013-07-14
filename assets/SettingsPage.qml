@@ -615,6 +615,11 @@ BasePage
 	            
 	            bottomPadding: 50
 	        }
+            
+            SliderPair {
+            	labelValue: qsTr("Primary Font Size") + Retranslate.onLanguageChanged
+            	
+            }
 	        
 	        Label {
 	            id: infoText

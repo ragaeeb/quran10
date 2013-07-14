@@ -49,7 +49,7 @@ TabbedPane {
         id: bookmarks
         title: qsTr("Bookmarks") + Retranslate.onLanguageChanged
         description: qsTr("Favourites") + Retranslate.onLanguageChanged
-        imageSource: "images/ic_bookmark.png"
+        imageSource: "images/ic_bookmarks.png"
 
         onTriggered: {
             if (! content) {
