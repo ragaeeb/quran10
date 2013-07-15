@@ -91,7 +91,7 @@ Page
 
             onDataLoaded: {
                 if (id == 0) {
-                    contentLabel.text = data[0].text;
+                    contentLabel.text = data[0].text+"\n\n";
                     descriptionLabel.text = data[0].description;
                     
                     var explainer = data[0].explainer;

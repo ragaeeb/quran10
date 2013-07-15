@@ -43,8 +43,11 @@ Page
         }
     }
     
-    function startPlayback() {
-        playAllAction.triggered();
+    function startPlayback()
+    {
+        if (queue.queued == 0) {
+            playAllAction.triggered();   
+        }
     }
     
     function showExplanation(id)
@@ -63,7 +66,7 @@ Page
 
     onCreationCompleted: {
         persist.settingChanged.connect(reloadNeeded);
-        //queue.queueCompleted.connect(startPlayback);
+        queue.queueChanged.connect(startPlayback);
     }
     
     attachedObjects: [
@@ -161,24 +164,10 @@ Page
             {
                 if (listView.mediaPlayer.playing) {
                     listView.mediaPlayer.pause();
-                } else if (listView.playlist) {
+                } else if (listView.mediaPlayer.paused) {
                     listView.mediaPlayer.resume();
                 } else {
-                    var downloaded = app.fileExists(surahId, listView.theDataModel.size());
-
-                    if (! downloaded) {
-                        listView.download();
-                    } else {
-                        var result = []
-
-                        var n = listView.theDataModel.size();
-
-                        for (var i = 1; i <= n; i ++) {
-                            result.push(i);
-                        }
-
-                        listView.play(result);
-                    }
+                    listView.mediaPlayer.doPlay( 1, listView.dataModel.size() );
                 }
             }
         },

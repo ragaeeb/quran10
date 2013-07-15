@@ -26,7 +26,6 @@ class ApplicationUI : public QObject
 	Persistance m_persistance;
 
     ApplicationUI(bb::cascades::Application *app);
-    QStringList getMissingFiles(QStringList const& playlist);
 
 signals:
 	void mushafReadyChanged();
@@ -40,7 +39,7 @@ public:
 	static void create(bb::cascades::Application* app);
     virtual ~ApplicationUI();
 
-    Q_INVOKABLE void downloadChapter(int chapter, int numVerses);
+    Q_INVOKABLE QStringList downloadChapter(int chapter, int fromVerse, int toVerse);
     Q_INVOKABLE QStringList generatePlaylist(int chapter, int fromVerse, int toVerse);
     Q_INVOKABLE void bookmarkVerse(QString const& surahName, int surahNumber, QVariantMap const& verseData);
     Q_INVOKABLE void downloadMushaf();

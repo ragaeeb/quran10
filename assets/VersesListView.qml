@@ -1,6 +1,5 @@
 import bb.cascades 1.0
 import com.canadainc.data 1.0
-import bb.system 1.0
 
 ListView {
     property alias theDataModel: verseModel
@@ -8,7 +7,6 @@ ListView {
     property alias background: headerBackground
     property int chapterNumber
     property string chapterName
-    property variant playlist
     property alias mediaPlayer: player
     property ActionSet sourceSet
     property int translationSize: persist.getValueFor("translationSize")
@@ -69,22 +67,10 @@ ListView {
                 imageSource: "images/ic_play.png"
 
                 onTriggered: {
-                    var selectedIndices = listView.selectionList()
-                    var last = listView.dataModel.data(selectedIndices[selectedIndices.length - 1])
-                    var downloaded = listView.fileExists(last)
-
-                    if (! downloaded) {
-                        listView.download()
-                    } else {
-                        var result = []
-
-                        for (var i = 0; i < selectedIndices.length; i ++) {
-                            var current = listView.dataModel.data(selectedIndices[i]).verse_id
-                            result.push(current)
-                        }
-
-                        listView.play(result)
-                    }
+                    var selectedIndices = listView.selectionList();
+                    var first = selectedIndices[0][0];
+                    var last = selectedIndices[selectedIndices.length-1][0];
+                    player.doPlay(first+1, last+1);
                 }
             }
         ]
@@ -141,14 +127,6 @@ ListView {
         app.bookmarkVerse(chapterName, chapterNumber, ListItemData);
         persist.showToast( qsTr("Bookmarked %1:%2").arg(chapterNumber).arg(ListItemData.verse_id) );
     }
-
-    function download() {
-        if (persist.getValueFor("hideDataWarning") == 0) {
-            prompt.show()
-        } else {
-            app.downloadChapter(chapterNumber, verseModel.size())
-        }
-    }
     
     function queryExplanationsFor(source, verseId)
     {
@@ -173,41 +151,37 @@ ListView {
             id: player
             property bool follow: persist.getValueFor("follow") == 1
             repeat: persist.getValueFor("repeat") == 1
+            property int fromVerse
+            
+            function doPlay(from, to)
+            {
+                var toPlay = app.downloadChapter(chapterNumber, from, to);
+                
+                if (toPlay.length > 0) {
+                    fromVerse = from;
+                    play(toPlay);
+                }
+            }
 
             onIndexChanged: {
                 if (index >= 0)
                 {
-                    var actual = playlist[index] - 1;
-                    var target = [ actual, 0 ];
+                    var target = [ index+fromVerse-1, 0 ];
                     var data = dataModel.data(target);
                     data["playing"] = true
                     verseModel.updateItem(target, data);
 
-                    if (follow == 1) {
+                    if (follow) {
                         listView.scrollToItem(target, ScrollAnimation.Default);
                     }
                 }
             }
 
             onPlaybackCompleted: {
-                var actual = [ playlist[index]-1, 0 ];
+                var actual = [ index+fromVerse-1, 0 ];
                 var data = verseModel.data(actual);
                 data.playing = false;
                 verseModel.updateItem(actual, data);
-            }
-        },
-
-        SystemDialog {
-            id: prompt
-            title: qsTr("Confirmation") + Retranslate.onLanguageChanged
-            body: qsTr("We are about to download a whole bunch of MP3 recitations, you should only attempt to do this if you have either an unlimited data plan, or are connected via Wi-Fi. Otherwise you might incur a lot of data charges. Are you sure you want to continue? If you select No you can always attempt to download again later.") + Retranslate.onLanguageChanged
-            confirmButton.label: qsTr("Yes") + Retranslate.onLanguageChanged
-            cancelButton.label: qsTr("No") + Retranslate.onLanguageChanged
-
-            onFinished: {
-                if (result == SystemUiResult.ConfirmButtonSelection) {
-                    app.downloadChapter(surahId, verseModel.size())
-                }
             }
         },
 
@@ -351,20 +325,7 @@ ListView {
                             imageSource: "images/ic_play.png"
 
                             onTriggered: {
-                                var n = itemRoot.ListItem.view.dataModel.size();
-                                var downloaded = itemRoot.ListItem.view.fileExists(n);
-
-                                if (!downloaded) {
-                                    itemRoot.ListItem.view.download();
-                                } else {
-                                    var result = [];
-
-                                    for (var i = ListItemData.verse_id; i <= n; i++) {
-                                        result.push(i);
-                                    }
-                                    
-                                    itemRoot.ListItem.view.play(result);
-                                }
+                                itemRoot.ListItem.view.mediaPlayer.doPlay( itemRoot.ListItem.indexPath[0]+1, itemRoot.ListItem.view.dataModel.size() );
                             }
                         }
 
