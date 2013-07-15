@@ -1,6 +1,7 @@
 import bb.cascades 1.0
 import bb.system 1.0
 import QtQuick 1.0
+import com.canadainc.data 1.0
 
 Sheet
 {
@@ -10,6 +11,18 @@ Sheet
     {
         id: mainPage
         actionBarVisibility: ChromeVisibility.Hidden
+        
+        actions: [
+            ActionItem {
+                title: qsTr("Jump") + Retranslate.onLanguageChanged
+                ActionBar.placement: ActionBarPlacement.OnBar
+                imageSource: "images/ic_jump.png"
+                
+                onTriggered: {
+                    dropDownDelegate.delegateActive = true;
+                }
+            }
+        ]
         
         titleBar: TitleBar
         {
@@ -34,6 +47,7 @@ Sheet
                     onTriggered: {
                         hiddenTitle.visibility = ChromeVisibility.Hidden
                         mainPage.actionBarVisibility = ChromeVisibility.Hidden
+                        dropDownDelegate.delegateActive = false;
                     }
                 }
             ]
@@ -82,13 +96,43 @@ Sheet
                 sourceComponent: ComponentDefinition
                 {
                     DropDown {
-                        horizontalAlignment: HorizontalAlignment.Fill       
-                    }
-                    
-                    onCreationCompleted: {
+                        id: dropDown
+                        horizontalAlignment: HorizontalAlignment.Fill
                         
+                        onCreationCompleted: {
+                            sqlDataSource.query = "SELECT MIN(page_number),chapters.english_name,chapters.arabic_name from mushaf_pages INNER JOIN chapters ON mushaf_pages.surah_id=chapters.surah_id GROUP BY mushaf_pages.surah_id";
+                            sqlDataSource.load(0);
+                        }
                     }
                 }
+                
+                attachedObjects: [
+                    CustomSqlDataSource {
+                        id: sqlDataSource
+                        source: "app/native/assets/dbase/quran.db"
+                        name: "main"
+                        
+                        onDataLoaded: {
+                            var n = data.length;
+                            
+                            for (var i = 0; i < n; i++) {
+                                var option = optionDefinition.createObject();
+                                option.text = data[i].arabic_name;
+                                option.description = data[i].english_name;
+                                option.value = data[i].page_number;
+                                dropDown.add(option);
+                            }
+                            
+                            dropDown.expanded = true;
+                        }
+                    },
+                    
+                    ComponentDefinition
+                    {
+                        id: optionDefinition
+                        Option {}
+                    }
+                ]
             }
             
             ListView

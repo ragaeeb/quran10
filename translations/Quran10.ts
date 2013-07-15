@@ -73,27 +73,27 @@ http://tanzil.ca
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="127"/>
+        <location filename="../assets/MushafSheet.qml" line="146"/>
         <source>Confirmation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="128"/>
+        <location filename="../assets/MushafSheet.qml" line="147"/>
         <source>We are about to download the mushaf (which is about ~200MB in size), you should only attempt to do this if you have either an unlimited data plan, or are connected via Wi-Fi. Otherwise you might incur a lot of data charges. Are you sure you want to continue? If you select No you can always attempt to download again later.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="129"/>
+        <location filename="../assets/MushafSheet.qml" line="148"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="130"/>
+        <location filename="../assets/MushafSheet.qml" line="149"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="156"/>
+        <location filename="../assets/MushafSheet.qml" line="177"/>
         <source>Abort</source>
         <translation type="unfinished"></translation>
     </message>
@@ -791,7 +791,7 @@ http://tanzil.ca
 <context>
     <name>VersesListView</name>
     <message>
-        <location filename="../assets/VersesListView.qml" line="244"/>
+        <location filename="../assets/VersesListView.qml" line="232"/>
         <source>%1:%2-%3</source>
         <translation type="unfinished"></translation>
     </message>
@@ -801,34 +801,34 @@ http://tanzil.ca
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="90"/>
+        <location filename="../assets/VersesListView.qml" line="78"/>
         <source>None selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="122"/>
-        <location filename="../assets/VersesListView.qml" line="265"/>
-        <location filename="../assets/VersesListView.qml" line="323"/>
+        <location filename="../assets/VersesListView.qml" line="110"/>
+        <location filename="../assets/VersesListView.qml" line="253"/>
+        <location filename="../assets/VersesListView.qml" line="310"/>
         <source>%1:%2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="140"/>
+        <location filename="../assets/VersesListView.qml" line="128"/>
         <source>Bookmarked %1:%2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="213"/>
+        <location filename="../assets/VersesListView.qml" line="201"/>
         <source>ayahs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="326"/>
+        <location filename="../assets/VersesListView.qml" line="313"/>
         <source>Bookmark</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="337"/>
+        <location filename="../assets/VersesListView.qml" line="324"/>
         <source>Play From Here</source>
         <translation type="unfinished"></translation>
     </message>

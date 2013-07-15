@@ -32,7 +32,11 @@ Page
         
         if (translation == "english") {
             sqlDataSource.query = "SELECT id,description,verse_id FROM tafsir_english WHERE surah_id=%1".arg(surahId);
-            sqlDataSource.load(80);   
+            sqlDataSource.load(80);
+            
+            surahPage.addAction(tafsirAction);   
+        } else {
+            surahPage.removeAction(tafsirAction);
         }
     }
     
@@ -67,6 +71,11 @@ Page
     onCreationCompleted: {
         persist.settingChanged.connect(reloadNeeded);
         queue.queueChanged.connect(startPlayback);
+        
+        if ( persist.getValueFor("tutorialCount") != 1 ) {
+            persist.showToast( qsTr("Press-and-hold on a grey verse to find explanations on it."), qsTr("OK") );
+            persist.saveValueFor("tutorialCount", 1);
+        }
     }
     
     attachedObjects: [

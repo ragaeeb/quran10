@@ -96,7 +96,6 @@ Tab
                 }
 
                 ListView {
-                    property variant surahPage
                     id: listView
 
                     dataModel: ArrayDataModel {
@@ -134,12 +133,8 @@ Tab
                             name: "main"
 
                             onDataLoaded: {
-                                if (! listView.surahPage) {
-                                    theDataModel.clear()
-                                    theDataModel.append(data)
-                                } else {
-                                    listView.surahPage.load(data)
-                                }
+                                theDataModel.clear();
+                                theDataModel.append(data);
                             }
                         }
                     ]
