@@ -49,12 +49,40 @@ Tab
                     }
 
                     onTextChanging: {
-                        if (text.length > 2) {
-                            sqlDataSource.query = "SELECT surah_id,arabic_name,english_name,english_translation FROM chapters WHERE english_name like '%" + text + "%' OR arabic_name like '%" + text + "%'"
-                            sqlDataSource.load()
+                        if ( text.match(/^\d{1,3}:\d{1,3}$/) ) {
+                            var tokens = text.split(":");
+                            var surah = parseInt(tokens[0]);
+                            sqlDataSource.query = "SELECT surah_id,arabic_name,english_name,english_translation FROM chapters WHERE surah_id=%1".arg(surah);
+                            sqlDataSource.load();
+                        } else if (text.length > 2) {
+                            sqlDataSource.query = "SELECT surah_id,arabic_name,english_name,english_translation FROM chapters WHERE english_name like '%%1%' OR arabic_name like '%%1%'".arg(text);
+                            sqlDataSource.load();
                         } else if (text.length == 0) {
-                            sqlDataSource.query = "SELECT surah_id,arabic_name,english_name,english_translation FROM chapters"
-                            sqlDataSource.load()
+                            sqlDataSource.query = "SELECT surah_id,arabic_name,english_name,english_translation FROM chapters";
+                            sqlDataSource.load();
+                        }
+                    }
+                    
+                    input {
+                        submitKey: SubmitKey.Submit
+                        
+                        onSubmitted: {
+                            if ( text.match(/^\d{1,3}:\d{1,3}$/) )
+                            {
+                                var tokens = text.split(":");
+                                var surah = parseInt(tokens[0]);
+                                var verse = parseInt(tokens[1]);
+                                
+                                if (surah >= 1 && surah <= 114)
+                                {
+                                    definition.source = "SurahPage.qml";
+                                    var surahPage = definition.createObject();
+                                    navigationPane.push(surahPage);
+                                    
+                                    surahPage.surahId = surah;
+                                    surahPage.requestedVerse = verse;
+                                }
+                            }
                         }
                     }
 

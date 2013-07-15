@@ -100,7 +100,7 @@ Page
                     
                     if (recorder.length > 0) {
                         authorText += "\n";
-                        authorText += qsTr("Recorded by: %1").arg(authorText)
+                        authorText += qsTr("Recorded by: %1").arg(recorder)
                     }
                     
                     authorLabel.text = authorText

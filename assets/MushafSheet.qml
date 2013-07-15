@@ -58,6 +58,7 @@ Sheet
             
             ControlDelegate
             {
+                id: progressDelegate
                 delegateActive: !app.mushafReady
                 horizontalAlignment: HorizontalAlignment.Fill
                 
@@ -68,6 +69,24 @@ Sheet
                         fromValue: 0
                         toValue: 614
                         value: mushafQueue.queued
+                    }
+                }
+            }
+            
+            ControlDelegate
+            {
+                id: dropDownDelegate
+                horizontalAlignment: HorizontalAlignment.Fill
+                delegateActive: false
+                
+                sourceComponent: ComponentDefinition
+                {
+                    DropDown {
+                        horizontalAlignment: HorizontalAlignment.Fill       
+                    }
+                    
+                    onCreationCompleted: {
+                        
                     }
                 }
             }
@@ -144,6 +163,8 @@ Sheet
                             if ( adm.isEmpty() ) {
                                 sheet.close();   
                             }
+                            
+                            progressDelegate.delegateActive = false;
                         }
                     }
                 },
