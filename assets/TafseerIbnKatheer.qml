@@ -3,14 +3,15 @@ import com.canadainc.data 1.0
 
 Page
 {
-    function load(englishText, arabicName, chapterId)
-    {
+    property variant surahId
+    
+    onSurahIdChanged: {
         var chapterId = surahId == 114 ? 113 : surahId;
         sqlDataSource.query = "SELECT title,body FROM ibn_katheer_english WHERE surah_id=%1".arg(chapterId)
         sqlDataSource.load(98);
         
-        surahNameArabic.text = arabicName;
-        surahNameEnglish.text = englishText;
+        sqlDataSource.query = "SELECT english_name, english_translation, arabic_name FROM chapters WHERE surah_id=%1".arg(surahId);
+        sqlDataSource.load(1);        
     }
     
     attachedObjects: [
@@ -23,6 +24,9 @@ Page
                 if (id == 98) {
 			        adm.append(data);
                     busy.running = false;
+                } else if (id == 1) {
+                    surahNameArabic.text = data[0].arabic_name
+                    surahNameEnglish.text = qsTr("%1 (%2)").arg(data[0].english_name).arg(data[0].english_translation);
                 }
             }
         }

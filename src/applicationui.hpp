@@ -5,9 +5,15 @@
 #include "Persistance.h"
 #include "QueueDownloader.h"
 
+#include <bb/system/InvokeManager>
+
 namespace bb {
 	namespace cascades {
 		class Application;
+	}
+
+	namespace system {
+		class InvokeManager;
 	}
 }
 
@@ -20,12 +26,14 @@ class ApplicationUI : public QObject
 	Q_OBJECT
 	Q_PROPERTY(bool mushafReady READ mushafReady NOTIFY mushafReadyChanged)
 
+	bb::system::InvokeManager m_invokeManager;
 	QueueDownloader m_queue;
 	QueueDownloader m_mushafQueue;
 	LazySceneCover m_sceneCover;
 	Persistance m_persistance;
 
     ApplicationUI(bb::cascades::Application *app);
+    QObject* init(QString const& qml);
 
 signals:
 	void mushafReadyChanged();
@@ -34,6 +42,7 @@ signals:
 private slots:
 	void onRequestComplete(QVariant const& cookie, QByteArray const& data);
 	void onPageDownloaded(QVariant const& cookie, QByteArray const& data);
+	void invoked(bb::system::InvokeRequest const& request);
 
 public:
 	static void create(bb::cascades::Application* app);

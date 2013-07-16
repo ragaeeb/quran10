@@ -46,15 +46,19 @@ support@canadainc.org
 
 This app facilitates the reading of Qu&apos;ran for Muslims using BB10 to get a smooth and fluid native experience. It includes translations in several languages (Bengali, English, French, Indonesian, Malaysian, Thai, Turkish, Urdu, and many more) as well as the original Arabic version. There is also support for verse-by-verse recitation to help you memorize the Qu&apos;ran. You have several reciters to choose from.
 
-There is built-in support for bookmarking a verse and a surah to quickly pick up where you left off reading. There is also easy access to copying certain verses to make it easy for you to share it with your contacts.
+There is built-in support for bookmarking verses to quickly pick up where you left off reading. There is also easy access to copying certain verses to make it easy for you to share it with your contacts.
 
-While reading the chapters you can easily show a split-pane view to show the tafsir (Ibn Katheer&apos;s explanation) to understand the interpretation of the verse according to the companions of the Prophet (sallahu alayhi wa&apos;sallam).
+While reading the chapters you can easily view the tafsir (Ibn Katheer&apos;s explanation among others) to understand the interpretation of the verse according to the companions of the Prophet (sallahu alayhi wa&apos;sallam).
 
 Finally, there is built-in support to do efficient and fast lookups for any surah or any text in the surah in any of the languages. Note that the search will only be done on the translation that you are currently on.
+
+In addition to the 
 
 Special thanks to:
 http://www.versebyversequran.com
 http://tanzil.ca
+http://abdurrahman.org
+http://www.troid.ca
 
 </source>
         <translation type="unfinished"></translation>
@@ -63,37 +67,42 @@ http://tanzil.ca
 <context>
     <name>MushafSheet</name>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="18"/>
+        <location filename="../assets/MushafSheet.qml" line="17"/>
+        <source>Jump</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/MushafSheet.qml" line="33"/>
         <source>Page %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="21"/>
+        <location filename="../assets/MushafSheet.qml" line="36"/>
         <source>Back</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="146"/>
+        <location filename="../assets/MushafSheet.qml" line="201"/>
         <source>Confirmation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="147"/>
+        <location filename="../assets/MushafSheet.qml" line="202"/>
         <source>We are about to download the mushaf (which is about ~200MB in size), you should only attempt to do this if you have either an unlimited data plan, or are connected via Wi-Fi. Otherwise you might incur a lot of data charges. Are you sure you want to continue? If you select No you can always attempt to download again later.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="148"/>
+        <location filename="../assets/MushafSheet.qml" line="203"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="149"/>
+        <location filename="../assets/MushafSheet.qml" line="204"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="177"/>
+        <location filename="../assets/MushafSheet.qml" line="232"/>
         <source>Abort</source>
         <translation type="unfinished"></translation>
     </message>
@@ -713,33 +722,43 @@ http://tanzil.ca
 <context>
     <name>SurahPage</name>
     <message>
-        <location filename="../assets/SurahPage.qml" line="95"/>
-        <location filename="../assets/SurahPage.qml" line="242"/>
+        <location filename="../assets/SurahPage.qml" line="75"/>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/SurahPage.qml" line="75"/>
+        <source>Press-and-hold on a verse with a grey highlight to find explanations on it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/SurahPage.qml" line="103"/>
+        <location filename="../assets/SurahPage.qml" line="250"/>
         <source>%1 (%2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="140"/>
+        <location filename="../assets/SurahPage.qml" line="148"/>
         <source>Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="149"/>
+        <location filename="../assets/SurahPage.qml" line="157"/>
         <source>Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="159"/>
+        <location filename="../assets/SurahPage.qml" line="167"/>
         <source>Play All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="159"/>
+        <location filename="../assets/SurahPage.qml" line="167"/>
         <source>Pause</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="178"/>
+        <location filename="../assets/SurahPage.qml" line="186"/>
         <source>Ibn Katheer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -747,30 +766,35 @@ http://tanzil.ca
 <context>
     <name>TafseerIbnKatheer</name>
     <message>
-        <location filename="../assets/TafseerIbnKatheer.qml" line="33"/>
+        <location filename="../assets/TafseerIbnKatheer.qml" line="29"/>
+        <source>%1 (%2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/TafseerIbnKatheer.qml" line="37"/>
         <source>Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/TafseerIbnKatheer.qml" line="43"/>
+        <location filename="../assets/TafseerIbnKatheer.qml" line="47"/>
         <source>Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/TafseerIbnKatheer.qml" line="127"/>
         <location filename="../assets/TafseerIbnKatheer.qml" line="131"/>
+        <location filename="../assets/TafseerIbnKatheer.qml" line="135"/>
         <source>%1
 
 %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/TafseerIbnKatheer.qml" line="199"/>
+        <location filename="../assets/TafseerIbnKatheer.qml" line="203"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/TafseerIbnKatheer.qml" line="207"/>
+        <location filename="../assets/TafseerIbnKatheer.qml" line="211"/>
         <source>Share</source>
         <translation type="unfinished"></translation>
     </message>
@@ -808,7 +832,7 @@ http://tanzil.ca
     <message>
         <location filename="../assets/VersesListView.qml" line="110"/>
         <location filename="../assets/VersesListView.qml" line="253"/>
-        <location filename="../assets/VersesListView.qml" line="310"/>
+        <location filename="../assets/VersesListView.qml" line="308"/>
         <source>%1:%2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -823,12 +847,12 @@ http://tanzil.ca
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="313"/>
+        <location filename="../assets/VersesListView.qml" line="311"/>
         <source>Bookmark</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="324"/>
+        <location filename="../assets/VersesListView.qml" line="322"/>
         <source>Play From Here</source>
         <translation type="unfinished"></translation>
     </message>
@@ -869,12 +893,12 @@ http://tanzil.ca
 <context>
     <name>quran::ApplicationUI</name>
     <message>
-        <location filename="../src/applicationui.cpp" line="122"/>
+        <location filename="../src/applicationui.cpp" line="197"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="122"/>
+        <location filename="../src/applicationui.cpp" line="197"/>
         <source>Error: Could not create the directory to download the files into. Please try one of the following to fix this:
 
 1) Swipe-down from the top-bezel &amp; go to the app settings and make sure the Download Directory is set to a valid location.
@@ -883,22 +907,22 @@ http://tanzil.ca
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="154"/>
+        <location filename="../src/applicationui.cpp" line="229"/>
         <source>Confirmation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="154"/>
+        <location filename="../src/applicationui.cpp" line="229"/>
         <source>We are about to download a whole bunch of MP3 recitations, you should only attempt to do this if you have either an unlimited data plan, or are connected via Wi-Fi. Otherwise you might incur a lot of data charges. Are you sure you want to continue? If you select No you can always attempt to download again later.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="154"/>
+        <location filename="../src/applicationui.cpp" line="229"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="154"/>
+        <location filename="../src/applicationui.cpp" line="229"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>

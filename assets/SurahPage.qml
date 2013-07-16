@@ -6,7 +6,6 @@ Page
     id: surahPage
     property variant surahId
     property int requestedVerse: -1
-    property int currentTrack: 0
 
     onSurahIdChanged:
     {
@@ -73,7 +72,7 @@ Page
         queue.queueChanged.connect(startPlayback);
         
         if ( persist.getValueFor("tutorialCount") != 1 ) {
-            persist.showToast( qsTr("Press-and-hold on a grey verse to find explanations on it."), qsTr("OK") );
+            persist.showToast( qsTr("Press-and-hold on a verse with a grey highlight to find explanations on it."), qsTr("OK") );
             persist.saveValueFor("tutorialCount", 1);
         }
     }
@@ -190,7 +189,7 @@ Page
             onTriggered: {
                 tafsirDelegate.source = "TafseerIbnKatheer.qml";
                 var page = tafsirDelegate.createObject();
-                page.load(surahNameEnglish.text, surahNameArabic.text, surahId);
+                page.load(surahId);
                 
                 properties.navPane.push(page);
             }

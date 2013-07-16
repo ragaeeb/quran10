@@ -259,7 +259,6 @@ ListView {
 
             Container {
                 property bool selection: ListItem.selected
-                property bool active: ListItem.active
                 property bool hasTafsir: ListItemData.hasTafsir ? ListItemData.hasTafsir : false
                 property bool playing: ListItemData.playing ? ListItemData.playing : false
 
@@ -269,7 +268,7 @@ ListView {
                 {
                     if (playing) {
                         background = Color.create("#ffff8c00")
-                    } else if (selection || active) {
+                    } else if (selection) {
                         background = Color.DarkGreen
                     } else if (hasTafsir) {
                         background = Color.create("#ffe0e0e0")
@@ -281,7 +280,6 @@ ListView {
                 onCreationCompleted: {
                     selectionChanged.connect(updateState);
                     playingChanged.connect(updateState);
-                    activeChanged.connect(updateState);
                     hasTafsirChanged.connect(updateState);
                     updateState();
                 }
@@ -370,7 +368,7 @@ ListView {
                     text: ListItemData.arabic
                     multiline: true
                     horizontalAlignment: HorizontalAlignment.Fill
-                    textStyle.color: selection || active || playing ? Color.White : Color.Black
+                    textStyle.color: selection || playing ? Color.White : Color.Black
                     textStyle.textAlign: TextAlign.Center
                     textStyle.fontSize: {
                         var primary = itemRoot.ListItem.view.primarySize;
@@ -398,7 +396,7 @@ ListView {
                             text: ListItemData.translation
                             multiline: true
                             horizontalAlignment: HorizontalAlignment.Fill
-                            textStyle.color: selection || active || playing ? Color.White : Color.Black
+                            textStyle.color: selection || playing ? Color.White : Color.Black
                             textStyle.textAlign: TextAlign.Center
                             visible: text.length > 0;
                             textStyle.fontSize: {

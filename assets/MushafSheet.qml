@@ -19,7 +19,9 @@ Sheet
                 imageSource: "images/ic_jump.png"
                 
                 onTriggered: {
+                    hiddenTitle.visibility = ChromeVisibility.Hidden;
                     dropDownDelegate.delegateActive = true;
+                    timer.stop();
                 }
             }
         ]
@@ -67,6 +69,9 @@ Sheet
                     prompt.show();
                 } else {
                     adm.append( app.getDownloadedMushafPages() );
+                    
+                    var abort = abortDownloadAction.createObject();
+                    mainPage.addAction(abort, ActionBarPlacement.Default);
                 }
             }
             
@@ -100,8 +105,12 @@ Sheet
                         horizontalAlignment: HorizontalAlignment.Fill
                         
                         onCreationCompleted: {
-                            sqlDataSource.query = "SELECT MIN(page_number),chapters.english_name,chapters.arabic_name from mushaf_pages INNER JOIN chapters ON mushaf_pages.surah_id=chapters.surah_id GROUP BY mushaf_pages.surah_id";
+                            sqlDataSource.query = "SELECT MIN(page_number) as page_number,chapters.english_name,chapters.arabic_name from mushaf_pages INNER JOIN chapters ON mushaf_pages.surah_id=chapters.surah_id GROUP BY mushaf_pages.surah_id";
                             sqlDataSource.load(0);
+                        }
+                        
+                        onSelectedValueChanged: {
+                            listView.scrollToItem([selectedValue-1], ScrollAnimation.Default);
                         }
                     }
                 }
@@ -110,7 +119,7 @@ Sheet
                     CustomSqlDataSource {
                         id: sqlDataSource
                         source: "app/native/assets/dbase/quran.db"
-                        name: "main"
+                        name: "mushaf"
                         
                         onDataLoaded: {
                             var n = data.length;
@@ -120,10 +129,10 @@ Sheet
                                 option.text = data[i].arabic_name;
                                 option.description = data[i].english_name;
                                 option.value = data[i].page_number;
-                                dropDown.add(option);
+                                dropDownDelegate.control.add(option);
                             }
                             
-                            dropDown.expanded = true;
+                            dropDownDelegate.control.expanded = true;
                         }
                     },
                     
@@ -137,6 +146,8 @@ Sheet
             
             ListView
             {
+                id: listView
+                
                 dataModel: ArrayDataModel {
                     id: adm
                 }
@@ -223,6 +234,7 @@ Sheet
                         
                         onTriggered: {
                             mushafQueue.abort();
+                            progressDelegate.delegateActive = false;
                         }
                     }
                 }

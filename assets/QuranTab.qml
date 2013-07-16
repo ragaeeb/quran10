@@ -117,7 +117,7 @@ Tab
                         var data = listView.dataModel.data(indexPath);
 
                         definition.source = "SurahPage.qml";
-                        surahPage = definition.createObject();
+                        var surahPage = definition.createObject();
                         surahPage.surahId = data.surah_id;
 
                         navigationPane.push(surahPage);
