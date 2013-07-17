@@ -38,6 +38,7 @@ class ApplicationUI : public QObject
 signals:
 	void mushafReadyChanged();
 	void mushafPageReady(QString const& imageSource);
+	void recitationDownloadComplete();
 
 private slots:
 	void onRequestComplete(QVariant const& cookie, QByteArray const& data);

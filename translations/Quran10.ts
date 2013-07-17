@@ -746,48 +746,48 @@ http://www.troid.ca
 <context>
     <name>SurahPage</name>
     <message>
-        <location filename="../assets/SurahPage.qml" line="103"/>
+        <location filename="../assets/SurahPage.qml" line="104"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="103"/>
+        <location filename="../assets/SurahPage.qml" line="104"/>
         <source>Press-and-hold on a verse with a grey highlight to find explanations on it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="98"/>
-        <location filename="../assets/SurahPage.qml" line="288"/>
+        <location filename="../assets/SurahPage.qml" line="99"/>
+        <location filename="../assets/SurahPage.qml" line="293"/>
         <source>%1 (%2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="148"/>
+        <location filename="../assets/SurahPage.qml" line="149"/>
         <source>Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="157"/>
+        <location filename="../assets/SurahPage.qml" line="158"/>
         <source>Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="167"/>
+        <location filename="../assets/SurahPage.qml" line="168"/>
         <source>Play All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="167"/>
+        <location filename="../assets/SurahPage.qml" line="168"/>
         <source>Pause</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="186"/>
+        <location filename="../assets/SurahPage.qml" line="191"/>
         <source>Ibn Katheer</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../assets/SurahPage.qml" line="271"/>
+        <location filename="../assets/SurahPage.qml" line="276"/>
         <source>%n downloads remaining...</source>
         <translation type="unfinished">
             <numerusform></numerusform>

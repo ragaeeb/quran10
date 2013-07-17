@@ -48,6 +48,7 @@ Page
     
     function startPlayback()
     {
+        console.log("START PLAYBACK!!!", queue.queued);
         if (queue.queued == 0) {
             playAllAction.triggered();   
         }
@@ -69,7 +70,7 @@ Page
 
     onCreationCompleted: {
         persist.settingChanged.connect(reloadNeeded);
-        queue.queueChanged.connect(startPlayback);
+        app.recitationDownloadComplete.connect(startPlayback);
     }
     
     attachedObjects: [
@@ -170,11 +171,15 @@ Page
             
             onTriggered:
             {
+                console.log("TRIGGERED");
                 if (listView.mediaPlayer.playing) {
+                    console.log("TRIGGERED 1");
                     listView.mediaPlayer.pause();
                 } else if (listView.mediaPlayer.paused) {
+                    console.log("TRIGGERED 2");
                     listView.mediaPlayer.resume();
                 } else {
+                    console.log("TRIGGERED 3");
                     listView.mediaPlayer.doPlay( 1, listView.dataModel.size() );
                 }
             }
