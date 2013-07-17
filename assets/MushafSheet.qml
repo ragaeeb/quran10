@@ -103,6 +103,7 @@ Sheet
                     DropDown {
                         id: dropDown
                         horizontalAlignment: HorizontalAlignment.Fill
+                        title: qsTr("Surah")
                         
                         onCreationCompleted: {
                             sqlDataSource.query = "SELECT MIN(page_number) as page_number,chapters.english_name,chapters.arabic_name from mushaf_pages INNER JOIN chapters ON mushaf_pages.surah_id=chapters.surah_id GROUP BY mushaf_pages.surah_id";

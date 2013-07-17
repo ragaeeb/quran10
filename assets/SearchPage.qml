@@ -45,15 +45,19 @@ NavigationPane {
 
                             busy.running = true
 
-                            var translation = persist.getValueFor("translation")
+                            var table = persist.getValueFor("translation");
 
-                            if (translation != "") {
-                                sqlDataSource.query = "select %1.surah_id,%1.verse_id,%1.text,chapters.english_name as name, chapters.english_name, chapters.arabic_name, chapters.english_translation from %1 INNER JOIN chapters on chapters.surah_id=%1.surah_id AND %1.text LIKE '%%2%'".arg(translation).arg(trimmedText)
-                                sqlDataSource.load(0)
+                            if (table != "") {
+                                sqlDataSource.query = "select %1.surah_id,%1.verse_id,%1.text,chapters.english_name as name, chapters.english_name, chapters.arabic_name, chapters.english_translation from %1 INNER JOIN chapters on chapters.surah_id=%1.surah_id AND %1.text LIKE '%%2%'".arg(table).arg(trimmedText);
+                                sqlDataSource.load(0);
                             }
-
-                            sqlDataSource.query = "select arabic.surah_id,arabic.verse_id,arabic.text,chapters.arabic_name as name, chapters.english_name, chapters.arabic_name, chapters.english_translation from arabic INNER JOIN chapters on chapters.surah_id=arabic.surah_id AND arabic.text LIKE '%%1%'".arg(trimmedText)
-                            sqlDataSource.load(1)
+                            
+                            table = persist.getValueFor("primary");
+                            
+                            if (table != "transliteration") {
+                                sqlDataSource.query = "select %1.surah_id,%1.verse_id,%1.text,chapters.arabic_name as name, chapters.english_name, chapters.arabic_name, chapters.english_translation from %1 INNER JOIN chapters on chapters.surah_id=%1.surah_id AND %1.text LIKE '%%2%'".arg(table).arg(trimmedText);
+                                sqlDataSource.load(1);   
+                            }
                         }
                     }
                 }

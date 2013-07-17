@@ -18,8 +18,8 @@ Page
     
     function loadVerses()
     {
-        var primary = persist.getValueFor("primary")
-        var translation = persist.getValueFor("translation")
+        var primary = persist.getValueFor("primary");
+        var translation = persist.getValueFor("translation");
 
         if (translation != "") {
             sqlDataSource.query = "SELECT %1.text as arabic,%1.verse_id,%2.text as translation FROM %1 INNER JOIN %2 on %1.surah_id=%2.surah_id AND %1.verse_id=%2.verse_id AND %1.surah_id=%3".arg(primary).arg(translation).arg(surahId);
@@ -70,11 +70,6 @@ Page
     onCreationCompleted: {
         persist.settingChanged.connect(reloadNeeded);
         queue.queueChanged.connect(startPlayback);
-        
-        if ( persist.getValueFor("tutorialCount") != 1 ) {
-            persist.showToast( qsTr("Press-and-hold on a verse with a grey highlight to find explanations on it."), qsTr("OK") );
-            persist.saveValueFor("tutorialCount", 1);
-        }
     }
     
     attachedObjects: [
@@ -103,6 +98,11 @@ Page
 			        surahNameEnglish.text = qsTr("%1 (%2)").arg(data[0].english_name).arg(data[0].english_translation)
                 } else if (id == 80) {
                     var verseModel = listView.dataModel;
+                    
+                    if ( persist.getValueFor("tafsirTutorialCount") != 1 ) {
+                        persist.showToast( qsTr("Press-and-hold on a verse with a grey highlight to find explanations on it."), qsTr("OK") );
+                        persist.saveValueFor("tafsirTutorialCount", 1);
+                    }
                     
                     for (var i = data.length-1; i >= 0; i--)
                     {
@@ -189,7 +189,7 @@ Page
             onTriggered: {
                 tafsirDelegate.source = "TafseerIbnKatheer.qml";
                 var page = tafsirDelegate.createObject();
-                page.load(surahId);
+                page.surahId = surahId;
                 
                 properties.navPane.push(page);
             }
@@ -234,6 +234,44 @@ Page
                 textStyle.fontSize: FontSize.XXSmall
                 textStyle.fontWeight: FontWeight.Bold
                 topMargin: 0
+            }
+            
+            ControlDelegate
+            {
+                id: progressDelegate
+                delegateActive: queue.queued > 0
+                horizontalAlignment: HorizontalAlignment.Fill
+                
+                sourceComponent: ComponentDefinition
+                {
+                    Container
+                    {
+                        ProgressIndicator {
+                            horizontalAlignment: HorizontalAlignment.Fill
+                            fromValue: 0
+                            state: ProgressIndicatorState.Progress
+                            
+                            function onDownloadProgress(cookie, received, total)
+                            {
+                                value = received;
+                                toValue = total;
+                            }
+                            
+                            onCreationCompleted: {
+                                queue.downloadProgress.connect(onDownloadProgress);
+                            }
+                        }
+                        
+                        Label {
+                            horizontalAlignment: HorizontalAlignment.Fill
+                            textStyle.textAlign: TextAlign.Center
+                            textStyle.fontSize: FontSize.XXSmall
+                            textStyle.fontWeight: FontWeight.Bold
+                            topMargin: 0
+                            text: qsTr("%n downloads remaining...", "", queue.queued)
+                        }   
+                    }
+                }
             }
         }
         

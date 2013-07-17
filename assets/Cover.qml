@@ -49,14 +49,18 @@ Container {
     }
 
     function updateCover() {
-        var translation = persist.getValueFor("translation")
-
-        if (translation != "") {
-            sql.query = "select * from %1 ORDER BY RANDOM() LIMIT 1".arg(translation);
-        } else {
-            sql.query = "select * from arabic ORDER BY RANDOM() LIMIT 1";
+        var table = persist.getValueFor("translation");
+        
+        if (table == "")
+        {
+            table = persist.getValueFor("primary");
+            
+            if (table == "transliteration") {
+                table = "arabic_uthmani";
+            }
         }
         
+        sql.query = "select * from %1 ORDER BY RANDOM() LIMIT 1".arg(table);
         sql.load();
     }
 

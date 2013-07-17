@@ -18,11 +18,10 @@ BasePage
 	        SettingPair {
 	            topMargin: 20
 	            title: qsTr("Hide Data Warning")
-	        	toggle.checked: persist.getValueFor("hideDataWarning") == 1
+	        	key: "hideDataWarning"
 	    
-	            toggle.onCheckedChanged: {
-	        		persist.saveValueFor("hideDataWarning", checked ? 1 : 0)
-	        		
+	            toggle.onCheckedChanged:
+	            {
 	        		if (checked) {
 	        		    infoText.text = qsTr("The warning dialog for downloading will not be shown.") + Retranslate.onLanguageChanged
 	                } else {
@@ -31,15 +30,23 @@ BasePage
 	            }
 	        }
 	        
-            DropDown {
+            PersistDropDown
+            {
+                key: "primary"
                 title: qsTr("Primary Text") + Retranslate.onLanguageChanged
-                horizontalAlignment: HorizontalAlignment.Fill
 
                 Option {
-                    id: primaryArabic
-                    text: qsTr("Arabic") + Retranslate.onLanguageChanged
-                    description: qsTr("Original Book") + Retranslate.onLanguageChanged
-                    value: "arabic"
+                    id: primaryUthmani
+                    text: qsTr("Uthmani Script") + Retranslate.onLanguageChanged
+                    description: qsTr("An old-fashion Arabic script used by the third Caliph, Uthman, to produce the first standard quran manuscript.") + Retranslate.onLanguageChanged
+                    value: "arabic_uthmani"
+                }
+                
+                Option {
+                    id: primaryImlaei
+                    text: qsTr("Imla'ei Script") + Retranslate.onLanguageChanged
+                    description: qsTr("The modern Arabic writing style which is currently in use.") + Retranslate.onLanguageChanged
+                    value: "arabic_imlaei"
                 }
 
                 Option {
@@ -49,33 +56,21 @@ BasePage
                     value: "transliteration"
                 }
 
-                onCreationCompleted: {
-                    var primary = persist.getValueFor("primary")
-
-                    for (var i = 0; i < options.length; i ++) {
-                        if (options[i].value == primary) {
-                            options[i].selected = true
-                            break;
-                        }
-                    }
-                }
-
-                onSelectedValueChanged: {
-                    persist.saveValueFor("primary", selectedValue);
-                }
-
                 onSelectedOptionChanged: {
                     if (selectedOption == primaryTransliteration) {
                         infoText.text = qsTr("English transliteration will be displayed in place of Arabic text.") + Retranslate.onLanguageChanged
+                    } else if (selectedOption == primaryImlaei) {
+                        infoText.text = qsTr("Modern Arabic glyphs will be rendered for the primary text.") + Retranslate.onLanguageChanged
                     } else {
-                        infoText.text = qsTr("Arabic glyphs will be rendered for the primary text.") + Retranslate.onLanguageChanged
+                        infoText.text = qsTr("Old-fashioned Arabic glyphs will be rendered for the primary text.") + Retranslate.onLanguageChanged
                     }
                 }
             }
 
-            DropDown {
+            PersistDropDown {
 	            title: qsTr("Translation") + Retranslate.onLanguageChanged
 	            horizontalAlignment: HorizontalAlignment.Fill
+	            key: "translation"
 	            
 	            Option {
 	                id: none
@@ -163,22 +158,6 @@ BasePage
 	                value: "urdu"
 	            }
 	            
-	            onCreationCompleted: {
-	                var translation = persist.getValueFor("translation")
-	                
-	                for (var i = 0; i < options.length; i++)
-	                {
-	                    if (options[i].value == translation) {
-	                        options[i].selected = true
-	                        break;
-	                    }
-	                }
-                }
-	            
-	            onSelectedValueChanged: {
-	                persist.saveValueFor("translation", selectedValue);
-	            }
-	            
 	            onSelectedOptionChanged: {
 	                if (selectedOption == none) {
 	                    infoText.text = qsTr("No translation will be displayed.") + Retranslate.onLanguageChanged
@@ -191,11 +170,9 @@ BasePage
             SettingPair {
                 topMargin: 40
                 title: qsTr("Repeat Recitation")
-                toggle.checked: persist.getValueFor("repeat") == 1
+                key: "repeat"
 
                 toggle.onCheckedChanged: {
-                    persist.saveValueFor("repeat", checked ? 1 : 0)
-
                     if (checked) {
                         infoText.text = qsTr("Recitations will keep repeating indefinitely.") + Retranslate.onLanguageChanged
                     } else {
@@ -206,11 +183,9 @@ BasePage
 
             SettingPair {
                 title: qsTr("Follow Recitation")
-                toggle.checked: persist.getValueFor("follow") == 1
+                key: "follow"
 
                 toggle.onCheckedChanged: {
-                    persist.saveValueFor("follow", checked ? 1 : 0)
-
                     if (checked) {
                         infoText.text = qsTr("The list will be scrolled to follow the current verse.") + Retranslate.onLanguageChanged
                     } else {
@@ -219,9 +194,10 @@ BasePage
                 }
             }
 
-            DropDown {
+            PersistDropDown
+            {
                 title: qsTr("Reciter") + Retranslate.onLanguageChanged
-                horizontalAlignment: HorizontalAlignment.Fill
+                key: "reciter"
 
                 Option {
                     text: qsTr("Abdul-Baset Abdel-Samad") + Retranslate.onLanguageChanged
@@ -541,23 +517,8 @@ BasePage
                     value: "Yasser_Ad-Dussary_128kbps"
                 }
 
-                onSelectedValueChanged: {
-                    persist.saveValueFor("reciter", selectedValue);
-                }
-
                 onSelectedOptionChanged: {
                     infoText.text = qsTr("The verse recitations will be that of %1.").arg(selectedOption.text) + Retranslate.onLanguageChanged
-                }
-
-                onCreationCompleted: {
-                    var reciter = persist.getValueFor("reciter")
-
-                    for (var i = 0; i < options.length; i ++) {
-                        if (options[i].value == reciter) {
-                            options[i].selected = true
-                            break;
-                        }
-                    }
                 }
             }
 
@@ -616,15 +577,14 @@ BasePage
 	            bottomPadding: 50
 	        }
             
-            SliderPair {
+            SliderPair
+            {
             	labelValue: qsTr("Primary Font Size") + Retranslate.onLanguageChanged
-                sliderControl.fromValue: 1
-                sliderControl.toValue: 3
-                sliderControl.value: persist.getValueFor("primarySize");
+                from: 1
+                to: 3
+                key: "primarySize"
                 
                 onSliderValueChanged: {
-                    persist.saveValueFor("primarySize", sliderValue);
-                    
                     if (sliderValue == 1) {
                         infoText.text = qsTr("The primary font size will be small");   
                     } else if (sliderValue == 2) {
@@ -635,15 +595,14 @@ BasePage
                 }
             }
             
-            SliderPair {
+            SliderPair
+            {
                 labelValue: qsTr("Translation Font Size") + Retranslate.onLanguageChanged
-                sliderControl.fromValue: 1
-                sliderControl.toValue: 3
-                sliderControl.value: persist.getValueFor("translationSize");
+                from: 1
+                to: 3
+                key: "translationSize"
                 
                 onSliderValueChanged: {
-                    persist.saveValueFor("translationSize", sliderValue);
-                    
                     if (sliderValue == 1) {
                         infoText.text = qsTr("The translation font size will be small");   
                     } else if (sliderValue == 2) {

@@ -2,6 +2,7 @@ import bb.cascades 1.0
 
 Container
 {
+    property string key
     property alias toggle: animationsToggle
     property string title
     
@@ -19,5 +20,10 @@ Container
     
     ToggleButton {
         id: animationsToggle
+        checked: persist.getValueFor(key) == 1
+        
+        onCheckedChanged: {
+            persist.saveValueFor(key, checked ? 1 : 0);
+        }
     }
 }

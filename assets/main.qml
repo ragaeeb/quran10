@@ -22,6 +22,13 @@ TabbedPane {
 
                 root.activePane.push(settingsPage);
             }
+            
+            onCreationCompleted: {
+                if ( persist.getValueFor("tutorialCount") != 1 ) {
+                    persist.saveValueFor("tutorialCount", 1);
+                    triggered();
+                }
+            }
         }
 
         helpAction: HelpActionItem {
