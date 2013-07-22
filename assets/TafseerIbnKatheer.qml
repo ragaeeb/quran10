@@ -142,12 +142,11 @@ Page
                     Container {
                         id: tafsirItemRoot
 
-                        property bool active: ListItem.active
                         property bool selected: ListItem.selected
 
                         horizontalAlignment: HorizontalAlignment.Fill
                         verticalAlignment: VerticalAlignment.Fill
-                        background: active || selected ? Color.DarkGreen : undefined
+                        background: selected ? Color.DarkGreen : undefined
 
                         Container {
                             background: tafsirItemRoot.ListItem.view.background.imagePaint
@@ -189,7 +188,7 @@ Page
                                 text: ListItemData.body
                                 multiline: true
                                 horizontalAlignment: HorizontalAlignment.Fill
-                                textStyle.color: active || selected ? Color.White : Color.Black
+                                textStyle.color: selected ? Color.White : Color.Black
                                 textStyle.textAlign: TextAlign.Center
                             }
                         }

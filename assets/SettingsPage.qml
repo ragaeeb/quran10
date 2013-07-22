@@ -15,6 +15,21 @@ BasePage
 	        rightPadding: 20
 	        bottomPadding: 20
 	        
+            SettingPair {
+                topMargin: 20
+                title: qsTr("Hide Agreement Message")
+                key: "hideAgreement"
+                
+                toggle.onCheckedChanged:
+                {
+                    if (checked) {
+                        infoText.text = qsTr("The agreement dialog will not be shown.") + Retranslate.onLanguageChanged
+                    } else {
+                        infoText.text = qsTr("The agreement dialog will be shown everytime the app starts up.") + Retranslate.onLanguageChanged
+                    }
+                }
+            }
+	        
 	        SettingPair {
 	            topMargin: 20
 	            title: qsTr("Hide Data Warning")

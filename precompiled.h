@@ -15,6 +15,7 @@
 #include <bb/system/SystemDialog>
 #include <bb/system/SystemToast>
 
+#include <bb/cascades/AbstractDialog>
 #include <bb/cascades/AbstractPane>
 #include <bb/cascades/Application>
 #include <bb/cascades/Control>

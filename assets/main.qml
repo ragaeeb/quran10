@@ -30,6 +30,29 @@ TabbedPane {
                 }
             }
         }
+        
+        actions: [
+            ActionItem {
+                title: qsTr("Bug Reports") + Retranslate.onLanguageChanged
+                imageSource: "images/ic_bugs.png"
+                
+                onTriggered: {
+                    bugReports.trigger("bb.action.OPEN");
+                }
+                
+                attachedObjects: [
+                    Invocation {
+                        id: bugReports
+                        
+                        query: InvokeQuery {
+                            mimeType: "text/html"
+                            uri: "http://code.google.com/p/quran10/issues/list"
+                            invokeActionId: "bb.action.OPEN"
+                        }
+                    }
+                ]
+            }
+        ]
 
         helpAction: HelpActionItem {
             property Page helpPage

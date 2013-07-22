@@ -64,6 +64,7 @@ Sheet
             {
                 if (app.mushafReady) {
                     adm.append( app.getMushafPages() );
+                    listView.scrollToPosition(0, ScrollAnimation.Default);
                 } else if (mushafQueue.queued == 0) {
                     adm.append( app.getDownloadedMushafPages() );
                     prompt.show();
@@ -72,6 +73,8 @@ Sheet
                     
                     var abort = abortDownloadAction.createObject();
                     mainPage.addAction(abort, ActionBarPlacement.Default);
+                    
+                    listView.scrollToPosition(0, ScrollAnimation.Default);
                 }
             }
             
@@ -175,6 +178,7 @@ Sheet
                             scrollViewProperties.overScrollEffectMode: OverScrollEffectMode.OnPinch
                             
                             onDataChanged: {
+                                console.log("DATA", data);
                                 resetViewableArea();
                             }
                             
