@@ -12,6 +12,7 @@ Container
     
     Label {
         text: title
+        verticalAlignment: VerticalAlignment.Center
         
         layoutProperties: StackLayoutProperties {
             spaceQuota: 1

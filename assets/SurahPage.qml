@@ -251,6 +251,8 @@ Page
                 {
                     Container
                     {
+                        leftPadding: 10; rightPadding: 10
+                        
                         ProgressIndicator {
                             horizontalAlignment: HorizontalAlignment.Fill
                             fromValue: 0
