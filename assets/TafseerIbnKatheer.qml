@@ -3,7 +3,7 @@ import com.canadainc.data 1.0
 
 Page
 {
-    property variant surahId
+    property int surahId
     
     onSurahIdChanged: {
         var chapterId = surahId == 114 ? 113 : surahId;

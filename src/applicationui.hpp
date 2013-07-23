@@ -9,6 +9,7 @@
 
 namespace bb {
 	namespace cascades {
+		class AbstractPane;
 		class Application;
 	}
 
@@ -33,7 +34,7 @@ class ApplicationUI : public QObject
 	Persistance m_persistance;
 
     ApplicationUI(bb::cascades::Application *app);
-    QObject* init(QString const& qml);
+    QObject* init(QString const& qml, bool invoked=false);
 
 signals:
 	void mushafReadyChanged();

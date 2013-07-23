@@ -4,7 +4,7 @@ import com.canadainc.data 1.0
 Page
 {
     id: surahPage
-    property variant surahId
+    property int surahId
     property int requestedVerse: -1
 
     onSurahIdChanged:

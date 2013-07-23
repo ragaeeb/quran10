@@ -983,12 +983,12 @@ http://www.troid.ca
 <context>
     <name>quran::ApplicationUI</name>
     <message>
-        <location filename="../src/applicationui.cpp" line="215"/>
+        <location filename="../src/applicationui.cpp" line="224"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="215"/>
+        <location filename="../src/applicationui.cpp" line="224"/>
         <source>Error: Could not create the directory to download the files into. Please try one of the following to fix this:
 
 1) Swipe-down from the top-bezel &amp; go to the app settings and make sure the Download Directory is set to a valid location.
@@ -997,22 +997,22 @@ http://www.troid.ca
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="247"/>
+        <location filename="../src/applicationui.cpp" line="256"/>
         <source>Confirmation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="247"/>
+        <location filename="../src/applicationui.cpp" line="256"/>
         <source>We are about to download a whole bunch of MP3 recitations, you should only attempt to do this if you have either an unlimited data plan, or are connected via Wi-Fi. Otherwise you might incur a lot of data charges. Are you sure you want to continue? If you select No you can always attempt to download again later.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="247"/>
+        <location filename="../src/applicationui.cpp" line="256"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="247"/>
+        <location filename="../src/applicationui.cpp" line="256"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>

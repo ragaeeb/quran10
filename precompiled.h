@@ -16,8 +16,8 @@
 #include <bb/system/SystemToast>
 
 #include <bb/cascades/AbstractDialog>
-#include <bb/cascades/AbstractPane>
 #include <bb/cascades/Application>
 #include <bb/cascades/Control>
+#include <bb/cascades/NavigationPane>
 #include <bb/cascades/QmlDocument>
 #include <bb/cascades/SceneCover>
