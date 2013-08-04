@@ -4,7 +4,7 @@ sqlite> SELECT COUNT() FROM (select name from sqlite_master where type='table' A
 sqlite> SELECT COUNT() FROM (select name from sqlite_master where type='table' AND name='bengali');
 
 95, 97 did not work
-UPDATE arabic SET text=REPLACE(text, 'BISMILLAH_TEXT', '') WHERE text like 'BISMILLAH_TEXT%' AND verse_id=1 AND surah_id != 1
+UPDATE arabic SET text=REPLACE(text, 'BISMILLAH_TEXT', '') WHERE text like 'BISMILLAH_TEXT%' AND verse_id=1 AND surah_id != 1 AND surah_id != 9
 
 ---------------
 
