@@ -191,6 +191,39 @@ http://www.troid.ca
     </message>
 </context>
 <context>
+    <name>RadioTab</name>
+    <message>
+        <location filename="../assets/RadioTab.qml" line="23"/>
+        <source>Channel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/RadioTab.qml" line="29"/>
+        <source>Off</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/RadioTab.qml" line="35"/>
+        <source>The Quran Radio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/RadioTab.qml" line="36"/>
+        <source>Wakas Mir Networks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/RadioTab.qml" line="48"/>
+        <source>Radio Quraan</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/RadioTab.qml" line="49"/>
+        <source>www.radioquraan.com</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>RangeSelector</name>
     <message numerus="yes">
         <location filename="../assets/RangeSelector.qml" line="18"/>
@@ -977,6 +1010,16 @@ http://www.troid.ca
     <message>
         <location filename="../assets/main.qml" line="113"/>
         <source>Find</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/main.qml" line="125"/>
+        <source>Radio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/main.qml" line="126"/>
+        <source>Live</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

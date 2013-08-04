@@ -119,6 +119,19 @@ TabbedPane {
             }
         }
     }
+    
+    Tab {
+        id: radio
+        title: qsTr("Radio") + Retranslate.onLanguageChanged
+        description: qsTr("Live") + Retranslate.onLanguageChanged
+        imageSource: "images/ic_radio.png"
+        
+        onTriggered: {
+            if (! content) {
+                lazyLoad("RadioTab.qml", radio);
+            }
+        }
+    }
 
     function lazyLoad(actualSource, tab) {
         definition.source = actualSource;
