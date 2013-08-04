@@ -49,7 +49,7 @@ Tab
                     }
 
                     onTextChanging: {
-                        if ( text.match(/^\d{1,3}:\d{1,3}$/) ) {
+                        if ( text.match(/^\d{1,3}:\d{1,3}$/) || text.match(/^\d{1,3}$/) ) {
                             var tokens = text.split(":");
                             var surah = parseInt(tokens[0]);
                             sqlDataSource.query = "SELECT surah_id,arabic_name,english_name,english_translation FROM chapters WHERE surah_id=%1".arg(surah);
@@ -67,11 +67,10 @@ Tab
                         submitKey: SubmitKey.Submit
                         
                         onSubmitted: {
-                            if ( text.match(/^\d{1,3}:\d{1,3}$/) )
+                            if ( text.match(/^\d{1,3}:\d{1,3}$/) || text.match(/^\d{1,3}$/) )
                             {
                                 var tokens = text.split(":");
                                 var surah = parseInt(tokens[0]);
-                                var verse = parseInt(tokens[1]);
                                 
                                 if (surah >= 1 && surah <= 114)
                                 {
@@ -80,7 +79,11 @@ Tab
                                     navigationPane.push(surahPage);
                                     
                                     surahPage.surahId = surah;
-                                    surahPage.requestedVerse = verse;
+                                    
+                                    if (tokens.length > 0) {
+                                        var verse = parseInt(tokens[1]);
+                                        surahPage.requestedVerse = verse;
+                                    }
                                 }
                             }
                         }
