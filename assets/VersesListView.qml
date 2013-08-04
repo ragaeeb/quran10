@@ -365,7 +365,7 @@ ListView {
 
                 Label {
                     id: firstLabel
-                    text: ListItemData.arabic
+                    text: ListItemData.arabic+" "
                     multiline: true
                     horizontalAlignment: HorizontalAlignment.Fill
                     textStyle.color: selection || playing ? Color.White : Color.Black

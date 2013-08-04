@@ -12,10 +12,6 @@ namespace bb {
 		class AbstractPane;
 		class Application;
 	}
-
-	namespace system {
-		class InvokeManager;
-	}
 }
 
 namespace quran {
