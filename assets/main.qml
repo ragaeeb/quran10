@@ -37,20 +37,11 @@ TabbedPane {
                 imageSource: "images/ic_bugs.png"
                 
                 onTriggered: {
-                    bugReports.trigger("bb.action.OPEN");
+                    definition.source = "BugReportPage.qml";
+                    var bugReportPage = definition.createObject();
+                    bugReportPage.projectName = "quran10";
+                    root.activePane.push(bugReportPage);
                 }
-                
-                attachedObjects: [
-                    Invocation {
-                        id: bugReports
-                        
-                        query: InvokeQuery {
-                            mimeType: "text/html"
-                            uri: "http://code.google.com/p/quran10/issues/list"
-                            invokeActionId: "bb.action.OPEN"
-                        }
-                    }
-                ]
             }
         ]
 
