@@ -1022,6 +1022,16 @@ http://www.troid.ca
         <source>Live</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../assets/main.qml" line="138"/>
+        <source>Supplications</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/main.qml" line="139"/>
+        <source>Du&apos;a from the Qu&apos;ran</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>quran::ApplicationUI</name>

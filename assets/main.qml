@@ -132,6 +132,19 @@ TabbedPane {
             }
         }
     }
+    
+    Tab {
+        id: supplications
+        title: qsTr("Supplications") + Retranslate.onLanguageChanged
+        description: qsTr("Du'a from the Qu'ran") + Retranslate.onLanguageChanged
+        imageSource: "images/ic_supplications.png"
+        
+        onTriggered: {
+            if (! content) {
+                lazyLoad("SupplicationsTab.qml", supplications);
+            }
+        }
+    }
 
     function lazyLoad(actualSource, tab) {
         definition.source = actualSource;
