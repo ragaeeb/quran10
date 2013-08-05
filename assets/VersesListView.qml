@@ -5,6 +5,7 @@ ListView {
     property alias theDataModel: verseModel
     property alias listFade: fader
     property alias background: headerBackground
+    property alias activeDefinition: activeDef
     property int chapterNumber
     property string chapterName
     property alias mediaPlayer: player
@@ -205,6 +206,11 @@ ListView {
             itemName: qsTr("ayahs")
         },
         
+        ImagePaintDefinition {
+            id: activeDef
+            imageSource: "images/list_item_pressed.amd"
+        },
+        
         PlainTextMultiselector
         {
             function getSelectedTextualData()
@@ -265,6 +271,7 @@ ListView {
                 property bool selection: ListItem.selected
                 property bool hasTafsir: ListItemData.hasTafsir ? ListItemData.hasTafsir : false
                 property bool playing: ListItemData.playing ? ListItemData.playing : false
+                property bool active: ListItem.active
 
                 id: itemRoot
 
@@ -276,6 +283,8 @@ ListView {
                         background = Color.DarkGreen
                     } else if (hasTafsir) {
                         background = Color.create("#ffe0e0e0")
+                    } else if (active) {
+                        background = ListItem.view.activeDefinition.imagePaint
                     } else {
                         background = undefined
                     }
@@ -285,6 +294,7 @@ ListView {
                     selectionChanged.connect(updateState);
                     playingChanged.connect(updateState);
                     hasTafsirChanged.connect(updateState);
+                    activeChanged.connect(updateState);
                     updateState();
                 }
                 

@@ -941,49 +941,49 @@ http://www.troid.ca
 <context>
     <name>VersesListView</name>
     <message>
-        <location filename="../assets/VersesListView.qml" line="236"/>
+        <location filename="../assets/VersesListView.qml" line="242"/>
         <source>%1:%2-%3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="66"/>
+        <location filename="../assets/VersesListView.qml" line="67"/>
         <source>Play</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="78"/>
+        <location filename="../assets/VersesListView.qml" line="79"/>
         <source>None selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="110"/>
-        <location filename="../assets/VersesListView.qml" line="257"/>
-        <location filename="../assets/VersesListView.qml" line="312"/>
+        <location filename="../assets/VersesListView.qml" line="111"/>
+        <location filename="../assets/VersesListView.qml" line="263"/>
+        <location filename="../assets/VersesListView.qml" line="321"/>
         <source>%1:%2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="128"/>
+        <location filename="../assets/VersesListView.qml" line="129"/>
         <source>Bookmarked %1:%2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="205"/>
+        <location filename="../assets/VersesListView.qml" line="206"/>
         <source>ayahs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="315"/>
+        <location filename="../assets/VersesListView.qml" line="324"/>
         <source>Bookmark</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="324"/>
+        <location filename="../assets/VersesListView.qml" line="333"/>
         <source>Add to Home Screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="335"/>
+        <location filename="../assets/VersesListView.qml" line="344"/>
         <source>Play From Here</source>
         <translation type="unfinished"></translation>
     </message>

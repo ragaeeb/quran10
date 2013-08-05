@@ -178,7 +178,6 @@ Sheet
                             scrollViewProperties.overScrollEffectMode: OverScrollEffectMode.OnPinch
                             
                             onDataChanged: {
-                                console.log("DATA", data);
                                 resetViewableArea();
                             }
                             

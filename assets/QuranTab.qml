@@ -25,13 +25,36 @@ Tab
                     title: qsTr("Mushaf") + Retranslate.onLanguageChanged
                     imageSource: "images/ic_mushaf.png"
                     ActionBar.placement: ActionBarPlacement.OnBar
-                    
+
                     onTriggered: {
                         definition.source = "MushafSheet.qml";
                         var sheet = definition.createObject();
                         
                         sheet.open();
                     }
+                },
+                
+                ActionItem {
+                    title: qsTr("Sunnah10") + Retranslate.onLanguageChanged
+                    imageSource: "images/ic_jump.png"
+                    ActionBar.placement: ActionBarPlacement.OnBar
+                    
+                    onTriggered: {
+                        sunnah.trigger("bb.action.OPEN");
+                    }
+
+                    attachedObjects: [
+                        Invocation {
+                            id: sunnah
+                            
+                            query: InvokeQuery {
+                                mimeType: "text/html"
+                                uri: "http://appworld.blackberry.com/webstore/content/30105889"
+                                invokeActionId: "bb.action.OPEN"
+                                invokeTargetId: "sys.appworld"
+                            }
+                        }
+                    ]
                 }
             ]
 
