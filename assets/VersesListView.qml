@@ -128,6 +128,10 @@ ListView {
         persist.showToast( qsTr("Bookmarked %1:%2").arg(chapterNumber).arg(ListItemData.verse_id) );
     }
     
+    function addToHomeScreen(ListItemData) {
+        app.addToHomeScreen(chapterNumber, ListItemData.verse_id, ListItemData.translation ? ListItemData.translation : ListItemData.arabic);
+    }
+    
     function queryExplanationsFor(source, verseId)
     {
         var translation = persist.getValueFor("translation");
@@ -313,6 +317,15 @@ ListView {
 
                             onTriggered: {
                                 itemRoot.ListItem.view.bookmark(ListItemData)
+                            }
+                        }
+                        
+                        ActionItem {
+                            title: qsTr("Add to Home Screen") + Retranslate.onLanguageChanged
+                            imageSource: "images/ic_home.png"
+                            
+                            onTriggered: {
+                                itemRoot.ListItem.view.addToHomeScreen(ListItemData)
                             }
                         }
 

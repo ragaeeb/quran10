@@ -941,7 +941,7 @@ http://www.troid.ca
 <context>
     <name>VersesListView</name>
     <message>
-        <location filename="../assets/VersesListView.qml" line="232"/>
+        <location filename="../assets/VersesListView.qml" line="236"/>
         <source>%1:%2-%3</source>
         <translation type="unfinished"></translation>
     </message>
@@ -957,8 +957,8 @@ http://www.troid.ca
     </message>
     <message>
         <location filename="../assets/VersesListView.qml" line="110"/>
-        <location filename="../assets/VersesListView.qml" line="253"/>
-        <location filename="../assets/VersesListView.qml" line="308"/>
+        <location filename="../assets/VersesListView.qml" line="257"/>
+        <location filename="../assets/VersesListView.qml" line="312"/>
         <source>%1:%2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -968,17 +968,22 @@ http://www.troid.ca
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="201"/>
+        <location filename="../assets/VersesListView.qml" line="205"/>
         <source>ayahs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="311"/>
+        <location filename="../assets/VersesListView.qml" line="315"/>
         <source>Bookmark</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="322"/>
+        <location filename="../assets/VersesListView.qml" line="324"/>
+        <source>Add to Home Screen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/VersesListView.qml" line="335"/>
         <source>Play From Here</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1075,6 +1080,16 @@ http://www.troid.ca
     <message>
         <location filename="../src/applicationui.cpp" line="256"/>
         <source>No</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/applicationui.cpp" line="279"/>
+        <source>Added %1 to home screen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/applicationui.cpp" line="281"/>
+        <source>Could not add %1 to home screen</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -1,19 +1,9 @@
 #include <QFile>
 #include <QStringList>
-#include <QTimer>
-
-#include <QtNetwork/QNetworkReply>
-#include <QtNetwork/QNetworkAccessManager>
 
 #include <bb/cascades/pickers/FilePicker>
 
-#include <bb/data/SqlConnection>
-
-#include <bb/multimedia/MediaState>
-
-#include <bb/system/Clipboard>
-#include <bb/system/SystemDialog>
-#include <bb/system/SystemToast>
+#include <bb/platform/HomeScreen>
 
 #include <bb/cascades/AbstractDialog>
 #include <bb/cascades/Application>

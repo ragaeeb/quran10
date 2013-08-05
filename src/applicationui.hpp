@@ -49,6 +49,7 @@ public:
     Q_INVOKABLE QStringList downloadChapter(int chapter, int fromVerse, int toVerse);
     Q_INVOKABLE QStringList generatePlaylist(int chapter, int fromVerse, int toVerse);
     Q_INVOKABLE void bookmarkVerse(QString const& surahName, int surahNumber, QVariantMap const& verseData);
+    Q_INVOKABLE void addToHomeScreen(int chapter, int verse, QString const& label);
     Q_INVOKABLE void downloadMushaf();
     Q_INVOKABLE static QStringList getMushafPages();
     Q_INVOKABLE static QStringList getDownloadedMushafPages();
