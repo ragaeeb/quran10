@@ -1,8 +1,13 @@
 import bb.cascades 1.0
 
-ActiveTextHandler
+QtObject
 {
     property string itemName
+    property MultiSelectActionItem msai: MultiSelectActionItem
+    {
+        title: qsTr("Select Range") + Retranslate.onLanguageChanged
+        imageSource: "images/ic_range.png"
+    }
 
     function onSelectionChanged()
     {
@@ -28,12 +33,4 @@ ActiveTextHandler
         parent.selectionChanged.connect(onSelectionChanged);
         parent.multiSelectAction = msai;
     }
-    
-    attachedObjects: [
-        MultiSelectActionItem {
-            id: msai
-            title: qsTr("Select Range") + Retranslate.onLanguageChanged
-            imageSource: "images/ic_range.png"
-        }
-    ]
 }

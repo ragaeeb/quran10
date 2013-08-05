@@ -77,6 +77,10 @@
        <platformArchitecture>armle-v7</platformArchitecture>
        <asset path="arm/o.le-v7/Quran10.so" entry="true" type="Qnx/Elf">Quran10.so</asset>
     </configuration>
+    <configuration name="Simulator-Debug">
+       <platformArchitecture>x86</platformArchitecture>
+       <asset path="x86/o-g/Quran10" entry="true" type="Qnx/Elf">Quran10</asset>
+    </configuration>
     
     <!--  The icon for the application -->
     <icon>
