@@ -181,10 +181,24 @@ BasePage
 	                }
 	            }
 	        }
+            
+            SettingPair {
+                topMargin: 40
+                title: qsTr("Link Tafsir to Translation") + Retranslate.onLanguageChanged
+                key: "linkTafsir"
+                
+                toggle.onCheckedChanged: {
+                    if (checked) {
+                        infoText.text = qsTr("Tafsir will only be shown if it is available for the translated language.") + Retranslate.onLanguageChanged
+                    } else {
+                        infoText.text = qsTr("Tafsir will always be shown.") + Retranslate.onLanguageChanged
+                    }
+                }
+            }
 
             SettingPair {
                 topMargin: 40
-                title: qsTr("Repeat Recitation")
+                title: qsTr("Repeat Recitation") + Retranslate.onLanguageChanged
                 key: "repeat"
 
                 toggle.onCheckedChanged: {
@@ -197,6 +211,7 @@ BasePage
             }
 
             SettingPair {
+                topMargin: 40
                 title: qsTr("Follow Recitation")
                 key: "follow"
 

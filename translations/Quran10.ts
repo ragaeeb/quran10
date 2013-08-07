@@ -328,331 +328,346 @@ http://www.troid.ca
     </message>
     <message>
         <location filename="../assets/SettingsPage.qml" line="187"/>
-        <source>Repeat Recitation</source>
+        <source>Link Tafsir to Translation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../assets/SettingsPage.qml" line="192"/>
-        <source>Recitations will keep repeating indefinitely.</source>
+        <source>Tafsir will only be shown if it is available for the translated language.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../assets/SettingsPage.qml" line="194"/>
+        <source>Tafsir will always be shown.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/SettingsPage.qml" line="201"/>
+        <source>Repeat Recitation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/SettingsPage.qml" line="206"/>
+        <source>Recitations will keep repeating indefinitely.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/SettingsPage.qml" line="208"/>
         <source>Recitations will only be played once and stopped.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="200"/>
+        <location filename="../assets/SettingsPage.qml" line="215"/>
         <source>Follow Recitation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="205"/>
+        <location filename="../assets/SettingsPage.qml" line="220"/>
         <source>The list will be scrolled to follow the current verse.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="207"/>
+        <location filename="../assets/SettingsPage.qml" line="222"/>
         <source>The list will not scroll to reflect the current verse.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="214"/>
+        <location filename="../assets/SettingsPage.qml" line="229"/>
         <source>Reciter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="218"/>
-        <location filename="../assets/SettingsPage.qml" line="224"/>
+        <location filename="../assets/SettingsPage.qml" line="233"/>
+        <location filename="../assets/SettingsPage.qml" line="239"/>
         <source>Abdul-Baset Abdel-Samad</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="219"/>
-        <location filename="../assets/SettingsPage.qml" line="231"/>
-        <location filename="../assets/SettingsPage.qml" line="249"/>
-        <location filename="../assets/SettingsPage.qml" line="273"/>
-        <location filename="../assets/SettingsPage.qml" line="285"/>
-        <location filename="../assets/SettingsPage.qml" line="303"/>
-        <location filename="../assets/SettingsPage.qml" line="315"/>
-        <location filename="../assets/SettingsPage.qml" line="327"/>
-        <location filename="../assets/SettingsPage.qml" line="339"/>
-        <location filename="../assets/SettingsPage.qml" line="351"/>
-        <location filename="../assets/SettingsPage.qml" line="363"/>
-        <location filename="../assets/SettingsPage.qml" line="369"/>
-        <location filename="../assets/SettingsPage.qml" line="381"/>
-        <location filename="../assets/SettingsPage.qml" line="387"/>
-        <location filename="../assets/SettingsPage.qml" line="399"/>
-        <location filename="../assets/SettingsPage.qml" line="411"/>
-        <location filename="../assets/SettingsPage.qml" line="429"/>
-        <location filename="../assets/SettingsPage.qml" line="447"/>
-        <location filename="../assets/SettingsPage.qml" line="459"/>
-        <location filename="../assets/SettingsPage.qml" line="483"/>
-        <location filename="../assets/SettingsPage.qml" line="495"/>
-        <location filename="../assets/SettingsPage.qml" line="507"/>
-        <location filename="../assets/SettingsPage.qml" line="513"/>
-        <location filename="../assets/SettingsPage.qml" line="525"/>
+        <location filename="../assets/SettingsPage.qml" line="234"/>
+        <location filename="../assets/SettingsPage.qml" line="246"/>
+        <location filename="../assets/SettingsPage.qml" line="264"/>
+        <location filename="../assets/SettingsPage.qml" line="288"/>
+        <location filename="../assets/SettingsPage.qml" line="300"/>
+        <location filename="../assets/SettingsPage.qml" line="318"/>
+        <location filename="../assets/SettingsPage.qml" line="330"/>
+        <location filename="../assets/SettingsPage.qml" line="342"/>
+        <location filename="../assets/SettingsPage.qml" line="354"/>
+        <location filename="../assets/SettingsPage.qml" line="366"/>
+        <location filename="../assets/SettingsPage.qml" line="378"/>
+        <location filename="../assets/SettingsPage.qml" line="384"/>
+        <location filename="../assets/SettingsPage.qml" line="396"/>
+        <location filename="../assets/SettingsPage.qml" line="402"/>
+        <location filename="../assets/SettingsPage.qml" line="414"/>
+        <location filename="../assets/SettingsPage.qml" line="426"/>
+        <location filename="../assets/SettingsPage.qml" line="444"/>
+        <location filename="../assets/SettingsPage.qml" line="462"/>
+        <location filename="../assets/SettingsPage.qml" line="474"/>
+        <location filename="../assets/SettingsPage.qml" line="498"/>
+        <location filename="../assets/SettingsPage.qml" line="510"/>
+        <location filename="../assets/SettingsPage.qml" line="522"/>
+        <location filename="../assets/SettingsPage.qml" line="528"/>
+        <location filename="../assets/SettingsPage.qml" line="540"/>
         <source>Low Quality</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="225"/>
-        <location filename="../assets/SettingsPage.qml" line="237"/>
-        <location filename="../assets/SettingsPage.qml" line="261"/>
-        <location filename="../assets/SettingsPage.qml" line="279"/>
-        <location filename="../assets/SettingsPage.qml" line="333"/>
-        <location filename="../assets/SettingsPage.qml" line="357"/>
-        <location filename="../assets/SettingsPage.qml" line="441"/>
-        <location filename="../assets/SettingsPage.qml" line="471"/>
-        <location filename="../assets/SettingsPage.qml" line="477"/>
+        <location filename="../assets/SettingsPage.qml" line="240"/>
+        <location filename="../assets/SettingsPage.qml" line="252"/>
+        <location filename="../assets/SettingsPage.qml" line="276"/>
+        <location filename="../assets/SettingsPage.qml" line="294"/>
+        <location filename="../assets/SettingsPage.qml" line="348"/>
+        <location filename="../assets/SettingsPage.qml" line="372"/>
+        <location filename="../assets/SettingsPage.qml" line="456"/>
+        <location filename="../assets/SettingsPage.qml" line="486"/>
+        <location filename="../assets/SettingsPage.qml" line="492"/>
         <source>High Quality</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="230"/>
-        <location filename="../assets/SettingsPage.qml" line="236"/>
+        <location filename="../assets/SettingsPage.qml" line="245"/>
+        <location filename="../assets/SettingsPage.qml" line="251"/>
         <source>Abdul-Basit Murattal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="242"/>
+        <location filename="../assets/SettingsPage.qml" line="257"/>
         <source>Abdullah &apos;Awwad Al-Juhany</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="243"/>
-        <location filename="../assets/SettingsPage.qml" line="255"/>
-        <location filename="../assets/SettingsPage.qml" line="267"/>
-        <location filename="../assets/SettingsPage.qml" line="291"/>
-        <location filename="../assets/SettingsPage.qml" line="297"/>
-        <location filename="../assets/SettingsPage.qml" line="309"/>
-        <location filename="../assets/SettingsPage.qml" line="321"/>
-        <location filename="../assets/SettingsPage.qml" line="345"/>
-        <location filename="../assets/SettingsPage.qml" line="375"/>
-        <location filename="../assets/SettingsPage.qml" line="393"/>
-        <location filename="../assets/SettingsPage.qml" line="405"/>
-        <location filename="../assets/SettingsPage.qml" line="417"/>
-        <location filename="../assets/SettingsPage.qml" line="423"/>
-        <location filename="../assets/SettingsPage.qml" line="435"/>
-        <location filename="../assets/SettingsPage.qml" line="453"/>
-        <location filename="../assets/SettingsPage.qml" line="465"/>
-        <location filename="../assets/SettingsPage.qml" line="489"/>
-        <location filename="../assets/SettingsPage.qml" line="501"/>
-        <location filename="../assets/SettingsPage.qml" line="519"/>
-        <location filename="../assets/SettingsPage.qml" line="531"/>
+        <location filename="../assets/SettingsPage.qml" line="258"/>
+        <location filename="../assets/SettingsPage.qml" line="270"/>
+        <location filename="../assets/SettingsPage.qml" line="282"/>
+        <location filename="../assets/SettingsPage.qml" line="306"/>
+        <location filename="../assets/SettingsPage.qml" line="312"/>
+        <location filename="../assets/SettingsPage.qml" line="324"/>
+        <location filename="../assets/SettingsPage.qml" line="336"/>
+        <location filename="../assets/SettingsPage.qml" line="360"/>
+        <location filename="../assets/SettingsPage.qml" line="390"/>
+        <location filename="../assets/SettingsPage.qml" line="408"/>
+        <location filename="../assets/SettingsPage.qml" line="420"/>
+        <location filename="../assets/SettingsPage.qml" line="432"/>
+        <location filename="../assets/SettingsPage.qml" line="438"/>
+        <location filename="../assets/SettingsPage.qml" line="450"/>
+        <location filename="../assets/SettingsPage.qml" line="468"/>
+        <location filename="../assets/SettingsPage.qml" line="480"/>
+        <location filename="../assets/SettingsPage.qml" line="504"/>
+        <location filename="../assets/SettingsPage.qml" line="516"/>
+        <location filename="../assets/SettingsPage.qml" line="534"/>
+        <location filename="../assets/SettingsPage.qml" line="546"/>
         <source>Medium Quality</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="248"/>
-        <location filename="../assets/SettingsPage.qml" line="254"/>
-        <location filename="../assets/SettingsPage.qml" line="260"/>
+        <location filename="../assets/SettingsPage.qml" line="263"/>
+        <location filename="../assets/SettingsPage.qml" line="269"/>
+        <location filename="../assets/SettingsPage.qml" line="275"/>
         <source>Abdullah Basfar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="266"/>
+        <location filename="../assets/SettingsPage.qml" line="281"/>
         <source>Abdullah Matroud</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="272"/>
-        <location filename="../assets/SettingsPage.qml" line="278"/>
+        <location filename="../assets/SettingsPage.qml" line="287"/>
+        <location filename="../assets/SettingsPage.qml" line="293"/>
         <source>Abdurrahman As-Sudais</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="284"/>
-        <location filename="../assets/SettingsPage.qml" line="290"/>
+        <location filename="../assets/SettingsPage.qml" line="299"/>
+        <location filename="../assets/SettingsPage.qml" line="305"/>
         <source>Abu Bakr Ash-Shaatree</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="296"/>
+        <location filename="../assets/SettingsPage.qml" line="311"/>
         <source>Ahmed Neana</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="302"/>
-        <location filename="../assets/SettingsPage.qml" line="308"/>
+        <location filename="../assets/SettingsPage.qml" line="317"/>
+        <location filename="../assets/SettingsPage.qml" line="323"/>
         <source>Ahmed Ibn Ali al-Ajamy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="314"/>
-        <location filename="../assets/SettingsPage.qml" line="320"/>
+        <location filename="../assets/SettingsPage.qml" line="329"/>
+        <location filename="../assets/SettingsPage.qml" line="335"/>
         <source>Ali Abdur-rahman al-Hudhaify</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="326"/>
-        <location filename="../assets/SettingsPage.qml" line="332"/>
+        <location filename="../assets/SettingsPage.qml" line="341"/>
+        <location filename="../assets/SettingsPage.qml" line="347"/>
         <source>Hani ar-Rifai</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="338"/>
-        <location filename="../assets/SettingsPage.qml" line="344"/>
+        <location filename="../assets/SettingsPage.qml" line="353"/>
+        <location filename="../assets/SettingsPage.qml" line="359"/>
         <source>Ibrahim Akdhar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="350"/>
+        <location filename="../assets/SettingsPage.qml" line="365"/>
         <source>Karim Mansoori</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="356"/>
+        <location filename="../assets/SettingsPage.qml" line="371"/>
         <source>Khalid Abdullah al-Qahtaanee</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="362"/>
+        <location filename="../assets/SettingsPage.qml" line="377"/>
         <source>Khalifa Al Tunaiji</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="368"/>
-        <location filename="../assets/SettingsPage.qml" line="374"/>
+        <location filename="../assets/SettingsPage.qml" line="383"/>
+        <location filename="../assets/SettingsPage.qml" line="389"/>
         <source>Maher bin Hamad Al-Mueaqly</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="380"/>
+        <location filename="../assets/SettingsPage.qml" line="395"/>
         <source>Mahmoud Ali Al Banna</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="386"/>
-        <location filename="../assets/SettingsPage.qml" line="392"/>
+        <location filename="../assets/SettingsPage.qml" line="401"/>
+        <location filename="../assets/SettingsPage.qml" line="407"/>
         <source>Mahmoud Khaleel El-Hosary Mujawwad</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="398"/>
-        <location filename="../assets/SettingsPage.qml" line="404"/>
+        <location filename="../assets/SettingsPage.qml" line="413"/>
+        <location filename="../assets/SettingsPage.qml" line="419"/>
         <source>Mishary Rashid Al-Afasy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="410"/>
-        <location filename="../assets/SettingsPage.qml" line="416"/>
+        <location filename="../assets/SettingsPage.qml" line="425"/>
+        <location filename="../assets/SettingsPage.qml" line="431"/>
         <source>Mohammad al Tablaway</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="422"/>
+        <location filename="../assets/SettingsPage.qml" line="437"/>
         <source>Muhammad Abdulkareem</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="428"/>
-        <location filename="../assets/SettingsPage.qml" line="434"/>
-        <location filename="../assets/SettingsPage.qml" line="440"/>
+        <location filename="../assets/SettingsPage.qml" line="443"/>
+        <location filename="../assets/SettingsPage.qml" line="449"/>
+        <location filename="../assets/SettingsPage.qml" line="455"/>
         <source>Muhammad Ayyoub</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="446"/>
-        <location filename="../assets/SettingsPage.qml" line="452"/>
+        <location filename="../assets/SettingsPage.qml" line="461"/>
+        <location filename="../assets/SettingsPage.qml" line="467"/>
         <source>Muhammad Jibreel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="458"/>
-        <location filename="../assets/SettingsPage.qml" line="464"/>
-        <location filename="../assets/SettingsPage.qml" line="470"/>
+        <location filename="../assets/SettingsPage.qml" line="473"/>
+        <location filename="../assets/SettingsPage.qml" line="479"/>
+        <location filename="../assets/SettingsPage.qml" line="485"/>
         <source>Muhammad Siddiq al-Minshawi</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="476"/>
+        <location filename="../assets/SettingsPage.qml" line="491"/>
         <source>Muhsin Al-Qasim</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="482"/>
+        <location filename="../assets/SettingsPage.qml" line="497"/>
         <source>Mustafa Ismail</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="488"/>
+        <location filename="../assets/SettingsPage.qml" line="503"/>
         <source>Nasser Alqatami</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="494"/>
+        <location filename="../assets/SettingsPage.qml" line="509"/>
         <source>Saad Al-Ghamidi</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="500"/>
+        <location filename="../assets/SettingsPage.qml" line="515"/>
         <source>Salah Abdulrahman Bukhatir</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="506"/>
+        <location filename="../assets/SettingsPage.qml" line="521"/>
         <source>Salah Al-Budair</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="512"/>
-        <location filename="../assets/SettingsPage.qml" line="518"/>
+        <location filename="../assets/SettingsPage.qml" line="527"/>
+        <location filename="../assets/SettingsPage.qml" line="533"/>
         <source>Saud al-Shuraim</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="524"/>
+        <location filename="../assets/SettingsPage.qml" line="539"/>
         <source>Ustad Shahriar Parhizgar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="530"/>
+        <location filename="../assets/SettingsPage.qml" line="545"/>
         <source>Yasser Ad-Dussary</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="536"/>
+        <location filename="../assets/SettingsPage.qml" line="551"/>
         <source>The verse recitations will be that of %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="597"/>
+        <location filename="../assets/SettingsPage.qml" line="612"/>
         <source>Primary Font Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="604"/>
+        <location filename="../assets/SettingsPage.qml" line="619"/>
         <source>The primary font size will be small</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="606"/>
+        <location filename="../assets/SettingsPage.qml" line="621"/>
         <source>The primary font size will be medium</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="608"/>
+        <location filename="../assets/SettingsPage.qml" line="623"/>
         <source>The primary font size will be large</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="615"/>
+        <location filename="../assets/SettingsPage.qml" line="630"/>
         <source>Translation Font Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="622"/>
+        <location filename="../assets/SettingsPage.qml" line="637"/>
         <source>The translation font size will be small</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="624"/>
+        <location filename="../assets/SettingsPage.qml" line="639"/>
         <source>The translation font size will be medium</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="626"/>
+        <location filename="../assets/SettingsPage.qml" line="641"/>
         <source>The translation font size will be large</source>
         <translation type="unfinished"></translation>
     </message>
@@ -767,18 +782,18 @@ http://www.troid.ca
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="548"/>
+        <location filename="../assets/SettingsPage.qml" line="563"/>
         <source>Select Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="566"/>
+        <location filename="../assets/SettingsPage.qml" line="581"/>
         <source>Download directory:
 %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="584"/>
+        <location filename="../assets/SettingsPage.qml" line="599"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -846,48 +861,48 @@ http://www.troid.ca
 <context>
     <name>SurahPage</name>
     <message>
-        <location filename="../assets/SurahPage.qml" line="103"/>
+        <location filename="../assets/SurahPage.qml" line="105"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="103"/>
+        <location filename="../assets/SurahPage.qml" line="105"/>
         <source>Press-and-hold on a verse with a grey highlight to find explanations on it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="98"/>
-        <location filename="../assets/SurahPage.qml" line="290"/>
+        <location filename="../assets/SurahPage.qml" line="100"/>
+        <location filename="../assets/SurahPage.qml" line="292"/>
         <source>%1 (%2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="148"/>
+        <location filename="../assets/SurahPage.qml" line="150"/>
         <source>Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="157"/>
+        <location filename="../assets/SurahPage.qml" line="159"/>
         <source>Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="167"/>
+        <location filename="../assets/SurahPage.qml" line="169"/>
         <source>Play All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="167"/>
+        <location filename="../assets/SurahPage.qml" line="169"/>
         <source>Pause</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="186"/>
+        <location filename="../assets/SurahPage.qml" line="188"/>
         <source>Ibn Katheer</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../assets/SurahPage.qml" line="273"/>
+        <location filename="../assets/SurahPage.qml" line="275"/>
         <source>%n downloads remaining...</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -946,49 +961,49 @@ http://www.troid.ca
 <context>
     <name>VersesListView</name>
     <message>
-        <location filename="../assets/VersesListView.qml" line="242"/>
+        <location filename="../assets/VersesListView.qml" line="246"/>
         <source>%1:%2-%3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="67"/>
+        <location filename="../assets/VersesListView.qml" line="68"/>
         <source>Play</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="79"/>
+        <location filename="../assets/VersesListView.qml" line="80"/>
         <source>None selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="111"/>
-        <location filename="../assets/VersesListView.qml" line="263"/>
-        <location filename="../assets/VersesListView.qml" line="322"/>
+        <location filename="../assets/VersesListView.qml" line="114"/>
+        <location filename="../assets/VersesListView.qml" line="267"/>
+        <location filename="../assets/VersesListView.qml" line="326"/>
         <source>%1:%2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="129"/>
+        <location filename="../assets/VersesListView.qml" line="132"/>
         <source>Bookmarked %1:%2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="206"/>
+        <location filename="../assets/VersesListView.qml" line="210"/>
         <source>ayahs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="325"/>
+        <location filename="../assets/VersesListView.qml" line="329"/>
         <source>Bookmark</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="334"/>
+        <location filename="../assets/VersesListView.qml" line="338"/>
         <source>Add to Home Screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="345"/>
+        <location filename="../assets/VersesListView.qml" line="349"/>
         <source>Play From Here</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1054,12 +1069,12 @@ http://www.troid.ca
 <context>
     <name>quran::ApplicationUI</name>
     <message>
-        <location filename="../src/applicationui.cpp" line="224"/>
+        <location filename="../src/applicationui.cpp" line="225"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="224"/>
+        <location filename="../src/applicationui.cpp" line="225"/>
         <source>Error: Could not create the directory to download the files into. Please try one of the following to fix this:
 
 1) Swipe-down from the top-bezel &amp; go to the app settings and make sure the Download Directory is set to a valid location.
@@ -1068,32 +1083,32 @@ http://www.troid.ca
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="256"/>
+        <location filename="../src/applicationui.cpp" line="257"/>
         <source>Confirmation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="256"/>
+        <location filename="../src/applicationui.cpp" line="257"/>
         <source>We are about to download a whole bunch of MP3 recitations, you should only attempt to do this if you have either an unlimited data plan, or are connected via Wi-Fi. Otherwise you might incur a lot of data charges. Are you sure you want to continue? If you select No you can always attempt to download again later.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="256"/>
+        <location filename="../src/applicationui.cpp" line="257"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="256"/>
+        <location filename="../src/applicationui.cpp" line="257"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="279"/>
+        <location filename="../src/applicationui.cpp" line="280"/>
         <source>Added %1 to home screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="281"/>
+        <location filename="../src/applicationui.cpp" line="282"/>
         <source>Could not add %1 to home screen</source>
         <translation type="unfinished"></translation>
     </message>

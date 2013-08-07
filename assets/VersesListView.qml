@@ -12,6 +12,7 @@ ListView {
     property ActionSet sourceSet
     property int translationSize: persist.getValueFor("translationSize")
     property int primarySize: persist.getValueFor("primarySize")
+    property bool addSpaceHack: persist.getValueFor("primary") != "transliteration"
     signal tafsirTriggered(int id);
     id: listView
     opacity: 0
@@ -92,6 +93,8 @@ ListView {
             primarySize = persist.getValueFor("primarySize");
         } else if (key == "translationSize") {
             translationSize = persist.getValueFor("translationSize");
+        } else if (key == "primary") {
+            addSpaceHack = persist.getValueFor("primary") != "transliteration";
         }
     }
 
@@ -136,13 +139,14 @@ ListView {
     function queryExplanationsFor(source, verseId)
     {
         var translation = persist.getValueFor("translation");
+        var alwaysShowTafsir = persist.getValueFor("linkTafsir") == 0;
         
-        if (translation == "english")
+        if (alwaysShowTafsir || translation == "english")
         {
             sourceSet = source;
             
             sqlDataSource.query = "SELECT id,verse_id,description FROM tafsir_english WHERE surah_id=%1 AND verse_id=%2".arg(chapterNumber).arg(verseId);
-            sqlDataSource.load(0);   
+            sqlDataSource.load(0);
         }
     }
 
@@ -388,7 +392,7 @@ ListView {
 
                 Label {
                     id: firstLabel
-                    text: ListItemData.arabic+" "
+                    text: itemRoot.ListItem.view.addSpaceHack ? ListItemData.arabic+" " : ListItemData.arabic
                     multiline: true
                     horizontalAlignment: HorizontalAlignment.Fill
                     textStyle.color: selection || playing ? Color.White : Color.Black

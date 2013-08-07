@@ -29,7 +29,9 @@ Page
 
         sqlDataSource.load(0);
         
-        if (translation == "english") {
+        var alwaysShowTafsir = persist.getValueFor("linkTafsir") == 0;
+        
+        if (alwaysShowTafsir || translation == "english") {
             sqlDataSource.query = "SELECT id,description,verse_id FROM tafsir_english WHERE surah_id=%1".arg(surahId);
             sqlDataSource.load(80);
             
@@ -41,7 +43,7 @@ Page
     
     function reloadNeeded(key)
     {
-        if (key == "translation" || key == "primary" || key == "primarySize" || key == "translationSize") {
+        if (key == "translation" || key == "primary" || key == "primarySize" || key == "translationSize" || key == "linkTafsir") {
             loadVerses()
         }
     }
