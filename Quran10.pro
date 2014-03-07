@@ -15,14 +15,17 @@ CONFIG(debug, debug|release) {
 }
 
 simulator {
+
 CONFIG(release, debug|release) {
     DESTDIR = o
     LIBS += -Bstatic -L../../canadainc/x86/o-g/ -lcanadainc -Bdynamic     
 }
+
 CONFIG(debug, debug|release) {
     DESTDIR = o-g
     LIBS += -Bstatic -L../../canadainc/x86/o-g/ -lcanadainc -Bdynamic
 }
+
 }
 
 include(config.pri)
