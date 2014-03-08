@@ -6,7 +6,7 @@
 using namespace bb::cascades;
 using namespace quran;
 
-#ifdef DEBUG
+#if !defined(QT_NO_DEBUG)
 namespace {
 
 void redirectedMessageOutput(QtMsgType type, const char *msg) {
@@ -19,7 +19,7 @@ void redirectedMessageOutput(QtMsgType type, const char *msg) {
 
 Q_DECL_EXPORT int main(int argc, char **argv)
 {
-#ifdef DEBUG
+#if !defined(QT_NO_DEBUG)
 	qInstallMsgHandler(redirectedMessageOutput);
 #endif
 

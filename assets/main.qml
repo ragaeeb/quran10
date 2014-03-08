@@ -1,72 +1,29 @@
-import bb.cascades 1.0
+import bb.cascades 1.2
 
-TabbedPane {
+TabbedPane
+{
     id: root
     activeTab: quranTab
-
-    attachedObjects: [
-        ComponentDefinition {
-            id: definition
-        }
-    ]
-
-    Menu.definition: MenuDefinition {
-        settingsAction: SettingsActionItem {
-            property Page settingsPage
-
-            onTriggered: {
-                if (! settingsPage) {
-                    definition.source = "SettingsPage.qml"
-                    settingsPage = definition.createObject()
-                }
-
-                root.activePane.push(settingsPage);
-            }
-            
-            onCreationCompleted: {
-                if ( persist.getValueFor("tutorialCount") != 1 ) {
-                    persist.saveValueFor("tutorialCount", 1);
-                    triggered();
-                }
-            }
-        }
-        
-        actions: [
-            ActionItem {
-                title: qsTr("Bug Reports") + Retranslate.onLanguageChanged
-                imageSource: "images/ic_bugs.png"
-                
-                onTriggered: {
-                    definition.source = "BugReportPage.qml";
-                    var bugReportPage = definition.createObject();
-                    bugReportPage.projectName = "quran10";
-                    root.activePane.push(bugReportPage);
-                }
-            }
-        ]
-
-        helpAction: HelpActionItem {
-            property Page helpPage
-
-            onTriggered: {
-                if (! helpPage) {
-                    definition.source = "HelpPage.qml"
-                    helpPage = definition.createObject();
-                }
-
-                root.activePane.push(helpPage);
-            }
-        }
+    
+    Menu.definition: CanadaIncMenu
+    {
+        projectName: "quran10"
+        allowDonations: true
+        promoteChannel: true
+        bbWorldID: "27022877"
     }
 
-    QuranTab {
+	Tab
+	{
         id: quranTab
         title: qsTr("Qu'ran") + Retranslate.onLanguageChanged
         description: qsTr("القرآن") + Retranslate.onLanguageChanged
         imageSource: "images/ic_quran_open.png"
         unreadContentCount: mushafQueue.queued + queue.queued
         newContentAvailable: unreadContentCount > 0
-    }
+	    
+	    QuranPane {}
+	}
 
     Tab {
         id: bookmarks

@@ -64,14 +64,6 @@ Canada Inc. Support</source>
     </message>
 </context>
 <context>
-    <name>BugReportPage</name>
-    <message>
-        <location filename="../assets/BugReportPage.qml" line="8"/>
-        <source>Bug Report</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>Cover</name>
     <message>
         <location filename="../assets/Cover.qml" line="33"/>
@@ -85,7 +77,7 @@ Canada Inc. Support</source>
         <location filename="../assets/HelpPage.qml" line="34"/>
         <source>
 
-(c) 2013 %1. All Rights Reserved.
+(c) 2013-2014 %1. All Rights Reserved.
 %2 %3
 
 Please report all bugs to:
@@ -186,19 +178,19 @@ http://www.troid.ca
     </message>
 </context>
 <context>
-    <name>QuranTab</name>
+    <name>QuranPane</name>
     <message>
-        <location filename="../assets/QuranTab.qml" line="25"/>
+        <location filename="../assets/QuranPane.qml" line="23"/>
         <source>Mushaf</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranTab.qml" line="38"/>
+        <location filename="../assets/QuranPane.qml" line="36"/>
         <source>Sunnah10</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranTab.qml" line="65"/>
+        <location filename="../assets/QuranPane.qml" line="63"/>
         <source>Search surah name...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1011,57 +1003,52 @@ http://www.troid.ca
 <context>
     <name>main</name>
     <message>
-        <location filename="../assets/main.qml" line="36"/>
-        <source>Bug Reports</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/main.qml" line="64"/>
+        <location filename="../assets/main.qml" line="19"/>
         <source>Qu&apos;ran</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="65"/>
+        <location filename="../assets/main.qml" line="20"/>
         <source>القرآن</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="73"/>
+        <location filename="../assets/main.qml" line="30"/>
         <source>Bookmarks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="74"/>
+        <location filename="../assets/main.qml" line="31"/>
         <source>Favourites</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="103"/>
+        <location filename="../assets/main.qml" line="60"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="104"/>
+        <location filename="../assets/main.qml" line="61"/>
         <source>Find</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="116"/>
+        <location filename="../assets/main.qml" line="73"/>
         <source>Radio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="117"/>
+        <location filename="../assets/main.qml" line="74"/>
         <source>Live</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="129"/>
+        <location filename="../assets/main.qml" line="86"/>
         <source>Supplications</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="130"/>
+        <location filename="../assets/main.qml" line="87"/>
         <source>Du&apos;a from the Qu&apos;ran</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1069,12 +1056,12 @@ http://www.troid.ca
 <context>
     <name>quran::ApplicationUI</name>
     <message>
-        <location filename="../src/applicationui.cpp" line="225"/>
+        <location filename="../src/applicationui.cpp" line="224"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="225"/>
+        <location filename="../src/applicationui.cpp" line="224"/>
         <source>Error: Could not create the directory to download the files into. Please try one of the following to fix this:
 
 1) Swipe-down from the top-bezel &amp; go to the app settings and make sure the Download Directory is set to a valid location.
@@ -1083,32 +1070,32 @@ http://www.troid.ca
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="257"/>
+        <location filename="../src/applicationui.cpp" line="256"/>
         <source>Confirmation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="257"/>
+        <location filename="../src/applicationui.cpp" line="256"/>
         <source>We are about to download a whole bunch of MP3 recitations, you should only attempt to do this if you have either an unlimited data plan, or are connected via Wi-Fi. Otherwise you might incur a lot of data charges. Are you sure you want to continue? If you select No you can always attempt to download again later.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="257"/>
+        <location filename="../src/applicationui.cpp" line="256"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="257"/>
+        <location filename="../src/applicationui.cpp" line="256"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="280"/>
+        <location filename="../src/applicationui.cpp" line="279"/>
         <source>Added %1 to home screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="282"/>
+        <location filename="../src/applicationui.cpp" line="281"/>
         <source>Could not add %1 to home screen</source>
         <translation type="unfinished"></translation>
     </message>
