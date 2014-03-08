@@ -18,6 +18,8 @@ Page
 	        rightPadding: 20
 	        bottomPadding: 20
 	        background: back.imagePaint
+	        horizontalAlignment: HorizontalAlignment.Fill
+	        verticalAlignment: VerticalAlignment.Fill
 	        
             PersistDropDown
             {
