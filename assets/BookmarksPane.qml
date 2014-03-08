@@ -20,26 +20,14 @@ NavigationPane
             topPadding: 20;
             background: back.imagePaint
 
-            ControlDelegate {
+            EmptyDelegate
+            {
                 id: noElements
-                horizontalAlignment: HorizontalAlignment.Fill
-                verticalAlignment: VerticalAlignment.Fill
-
-                sourceComponent: ComponentDefinition {
-                    
-                    Container
-                    {
-                        horizontalAlignment: HorizontalAlignment.Fill
-                        leftPadding: 20; rightPadding: 20;
-                        
-                        Label {
-                            horizontalAlignment: HorizontalAlignment.Fill
-                            verticalAlignment: VerticalAlignment.Fill
-                            textStyle.textAlign: TextAlign.Center
-                            multiline: true
-                            text: qsTr("You have no favourites. To mark a favourite, press-and-hold on an ayat or tafsir and choose 'Mark Favourite' from the context-menu.") + Retranslate.onLanguageChanged
-                        }
-                    }
+                graphic: "images/placeholders/ic_empty_bookmarks.png"
+                labelText: qsTr("You have no favourites. To mark a favourite, press-and-hold on an ayat or tafsir and choose 'Mark Favourite' from the context-menu.") + Retranslate.onLanguageChanged
+                
+                onImageTapped: {
+                    //addClicked();
                 }
             }
 
@@ -54,7 +42,8 @@ NavigationPane
 
                 sourceComponent: ComponentDefinition
                 {
-                    ListView {
+                    ListView
+                    {
                         id: listView
                         dataModel: ArrayDataModel {}
 
