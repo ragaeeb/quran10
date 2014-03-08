@@ -10,6 +10,7 @@ Sheet
     Page
     {
         id: mainPage
+        actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
         actionBarVisibility: ChromeVisibility.Hidden
         
         actions: [

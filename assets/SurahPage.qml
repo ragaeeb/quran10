@@ -6,6 +6,7 @@ Page
     id: surahPage
     property int surahId
     property int requestedVerse: -1
+    actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
 
     onSurahIdChanged:
     {

@@ -4,6 +4,7 @@ import com.canadainc.data 1.0
 Page
 {
     property int surahId
+    actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
     
     onSurahIdChanged: {
         var chapterId = surahId == 114 ? 113 : surahId;

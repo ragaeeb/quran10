@@ -8,12 +8,15 @@ NavigationPane
         page.destroy();
     }
     
-    BasePage
+    Page
     {
         id: mainPage
+        actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
+        titleBar: QuranTitleBar {}
         
-        contentContainer: Container
+        Container
         {
+            background: back.imagePaint
             horizontalAlignment: HorizontalAlignment.Fill
             verticalAlignment: VerticalAlignment.Fill
             leftPadding: 10; rightPadding: 10; topPadding: 10;
@@ -129,4 +132,11 @@ NavigationPane
             }
         }
     }
+    
+    attachedObjects: [
+        ImagePaintDefinition {
+            id: back
+            imageSource: "images/background.png"
+        }
+    ]
 }

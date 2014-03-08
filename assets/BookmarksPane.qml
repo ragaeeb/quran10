@@ -8,27 +8,17 @@ NavigationPane
         page.destroy();
     }
 
-    BasePage {
+    Page
+    {
         id: mainPage
+        actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
+        titleBar: QuranTitleBar {}
 
-        actions: [
-            InvokeActionItem {
-                title: qsTr("Donate") + Retranslate.onLanguageChanged
-                imageSource: "images/ic_donate.png"
-                ActionBar.placement: ActionBarPlacement.OnBar
-
-                query {
-                    mimeType: "text/html"
-                    uri: "https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=dar.as.sahaba@hotmail.com&currency_code=CAD&no_shipping=1&tax=0&lc=CA&bn=PP-DonationsBF&item_name=Da'wah Activities, Rent and Utility Expenses for the Musalla (please do not use credit cards)"
-                    invokeActionId: "bb.action.OPEN"
-                }
-            }
-        ]
-
-        contentContainer: Container
+        Container
         {
             horizontalAlignment: HorizontalAlignment.Fill
             topPadding: 20;
+            background: back.imagePaint
 
             ControlDelegate {
                 id: noElements
@@ -62,7 +52,8 @@ NavigationPane
                     spaceQuota: 1
                 }
 
-                sourceComponent: ComponentDefinition {
+                sourceComponent: ComponentDefinition
+                {
                     ListView {
                         id: listView
                         dataModel: ArrayDataModel {}
@@ -163,5 +154,12 @@ NavigationPane
                 }
             }
         }
+        
+        attachedObjects: [
+            ImagePaintDefinition {
+                id: back
+                imageSource: "images/background.png"
+            }
+        ]
     }
 }
