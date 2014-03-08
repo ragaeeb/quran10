@@ -15,21 +15,6 @@ BasePage
 	        rightPadding: 20
 	        bottomPadding: 20
 	        
-	        SettingPair {
-	            topMargin: 20
-	            title: qsTr("Hide Data Warning")
-	        	key: "hideDataWarning"
-	    
-	            toggle.onCheckedChanged:
-	            {
-	        		if (checked) {
-	        		    infoText.text = qsTr("The warning dialog for downloading will not be shown.") + Retranslate.onLanguageChanged
-	                } else {
-	        		    infoText.text = qsTr("A warning dialog will be shown next time you attempt to download a recitation to inform you about possible data charges.") + Retranslate.onLanguageChanged
-	                }
-	            }
-	        }
-	        
             PersistDropDown
             {
                 key: "primary"
@@ -166,27 +151,14 @@ BasePage
 	                }
 	            }
 	        }
-            
-            SettingPair {
-                topMargin: 40
-                title: qsTr("Link Tafsir to Translation") + Retranslate.onLanguageChanged
-                key: "linkTafsir"
-                
-                toggle.onCheckedChanged: {
-                    if (checked) {
-                        infoText.text = qsTr("Tafsir will only be shown if it is available for the translated language.") + Retranslate.onLanguageChanged
-                    } else {
-                        infoText.text = qsTr("Tafsir will always be shown.") + Retranslate.onLanguageChanged
-                    }
-                }
-            }
 
-            SettingPair {
+            PersistCheckBox
+            {
                 topMargin: 40
-                title: qsTr("Repeat Recitation") + Retranslate.onLanguageChanged
                 key: "repeat"
-
-                toggle.onCheckedChanged: {
+                text: qsTr("Repeat Recitation") + Retranslate.onLanguageChanged
+                
+                onCheckedChanged: {
                     if (checked) {
                         infoText.text = qsTr("Recitations will keep repeating indefinitely.") + Retranslate.onLanguageChanged
                     } else {
@@ -195,12 +167,13 @@ BasePage
                 }
             }
 
-            SettingPair {
+            PersistCheckBox
+            {
                 topMargin: 40
-                title: qsTr("Follow Recitation")
+                text: qsTr("Follow Recitation") + Retranslate.onLanguageChanged
                 key: "follow"
 
-                toggle.onCheckedChanged: {
+                onCheckedChanged: {
                     if (checked) {
                         infoText.text = qsTr("The list will be scrolled to follow the current verse.") + Retranslate.onLanguageChanged
                     } else {

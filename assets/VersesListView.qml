@@ -139,9 +139,8 @@ ListView {
     function queryExplanationsFor(source, verseId)
     {
         var translation = persist.getValueFor("translation");
-        var alwaysShowTafsir = persist.getValueFor("linkTafsir") == 0;
         
-        if (alwaysShowTafsir || translation == "english")
+        if (translation == "english")
         {
             sourceSet = source;
             
