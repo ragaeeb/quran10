@@ -7,6 +7,11 @@ NavigationPane {
     attachedObjects: [
         ComponentDefinition {
             id: definition
+        },
+        
+        ImagePaintDefinition {
+            id: back
+            imageSource: "images/background.png"
         }
     ]
     
@@ -14,9 +19,11 @@ NavigationPane {
         page.destroy();
     }
     
-    BasePage
+    Page
     {
         id: mainPage
+        actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
+        titleBar: QuranTitleBar {}
         
         actions: [
             ActionItem {
@@ -33,8 +40,10 @@ NavigationPane {
             }
         ]
         
-        contentContainer: Container
+        Container
         {
+            background: back.imagePaint
+            
             TextField
             {
                 hintText: qsTr("Search surah name...") + Retranslate.onLanguageChanged

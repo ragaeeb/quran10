@@ -4,6 +4,7 @@ import com.canadainc.data 1.0
 Page
 {
     property string tafsirId
+    actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
     
     onTafsirIdChanged: {
         sqlDataSource.query = "SELECT * from tafsir_english WHERE id=%1".arg(tafsirId);

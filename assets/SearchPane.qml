@@ -2,16 +2,25 @@ import bb.cascades 1.0
 import com.canadainc.data 1.0
 import QtQuick 1.0
 
-NavigationPane {
+NavigationPane
+{
     id: navigationPane
 
     onPopTransitionEnded: {
         page.destroy();
     }
 
-    BasePage {
-        contentContainer: Container {
-            TextField {
+    Page
+    {
+        actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
+        titleBar: QuranTitleBar {}
+        
+        Container
+        {
+            background: back.imagePaint
+            
+            TextField
+            {
                 onCreationCompleted: {
                     translate.play();
                 }
@@ -108,7 +117,8 @@ NavigationPane {
                 horizontalAlignment: HorizontalAlignment.Center
             }
 
-            ListView {
+            ListView
+            {
                 id: listView
                 property alias background: bg
 
@@ -204,4 +214,11 @@ NavigationPane {
             }
         }
     }
+    
+    attachedObjects: [
+        ImagePaintDefinition {
+            id: back
+            imageSource: "images/background.png"
+        }
+    ]
 }

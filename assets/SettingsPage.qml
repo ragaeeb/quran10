@@ -1,9 +1,12 @@
 import bb.cascades 1.0
 import CustomComponent 1.0
 
-BasePage
+Page
 {
-    contentContainer: ScrollView
+    actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
+    titleBar: QuranTitleBar {}
+    
+    ScrollView
     {  
     	horizontalAlignment: HorizontalAlignment.Fill
         verticalAlignment: VerticalAlignment.Fill
@@ -14,6 +17,7 @@ BasePage
 	        topPadding: 20
 	        rightPadding: 20
 	        bottomPadding: 20
+	        background: back.imagePaint
 	        
             PersistDropDown
             {
@@ -611,4 +615,11 @@ BasePage
 	        }
 	    }
     }
+    
+    attachedObjects: [
+        ImagePaintDefinition {
+            id: back
+            imageSource: "images/background.png"
+        }
+    ]
 }

@@ -21,8 +21,11 @@ TabbedPane
         imageSource: "images/ic_quran_open.png"
         unreadContentCount: mushafQueue.queued + queue.queued
         newContentAvailable: unreadContentCount > 0
+        delegateActivationPolicy: TabDelegateActivationPolicy.ActivateWhenSelected
 	    
-	    QuranPane {}
+        delegate: Delegate {
+            source: "QuranPane.qml"
+        }
 	}
 
     Tab {
@@ -30,6 +33,7 @@ TabbedPane
         title: qsTr("Bookmarks") + Retranslate.onLanguageChanged
         description: qsTr("Favourites") + Retranslate.onLanguageChanged
         imageSource: "images/ic_bookmarks.png"
+        delegateActivationPolicy: TabDelegateActivationPolicy.ActivateWhenSelected
         
         function onSettingsChanged(key)
         {
@@ -48,10 +52,8 @@ TabbedPane
             onSettingsChanged("bookmarks");
         }
 
-        onTriggered: {
-            if (! content) {
-                lazyLoad("BookmarksTab.qml", bookmarks);
-            }
+        delegate: Delegate {
+            source: "BookmarksPane.qml"
         }
     }
 
@@ -60,11 +62,10 @@ TabbedPane
         title: qsTr("Search") + Retranslate.onLanguageChanged
         description: qsTr("Find") + Retranslate.onLanguageChanged
         imageSource: "images/ic_search.png"
+        delegateActivationPolicy: TabDelegateActivationPolicy.ActivateWhenSelected
 
-        onTriggered: {
-            if (! content) {
-                lazyLoad("SearchPage.qml", search);
-            }
+        delegate: Delegate {
+            source: "SearchPane.qml"
         }
     }
     
@@ -73,11 +74,10 @@ TabbedPane
         title: qsTr("Radio") + Retranslate.onLanguageChanged
         description: qsTr("Live") + Retranslate.onLanguageChanged
         imageSource: "images/ic_radio.png"
+        delegateActivationPolicy: TabDelegateActivationPolicy.ActivateWhenSelected
         
-        onTriggered: {
-            if (! content) {
-                lazyLoad("RadioTab.qml", radio);
-            }
+        delegate: Delegate {
+            source: "RadioPane.qml"
         }
     }
     
@@ -86,20 +86,10 @@ TabbedPane
         title: qsTr("Supplications") + Retranslate.onLanguageChanged
         description: qsTr("Du'a from the Qu'ran") + Retranslate.onLanguageChanged
         imageSource: "images/ic_supplications.png"
+        delegateActivationPolicy: TabDelegateActivationPolicy.ActivatedWhileSelected
         
-        onTriggered: {
-            if (! content) {
-                lazyLoad("SupplicationsTab.qml", supplications);
-            }
+        delegate: Delegate {
+            source: "SupplicationsPane.qml"
         }
-    }
-
-    function lazyLoad(actualSource, tab) {
-        definition.source = actualSource;
-
-        var actual = definition.createObject();
-        tab.content = actual;
-
-        return actual;
     }
 }
