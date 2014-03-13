@@ -23,6 +23,8 @@ NavigationPane
             
             ListView
             {
+                id: listView
+                
                 dataModel: ArrayDataModel {
                     id: theDataModel
                 }
@@ -49,25 +51,23 @@ NavigationPane
                     sp.requestedVerse = data.verse_id;
                 }
                 
+                function onDataLoaded(id, data)
+                {
+                    if (id == QueryId.FetchAllDuaa)
+                    {
+                        theDataModel.clear();
+                        theDataModel.append(data);
+                    }
+                }
+                
                 onCreationCompleted: {
-                    sql.query = "select supplications.surah_id,supplications.verse_id,chapters.english_name,chapters.arabic_name FROM supplications INNER JOIN chapters ON supplications.surah_id=chapters.surah_id";
-                    sql.load();
+                    helper.dataLoaded.connect(onDataLoaded);
+                    helper.fetchAllDuaa(listView);
                 }
                 
                 attachedObjects: [
                     ComponentDefinition {
                         id: definition
-                    },
-                    
-                    CustomSqlDataSource {
-                        id: sql
-                        source: "app/native/assets/dbase/quran.db"
-                        name: "supplications"
-                        
-                        onDataLoaded: {
-                            theDataModel.clear();
-                            theDataModel.append(data);
-                        }
                     }
                 ]
             }

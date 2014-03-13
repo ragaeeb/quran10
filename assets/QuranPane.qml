@@ -107,6 +107,7 @@ NavigationPane {
             
             ListView {
                 id: listView
+                objectName: "listView"
                 
                 dataModel: ArrayDataModel {
                     id: theDataModel
@@ -136,22 +137,19 @@ NavigationPane {
                 horizontalAlignment: HorizontalAlignment.Fill
                 verticalAlignment: VerticalAlignment.Fill
                 
-                attachedObjects: [
-                    CustomSqlDataSource {
-                        id: sqlDataSource
-                        source: "app/native/assets/dbase/quran.db"
-                        name: "main"
-                        
-                        onDataLoaded: {
-                            theDataModel.clear();
-                            theDataModel.append(data);
-                        }
+                function onDataLoaded(id, data)
+                {
+                    console.log("DATA LOADEDEED!");
+                    if (id == QueryId.FetchAllSurahs)
+                    {
+                        theDataModel.clear();
+                        theDataModel.append(data);
                     }
-                ]
+                }
                 
                 onCreationCompleted: {
-                    sqlDataSource.query = "SELECT surah_id,arabic_name,english_name,english_translation FROM chapters"
-                    sqlDataSource.load();
+                    helper.dataLoaded.connect(onDataLoaded);
+                    helper.fetchAllSurahs(listView, onDataLoaded);
                 }
             }
         }

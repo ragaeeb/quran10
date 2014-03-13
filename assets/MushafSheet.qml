@@ -1,6 +1,6 @@
+import QtQuick 1.0
 import bb.cascades 1.0
 import bb.system 1.0
-import QtQuick 1.0
 import com.canadainc.data 1.0
 
 Sheet
@@ -109,38 +109,36 @@ Sheet
                         horizontalAlignment: HorizontalAlignment.Fill
                         title: qsTr("Surah")
                         
-                        onCreationCompleted: {
-                            sqlDataSource.query = "SELECT MIN(page_number) as page_number,chapters.english_name,chapters.arabic_name from mushaf_pages INNER JOIN chapters ON mushaf_pages.surah_id=chapters.surah_id GROUP BY mushaf_pages.surah_id";
-                            sqlDataSource.load(0);
-                        }
-                        
                         onSelectedValueChanged: {
                             listView.scrollToItem([selectedValue-1], ScrollAnimation.Default);
+                        }
+                        
+                        function onDataLoaded(id, data)
+                        {
+                            if (id == QueryId.FetchPageNumbers && data.length > 0)
+                            {
+                                var n = data.length;
+                                
+                                for (var i = 0; i < n; i++) {
+                                    var option = optionDefinition.createObject();
+                                    option.text = data[i].arabic_name;
+                                    option.description = data[i].english_name;
+                                    option.value = data[i].page_number;
+                                    dropDownDelegate.control.add(option);
+                                }
+                                
+                                dropDownDelegate.control.expanded = true;
+                            }
+                        }
+                        
+                        onCreationCompleted: {
+                            helper.dataLoaded.connect(onDataLoaded);
+                            helper.fetchPageNumbers(dropDown);
                         }
                     }
                 }
                 
                 attachedObjects: [
-                    CustomSqlDataSource {
-                        id: sqlDataSource
-                        source: "app/native/assets/dbase/quran.db"
-                        name: "mushaf"
-                        
-                        onDataLoaded: {
-                            var n = data.length;
-                            
-                            for (var i = 0; i < n; i++) {
-                                var option = optionDefinition.createObject();
-                                option.text = data[i].arabic_name;
-                                option.description = data[i].english_name;
-                                option.value = data[i].page_number;
-                                dropDownDelegate.control.add(option);
-                            }
-                            
-                            dropDownDelegate.control.expanded = true;
-                        }
-                    },
-                    
                     ComponentDefinition
                     {
                         id: optionDefinition

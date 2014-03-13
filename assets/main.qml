@@ -30,27 +30,11 @@ TabbedPane
 
     Tab {
         id: bookmarks
-        title: qsTr("Bookmarks") + Retranslate.onLanguageChanged
+        delegateActivationPolicy: TabDelegateActivationPolicy.ActivateWhenSelected
         description: qsTr("Favourites") + Retranslate.onLanguageChanged
         imageSource: "images/ic_bookmarks.png"
-        delegateActivationPolicy: TabDelegateActivationPolicy.ActivateWhenSelected
-        
-        function onSettingsChanged(key)
-        {
-            if (key == "bookmarks")
-            {
-                var bookmarks = persist.getValueFor("bookmarks");
-                
-                if (bookmarks && bookmarks.length > 0) {
-                    unreadContentCount = bookmarks.length;
-                }
-            }
-        }
-        
-        onCreationCompleted: {
-            persist.settingChanged.connect(onSettingsChanged);
-            onSettingsChanged("bookmarks");
-        }
+        title: qsTr("Bookmarks") + Retranslate.onLanguageChanged
+        unreadContentCount: helper.totalBookmarks
 
         delegate: Delegate {
             source: "BookmarksPane.qml"

@@ -3,35 +3,30 @@ import com.canadainc.data 1.0
 
 Page
 {
+    id: root
     property int surahId
     actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
     
-    onSurahIdChanged: {
-        var chapterId = surahId == 114 ? 113 : surahId;
-        sqlDataSource.query = "SELECT title,body FROM ibn_katheer_english WHERE surah_id=%1".arg(chapterId)
-        sqlDataSource.load(98);
-        
-        sqlDataSource.query = "SELECT english_name, english_translation, arabic_name FROM chapters WHERE surah_id=%1".arg(surahId);
-        sqlDataSource.load(1);        
+    function onDataLoaded(id, data)
+    {
+        if (id == QueryId.FetchTafsirIbnKatheerForSurah) {
+            adm.append(data);
+            busy.running = false;
+        } else if (id == QueryId.FetchSurahHeader) {
+            console.log("actual data", data[0].arabic_name, data[0].english_name);
+            surahNameArabic.text = data[0].arabic_name
+            surahNameEnglish.text = qsTr("%1 (%2)").arg(data[0].english_name).arg(data[0].english_translation);
+        }
     }
     
-    attachedObjects: [
-        CustomSqlDataSource {
-            id: sqlDataSource
-            source: "app/native/assets/dbase/quran.db"
-            name: "ibnkatheer"
-
-            onDataLoaded: {
-                if (id == 98) {
-			        adm.append(data);
-                    busy.running = false;
-                } else if (id == 1) {
-                    surahNameArabic.text = data[0].arabic_name
-                    surahNameEnglish.text = qsTr("%1 (%2)").arg(data[0].english_name).arg(data[0].english_translation);
-                }
-            }
-        }
-    ]
+    onCreationCompleted: {
+        helper.dataLoaded.connect(onDataLoaded);
+    }
+    
+    onSurahIdChanged: {
+        helper.fetchSurahHeader(root, surahId);
+        helper.fetchTafsirIbnKatheer(root, surahId);
+    }
 
     actions: [
         ActionItem {
@@ -54,57 +49,52 @@ Page
             }
         }
     ]
+    
+    titleBar: TitleBar
+    {
+        kind: TitleBarKind.FreeForm
+        kindProperties: FreeFormTitleBarKindProperties
+        {
+            content: Container
+            {
+                topPadding: 10; bottomPadding: 25
+                
+                horizontalAlignment: HorizontalAlignment.Fill
+                verticalAlignment: VerticalAlignment.Top
+                background: back.imagePaint
+                
+                attachedObjects: [
+                    ImagePaintDefinition {
+                        id: back
+                        imageSource: "images/title_bg_tafseer.amd"
+                    }
+                ]
+                
+                Label {
+                    id: surahNameArabic
+                    horizontalAlignment: HorizontalAlignment.Fill
+                    textStyle.textAlign: TextAlign.Center
+                    textStyle.fontSize: FontSize.XXSmall
+                    textStyle.fontWeight: FontWeight.Bold
+                    bottomMargin: 5
+                }
+                
+                Label {
+                    id: surahNameEnglish
+                    horizontalAlignment: HorizontalAlignment.Fill
+                    textStyle.textAlign: TextAlign.Center
+                    textStyle.fontSize: FontSize.XXSmall
+                    textStyle.fontWeight: FontWeight.Bold
+                    topMargin: 0
+                }
+            }
+        }
+    }
 
     Container
     {
         background: Color.White
         
-        Container {
-            id: titleBar
-            
-            topPadding: 10; bottomPadding: 25
-
-            horizontalAlignment: HorizontalAlignment.Fill
-            verticalAlignment: VerticalAlignment.Top
-            background: back.imagePaint
-            
-            attachedObjects: [
-                ImagePaintDefinition {
-                    id: back
-                    imageSource: "images/title_bg_tafseer.amd"
-                }
-            ]
-            
-            Label {
-                id: surahNameArabic
-                horizontalAlignment: HorizontalAlignment.Fill
-                textStyle.textAlign: TextAlign.Center
-                textStyle.fontSize: FontSize.XXSmall
-                textStyle.fontWeight: FontWeight.Bold
-                bottomMargin: 5
-            }
-
-            Label {
-                id: surahNameEnglish
-                horizontalAlignment: HorizontalAlignment.Fill
-                textStyle.textAlign: TextAlign.Center
-                textStyle.fontSize: FontSize.XXSmall
-                textStyle.fontWeight: FontWeight.Bold
-                topMargin: 0
-            }
-        }
-
-        ImageView {
-            imageSource: "images/bottomDropShadow.png"
-            topMargin: 0
-            leftMargin: 0
-            rightMargin: 0
-            bottomMargin: 0
-
-            horizontalAlignment: HorizontalAlignment.Fill
-            verticalAlignment: VerticalAlignment.Top
-        }
-
         ActivityIndicator {
             id: busy
             running: true
