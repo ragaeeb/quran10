@@ -3,6 +3,7 @@
 
 #include "LazySceneCover.h"
 #include "Persistance.h"
+#include "QueryHelper.h"
 #include "QueueDownloader.h"
 
 #include <bb/system/InvokeManager>
@@ -28,6 +29,7 @@ class ApplicationUI : public QObject
 	QueueDownloader m_mushafQueue;
 	LazySceneCover m_sceneCover;
 	Persistance m_persistance;
+	QueryHelper m_helper;
 
     ApplicationUI(bb::cascades::Application *app);
     QObject* init(QString const& qml, bool invoked=false);

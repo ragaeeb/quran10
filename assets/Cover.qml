@@ -2,7 +2,8 @@ import bb.cascades 1.0
 import com.canadainc.data 1.0
 import QtQuick 1.0
 
-Container {
+Container
+{
     attachedObjects: [
         ImagePaintDefinition {
             id: back
@@ -13,55 +14,26 @@ Container {
             id: timer
             repeat: true
             interval: 60000
-            running: false
+            running: true
+            triggeredOnStart: true
 
             onTriggered: {
-                updateCover();
-            }
-        },
-
-        CustomSqlDataSource {
-            id: sql
-            source: "app/native/assets/dbase/quran.db"
-            name: "cover"
-
-            onDataLoaded: {
-                if (data.length > 0) {
-                    var verse = data[0];
-                    label.text = "%1 (%2:%3)".arg(verse.text).arg(verse.surah_id).arg(verse.verse_id);
-                } else {
-                    label.text = qsTr("Quran10");
-                }
+                helper.fetchRandomAyat(timer);
             }
         }
     ]
     
-    onCreationCompleted: {
-        persist.settingChanged.connect(reloadNeeded);
-        updateCover();
-        timer.start();
-    }
-
-    function reloadNeeded(key) {
-        if (key == "translation" || key == "primary") {
-            updateCover()
-        }
-    }
-
-    function updateCover() {
-        var table = persist.getValueFor("translation");
-        
-        if (table == "")
+    function onDataLoaded(id, data)
+    {
+        if (id == QueryId.FetchRandomAyat)
         {
-            table = persist.getValueFor("primary");
-            
-            if (table == "transliteration") {
-                table = "arabic_uthmani";
-            }
+            var verse = data[0];
+            label.text = "(%2:%3) %1".arg(verse.text).arg(verse.surah_id).arg(verse.verse_id);
         }
-        
-        sql.query = "select * from %1 ORDER BY RANDOM() LIMIT 1".arg(table);
-        sql.load();
+    }
+    
+    onCreationCompleted: {
+        helper.dataLoaded.connect(onDataLoaded);
     }
 
     background: back.imagePaint
@@ -80,6 +52,7 @@ Container {
 
     Label {
         id: label
+        text: qsTr("Quran10") + Retranslate.onLanguageChanged
         textStyle.fontSize: FontSize.XXSmall
         textStyle.textAlign: TextAlign.Center
         horizontalAlignment: HorizontalAlignment.Fill

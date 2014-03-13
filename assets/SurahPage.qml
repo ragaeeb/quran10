@@ -11,29 +11,19 @@ Page
     onSurahIdChanged:
     {
 	    listView.chapterNumber = surahId;
-        sqlDataSource.query = "SELECT english_name, english_translation, arabic_name FROM chapters WHERE surah_id=%1".arg(surahId);
-        sqlDataSource.load(1);
+        helper.fetchSurahHeader(surahPage, surahId);
 
         loadVerses();
     }
     
     function loadVerses()
     {
-        var primary = persist.getValueFor("primary");
+        helper.fetchAllAyats(surahPage, surahId);
+        
         var translation = persist.getValueFor("translation");
-
-        if (translation != "") {
-            sqlDataSource.query = "SELECT %1.text as arabic,%1.verse_id,%2.text as translation FROM %1 INNER JOIN %2 on %1.surah_id=%2.surah_id AND %1.verse_id=%2.verse_id AND %1.surah_id=%3".arg(primary).arg(translation).arg(surahId);
-        } else {
-        	sqlDataSource.query = "SELECT text as arabic,verse_id FROM %1 WHERE surah_id=%2".arg(primary).arg(surahId);
-        }
-
-        sqlDataSource.load(0);
         
         if (translation == "english") {
-            sqlDataSource.query = "SELECT id,description,verse_id FROM tafsir_english WHERE surah_id=%1".arg(surahId);
-            sqlDataSource.load(80);
-            
+            helper.fetchTafsirForSurah(surahPage, surahId);
             surahPage.addAction(tafsirAction);   
         } else {
             surahPage.removeAction(tafsirAction);
@@ -67,64 +57,60 @@ Page
         property variant navPane: navigationPane
         id: properties
     }
+    
+    function onDataLoaded(id, data)
+    {
+        if (id == QueryId.FetchAllAyats) {
+            listView.theDataModel.clear();
+            listView.theDataModel.insertList(data);
+            busy.running = false
+            listView.listFade.play();
+            
+            if (requestedVerse > 0) {
+                var target = [ requestedVerse - 1, 0 ]
+                listView.scrollToItem(target, ScrollAnimation.Default);
+                listView.select(target,true);
+            } else if (surahId > 1 && surahId != 9) {
+                listView.scrollToPosition(0, ScrollAnimation.None);
+                listView.scroll(-100, ScrollAnimation.Smooth);
+            }
+        } else if (id == QueryId.FetchSurahHeader) {
+            surahNameArabic.text = data[0].arabic_name
+            surahNameEnglish.text = qsTr("%1 (%2)").arg(data[0].english_name).arg(data[0].english_translation)
+        } else if (id == QueryId.FetchTafsirForSurah) {
+            var verseModel = listView.dataModel;
+            
+            if ( persist.getValueFor("tafsirTutorialCount") != 1 ) {
+                persist.showToast( qsTr("Press-and-hold on a verse with a grey highlight to find explanations on it."), qsTr("OK") );
+                persist.saveValueFor("tafsirTutorialCount", 1);
+            }
+            
+            for (var i = data.length-1; i >= 0; i--)
+            {
+                var verse = data[i].verse_id;
+                
+                if (verse) {
+                    var target = [ verse-1, 0 ];
+                    var verseData = verseModel.data(target);
+                    verseData["hasTafsir"] = true;
+                    verseModel.updateItem(target, verseData);
+                } else {
+                    var ai = actionDefinition.createObject();
+                    ai.title = data[i].description;
+                    ai.id = data[i].id;
+                    surahPage.addAction(ai, ActionBarPlacement.Default);   
+                }
+            }
+        }
+    }
 
     onCreationCompleted: {
         persist.settingChanged.connect(reloadNeeded);
         app.recitationDownloadComplete.connect(startPlayback);
+        helper.dataLoaded.connect(onDataLoaded);
     }
     
     attachedObjects: [
-        CustomSqlDataSource {
-            id: sqlDataSource
-            source: "app/native/assets/dbase/quran.db"
-            name: "surah"
-
-            onDataLoaded: {
-                if (id == 0) {
-			        listView.theDataModel.clear();
-			        listView.theDataModel.insertList(data);
-			        busy.running = false
-			        listView.listFade.play();
-			        
-			        if (requestedVerse > 0) {
-			            var target = [ requestedVerse - 1, 0 ]
-			            listView.scrollToItem(target, ScrollAnimation.Default);
-			            listView.select(target,true);
-			        } else if (surahId > 1 && surahId != 9) {
-                        listView.scrollToPosition(0, ScrollAnimation.None);
-                        listView.scroll(-100, ScrollAnimation.Smooth);
-                    }
-                } else if (id == 1) {
-			        surahNameArabic.text = data[0].arabic_name
-			        surahNameEnglish.text = qsTr("%1 (%2)").arg(data[0].english_name).arg(data[0].english_translation)
-                } else if (id == 80) {
-                    var verseModel = listView.dataModel;
-                    
-                    if ( persist.getValueFor("tafsirTutorialCount") != 1 ) {
-                        persist.showToast( qsTr("Press-and-hold on a verse with a grey highlight to find explanations on it."), qsTr("OK") );
-                        persist.saveValueFor("tafsirTutorialCount", 1);
-                    }
-                    
-                    for (var i = data.length-1; i >= 0; i--)
-                    {
-                        var verse = data[i].verse_id;
-                        
-                        if (verse) {
-                            var target = [ verse-1, 0 ];
-                            var verseData = verseModel.data(target);
-                            verseData["hasTafsir"] = true;
-                            verseModel.updateItem(target, verseData);
-                        } else {
-                            var ai = actionDefinition.createObject();
-                            ai.title = data[i].description;
-                            ai.id = data[i].id;
-                            surahPage.addAction(ai, ActionBarPlacement.Default);   
-                        }
-                    }
-                }
-            }
-        },
-        
         ComponentDefinition {
             id: tafsirDelegate
         },
@@ -198,85 +184,91 @@ Page
             ActionBar.placement: ActionBarPlacement.OnBar
         }
     ]
-
-    Container
+    
+    titleBar: TitleBar
     {
-        background: Color.White
-        
-        Container {
-            id: titleBar
-            
-            topPadding: 10; bottomPadding: 25
-
-            horizontalAlignment: HorizontalAlignment.Fill
-            verticalAlignment: VerticalAlignment.Top
-            background: back.imagePaint
-            
-            attachedObjects: [
-                ImagePaintDefinition {
-                    id: back
-                    imageSource: "images/title_bg_alt.png"
-                }
-            ]
-            
-            Label {
-                id: surahNameArabic
-                horizontalAlignment: HorizontalAlignment.Fill
-                textStyle.textAlign: TextAlign.Center
-                textStyle.fontSize: FontSize.XXSmall
-                textStyle.fontWeight: FontWeight.Bold
-                bottomMargin: 5
-            }
-
-            Label {
-                id: surahNameEnglish
-                horizontalAlignment: HorizontalAlignment.Fill
-                textStyle.textAlign: TextAlign.Center
-                textStyle.fontSize: FontSize.XXSmall
-                textStyle.fontWeight: FontWeight.Bold
-                topMargin: 0
-            }
-            
-            ControlDelegate
+        kind: TitleBarKind.FreeForm
+        kindProperties: FreeFormTitleBarKindProperties
+        {
+            content: Container
             {
-                id: progressDelegate
-                delegateActive: queue.queued > 0
-                horizontalAlignment: HorizontalAlignment.Fill
+                topPadding: 10; bottomPadding: 25
                 
-                sourceComponent: ComponentDefinition
+                horizontalAlignment: HorizontalAlignment.Fill
+                verticalAlignment: VerticalAlignment.Top
+                background: back.imagePaint
+                
+                attachedObjects: [
+                    ImagePaintDefinition {
+                        id: back
+                        imageSource: "images/title_bg_alt.png"
+                    }
+                ]
+                
+                Label {
+                    id: surahNameArabic
+                    horizontalAlignment: HorizontalAlignment.Fill
+                    textStyle.textAlign: TextAlign.Center
+                    textStyle.fontSize: FontSize.XXSmall
+                    textStyle.fontWeight: FontWeight.Bold
+                    bottomMargin: 5
+                }
+                
+                Label {
+                    id: surahNameEnglish
+                    horizontalAlignment: HorizontalAlignment.Fill
+                    textStyle.textAlign: TextAlign.Center
+                    textStyle.fontSize: FontSize.XXSmall
+                    textStyle.fontWeight: FontWeight.Bold
+                    topMargin: 0
+                }
+                
+                ControlDelegate
                 {
-                    Container
+                    id: progressDelegate
+                    delegateActive: queue.queued > 0
+                    horizontalAlignment: HorizontalAlignment.Fill
+                    
+                    sourceComponent: ComponentDefinition
                     {
-                        leftPadding: 10; rightPadding: 10
-                        
-                        ProgressIndicator {
-                            horizontalAlignment: HorizontalAlignment.Fill
-                            fromValue: 0
-                            state: ProgressIndicatorState.Progress
+                        Container
+                        {
+                            leftPadding: 10; rightPadding: 10
                             
-                            function onDownloadProgress(cookie, received, total)
-                            {
-                                value = received;
-                                toValue = total;
+                            ProgressIndicator {
+                                horizontalAlignment: HorizontalAlignment.Fill
+                                fromValue: 0
+                                state: ProgressIndicatorState.Progress
+                                
+                                function onDownloadProgress(cookie, received, total)
+                                {
+                                    value = received;
+                                    toValue = total;
+                                }
+                                
+                                onCreationCompleted: {
+                                    queue.downloadProgress.connect(onDownloadProgress);
+                                }
                             }
                             
-                            onCreationCompleted: {
-                                queue.downloadProgress.connect(onDownloadProgress);
-                            }
+                            Label {
+                                horizontalAlignment: HorizontalAlignment.Fill
+                                textStyle.textAlign: TextAlign.Center
+                                textStyle.fontSize: FontSize.XXSmall
+                                textStyle.fontWeight: FontWeight.Bold
+                                topMargin: 0
+                                text: qsTr("%n downloads remaining...", "", queue.queued)
+                            }   
                         }
-                        
-                        Label {
-                            horizontalAlignment: HorizontalAlignment.Fill
-                            textStyle.textAlign: TextAlign.Center
-                            textStyle.fontSize: FontSize.XXSmall
-                            textStyle.fontWeight: FontWeight.Bold
-                            topMargin: 0
-                            text: qsTr("%n downloads remaining...", "", queue.queued)
-                        }   
                     }
                 }
             }
         }
+    }
+
+    Container
+    {
+        background: Color.White
         
         ActivityIndicator {
             id: busy

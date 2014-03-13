@@ -1,6 +1,6 @@
+import QtQuick 1.0
 import bb.cascades 1.0
 import com.canadainc.data 1.0
-import QtQuick 1.0
 
 NavigationPane
 {
@@ -48,54 +48,18 @@ NavigationPane
                     onSubmitted: {
                         var trimmedText = text.replace(/^\s+|\s+$/g, "");
 
-                        if (trimmedText.length > 1) {
+                        if (trimmedText.length > 1)
+                        {
                             theDataModel.clear()
-                            sqlDataSource.translationLoaded = sqlDataSource.arabicLoaded = false
+                            listView.translationLoaded = listView.arabicLoaded = false;
 
-                            busy.running = true
-
-                            var table = persist.getValueFor("translation");
-
-                            if (table != "") {
-                                sqlDataSource.query = "select %1.surah_id,%1.verse_id,%1.text,chapters.english_name as name, chapters.english_name, chapters.arabic_name, chapters.english_translation from %1 INNER JOIN chapters on chapters.surah_id=%1.surah_id AND %1.text LIKE '%%2%'".arg(table).arg(trimmedText);
-                                sqlDataSource.load(0);
-                            }
-                            
-                            table = persist.getValueFor("primary");
-                            
-                            if (table != "transliteration") {
-                                sqlDataSource.query = "select %1.surah_id,%1.verse_id,%1.text,chapters.arabic_name as name, chapters.english_name, chapters.arabic_name, chapters.english_translation from %1 INNER JOIN chapters on chapters.surah_id=%1.surah_id AND %1.text LIKE '%%2%'".arg(table).arg(trimmedText);
-                                sqlDataSource.load(1);   
-                            }
+                            busy.running = true;
+                            helper.searchQuery(listView, trimmedText);
                         }
                     }
                 }
 
                 attachedObjects: [
-                    CustomSqlDataSource {
-                        property bool translationLoaded: false
-                        property bool arabicLoaded: false
-                        id: sqlDataSource
-                        source: "app/native/assets/dbase/quran.db"
-                        name: "search"
-
-                        onDataLoaded: {
-                            theDataModel.insertList(data);
-
-                            var translation = persist.getValueFor("translation");
-
-                            if (id == 0) {
-                                translationLoaded = true
-                            } else if (id == 1) {
-                                arabicLoaded = true
-                            }
-
-                            if ( (translationLoaded && arabicLoaded) || (translation == "" && arabicLoaded) ) {
-                                busy.running = false
-                            }
-                        }
-                    },
-
                     Timer {
                         id: timer
                         repeat: false
@@ -121,6 +85,8 @@ NavigationPane
             {
                 id: listView
                 property alias background: bg
+                property bool translationLoaded: false
+                property bool arabicLoaded: false
 
                 attachedObjects: [
                     ImagePaintDefinition {
@@ -133,6 +99,27 @@ NavigationPane
                         source: "SurahPage.qml"
                     }
                 ]
+                
+                function onDataLoaded(id, data)
+                {
+                    theDataModel.insertList(data);
+                    
+                    var translation = persist.getValueFor("translation");
+                    
+                    if (id == QueryId.SearchQueryTranslation) {
+                        translationLoaded = true
+                    } else if (id == QueryId.SearchQueryPrimary) {
+                        arabicLoaded = true
+                    }
+                    
+                    if ( (translationLoaded && arabicLoaded) || (translation == "" && arabicLoaded) ) {
+                        busy.running = false
+                    }
+                }
+                
+                onCreationCompleted: {
+                    helper.dataLoaded.connect(onDataLoaded);
+                }
 
                 dataModel: GroupDataModel {
                     id: theDataModel

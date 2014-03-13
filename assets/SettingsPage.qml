@@ -1,5 +1,5 @@
 import bb.cascades 1.0
-import CustomComponent 1.0
+import bb.cascades.pickers 1.0
 
 Page
 {

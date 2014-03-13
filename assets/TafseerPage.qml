@@ -3,110 +3,105 @@ import com.canadainc.data 1.0
 
 Page
 {
+    id: root
     property string tafsirId
     actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
     
-    onTafsirIdChanged: {
-        sqlDataSource.query = "SELECT * from tafsir_english WHERE id=%1".arg(tafsirId);
-        sqlDataSource.load(0);
+    onCreationCompleted: {
+        helper.dataLoaded.connect(onDataLoaded);
     }
     
-    Container
+    onTafsirIdChanged: {
+        helper.fetchTafsirContent(root, tafsirId);
+    }
+    
+    function onDataLoaded(id, data)
     {
-        background: Color.White
-        
-        horizontalAlignment: HorizontalAlignment.Fill
-        verticalAlignment: VerticalAlignment.Fill
-
-        Container {
-            topPadding: 10
-            bottomPadding: 25
-            leftPadding: 20
-            rightPadding: 20
-
-            horizontalAlignment: HorizontalAlignment.Fill
-            verticalAlignment: VerticalAlignment.Top
-            background: back.imagePaint
-
-            attachedObjects: [
-                ImagePaintDefinition {
-                    id: back
-                    imageSource: "images/title_bg_alt.png"
-                }
-            ]
-
-            Label {
-                id: descriptionLabel
-                horizontalAlignment: HorizontalAlignment.Fill
-                textStyle.textAlign: TextAlign.Center
-                textStyle.fontSize: FontSize.XXSmall
-                textStyle.fontWeight: FontWeight.Bold
-                multiline: true
-                bottomMargin: 5
-            }
-
-            Label {
-                id: authorLabel
-                horizontalAlignment: HorizontalAlignment.Fill
-                textStyle.textAlign: TextAlign.Center
-                textStyle.fontSize: FontSize.XXSmall
-                textStyle.fontWeight: FontWeight.Bold
-                multiline: true
-                topMargin: 0
-            }
-        }
-
-        Divider {
-            topMargin: 0; bottomMargin: 0;
-        }
-        
-        ScrollView
+        if (id == QueryId.FetchTafsirContent)
         {
-            horizontalAlignment: HorizontalAlignment.Fill
-            verticalAlignment: VerticalAlignment.Fill
-
-			Container
-			{
+            contentLabel.text = data[0].text+"\n\n";
+            descriptionLabel.text = data[0].description;
+            
+            var explainer = data[0].explainer;
+            var recorder = data[0].recorder;
+            var authorText = qsTr("Author: %1").arg(explainer);
+            
+            if (recorder.length > 0) {
+                authorText += "\n";
+                authorText += qsTr("Recorded/Translated by: %1").arg(recorder)
+            }
+            
+            authorLabel.text = authorText
+        }
+    }
+    
+    titleBar: TitleBar
+    {
+        kind: TitleBarKind.FreeForm
+        
+        kindProperties: FreeFormTitleBarKindProperties
+        {
+            content: Container
+            {
+                bottomPadding: 25
                 leftPadding: 20
                 rightPadding: 20
-
+                
                 horizontalAlignment: HorizontalAlignment.Fill
-                verticalAlignment: VerticalAlignment.Fill
-
+                verticalAlignment: VerticalAlignment.Top
+                background: back.imagePaint
+                
+                attachedObjects: [
+                    ImagePaintDefinition {
+                        id: back
+                        imageSource: "images/title_bg_alt.png"
+                    }
+                ]
+                
                 Label {
-                    id: contentLabel
+                    id: descriptionLabel
                     horizontalAlignment: HorizontalAlignment.Fill
-                    verticalAlignment: VerticalAlignment.Top
-                    textStyle.color: Color.Black
+                    textStyle.textAlign: TextAlign.Center
+                    textStyle.fontSize: FontSize.XXSmall
+                    textStyle.fontWeight: FontWeight.Bold
                     multiline: true
+                    bottomMargin: 5
+                }
+                
+                Label {
+                    id: authorLabel
+                    horizontalAlignment: HorizontalAlignment.Fill
+                    textStyle.textAlign: TextAlign.Center
+                    textStyle.fontSize: FontSize.XXSmall
+                    textStyle.fontWeight: FontWeight.Bold
+                    multiline: true
+                    topMargin: 0
                 }
             }
         }
     }
     
-    attachedObjects: [
-        CustomSqlDataSource {
-            id: sqlDataSource
-            source: "app/native/assets/dbase/quran.db"
-            name: "tafseer"
-
-            onDataLoaded: {
-                if (id == 0) {
-                    contentLabel.text = data[0].text+"\n\n";
-                    descriptionLabel.text = data[0].description;
-                    
-                    var explainer = data[0].explainer;
-                    var recorder = data[0].recorder;
-                    var authorText = qsTr("Author: %1").arg(explainer);
-                    
-                    if (recorder.length > 0) {
-                        authorText += "\n";
-                        authorText += qsTr("Recorded/Translated by: %1").arg(recorder)
-                    }
-                    
-                    authorLabel.text = authorText
-                }
+    ScrollView
+    {
+        horizontalAlignment: HorizontalAlignment.Fill
+        verticalAlignment: VerticalAlignment.Fill
+        
+        Container
+        {
+            leftPadding: 20
+            rightPadding: 20
+            background: Color.White
+            horizontalAlignment: HorizontalAlignment.Fill
+            verticalAlignment: VerticalAlignment.Fill
+            
+            Label
+            {
+                id: contentLabel
+                horizontalAlignment: HorizontalAlignment.Fill
+                verticalAlignment: VerticalAlignment.Top
+                textStyle.color: Color.Black
+                multiline: true
             }
         }
-    ]
+    }
 }

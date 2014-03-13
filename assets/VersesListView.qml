@@ -1,7 +1,9 @@
 import bb.cascades 1.0
 import com.canadainc.data 1.0
 
-ListView {
+ListView
+{
+    id: listView
     property alias theDataModel: verseModel
     property alias listFade: fader
     property alias background: headerBackground
@@ -14,7 +16,6 @@ ListView {
     property int primarySize: persist.getValueFor("primarySize")
     property bool addSpaceHack: persist.getValueFor("primary") != "transliteration"
     signal tafsirTriggered(int id);
-    id: listView
     opacity: 0
 
     dataModel: GroupDataModel {
@@ -80,11 +81,20 @@ ListView {
         status: qsTr("None selected") + Retranslate.onLanguageChanged
     }
     
+    function onDataLoaded(id, data)
+    {
+        if (id == QueryId.FetchTafsirForAyat && sourceSet && data.length > 0) {
+            sourceSet.appendExplanations(data);
+        }
+    }
+    
     onCreationCompleted: {
         persist.settingChanged.connect(settingChanged);
+        helper.dataLoaded.connect(onDataLoaded);
     }
 
-    function settingChanged(key) {
+    function settingChanged(key)
+    {
         if (key == "repeat") {
             player.setRepeat(persist.getValueFor("repeat") == 1 );
         } else if (key == "follow") {
@@ -138,15 +148,8 @@ ListView {
     
     function queryExplanationsFor(source, verseId)
     {
-        var translation = persist.getValueFor("translation");
-        
-        if (translation == "english")
-        {
-            sourceSet = source;
-            
-            sqlDataSource.query = "SELECT id,verse_id,description FROM tafsir_english WHERE surah_id=%1 AND verse_id=%2".arg(chapterNumber).arg(verseId);
-            sqlDataSource.load(0);
-        }
+        sourceSet = source;
+        helper.fetchTafsirForAyat(listView, chapterNumber, verseId);
     }
 
     attachedObjects: [
@@ -190,18 +193,6 @@ ListView {
                 var data = verseModel.data(actual);
                 data.playing = false;
                 verseModel.updateItem(actual, data);
-            }
-        },
-
-        CustomSqlDataSource {
-            id: sqlDataSource
-            source: "app/native/assets/dbase/quran.db"
-            name: "contextMenu"
-            
-            onDataLoaded: {
-                if (id == 0 && sourceSet && data.length > 0) {
-                    sourceSet.appendExplanations(data);
-                }
             }
         },
         
@@ -251,10 +242,12 @@ ListView {
         }
     ]
     
-    animations: FadeTransition {
-        id: fader
-        toOpacity: 1
-    }
+    animations: [
+        FadeTransition {
+            id: fader
+            toOpacity: 1
+        }
+    ]
 
     listItemComponents: [
 

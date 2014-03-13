@@ -25,10 +25,6 @@ NavigationPane
                 id: noElements
                 graphic: "images/placeholders/ic_empty_bookmarks.png"
                 labelText: qsTr("You have no favourites. To mark a favourite, press-and-hold on an ayat or tafsir and choose 'Mark Favourite' from the context-menu.") + Retranslate.onLanguageChanged
-                
-                onImageTapped: {
-                    //addClicked();
-                }
             }
 
             ControlDelegate {
