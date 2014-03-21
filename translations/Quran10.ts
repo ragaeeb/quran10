@@ -853,20 +853,20 @@ http://www.troid.ca
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/TafseerIbnKatheer.qml" line="116"/>
-        <location filename="../assets/TafseerIbnKatheer.qml" line="120"/>
+        <location filename="../assets/TafseerIbnKatheer.qml" line="122"/>
+        <location filename="../assets/TafseerIbnKatheer.qml" line="126"/>
         <source>%1
 
 %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/TafseerIbnKatheer.qml" line="187"/>
+        <location filename="../assets/TafseerIbnKatheer.qml" line="193"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/TafseerIbnKatheer.qml" line="195"/>
+        <location filename="../assets/TafseerIbnKatheer.qml" line="201"/>
         <source>Share</source>
         <translation type="unfinished"></translation>
     </message>
@@ -887,7 +887,7 @@ http://www.troid.ca
 <context>
     <name>VersesListView</name>
     <message>
-        <location filename="../assets/VersesListView.qml" line="236"/>
+        <location filename="../assets/VersesListView.qml" line="246"/>
         <source>%1:%2-%3</source>
         <translation type="unfinished"></translation>
     </message>
@@ -902,18 +902,18 @@ http://www.troid.ca
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="124"/>
-        <location filename="../assets/VersesListView.qml" line="259"/>
+        <location filename="../assets/VersesListView.qml" line="122"/>
+        <location filename="../assets/VersesListView.qml" line="269"/>
         <source>%1:%2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="142"/>
+        <location filename="../assets/VersesListView.qml" line="140"/>
         <source>Bookmarked %1:%2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="200"/>
+        <location filename="../assets/VersesListView.qml" line="210"/>
         <source>ayahs</source>
         <translation type="unfinished"></translation>
     </message>
