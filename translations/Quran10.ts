@@ -58,7 +58,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/HelpPage.qml" line="39"/>
+        <location filename="../assets/HelpPage.qml" line="25"/>
+        <source>Our BBM Channel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/HelpPage.qml" line="38"/>
+        <source>Video Tutorial</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/HelpPage.qml" line="66"/>
         <source>
 
 (c) 2013-2014 %1. All Rights Reserved.
