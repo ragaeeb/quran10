@@ -1,4 +1,4 @@
-import bb.cascades 1.0
+import bb.cascades 1.2
 import com.canadainc.data 1.0
 
 ListView
@@ -14,7 +14,7 @@ ListView
     property ActionSet sourceSet
     property int translationSize: persist.getValueFor("translationSize")
     property int primarySize: persist.getValueFor("primarySize")
-    property bool addSpaceHack: persist.getValueFor("primary") != "transliteration"
+    property alias custom: customTextStyle
     signal tafsirTriggered(int id);
     opacity: 0
 
@@ -103,8 +103,6 @@ ListView
             primarySize = persist.getValueFor("primarySize");
         } else if (key == "translationSize") {
             translationSize = persist.getValueFor("translationSize");
-        } else if (key == "primary") {
-            addSpaceHack = persist.getValueFor("primary") != "transliteration";
         }
     }
 
@@ -156,6 +154,18 @@ ListView
         ImagePaintDefinition {
             id: headerBackground
             imageSource: "images/header_bg.png"
+        },
+        
+        TextStyleDefinition {
+            id: customTextStyle
+
+            rules: [
+                FontFaceRule {
+                    id: baseStyleFontRule
+                    source: "fonts/uthman_bold.otf"
+                    fontFamily: "uthman_bold"
+                }
+            ]
         },
 
         DualChannelPlayer {
@@ -263,9 +273,7 @@ ListView
         ListItemComponent {
             type: "item"
 
-			AyatListItem {
-			    
-       		}
+			AyatListItem {}
         }
     ]
 }

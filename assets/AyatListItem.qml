@@ -1,4 +1,4 @@
-import bb.cascades 1.0
+import bb.cascades 1.2
 
 Container
 {
@@ -123,25 +123,32 @@ Container
     
     Label {
         id: firstLabel
-        text: itemRoot.ListItem.view.addSpaceHack ? ListItemData.arabic+" " : ListItemData.arabic
+        text: ListItemData.arabic
         multiline: true
         horizontalAlignment: HorizontalAlignment.Fill
-        textStyle.color: selection || playing ? Color.White : Color.Black
-        textStyle.textAlign: TextAlign.Center
-        textStyle.fontSize: {
-            var primary = itemRoot.ListItem.view.primarySize;
+        
+        textStyle {
+            color: selection || playing ? Color.White : Color.Black;
+            base: itemRoot.ListItem.view.custom.style;
+            fontFamily: "uthman_bold";
+            textAlign: TextAlign.Center;
             
-            if (primary == 1) {
-                return FontSize.Small;
-            } else if (primary == 2) {
-                return FontSize.Medium;
-            } else {
-                return FontSize.XXLarge;
+            fontSize: {
+                var primary = itemRoot.ListItem.view.primarySize;
+                
+                if (primary == 1) {
+                    return FontSize.Small;
+                } else if (primary == 2) {
+                    return FontSize.Medium;
+                } else {
+                    return FontSize.XXLarge;
+                }
             }
         }
     }
     
-    ControlDelegate {
+    ControlDelegate
+    {
         id: labelDelegate
         delegateActive: ListItemData.translation ? true : false
         horizontalAlignment: HorizontalAlignment.Fill
