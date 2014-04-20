@@ -34,7 +34,7 @@ void QueryHelper::settingChanged(QString const& key)
 
 void QueryHelper::dataLoaded(int id, QVariant const& data)
 {
-    LOGGER(id);
+    //LOGGER(id);
     QPair<QObject*, QueryId::Type> value = m_idToObjectQueryType[id];
     QObject* caller = value.first;
     QueryId::Type t = value.second;
@@ -50,9 +50,9 @@ void QueryHelper::dataLoaded(int id, QVariant const& data)
         m_objectToIds.remove(caller);
     }
 
-    LOGGER("Emitting data loaded" << t << caller);
+    //LOGGER("Emitting data loaded" << t << caller);
 
-    LOGGER("DATA" << data);
+    //LOGGER("DATA" << data);
     QMetaObject::invokeMethod(caller, "onDataLoaded", Qt::QueuedConnection, Q_ARG(QVariant, t), Q_ARG(QVariant, data) );
 }
 
@@ -61,7 +61,7 @@ void QueryHelper::executeQuery(QObject* caller, QString const& query, QueryId::T
 {
     ++m_currentId;
 
-    LOGGER(caller << query << t << m_currentId);
+    //LOGGER(caller << query << t << m_currentId);
 
     QPair<QObject*, QueryId::Type> pair = qMakePair<QObject*, QueryId::Type>(caller, t);
     m_idToObjectQueryType.insert(m_currentId, pair);
@@ -100,14 +100,14 @@ void QueryHelper::fetchAllDuaa(QObject* caller)
 
 void QueryHelper::fetchAllSurahs(QObject* caller, QVariant const& func)
 {
-    LOGGER("fetchAllSurahs" << func);
+    //LOGGER("fetchAllSurahs" << func);
     executeQuery(caller, "SELECT surah_id,arabic_name,english_name,english_translation FROM chapters", QueryId::FetchAllSurahs);
 }
 
 
 void QueryHelper::fetchRandomAyat(QObject* caller)
 {
-    LOGGER("fetchRandomAyat");
+    //LOGGER("fetchRandomAyat");
 
     if ( !m_connected.contains(__FUNCTION__) ) {
         connect( this, SIGNAL( textualChange() ), this, SLOT( fetchRandomAyat() ) );
@@ -131,7 +131,7 @@ void QueryHelper::fetchRandomAyat(QObject* caller)
 
 void QueryHelper::fetchTafsirForAyat(QObject* caller, int chapterNumber, int verseId)
 {
-    LOGGER(chapterNumber << verseId);
+    //LOGGER(chapterNumber << verseId);
     QString translation = m_persist->getValueFor("translation").toString();
 
     if (translation == "english")
@@ -143,14 +143,14 @@ void QueryHelper::fetchTafsirForAyat(QObject* caller, int chapterNumber, int ver
 
 void QueryHelper::fetchTafsirContent(QObject* caller, QString const& tafsirId)
 {
-    LOGGER(tafsirId);
+    //LOGGER(tafsirId);
     executeQuery( caller, QString("SELECT * from tafsir_english WHERE id=%1").arg(tafsirId), QueryId::FetchTafsirContent );
 }
 
 
 void QueryHelper::fetchSurahHeader(QObject* caller, int chapterNumber)
 {
-    LOGGER(chapterNumber);
+    //LOGGER(chapterNumber);
 
     executeQuery( caller, QString("SELECT english_name, english_translation, arabic_name FROM chapters WHERE surah_id=%1").arg(chapterNumber), QueryId::FetchSurahHeader );
 }
@@ -158,7 +158,7 @@ void QueryHelper::fetchSurahHeader(QObject* caller, int chapterNumber)
 
 void QueryHelper::fetchTafsirForSurah(QObject* caller, int chapterNumber)
 {
-    LOGGER(chapterNumber);
+    //LOGGER(chapterNumber);
 
     executeQuery( caller, QString("SELECT id,description,verse_id FROM tafsir_english WHERE surah_id=%1").arg(chapterNumber), QueryId::FetchTafsirForSurah );
 }
@@ -166,7 +166,7 @@ void QueryHelper::fetchTafsirForSurah(QObject* caller, int chapterNumber)
 
 void QueryHelper::fetchAllAyats(QObject* caller, int chapterNumber)
 {
-    LOGGER(chapterNumber);
+    //LOGGER(chapterNumber);
 
     QString primary = m_persist->getValueFor("primary").toString();
     QString translation = m_persist->getValueFor("translation").toString();
@@ -184,7 +184,7 @@ void QueryHelper::fetchAllAyats(QObject* caller, int chapterNumber)
 
 void QueryHelper::fetchTafsirIbnKatheer(QObject* caller, int chapterNumber)
 {
-    LOGGER(chapterNumber);
+    //LOGGER(chapterNumber);
 
     if (chapterNumber == 114) {
         chapterNumber = 113;
@@ -201,7 +201,7 @@ int QueryHelper::totalBookmarks() {
 
 void QueryHelper::searchQuery(QObject* caller, QString const& trimmedText)
 {
-    LOGGER(trimmedText);
+    //LOGGER(trimmedText);
     QString table = m_persist->getValueFor("translation").toString();
 
     if ( !table.isEmpty() ) {
@@ -218,7 +218,7 @@ void QueryHelper::searchQuery(QObject* caller, QString const& trimmedText)
 
 void QueryHelper::fetchPageNumbers(QObject* caller)
 {
-    LOGGER("fetchPageNumbers");
+    //LOGGER("fetchPageNumbers");
     executeQuery(caller, "SELECT MIN(page_number) as page_number,chapters.english_name,chapters.arabic_name from mushaf_pages INNER JOIN chapters ON mushaf_pages.surah_id=chapters.surah_id GROUP BY mushaf_pages.surah_id", QueryId::FetchPageNumbers);
 }
 

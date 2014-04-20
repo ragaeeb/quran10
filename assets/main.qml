@@ -19,8 +19,7 @@ TabbedPane
         title: qsTr("Qu'ran") + Retranslate.onLanguageChanged
         description: qsTr("القرآن") + Retranslate.onLanguageChanged
         imageSource: "images/ic_quran_open.png"
-        unreadContentCount: mushafQueue.queued + queue.queued
-        newContentAvailable: unreadContentCount > 0
+        unreadContentCount: 114
         delegateActivationPolicy: TabDelegateActivationPolicy.ActivateWhenSelected
 	    
         delegate: Delegate {
@@ -74,6 +73,20 @@ TabbedPane
         
         delegate: Delegate {
             source: "SupplicationsPane.qml"
+        }
+    }
+    
+    Tab {
+        id: transfers
+        title: qsTr("Downloads") + Retranslate.onLanguageChanged
+        description: qsTr("Active Transfers") + Retranslate.onLanguageChanged
+        imageSource: "images/menu/ic_transfers.png"
+        delegateActivationPolicy: TabDelegateActivationPolicy.ActivateWhenSelected
+        unreadContentCount: mushaf.queued + recitation.queued
+        newContentAvailable: unreadContentCount > 0
+        
+        delegate: Delegate {
+            source: "TransfersPane.qml"
         }
     }
 }

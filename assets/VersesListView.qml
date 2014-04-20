@@ -10,13 +10,18 @@ ListView
     property alias activeDefinition: activeDef
     property int chapterNumber
     property string chapterName
-    property alias mediaPlayer: player
     property ActionSet sourceSet
     property int translationSize: persist.getValueFor("translationSize")
     property int primarySize: persist.getValueFor("primarySize")
     property alias custom: customTextStyle
+    property int fromVerse
+    property int previousPlayedIndex
     signal tafsirTriggered(int id);
     opacity: 0
+
+    onFromVerseChanged: {
+        previousPlayedIndex = -1;
+    }
 
     dataModel: GroupDataModel {
         id: verseModel
@@ -73,7 +78,9 @@ ListView
                     var selectedIndices = listView.selectionList();
                     var first = selectedIndices[0][0];
                     var last = selectedIndices[selectedIndices.length-1][0];
-                    player.doPlay(first+1, last+1);
+
+                    fromVerse = first+1;
+                    recitation.downloadAndPlay( chapterNumber, fromVerse, last+1 );
                 }
             }
         ]
@@ -88,16 +95,40 @@ ListView
         }
     }
     
+    function clearPrevious()
+    {
+        var actual = [ previousPlayedIndex, 0 ];
+        var data = verseModel.data(actual);
+        data.playing = false;
+        verseModel.updateItem(actual, data);
+    }
+    
+    function onIndexChanged()
+    {
+        var index = recitation.player.currentIndex;
+        
+        if (previousPlayedIndex >= 0) {
+            clearPrevious();
+        }
+        
+        var target = [ index+fromVerse-1, 0 ];
+        var data = dataModel.data(target);
+        data["playing"] = true
+        verseModel.updateItem(target, data);
+        
+        previousPlayedIndex = index+fromVerse-1;
+    }
+    
     onCreationCompleted: {
         persist.settingChanged.connect(settingChanged);
         helper.dataLoaded.connect(onDataLoaded);
+        recitation.currentIndexChanged.connect(onIndexChanged);
+        recitation.player.playbackCompleted.connect(clearPrevious);
     }
 
     function settingChanged(key)
     {
-        if (key == "repeat") {
-            player.setRepeat(persist.getValueFor("repeat") == 1 );
-        } else if (key == "follow") {
+        if (key == "follow") {
             player.follow = persist.getValueFor("follow") == 1;
         } else if (key == "primarySize") {
             primarySize = persist.getValueFor("primarySize");
@@ -166,44 +197,6 @@ ListView
                     fontFamily: "uthman_bold"
                 }
             ]
-        },
-
-        DualChannelPlayer {
-            id: player
-            property bool follow: persist.getValueFor("follow") == 1
-            repeat: persist.getValueFor("repeat") == 1
-            property int fromVerse
-            
-            function doPlay(from, to)
-            {
-                var toPlay = app.downloadChapter(chapterNumber, from, to);
-                
-                if (toPlay.length > 0) {
-                    fromVerse = from;
-                    play(toPlay);
-                }
-            }
-
-            onIndexChanged: {
-                if (index >= 0)
-                {
-                    var target = [ index+fromVerse-1, 0 ];
-                    var data = dataModel.data(target);
-                    data["playing"] = true
-                    verseModel.updateItem(target, data);
-
-                    if (follow) {
-                        listView.scrollToItem(target, ScrollAnimation.Default);
-                    }
-                }
-            }
-
-            onPlaybackCompleted: {
-                var actual = [ index+fromVerse-1, 0 ];
-                var data = verseModel.data(actual);
-                data.playing = false;
-                verseModel.updateItem(actual, data);
-            }
         },
         
         RangeSelector {

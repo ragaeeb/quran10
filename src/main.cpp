@@ -1,6 +1,5 @@
 #include "precompiled.h"
 
-#include "Logger.h"
 #include "applicationui.hpp"
 
 using namespace bb::cascades;
