@@ -1,5 +1,6 @@
-import bb.cascades 1.0
+import bb.cascades 1.2
 import com.canadainc.data 1.0
+import bb.multimedia 1.0
 
 Page
 {
@@ -34,13 +35,6 @@ Page
     {
         if (key == "translation" || key == "primary" || key == "primarySize" || key == "translationSize") {
             loadVerses()
-        }
-    }
-    
-    function startPlayback()
-    {
-        if (queue.queued == 0) {
-            playAllAction.triggered();   
         }
     }
     
@@ -106,7 +100,6 @@ Page
 
     onCreationCompleted: {
         persist.settingChanged.connect(reloadNeeded);
-        app.recitationDownloadComplete.connect(startPlayback);
         helper.dataLoaded.connect(onDataLoaded);
     }
     
@@ -151,19 +144,29 @@ Page
         
         ActionItem {
             id: playAllAction
-            title: listView.mediaPlayer.playing ? qsTr("Pause") : qsTr("Play All")
-            imageSource: listView.mediaPlayer.playing ? "images/ic_pause.png" : "images/ic_play.png"
+            title: recitation.player.playing ? qsTr("Pause") : qsTr("Play All")
+            imageSource: recitation.player.playing ? "images/ic_pause.png" : "images/ic_play.png"
             ActionBar.placement: ActionBarPlacement.OnBar
             
             onTriggered:
             {
-                if (listView.mediaPlayer.playing) {
-                    listView.mediaPlayer.pause();
-                } else if (listView.mediaPlayer.paused) {
-                    listView.mediaPlayer.resume();
-                } else {
-                    listView.mediaPlayer.doPlay( 1, listView.dataModel.size() );
+                if ( !persist.contains("hideDataWarning") )
+                {
+                    var yesClicked = persist.showBlockingDialog( qsTr("Confirmation"), qsTr("We are about to download a whole bunch of MP3 recitations, you should only attempt to do this if you have either an unlimited data plan, or are connected via Wi-Fi. Otherwise you might incur a lot of data charges. Are you sure you want to continue? If you select No you can always attempt to download again later."), qsTr("Yes"), qsTr("No") );
+                    
+                    if (!yesClicked) {
+                        return;
+                    }
+
+                    persist.saveValueFor("hideDataWarning", 1);
                 }
+
+				if (recitation.player.active) {
+				    recitation.player.togglePlayback();
+				} else {
+				    listView.fromVerse = 1;
+                    recitation.downloadAndPlay( surahId, 1, listView.dataModel.size() );
+				}
             }
         },
 
@@ -192,10 +195,10 @@ Page
         {
             content: Container
             {
-                topPadding: 10; bottomPadding: 25
+                topPadding: 10;
                 
                 horizontalAlignment: HorizontalAlignment.Fill
-                verticalAlignment: VerticalAlignment.Top
+                verticalAlignment: VerticalAlignment.Center
                 background: back.imagePaint
                 
                 attachedObjects: [
@@ -221,46 +224,6 @@ Page
                     textStyle.fontSize: FontSize.XXSmall
                     textStyle.fontWeight: FontWeight.Bold
                     topMargin: 0
-                }
-                
-                ControlDelegate
-                {
-                    id: progressDelegate
-                    delegateActive: queue.queued > 0
-                    horizontalAlignment: HorizontalAlignment.Fill
-                    
-                    sourceComponent: ComponentDefinition
-                    {
-                        Container
-                        {
-                            leftPadding: 10; rightPadding: 10
-                            
-                            ProgressIndicator {
-                                horizontalAlignment: HorizontalAlignment.Fill
-                                fromValue: 0
-                                state: ProgressIndicatorState.Progress
-                                
-                                function onDownloadProgress(cookie, received, total)
-                                {
-                                    value = received;
-                                    toValue = total;
-                                }
-                                
-                                onCreationCompleted: {
-                                    queue.downloadProgress.connect(onDownloadProgress);
-                                }
-                            }
-                            
-                            Label {
-                                horizontalAlignment: HorizontalAlignment.Fill
-                                textStyle.textAlign: TextAlign.Center
-                                textStyle.fontSize: FontSize.XXSmall
-                                textStyle.fontWeight: FontWeight.Bold
-                                topMargin: 0
-                                text: qsTr("%n downloads remaining...", "", queue.queued)
-                            }   
-                        }
-                    }
                 }
             }
         }

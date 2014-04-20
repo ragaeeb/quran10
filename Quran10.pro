@@ -3,6 +3,7 @@ APP_NAME = Quran10
 INCLUDEPATH += ../../canadainc/src/
 CONFIG += qt warn_on cascades10
 LIBS += -lbbdata -lbbsystem -lbbcascadespickers -lbbmultimedia -lbb -lbbplatform
+QT += network
 
 CONFIG(release, debug|release) {
     DESTDIR = o.le-v7
