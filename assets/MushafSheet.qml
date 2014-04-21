@@ -74,7 +74,7 @@ Sheet
                     var abort = abortDownloadAction.createObject();
                     mainPage.addAction(abort, ActionBarPlacement.Default);
                     
-                    listView.scrollToPosition(0, ScrollAnimation.Default);
+                    listView.scrollToPosition(ScrollPosition.Beginning, ScrollAnimation.Default);
                 }
             }
             
