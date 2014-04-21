@@ -1,4 +1,5 @@
 import bb.cascades 1.0
+import bb.device 1.0
 import com.canadainc.data 1.0
 
 Page
@@ -15,16 +16,13 @@ Page
         }
     }
     
-    onCreationCompleted: {
-        helper.dataLoaded.connect(onDataLoaded);
-    }
-    
     onSurahIdChanged: {
         helper.fetchTafsirIbnKatheer(root, surahId);
     }
 
     actions: [
         ActionItem {
+            id: top
             title: qsTr("Top") + Retranslate.onLanguageChanged
             imageSource: "file:///usr/share/icons/ic_go.png"
             ActionBar.placement: ActionBarPlacement.OnBar
@@ -32,15 +30,28 @@ Page
             onTriggered: {
                 listView.scrollToPosition(ScrollPosition.Beginning, ScrollAnimation.Default);
             }
+            
+            onCreationCompleted: {
+                if (hw.isPhysicalKeyboardDevice) {
+                    removeAction(top);
+                }
+            }
         },
 
         ActionItem {
+            id: bottom
             title: qsTr("Bottom") + Retranslate.onLanguageChanged
             imageSource: "images/ic_scroll_end.png"
             ActionBar.placement: ActionBarPlacement.OnBar
 
             onTriggered: {
                 listView.scrollToPosition(ScrollPosition.End, ScrollAnimation.Default);
+            }
+            
+            onCreationCompleted: {
+                if (hw.isPhysicalKeyboardDevice) {
+                    removeAction(bottom);
+                }
             }
         }
     ]
@@ -174,4 +185,10 @@ Page
             ]
         }
     }
+    
+    attachedObjects: [
+        HardwareInfo {
+            id: hw
+        }
+    ]
 }

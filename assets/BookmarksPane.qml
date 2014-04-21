@@ -61,10 +61,12 @@ NavigationPane
                         }
 
                         listItemComponents: [
-                            ListItemComponent {
+                            ListItemComponent
+                            {
                                 type: "verse"
 
-                                StandardListItem {
+                                StandardListItem
+                                {
                                     id: sli
                                     title: ListItemData.surah_name
                                     status: ListItemData.verse_id
@@ -86,10 +88,6 @@ NavigationPane
                                         }
                                     ]
                                 }
-                            },
-
-                            ListItemComponent {
-                                type: "tafsir"
                             }
                         ]
 

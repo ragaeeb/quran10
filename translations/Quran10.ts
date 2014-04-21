@@ -4,22 +4,22 @@
 <context>
     <name>AyatListItem</name>
     <message>
-        <location filename="../assets/AyatListItem.qml" line="43"/>
+        <location filename="../assets/AyatListItem.qml" line="41"/>
         <source>%1:%2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatListItem.qml" line="46"/>
+        <location filename="../assets/AyatListItem.qml" line="44"/>
         <source>Bookmark</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatListItem.qml" line="55"/>
+        <location filename="../assets/AyatListItem.qml" line="53"/>
         <source>Add to Home Screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatListItem.qml" line="66"/>
+        <location filename="../assets/AyatListItem.qml" line="64"/>
         <source>Play From Here</source>
         <translation type="unfinished"></translation>
     </message>
@@ -37,7 +37,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/BookmarksPane.qml" line="80"/>
+        <location filename="../assets/BookmarksPane.qml" line="82"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
@@ -128,27 +128,27 @@ http://www.troid.ca
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="212"/>
+        <location filename="../assets/MushafSheet.qml" line="213"/>
         <source>Confirmation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="213"/>
+        <location filename="../assets/MushafSheet.qml" line="214"/>
         <source>We are about to download the mushaf (which is about ~200MB in size), you should only attempt to do this if you have either an unlimited data plan, or are connected via Wi-Fi. Otherwise you might incur a lot of data charges. Are you sure you want to continue? If you select No you can always attempt to download again later.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="214"/>
+        <location filename="../assets/MushafSheet.qml" line="215"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="215"/>
+        <location filename="../assets/MushafSheet.qml" line="216"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="238"/>
+        <location filename="../assets/MushafSheet.qml" line="239"/>
         <source>Abort</source>
         <translation type="unfinished"></translation>
     </message>
@@ -241,9 +241,9 @@ http://www.troid.ca
     </message>
 </context>
 <context>
-    <name>SearchPane</name>
+    <name>SearchPage</name>
     <message>
-        <location filename="../assets/SearchPane.qml" line="29"/>
+        <location filename="../assets/SearchPage.qml" line="22"/>
         <source>Enter text to search...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -577,41 +577,21 @@ http://www.troid.ca
     </message>
     <message>
         <location filename="../assets/SettingsPage.qml" line="576"/>
-        <source>Primary Font Size</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/SettingsPage.qml" line="583"/>
-        <source>The primary font size will be small</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/SettingsPage.qml" line="585"/>
-        <source>The primary font size will be medium</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/SettingsPage.qml" line="587"/>
-        <source>The primary font size will be large</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/SettingsPage.qml" line="594"/>
         <source>Translation Font Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="601"/>
+        <location filename="../assets/SettingsPage.qml" line="583"/>
         <source>The translation font size will be small</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="603"/>
+        <location filename="../assets/SettingsPage.qml" line="585"/>
         <source>The translation font size will be medium</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="605"/>
+        <location filename="../assets/SettingsPage.qml" line="587"/>
         <source>The translation font size will be large</source>
         <translation type="unfinished"></translation>
     </message>
@@ -805,62 +785,62 @@ http://www.troid.ca
 <context>
     <name>SurahPage</name>
     <message>
-        <location filename="../assets/SurahPage.qml" line="67"/>
+        <location filename="../assets/SurahPage.qml" line="66"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="67"/>
+        <location filename="../assets/SurahPage.qml" line="66"/>
         <source>Press-and-hold on a verse with a grey highlight to find explanations on it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="158"/>
+        <location filename="../assets/SurahPage.qml" line="157"/>
         <source>Tafsir</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="194"/>
+        <location filename="../assets/SurahPage.qml" line="193"/>
         <source>%1 (%2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="96"/>
+        <location filename="../assets/SurahPage.qml" line="95"/>
         <source>Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="113"/>
+        <location filename="../assets/SurahPage.qml" line="112"/>
         <source>Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="129"/>
+        <location filename="../assets/SurahPage.qml" line="128"/>
         <source>Pause</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="129"/>
+        <location filename="../assets/SurahPage.qml" line="128"/>
         <source>Play All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="137"/>
+        <location filename="../assets/SurahPage.qml" line="136"/>
         <source>Confirmation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="137"/>
+        <location filename="../assets/SurahPage.qml" line="136"/>
         <source>We are about to download a whole bunch of MP3 recitations, you should only attempt to do this if you have either an unlimited data plan, or are connected via Wi-Fi. Otherwise you might incur a lot of data charges. Are you sure you want to continue? If you select No you can always attempt to download again later.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="137"/>
+        <location filename="../assets/SurahPage.qml" line="136"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="137"/>
+        <location filename="../assets/SurahPage.qml" line="136"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>
@@ -868,30 +848,30 @@ http://www.troid.ca
 <context>
     <name>TafseerIbnKatheer</name>
     <message>
-        <location filename="../assets/TafseerIbnKatheer.qml" line="28"/>
+        <location filename="../assets/TafseerIbnKatheer.qml" line="26"/>
         <source>Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/TafseerIbnKatheer.qml" line="38"/>
+        <location filename="../assets/TafseerIbnKatheer.qml" line="43"/>
         <source>Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/TafseerIbnKatheer.qml" line="80"/>
-        <location filename="../assets/TafseerIbnKatheer.qml" line="84"/>
+        <location filename="../assets/TafseerIbnKatheer.qml" line="91"/>
+        <location filename="../assets/TafseerIbnKatheer.qml" line="95"/>
         <source>%1
 
 %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/TafseerIbnKatheer.qml" line="151"/>
+        <location filename="../assets/TafseerIbnKatheer.qml" line="162"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/TafseerIbnKatheer.qml" line="159"/>
+        <location filename="../assets/TafseerIbnKatheer.qml" line="170"/>
         <source>Share</source>
         <translation type="unfinished"></translation>
     </message>
@@ -925,33 +905,33 @@ http://www.troid.ca
 <context>
     <name>VersesListView</name>
     <message>
-        <location filename="../assets/VersesListView.qml" line="224"/>
+        <location filename="../assets/VersesListView.qml" line="217"/>
         <source>%1:%2-%3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="72"/>
+        <location filename="../assets/VersesListView.qml" line="65"/>
         <source>Play</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="86"/>
+        <location filename="../assets/VersesListView.qml" line="79"/>
         <source>None selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="144"/>
-        <location filename="../assets/VersesListView.qml" line="247"/>
+        <location filename="../assets/VersesListView.qml" line="137"/>
+        <location filename="../assets/VersesListView.qml" line="240"/>
         <source>%1:%2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="162"/>
+        <location filename="../assets/VersesListView.qml" line="155"/>
         <source>Bookmarked %1:%2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="188"/>
+        <location filename="../assets/VersesListView.qml" line="181"/>
         <source>ayahs</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1022,12 +1002,12 @@ http://www.troid.ca
 <context>
     <name>quran::ApplicationUI</name>
     <message>
-        <location filename="../src/applicationui.cpp" line="151"/>
+        <location filename="../src/applicationui.cpp" line="157"/>
         <source>Added %1 to home screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="153"/>
+        <location filename="../src/applicationui.cpp" line="159"/>
         <source>Could not add %1 to home screen</source>
         <translation type="unfinished"></translation>
     </message>
