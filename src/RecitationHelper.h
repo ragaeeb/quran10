@@ -34,6 +34,7 @@ private slots:
     void indexChanged(int index);
     void onFinished();
     void onRequestComplete(QVariant const& cookie, QByteArray const& data);
+    void onWritten();
     void settingChanged(QString const& key);
 
 signals:

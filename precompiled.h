@@ -11,3 +11,5 @@
 #include <bb/cascades/NavigationPane>
 #include <bb/cascades/QmlDocument>
 #include <bb/cascades/SceneCover>
+
+#include <QtConcurrentRun>

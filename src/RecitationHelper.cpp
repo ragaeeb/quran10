@@ -7,13 +7,18 @@
 #include "Persistance.h"
 #include "TextUtils.h"
 
-#include <QtConcurrentRun>
-
 #define normalize(a) TextUtils::zeroFill(a,3)
 #define PLAYLIST_TARGET "/var/tmp/playlist.m3u"
+#define remote "http://www.everyayah.com/data"
 
 namespace {
-    const char* remote = "http://www.everyayah.com/data";
+
+void writeVerse(QVariant const& cookie, QByteArray const& data)
+{
+    LOGGER("*** WRITING FILE!!");
+    canadainc::IOUtils::writeFile( cookie.toMap().value("local").toString(), data );
+}
+
 }
 
 namespace quran {
@@ -87,7 +92,9 @@ QVariantList RecitationHelper::generatePlaylist(int chapter, int fromVerse, int 
 
     if (chapter > 0)
     {
-        if ( !m_persistance->contains("output") ) {
+        QDir output( m_persistance->getValueFor("output").toString() );
+
+        if ( !output.exists() ) {
             m_persistance->saveValueFor( "output", IOUtils::setupOutputDirectory("downloads", "quran10") );
         }
 
@@ -154,8 +161,18 @@ void RecitationHelper::settingChanged(QString const& key)
 
 void RecitationHelper::onRequestComplete(QVariant const& cookie, QByteArray const& data)
 {
-    IOUtils::writeFile( cookie.toMap().value("local").toString(), data );
+    LOGGER("*** Request complete" << cookie);
+    QFutureWatcher<void>* qfw = new QFutureWatcher<void>(this);
+    connect( qfw, SIGNAL( finished() ), this, SLOT( onWritten() ) );
 
+    QFuture<void> future = QtConcurrent::run(writeVerse, cookie, data);
+    qfw->setFuture(future);
+}
+
+
+void RecitationHelper::onWritten()
+{
+    LOGGER("*** FILE WRITTEN!");
     if ( queued() == 0 ) { // last one
         startPlayback();
     }
