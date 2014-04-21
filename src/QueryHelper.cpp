@@ -156,11 +156,15 @@ void QueryHelper::fetchSurahHeader(QObject* caller, int chapterNumber)
 }
 
 
-void QueryHelper::fetchTafsirForSurah(QObject* caller, int chapterNumber)
+void QueryHelper::fetchTafsirForSurah(QObject* caller, int chapterNumber, bool excludeVerses)
 {
     //LOGGER(chapterNumber);
 
-    executeQuery( caller, QString("SELECT id,description,verse_id FROM tafsir_english WHERE surah_id=%1").arg(chapterNumber), QueryId::FetchTafsirForSurah );
+    if (excludeVerses) {
+        executeQuery( caller, QString("SELECT id,description,verse_id FROM tafsir_english WHERE surah_id=%1 AND verse_id ISNULL").arg(chapterNumber), QueryId::FetchTafsirForSurah );
+    } else {
+        executeQuery( caller, QString("SELECT id,verse_id FROM tafsir_english WHERE surah_id=%1 AND verse_id NOT NULL").arg(chapterNumber), QueryId::FetchTafsirForSurah );
+    }
 }
 
 

@@ -10,13 +10,11 @@ ListView
     property alias activeDefinition: activeDef
     property int chapterNumber
     property string chapterName
-    property ActionSet sourceSet
     property int translationSize: persist.getValueFor("translationSize")
     property int primarySize: persist.getValueFor("primarySize")
     property alias custom: customTextStyle
     property int fromVerse
     property int previousPlayedIndex
-    signal tafsirTriggered(int id);
     opacity: 0
 
     onFromVerseChanged: {
@@ -86,13 +84,6 @@ ListView
         ]
 
         status: qsTr("None selected") + Retranslate.onLanguageChanged
-    }
-    
-    function onDataLoaded(id, data)
-    {
-        if (id == QueryId.FetchTafsirForAyat && sourceSet && data.length > 0) {
-            sourceSet.appendExplanations(data);
-        }
     }
     
     function clearPrevious()
@@ -173,12 +164,6 @@ ListView
     
     function addToHomeScreen(ListItemData) {
         app.addToHomeScreen(chapterNumber, ListItemData.verse_id, ListItemData.translation ? ListItemData.translation : ListItemData.arabic);
-    }
-    
-    function queryExplanationsFor(source, verseId)
-    {
-        sourceSet = source;
-        helper.fetchTafsirForAyat(listView, chapterNumber, verseId);
     }
 
     attachedObjects: [

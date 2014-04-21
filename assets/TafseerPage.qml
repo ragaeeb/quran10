@@ -43,12 +43,12 @@ Page
         {
             content: Container
             {
-                bottomPadding: 25
+                topPadding: 15
                 leftPadding: 20
                 rightPadding: 20
                 
                 horizontalAlignment: HorizontalAlignment.Fill
-                verticalAlignment: VerticalAlignment.Top
+                verticalAlignment: VerticalAlignment.Center
                 background: back.imagePaint
                 
                 attachedObjects: [
@@ -61,6 +61,7 @@ Page
                 Label {
                     id: descriptionLabel
                     horizontalAlignment: HorizontalAlignment.Fill
+                    verticalAlignment: VerticalAlignment.Center
                     textStyle.textAlign: TextAlign.Center
                     textStyle.fontSize: FontSize.XXSmall
                     textStyle.fontWeight: FontWeight.Bold
@@ -71,6 +72,7 @@ Page
                 Label {
                     id: authorLabel
                     horizontalAlignment: HorizontalAlignment.Fill
+                    verticalAlignment: VerticalAlignment.Center
                     textStyle.textAlign: TextAlign.Center
                     textStyle.fontSize: FontSize.XXSmall
                     textStyle.fontWeight: FontWeight.Bold

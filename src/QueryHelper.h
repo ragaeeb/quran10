@@ -50,7 +50,7 @@ public:
     Q_SLOT void fetchSurahHeader(QObject* caller, int chapterNumber);
     Q_SLOT void fetchTafsirContent(QObject* caller, QString const& tafsirId);
 	Q_SLOT void fetchTafsirForAyat(QObject* caller, int chapterNumber, int verseId);
-	Q_SLOT void fetchTafsirForSurah(QObject* caller, int chapterNumber);
+	Q_SLOT void fetchTafsirForSurah(QObject* caller, int chapterNumber, bool excludeVerses=true);
     Q_SLOT void fetchTafsirIbnKatheer(QObject* caller, int chapterNumber);
 	Q_SLOT void searchQuery(QObject* caller, QString const& trimmedText);
     int totalBookmarks();

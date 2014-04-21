@@ -11,6 +11,8 @@ Container
     
     function updateState()
     {
+        console.log("*** UPDATE SETATE", ListItemData.verse_id, hasTafsir);
+        
         if (playing) {
             background = Color.create("#ffff8c00")
         } else if (selection) {
@@ -30,22 +32,6 @@ Container
         hasTafsirChanged.connect(updateState);
         activeChanged.connect(updateState);
         updateState();
-    }
-    
-    onSelectionChanged: {
-        if (!selection)
-        {
-            for (var i = actionSet.count() - 1; i >= 0; i --) {
-                var current = actionSet.at(i);
-                
-                if (current.id) {
-                    actionSet.remove(current);
-                    current.destroy();
-                }
-            }
-        } else {
-            itemRoot.ListItem.view.queryExplanationsFor(actionSet, ListItemData.verse_id);
-        }
     }
     
     contextActions: [
@@ -84,33 +70,6 @@ Container
                     itemRoot.ListItem.view.mediaPlayer.doPlay( itemRoot.ListItem.indexPath[0]+1, itemRoot.ListItem.view.dataModel.size() );
                 }
             }
-            
-            function appendExplanations(data)
-            {
-                for (var i = data.length-1; i >= 0; i--)
-                {
-                    if (data[i].verse_id == ListItemData.verse_id) {
-                        var action = actionDefinition.createObject();
-                        action.id = data[i].id;
-                        action.title = data[i].description;
-                        add(action);
-                    }
-                }
-            }
-            
-            attachedObjects: [
-                ComponentDefinition {
-                    id: actionDefinition
-                    ActionItem {
-                        property int id
-                        imageSource: "images/ic_tafsir.png"
-                        
-                        onTriggered: {
-                            itemRoot.ListItem.view.tafsirTriggered(id);
-                        }
-                    }
-                }
-            ]
         }
     ]
     
