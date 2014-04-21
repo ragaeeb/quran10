@@ -12,8 +12,6 @@ Page
     onSurahIdChanged:
     {
 	    listView.chapterNumber = surahId;
-        helper.fetchSurahHeader(surahPage, surahId);
-
         loadVerses();
     }
     
@@ -24,7 +22,8 @@ Page
         var translation = persist.getValueFor("translation");
         
         if (translation == "english") {
-            helper.fetchTafsirForSurah(surahPage, surahId);
+            console.log("** SEE I DO THIS!");
+            helper.fetchTafsirForSurah(surahPage, surahId, false);
             surahPage.addAction(tafsirAction);   
         } else {
             surahPage.removeAction(tafsirAction);
@@ -36,15 +35,6 @@ Page
         if (key == "translation" || key == "primary" || key == "primarySize" || key == "translationSize") {
             loadVerses()
         }
-    }
-    
-    function showExplanation(id)
-    {
-        tafsirDelegate.source = "TafseerPage.qml";
-        var tafsirPage = tafsirDelegate.createObject();
-        tafsirPage.tafsirId = id;
-
-        paneProperties.navPane.push(tafsirPage);
     }
 
     paneProperties: NavigationPaneProperties {
@@ -68,10 +58,8 @@ Page
                 listView.scrollToPosition(0, ScrollAnimation.None);
                 listView.scroll(-100, ScrollAnimation.Smooth);
             }
-        } else if (id == QueryId.FetchSurahHeader) {
-            surahNameArabic.text = data[0].arabic_name
-            surahNameEnglish.text = qsTr("%1 (%2)").arg(data[0].english_name).arg(data[0].english_translation)
         } else if (id == QueryId.FetchTafsirForSurah) {
+            console.log("** WE HERE NOW!", data.length);
             var verseModel = listView.dataModel;
             
             if ( persist.getValueFor("tafsirTutorialCount") != 1 ) {
@@ -81,45 +69,22 @@ Page
             
             for (var i = data.length-1; i >= 0; i--)
             {
-                var verse = data[i].verse_id;
-                
-                if (verse) {
-                    var target = [ verse-1, 0 ];
-                    var verseData = verseModel.data(target);
-                    verseData["hasTafsir"] = true;
-                    verseModel.updateItem(target, verseData);
-                } else {
-                    var ai = actionDefinition.createObject();
-                    ai.title = data[i].description;
-                    ai.id = data[i].id;
-                    surahPage.addAction(ai, ActionBarPlacement.Default);   
-                }
+                var target = [ data[i].verse_id-1, 0 ];
+                var verseData = verseModel.data(target);
+                verseData["hasTafsir"] = true;
+                verseModel.updateItem(target, verseData);
             }
         }
     }
 
     onCreationCompleted: {
         persist.settingChanged.connect(reloadNeeded);
-        helper.dataLoaded.connect(onDataLoaded);
     }
     
     attachedObjects: [
         ComponentDefinition {
             id: tafsirDelegate
-        },
-        
-        ComponentDefinition
-        {
-            id: actionDefinition
-            
-            ActionItem {
-                property int id
-                imageSource: "images/ic_tafsir.png"
-                
-                onTriggered: {
-                    showExplanation(id);
-                }
-            }
+            source: "TafseerPicker.qml"
         }
     ]
 
@@ -173,13 +138,13 @@ Page
         ActionItem {
             id: tafsirAction
             
-            title: qsTr("Ibn Katheer") + Retranslate.onLanguageChanged
+            title: qsTr("Tafsir") + Retranslate.onLanguageChanged
             imageSource: "images/ic_tafsir_show.png"
 
             onTriggered: {
-                tafsirDelegate.source = "TafseerIbnKatheer.qml";
                 var page = tafsirDelegate.createObject();
-                page.surahId = surahId;
+                page.chapterNumber = surahId;
+                page.verseNumber = 0;
                 
                 properties.navPane.push(page);
             }
@@ -188,45 +153,11 @@ Page
         }
     ]
     
-    titleBar: TitleBar
+    titleBar: ChapterTitleBar
     {
-        kind: TitleBarKind.FreeForm
-        kindProperties: FreeFormTitleBarKindProperties
-        {
-            content: Container
-            {
-                topPadding: 10;
-                
-                horizontalAlignment: HorizontalAlignment.Fill
-                verticalAlignment: VerticalAlignment.Center
-                background: back.imagePaint
-                
-                attachedObjects: [
-                    ImagePaintDefinition {
-                        id: back
-                        imageSource: "images/title_bg_alt.png"
-                    }
-                ]
-                
-                Label {
-                    id: surahNameArabic
-                    horizontalAlignment: HorizontalAlignment.Fill
-                    textStyle.textAlign: TextAlign.Center
-                    textStyle.fontSize: FontSize.XXSmall
-                    textStyle.fontWeight: FontWeight.Bold
-                    bottomMargin: 5
-                }
-                
-                Label {
-                    id: surahNameEnglish
-                    horizontalAlignment: HorizontalAlignment.Fill
-                    textStyle.textAlign: TextAlign.Center
-                    textStyle.fontSize: FontSize.XXSmall
-                    textStyle.fontWeight: FontWeight.Bold
-                    topMargin: 0
-                }
-            }
-        }
+        bgSource: "images/title_bg_alt.png"
+        bottomPad: 0
+        chapterNumber: surahId
     }
 
     Container
@@ -245,9 +176,22 @@ Page
             id: listView
             chapterName: qsTr("%1 (%2)").arg(surahNameArabic.text).arg(surahNameEnglish.text)
             
-            onCreationCompleted: {
-                tafsirTriggered.connect(showExplanation);
+            onTriggered: {
+                var data = dataModel.data(indexPath);
+                
+                var created = tp.createObject();
+                created.chapterNumber = surahId;
+                created.verseNumber = data.verse_id;
+                
+                properties.navPane.push(created);
             }
         }
+        
+        attachedObjects: [
+            ComponentDefinition {
+                id: tp
+                source: "TafseerPicker.qml"
+            }
+        ]
     }
 }

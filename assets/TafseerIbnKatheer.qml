@@ -12,10 +12,6 @@ Page
         if (id == QueryId.FetchTafsirIbnKatheerForSurah) {
             adm.append(data);
             busy.running = false;
-        } else if (id == QueryId.FetchSurahHeader) {
-            console.log("actual data", data[0].arabic_name, data[0].english_name);
-            surahNameArabic.text = data[0].arabic_name
-            surahNameEnglish.text = qsTr("%1 (%2)").arg(data[0].english_name).arg(data[0].english_translation);
         }
     }
     
@@ -24,7 +20,6 @@ Page
     }
     
     onSurahIdChanged: {
-        helper.fetchSurahHeader(root, surahId);
         helper.fetchTafsirIbnKatheer(root, surahId);
     }
 
@@ -50,45 +45,8 @@ Page
         }
     ]
     
-    titleBar: TitleBar
-    {
-        kind: TitleBarKind.FreeForm
-        kindProperties: FreeFormTitleBarKindProperties
-        {
-            content: Container
-            {
-                topPadding: 10; bottomPadding: 25
-                
-                horizontalAlignment: HorizontalAlignment.Fill
-                verticalAlignment: VerticalAlignment.Top
-                background: back.imagePaint
-                
-                attachedObjects: [
-                    ImagePaintDefinition {
-                        id: back
-                        imageSource: "images/title_bg_tafseer.amd"
-                    }
-                ]
-                
-                Label {
-                    id: surahNameArabic
-                    horizontalAlignment: HorizontalAlignment.Fill
-                    textStyle.textAlign: TextAlign.Center
-                    textStyle.fontSize: FontSize.XXSmall
-                    textStyle.fontWeight: FontWeight.Bold
-                    bottomMargin: 5
-                }
-                
-                Label {
-                    id: surahNameEnglish
-                    horizontalAlignment: HorizontalAlignment.Fill
-                    textStyle.textAlign: TextAlign.Center
-                    textStyle.fontSize: FontSize.XXSmall
-                    textStyle.fontWeight: FontWeight.Bold
-                    topMargin: 0
-                }
-            }
-        }
+    titleBar: ChapterTitleBar {
+        chapterNumber: surahId
     }
 
     Container
