@@ -805,62 +805,62 @@ http://www.troid.ca
 <context>
     <name>SurahPage</name>
     <message>
-        <location filename="../assets/SurahPage.qml" line="66"/>
+        <location filename="../assets/SurahPage.qml" line="67"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="66"/>
+        <location filename="../assets/SurahPage.qml" line="67"/>
         <source>Press-and-hold on a verse with a grey highlight to find explanations on it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="141"/>
+        <location filename="../assets/SurahPage.qml" line="158"/>
         <source>Tafsir</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="177"/>
+        <location filename="../assets/SurahPage.qml" line="194"/>
         <source>%1 (%2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="93"/>
+        <location filename="../assets/SurahPage.qml" line="96"/>
         <source>Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="102"/>
+        <location filename="../assets/SurahPage.qml" line="113"/>
         <source>Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="112"/>
+        <location filename="../assets/SurahPage.qml" line="129"/>
         <source>Pause</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="112"/>
+        <location filename="../assets/SurahPage.qml" line="129"/>
         <source>Play All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="120"/>
+        <location filename="../assets/SurahPage.qml" line="137"/>
         <source>Confirmation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="120"/>
+        <location filename="../assets/SurahPage.qml" line="137"/>
         <source>We are about to download a whole bunch of MP3 recitations, you should only attempt to do this if you have either an unlimited data plan, or are connected via Wi-Fi. Otherwise you might incur a lot of data charges. Are you sure you want to continue? If you select No you can always attempt to download again later.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="120"/>
+        <location filename="../assets/SurahPage.qml" line="137"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="120"/>
+        <location filename="../assets/SurahPage.qml" line="137"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>

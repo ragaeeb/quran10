@@ -11,7 +11,7 @@ ListView
     property int chapterNumber
     property string chapterName
     property int translationSize: persist.getValueFor("translationSize")
-    property int primarySize: persist.getValueFor("primarySize")
+    property int primarySize: persist.contains("primarySize") ? persist.getValueFor("primarySize") : 8
     property alias custom: customTextStyle
     property int fromVerse
     property int previousPlayedIndex
@@ -46,15 +46,8 @@ ListView
                     horizontalAlignment: HorizontalAlignment.Fill
                     textStyle.textAlign: TextAlign.Center
                     textStyle.color: Color.Black
-                    textStyle.fontSize: {
-                        if (primarySize == 1) {
-                            return FontSize.Small;
-                        } else if (primarySize == 2) {
-                            return FontSize.Medium;
-                        } else {
-                            return FontSize.XXLarge;
-                        }
-                    }
+                    textStyle.fontSize: FontSize.PointValue
+                    textStyle.fontSizeValue: primarySize
                     
                     layoutProperties: StackLayoutProperties {
                         spaceQuota: 1

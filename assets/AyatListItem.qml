@@ -11,8 +11,6 @@ Container
     
     function updateState()
     {
-        console.log("*** UPDATE SETATE", ListItemData.verse_id, hasTafsir);
-        
         if (playing) {
             background = Color.create("#ffff8c00")
         } else if (selection) {
@@ -91,18 +89,8 @@ Container
             base: itemRoot.ListItem.view.custom.style;
             fontFamily: "uthman_bold";
             textAlign: TextAlign.Center;
-            
-            fontSize: {
-                var primary = itemRoot.ListItem.view.primarySize;
-                
-                if (primary == 1) {
-                    return FontSize.Small;
-                } else if (primary == 2) {
-                    return FontSize.Medium;
-                } else {
-                    return FontSize.XXLarge;
-                }
-            }
+            fontSizeValue: itemRoot.ListItem.view.primarySize
+            fontSize: FontSize.PointValue
         }
     }
     
