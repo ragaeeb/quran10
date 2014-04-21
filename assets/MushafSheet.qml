@@ -185,6 +185,7 @@ Sheet
                                 scalingMethod: ScalingMethod.AspectFit
                                 horizontalAlignment: HorizontalAlignment.Center
                                 verticalAlignment: VerticalAlignment.Fill
+                                opacity: rootItem.ListItem.active == true ? 0.7 : 1;
                             }
                         }
                     }
