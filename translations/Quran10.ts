@@ -128,27 +128,27 @@ http://www.troid.ca
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="204"/>
+        <location filename="../assets/MushafSheet.qml" line="212"/>
         <source>Confirmation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="205"/>
+        <location filename="../assets/MushafSheet.qml" line="213"/>
         <source>We are about to download the mushaf (which is about ~200MB in size), you should only attempt to do this if you have either an unlimited data plan, or are connected via Wi-Fi. Otherwise you might incur a lot of data charges. Are you sure you want to continue? If you select No you can always attempt to download again later.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="206"/>
+        <location filename="../assets/MushafSheet.qml" line="214"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="207"/>
+        <location filename="../assets/MushafSheet.qml" line="215"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="235"/>
+        <location filename="../assets/MushafSheet.qml" line="238"/>
         <source>Abort</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1035,7 +1035,7 @@ http://www.troid.ca
 <context>
     <name>quran::RecitationHelper</name>
     <message>
-        <location filename="../src/RecitationHelper.cpp" line="52"/>
+        <location filename="../src/RecitationHelper.cpp" line="57"/>
         <source>Error: Could not create the directory to download the files into. Please try one of the following to fix this:
 
 1) Swipe-down from the top-bezel &amp; go to the app settings and make sure the Download Directory is set to a valid location.
@@ -1044,7 +1044,7 @@ http://www.troid.ca
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/RecitationHelper.cpp" line="52"/>
+        <location filename="../src/RecitationHelper.cpp" line="57"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>

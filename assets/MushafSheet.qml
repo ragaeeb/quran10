@@ -63,14 +63,13 @@ Sheet
             
             onCreationCompleted:
             {
-                if (app.mushafReady) {
-                    adm.append( app.getMushafPages() );
-                    listView.scrollToPosition(0, ScrollAnimation.Default);
-                } else if (mushafQueue.queued == 0) {
-                    adm.append( app.getDownloadedMushafPages() );
+                if (mushaf.mushafReady) {
+                    adm.append( mushaf.getMushafPages() );
+                } else if (mushaf.queued == 0) {
+                    adm.append( mushaf.getDownloadedMushafPages() );
                     prompt.show();
                 } else {
-                    adm.append( app.getDownloadedMushafPages() );
+                    adm.append( mushaf.getDownloadedMushafPages() );
                     
                     var abort = abortDownloadAction.createObject();
                     mainPage.addAction(abort, ActionBarPlacement.Default);
@@ -82,7 +81,7 @@ Sheet
             ControlDelegate
             {
                 id: progressDelegate
-                delegateActive: !app.mushafReady
+                delegateActive: !mushaf.mushafReady
                 horizontalAlignment: HorizontalAlignment.Fill
                 
                 sourceComponent: ComponentDefinition
@@ -91,7 +90,7 @@ Sheet
                         horizontalAlignment: HorizontalAlignment.Fill
                         fromValue: 0
                         toValue: 614
-                        value: mushafQueue.queued
+                        value: mushaf.queued
                     }
                 }
             }
@@ -104,7 +103,8 @@ Sheet
                 
                 sourceComponent: ComponentDefinition
                 {
-                    DropDown {
+                    DropDown
+                    {
                         id: dropDown
                         horizontalAlignment: HorizontalAlignment.Fill
                         title: qsTr("Surah")
@@ -132,7 +132,6 @@ Sheet
                         }
                         
                         onCreationCompleted: {
-                            helper.dataLoaded.connect(onDataLoaded);
                             helper.fetchPageNumbers(dropDown);
                         }
                     }
@@ -191,6 +190,15 @@ Sheet
                     }
                 ]
                 
+                function onMushafPageReady(imageSource) {
+                    console.log("*** YES!", imageSource);
+                    adm.append(imageSource);
+                }
+                
+                onCreationCompleted: {
+                    mushaf.mushafPageReady.connect(onMushafPageReady);
+                }
+                
                 attachedObjects: [
                     ListScrollStateHandler {
                         id: scroller
@@ -206,14 +214,9 @@ Sheet
                     confirmButton.label: qsTr("Yes") + Retranslate.onLanguageChanged
                     cancelButton.label: qsTr("No") + Retranslate.onLanguageChanged
                     
-                    function onMushafPageReady(imageSource) {
-                        adm.append(imageSource);
-                    }
-                    
                     onFinished: {
                         if (result == SystemUiResult.ConfirmButtonSelection) {
-                            app.mushafPageReady.connect(onMushafPageReady);
-                            app.downloadMushaf();
+                            mushaf.downloadMushaf();
                             
                             var abort = abortDownloadAction.createObject();
                             mainPage.addAction(abort, ActionBarPlacement.Default);
@@ -236,7 +239,7 @@ Sheet
                         imageSource: "images/ic_cancel.png"
                         
                         onTriggered: {
-                            mushafQueue.abort();
+                            mushaf.abort();
                             progressDelegate.delegateActive = false;
                         }
                     }
@@ -247,5 +250,11 @@ Sheet
     
     onClosed: {
         destroy();
+    }
+    
+    onOpened: {
+        if (mushaf.mushafReady) {
+            listView.scrollToPosition(ScrollPosition.Beginning, ScrollAnimation.Default);
+        }
     }
 }
