@@ -60,7 +60,6 @@ Page
                 listView.scroll(-100, ScrollAnimation.Smooth);
             }
         } else if (id == QueryId.FetchTafsirForSurah) {
-            console.log("** WE HERE NOW!", data.length);
             var verseModel = listView.dataModel;
             
             if ( persist.getValueFor("tafsirTutorialCount") != 1 ) {
@@ -203,6 +202,22 @@ Page
                 properties.navPane.push(created);
             }
         }
+        
+        gestureHandlers: [
+            PinchHandler
+            {
+                onPinchEnded: {
+                    var newValue = Math.floor(event.pinchRatio*listView.primarySize);
+                    newValue = Math.max(8,newValue);
+                    newValue = Math.min(newValue, 24);
+                    
+                    listView.primarySize = newValue;
+                    persist.saveValueFor("primarySize", newValue);
+                    
+                    console.log("**** ROTATION", event.rotation)
+                }
+            }
+        ]
         
         attachedObjects: [
             ComponentDefinition {
