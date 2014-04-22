@@ -4,22 +4,22 @@
 <context>
     <name>AyatListItem</name>
     <message>
-        <location filename="../assets/AyatListItem.qml" line="41"/>
+        <location filename="../assets/AyatListItem.qml" line="40"/>
         <source>%1:%2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatListItem.qml" line="44"/>
+        <location filename="../assets/AyatListItem.qml" line="43"/>
         <source>Bookmark</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatListItem.qml" line="53"/>
+        <location filename="../assets/AyatListItem.qml" line="52"/>
         <source>Add to Home Screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatListItem.qml" line="64"/>
+        <location filename="../assets/AyatListItem.qml" line="63"/>
         <source>Play From Here</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27,7 +27,7 @@
 <context>
     <name>BookmarksPane</name>
     <message>
-        <location filename="../assets/BookmarksPane.qml" line="27"/>
+        <location filename="../assets/BookmarksPane.qml" line="26"/>
         <source>You have no favourites. To mark a favourite, press-and-hold on an ayat or tafsir and choose &apos;Mark Favourite&apos; from the context-menu.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -37,7 +37,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/BookmarksPane.qml" line="82"/>
+        <location filename="../assets/BookmarksPane.qml" line="84"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
@@ -45,7 +45,7 @@
 <context>
     <name>ChapterTitleBar</name>
     <message>
-        <location filename="../assets/ChapterTitleBar.qml" line="58"/>
+        <location filename="../assets/ChapterTitleBar.qml" line="59"/>
         <source>%1 (%2)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -150,32 +150,6 @@ http://www.troid.ca
     <message>
         <location filename="../assets/MushafSheet.qml" line="239"/>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>PlainTextActionSet</name>
-    <message>
-        <location filename="../assets/PlainTextActionSet.qml" line="8"/>
-        <source>Copy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/PlainTextActionSet.qml" line="17"/>
-        <source>Share</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>PlainTextMultiselector</name>
-    <message>
-        <location filename="../assets/PlainTextMultiselector.qml" line="9"/>
-        <source>Copy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/PlainTextMultiselector.qml" line="20"/>
-        <source>Share</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -785,17 +759,17 @@ http://www.troid.ca
 <context>
     <name>SurahPage</name>
     <message>
-        <location filename="../assets/SurahPage.qml" line="66"/>
+        <location filename="../assets/SurahPage.qml" line="65"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="66"/>
+        <location filename="../assets/SurahPage.qml" line="65"/>
         <source>Press-and-hold on a verse with a grey highlight to find explanations on it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="157"/>
+        <location filename="../assets/SurahPage.qml" line="156"/>
         <source>Tafsir</source>
         <translation type="unfinished"></translation>
     </message>
@@ -805,42 +779,42 @@ http://www.troid.ca
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="95"/>
+        <location filename="../assets/SurahPage.qml" line="94"/>
         <source>Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="112"/>
+        <location filename="../assets/SurahPage.qml" line="111"/>
         <source>Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="128"/>
+        <location filename="../assets/SurahPage.qml" line="127"/>
         <source>Pause</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="128"/>
+        <location filename="../assets/SurahPage.qml" line="127"/>
         <source>Play All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="136"/>
+        <location filename="../assets/SurahPage.qml" line="135"/>
         <source>Confirmation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="136"/>
+        <location filename="../assets/SurahPage.qml" line="135"/>
         <source>We are about to download a whole bunch of MP3 recitations, you should only attempt to do this if you have either an unlimited data plan, or are connected via Wi-Fi. Otherwise you might incur a lot of data charges. Are you sure you want to continue? If you select No you can always attempt to download again later.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="136"/>
+        <location filename="../assets/SurahPage.qml" line="135"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="136"/>
+        <location filename="../assets/SurahPage.qml" line="135"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>
@@ -871,7 +845,7 @@ http://www.troid.ca
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/TafseerIbnKatheer.qml" line="170"/>
+        <location filename="../assets/TafseerIbnKatheer.qml" line="172"/>
         <source>Share</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1015,7 +989,7 @@ http://www.troid.ca
 <context>
     <name>quran::RecitationHelper</name>
     <message>
-        <location filename="../src/RecitationHelper.cpp" line="60"/>
+        <location filename="../src/RecitationHelper.cpp" line="59"/>
         <source>It appears the app does not have access to your Shared Folder. This permission is needed to download the recitation audio. Please enable the Shared Folder access in the BlackBerry 10 Application Permissions Screen.</source>
         <translation type="unfinished"></translation>
     </message>

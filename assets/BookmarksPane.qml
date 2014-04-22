@@ -17,7 +17,6 @@ NavigationPane
         Container
         {
             horizontalAlignment: HorizontalAlignment.Fill
-            topPadding: 20;
             background: back.imagePaint
 
             EmptyDelegate
@@ -27,7 +26,8 @@ NavigationPane
                 labelText: qsTr("You have no favourites. To mark a favourite, press-and-hold on an ayat or tafsir and choose 'Mark Favourite' from the context-menu.") + Retranslate.onLanguageChanged
             }
 
-            ControlDelegate {
+            ControlDelegate
+            {
                 id: listDelegate
                 horizontalAlignment: HorizontalAlignment.Fill
                 verticalAlignment: VerticalAlignment.Fill
@@ -78,7 +78,9 @@ NavigationPane
                                             title: sli.title
                                             subtitle: sli.description
 
-                                            DeleteActionItem {
+                                            DeleteActionItem
+                                            {
+                                                imageSource: "images/menu/ic_bookmark_delete.png"
                                                 title: qsTr("Remove") + Retranslate.onLanguageChanged
 
                                                 onTriggered: {

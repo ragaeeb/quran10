@@ -166,7 +166,9 @@ Page
                                     }
                                 }
 
-                                InvokeActionItem {
+                                InvokeActionItem
+                                {
+                                    imageSource: "images/menu/ic_share.png"
                                     title: qsTr("Share") + Retranslate.onLanguageChanged
 
                                     query {

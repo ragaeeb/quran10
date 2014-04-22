@@ -1,4 +1,4 @@
-import bb.cascades 1.2
+import bb.cascades 1.0
 
 Container
 {
@@ -36,7 +36,6 @@ Container
         PlainTextActionSet
         {
             id: actionSet
-            listItemRoot: itemRoot
             title: firstLabel.text
             subtitle: labelDelegate.delegateActive ? labelDelegate.control.text : qsTr("%1:%2").arg(itemRoot.ListItem.view.chapterNumber).arg(ListItemData.verse_id)
             

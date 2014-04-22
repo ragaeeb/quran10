@@ -5,6 +5,8 @@ TitleBar
 {
     id: titleControl
     property int chapterNumber
+    property alias titleText: surahNameArabic.text
+    property alias subtitleText: surahNameEnglish.text
     property variant bgSource: "images/title_bg_tafseer.amd"
     property double bottomPad: 25
     
@@ -52,7 +54,6 @@ TitleBar
     
     function onDataLoaded(id, data)
     {
-        console.log("BOOOOM2323***!");
         if (id == QueryId.FetchSurahHeader) {
             surahNameArabic.text = data[0].arabic_name;
             surahNameEnglish.text = qsTr("%1 (%2)").arg(data[0].english_name).arg(data[0].english_translation);
