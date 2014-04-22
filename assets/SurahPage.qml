@@ -213,8 +213,6 @@ Page
                     
                     listView.primarySize = newValue;
                     persist.saveValueFor("primarySize", newValue);
-                    
-                    console.log("**** ROTATION", event.rotation)
                 }
             }
         ]
