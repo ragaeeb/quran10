@@ -27,6 +27,7 @@ class RecitationHelper : public QObject
 
     void startPlayback();
     QVariantList generatePlaylist(int chapter, int fromVerse, int toVerse);
+    QVariantList generateMemorizePlaylist(int chapter, int totalVerses);
 
 private slots:
     void indexChanged(int index);

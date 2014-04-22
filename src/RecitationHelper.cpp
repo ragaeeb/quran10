@@ -10,11 +10,12 @@
 #define normalize(a) TextUtils::zeroFill(a,3)
 #define PLAYLIST_TARGET "/var/tmp/playlist.m3u"
 #define remote "http://www.everyayah.com/data"
+#define ITERATION 20
+#define CHUNK_SIZE 4
 
 namespace {
 
-void writeVerse(QVariant const& cookie, QByteArray const& data)
-{
+void writeVerse(QVariant const& cookie, QByteArray const& data) {
     canadainc::IOUtils::writeFile( cookie.toMap().value("local").toString(), data );
 }
 
@@ -48,6 +49,40 @@ void RecitationHelper::downloadAndPlay(int chapter, int fromVerse, int toVerse)
     LOGGER(chapter << fromVerse << toVerse);
     QFuture<QVariantList> future = QtConcurrent::run(this, &RecitationHelper::generatePlaylist, chapter, fromVerse, toVerse);
     m_future.setFuture(future);
+}
+
+
+void RecitationHelper::memorize(int chapter, int totalVerses)
+{
+    QStringList result;
+    int start = 1;
+    int end = CHUNK_SIZE;
+
+    while (true)
+    {
+        for (int i = start; i <= end; i++)
+        {
+            QString currentVerse = QString::number(i);
+
+            for (int j = 0; j < ITERATION; j++) {
+                result << currentVerse;
+            }
+        }
+
+        for (int j = 0; j < ITERATION; j++)
+        {
+            for (int i = start; i <= end; i++) {
+                result << QString::number(i);
+            }
+        }
+
+        start = end+1;
+        end += CHUNK_SIZE;
+
+        if (end > totalVerses) {
+            break;
+        }
+    }
 }
 
 
