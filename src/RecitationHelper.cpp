@@ -37,38 +37,6 @@ RecitationHelper::RecitationHelper(Persistance* p, QObject* parent) :
 }
 
 
-bool RecitationHelper::directoryReady()
-{
-    if ( !m_persistance->contains("output") ) {
-        m_persistance->saveValueFor( "output", IOUtils::setupOutputDirectory("downloads", "quran10") );
-    }
-
-    QString chosenOutputDir = m_persistance->getValueFor("output").toString();
-    QString reciter = m_persistance->getValueFor("reciter").toString();
-    QString path = QString("%1/%2").arg(chosenOutputDir).arg(reciter);
-    QDir dir(path);
-    if ( !dir.exists() )
-    {
-        bool created = dir.mkdir(path);
-        LOGGER("Directory didn't exist, creating!" << created);
-
-        if (!created)
-        {
-            bool result = m_persistance->showBlockingToast( tr("Error: Could not create the directory to download the files into. Please try one of the following to fix this:\n\n1) Swipe-down from the top-bezel & go to the app settings and make sure the Download Directory is set to a valid location.\n\n2) Go to the BB10 device settings -> Security & Privacy -> Application Permissions -> Quran10 & make sure the app has all the permissions it needs."), tr("OK") );
-            LOGGER("Could not create directory!!");
-
-            if (result) {
-                InvocationUtils::launchAppPermissionSettings();
-            }
-
-            return false;
-        }
-    }
-
-    return true;
-}
-
-
 void RecitationHelper::indexChanged(int index)
 {
     LOGGER(index);
@@ -89,8 +57,9 @@ QVariantList RecitationHelper::generatePlaylist(int chapter, int fromVerse, int 
     LOGGER(chapter << fromVerse << toVerse);
 
     QVariantList queue;
+    bool sharedOK = InvocationUtils::validateSharedFolderAccess( tr("It appears the app does not have access to your Shared Folder. This permission is needed to download the recitation audio. Please enable the Shared Folder access in the BlackBerry 10 Application Permissions Screen.") );
 
-    if (chapter > 0)
+    if (sharedOK && chapter > 0)
     {
         QDir output( m_persistance->getValueFor("output").toString() );
 
