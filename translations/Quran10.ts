@@ -1002,12 +1002,12 @@ http://www.troid.ca
 <context>
     <name>quran::ApplicationUI</name>
     <message>
-        <location filename="../src/applicationui.cpp" line="157"/>
+        <location filename="../src/applicationui.cpp" line="156"/>
         <source>Added %1 to home screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="159"/>
+        <location filename="../src/applicationui.cpp" line="158"/>
         <source>Could not add %1 to home screen</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1015,17 +1015,8 @@ http://www.troid.ca
 <context>
     <name>quran::RecitationHelper</name>
     <message>
-        <location filename="../src/RecitationHelper.cpp" line="57"/>
-        <source>Error: Could not create the directory to download the files into. Please try one of the following to fix this:
-
-1) Swipe-down from the top-bezel &amp; go to the app settings and make sure the Download Directory is set to a valid location.
-
-2) Go to the BB10 device settings -&gt; Security &amp; Privacy -&gt; Application Permissions -&gt; Quran10 &amp; make sure the app has all the permissions it needs.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/RecitationHelper.cpp" line="57"/>
-        <source>OK</source>
+        <location filename="../src/RecitationHelper.cpp" line="60"/>
+        <source>It appears the app does not have access to your Shared Folder. This permission is needed to download the recitation audio. Please enable the Shared Folder access in the BlackBerry 10 Application Permissions Screen.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -18,7 +18,6 @@ class RecitationHelper : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(int queued READ queued NOTIFY queueChanged)
-    Q_PROPERTY(bool directoryReady READ directoryReady FINAL)
     Q_PROPERTY(QObject* player READ player FINAL)
 
     QueueDownloader m_queue;
@@ -27,7 +26,6 @@ class RecitationHelper : public QObject
     LazyMediaPlayer m_player;
 
     void startPlayback();
-    bool directoryReady();
     QVariantList generatePlaylist(int chapter, int fromVerse, int toVerse);
 
 private slots:
