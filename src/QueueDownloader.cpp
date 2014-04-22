@@ -22,8 +22,8 @@ QueueDownloader::QueueDownloader(QStringList const& sortingKeys, QObject* parent
     m_model.setSortingKeys(sortingKeys);
 }
 
-QueueDownloader::~QueueDownloader() {
-	abort();
+QueueDownloader::~QueueDownloader()
+{
 }
 
 

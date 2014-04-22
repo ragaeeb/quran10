@@ -15,7 +15,6 @@ namespace {
 
 void writeVerse(QVariant const& cookie, QByteArray const& data)
 {
-    LOGGER("*** WRITING FILE!!");
     canadainc::IOUtils::writeFile( cookie.toMap().value("local").toString(), data );
 }
 
@@ -130,7 +129,6 @@ void RecitationHelper::settingChanged(QString const& key)
 
 void RecitationHelper::onRequestComplete(QVariant const& cookie, QByteArray const& data)
 {
-    LOGGER("*** Request complete" << cookie);
     QFutureWatcher<void>* qfw = new QFutureWatcher<void>(this);
     connect( qfw, SIGNAL( finished() ), this, SLOT( onWritten() ) );
 
@@ -141,7 +139,6 @@ void RecitationHelper::onRequestComplete(QVariant const& cookie, QByteArray cons
 
 void RecitationHelper::onWritten()
 {
-    LOGGER("*** FILE WRITTEN!");
     if ( queued() == 0 ) { // last one
         startPlayback();
     }
@@ -166,7 +163,6 @@ int RecitationHelper::queued() const {
 
 RecitationHelper::~RecitationHelper()
 {
-    m_queue.abort();
 }
 
 } /* namespace quran */

@@ -23,7 +23,6 @@ Page
         var translation = persist.getValueFor("translation");
         
         if (translation == "english") {
-            console.log("** SEE I DO THIS!");
             helper.fetchTafsirForSurah(surahPage, surahId, false);
             surahPage.addAction(tafsirAction);   
         } else {
@@ -171,6 +170,7 @@ Page
     
     titleBar: ChapterTitleBar
     {
+        id: ctb
         bgSource: "images/title_bg_alt.png"
         bottomPad: 0
         chapterNumber: surahId
@@ -190,7 +190,7 @@ Page
 
         VersesListView {
             id: listView
-            chapterName: qsTr("%1 (%2)").arg(surahNameArabic.text).arg(surahNameEnglish.text)
+            chapterName: qsTr("%1 (%2)").arg(ctb.titleText).arg(ctb.subtitleText)
             
             onTriggered: {
                 var data = dataModel.data(indexPath);
