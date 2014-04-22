@@ -25,13 +25,27 @@ NavigationPane
             {
                 id: listView
                 
-                dataModel: ArrayDataModel {
+                dataModel: GroupDataModel {
                     id: theDataModel
+                    grouping: ItemGrouping.ByFullValue
+                    sortingKeys: ["english_name"]
                 }
                 
                 listItemComponents: [
                     ListItemComponent
                     {
+                        type: "header"
+                        
+                        Header {
+                            title: ListItemData
+                            subtitle: ListItem.sectionSize
+                        }
+                    },
+                    
+                    ListItemComponent
+                    {
+                        type: "item"
+                        
                         StandardListItem {
                             title: ListItemData.english_name
                             description: ListItemData.arabic_name
@@ -56,12 +70,11 @@ NavigationPane
                     if (id == QueryId.FetchAllDuaa)
                     {
                         theDataModel.clear();
-                        theDataModel.append(data);
+                        theDataModel.insertList(data);
                     }
                 }
                 
                 onCreationCompleted: {
-                    helper.dataLoaded.connect(onDataLoaded);
                     helper.fetchAllDuaa(listView);
                 }
                 
