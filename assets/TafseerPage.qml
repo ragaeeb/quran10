@@ -7,10 +7,6 @@ Page
     property string tafsirId
     actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
     
-    onCreationCompleted: {
-        helper.dataLoaded.connect(onDataLoaded);
-    }
-    
     onTafsirIdChanged: {
         helper.fetchTafsirContent(root, tafsirId);
     }

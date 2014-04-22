@@ -147,7 +147,6 @@ NavigationPane {
                 }
                 
                 onCreationCompleted: {
-                    helper.dataLoaded.connect(onDataLoaded);
                     helper.fetchAllSurahs(listView, onDataLoaded);
                 }
             }

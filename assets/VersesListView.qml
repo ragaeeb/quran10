@@ -104,7 +104,6 @@ ListView
     
     onCreationCompleted: {
         persist.settingChanged.connect(settingChanged);
-        helper.dataLoaded.connect(onDataLoaded);
         recitation.currentIndexChanged.connect(onIndexChanged);
         player.playbackCompleted.connect(clearPrevious);
     }

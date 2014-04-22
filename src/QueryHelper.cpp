@@ -109,11 +109,6 @@ void QueryHelper::fetchRandomAyat(QObject* caller)
 {
     //LOGGER("fetchRandomAyat");
 
-    if ( !m_connected.contains(__FUNCTION__) ) {
-        connect( this, SIGNAL( textualChange() ), this, SLOT( fetchRandomAyat() ) );
-        m_connected.insert(__FUNCTION__, true);
-    }
-
     QString table = m_persist->getValueFor("translation").toString();
 
     if ( table.isEmpty() )
