@@ -30,65 +30,123 @@ RecitationHelper::RecitationHelper(Persistance* p, QObject* parent) :
 {
     connect( &m_queue, SIGNAL( requestComplete(QVariant const&, QByteArray const&) ), this, SLOT( onRequestComplete(QVariant const&, QByteArray const&) ) );
     connect( &m_future, SIGNAL( finished() ), this, SLOT( onFinished() ) );
-    connect( &m_player, SIGNAL( currentIndexChanged(int) ), this, SLOT( indexChanged(int) ) );
+    connect( &m_player, SIGNAL( metaDataChanged(QVariantMap const&) ), this, SLOT( metaDataChanged(QVariantMap const&) ) );
     connect( p, SIGNAL( settingChanged(QString const&) ), this, SLOT( settingChanged(QString const&) ) );
 
     settingChanged("repeat");
 }
 
 
-void RecitationHelper::indexChanged(int index)
+void RecitationHelper::metaDataChanged(QVariantMap const& m)
 {
-    LOGGER(index);
-    emit currentIndexChanged();
+    QString uri = m.value("uri").toString();
+    uri = uri.mid( uri.lastIndexOf("/")+1 );
+    uri = uri.left( uri.lastIndexOf(".") );
+    int index = uri.mid(3).toInt();
+
+    emit currentIndexChanged(index);
+}
+
+
+void RecitationHelper::memorize(int chapter, int fromVerse, int toVerse)
+{
+    LOGGER(chapter << fromVerse << toVerse);
+
+    if ( !m_future.isRunning() )
+    {
+        QFuture<QVariantList> future = QtConcurrent::run(this, &RecitationHelper::generateMemorization, chapter, fromVerse, toVerse);
+        m_future.setFuture(future);
+    }
+}
+
+
+QVariantList RecitationHelper::generateMemorization(int chapter, int from, int toVerse)
+{
+    LOGGER(chapter << from << toVerse);
+
+    QVariantList queue = generatePlaylist(chapter, from, toVerse, false);
+
+    QStringList playlist;
+
+    QString chapterNumber = normalize(chapter);
+    QString reciter = m_persistance->getValueFor("reciter").toString();
+    QString directory = QString("%1/%2").arg( m_persistance->getValueFor("output").toString() ).arg(reciter);
+
+    int k = 0;
+    int fromVerse = from;
+
+    while (k < 2)
+    {
+        int endPoint = fromVerse+CHUNK_SIZE;
+
+        if (endPoint > toVerse) {
+            endPoint = toVerse+1;
+        }
+
+        for (int verse = fromVerse; verse < endPoint; verse++)
+        {
+            QString currentVerse = QString::number(verse);
+            QString fileName = QString("%1%2.mp3").arg(chapterNumber).arg( normalize(verse) );
+            QString absolutePath = QString("%1/%2").arg(directory).arg(fileName);
+
+            for (int j = 0; j < ITERATION; j++) {
+                playlist << absolutePath;
+            }
+        }
+
+        for (int j = 0; j < ITERATION; j++)
+        {
+            for (int verse = fromVerse; verse < endPoint; verse++)
+            {
+                QString currentVerse = QString::number(verse);
+                QString fileName = QString("%1%2.mp3").arg(chapterNumber).arg( normalize(verse) );
+                QString absolutePath = QString("%1/%2").arg(directory).arg(fileName);
+                playlist << absolutePath;
+            }
+        }
+
+        fromVerse += CHUNK_SIZE;
+
+        if (fromVerse > endPoint) {
+            break;
+        }
+
+        ++k;
+    }
+
+    for (int j = 0; j < ITERATION; j++)
+    {
+        for (int verse = from; verse <= toVerse; verse++)
+        {
+            QString currentVerse = QString::number(verse);
+            QString fileName = QString("%1%2.mp3").arg(chapterNumber).arg( normalize(verse) );
+            QString absolutePath = QString("%1/%2").arg(directory).arg(fileName);
+            playlist << absolutePath;
+        }
+    }
+
+    bool written = IOUtils::writeTextFile( PLAYLIST_TARGET, playlist.join("\n"), true, false );
+    LOGGER(written);
+
+    return queue;
 }
 
 
 void RecitationHelper::downloadAndPlay(int chapter, int fromVerse, int toVerse)
 {
     LOGGER(chapter << fromVerse << toVerse);
-    QFuture<QVariantList> future = QtConcurrent::run(this, &RecitationHelper::generatePlaylist, chapter, fromVerse, toVerse);
-    m_future.setFuture(future);
-}
 
-
-void RecitationHelper::memorize(int chapter, int totalVerses)
-{
-    QStringList result;
-    int start = 1;
-    int end = CHUNK_SIZE;
-
-    while (true)
+    if ( !m_future.isRunning() )
     {
-        for (int i = start; i <= end; i++)
-        {
-            QString currentVerse = QString::number(i);
-
-            for (int j = 0; j < ITERATION; j++) {
-                result << currentVerse;
-            }
-        }
-
-        for (int j = 0; j < ITERATION; j++)
-        {
-            for (int i = start; i <= end; i++) {
-                result << QString::number(i);
-            }
-        }
-
-        start = end+1;
-        end += CHUNK_SIZE;
-
-        if (end > totalVerses) {
-            break;
-        }
+        QFuture<QVariantList> future = QtConcurrent::run(this, &RecitationHelper::generatePlaylist, chapter, fromVerse, toVerse, true);
+        m_future.setFuture(future);
     }
 }
 
 
-QVariantList RecitationHelper::generatePlaylist(int chapter, int fromVerse, int toVerse)
+QVariantList RecitationHelper::generatePlaylist(int chapter, int fromVerse, int toVerse, bool write)
 {
-    LOGGER(chapter << fromVerse << toVerse);
+    LOGGER(chapter << fromVerse << toVerse << write);
 
     QVariantList queue;
     bool sharedOK = InvocationUtils::validateSharedFolderAccess( tr("It appears the app does not have access to your Shared Folder. This permission is needed to download the recitation audio. Please enable the Shared Folder access in the BlackBerry 10 Application Permissions Screen.") );
@@ -105,7 +163,7 @@ QVariantList RecitationHelper::generatePlaylist(int chapter, int fromVerse, int 
 
         QString chapterNumber = normalize(chapter);
         QString reciter = m_persistance->getValueFor("reciter").toString();
-        QString directory = QString("%1/%2").arg( m_persistance->getValueFor("output").toString() ).arg( m_persistance->getValueFor("reciter").toString() );
+        QString directory = QString("%1/%2").arg( m_persistance->getValueFor("output").toString() ).arg(reciter);
         QDir outDir(directory);
 
         if ( !outDir.exists() ) {
@@ -134,8 +192,11 @@ QVariantList RecitationHelper::generatePlaylist(int chapter, int fromVerse, int 
             playlist << absolutePath;
         }
 
-        bool written = IOUtils::writeTextFile( PLAYLIST_TARGET, playlist.join("\n"), true, false );
-        LOGGER(written);
+        if (write)
+        {
+            bool written = IOUtils::writeTextFile( PLAYLIST_TARGET, playlist.join("\n"), true, false );
+            LOGGER(written);
+        }
     }
 
     return queue;
@@ -183,11 +244,6 @@ void RecitationHelper::onWritten()
 void RecitationHelper::startPlayback()
 {
     m_player.play( QUrl::fromLocalFile(PLAYLIST_TARGET) );
-}
-
-
-QObject* RecitationHelper::player() {
-    return &m_player;
 }
 
 

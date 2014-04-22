@@ -139,7 +139,6 @@ NavigationPane {
                 
                 function onDataLoaded(id, data)
                 {
-                    console.log("DATA LOADEDEED!");
                     if (id == QueryId.FetchAllSurahs)
                     {
                         theDataModel.clear();
