@@ -160,7 +160,7 @@ Page
 
             PersistCheckBox
             {
-                topMargin: 40
+                topMargin: 20
                 key: "repeat"
                 text: qsTr("Repeat Recitation") + Retranslate.onLanguageChanged
                 
@@ -175,7 +175,7 @@ Page
 
             PersistCheckBox
             {
-                topMargin: 40
+                topMargin: 20
                 text: qsTr("Follow Recitation") + Retranslate.onLanguageChanged
                 key: "follow"
 

@@ -13,6 +13,12 @@ Sheet
         actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
         actionBarVisibility: ChromeVisibility.Hidden
         
+        paneProperties: NavigationPaneProperties {
+            backButton: ActionItem {
+                title: qsTr("Back") + Retranslate.onLanguageChanged
+            }
+        }
+        
         actions: [
             ActionItem {
                 title: qsTr("Jump") + Retranslate.onLanguageChanged
@@ -33,11 +39,26 @@ Sheet
             visibility: ChromeVisibility.Hidden
             title: qsTr("Page %1").arg(scroller.firstVisibleItem[0]+1)
             
-            dismissAction: ActionItem {
+            dismissAction: ActionItem
+            {
+                
                 title: qsTr("Back") + Retranslate.onLanguageChanged
                 
                 onTriggered: {
                     sheet.close();
+                }
+            }
+            
+            acceptAction: ActionItem
+            {
+                title: listView.mushafLock ? qsTr("Unlock") + Retranslate.onLanguageChanged : qsTr("Lock") + Retranslate.onLanguageChanged
+                imageSource: listView.mushafLock ? "images/mushaf/ic_unlock.png" : "images/mushaf/ic_lock.png"
+                
+                onTriggered: {
+                    listView.mushafLock = !listView.mushafLock;
+                    persist.saveValueFor("mushafLock", listView.mushafLock ? 1 : 0);
+                    adm.clear();
+                    loadMushaf();
                 }
             }
             
@@ -60,23 +81,6 @@ Sheet
         {
             horizontalAlignment: HorizontalAlignment.Fill
             verticalAlignment: VerticalAlignment.Fill
-            
-            onCreationCompleted:
-            {
-                if (mushaf.mushafReady) {
-                    adm.append( mushaf.getMushafPages() );
-                } else if (mushaf.queued == 0) {
-                    adm.append( mushaf.getDownloadedMushafPages() );
-                    prompt.show();
-                } else {
-                    adm.append( mushaf.getDownloadedMushafPages() );
-                    
-                    var abort = abortDownloadAction.createObject();
-                    mainPage.addAction(abort, ActionBarPlacement.Default);
-                    
-                    listView.scrollToPosition(ScrollPosition.Beginning, ScrollAnimation.Default);
-                }
-            }
             
             ControlDelegate
             {
@@ -149,6 +153,7 @@ Sheet
             ListView
             {
                 id: listView
+                property bool mushafLock: persist.getValueFor("mushafLock") == 1
                 
                 dataModel: ArrayDataModel {
                     id: adm
@@ -160,6 +165,10 @@ Sheet
                     timer.restart();
                 }
                 
+                function itemType(data, indexPath) {
+                    return mushafLock ? "scaled" : "original"
+                }
+                
                 layout: StackListLayout {
                     orientation: LayoutOrientation.RightToLeft
                 }
@@ -167,32 +176,24 @@ Sheet
                 listItemComponents: [
                     ListItemComponent
                     {
-                        ScrollView {
-                            id: rootItem
-                            property variant data: ListItemData
-                            horizontalAlignment: HorizontalAlignment.Fill
-                            verticalAlignment: VerticalAlignment.Fill
-                            scrollViewProperties.pinchToZoomEnabled: true
-                            scrollViewProperties.overScrollEffectMode: OverScrollEffectMode.OnPinch
-                            
-                            onDataChanged: {
-                                resetViewableArea();
-                            }
-                            
-                            ImageView {
-                                id: root
-                                imageSource: ListItemData
-                                scalingMethod: ScalingMethod.AspectFit
-                                horizontalAlignment: HorizontalAlignment.Center
-                                verticalAlignment: VerticalAlignment.Fill
-                                opacity: rootItem.ListItem.active == true ? 0.7 : 1;
-                            }
+                        type: "scaled"
+                        
+                        MushafPage {
+                            scrollViewProperties.initialScalingMethod: ScalingMethod.AspectFit
+                        }
+                    },
+                    
+                    ListItemComponent
+                    {
+                        type: "original"
+                        
+                        MushafPage {
+                            scrollViewProperties.initialScalingMethod: ScalingMethod.None
                         }
                     }
                 ]
                 
                 function onMushafPageReady(imageSource) {
-                    console.log("*** YES!", imageSource);
                     adm.append(imageSource);
                 }
                 
@@ -247,6 +248,27 @@ Sheet
                 }
             ]
         }
+    }
+    
+    function loadMushaf()
+    {
+        if (mushaf.mushafReady) {
+            adm.append( mushaf.getMushafPages() );
+        } else if (mushaf.queued == 0) {
+            adm.append( mushaf.getDownloadedMushafPages() );
+            prompt.show();
+        } else {
+            adm.append( mushaf.getDownloadedMushafPages() );
+            
+            var abort = abortDownloadAction.createObject();
+            mainPage.addAction(abort, ActionBarPlacement.Default);
+            
+            listView.scrollToPosition(ScrollPosition.Beginning, ScrollAnimation.Default);
+        }
+    }
+    
+    onCreationCompleted: {
+        loadMushaf();
     }
     
     onClosed: {
