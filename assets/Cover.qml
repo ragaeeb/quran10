@@ -4,22 +4,23 @@ import QtQuick 1.0
 
 Container
 {
+    id: root
+    property variant lastTime
+    
+    function doLookup()
+    {
+        var now = new Date();
+        
+        if (!lastTime || now-lastTime > 60000) {
+            lastTime = now;
+            helper.fetchRandomAyat(root);
+        }
+    }
+    
     attachedObjects: [
         ImagePaintDefinition {
             id: back
             imageSource: "images/title_bg.png"
-        },
-
-        Timer {
-            id: timer
-            repeat: true
-            interval: 60000
-            running: true
-            triggeredOnStart: true
-
-            onTriggered: {
-                helper.fetchRandomAyat(timer);
-            }
         }
     ]
     
@@ -33,7 +34,8 @@ Container
     }
     
     onCreationCompleted: {
-        helper.dataLoaded.connect(onDataLoaded);
+        Application.thumbnail.connect(doLookup);
+        doLookup();
     }
 
     background: back.imagePaint

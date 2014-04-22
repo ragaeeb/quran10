@@ -21,7 +21,6 @@ class QueryHelper : public QObject
 
 	CustomSqlDataSource m_sql;
 	Persistance* m_persist;
-	QMap<const char*, bool> m_connected;
 	QMap<int, QPair<QObject*,QueryId::Type> > m_idToObjectQueryType;
 	QMap< QObject*, QMap<int,bool> > m_objectToIds;
 	int m_currentId;

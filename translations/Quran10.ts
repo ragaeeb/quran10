@@ -58,7 +58,7 @@
 <context>
     <name>Cover</name>
     <message>
-        <location filename="../assets/Cover.qml" line="55"/>
+        <location filename="../assets/Cover.qml" line="57"/>
         <source>Quran10</source>
         <translation type="unfinished"></translation>
     </message>
@@ -466,57 +466,57 @@ http://www.troid.ca
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="177"/>
+        <location filename="../assets/SettingsPage.qml" line="184"/>
         <source>Repeat Recitation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="181"/>
+        <location filename="../assets/SettingsPage.qml" line="188"/>
         <source>Recitations will keep repeating indefinitely.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="183"/>
+        <location filename="../assets/SettingsPage.qml" line="190"/>
         <source>Recitations will only be played once and stopped.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="191"/>
+        <location filename="../assets/SettingsPage.qml" line="198"/>
         <source>Follow Recitation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="196"/>
+        <location filename="../assets/SettingsPage.qml" line="203"/>
         <source>The list will be scrolled to follow the current verse.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="198"/>
+        <location filename="../assets/SettingsPage.qml" line="205"/>
         <source>The list will not scroll to reflect the current verse.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="206"/>
+        <location filename="../assets/SettingsPage.qml" line="176"/>
         <source>The verse recitations will be that of %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="267"/>
+        <location filename="../assets/SettingsPage.qml" line="269"/>
         <source>Translation Font Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="274"/>
+        <location filename="../assets/SettingsPage.qml" line="276"/>
         <source>The translation font size will be small</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="276"/>
+        <location filename="../assets/SettingsPage.qml" line="278"/>
         <source>The translation font size will be medium</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="278"/>
+        <location filename="../assets/SettingsPage.qml" line="280"/>
         <source>The translation font size will be large</source>
         <translation type="unfinished"></translation>
     </message>
@@ -647,7 +647,7 @@ http://www.troid.ca
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="254"/>
+        <location filename="../assets/SettingsPage.qml" line="256"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -809,12 +809,12 @@ http://www.troid.ca
 <context>
     <name>TafseerPage</name>
     <message>
-        <location filename="../assets/TafseerPage.qml" line="27"/>
+        <location filename="../assets/TafseerPage.qml" line="23"/>
         <source>Author: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/TafseerPage.qml" line="31"/>
+        <location filename="../assets/TafseerPage.qml" line="27"/>
         <source>Recorded/Translated by: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -835,7 +835,7 @@ http://www.troid.ca
 <context>
     <name>VersesListView</name>
     <message>
-        <location filename="../assets/VersesListView.qml" line="224"/>
+        <location filename="../assets/VersesListView.qml" line="223"/>
         <source>%1:%2-%3</source>
         <translation type="unfinished"></translation>
     </message>
@@ -850,18 +850,18 @@ http://www.troid.ca
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="136"/>
-        <location filename="../assets/VersesListView.qml" line="247"/>
+        <location filename="../assets/VersesListView.qml" line="135"/>
+        <location filename="../assets/VersesListView.qml" line="246"/>
         <source>%1:%2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="154"/>
+        <location filename="../assets/VersesListView.qml" line="153"/>
         <source>Bookmarked %1:%2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="188"/>
+        <location filename="../assets/VersesListView.qml" line="187"/>
         <source>ayahs</source>
         <translation type="unfinished"></translation>
     </message>
