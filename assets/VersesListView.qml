@@ -13,13 +13,8 @@ ListView
     property int translationSize: persist.getValueFor("translationSize")
     property int primarySize: persist.contains("primarySize") ? persist.getValueFor("primarySize") : 8
     property alias custom: customTextStyle
-    property int fromVerse
     property int previousPlayedIndex
     opacity: 0
-
-    onFromVerseChanged: {
-        previousPlayedIndex = -1;
-    }
 
     dataModel: GroupDataModel {
         id: verseModel
@@ -56,6 +51,12 @@ ListView
             }
         }
     }
+    
+    function play(from, to)
+    {
+        previousPlayedIndex = -1;
+        recitation.downloadAndPlay(chapterNumber, from, to);
+    }
 
     multiSelectHandler {
         actions: [
@@ -69,9 +70,8 @@ ListView
                     var selectedIndices = listView.selectionList();
                     var first = selectedIndices[0][0];
                     var last = selectedIndices[selectedIndices.length-1][0];
-
-                    fromVerse = first+1;
-                    recitation.downloadAndPlay( chapterNumber, fromVerse, last+1 );
+                    
+                    play(first+1, last+1);
                 }
             }
         ]
@@ -87,27 +87,26 @@ ListView
         verseModel.updateItem(actual, data);
     }
     
-    function onIndexChanged()
+    function onIndexChanged(index)
     {
-        var index = recitation.player.currentIndex;
-        
         if (previousPlayedIndex >= 0) {
             clearPrevious();
         }
         
-        var target = [ index+fromVerse-1, 0 ];
+        var target = [ index-1, 0 ];
         var data = dataModel.data(target);
-        data["playing"] = true
+        
+        data["playing"] = true;
         verseModel.updateItem(target, data);
         
-        previousPlayedIndex = index+fromVerse-1;
+        previousPlayedIndex = index-1;
     }
     
     onCreationCompleted: {
         persist.settingChanged.connect(settingChanged);
         helper.dataLoaded.connect(onDataLoaded);
         recitation.currentIndexChanged.connect(onIndexChanged);
-        recitation.player.playbackCompleted.connect(clearPrevious);
+        player.playbackCompleted.connect(clearPrevious);
     }
 
     function settingChanged(key)
@@ -157,6 +156,14 @@ ListView
     
     function addToHomeScreen(ListItemData) {
         app.addToHomeScreen(chapterNumber, ListItemData.verse_id, ListItemData.translation ? ListItemData.translation : ListItemData.arabic);
+    }
+    
+    function memorize(from)
+    {
+        previousPlayedIndex = -1;
+        var end = Math.min( from+1+8, dataModel.size() );
+        
+        recitation.memorize(chapterNumber, from+1, end);
     }
 
     attachedObjects: [

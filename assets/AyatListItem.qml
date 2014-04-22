@@ -64,7 +64,17 @@ Container
                 imageSource: "images/ic_play.png"
                 
                 onTriggered: {
-                    itemRoot.ListItem.view.mediaPlayer.doPlay( itemRoot.ListItem.indexPath[0]+1, itemRoot.ListItem.view.dataModel.size() );
+                    itemRoot.ListItem.view.play( itemRoot.ListItem.indexPath[0]+1, itemRoot.ListItem.view.dataModel.size() );
+                }
+            }
+            
+            ActionItem
+            {
+                title: qsTr("Memorize") + Retranslate.onLanguageChanged
+                imageSource: "images/menu/ic_memorize.png"
+                
+                onTriggered: {
+                    itemRoot.ListItem.view.memorize( itemRoot.ListItem.indexPath[0] );
                 }
             }
         }

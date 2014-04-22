@@ -14,8 +14,12 @@ Page
         property variant navPane: navigationPane
     }
     
-    function onDataLoaded(id, data) {
+    function onDataLoaded(id, data)
+    {
         adm.append(data);
+        
+        emptyDelegate.delegateActive = adm.isEmpty();
+        listView.visible = !emptyDelegate.delegateActive;
     }
     
     onVerseNumberChanged: {

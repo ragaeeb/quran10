@@ -18,7 +18,6 @@ class RecitationHelper : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(int queued READ queued NOTIFY queueChanged)
-    Q_PROPERTY(QObject* player READ player FINAL)
 
     QueueDownloader m_queue;
     Persistance* m_persistance;
@@ -26,10 +25,11 @@ class RecitationHelper : public QObject
     LazyMediaPlayer m_player;
 
     void startPlayback();
-    QVariantList generatePlaylist(int chapter, int fromVerse, int toVerse);
+    QVariantList generatePlaylist(int chapter, int fromVerse, int toVerse, bool write);
+    QVariantList generateMemorization(int chapter, int fromVerse, int toVerse);
 
 private slots:
-    void indexChanged(int index);
+    void metaDataChanged(QVariantMap const& m);
     void onFinished();
     void onRequestComplete(QVariant const& cookie, QByteArray const& data);
     void onWritten();
@@ -37,7 +37,7 @@ private slots:
 
 signals:
     void queueChanged();
-    void currentIndexChanged();
+    void currentIndexChanged(int index);
 
 public:
     RecitationHelper(Persistance* p, QObject* parent=NULL);
@@ -47,8 +47,7 @@ public:
      * @pre The directory must have been set up.
      */
     Q_INVOKABLE void downloadAndPlay(int chapter, int fromVerse, int toVerse);
-    void memorize(int chapter, int totalVerses);
-    QObject* player();
+    Q_INVOKABLE void memorize(int chapter, int fromVerse, int toVerse);
     int queued() const;
 };
 

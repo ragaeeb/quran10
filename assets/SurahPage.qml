@@ -122,10 +122,11 @@ Page
             }
         },
         
-        ActionItem {
+        ActionItem
+        {
             id: playAllAction
-            title: recitation.player.playing ? qsTr("Pause") : qsTr("Play All")
-            imageSource: recitation.player.playing ? "images/ic_pause.png" : "images/ic_play.png"
+            title: player.playing ? qsTr("Pause") : qsTr("Play All")
+            imageSource: player.playing ? "images/ic_pause.png" : "images/ic_play.png"
             ActionBar.placement: ActionBarPlacement.OnBar
             
             onTriggered:
@@ -141,10 +142,10 @@ Page
                     persist.saveValueFor("hideDataWarning", 1);
                 }
 
-				if (recitation.player.active) {
-				    recitation.player.togglePlayback();
+				if (player.active) {
+				    player.togglePlayback();
 				} else {
-				    listView.fromVerse = 1;
+				    listView.previousPlayedIndex = -1;
                     recitation.downloadAndPlay( surahId, 1, listView.dataModel.size() );
 				}
             }
