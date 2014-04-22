@@ -56,7 +56,7 @@ NavigationPane
                                 bookmarks.splice(indexPath, 1);
 
                                 persist.saveValueFor("bookmarks", bookmarks);
-                                persist.showToast(qsTr("Removed bookmark!"));
+                                persist.showToast( qsTr("Removed bookmark!"), "", "asset:///images/menu/ic_bookmark_delete.png" );
                             }
                         }
 

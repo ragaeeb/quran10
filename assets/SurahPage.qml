@@ -61,8 +61,8 @@ Page
         } else if (id == QueryId.FetchTafsirForSurah) {
             var verseModel = listView.dataModel;
             
-            if ( persist.getValueFor("tafsirTutorialCount") != 1 ) {
-                persist.showToast( qsTr("Press-and-hold on a verse with a grey highlight to find explanations on it."), qsTr("OK") );
+            if ( !persist.contains("tafsirTutorialCount") ) {
+                persist.showToast( qsTr("Press-and-hold on a verse with a grey highlight to find explanations on it."), qsTr("OK"), "asset:///images/ic_tafsir.png" );
                 persist.saveValueFor("tafsirTutorialCount", 1);
             }
             
