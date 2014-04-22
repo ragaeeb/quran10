@@ -27,7 +27,6 @@ class RecitationHelper : public QObject
 
     void startPlayback();
     QVariantList generatePlaylist(int chapter, int fromVerse, int toVerse);
-    QVariantList generateMemorizePlaylist(int chapter, int totalVerses);
 
 private slots:
     void indexChanged(int index);
@@ -48,6 +47,7 @@ public:
      * @pre The directory must have been set up.
      */
     Q_INVOKABLE void downloadAndPlay(int chapter, int fromVerse, int toVerse);
+    void memorize(int chapter, int totalVerses);
     QObject* player();
     int queued() const;
 };
