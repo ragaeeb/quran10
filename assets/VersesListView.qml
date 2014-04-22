@@ -152,7 +152,7 @@ ListView
     function bookmark(ListItemData)
     {
         app.bookmarkVerse(chapterName, chapterNumber, ListItemData);
-        persist.showToast( qsTr("Bookmarked %1:%2").arg(chapterNumber).arg(ListItemData.verse_id) );
+        persist.showToast( qsTr("Bookmarked %1:%2").arg(chapterNumber).arg(ListItemData.verse_id), "", "asset:///images/ic_bookmark_add.png" );
     }
     
     function addToHomeScreen(ListItemData) {

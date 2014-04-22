@@ -976,12 +976,12 @@ http://www.troid.ca
 <context>
     <name>quran::ApplicationUI</name>
     <message>
-        <location filename="../src/applicationui.cpp" line="156"/>
+        <location filename="../src/applicationui.cpp" line="157"/>
         <source>Added %1 to home screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="158"/>
+        <location filename="../src/applicationui.cpp" line="159"/>
         <source>Could not add %1 to home screen</source>
         <translation type="unfinished"></translation>
     </message>
