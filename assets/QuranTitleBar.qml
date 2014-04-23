@@ -21,7 +21,7 @@ TitleBar
                 leftMargin: 0
                 rightMargin: 0
                 bottomMargin: 0
-                
+                loadEffect: ImageViewLoadEffect.FadeZoom
                 horizontalAlignment: HorizontalAlignment.Right
                 verticalAlignment: VerticalAlignment.Center
                 
