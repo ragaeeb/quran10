@@ -181,60 +181,77 @@ Page
 
     Container
     {
-        background: Color.White
+        layout: DockLayout {}
+        horizontalAlignment: HorizontalAlignment.Fill
+        verticalAlignment: VerticalAlignment.Fill
         
-        ActivityIndicator {
-            id: busy
-            running: true
-            visible: running
-            preferredHeight: 250
-            horizontalAlignment: HorizontalAlignment.Center
-        }
-
-        VersesListView {
-            id: listView
-            chapterName: qsTr("%1 (%2)").arg(ctb.titleText).arg(ctb.subtitleText)
+        Container
+        {
+            background: Color.White
             
-            onTriggered: {
-                var data = dataModel.data(indexPath);
-                
-                var created = tp.createObject();
-                created.chapterNumber = surahId;
-                created.verseNumber = data.verse_id;
-                
-                properties.navPane.push(created);
+            ActivityIndicator {
+                id: busy
+                running: true
+                visible: running
+                preferredHeight: 250
+                horizontalAlignment: HorizontalAlignment.Center
             }
             
+            VersesListView {
+                id: listView
+                chapterName: qsTr("%1 (%2)").arg(ctb.titleText).arg(ctb.subtitleText)
+                
+                onTriggered: {
+                    var data = dataModel.data(indexPath);
+                    
+                    var created = tp.createObject();
+                    created.chapterNumber = surahId;
+                    created.verseNumber = data.verse_id;
+                    
+                    properties.navPane.push(created);
+                }
+                
+                attachedObjects: [
+                    ListScrollStateHandler {
+                        id: scroller
+                    }
+                ]
+            }
+            
+            gestureHandlers: [
+                PinchHandler
+                {
+                    onPinchEnded: {
+                        var newValue = Math.floor(event.pinchRatio*listView.primarySize);
+                        newValue = Math.max(8,newValue);
+                        newValue = Math.min(newValue, 24);
+                        
+                        listView.primarySize = newValue;
+                        persist.saveValueFor("primarySize", newValue);
+                    }
+                }
+            ]
+            
             attachedObjects: [
-                ListScrollStateHandler {
-                    id: scroller
+                ComponentDefinition {
+                    id: tp
+                    source: "TafseerPicker.qml"
+                },
+                
+                HardwareInfo {
+                    id: hw
                 }
             ]
         }
         
-        gestureHandlers: [
-            PinchHandler
-            {
-                onPinchEnded: {
-                    var newValue = Math.floor(event.pinchRatio*listView.primarySize);
-                    newValue = Math.max(8,newValue);
-                    newValue = Math.min(newValue, 24);
-                    
-                    listView.primarySize = newValue;
-                    persist.saveValueFor("primarySize", newValue);
-                }
-            }
-        ]
-        
-        attachedObjects: [
-            ComponentDefinition {
-                id: tp
-                source: "TafseerPicker.qml"
-            },
+        DownloadsOverlay
+        {
+            downloadText: qsTr("%1").arg(recitation.queued) + Retranslate.onLanguageChanged
+            delegateActive: recitation.queued > 0
             
-            HardwareInfo {
-                id: hw
+            onCancelClicked: {
+                recitation.abort();
             }
-        ]
+        }
     }
 }

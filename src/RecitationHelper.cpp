@@ -29,6 +29,7 @@ RecitationHelper::RecitationHelper(Persistance* p, QObject* parent) :
         QObject(parent), m_queue( QStringList() << "chapter" << "verse" ), m_persistance(p)
 {
     connect( &m_queue, SIGNAL( requestComplete(QVariant const&, QByteArray const&) ), this, SLOT( onRequestComplete(QVariant const&, QByteArray const&) ) );
+    connect( &m_queue, SIGNAL( queueChanged() ), this, SIGNAL( queueChanged() ) );
     connect( &m_future, SIGNAL( finished() ), this, SLOT( onFinished() ) );
     connect( &m_player, SIGNAL( metaDataChanged(QVariantMap const&) ), this, SLOT( metaDataChanged(QVariantMap const&) ) );
     connect( p, SIGNAL( settingChanged(QString const&) ), this, SLOT( settingChanged(QString const&) ) );
@@ -249,6 +250,11 @@ void RecitationHelper::startPlayback()
 
 int RecitationHelper::queued() const {
     return m_queue.queued();
+}
+
+
+void RecitationHelper::abort() {
+    m_queue.abort();
 }
 
 
