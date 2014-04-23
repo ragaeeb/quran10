@@ -91,6 +91,7 @@ Page
 	            }
 	
 	            Option {
+	                id: english
 	                text: qsTr("English") + Retranslate.onLanguageChanged
 	                description: qsTr("Muhammad al-Hilali & Muhsin Khan") + Retranslate.onLanguageChanged
 	                value: "english"
@@ -164,6 +165,8 @@ Page
 	            onSelectedOptionChanged: {
 	                if (selectedOption == none) {
 	                    infoText.text = qsTr("No translation will be displayed.") + Retranslate.onLanguageChanged
+	                } else if (selectedOption == english) {
+                        infoText.text = qsTr("Translation will be provided in %1 by %2. Please see why this is the only English translation we support:\nhttps://www.youtube.com/watch?v=BDY8i9VQeZM").arg(selectedOption.text).arg(selectedOption.description) + Retranslate.onLanguageChanged
 	                } else {
 	                    infoText.text = qsTr("Translation will be provided in %1 by %2.").arg(selectedOption.text).arg(selectedOption.description) + Retranslate.onLanguageChanged
 	                }
@@ -287,6 +290,7 @@ Page
 	            multiline: true
 	            textStyle.fontSize: FontSize.XXSmall
 	            textStyle.textAlign: TextAlign.Center
+	            content.flags: TextContentFlag.ActiveText | TextContentFlag.EmoticonsOff
 	            verticalAlignment: VerticalAlignment.Bottom
 	            horizontalAlignment: HorizontalAlignment.Center
 	        }
