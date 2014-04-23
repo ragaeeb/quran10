@@ -48,6 +48,7 @@ public:
      */
     Q_INVOKABLE void downloadAndPlay(int chapter, int fromVerse, int toVerse);
     Q_INVOKABLE void memorize(int chapter, int fromVerse, int toVerse);
+    Q_SLOT void abort();
     int queued() const;
 };
 

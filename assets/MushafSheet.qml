@@ -79,174 +79,152 @@ Sheet
         
         Container
         {
+            layout: DockLayout {}
             horizontalAlignment: HorizontalAlignment.Fill
             verticalAlignment: VerticalAlignment.Fill
             
-            ControlDelegate
+            Container
             {
-                id: progressDelegate
-                delegateActive: !mushaf.mushafReady
                 horizontalAlignment: HorizontalAlignment.Fill
+                verticalAlignment: VerticalAlignment.Fill
                 
-                sourceComponent: ComponentDefinition
+                ControlDelegate
                 {
-                    ProgressIndicator {
-                        horizontalAlignment: HorizontalAlignment.Fill
-                        fromValue: 0
-                        toValue: 614
-                        value: mushaf.queued
-                    }
-                }
-            }
-            
-            ControlDelegate
-            {
-                id: dropDownDelegate
-                horizontalAlignment: HorizontalAlignment.Fill
-                delegateActive: false
-                
-                sourceComponent: ComponentDefinition
-                {
-                    DropDown
+                    id: dropDownDelegate
+                    horizontalAlignment: HorizontalAlignment.Fill
+                    delegateActive: false
+                    
+                    sourceComponent: ComponentDefinition
                     {
-                        id: dropDown
-                        horizontalAlignment: HorizontalAlignment.Fill
-                        title: qsTr("Surah")
-                        
-                        onSelectedValueChanged: {
-                            listView.scrollToItem([selectedValue-1], ScrollAnimation.Default);
-                        }
-                        
-                        function onDataLoaded(id, data)
+                        DropDown
                         {
-                            if (id == QueryId.FetchPageNumbers && data.length > 0)
+                            id: dropDown
+                            horizontalAlignment: HorizontalAlignment.Fill
+                            title: qsTr("Surah")
+                            
+                            onSelectedValueChanged: {
+                                listView.scrollToItem([selectedValue-1], ScrollAnimation.Default);
+                            }
+                            
+                            function onDataLoaded(id, data)
                             {
-                                var n = data.length;
-                                
-                                for (var i = 0; i < n; i++) {
-                                    var option = optionDefinition.createObject();
-                                    option.text = data[i].arabic_name;
-                                    option.description = data[i].english_name;
-                                    option.value = data[i].page_number;
-                                    dropDownDelegate.control.add(option);
+                                if (id == QueryId.FetchPageNumbers && data.length > 0)
+                                {
+                                    var n = data.length;
+                                    
+                                    for (var i = 0; i < n; i++) {
+                                        var option = optionDefinition.createObject();
+                                        option.text = data[i].arabic_name;
+                                        option.description = data[i].english_name;
+                                        option.value = data[i].page_number;
+                                        dropDownDelegate.control.add(option);
+                                    }
+                                    
+                                    dropDownDelegate.control.expanded = true;
                                 }
-                                
-                                dropDownDelegate.control.expanded = true;
-                            }
-                        }
-                        
-                        onCreationCompleted: {
-                            helper.fetchPageNumbers(dropDown);
-                        }
-                    }
-                }
-                
-                attachedObjects: [
-                    ComponentDefinition
-                    {
-                        id: optionDefinition
-                        Option {}
-                    }
-                ]
-            }
-            
-            ListView
-            {
-                id: listView
-                property bool mushafLock: persist.getValueFor("mushafLock") == 1
-                
-                dataModel: ArrayDataModel {
-                    id: adm
-                }
-                
-                onTouch: {
-                    hiddenTitle.visibility = ChromeVisibility.Overlay;
-                    mainPage.actionBarVisibility = ChromeVisibility.Overlay;
-                    timer.restart();
-                }
-                
-                function itemType(data, indexPath) {
-                    return mushafLock ? "scaled" : "original"
-                }
-                
-                layout: StackListLayout {
-                    orientation: LayoutOrientation.RightToLeft
-                }
-                
-                listItemComponents: [
-                    ListItemComponent
-                    {
-                        type: "scaled"
-                        
-                        MushafPage {
-                            scrollViewProperties.initialScalingMethod: ScalingMethod.AspectFit
-                        }
-                    },
-                    
-                    ListItemComponent
-                    {
-                        type: "original"
-                        
-                        MushafPage {
-                            scrollViewProperties.initialScalingMethod: ScalingMethod.None
-                        }
-                    }
-                ]
-                
-                function onMushafPageReady(imageSource) {
-                    adm.append(imageSource);
-                }
-                
-                onCreationCompleted: {
-                    mushaf.mushafPageReady.connect(onMushafPageReady);
-                }
-                
-                attachedObjects: [
-                    ListScrollStateHandler {
-                        id: scroller
-                    }
-                ]
-            }
-            
-            attachedObjects: [
-                SystemDialog {
-                    id: prompt
-                    title: qsTr("Confirmation") + Retranslate.onLanguageChanged
-                    body: qsTr("We are about to download the mushaf (which is about ~200MB in size), you should only attempt to do this if you have either an unlimited data plan, or are connected via Wi-Fi. Otherwise you might incur a lot of data charges. Are you sure you want to continue? If you select No you can always attempt to download again later.") + Retranslate.onLanguageChanged
-                    confirmButton.label: qsTr("Yes") + Retranslate.onLanguageChanged
-                    cancelButton.label: qsTr("No") + Retranslate.onLanguageChanged
-                    
-                    onFinished: {
-                        if (result == SystemUiResult.ConfirmButtonSelection) {
-                            mushaf.downloadMushaf();
-                            
-                            var abort = abortDownloadAction.createObject();
-                            mainPage.addAction(abort, ActionBarPlacement.Default);
-                        } else {
-                            if ( adm.isEmpty() ) {
-                                sheet.close();   
                             }
                             
-                            progressDelegate.delegateActive = false;
+                            onCreationCompleted: {
+                                helper.fetchPageNumbers(dropDown);
+                            }
                         }
                     }
-                },
+                    
+                    attachedObjects: [
+                        ComponentDefinition
+                        {
+                            id: optionDefinition
+                            Option {}
+                        }
+                    ]
+                }
                 
-                ComponentDefinition
+                ListView
                 {
-                    id: abortDownloadAction
+                    id: listView
+                    property bool mushafLock: persist.getValueFor("mushafLock") == 1
                     
-                    DeleteActionItem {
-                        title: qsTr("Abort") + Retranslate.onLanguageChanged
-                        imageSource: "images/ic_cancel.png"
+                    dataModel: ArrayDataModel {
+                        id: adm
+                    }
+                    
+                    onTouch: {
+                        hiddenTitle.visibility = ChromeVisibility.Overlay;
+                        mainPage.actionBarVisibility = ChromeVisibility.Overlay;
+                        timer.restart();
+                    }
+                    
+                    function itemType(data, indexPath) {
+                        return mushafLock ? "scaled" : "original"
+                    }
+                    
+                    layout: StackListLayout {
+                        orientation: LayoutOrientation.RightToLeft
+                    }
+                    
+                    listItemComponents: [
+                        ListItemComponent
+                        {
+                            type: "scaled"
+                            
+                            MushafPage {
+                                scrollViewProperties.initialScalingMethod: ScalingMethod.AspectFit
+                            }
+                        },
                         
-                        onTriggered: {
-                            mushaf.abort();
-                            progressDelegate.delegateActive = false;
+                        ListItemComponent
+                        {
+                            type: "original"
+                            
+                            MushafPage {
+                                scrollViewProperties.initialScalingMethod: ScalingMethod.None
+                            }
+                        }
+                    ]
+                    
+                    function onMushafPageReady(imageSource) {
+                        adm.append(imageSource);
+                    }
+                    
+                    onCreationCompleted: {
+                        mushaf.mushafPageReady.connect(onMushafPageReady);
+                    }
+                    
+                    attachedObjects: [
+                        ListScrollStateHandler {
+                            id: scroller
+                        }
+                    ]
+                }
+                
+                attachedObjects: [
+                    SystemDialog {
+                        id: prompt
+                        title: qsTr("Confirmation") + Retranslate.onLanguageChanged
+                        body: qsTr("We are about to download the mushaf (which is about ~200MB in size), you should only attempt to do this if you have either an unlimited data plan, or are connected via Wi-Fi. Otherwise you might incur a lot of data charges. Are you sure you want to continue? If you select No you can always attempt to download again later.") + Retranslate.onLanguageChanged
+                        confirmButton.label: qsTr("Yes") + Retranslate.onLanguageChanged
+                        cancelButton.label: qsTr("No") + Retranslate.onLanguageChanged
+                        
+                        onFinished: {
+                            if (result == SystemUiResult.ConfirmButtonSelection) {
+                                mushaf.downloadMushaf();
+                            } else if ( adm.isEmpty() ) {
+                                sheet.close();
+                            }
                         }
                     }
+                ]
+            }
+            
+            DownloadsOverlay
+            {
+                downloadText: qsTr("%1").arg(mushaf.queued) + Retranslate.onLanguageChanged
+                delegateActive: mushaf.queued > 0
+                
+                onCancelClicked: {
+                    mushaf.abort();
                 }
-            ]
+            }
         }
     }
     
@@ -259,10 +237,6 @@ Sheet
             prompt.show();
         } else {
             adm.append( mushaf.getDownloadedMushafPages() );
-            
-            var abort = abortDownloadAction.createObject();
-            mainPage.addAction(abort, ActionBarPlacement.Default);
-            
             listView.scrollToPosition(ScrollPosition.Beginning, ScrollAnimation.Default);
         }
     }
