@@ -101,6 +101,13 @@
 		<icon>
 			<image>icon.png</image>
 		</icon>
+		<invoke-target-pattern>
+			<pattern-value type="regex">[0-9]{1,3}:[0-9]{1,3}</pattern-value>
+		</invoke-target-pattern>
+
+		<invoke-target-pattern>
+			<pattern-value type="regex">A[lrLR]-[a-zA-Z]{3,11}:[0-9]{1,3}</pattern-value>
+		</invoke-target-pattern>
 	</invoke-target>
   
 	<invoke-target id="com.canadainc.Quran10.shortcut">

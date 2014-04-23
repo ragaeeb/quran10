@@ -98,10 +98,29 @@ void QueryHelper::fetchAllDuaa(QObject* caller)
 }
 
 
-void QueryHelper::fetchAllSurahs(QObject* caller, QVariant const& func)
+void QueryHelper::fetchChapters(QObject* caller, QString const& text)
 {
-    //LOGGER("fetchAllSurahs" << func);
-    executeQuery(caller, "SELECT surah_id,arabic_name,english_name,english_translation FROM chapters", QueryId::FetchAllSurahs);
+    QString query;
+
+    static QRegExp chapterAyatNumeric = QRegExp(AYAT_NUMERIC_PATTERN);
+    static QRegExp chapterNumeric = QRegExp("^\\d{1,3}$");
+
+    if ( chapterAyatNumeric.exactMatch(text) || chapterNumeric.exactMatch(text) )
+    {
+        int chapter = text.split(":").first().toInt();
+
+        if (chapter > 0 && chapter <= 114) {
+            query = QString("SELECT surah_id,arabic_name,english_name,english_translation FROM chapters WHERE surah_id=%1").arg(chapter);
+        }
+    } else if ( text.length() > 2 ) {
+        query = QString("SELECT surah_id,arabic_name,english_name,english_translation FROM chapters WHERE english_name like '%%1%' OR arabic_name like '%%1%'").arg(text);
+    } else if ( text.isEmpty() ) {
+        query = "SELECT surah_id,arabic_name,english_name,english_translation FROM chapters";
+    }
+
+    if ( !query.isNull() ) {
+        executeQuery(caller, query, QueryId::FetchChapters);
+    }
 }
 
 

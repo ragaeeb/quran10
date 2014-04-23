@@ -14,7 +14,7 @@ public:
     enum Type {
         FetchAllAyats,
         FetchAllDuaa,
-        FetchAllSurahs,
+        FetchChapters,
         FetchPageNumbers,
         FetchRandomAyat,
         FetchSurahHeader,

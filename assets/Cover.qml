@@ -1,6 +1,4 @@
 import bb.cascades 1.0
-import com.canadainc.data 1.0
-import QtQuick 1.0
 
 Container
 {
@@ -26,11 +24,8 @@ Container
     
     function onDataLoaded(id, data)
     {
-        if (id == QueryId.FetchRandomAyat)
-        {
-            var verse = data[0];
-            label.text = "(%2:%3) %1".arg(verse.text).arg(verse.surah_id).arg(verse.verse_id);
-        }
+        var verse = data[0];
+        label.text = "(%2:%3) %1".arg(verse.text).arg(verse.surah_id).arg(verse.verse_id);
     }
     
     onCreationCompleted: {

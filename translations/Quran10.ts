@@ -58,7 +58,7 @@
 <context>
     <name>Cover</name>
     <message>
-        <location filename="../assets/Cover.qml" line="57"/>
+        <location filename="../assets/Cover.qml" line="52"/>
         <source>Quran10</source>
         <translation type="unfinished"></translation>
     </message>
@@ -177,7 +177,7 @@ http://www.troid.ca
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="49"/>
+        <location filename="../assets/QuranPane.qml" line="50"/>
         <source>Search surah name...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -932,12 +932,32 @@ http://www.troid.ca
 <context>
     <name>quran::ApplicationUI</name>
     <message>
-        <location filename="../src/applicationui.cpp" line="157"/>
+        <location filename="../src/applicationui.cpp" line="118"/>
+        <source>Invalid pattern specified!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/applicationui.cpp" line="142"/>
+        <source>Invalid URI specified!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/applicationui.cpp" line="158"/>
+        <source>Invalid surah specified</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/applicationui.cpp" line="182"/>
+        <source>Surah not found!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/applicationui.cpp" line="208"/>
         <source>Added %1 to home screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="159"/>
+        <location filename="../src/applicationui.cpp" line="210"/>
         <source>Could not add %1 to home screen</source>
         <translation type="unfinished"></translation>
     </message>
