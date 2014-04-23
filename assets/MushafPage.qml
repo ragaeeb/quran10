@@ -20,5 +20,6 @@ ScrollView
         horizontalAlignment: HorizontalAlignment.Center
         verticalAlignment: VerticalAlignment.Fill
         opacity: rootItem.ListItem.active == true ? 0.7 : 1;
+        loadEffect: ImageViewLoadEffect.DefaultDeferred
     }
 }
