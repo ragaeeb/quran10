@@ -1,4 +1,4 @@
-import bb.cascades 1.0
+import bb.cascades 1.2
 import com.canadainc.data 1.0
 
 NavigationPane {
@@ -54,6 +54,8 @@ NavigationPane {
                 onCreationCompleted: {
                     inputRoute.primaryKeyTarget = true;
                     translate.play();
+
+                    input.keyLayout = 7;
                 }
                 
                 onTextChanging: {
