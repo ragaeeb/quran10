@@ -7,6 +7,7 @@
 #include "QueryHelper.h"
 #include "RecitationHelper.h"
 
+#include <bb/system/CardDoneMessage>
 #include <bb/system/InvokeManager>
 
 namespace bb {
@@ -29,13 +30,17 @@ class ApplicationUI : public QObject
 	QueryHelper m_helper;
 	MushafHelper m_mushaf;
 	RecitationHelper m_recitation;
+	int m_verseId;
 
     ApplicationUI(bb::cascades::Application *app);
     QObject* init(QString const& qml, bool invoked=false);
+    void finishWithToast(QString const& message);
 
 private slots:
+    void childCardDone(bb::system::CardDoneMessage const& message=bb::system::CardDoneMessage());
 	void invoked(bb::system::InvokeRequest const& request);
 	void lazyInit();
+	void onDataLoaded(QVariant id, QVariant data);
 
 signals:
     void initialize();

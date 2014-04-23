@@ -6,6 +6,8 @@
 #include "customsqldatasource.h"
 #include "QueryId.h"
 
+#define AYAT_NUMERIC_PATTERN "^\\d{1,3}:\\d{1,3}$"
+
 namespace canadainc {
 	class Persistance;
 }
@@ -42,8 +44,8 @@ public:
 	virtual ~QueryHelper();
 
 	Q_SLOT void fetchAllDuaa(QObject* caller);
-	Q_SLOT void fetchAllSurahs(QObject* caller, QVariant const& func);
 	Q_SLOT void fetchAllAyats(QObject* caller, int chapterNumber);
+	Q_SLOT void fetchChapters(QObject* caller, QString const& text=QString());
     Q_SLOT void fetchPageNumbers(QObject* caller);
 	Q_SLOT void fetchRandomAyat(QObject* caller);
     Q_SLOT void fetchSurahHeader(QObject* caller, int chapterNumber);

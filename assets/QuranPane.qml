@@ -46,6 +46,7 @@ NavigationPane {
             
             TextField
             {
+                id: textField
                 hintText: qsTr("Search surah name...") + Retranslate.onLanguageChanged
                 bottomMargin: 0
                 horizontalAlignment: HorizontalAlignment.Fill
@@ -56,18 +57,7 @@ NavigationPane {
                 }
                 
                 onTextChanging: {
-                    if ( text.match(/^\d{1,3}:\d{1,3}$/) || text.match(/^\d{1,3}$/) ) {
-                        var tokens = text.split(":");
-                        var surah = parseInt(tokens[0]);
-                        sqlDataSource.query = "SELECT surah_id,arabic_name,english_name,english_translation FROM chapters WHERE surah_id=%1".arg(surah);
-                        sqlDataSource.load();
-                    } else if (text.length > 2) {
-                        sqlDataSource.query = "SELECT surah_id,arabic_name,english_name,english_translation FROM chapters WHERE english_name like '%%1%' OR arabic_name like '%%1%'".arg(text);
-                        sqlDataSource.load();
-                    } else if (text.length == 0) {
-                        sqlDataSource.query = "SELECT surah_id,arabic_name,english_name,english_translation FROM chapters";
-                        sqlDataSource.load();
-                    }
+                    helper.fetchChapters(listView, text);
                 }
                 
                 input {
@@ -136,10 +126,10 @@ NavigationPane {
                 
                 horizontalAlignment: HorizontalAlignment.Fill
                 verticalAlignment: VerticalAlignment.Fill
-                
+
                 function onDataLoaded(id, data)
                 {
-                    if (id == QueryId.FetchAllSurahs)
+                    if (id == QueryId.FetchChapters)
                     {
                         theDataModel.clear();
                         theDataModel.append(data);
@@ -147,7 +137,7 @@ NavigationPane {
                 }
                 
                 onCreationCompleted: {
-                    helper.fetchAllSurahs(listView, onDataLoaded);
+                    textField.textChanging("");
                 }
             }
         }
