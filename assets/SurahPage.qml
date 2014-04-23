@@ -33,7 +33,8 @@ Page
     function reloadNeeded(key)
     {
         if (key == "translation" || key == "primary" || key == "primarySize" || key == "translationSize") {
-            loadVerses()
+            requestedVerse = scroller.firstVisibleItem[0];
+            loadVerses();
         }
     }
 
@@ -54,6 +55,7 @@ Page
                 var target = [ requestedVerse - 1, 0 ]
                 listView.scrollToItem(target, ScrollAnimation.None);
                 listView.select(target,true);
+                requestedVerse = -1;
             } else if (surahId > 1 && surahId != 9) {
                 listView.scrollToPosition(0, ScrollAnimation.None);
                 listView.scroll(-100, ScrollAnimation.Smooth);
@@ -202,6 +204,12 @@ Page
                 
                 properties.navPane.push(created);
             }
+            
+            attachedObjects: [
+                ListScrollStateHandler {
+                    id: scroller
+                }
+            ]
         }
         
         gestureHandlers: [
