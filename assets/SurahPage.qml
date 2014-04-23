@@ -52,7 +52,7 @@ Page
             
             if (requestedVerse > 0) {
                 var target = [ requestedVerse - 1, 0 ]
-                listView.scrollToItem(target, ScrollAnimation.Default);
+                listView.scrollToItem(target, ScrollAnimation.None);
                 listView.select(target,true);
             } else if (surahId > 1 && surahId != 9) {
                 listView.scrollToPosition(0, ScrollAnimation.None);
