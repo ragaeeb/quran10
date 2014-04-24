@@ -110,11 +110,13 @@ Container
     horizontalAlignment: HorizontalAlignment.Fill
     preferredWidth: 1280
     
-    Label {
+    Label
+    {
         id: firstLabel
         text: ListItemData.arabic
         multiline: true
         horizontalAlignment: HorizontalAlignment.Fill
+        scaleX: active ? 1.15 : 1
         
         textStyle {
             color: selection || playing ? Color.White : Color.Black;
