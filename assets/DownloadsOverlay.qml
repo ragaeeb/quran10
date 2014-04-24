@@ -35,7 +35,6 @@ ControlDelegate
             verticalAlignment: VerticalAlignment.Fill
             layout: DockLayout {}
             
-            
             Button
             {
                 horizontalAlignment: HorizontalAlignment.Center

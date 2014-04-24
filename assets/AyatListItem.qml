@@ -2,12 +2,12 @@ import bb.cascades 1.0
 
 Container
 {
+    id: itemRoot
+    property bool peek: ListItem.view.secretPeek
     property bool selection: ListItem.selected
     property bool hasTafsir: ListItemData.hasTafsir ? ListItemData.hasTafsir : false
     property bool playing: ListItemData.playing ? ListItemData.playing : false
     property bool active: ListItem.active
-    
-    id: itemRoot
     
     function updateState()
     {
@@ -30,6 +30,29 @@ Container
         hasTafsirChanged.connect(updateState);
         activeChanged.connect(updateState);
         updateState();
+    }
+    
+    onPeekChanged: {
+        if (peek) {
+            showAnim.play();
+        }
+    }
+    
+    opacity: 0
+    animations: [
+        FadeTransition
+        {
+            id: showAnim
+            fromOpacity: 0
+            toOpacity: 1
+            duration: Math.min( itemRoot.ListItem.indexPath[0]*300, 750 );
+        }
+    ]
+    
+    ListItem.onInitializedChanged: {
+        if (initialized) {
+            showAnim.play();
+        }
     }
     
     contextActions: [
