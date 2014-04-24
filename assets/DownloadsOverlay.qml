@@ -1,4 +1,5 @@
 import bb.cascades 1.0
+import bb.system 1.0
 
 ControlDelegate
 {
@@ -44,11 +45,29 @@ ControlDelegate
                 preferredWidth: 125
                 
                 onClicked: {
-                    animator.delay = 0;
-                    animator.toX = 225;
-                    animator.play();
-                    animator.ended.connect(cancelClicked);
+                    prompt.show();
                 }
+                
+                attachedObjects: [
+                    SystemDialog
+                    {
+                        id: prompt
+                        title: qsTr("Confirmation") + Retranslate.onLanguageChanged
+                        body: qsTr("Are you sure you want to cancel the downloads?") + Retranslate.onLanguageChanged
+                        confirmButton.label: qsTr("Yes") + Retranslate.onLanguageChanged
+                        cancelButton.label: qsTr("No") + Retranslate.onLanguageChanged
+                        
+                        onFinished: {
+                            if (result == SystemUiResult.ConfirmButtonSelection)
+                            {
+                                animator.delay = 0;
+                                animator.toX = 225;
+                                animator.play();
+                                animator.ended.connect(cancelClicked);
+                            }
+                        }
+                    }
+                ]
             }
             
             attachedObjects: [
