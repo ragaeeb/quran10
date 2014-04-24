@@ -1,4 +1,5 @@
 #include "QueueDownloader.h"
+#include "Persistance.h"
 #include "Logger.h"
 
 namespace canadainc {
@@ -44,8 +45,12 @@ void QueueDownloader::processNext()
 
 void QueueDownloader::process(QVariantList const& toProcess)
 {
-	m_model.insertList(toProcess);
-	processNext();
+    if ( !m_network.online() ) {
+        Persistance::showBlockingToast( tr("It seems your device is offline, please connect to Wi-Fi or enable your data connection to proceed."), tr("OK"), "asset:///images/toast/ic_offline.png" );
+    } else {
+        m_model.insertList(toProcess);
+        processNext();
+    }
 }
 
 
