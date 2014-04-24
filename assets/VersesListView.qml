@@ -1,4 +1,5 @@
 import bb.cascades 1.2
+import bb.system 1.0
 import com.canadainc.data 1.0
 
 ListView
@@ -136,12 +137,14 @@ ListView
         return result;
     }
 
-    function copyItem(ListItemData) {
+    function copyItem(ListItemData)
+    {
         var result = getTextualData(ListItemData)
         persist.copyToClipboard(result)
     }
 
-    function shareItem(ListItemData) {
+    function shareItem(ListItemData)
+    {
         var result = getTextualData(ListItemData)
         result = persist.convertToUtf8(result)
         return result;
@@ -149,12 +152,18 @@ ListView
 
     function bookmark(ListItemData)
     {
-        app.bookmarkVerse(chapterName, chapterNumber, ListItemData);
-        persist.showToast( qsTr("Bookmarked %1:%2").arg(chapterNumber).arg(ListItemData.verse_id), "", "asset:///images/ic_bookmark_add.png" );
+        prompt.data = ListItemData;
+        prompt.body = qsTr("Enter a name for this bookmark");
+        prompt.inputField.maximumLength = 50;
+        prompt.show();
     }
     
-    function addToHomeScreen(ListItemData) {
-        app.addToHomeScreen(chapterNumber, ListItemData.verse_id, ListItemData.translation ? ListItemData.translation : ListItemData.arabic);
+    function addToHomeScreen(ListItemData)
+    {
+        prompt.data = ListItemData;
+        prompt.body = qsTr("Enter a name for this shortcut:");
+        prompt.inputField.maximumLength = 15;
+        prompt.show();
     }
     
     function memorize(from)
@@ -166,12 +175,14 @@ ListView
     }
 
     attachedObjects: [
-        ImagePaintDefinition {
+        ImagePaintDefinition
+        {
             id: headerBackground
             imageSource: "images/header_bg.png"
         },
         
-        TextStyleDefinition {
+        TextStyleDefinition
+        {
             id: customTextStyle
 
             rules: [
@@ -187,7 +198,8 @@ ListView
             itemName: qsTr("ayahs")
         },
         
-        ImagePaintDefinition {
+        ImagePaintDefinition
+        {
             id: activeDef
             imageSource: "images/list_item_pressed.amd"
         },
@@ -226,12 +238,37 @@ ListView
                     return ""
                 }
             }
+        },
+        
+        SystemPrompt
+        {
+            id: prompt
+            property variant data
+            title: qsTr("Enter Name") + Retranslate.onLanguageChanged
+            inputField.emptyText: qsTr("Enter a meaningful name...") + Retranslate.onLanguageChanged
+            confirmButton.label: qsTr("OK") + Retranslate.onLanguageChanged
+            cancelButton.label: qsTr("Cancel") + Retranslate.onLanguageChanged
+            inputField.defaultText: "(%1:%2) %3".arg(chapterNumber).arg(data.verse_id).arg(data.translation ? data.translation : data.arabic)
+            
+            onFinished: {
+                if (result == SystemUiResult.ConfirmButtonSelection)
+                {
+                    var bookmarkName = inputFieldTextEntry().trim();
+                    
+                    if (inputField.maximumLength > 15) { // bookmark
+                        app.bookmarkVerse(bookmarkName, chapterNumber, data);
+                        persist.showToast( qsTr("Bookmarked %1:%2").arg(chapterName).arg(data.verse_id), "", "asset:///images/ic_bookmark_add.png" );
+                    } else {
+                        app.addToHomeScreen(chapterNumber, data.verse_id, bookmarkName);
+                    }
+                }
+            }
         }
     ]
     
     listItemComponents: [
-
-        ListItemComponent {
+        ListItemComponent
+        {
             type: "header"
             
             CanadaIncHeaderListItem {
@@ -240,7 +277,8 @@ ListView
             }
         },
 
-        ListItemComponent {
+        ListItemComponent
+        {
             type: "item"
 
 			AyatListItem {}

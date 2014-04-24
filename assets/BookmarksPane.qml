@@ -83,7 +83,7 @@ NavigationPane
                                 {
                                     id: sli
                                     title: ListItemData.surah_name
-                                    status: ListItemData.verse_id
+                                    status: "%1:%2".arg(ListItemData.surah_id).arg(ListItemData.verse_id)
                                     description: ListItemData.text
                                     imageSource: "images/ic_quran.png"
 
