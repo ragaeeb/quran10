@@ -1,4 +1,5 @@
 import bb.cascades 1.0
+import bb.system 1.0
 
 NavigationPane
 {
@@ -13,6 +14,19 @@ NavigationPane
         id: mainPage
         actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
         titleBar: QuranTitleBar {}
+        
+        actions: [
+            DeleteActionItem
+            {
+                enabled: listDelegate.delegateActive
+                imageSource: "images/menu/ic_bookmark_delete.png"
+                title: qsTr("Clear Bookmarks") + Retranslate.onLanguageChanged
+                
+                onTriggered: {
+                    prompt.show();
+                }
+            }
+        ]
 
         Container
         {
@@ -74,7 +88,8 @@ NavigationPane
                                     imageSource: "images/ic_quran.png"
 
                                     contextActions: [
-                                        ActionSet {
+                                        ActionSet
+                                        {
                                             title: sli.title
                                             subtitle: sli.description
 
@@ -84,8 +99,23 @@ NavigationPane
                                                 title: qsTr("Remove") + Retranslate.onLanguageChanged
 
                                                 onTriggered: {
-                                                    sli.ListItem.view.deleteBookmark(sli.ListItem.indexPath);
+                                                    itemDeletedAnim.play();
                                                 }
+                                            }
+                                        }
+                                    ]
+                                    
+                                    animations: [
+                                        ScaleTransition
+                                        {
+                                            id: itemDeletedAnim
+                                            fromX: 1
+                                            toX: 0
+                                            duration: 500
+                                            easingCurve: StockCurve.CubicOut
+
+                                            onEnded: {
+                                                sli.ListItem.view.deleteBookmark(sli.ListItem.indexPath);
                                             }
                                         }
                                     ]
@@ -141,9 +171,25 @@ NavigationPane
         }
         
         attachedObjects: [
-            ImagePaintDefinition {
+            ImagePaintDefinition
+            {
                 id: back
                 imageSource: "images/background.png"
+            },
+            
+            SystemDialog
+            {
+                id: prompt
+                title: qsTr("Confirmation") + Retranslate.onLanguageChanged
+                body: qsTr("Are you sure you want to clear all bookmarks?") + Retranslate.onLanguageChanged
+                confirmButton.label: qsTr("Yes") + Retranslate.onLanguageChanged
+                cancelButton.label: qsTr("No") + Retranslate.onLanguageChanged
+                
+                onFinished: {
+                    if (result == SystemUiResult.ConfirmButtonSelection) {
+                        persist.remove("bookmarks");
+                    }
+                }
             }
         ]
     }
