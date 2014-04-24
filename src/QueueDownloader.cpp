@@ -52,6 +52,7 @@ void QueueDownloader::process(QVariantList const& toProcess)
 void QueueDownloader::onRequestComplete(QVariant const& cookie, QByteArray const& data)
 {
     Q_UNUSED(data);
+    Q_UNUSED(cookie);
     processNext();
 }
 

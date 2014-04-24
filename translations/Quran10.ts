@@ -50,7 +50,7 @@
 <context>
     <name>ChapterTitleBar</name>
     <message>
-        <location filename="../assets/ChapterTitleBar.qml" line="59"/>
+        <location filename="../assets/ChapterTitleBar.qml" line="121"/>
         <source>%1 (%2)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -150,7 +150,7 @@ http://www.troid.ca
     </message>
     <message>
         <location filename="../assets/MushafSheet.qml" line="204"/>
-        <source>We are about to download the mushaf (which is about ~200MB in size), you should only attempt to do this if you have either an unlimited data plan, or are connected via Wi-Fi. Otherwise you might incur a lot of data charges. Are you sure you want to continue? If you select No you can always attempt to download again later.</source>
+        <source>We are about to download the mushaf (which is about ~200MB in size), you should only attempt to do this if you have either an unlimited data plan, or are connected via Wi-Fi. Otherwise you might incur a lot of data charges. Are you sure you want to continue? If you select No the pages will be downloaded one at a time as you request them.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -736,7 +736,7 @@ https://www.youtube.com/watch?v=BDY8i9VQeZM</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="202"/>
+        <location filename="../assets/SurahPage.qml" line="211"/>
         <source>%1 (%2)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -781,7 +781,7 @@ https://www.youtube.com/watch?v=BDY8i9VQeZM</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="249"/>
+        <location filename="../assets/SurahPage.qml" line="258"/>
         <source>%1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -846,33 +846,33 @@ https://www.youtube.com/watch?v=BDY8i9VQeZM</source>
 <context>
     <name>VersesListView</name>
     <message>
-        <location filename="../assets/VersesListView.qml" line="223"/>
+        <location filename="../assets/VersesListView.qml" line="224"/>
         <source>%1:%2-%3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="66"/>
+        <location filename="../assets/VersesListView.qml" line="67"/>
         <source>Play</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="79"/>
+        <location filename="../assets/VersesListView.qml" line="80"/>
         <source>None selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="135"/>
-        <location filename="../assets/VersesListView.qml" line="246"/>
+        <location filename="../assets/VersesListView.qml" line="136"/>
+        <location filename="../assets/VersesListView.qml" line="247"/>
         <source>%1:%2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="153"/>
+        <location filename="../assets/VersesListView.qml" line="154"/>
         <source>Bookmarked %1:%2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="187"/>
+        <location filename="../assets/VersesListView.qml" line="188"/>
         <source>ayahs</source>
         <translation type="unfinished"></translation>
     </message>
@@ -927,16 +927,6 @@ https://www.youtube.com/watch?v=BDY8i9VQeZM</source>
     <message>
         <location filename="../assets/main.qml" line="70"/>
         <source>Du&apos;a from the Qu&apos;ran</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/main.qml" line="81"/>
-        <source>Downloads</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/main.qml" line="82"/>
-        <source>Active Transfers</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
