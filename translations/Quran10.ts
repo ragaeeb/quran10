@@ -50,7 +50,7 @@
 <context>
     <name>ChapterTitleBar</name>
     <message>
-        <location filename="../assets/ChapterTitleBar.qml" line="121"/>
+        <location filename="../assets/ChapterTitleBar.qml" line="188"/>
         <source>%1 (%2)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -874,6 +874,19 @@ https://www.youtube.com/watch?v=BDY8i9VQeZM</source>
     <message>
         <location filename="../assets/VersesListView.qml" line="188"/>
         <source>ayahs</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>canadainc::QueueDownloader</name>
+    <message>
+        <location filename="../src/QueueDownloader.cpp" line="49"/>
+        <source>It seems your device is offline, please connect to Wi-Fi or enable your data connection to proceed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/QueueDownloader.cpp" line="49"/>
+        <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
