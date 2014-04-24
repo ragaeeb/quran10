@@ -5,7 +5,6 @@ ListView
 {
     id: listView
     property alias theDataModel: verseModel
-    property alias listFade: fader
     property alias background: headerBackground
     property alias activeDefinition: activeDef
     property int chapterNumber
@@ -14,9 +13,10 @@ ListView
     property int primarySize: persist.contains("primarySize") ? persist.getValueFor("primarySize") : 8
     property alias custom: customTextStyle
     property int previousPlayedIndex
-    opacity: 0
+    property bool secretPeek: false
 
-    dataModel: GroupDataModel {
+    dataModel: GroupDataModel
+    {
         id: verseModel
         sortingKeys: [ "verse_id" ]
         grouping: ItemGrouping.ByFullValue
@@ -229,13 +229,6 @@ ListView
         }
     ]
     
-    animations: [
-        FadeTransition {
-            id: fader
-            toOpacity: 1
-        }
-    ]
-
     listItemComponents: [
 
         ListItemComponent {

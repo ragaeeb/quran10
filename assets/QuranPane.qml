@@ -40,6 +40,10 @@ NavigationPane {
             }
         ]
         
+        onPeekedAtChanged: {
+            listView.secretPeek = peekedAt;
+        }
+        
         Container
         {
             background: back.imagePaint
@@ -97,21 +101,50 @@ NavigationPane {
                 ]
             }
             
-            ListView {
+            ListView
+            {
                 id: listView
                 objectName: "listView"
+                property bool secretPeek: false
                 
                 dataModel: ArrayDataModel {
                     id: theDataModel
                 }
                 
                 listItemComponents: [
-                    ListItemComponent {
-                        StandardListItem {
+                    ListItemComponent
+                    {
+                        StandardListItem
+                        {
+                            id: sli
+                            property bool peek: ListItem.view.secretPeek
                             title: ListItemData.english_name
                             description: ListItemData.arabic_name
                             status: ListItemData.surah_id
                             imageSource: "images/ic_quran.png"
+                            
+                            onPeekChanged: {
+                                if (peek) {
+                                    showAnim.play();
+                                }
+                            }
+                            
+                            opacity: 0
+                            animations: [
+                                FadeTransition
+                                {
+                                    id: showAnim
+                                    fromOpacity: 0
+                                    toOpacity: 1
+                                    duration: Math.min( sli.ListItem.indexInSection*300, 750 );
+                                }
+                            ]
+                            
+                            ListItem.onInitializedChanged: {
+                                if (initialized) {
+                                    showAnim.play();
+                                }
+                            }
                         }
                     }
                 ]

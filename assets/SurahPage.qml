@@ -43,13 +43,16 @@ Page
         id: properties
     }
     
+    onPeekedAtChanged: {
+        listView.secretPeek = peekedAt;
+    }
+    
     function onDataLoaded(id, data)
     {
         if (id == QueryId.FetchAllAyats) {
             listView.theDataModel.clear();
             listView.theDataModel.insertList(data);
             busy.running = false
-            listView.listFade.play();
             
             if (requestedVerse > 0) {
                 var target = [ requestedVerse - 1, 0 ]
@@ -97,7 +100,7 @@ Page
             imageSource: "file:///usr/share/icons/ic_go.png"
 
             onTriggered: {
-                listView.scrollToPosition(ScrollPosition.Beginning, ScrollAnimation.Default);
+                listView.scrollToPosition(ScrollPosition.Beginning, ScrollAnimation.None);
             }
             
             onCreationCompleted: {
@@ -114,7 +117,7 @@ Page
             imageSource: "images/ic_scroll_end.png"
 
             onTriggered: {
-                listView.scrollToPosition(ScrollPosition.End, ScrollAnimation.Default);
+                listView.scrollToPosition(ScrollPosition.End, ScrollAnimation.None);
             }
             
             onCreationCompleted: {
@@ -206,7 +209,8 @@ Page
                 horizontalAlignment: HorizontalAlignment.Center
             }
             
-            VersesListView {
+            VersesListView
+            {
                 id: listView
                 chapterName: qsTr("%1 (%2)").arg(ctb.titleText).arg(ctb.subtitleText)
                 
