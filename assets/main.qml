@@ -75,18 +75,4 @@ TabbedPane
             source: "SupplicationsPane.qml"
         }
     }
-    
-    Tab {
-        id: transfers
-        title: qsTr("Downloads") + Retranslate.onLanguageChanged
-        description: qsTr("Active Transfers") + Retranslate.onLanguageChanged
-        imageSource: "images/menu/ic_transfers.png"
-        delegateActivationPolicy: TabDelegateActivationPolicy.ActivateWhenSelected
-        unreadContentCount: mushaf.queued + recitation.queued
-        newContentAvailable: unreadContentCount > 0
-        
-        delegate: Delegate {
-            source: "TransfersPane.qml"
-        }
-    }
 }

@@ -177,6 +177,15 @@ Page
         bgSource: "images/title_bg_alt.png"
         bottomPad: 0
         chapterNumber: surahId
+        showNavigation: true
+        
+        onNavigationTapped: {
+            if (right) {
+                ++surahId;
+            } else {
+                --surahId;
+            }
+        }
     }
 
     Container

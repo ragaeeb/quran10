@@ -38,10 +38,11 @@ ControlDelegate
             
             Button
             {
-                horizontalAlignment: HorizontalAlignment.Fill
+                horizontalAlignment: HorizontalAlignment.Center
                 verticalAlignment: VerticalAlignment.Center
                 text: downloadText
                 imageSource: "images/ic_cancel.png"
+                preferredWidth: 125
                 
                 onClicked: {
                     animator.delay = 0;

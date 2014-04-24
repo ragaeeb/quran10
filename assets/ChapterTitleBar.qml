@@ -9,6 +9,8 @@ TitleBar
     property alias subtitleText: surahNameEnglish.text
     property variant bgSource: "images/title_bg_tafseer.amd"
     property double bottomPad: 25
+    property bool showNavigation: false
+    signal navigationTapped(bool right);
     
     onChapterNumberChanged: {
         helper.fetchSurahHeader(titleControl, chapterNumber);
@@ -48,6 +50,133 @@ TitleBar
                 textStyle.fontSize: FontSize.XXSmall
                 textStyle.fontWeight: FontWeight.Bold
                 topMargin: 0
+            }
+        }
+        
+        expandableArea
+        {
+            expanded: showNavigation
+            indicatorVisibility: showNavigation ? TitleBarExpandableAreaIndicatorVisibility.Visible : TitleBarExpandableAreaIndicatorVisibility.Hidden
+            
+            content: ControlDelegate
+            {
+                delegateActive: showNavigation
+                
+                sourceComponent: ComponentDefinition
+                {
+                    Container
+                    {
+                        background: orangeBg.imagePaint
+                        horizontalAlignment: HorizontalAlignment.Fill
+                        verticalAlignment: VerticalAlignment.Fill
+                        layout: DockLayout {}
+                        
+                        Container
+                        {
+                            leftPadding: 10; rightPadding: 10; topPadding: 5; bottomPadding: 5
+                            background: Color.create(0.0, 0.0, 0.0, 0.5)
+                            horizontalAlignment: HorizontalAlignment.Fill
+                            verticalAlignment: VerticalAlignment.Fill
+                            
+                            layout: StackLayout {
+                                orientation: LayoutOrientation.LeftToRight
+                            }
+                            
+                            ImageButton
+                            {
+                                defaultImageSource: "images/backgrounds/ic_prev.png"
+                                pressedImageSource: defaultImageSource
+                                disabledImageSource: defaultImageSource
+                                enabled: chapterNumber > 1
+                                rotationZ: 180
+                                
+                                onClicked: {
+                                    navigationTapped(false);
+                                }
+                                
+                                animations: [
+                                    SequentialAnimation
+                                    {
+                                        id: prevTransition
+                                        delay: 250
+                                        
+                                        TranslateTransition
+                                        {
+                                            fromX: 1000
+                                            toX: 0
+                                            easingCurve: StockCurve.QuinticOut
+                                            duration: 1500
+                                        }
+                                        
+                                        RotateTransition {
+                                            fromAngleZ: 180
+                                            toAngleZ: 0
+                                            duration: 1000
+                                        }
+                                    }
+                                ]
+                                
+                                onCreationCompleted: {
+                                    prevTransition.play();
+                                }
+                            }
+                            
+                            Container
+                            {
+                                horizontalAlignment: HorizontalAlignment.Fill
+                                layoutProperties: StackLayoutProperties {
+                                    spaceQuota: 1
+                                }
+                            }
+                            
+                            ImageButton {
+                                defaultImageSource: "images/backgrounds/ic_next.png"
+                                pressedImageSource: defaultImageSource
+                                disabledImageSource: defaultImageSource
+                                horizontalAlignment: HorizontalAlignment.Right
+                                enabled: chapterNumber < 114
+                                rotationZ: -180
+                                
+                                onClicked: {
+                                    navigationTapped(true);
+                                }
+                                
+                                animations: [
+                                    SequentialAnimation
+                                    {
+                                        id: nextTransition
+                                        delay: 250
+                                        
+                                        TranslateTransition
+                                        {
+                                            fromX: -1000
+                                            toX: 0
+                                            easingCurve: StockCurve.QuinticOut
+                                            duration: 1500
+                                        }
+                                        
+                                        RotateTransition {
+                                            fromAngleZ: -180
+                                            toAngleZ: 0
+                                            duration: 1000
+                                        }
+                                    }
+                                ]
+                                
+                                onCreationCompleted: {
+                                    nextTransition.play();
+                                }
+                            }
+                            
+                            attachedObjects: [
+                                ImagePaintDefinition {
+                                    id: orangeBg
+                                    imageSource: "images/title_bg.png"
+                                }
+                            ]
+                        }
+                    }
+                }
             }
         }
     }
