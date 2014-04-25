@@ -45,7 +45,7 @@ Container
             id: showAnim
             fromOpacity: 0
             toOpacity: 1
-            duration: Math.min( itemRoot.ListItem.indexPath[0]*300, 750 );
+            duration: Math.max( 200, Math.min( itemRoot.ListItem.indexPath[0]*300, 750 ) );
         }
     ]
     

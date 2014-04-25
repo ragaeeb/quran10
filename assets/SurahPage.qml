@@ -37,11 +37,6 @@ Page
             loadVerses();
         }
     }
-
-    paneProperties: NavigationPaneProperties {
-        property variant navPane: navigationPane
-        id: properties
-    }
     
     onPeekedAtChanged: {
         listView.secretPeek = peekedAt;
@@ -80,9 +75,17 @@ Page
             }
         }
     }
+    
+    function onPopEnded(page)
+    {
+        if (navigationPane.top == surahPage) {
+            ctb.navigationExpanded = true;
+        }
+    }
 
     onCreationCompleted: {
         persist.settingChanged.connect(reloadNeeded);
+        navigationPane.popTransitionEnded.connect(onPopEnded);
     }
     
     attachedObjects: [
@@ -137,10 +140,6 @@ Page
             shortcuts: [
                 Shortcut {
                     key: qsTr("A") + Retranslate.onLanguageChanged
-                },
-                
-                Shortcut {
-                    key: qsTr("T") + Retranslate.onLanguageChanged
                 }
             ]
             
@@ -173,12 +172,20 @@ Page
             imageSource: "images/ic_tafsir_show.png"
 
             onTriggered: {
+                ctb.navigationExpanded = false;
                 var page = tafsirDelegate.createObject();
+
+                navigationPane.push(page);
+                
                 page.chapterNumber = surahId;
                 page.verseNumber = 0;
-                
-                properties.navPane.push(page);
             }
+            
+            shortcuts: [
+                Shortcut {
+                    key: qsTr("K") + Retranslate.onLanguageChanged
+                }
+            ]
 
             ActionBar.placement: ActionBarPlacement.OnBar
         }
@@ -191,6 +198,7 @@ Page
         bottomPad: 0
         chapterNumber: surahId
         showNavigation: true
+        navigationExpanded: true
         
         onNavigationTapped: {
             if (right) {
@@ -225,13 +233,14 @@ Page
                 chapterName: qsTr("%1 (%2)").arg(ctb.titleText).arg(ctb.subtitleText)
                 
                 onTriggered: {
+                    ctb.navigationExpanded = false;
                     var data = dataModel.data(indexPath);
                     
                     var created = tp.createObject();
                     created.chapterNumber = surahId;
                     created.verseNumber = data.verse_id;
                     
-                    properties.navPane.push(created);
+                    navigationPane.push(created);
                 }
                 
                 attachedObjects: [

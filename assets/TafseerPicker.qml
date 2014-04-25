@@ -8,18 +8,36 @@ Page
     property int chapterNumber
     property int verseNumber: -1
     
-    paneProperties: NavigationPaneProperties
-    {
-        id: properties
-        property variant navPane: navigationPane
-    }
-    
     function onDataLoaded(id, data)
     {
         adm.append(data);
         
         emptyDelegate.delegateActive = adm.isEmpty();
         listView.visible = !emptyDelegate.delegateActive;
+        
+        if ( adm.size() == 1 ) {
+            navigationPane.remove(root);
+            tafsirPicked([0]);
+        }
+    }
+    
+    function tafsirPicked(indexPath)
+    {
+        var item = adm.data(indexPath);
+        var id = item.id;
+        var page
+        
+        if (id == 0) {
+            definition.source = "TafseerIbnKatheer.qml";
+            page = definition.createObject();
+            page.surahId = chapterNumber;
+        } else {
+            definition.source = "TafseerPage.qml";
+            page = definition.createObject();
+            page.tafsirId = id;
+        }
+        
+        navigationPane.push(page);
     }
     
     onVerseNumberChanged: {
@@ -80,21 +98,7 @@ Page
             
             onTriggered: {
                 console.log("UserEvent: Tafsir Picked");
-                var item = dataModel.data(indexPath);
-                var id = item.id;
-                var page
-                
-                if (id == 0) {
-                    definition.source = "TafseerIbnKatheer.qml";
-                    page = definition.createObject();
-                    page.surahId = chapterNumber;
-                } else {
-                    definition.source = "TafseerPage.qml";
-                    page = definition.createObject();
-                    page.tafsirId = id;
-                }
-                
-                properties.navPane.push(page);
+                tafsirPicked(indexPath);
             }
         }
         
