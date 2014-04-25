@@ -137,6 +137,7 @@
     <asset path="splash_lseries_landscape.png">splash_lseries_landscape.png</asset>
     <asset path="splash_lseries_portrait.png">splash_lseries_portrait.png</asset>
     <asset path="splash_n.png">splash_n.png</asset>
+	<asset path="../canadainc/assets/AboutTitleBar.qml">assets/AboutTitleBar.qml</asset>
     <asset path="../canadainc/assets/BugReportPage.qml">assets/BugReportPage.qml</asset>
     <asset path="../canadainc/assets/CanadaIncMenu.qml">assets/CanadaIncMenu.qml</asset>
     <asset path="../canadainc/assets/EmptyDelegate.qml">assets/EmptyDelegate.qml</asset>
