@@ -75,7 +75,7 @@
 <context>
     <name>ChapterTitleBar</name>
     <message>
-        <location filename="../assets/ChapterTitleBar.qml" line="192"/>
+        <location filename="../assets/ChapterTitleBar.qml" line="189"/>
         <source>%1 (%2)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -114,22 +114,12 @@
 <context>
     <name>HelpPage</name>
     <message>
-        <location filename="../assets/HelpPage.qml" line="19"/>
-        <source>Help</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/HelpPage.qml" line="25"/>
-        <source>Our BBM Channel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/HelpPage.qml" line="38"/>
+        <location filename="../assets/HelpPage.qml" line="37"/>
         <source>Video Tutorial</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/HelpPage.qml" line="66"/>
+        <location filename="../assets/HelpPage.qml" line="65"/>
         <source>
 
 (c) 2013-2014 %1. All Rights Reserved.
@@ -788,67 +778,67 @@ https://www.youtube.com/watch?v=BDY8i9VQeZM</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="163"/>
+        <location filename="../assets/SurahPage.qml" line="171"/>
         <source>Tafsir</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="223"/>
+        <location filename="../assets/SurahPage.qml" line="233"/>
         <source>%1 (%2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="94"/>
+        <location filename="../assets/SurahPage.qml" line="102"/>
         <source>Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="111"/>
+        <location filename="../assets/SurahPage.qml" line="119"/>
         <source>Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="128"/>
+        <location filename="../assets/SurahPage.qml" line="136"/>
         <source>Pause</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="128"/>
+        <location filename="../assets/SurahPage.qml" line="136"/>
         <source>Play All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="134"/>
+        <location filename="../assets/SurahPage.qml" line="142"/>
         <source>A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="142"/>
+        <location filename="../assets/SurahPage.qml" line="150"/>
         <source>Confirmation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="142"/>
+        <location filename="../assets/SurahPage.qml" line="150"/>
         <source>We are about to download a whole bunch of MP3 recitations, you should only attempt to do this if you have either an unlimited data plan, or are connected via Wi-Fi. Otherwise you might incur a lot of data charges. Are you sure you want to continue? If you select No you can always attempt to download again later.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="142"/>
+        <location filename="../assets/SurahPage.qml" line="150"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="142"/>
+        <location filename="../assets/SurahPage.qml" line="150"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="177"/>
+        <location filename="../assets/SurahPage.qml" line="186"/>
         <source>K</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="270"/>
+        <location filename="../assets/SurahPage.qml" line="281"/>
         <source>%1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -900,12 +890,12 @@ https://www.youtube.com/watch?v=BDY8i9VQeZM</source>
 <context>
     <name>TafseerPicker</name>
     <message>
-        <location filename="../assets/TafseerPicker.qml" line="83"/>
+        <location filename="../assets/TafseerPicker.qml" line="72"/>
         <source>No tafsir found for that specific verse.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/TafseerPicker.qml" line="83"/>
+        <location filename="../assets/TafseerPicker.qml" line="72"/>
         <source>No tafsir found for that chapter.</source>
         <translation type="unfinished"></translation>
     </message>
