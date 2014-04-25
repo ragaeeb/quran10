@@ -248,7 +248,7 @@ ListView
             inputField.emptyText: qsTr("Enter a meaningful name...") + Retranslate.onLanguageChanged
             confirmButton.label: qsTr("OK") + Retranslate.onLanguageChanged
             cancelButton.label: qsTr("Cancel") + Retranslate.onLanguageChanged
-            inputField.defaultText: "(%1:%2) %3".arg(chapterNumber).arg(data.verse_id).arg(data.translation ? data.translation : data.arabic)
+            inputField.defaultText: data ? "(%1:%2) %3".arg(chapterNumber).arg(data.verse_id).arg(data.translation ? data.translation : data.arabic) : ""
             
             onFinished: {
                 if (result == SystemUiResult.ConfirmButtonSelection)

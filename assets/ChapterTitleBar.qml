@@ -10,6 +10,7 @@ TitleBar
     property variant bgSource: "images/title_bg_tafseer.amd"
     property double bottomPad: 25
     property bool showNavigation: false
+    property bool navigationExpanded: false
     signal navigationTapped(bool right);
     
     onChapterNumberChanged: {
@@ -55,7 +56,7 @@ TitleBar
         
         expandableArea
         {
-            expanded: showNavigation
+            expanded: showNavigation && navigationExpanded
             indicatorVisibility: showNavigation ? TitleBarExpandableAreaIndicatorVisibility.Visible : TitleBarExpandableAreaIndicatorVisibility.Hidden
             
             content: ControlDelegate

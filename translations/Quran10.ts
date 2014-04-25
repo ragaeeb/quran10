@@ -75,7 +75,7 @@
 <context>
     <name>ChapterTitleBar</name>
     <message>
-        <location filename="../assets/ChapterTitleBar.qml" line="188"/>
+        <location filename="../assets/ChapterTitleBar.qml" line="192"/>
         <source>%1 (%2)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -161,8 +161,13 @@ http://www.troid.ca
 <context>
     <name>MushafSheet</name>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="24"/>
+        <location filename="../assets/MushafSheet.qml" line="18"/>
         <source>Jump</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/MushafSheet.qml" line="30"/>
+        <source>J</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -171,7 +176,6 @@ http://www.troid.ca
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="18"/>
         <location filename="../assets/MushafSheet.qml" line="45"/>
         <source>Back</source>
         <translation type="unfinished"></translation>
@@ -198,7 +202,7 @@ http://www.troid.ca
     </message>
     <message>
         <location filename="../assets/MushafSheet.qml" line="204"/>
-        <source>We are about to download the mushaf (which is about ~200MB in size), you should only attempt to do this if you have either an unlimited data plan, or are connected via Wi-Fi. Otherwise you might incur a lot of data charges. Are you sure you want to continue? If you select No the pages will be downloaded one at a time as you request them.</source>
+        <source>We are about to download the mushaf (which is about ~200MB in size), you should only attempt to do this if you have either an unlimited data plan, or are connected via Wi-Fi. Otherwise you might incur a lot of data charges. Are you sure you want to continue? If you select No you can always attempt to download again later.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -225,7 +229,12 @@ http://www.troid.ca
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="54"/>
+        <location filename="../assets/QuranPane.qml" line="43"/>
+        <source>M</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/QuranPane.qml" line="60"/>
         <source>Search surah name...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -233,32 +242,32 @@ http://www.troid.ca
 <context>
     <name>RadioPane</name>
     <message>
-        <location filename="../assets/RadioPane.qml" line="26"/>
+        <location filename="../assets/RadioPane.qml" line="37"/>
         <source>Channel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/RadioPane.qml" line="32"/>
+        <location filename="../assets/RadioPane.qml" line="43"/>
         <source>Off</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/RadioPane.qml" line="38"/>
+        <location filename="../assets/RadioPane.qml" line="49"/>
         <source>The Quran Radio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/RadioPane.qml" line="39"/>
+        <location filename="../assets/RadioPane.qml" line="50"/>
         <source>Wakas Mir Networks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/RadioPane.qml" line="51"/>
+        <location filename="../assets/RadioPane.qml" line="62"/>
         <source>Radio Quraan</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/RadioPane.qml" line="52"/>
+        <location filename="../assets/RadioPane.qml" line="63"/>
         <source>www.radioquraan.com</source>
         <translation type="unfinished"></translation>
     </message>
@@ -769,67 +778,77 @@ https://www.youtube.com/watch?v=BDY8i9VQeZM</source>
 <context>
     <name>SurahPage</name>
     <message>
-        <location filename="../assets/SurahPage.qml" line="70"/>
+        <location filename="../assets/SurahPage.qml" line="65"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="70"/>
+        <location filename="../assets/SurahPage.qml" line="65"/>
         <source>Press-and-hold on a verse with a grey highlight to find explanations on it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="162"/>
+        <location filename="../assets/SurahPage.qml" line="163"/>
         <source>Tafsir</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="215"/>
+        <location filename="../assets/SurahPage.qml" line="223"/>
         <source>%1 (%2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="99"/>
+        <location filename="../assets/SurahPage.qml" line="94"/>
         <source>Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="116"/>
+        <location filename="../assets/SurahPage.qml" line="111"/>
         <source>Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="133"/>
+        <location filename="../assets/SurahPage.qml" line="128"/>
         <source>Pause</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="133"/>
+        <location filename="../assets/SurahPage.qml" line="128"/>
         <source>Play All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="141"/>
+        <location filename="../assets/SurahPage.qml" line="134"/>
+        <source>A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/SurahPage.qml" line="142"/>
         <source>Confirmation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="141"/>
+        <location filename="../assets/SurahPage.qml" line="142"/>
         <source>We are about to download a whole bunch of MP3 recitations, you should only attempt to do this if you have either an unlimited data plan, or are connected via Wi-Fi. Otherwise you might incur a lot of data charges. Are you sure you want to continue? If you select No you can always attempt to download again later.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="141"/>
+        <location filename="../assets/SurahPage.qml" line="142"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="141"/>
+        <location filename="../assets/SurahPage.qml" line="142"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="262"/>
+        <location filename="../assets/SurahPage.qml" line="177"/>
+        <source>K</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/SurahPage.qml" line="270"/>
         <source>%1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -881,12 +900,12 @@ https://www.youtube.com/watch?v=BDY8i9VQeZM</source>
 <context>
     <name>TafseerPicker</name>
     <message>
-        <location filename="../assets/TafseerPicker.qml" line="54"/>
+        <location filename="../assets/TafseerPicker.qml" line="83"/>
         <source>No tafsir found for that specific verse.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/TafseerPicker.qml" line="54"/>
+        <location filename="../assets/TafseerPicker.qml" line="83"/>
         <source>No tafsir found for that chapter.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -910,7 +929,7 @@ https://www.youtube.com/watch?v=BDY8i9VQeZM</source>
     </message>
     <message>
         <location filename="../assets/VersesListView.qml" line="136"/>
-        <location filename="../assets/VersesListView.qml" line="275"/>
+        <location filename="../assets/VersesListView.qml" line="276"/>
         <source>%1:%2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -945,7 +964,7 @@ https://www.youtube.com/watch?v=BDY8i9VQeZM</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="259"/>
+        <location filename="../assets/VersesListView.qml" line="260"/>
         <source>Bookmarked %1:%2</source>
         <translation type="unfinished"></translation>
     </message>
