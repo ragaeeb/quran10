@@ -134,6 +134,16 @@ Page
             imageSource: player.playing ? "images/ic_pause.png" : "images/ic_play.png"
             ActionBar.placement: ActionBarPlacement.OnBar
             
+            shortcuts: [
+                Shortcut {
+                    key: qsTr("A") + Retranslate.onLanguageChanged
+                },
+                
+                Shortcut {
+                    key: qsTr("T") + Retranslate.onLanguageChanged
+                }
+            ]
+            
             onTriggered:
             {
                 if ( !persist.contains("hideDataWarning") )

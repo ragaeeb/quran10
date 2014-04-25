@@ -37,6 +37,12 @@ NavigationPane {
                     
                     sheet.open();
                 }
+                
+                shortcuts: [
+                    Shortcut {
+                        key: qsTr("M") + Retranslate.onLanguageChanged
+                    }
+                ]
             }
         ]
         
