@@ -13,12 +13,6 @@ Sheet
         actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
         actionBarVisibility: ChromeVisibility.Hidden
         
-        paneProperties: NavigationPaneProperties {
-            backButton: ActionItem {
-                title: qsTr("Back") + Retranslate.onLanguageChanged
-            }
-        }
-        
         actions: [
             ActionItem {
                 title: qsTr("Jump") + Retranslate.onLanguageChanged
@@ -30,6 +24,12 @@ Sheet
                     dropDownDelegate.delegateActive = true;
                     timer.stop();
                 }
+                
+                shortcuts: [
+                    Shortcut {
+                        key: qsTr("J") + Retranslate.onLanguageChanged
+                    }
+                ]
             }
         ]
         

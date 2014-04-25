@@ -14,6 +14,16 @@ NavigationPane
         actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
         titleBar: QuranTitleBar {}
         
+        shortcuts: [
+            SystemShortcut {
+                type: SystemShortcuts.ScrollDownOneScreen
+                
+                onTriggered: {
+                    dropDown.expanded = true;
+                }
+            }
+        ]
+        
         Container
         {
             background: back.imagePaint
@@ -23,6 +33,7 @@ NavigationPane
             
             DropDown
             {
+                id: dropDown
                 title: qsTr("Channel") + Retranslate.onLanguageChanged
                 horizontalAlignment: HorizontalAlignment.Fill
                 
