@@ -75,7 +75,7 @@
 <context>
     <name>ChapterTitleBar</name>
     <message>
-        <location filename="../assets/ChapterTitleBar.qml" line="189"/>
+        <location filename="../assets/ChapterTitleBar.qml" line="133"/>
         <source>%1 (%2)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -114,21 +114,15 @@
 <context>
     <name>HelpPage</name>
     <message>
-        <location filename="../assets/HelpPage.qml" line="37"/>
+        <location filename="../assets/HelpPage.qml" line="27"/>
         <source>Video Tutorial</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/HelpPage.qml" line="65"/>
+        <location filename="../assets/HelpPage.qml" line="55"/>
         <source>
 
-(c) 2013-2014 %1. All Rights Reserved.
-%2 %3
-
-Please report all bugs to:
-support@canadainc.org
-
-This app facilitates the reading of Qu&apos;ran for Muslims using BB10 to get a smooth and fluid native experience. It includes translations in several languages (Bengali, English, French, Indonesian, Malaysian, Thai, Turkish, Urdu, and many more) as well as the original Arabic version (which is available in both the Uthmani script and the modern simple Imla&apos;ei script). There is also support for verse-by-verse recitation to help you memorize the Qu&apos;ran. You have several reciters to choose from.
+This app facilitates the reading of Qu&apos;ran for Muslims using BlackBerry 10 to get a smooth and fluid native experience. It includes translations in several languages (Bengali, English, French, Indonesian, Malaysian, Thai, Turkish, Urdu, and many more) as well as the original Arabic version (which is available in both the Uthmani script and the modern simple Imla&apos;ei script). There is also support for verse-by-verse recitation to help you memorize the Qu&apos;ran. You have several reciters to choose from.
 
 There is built-in support for bookmarking verses to quickly pick up where you left off reading. There is also easy access to copying certain verses to make it easy for you to share it with your contacts.
 
@@ -151,62 +145,32 @@ http://www.troid.ca
 <context>
     <name>MushafSheet</name>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="18"/>
+        <location filename="../assets/MushafSheet.qml" line="20"/>
         <source>Jump</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="30"/>
+        <location filename="../assets/MushafSheet.qml" line="32"/>
         <source>J</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="40"/>
+        <location filename="../assets/MushafSheet.qml" line="42"/>
         <source>Page %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="45"/>
+        <location filename="../assets/MushafSheet.qml" line="47"/>
         <source>Back</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="54"/>
-        <source>Unlock</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/MushafSheet.qml" line="54"/>
-        <source>Lock</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/MushafSheet.qml" line="103"/>
+        <location filename="../assets/MushafSheet.qml" line="92"/>
         <source>Surah</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="203"/>
-        <source>Confirmation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../assets/MushafSheet.qml" line="204"/>
-        <source>We are about to download the mushaf (which is about ~200MB in size), you should only attempt to do this if you have either an unlimited data plan, or are connected via Wi-Fi. Otherwise you might incur a lot of data charges. Are you sure you want to continue? If you select No you can always attempt to download again later.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/MushafSheet.qml" line="205"/>
-        <source>Yes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/MushafSheet.qml" line="206"/>
-        <source>No</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/MushafSheet.qml" line="221"/>
         <source>%1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -903,63 +867,63 @@ https://www.youtube.com/watch?v=BDY8i9VQeZM</source>
 <context>
     <name>VersesListView</name>
     <message>
-        <location filename="../assets/VersesListView.qml" line="235"/>
+        <location filename="../assets/VersesListView.qml" line="237"/>
         <source>%1:%2-%3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="67"/>
+        <location filename="../assets/VersesListView.qml" line="69"/>
         <source>Play</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="80"/>
+        <location filename="../assets/VersesListView.qml" line="82"/>
         <source>None selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="136"/>
-        <location filename="../assets/VersesListView.qml" line="276"/>
+        <location filename="../assets/VersesListView.qml" line="138"/>
+        <location filename="../assets/VersesListView.qml" line="278"/>
         <source>%1:%2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="156"/>
+        <location filename="../assets/VersesListView.qml" line="158"/>
         <source>Enter a name for this bookmark</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="164"/>
+        <location filename="../assets/VersesListView.qml" line="166"/>
         <source>Enter a name for this shortcut:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="247"/>
+        <location filename="../assets/VersesListView.qml" line="249"/>
         <source>Enter Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="248"/>
+        <location filename="../assets/VersesListView.qml" line="250"/>
         <source>Enter a meaningful name...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="249"/>
+        <location filename="../assets/VersesListView.qml" line="251"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="250"/>
+        <location filename="../assets/VersesListView.qml" line="252"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="260"/>
+        <location filename="../assets/VersesListView.qml" line="262"/>
         <source>Bookmarked %1:%2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="198"/>
+        <location filename="../assets/VersesListView.qml" line="200"/>
         <source>ayahs</source>
         <translation type="unfinished"></translation>
     </message>

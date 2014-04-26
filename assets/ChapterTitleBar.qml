@@ -83,42 +83,13 @@ TitleBar
                                 orientation: LayoutOrientation.LeftToRight
                             }
                             
-                            ImageButton
+                            NavigationButton
                             {
                                 defaultImageSource: "images/backgrounds/ic_prev.png"
-                                pressedImageSource: defaultImageSource
-                                disabledImageSource: defaultImageSource
                                 enabled: chapterNumber > 1
-                                rotationZ: 180
                                 
                                 onClicked: {
                                     navigationTapped(false);
-                                }
-                                
-                                animations: [
-                                    SequentialAnimation
-                                    {
-                                        id: prevTransition
-                                        delay: 250
-                                        
-                                        TranslateTransition
-                                        {
-                                            fromX: 1000
-                                            toX: 0
-                                            easingCurve: StockCurve.QuinticOut
-                                            duration: 1500
-                                        }
-                                        
-                                        RotateTransition {
-                                            fromAngleZ: 180
-                                            toAngleZ: 0
-                                            duration: 1000
-                                        }
-                                    }
-                                ]
-                                
-                                onCreationCompleted: {
-                                    prevTransition.play();
                                 }
                             }
                             
@@ -130,42 +101,15 @@ TitleBar
                                 }
                             }
                             
-                            ImageButton {
-                                defaultImageSource: "images/backgrounds/ic_next.png"
-                                pressedImageSource: defaultImageSource
-                                disabledImageSource: defaultImageSource
+                            NavigationButton
+                            {
                                 horizontalAlignment: HorizontalAlignment.Right
+                                defaultImageSource: "images/backgrounds/ic_next.png"
                                 enabled: chapterNumber < 114
-                                rotationZ: -180
+                                multiplier: -1
                                 
                                 onClicked: {
                                     navigationTapped(true);
-                                }
-                                
-                                animations: [
-                                    SequentialAnimation
-                                    {
-                                        id: nextTransition
-                                        delay: 250
-                                        
-                                        TranslateTransition
-                                        {
-                                            fromX: -1000
-                                            toX: 0
-                                            easingCurve: StockCurve.QuinticOut
-                                            duration: 1500
-                                        }
-                                        
-                                        RotateTransition {
-                                            fromAngleZ: -180
-                                            toAngleZ: 0
-                                            duration: 1000
-                                        }
-                                    }
-                                ]
-                                
-                                onCreationCompleted: {
-                                    nextTransition.play();
                                 }
                             }
                             

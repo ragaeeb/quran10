@@ -5,11 +5,10 @@
 #include <bb/platform/HomeScreen>
 
 #include <bb/cascades/Application>
-#include <bb/cascades/Control>
+#include <bb/cascades/GroupDataModel>
 #include <bb/cascades/NavigationPane>
 #include <bb/cascades/QmlDocument>
-#include <bb/cascades/SceneCover>
 
 #include <QtConcurrentRun>
 
-#include <bb/cascades/ScalingMethod>
+#include <QFutureWatcher>
