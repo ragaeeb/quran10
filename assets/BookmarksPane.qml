@@ -17,7 +17,7 @@ NavigationPane
         actions: [
             DeleteActionItem
             {
-                enabled: listDelegate.delegateActive
+                enabled: listView.visible
                 imageSource: "images/menu/ic_bookmark_delete.png"
                 title: qsTr("Clear Bookmarks") + Retranslate.onLanguageChanged
                 
@@ -40,111 +40,101 @@ NavigationPane
                 labelText: qsTr("You have no favourites. To mark a favourite, press-and-hold on an ayat or tafsir and choose 'Mark Favourite' from the context-menu.") + Retranslate.onLanguageChanged
             }
 
-            ControlDelegate
+            ListView
             {
-                id: listDelegate
-                horizontalAlignment: HorizontalAlignment.Fill
-                verticalAlignment: VerticalAlignment.Fill
-
-                layoutProperties: StackLayoutProperties {
-                    spaceQuota: 1
+                id: listView
+                dataModel: ArrayDataModel {
+                    id: adm
                 }
-
-                sourceComponent: ComponentDefinition
+                
+                function itemType(data, indexPath) {
+                    return data.type;
+                }
+                
+                function deleteBookmark(indexPath)
                 {
-                    ListView
+                    var bookmarks = persist.getValueFor("bookmarks");
+                    
+                    if (bookmarks && bookmarks.length > 0)
                     {
-                        id: listView
-                        dataModel: ArrayDataModel {}
-
-                        function itemType(data, indexPath) {
-                            return data.type;
-                        }
+                        bookmarks.splice(indexPath, 1);
                         
-                        function deleteBookmark(indexPath)
-                        {
-                            var bookmarks = persist.getValueFor("bookmarks");
-
-                            if (bookmarks && bookmarks.length > 0)
-                            {
-                                bookmarks.splice(indexPath, 1);
-
-                                persist.saveValueFor("bookmarks", bookmarks);
-                                persist.showToast( qsTr("Removed bookmark!"), "", "asset:///images/menu/ic_bookmark_delete.png" );
-                            }
-                        }
-
-                        listItemComponents: [
-                            ListItemComponent
-                            {
-                                type: "verse"
-
-                                StandardListItem
-                                {
-                                    id: sli
-                                    title: ListItemData.surah_name
-                                    status: "%1:%2".arg(ListItemData.surah_id).arg(ListItemData.verse_id)
-                                    description: ListItemData.text
-                                    imageSource: "images/ic_quran.png"
-
-                                    contextActions: [
-                                        ActionSet
-                                        {
-                                            title: sli.title
-                                            subtitle: sli.description
-
-                                            DeleteActionItem
-                                            {
-                                                imageSource: "images/menu/ic_bookmark_delete.png"
-                                                title: qsTr("Remove") + Retranslate.onLanguageChanged
-
-                                                onTriggered: {
-                                                    console.log("UserEvent: RemoveBookmark");
-                                                    itemDeletedAnim.play();
-                                                }
-                                            }
-                                        }
-                                    ]
-                                    
-                                    animations: [
-                                        ScaleTransition
-                                        {
-                                            id: itemDeletedAnim
-                                            fromX: 1
-                                            toX: 0
-                                            duration: 500
-                                            easingCurve: StockCurve.CubicOut
-
-                                            onEnded: {
-                                                sli.ListItem.view.deleteBookmark(sli.ListItem.indexPath);
-                                            }
-                                        }
-                                    ]
-                                }
-                            }
-                        ]
-
-                        onTriggered: {
-                            console.log("UserEvent: Bookmark Triggered");
-                            var data = dataModel.data(indexPath);
-
-							definition.source = "SurahPage.qml";
-							var sp = definition.createObject();
-                            navigationPane.push(sp);
-                            sp.surahId = data.surah_id;
-                            sp.requestedVerse = data.verse_id;
-                        }
-
-                        horizontalAlignment: HorizontalAlignment.Fill
-                        verticalAlignment: VerticalAlignment.Fill
-
-                        attachedObjects: [
-                            ComponentDefinition {
-                                id: definition
-                            }
-                        ]
+                        persist.saveValueFor("bookmarks", bookmarks);
+                        persist.showToast( qsTr("Removed bookmark!"), "", "asset:///images/menu/ic_bookmark_delete.png" );
                     }
                 }
+                
+                listItemComponents: [
+                    ListItemComponent
+                    {
+                        type: "verse"
+                        
+                        StandardListItem
+                        {
+                            id: sli
+                            title: ListItemData.surah_name
+                            status: "%1:%2".arg(ListItemData.surah_id).arg(ListItemData.verse_id)
+                            description: ListItemData.text
+                            imageSource: "images/ic_quran.png"
+                            scaleX: 1
+                            
+                            contextActions: [
+                                ActionSet
+                                {
+                                    title: sli.title
+                                    subtitle: sli.description
+                                    
+                                    DeleteActionItem
+                                    {
+                                        imageSource: "images/menu/ic_bookmark_delete.png"
+                                        title: qsTr("Remove") + Retranslate.onLanguageChanged
+                                        
+                                        onTriggered: {
+                                            console.log("UserEvent: RemoveBookmark");
+                                            itemDeletedAnim.play();
+                                        }
+                                    }
+                                }
+                            ]
+                            
+                            animations: [
+                                ScaleTransition
+                                {
+                                    id: itemDeletedAnim
+                                    fromX: 1
+                                    toX: 0
+                                    duration: 500
+                                    easingCurve: StockCurve.CubicOut
+                                    
+                                    onEnded: {
+                                        sli.ListItem.view.deleteBookmark(sli.ListItem.indexPath);
+                                        sli.scaleX = 1;
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+                
+                onTriggered: {
+                    console.log("UserEvent: Bookmark Triggered");
+                    var data = dataModel.data(indexPath);
+                    
+                    definition.source = "SurahPage.qml";
+                    var sp = definition.createObject();
+                    navigationPane.push(sp);
+                    sp.surahId = data.surah_id;
+                    sp.requestedVerse = data.verse_id;
+                }
+                
+                horizontalAlignment: HorizontalAlignment.Fill
+                verticalAlignment: VerticalAlignment.Fill
+                
+                attachedObjects: [
+                    ComponentDefinition {
+                        id: definition
+                    }
+                ]
             }
 
             onCreationCompleted: {
@@ -158,17 +148,18 @@ NavigationPane
                 {
                     var bookmarks = persist.getValueFor("bookmarks");
 
-                    if (bookmarks && bookmarks.length > 0) {
-                        noElements.delegateActive = false;
-                        listDelegate.delegateActive = true;
+                    if (!bookmarks) {
+                        bookmarks = [];
+                    }
 
-                        listDelegate.control.dataModel.clear();
-                        listDelegate.control.dataModel.append(bookmarks);
-                        
-                        if ( persist.tutorial( "tutorialBookmarkDel", qsTr("To delete an existing bookmark, simply press-and-hold on it and choose 'Remove' from the menu."), "asset:///images/menu/ic_bookmark_delete.png" ) ) {}
-                    } else {
-                        noElements.delegateActive = true;
-                        listDelegate.delegateActive = false;
+                    adm.clear();
+                    adm.append(bookmarks);
+
+                    noElements.delegateActive = adm.isEmpty();
+                    listView.visible = !noElements.delegateActive;
+
+                    if (listView.visible) {
+                        persist.tutorial( "tutorialBookmarkDel", qsTr("To delete an existing bookmark, simply press-and-hold on it and choose 'Remove' from the menu."), "asset:///images/menu/ic_bookmark_delete.png" );
                     }
                 }
             }

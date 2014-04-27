@@ -104,23 +104,24 @@ Page
             function onDataLoaded(id, data)
             {
                 theDataModel.insertList(data);
-                
+
+                var primary = persist.getValueFor("primary");
                 var translation = persist.getValueFor("translation");
-                
+
                 if (id == QueryId.SearchQueryTranslation) {
-                    translationLoaded = true
+                    translationLoaded = true;
                 } else if (id == QueryId.SearchQueryPrimary) {
-                    arabicLoaded = true
+                    arabicLoaded = true;
                 }
-                
-                if ( (translationLoaded && arabicLoaded) || (translation == "" && arabicLoaded) ) {
-                    busy.running = false
+
+                if ( (translationLoaded && arabicLoaded) || (translation == "" && arabicLoaded) || (primary == "transliteration") ) {
+                    busy.running = false;
                 }
-                
+
                 noElements.delegateActive = theDataModel.isEmpty();
                 listView.visible = !theDataModel.isEmpty();
             }
-            
+
             dataModel: GroupDataModel
             {
                 id: theDataModel

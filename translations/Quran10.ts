@@ -75,37 +75,37 @@ Pin - 2B77C09E</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/BookmarksPane.qml" line="73"/>
+        <location filename="../assets/BookmarksPane.qml" line="63"/>
         <source>Removed bookmark!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/BookmarksPane.qml" line="99"/>
+        <location filename="../assets/BookmarksPane.qml" line="90"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/BookmarksPane.qml" line="168"/>
+        <location filename="../assets/BookmarksPane.qml" line="162"/>
         <source>To delete an existing bookmark, simply press-and-hold on it and choose &apos;Remove&apos; from the menu.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/BookmarksPane.qml" line="187"/>
+        <location filename="../assets/BookmarksPane.qml" line="178"/>
         <source>Confirmation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/BookmarksPane.qml" line="188"/>
+        <location filename="../assets/BookmarksPane.qml" line="179"/>
         <source>Are you sure you want to clear all bookmarks?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/BookmarksPane.qml" line="189"/>
+        <location filename="../assets/BookmarksPane.qml" line="180"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/BookmarksPane.qml" line="190"/>
+        <location filename="../assets/BookmarksPane.qml" line="181"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>
@@ -175,42 +175,42 @@ Finally, there is built-in support to do efficient and fast lookups for any sura
 <context>
     <name>MushafSheet</name>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="20"/>
+        <location filename="../assets/MushafSheet.qml" line="24"/>
         <source>Jump</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="33"/>
+        <location filename="../assets/MushafSheet.qml" line="37"/>
         <source>J</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="43"/>
+        <location filename="../assets/MushafSheet.qml" line="47"/>
         <source>Page %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="48"/>
+        <location filename="../assets/MushafSheet.qml" line="52"/>
         <source>Back</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="97"/>
+        <location filename="../assets/MushafSheet.qml" line="101"/>
         <source>Surah</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="218"/>
+        <location filename="../assets/MushafSheet.qml" line="220"/>
         <source>You can pinch on the page to zoom in and out and scroll up and down.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="220"/>
+        <location filename="../assets/MushafSheet.qml" line="222"/>
         <source>Use the left and right arrows to switch pages.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="221"/>
+        <location filename="../assets/MushafSheet.qml" line="223"/>
         <source>Tap on the screen, then on the bottom action bar you will see the Jump icon. Use this to trigger the dropdown menu to jump to a specific surah in the mushaf.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -986,63 +986,63 @@ May Allah reward you, and bless you and your family.</source>
 <context>
     <name>VersesListView</name>
     <message>
-        <location filename="../assets/VersesListView.qml" line="241"/>
+        <location filename="../assets/VersesListView.qml" line="242"/>
         <source>%1:%2-%3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="68"/>
+        <location filename="../assets/VersesListView.qml" line="69"/>
         <source>Play</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="82"/>
+        <location filename="../assets/VersesListView.qml" line="83"/>
         <source>None selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="142"/>
-        <location filename="../assets/VersesListView.qml" line="282"/>
+        <location filename="../assets/VersesListView.qml" line="143"/>
+        <location filename="../assets/VersesListView.qml" line="283"/>
         <source>%1:%2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="162"/>
+        <location filename="../assets/VersesListView.qml" line="163"/>
         <source>Enter a name for this bookmark</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="170"/>
+        <location filename="../assets/VersesListView.qml" line="171"/>
         <source>Enter a name for this shortcut:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="253"/>
+        <location filename="../assets/VersesListView.qml" line="254"/>
         <source>Enter Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="254"/>
+        <location filename="../assets/VersesListView.qml" line="255"/>
         <source>Enter a meaningful name...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="255"/>
+        <location filename="../assets/VersesListView.qml" line="256"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="256"/>
+        <location filename="../assets/VersesListView.qml" line="257"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="266"/>
+        <location filename="../assets/VersesListView.qml" line="267"/>
         <source>Bookmarked %1:%2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="204"/>
+        <location filename="../assets/VersesListView.qml" line="205"/>
         <source>ayahs</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1116,32 +1116,32 @@ May Allah reward you, and bless you and your family.</source>
 <context>
     <name>quran::ApplicationUI</name>
     <message>
-        <location filename="../src/applicationui.cpp" line="130"/>
+        <location filename="../src/applicationui.cpp" line="147"/>
         <source>Invalid pattern specified!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="154"/>
+        <location filename="../src/applicationui.cpp" line="171"/>
         <source>Invalid URI specified!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="174"/>
+        <location filename="../src/applicationui.cpp" line="193"/>
         <source>Invalid surah specified</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="209"/>
+        <location filename="../src/applicationui.cpp" line="228"/>
         <source>Surah not found!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="235"/>
+        <location filename="../src/applicationui.cpp" line="254"/>
         <source>Added %1 to home screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="237"/>
+        <location filename="../src/applicationui.cpp" line="256"/>
         <source>Could not add %1 to home screen</source>
         <translation type="unfinished"></translation>
     </message>
