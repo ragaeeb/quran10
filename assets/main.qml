@@ -11,6 +11,7 @@ TabbedPane
         allowDonations: true
         promoteChannel: true
         bbWorldID: "27022877"
+        showSubmitLogs: true
     }
 
 	Tab
