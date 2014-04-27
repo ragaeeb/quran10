@@ -29,7 +29,7 @@ Page
             
             query {
                 mimeType: "text/html"
-                uri: "http://www.youtube.com/watch?v=AbHZLmWSKts"
+                uri: "http://youtu.be/7nA27gIxZ08"
                 invokeActionId: "bb.action.OPEN"
             }
         }

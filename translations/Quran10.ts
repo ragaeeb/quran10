@@ -218,12 +218,32 @@ Finally, there is built-in support to do efficient and fast lookups for any sura
 <context>
     <name>QuranPane</name>
     <message>
-        <location filename="../assets/QuranPane.qml" line="28"/>
+        <location filename="../assets/QuranPane.qml" line="19"/>
+        <source>Tutorial</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/QuranPane.qml" line="19"/>
+        <source>Would you like to see a video tutorial on how to use the app?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/QuranPane.qml" line="19"/>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/QuranPane.qml" line="19"/>
+        <source>No</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/QuranPane.qml" line="36"/>
         <source>Mushaf</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="42"/>
+        <location filename="../assets/QuranPane.qml" line="50"/>
         <source>M</source>
         <translation type="unfinished"></translation>
     </message>
