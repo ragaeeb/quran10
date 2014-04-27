@@ -15,8 +15,6 @@ ListView
     property alias custom: customTextStyle
     property int previousPlayedIndex
     property bool secretPeek: false
-    snapMode: SnapMode.LeadingEdge
-    flickMode: FlickMode.SingleItem
 
     dataModel: GroupDataModel
     {

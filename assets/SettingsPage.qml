@@ -47,8 +47,6 @@ Page
                 onSelectedOptionChanged: {
                     if (selectedOption == primaryTransliteration) {
                         infoText.text = qsTr("English transliteration will be displayed in place of Arabic text.") + Retranslate.onLanguageChanged
-                    } else if (selectedOption == primaryImlaei) {
-                        infoText.text = qsTr("Modern Arabic glyphs will be rendered for the primary text.") + Retranslate.onLanguageChanged
                     } else {
                         infoText.text = qsTr("Old-fashioned Arabic glyphs will be rendered for the primary text.") + Retranslate.onLanguageChanged
                     }
