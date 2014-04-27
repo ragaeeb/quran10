@@ -42,17 +42,17 @@ Pin - 2B77C09E</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatListItem.qml" line="66"/>
+        <location filename="../assets/AyatListItem.qml" line="78"/>
         <source>Bookmark</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatListItem.qml" line="76"/>
+        <location filename="../assets/AyatListItem.qml" line="88"/>
         <source>Add to Home Screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatListItem.qml" line="88"/>
+        <location filename="../assets/AyatListItem.qml" line="68"/>
         <source>Play From Here</source>
         <translation type="unfinished"></translation>
     </message>
@@ -832,7 +832,7 @@ https://www.youtube.com/watch?v=BDY8i9VQeZM</source>
         <location filename="../assets/SurahPage.qml" line="82"/>
         <source>As&apos;salaamu alaykum wa rahmatullahi wabarakathu,
 
-JazakAllahu khair for using Salat10. While our Islamic apps will always remain free of charge for your benefit, we encourage you to please donate whatever you can in order to support development. This will motivate the developers to continue to update the app, add new features and bug fixes. To donate, simply swipe-down from the top-bezel and tap the &apos;Donate&apos; button to send money via PayPal.
+JazakAllahu khair for using Quran10. While our Islamic apps will always remain free of charge for your benefit, we encourage you to please donate whatever you can in order to support development. This will motivate the developers to continue to update the app, add new features and bug fixes. To donate, simply swipe-down from the top-bezel and tap the &apos;Donate&apos; button to send money via PayPal.
 
 May Allah reward you, and bless you and your family.</source>
         <translation type="unfinished"></translation>
