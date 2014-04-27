@@ -1,4 +1,3 @@
-import QtQuick 1.0
 import bb.cascades 1.0
 import com.canadainc.data 1.0
 
@@ -6,69 +5,54 @@ Page
 {
     property alias searchText: searchField.text
     actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
-    titleBar: QuranTitleBar {}
+    
+    titleBar: TitleBar
+    {
+        kind: TitleBarKind.FreeForm
+        kindProperties: FreeFormTitleBarKindProperties
+        {
+            Container
+            {
+                topPadding: 10; rightPadding: 10; leftPadding: 10
+                background: back.imagePaint
+                
+                TextField
+                {
+                    id: searchField
+                    hintText: qsTr("Enter text to search...") + Retranslate.onLanguageChanged
+                    horizontalAlignment: HorizontalAlignment.Fill
+                    verticalAlignment: VerticalAlignment.Fill
+                    inputRoute.primaryKeyTarget: true;
+                    bottomMargin: 0; topMargin: 0
+                    
+                    onTextChanged: {
+                        input.submitted(undefined);
+                    }
+                    
+                    input {
+                        submitKey: SubmitKey.Submit
+                        
+                        onSubmitted: {
+                            var trimmedText = text.replace(/^\s+|\s+$/g, "");
+                            
+                            if (trimmedText.length > 1)
+                            {
+                                theDataModel.clear()
+                                listView.translationLoaded = listView.arabicLoaded = false;
+                                
+                                busy.running = true;
+                                helper.searchQuery(listView, trimmedText);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
     
     Container
     {
         background: back.imagePaint
-        
-        TextField
-        {
-            onCreationCompleted: {
-                translate.play();
-            }
-            
-            id: searchField
-            hintText: qsTr("Enter text to search...") + Retranslate.onLanguageChanged
-            bottomMargin: 0
-            horizontalAlignment: HorizontalAlignment.Fill
-            
-            onTextChanged: {
-                input.submitted(undefined);
-            }
-            
-            animations: [
-                TranslateTransition {
-                    id: translate
-                    fromY: 1000
-                    duration: 500
-                    
-                    onEnded: {
-                        searchField.requestFocus()
-                    }
-                }
-            ]
-            
-            input {
-                submitKey: SubmitKey.Submit
-                
-                onSubmitted: {
-                    var trimmedText = text.replace(/^\s+|\s+$/g, "");
-                    
-                    if (trimmedText.length > 1)
-                    {
-                        theDataModel.clear()
-                        listView.translationLoaded = listView.arabicLoaded = false;
-                        
-                        busy.running = true;
-                        helper.searchQuery(listView, trimmedText);
-                    }
-                }
-            }
-            
-            attachedObjects: [
-                Timer {
-                    id: timer
-                    repeat: false
-                    running: true
-                    interval: 150
-                    
-                    onTriggered: {
-                        searchField.requestFocus()
-                    }
-                }
-            ]
-        }
         
         ActivityIndicator {
             id: busy
@@ -76,6 +60,13 @@ Page
             visible: running
             preferredHeight: 250
             horizontalAlignment: HorizontalAlignment.Center
+        }
+        
+        EmptyDelegate
+        {
+            id: noElements
+            graphic: "images/placeholders/empty_search.png"
+            labelText: qsTr("There were no matches for your search. Please try another query.") + Retranslate.onLanguageChanged
         }
         
         ListView
@@ -112,9 +103,13 @@ Page
                 if ( (translationLoaded && arabicLoaded) || (translation == "" && arabicLoaded) ) {
                     busy.running = false
                 }
+                
+                noElements.delegateActive = theDataModel.isEmpty();
+                listView.visible = !theDataModel.isEmpty();
             }
             
-            dataModel: GroupDataModel {
+            dataModel: GroupDataModel
+            {
                 id: theDataModel
                 sortingKeys: [ "name", "verse_id" ]
                 grouping: ItemGrouping.ByFullValue
@@ -134,7 +129,8 @@ Page
             
             listItemComponents: [
                 
-                ListItemComponent {
+                ListItemComponent
+                {
                     type: "header"
                     
                     Container {
@@ -164,7 +160,8 @@ Page
                     }
                 },
                 
-                ListItemComponent {
+                ListItemComponent
+                {
                     type: "item"
                     
                     Container {

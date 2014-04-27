@@ -27,7 +27,7 @@ class QueryHelper : public QObject
 	QMap< QObject*, QMap<int,bool> > m_objectToIds;
 	int m_currentId;
 
-	void executeQuery(QObject* caller, QString const& query, QueryId::Type t);
+	void executeQuery(QObject* caller, QString const& query, QueryId::Type t, QVariantList const& args=QVariantList());
 
 private slots:
     void dataLoaded(int id, QVariant const& data);

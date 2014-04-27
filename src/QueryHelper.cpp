@@ -57,7 +57,7 @@ void QueryHelper::dataLoaded(int id, QVariant const& data)
 }
 
 
-void QueryHelper::executeQuery(QObject* caller, QString const& query, QueryId::Type t)
+void QueryHelper::executeQuery(QObject* caller, QString const& query, QueryId::Type t, QVariantList const& args)
 {
     ++m_currentId;
 
@@ -75,7 +75,12 @@ void QueryHelper::executeQuery(QObject* caller, QString const& query, QueryId::T
     m_objectToIds[caller] = idsForObject;
 
     m_sql.setQuery(query);
-    m_sql.load(m_currentId);
+
+    if ( args.isEmpty() ) {
+        m_sql.load(m_currentId);
+    } else {
+        m_sql.executePrepared(args, m_currentId);
+    }
 }
 
 
@@ -221,15 +226,16 @@ void QueryHelper::searchQuery(QObject* caller, QString const& trimmedText)
 {
     //LOGGER(trimmedText);
     QString table = m_persist->getValueFor("translation").toString();
+    QVariantList args = QVariantList() << trimmedText;
 
     if ( !table.isEmpty() ) {
-        executeQuery(caller, QString("select %1.surah_id,%1.verse_id,%1.text,chapters.english_name as name, chapters.english_name, chapters.arabic_name, chapters.english_translation from %1 INNER JOIN chapters on chapters.surah_id=%1.surah_id AND %1.text LIKE '%%2%'").arg(table).arg(trimmedText), QueryId::SearchQueryTranslation);
+        executeQuery(caller, QString("select %1.surah_id,%1.verse_id,%1.text,chapters.english_name as name, chapters.english_name, chapters.arabic_name, chapters.english_translation from %1 INNER JOIN chapters on chapters.surah_id=%1.surah_id AND %1.text LIKE '%' || ? || '%'").arg(table), QueryId::SearchQueryTranslation, args);
     }
 
     table = m_persist->getValueFor("primary").toString();
 
     if (table != "transliteration") {
-        executeQuery(caller, QString("select %1.surah_id,%1.verse_id,%1.text,chapters.arabic_name as name, chapters.english_name, chapters.arabic_name, chapters.english_translation from %1 INNER JOIN chapters on chapters.surah_id=%1.surah_id AND %1.text LIKE '%%2%'").arg(table).arg(trimmedText), QueryId::SearchQueryPrimary);
+        executeQuery(caller, QString("select %1.surah_id,%1.verse_id,%1.text,chapters.arabic_name as name, chapters.english_name, chapters.arabic_name, chapters.english_translation from %1 INNER JOIN chapters on chapters.surah_id=%1.surah_id AND %1.text LIKE '%' || ? || '%'").arg(table), QueryId::SearchQueryPrimary, args);
     }
 }
 
