@@ -86,6 +86,7 @@ TitleBar
                             NavigationButton
                             {
                                 defaultImageSource: "images/title/ic_prev.png"
+                                disabledImageSource: "images/title/ic_prev_disabled.png"
                                 enabled: chapterNumber > 1
                                 
                                 onClicked: {
@@ -121,6 +122,7 @@ TitleBar
                             {
                                 horizontalAlignment: HorizontalAlignment.Right
                                 defaultImageSource: "images/title/ic_next.png"
+                                disabledImageSource: "images/title/ic_next_disabled.png"
                                 enabled: chapterNumber < 114
                                 multiplier: -1
                                 

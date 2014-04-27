@@ -13,7 +13,6 @@ NavigationPane
     {
         id: mainPage
         actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
-        titleBar: QuranTitleBar {}
         
         Container
         {
@@ -71,6 +70,8 @@ NavigationPane
                     {
                         theDataModel.clear();
                         theDataModel.insertList(data);
+                        
+                        if ( persist.tutorial( "tutorialSupplications", qsTr("These are the various duaa that are found throughout the Qu'ran."), "asset:///images/tabs/ic_supplications.png" ) ) {}
                     }
                 }
                 

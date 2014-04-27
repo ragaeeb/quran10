@@ -12,7 +12,6 @@ NavigationPane
     {
         id: mainPage
         actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
-        titleBar: QuranTitleBar {}
         
         shortcuts: [
             SystemShortcut {
@@ -58,7 +57,7 @@ NavigationPane
                 }
                 
                 Option {
-                    imageSource: "images/ic_radio_channel.png"
+                    imageSource: "images/dropdown/ic_radio_channel.png"
                     text: qsTr("Radio Quraan") + Retranslate.onLanguageChanged
                     description: qsTr("www.radioquraan.com") + Retranslate.onLanguageChanged
                     
@@ -150,4 +149,8 @@ NavigationPane
             imageSource: "images/backgrounds/background.png"
         }
     ]
+    
+    onCreationCompleted: {
+        if ( persist.tutorial( "tutorialRadio", qsTr("These are some of the stations where they continuously stream Qu'ran. Be careful though, this uses data. Be sure to be on a proper wireless network."), "asset:///images/tabs/ic_radio.png" ) ) {}
+    }
 }

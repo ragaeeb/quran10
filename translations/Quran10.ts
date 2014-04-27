@@ -75,7 +75,7 @@
 <context>
     <name>ChapterTitleBar</name>
     <message>
-        <location filename="../assets/ChapterTitleBar.qml" line="149"/>
+        <location filename="../assets/ChapterTitleBar.qml" line="151"/>
         <source>%1 (%2)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -159,6 +159,21 @@ Finally, there is built-in support to do efficient and fast lookups for any sura
     <message>
         <location filename="../assets/MushafSheet.qml" line="95"/>
         <source>Surah</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/MushafSheet.qml" line="216"/>
+        <source>You can pinch on the page to zoom in and out and scroll up and down.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/MushafSheet.qml" line="218"/>
+        <source>Use the left and right arrows to switch pages.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/MushafSheet.qml" line="219"/>
+        <source>Tap on the screen, then on the bottom action bar you will see the Jump icon. Use this to trigger the dropdown menu to jump to a specific surah in the mushaf.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -684,87 +699,82 @@ https://www.youtube.com/watch?v=BDY8i9VQeZM</source>
 <context>
     <name>SurahPage</name>
     <message>
-        <location filename="../assets/SurahPage.qml" line="65"/>
-        <source>OK</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/SurahPage.qml" line="65"/>
-        <source>Press-and-hold on a verse with a grey highlight to find explanations on it.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/SurahPage.qml" line="177"/>
+        <location filename="../assets/SurahPage.qml" line="174"/>
         <source>Tafsir</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="239"/>
+        <location filename="../assets/SurahPage.qml" line="236"/>
         <source>%1 (%2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="102"/>
+        <location filename="../assets/SurahPage.qml" line="99"/>
         <source>Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="119"/>
+        <location filename="../assets/SurahPage.qml" line="64"/>
+        <source>Tap on a verse with a grey highlight to find explanations on it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/SurahPage.qml" line="116"/>
         <source>Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="136"/>
+        <location filename="../assets/SurahPage.qml" line="133"/>
         <source>Pause</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="136"/>
+        <location filename="../assets/SurahPage.qml" line="133"/>
         <source>Play All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="142"/>
+        <location filename="../assets/SurahPage.qml" line="139"/>
         <source>A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="150"/>
+        <location filename="../assets/SurahPage.qml" line="147"/>
         <source>Confirmation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="150"/>
+        <location filename="../assets/SurahPage.qml" line="147"/>
         <source>We are about to download a whole bunch of MP3 recitations, you should only attempt to do this if you have either an unlimited data plan, or are connected via Wi-Fi. Otherwise you might incur a lot of data charges. Are you sure you want to continue? If you select No you can always attempt to download again later.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="150"/>
+        <location filename="../assets/SurahPage.qml" line="147"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="150"/>
+        <location filename="../assets/SurahPage.qml" line="147"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="170"/>
+        <location filename="../assets/SurahPage.qml" line="167"/>
         <source>Disable Repeat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="170"/>
+        <location filename="../assets/SurahPage.qml" line="167"/>
         <source>Enable Repeat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="192"/>
+        <location filename="../assets/SurahPage.qml" line="189"/>
         <source>K</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="287"/>
+        <location filename="../assets/SurahPage.qml" line="284"/>
         <source>%1</source>
         <translation type="unfinished"></translation>
     </message>

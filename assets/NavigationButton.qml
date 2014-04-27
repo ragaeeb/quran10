@@ -3,7 +3,6 @@ import bb.cascades 1.0
 ImageButton
 {
     pressedImageSource: defaultImageSource
-    disabledImageSource: defaultImageSource
     property int multiplier: 1
     rotationZ: 180*multiplier
     

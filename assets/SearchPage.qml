@@ -45,6 +45,19 @@ Page
                             }
                         }
                     }
+                    
+                    animations: [
+                        FadeTransition
+                        {
+                            fromOpacity: 0
+                            toOpacity: 1
+                            duration: 500
+                            
+                            onEnded: {
+                                searchField.requestFocus();
+                            }
+                        }
+                    ]
                 }
             }
         }

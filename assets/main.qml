@@ -7,6 +7,7 @@ TabbedPane
     
     Menu.definition: CanadaIncMenu
     {
+        id: menuDef
         allowDonations: true
         bbWorldID: "27022877"
         projectName: "quran10"
@@ -74,6 +75,13 @@ TabbedPane
         
         delegate: Delegate {
             source: "SupplicationsPane.qml"
+        }
+    }
+    
+    onCreationCompleted: {
+        if ( !persist.contains("firstTime") ) {
+            menuDef.settings.triggered();
+            persist.saveValueFor("firstTime", 1);
         }
     }
 }
