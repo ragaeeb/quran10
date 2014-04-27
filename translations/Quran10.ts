@@ -2,6 +2,29 @@
 <!DOCTYPE TS>
 <TS version="2.0">
 <context>
+    <name>AlFurqanAdvertisement</name>
+    <message>
+        <location filename="../assets/AlFurqanAdvertisement.qml" line="29"/>
+        <source>Al Furqan Online Arabic Institute is an Arabic language Program that will be conducted online via Wiz IQ. These classes will be organized by your brother in Islam, Abu Asiya Ilyas Aidarus, who is a Canadian student at Umul Qura University, in Makkah, KSA. Classes will be conducted by qualified teachers who have the capability and experience of teaching the Arabic Language to non-native speakers who may be from different parts of the world. These classes will be geared towards brothers and sisters who have little to no experience with the Arabic language. This program will focus on the 4 components of learning, which are: listening, reading, writing, and speaking. A curriculum will be prepared, that will include all the necessary components to best support the student of Al Furqan E-Learning Arabic Institute and will help strengthen his/her knowledge of the Arabic language and its understanding.
+
+The specific days and times have not yet been determined; however, will be made available to you all shortly. Classes will last for an hour and a half, four times a week. There will be a limit of 30 male students and 30 female students that will be allowed to take part in this program and those 60 students will be divided into four classrooms. There will be 15 students per classroom. Two classrooms will be for brothers and two classrooms for sisters. Students will be provided with all the required materials for the program.
+
+The intent behind this online institute is to provide a means of learning the Arabic language with qualified Professors for both brothers and sisters whose native language is not Arabic.  We are well aware of the extreme difficulty in finding qualified Arabic teachers who can teach on a consistent basis, and we hoped to make this easier for both brothers and sisters seeking the Face of Allaah. We pray that this institute is of much benefit and we hope that this program develops into something much bigger so that many of those who wish to learn this beautiful language may be able to do so.
+
+Your brother in Islam,
+
+Abu Asiya Ilyas al Kanadi
+
+Abu Asiya Ilyas al Kanadi , Director
+Al-Furqān E-Learning Arabic Institute| Makkah, KSA
+Email - alfurqanarabic1@gmail.com
+Phone - +966 540451248
+Twitter - @AlFurqanArabic
+Pin - 2B77C09E</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>AyatListItem</name>
     <message>
         <location filename="../assets/AyatListItem.qml" line="63"/>
@@ -32,42 +55,47 @@
 <context>
     <name>BookmarksPane</name>
     <message>
-        <location filename="../assets/BookmarksPane.qml" line="23"/>
+        <location filename="../assets/BookmarksPane.qml" line="22"/>
         <source>Clear Bookmarks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/BookmarksPane.qml" line="40"/>
+        <location filename="../assets/BookmarksPane.qml" line="39"/>
         <source>You have no favourites. To mark a favourite, press-and-hold on an ayat or tafsir and choose &apos;Mark Favourite&apos; from the context-menu.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/BookmarksPane.qml" line="73"/>
+        <location filename="../assets/BookmarksPane.qml" line="72"/>
         <source>Removed bookmark!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/BookmarksPane.qml" line="99"/>
+        <location filename="../assets/BookmarksPane.qml" line="98"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/BookmarksPane.qml" line="183"/>
-        <source>Confirmation</source>
+        <location filename="../assets/BookmarksPane.qml" line="165"/>
+        <source>To delete an existing bookmark, simply press-and-hold on it and choose &apos;Remove&apos; from the menu.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../assets/BookmarksPane.qml" line="184"/>
-        <source>Are you sure you want to clear all bookmarks?</source>
+        <source>Confirmation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../assets/BookmarksPane.qml" line="185"/>
-        <source>Yes</source>
+        <source>Are you sure you want to clear all bookmarks?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../assets/BookmarksPane.qml" line="186"/>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/BookmarksPane.qml" line="187"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>
@@ -189,44 +217,63 @@ Finally, there is built-in support to do efficient and fast lookups for any sura
         <source>M</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../assets/QuranPane.qml" line="51"/>
+        <source>Did you know you can quickly jump to a specific verse by typing its chapter number followed by a &apos;:&apos; and followed by the verse number.
+
+For example, to jump to Surah Al-Baqara Verse #2, type &apos;2:2&apos; into the search field!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RadioPane</name>
     <message>
-        <location filename="../assets/RadioPane.qml" line="37"/>
+        <location filename="../assets/RadioPane.qml" line="36"/>
         <source>Channel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/RadioPane.qml" line="43"/>
+        <location filename="../assets/RadioPane.qml" line="42"/>
         <source>Off</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/RadioPane.qml" line="49"/>
+        <location filename="../assets/RadioPane.qml" line="48"/>
         <source>The Quran Radio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/RadioPane.qml" line="50"/>
+        <location filename="../assets/RadioPane.qml" line="49"/>
         <source>Wakas Mir Networks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/RadioPane.qml" line="62"/>
+        <location filename="../assets/RadioPane.qml" line="61"/>
         <source>Radio Quraan</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/RadioPane.qml" line="63"/>
+        <location filename="../assets/RadioPane.qml" line="62"/>
         <source>www.radioquraan.com</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/RadioPane.qml" line="154"/>
+        <source>These are some of the stations where they continuously stream Qu&apos;ran. Be careful though, this uses data. Be sure to be on a proper wireless network.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>RangeSelector</name>
+    <message>
+        <location filename="../assets/RangeSelector.qml" line="12"/>
+        <source>Now select the last ayat that you want to perform the actions of the menu on.
+
+You can also select an ayat above the current one to start there and end at the current one.</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message numerus="yes">
-        <location filename="../assets/RangeSelector.qml" line="23"/>
+        <location filename="../assets/RangeSelector.qml" line="27"/>
         <source>%n %1 selected</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -446,7 +493,7 @@ Finally, there is built-in support to do efficient and fast lookups for any sura
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SearchPage.qml" line="69"/>
+        <location filename="../assets/SearchPage.qml" line="82"/>
         <source>There were no matches for your search. Please try another query.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -697,84 +744,137 @@ https://www.youtube.com/watch?v=BDY8i9VQeZM</source>
     </message>
 </context>
 <context>
+    <name>SupplicationsPane</name>
+    <message>
+        <location filename="../assets/SupplicationsPane.qml" line="74"/>
+        <source>These are the various duaa that are found throughout the Qu&apos;ran.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SurahPage</name>
     <message>
-        <location filename="../assets/SurahPage.qml" line="174"/>
+        <location filename="../assets/SurahPage.qml" line="187"/>
         <source>Tafsir</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="236"/>
+        <location filename="../assets/SurahPage.qml" line="249"/>
         <source>%1 (%2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="99"/>
+        <location filename="../assets/SurahPage.qml" line="108"/>
         <source>Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="64"/>
+        <location filename="../assets/SurahPage.qml" line="72"/>
+        <source>You can do a pinch gesture anytime to increase and decrease the font size of the Arabic/Transliteration text!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/SurahPage.qml" line="73"/>
         <source>Tap on a verse with a grey highlight to find explanations on it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="116"/>
+        <location filename="../assets/SurahPage.qml" line="74"/>
+        <source>Tap the left/right arrow keys to navigate to the previous and next chapters respectively.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/SurahPage.qml" line="75"/>
+        <source>Use the follow button at the center of the left/right buttons if you want to follow the verses automatically as they are being recited.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/SurahPage.qml" line="76"/>
+        <source>Tap on the repeat action at the bottom to enable or disable repeating the recitation in a loop once it finishes.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/SurahPage.qml" line="77"/>
+        <source>Press-and-hold any ayat and choose the Copy or Share action to easily share the verse.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/SurahPage.qml" line="78"/>
+        <source>Press-and-hold any ayat and choose the Memorize action to play the next 8 verses in iteration to help you memorize them!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/SurahPage.qml" line="79"/>
+        <source>Did you know you can press-and-hold on any verse and tap on the &apos;Select Range&apos; action to only play recitations for those, or copy/share them to your contacts?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/SurahPage.qml" line="80"/>
+        <source>Want to dock a certain ayat right to your home screen? Press-and-hold on it and choose &apos;Add To Home Screen&apos; and name it!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/SurahPage.qml" line="81"/>
+        <source>Do you know how to set bookmarks? You can easily mark certain ayats as favourites by pressing-and-holding on them and choosing &apos;Add Bookmark&apos; on them! This is a very easy way to track our progress as you read the Qu&apos;ran to quickly find where you left off.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/SurahPage.qml" line="125"/>
         <source>Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="133"/>
+        <location filename="../assets/SurahPage.qml" line="142"/>
         <source>Pause</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="133"/>
+        <location filename="../assets/SurahPage.qml" line="142"/>
         <source>Play All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="139"/>
+        <location filename="../assets/SurahPage.qml" line="148"/>
         <source>A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="147"/>
+        <location filename="../assets/SurahPage.qml" line="156"/>
         <source>Confirmation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="147"/>
+        <location filename="../assets/SurahPage.qml" line="156"/>
         <source>We are about to download a whole bunch of MP3 recitations, you should only attempt to do this if you have either an unlimited data plan, or are connected via Wi-Fi. Otherwise you might incur a lot of data charges. Are you sure you want to continue? If you select No you can always attempt to download again later.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="147"/>
+        <location filename="../assets/SurahPage.qml" line="156"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="147"/>
+        <location filename="../assets/SurahPage.qml" line="156"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="167"/>
+        <location filename="../assets/SurahPage.qml" line="176"/>
         <source>Disable Repeat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="167"/>
+        <location filename="../assets/SurahPage.qml" line="176"/>
         <source>Enable Repeat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="189"/>
+        <location filename="../assets/SurahPage.qml" line="202"/>
         <source>K</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="284"/>
+        <location filename="../assets/SurahPage.qml" line="297"/>
         <source>%1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -783,7 +883,7 @@ https://www.youtube.com/watch?v=BDY8i9VQeZM</source>
     <name>SurahPickerPage</name>
     <message>
         <location filename="../assets/SurahPickerPage.qml" line="22"/>
-        <source>Search surah name...</source>
+        <source>Search surah name or number (ie: &apos;2&apos; for Surah Al-Baqara)...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -924,52 +1024,52 @@ https://www.youtube.com/watch?v=BDY8i9VQeZM</source>
 <context>
     <name>main</name>
     <message>
-        <location filename="../assets/main.qml" line="20"/>
+        <location filename="../assets/main.qml" line="21"/>
         <source>Qu&apos;ran</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="21"/>
+        <location filename="../assets/main.qml" line="22"/>
         <source>القرآن</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="36"/>
+        <location filename="../assets/main.qml" line="37"/>
         <source>Bookmarks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="34"/>
+        <location filename="../assets/main.qml" line="35"/>
         <source>Favourites</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="46"/>
+        <location filename="../assets/main.qml" line="47"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="47"/>
+        <location filename="../assets/main.qml" line="48"/>
         <source>Find</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="58"/>
+        <location filename="../assets/main.qml" line="59"/>
         <source>Radio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="59"/>
+        <location filename="../assets/main.qml" line="60"/>
         <source>Live</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="70"/>
+        <location filename="../assets/main.qml" line="71"/>
         <source>Supplications</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="71"/>
+        <location filename="../assets/main.qml" line="72"/>
         <source>Du&apos;a from the Qu&apos;ran</source>
         <translation type="unfinished"></translation>
     </message>
