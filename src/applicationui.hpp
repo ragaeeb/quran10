@@ -41,6 +41,7 @@ private slots:
 	void invoked(bb::system::InvokeRequest const& request);
 	void lazyInit();
 	void onDataLoaded(QVariant id, QVariant data);
+	void onPicked(int chapter, int verse);
 
 signals:
     void initialize();

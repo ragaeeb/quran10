@@ -173,18 +173,13 @@ http://www.troid.ca
 <context>
     <name>QuranPane</name>
     <message>
-        <location filename="../assets/QuranPane.qml" line="30"/>
+        <location filename="../assets/QuranPane.qml" line="15"/>
         <source>Mushaf</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="43"/>
+        <location filename="../assets/QuranPane.qml" line="28"/>
         <source>M</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/QuranPane.qml" line="60"/>
-        <source>Search surah name...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -798,6 +793,14 @@ https://www.youtube.com/watch?v=BDY8i9VQeZM</source>
     </message>
 </context>
 <context>
+    <name>SurahPickerPage</name>
+    <message>
+        <location filename="../assets/SurahPickerPage.qml" line="22"/>
+        <source>Search surah name...</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>TafseerIbnKatheer</name>
     <message>
         <location filename="../assets/TafseerIbnKatheer.qml" line="26"/>
@@ -987,32 +990,32 @@ https://www.youtube.com/watch?v=BDY8i9VQeZM</source>
 <context>
     <name>quran::ApplicationUI</name>
     <message>
-        <location filename="../src/applicationui.cpp" line="126"/>
+        <location filename="../src/applicationui.cpp" line="129"/>
         <source>Invalid pattern specified!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="150"/>
+        <location filename="../src/applicationui.cpp" line="153"/>
         <source>Invalid URI specified!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="166"/>
+        <location filename="../src/applicationui.cpp" line="173"/>
         <source>Invalid surah specified</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="190"/>
+        <location filename="../src/applicationui.cpp" line="208"/>
         <source>Surah not found!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="216"/>
+        <location filename="../src/applicationui.cpp" line="234"/>
         <source>Added %1 to home screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="218"/>
+        <location filename="../src/applicationui.cpp" line="236"/>
         <source>Could not add %1 to home screen</source>
         <translation type="unfinished"></translation>
     </message>
