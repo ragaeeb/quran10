@@ -438,6 +438,11 @@ http://www.troid.ca
         <source>Enter text to search...</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../assets/SearchPage.qml" line="85"/>
+        <source>There were no matches for your search. Please try another query.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsPage</name>

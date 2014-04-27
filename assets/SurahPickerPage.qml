@@ -22,9 +22,9 @@ Page
             hintText: qsTr("Search surah name...") + Retranslate.onLanguageChanged
             bottomMargin: 0
             horizontalAlignment: HorizontalAlignment.Fill
+            inputRoute.primaryKeyTarget: true;
             
             onCreationCompleted: {
-                inputRoute.primaryKeyTarget = true;
                 translate.play();
                 
                 input.keyLayout = 7;
