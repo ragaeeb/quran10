@@ -156,7 +156,7 @@ Page
             {
                 console.log("UserEvent: PlayAll");
                 
-                if ( !persist.contains("hideDataWarning") )
+                if ( !persist.contains("hideDataWarning") && !player.playing )
                 {
                     var yesClicked = persist.showBlockingDialog( qsTr("Confirmation"), qsTr("We are about to download a whole bunch of MP3 recitations, you should only attempt to do this if you have either an unlimited data plan, or are connected via Wi-Fi. Otherwise you might incur a lot of data charges. Are you sure you want to continue? If you select No you can always attempt to download again later."), qsTr("Yes"), qsTr("No") );
                     

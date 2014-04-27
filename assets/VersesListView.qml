@@ -45,6 +45,7 @@ ListView
                     textStyle.color: Color.Black
                     textStyle.fontSize: FontSize.PointValue
                     textStyle.fontSizeValue: primarySize
+                    multiline: true
                     
                     layoutProperties: StackLayoutProperties {
                         spaceQuota: 1

@@ -8,6 +8,10 @@ Sheet
     peekEnabled: false
     property int currentPage: persist.contains("savedPage") ? persist.getValueFor("savedPage") : 1
     
+    onCurrentPageChanged: {
+        mushaf.requestPage(currentPage);
+    }
+    
     Page
     {
         id: mainPage
@@ -97,7 +101,7 @@ Sheet
                         title: qsTr("Surah") + Retranslate.onLanguageChanged
                         
                         onSelectedValueChanged: {
-                            mushaf.requestPage(selectedValue);
+                            currentPage = selectedValue;
                         }
                         
                         function onDataLoaded(id, data)
@@ -186,7 +190,6 @@ Sheet
                     
                     onClicked: {
                         ++currentPage;
-                        mushaf.requestPage(currentPage);
                     }
                 }
                 
@@ -201,7 +204,6 @@ Sheet
                     
                     onClicked: {
                         --currentPage;
-                        mushaf.requestPage(currentPage);
                     }
                 }
             }
