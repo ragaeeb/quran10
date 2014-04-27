@@ -79,7 +79,7 @@ Page
             attachedObjects: [
                 ImagePaintDefinition {
                     id: bg
-                    imageSource: "images/header_bg.png"
+                    imageSource: "images/backgrounds/header_bg.png"
                 },
                 
                 ComponentDefinition {
@@ -193,7 +193,7 @@ Page
         attachedObjects: [
             ImagePaintDefinition {
                 id: back
-                imageSource: "images/background.png"
+                imageSource: "images/backgrounds/background.png"
             }
         ]
     }

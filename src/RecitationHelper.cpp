@@ -220,6 +220,7 @@ void RecitationHelper::settingChanged(QString const& key)
 {
     if (key == "repeat") {
         m_player.setRepeat( m_persistance->getValueFor("repeat").toInt() == 1 );
+        emit repeatChanged();
     }
 }
 
@@ -255,6 +256,11 @@ int RecitationHelper::queued() const {
 
 void RecitationHelper::abort() {
     m_queue.abort();
+}
+
+
+bool RecitationHelper::repeat() const {
+    return m_persistance->getValueFor("repeat").toInt() == 1;
 }
 
 

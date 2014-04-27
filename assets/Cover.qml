@@ -18,7 +18,7 @@ Container
     attachedObjects: [
         ImagePaintDefinition {
             id: back
-            imageSource: "images/title_bg.png"
+            imageSource: "images/title/title_bg.png"
         }
     ]
     

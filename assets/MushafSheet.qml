@@ -19,7 +19,7 @@ Sheet
             {
                 title: qsTr("Jump") + Retranslate.onLanguageChanged
                 ActionBar.placement: ActionBarPlacement.OnBar
-                imageSource: "images/ic_jump.png"
+                imageSource: "images/menu/ic_jump.png"
                 
                 onTriggered: {
                     hiddenTitle.visibility = ChromeVisibility.Hidden;
@@ -177,7 +177,7 @@ Sheet
                 
                 NavigationButton
                 {
-                    defaultImageSource: "images/backgrounds/ic_prev.png"
+                    defaultImageSource: "images/title/ic_prev.png"
                     verticalAlignment: VerticalAlignment.Center
                     enabled: currentPage < 604
                     
@@ -190,7 +190,7 @@ Sheet
                 NavigationButton
                 {
                     multiplier: -1
-                    defaultImageSource: "images/backgrounds/ic_next.png"
+                    defaultImageSource: "images/title/ic_next.png"
                     horizontalAlignment: HorizontalAlignment.Right
                     verticalAlignment: VerticalAlignment.Center
                     enabled: currentPage > 1

@@ -135,7 +135,7 @@ Page
         attachedObjects: [
             ImagePaintDefinition {
                 id: back
-                imageSource: "images/background.png"
+                imageSource: "images/backgrounds/background.png"
             }
         ]
     }

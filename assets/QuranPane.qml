@@ -13,7 +13,7 @@ NavigationPane
         actions: [
             ActionItem {
                 title: qsTr("Mushaf") + Retranslate.onLanguageChanged
-                imageSource: "images/ic_mushaf.png"
+                imageSource: "images/menu/ic_mushaf.png"
                 ActionBar.placement: ActionBarPlacement.OnBar
                 
                 onTriggered: {

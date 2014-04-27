@@ -6,7 +6,7 @@ QtObject
     property MultiSelectActionItem msai: MultiSelectActionItem
     {
         title: qsTr("Select Range") + Retranslate.onLanguageChanged
-        imageSource: "images/ic_range.png"
+        imageSource: "images/menu/ic_range.png"
     }
 
     function onSelectionChanged()

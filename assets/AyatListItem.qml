@@ -64,7 +64,7 @@ Container
             
             ActionItem {
                 title: qsTr("Bookmark") + Retranslate.onLanguageChanged
-                imageSource: "images/ic_bookmark_add.png"
+                imageSource: "images/menu/ic_bookmark_add.png"
                 
                 onTriggered: {
                     itemRoot.ListItem.view.bookmark(ListItemData)
@@ -73,7 +73,7 @@ Container
             
             ActionItem {
                 title: qsTr("Add to Home Screen") + Retranslate.onLanguageChanged
-                imageSource: "images/ic_home.png"
+                imageSource: "images/menu/ic_home.png"
                 
                 onTriggered: {
                     itemRoot.ListItem.view.addToHomeScreen(ListItemData)
@@ -84,7 +84,7 @@ Container
                 id: playFromHere
                 
                 title: qsTr("Play From Here") + Retranslate.onLanguageChanged
-                imageSource: "images/ic_play.png"
+                imageSource: "images/menu/ic_play.png"
                 
                 onTriggered: {
                     itemRoot.ListItem.view.play( itemRoot.ListItem.indexPath[0]+1, itemRoot.ListItem.view.dataModel.size() );

@@ -7,10 +7,10 @@ TabbedPane
     
     Menu.definition: CanadaIncMenu
     {
-        projectName: "quran10"
         allowDonations: true
-        promoteChannel: true
         bbWorldID: "27022877"
+        projectName: "quran10"
+        promoteChannel: true
         showSubmitLogs: true
     }
 
@@ -19,7 +19,7 @@ TabbedPane
         id: quranTab
         title: qsTr("Qu'ran") + Retranslate.onLanguageChanged
         description: qsTr("القرآن") + Retranslate.onLanguageChanged
-        imageSource: "images/ic_quran_open.png"
+        imageSource: "images/tabs/ic_quran_open.png"
         unreadContentCount: 114
         delegateActivationPolicy: TabDelegateActivationPolicy.ActivateWhenSelected
 	    
@@ -32,7 +32,7 @@ TabbedPane
         id: bookmarks
         delegateActivationPolicy: TabDelegateActivationPolicy.ActivateWhenSelected
         description: qsTr("Favourites") + Retranslate.onLanguageChanged
-        imageSource: "images/ic_bookmarks.png"
+        imageSource: "images/tabs/ic_bookmarks.png"
         title: qsTr("Bookmarks") + Retranslate.onLanguageChanged
         unreadContentCount: helper.totalBookmarks
 
@@ -45,7 +45,7 @@ TabbedPane
         id: search
         title: qsTr("Search") + Retranslate.onLanguageChanged
         description: qsTr("Find") + Retranslate.onLanguageChanged
-        imageSource: "images/ic_search.png"
+        imageSource: "images/tabs/ic_search.png"
         delegateActivationPolicy: TabDelegateActivationPolicy.ActivateWhenSelected
 
         delegate: Delegate {
@@ -57,7 +57,7 @@ TabbedPane
         id: radio
         title: qsTr("Radio") + Retranslate.onLanguageChanged
         description: qsTr("Live") + Retranslate.onLanguageChanged
-        imageSource: "images/ic_radio.png"
+        imageSource: "images/tabs/ic_radio.png"
         delegateActivationPolicy: TabDelegateActivationPolicy.ActivateWhenSelected
         
         delegate: Delegate {
@@ -69,7 +69,7 @@ TabbedPane
         id: supplications
         title: qsTr("Supplications") + Retranslate.onLanguageChanged
         description: qsTr("Du'a from the Qu'ran") + Retranslate.onLanguageChanged
-        imageSource: "images/ic_supplications.png"
+        imageSource: "images/tabs/ic_supplications.png"
         delegateActivationPolicy: TabDelegateActivationPolicy.ActivatedWhileSelected
         
         delegate: Delegate {

@@ -50,7 +50,7 @@ Page
                 attachedObjects: [
                     ImagePaintDefinition {
                         id: back
-                        imageSource: "images/title_bg_alt.png"
+                        imageSource: "images/title/title_bg_alt.png"
                     }
                 ]
                 
