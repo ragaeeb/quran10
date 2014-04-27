@@ -41,7 +41,7 @@ Page
         ActionItem {
             id: bottom
             title: qsTr("Bottom") + Retranslate.onLanguageChanged
-            imageSource: "images/ic_scroll_end.png"
+            imageSource: "images/menu/ic_scroll_end.png"
             ActionBar.placement: ActionBarPlacement.OnBar
 
             onTriggered: {
@@ -79,7 +79,7 @@ Page
             attachedObjects: [
                 ImagePaintDefinition {
                     id: headerBackground
-                    imageSource: "images/header_bg.png"
+                    imageSource: "images/backgrounds/header_bg.png"
                 }
             ]
 

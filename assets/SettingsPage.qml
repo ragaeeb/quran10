@@ -178,36 +178,6 @@ Page
                 }
             }
 
-            PersistCheckBox
-            {
-                topMargin: 20
-                key: "repeat"
-                text: qsTr("Repeat Recitation") + Retranslate.onLanguageChanged
-                
-                onCheckedChanged: {
-                    if (checked) {
-                        infoText.text = qsTr("Recitations will keep repeating indefinitely.") + Retranslate.onLanguageChanged
-                    } else {
-                        infoText.text = qsTr("Recitations will only be played once and stopped.") + Retranslate.onLanguageChanged
-                    }
-                }
-            }
-
-            PersistCheckBox
-            {
-                topMargin: 20
-                text: qsTr("Follow Recitation") + Retranslate.onLanguageChanged
-                key: "follow"
-
-                onCheckedChanged: {
-                    if (checked) {
-                        infoText.text = qsTr("The list will be scrolled to follow the current verse.") + Retranslate.onLanguageChanged
-                    } else {
-                        infoText.text = qsTr("The list will not scroll to reflect the current verse.") + Retranslate.onLanguageChanged
-                    }
-                }
-            }
-
             Container
 	        {
 	            topPadding: 40;

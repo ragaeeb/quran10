@@ -62,7 +62,7 @@ Page
             var verseModel = listView.dataModel;
             
             if ( !persist.contains("tafsirTutorialCount") ) {
-                persist.showToast( qsTr("Press-and-hold on a verse with a grey highlight to find explanations on it."), qsTr("OK"), "asset:///images/ic_tafsir.png" );
+                persist.showToast( qsTr("Press-and-hold on a verse with a grey highlight to find explanations on it."), qsTr("OK"), "asset:///images/toast/ic_tafsir.png" );
                 persist.saveValueFor("tafsirTutorialCount", 1);
             }
             
@@ -117,7 +117,7 @@ Page
         {
             id: scrollBottom
             title: qsTr("Bottom") + Retranslate.onLanguageChanged
-            imageSource: "images/ic_scroll_end.png"
+            imageSource: "images/menu/ic_scroll_end.png"
 
             onTriggered: {
                 listView.scrollToPosition(ScrollPosition.End, ScrollAnimation.None);
@@ -134,7 +134,7 @@ Page
         {
             id: playAllAction
             title: player.playing ? qsTr("Pause") : qsTr("Play All")
-            imageSource: player.playing ? "images/ic_pause.png" : "images/ic_play.png"
+            imageSource: player.playing ? "images/menu/ic_pause.png" : "images/menu/ic_play.png"
             ActionBar.placement: ActionBarPlacement.OnBar
             
             shortcuts: [
@@ -164,12 +164,18 @@ Page
 				}
             }
         },
+        
+        ActionItem
+        {
+            title: recitation.repeat ? qsTr("Disable Repeat") + Retranslate.onLanguageChanged : qsTr("Enable Repeat") + Retranslate.onLanguageChanged
+            imageSource: recitation.repeat ? "images/menu/ic_repeat_off.png" : "images/menu/ic_repeat_on.png"
+            ActionBar.placement: ActionBarPlacement.OnBar
+        },
 
         ActionItem {
             id: tafsirAction
-            
             title: qsTr("Tafsir") + Retranslate.onLanguageChanged
-            imageSource: "images/ic_tafsir_show.png"
+            imageSource: "images/menu/ic_tafsir_show.png"
 
             onTriggered: {
                 ctb.navigationExpanded = false;
@@ -194,7 +200,7 @@ Page
     titleBar: ChapterTitleBar
     {
         id: ctb
-        bgSource: "images/title_bg_alt.png"
+        bgSource: "images/title/title_bg_alt.png"
         bottomPad: 0
         chapterNumber: surahId
         showNavigation: true

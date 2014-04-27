@@ -39,13 +39,13 @@ NavigationPane
                 
                 Option {
                     id: offOption
-                    imageSource: "images/ic_off.png"
+                    imageSource: "images/dropdown/ic_off.png"
                     text: qsTr("Off") + Retranslate.onLanguageChanged
                     selected: true
                 }
 
                 Option {
-                    imageSource: "images/ic_radio_channel.png"
+                    imageSource: "images/dropdown/ic_radio_channel.png"
                     text: qsTr("The Quran Radio") + Retranslate.onLanguageChanged
                     description: qsTr("Wakas Mir Networks") + Retranslate.onLanguageChanged
                     
@@ -147,7 +147,7 @@ NavigationPane
     attachedObjects: [
         ImagePaintDefinition {
             id: back
-            imageSource: "images/background.png"
+            imageSource: "images/backgrounds/background.png"
         }
     ]
 }

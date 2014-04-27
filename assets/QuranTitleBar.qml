@@ -16,7 +16,7 @@ TitleBar
             verticalAlignment: VerticalAlignment.Top
             
             ImageView {
-                imageSource: "images/logo.png"
+                imageSource: "images/title/logo.png"
                 topMargin: 0
                 leftMargin: 0
                 rightMargin: 0
@@ -43,7 +43,7 @@ TitleBar
             attachedObjects: [
                 ImagePaintDefinition {
                     id: titleBack
-                    imageSource: "images/title_bg.png"
+                    imageSource: "images/title/title_bg.png"
                 }
             ]
         }

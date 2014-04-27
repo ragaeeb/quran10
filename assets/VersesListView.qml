@@ -15,6 +15,7 @@ ListView
     property alias custom: customTextStyle
     property int previousPlayedIndex
     property bool secretPeek: false
+    property bool follow: persist.getValueFor("follow") == 1
 
     dataModel: GroupDataModel
     {
@@ -65,7 +66,7 @@ ListView
                 id: multiPlayAction
 
                 title: qsTr("Play") + Retranslate.onLanguageChanged
-                imageSource: "images/ic_play.png"
+                imageSource: "images/menu/ic_play.png"
 
                 onTriggered: {
                     var selectedIndices = listView.selectionList();
@@ -100,6 +101,10 @@ ListView
         data["playing"] = true;
         verseModel.updateItem(target, data);
         
+        if (follow) {
+            listView.scrollToItem(target, ScrollAnimation.None);
+        }
+        
         previousPlayedIndex = index-1;
     }
     
@@ -112,7 +117,7 @@ ListView
     function settingChanged(key)
     {
         if (key == "follow") {
-            player.follow = persist.getValueFor("follow") == 1;
+            follow = persist.getValueFor("follow") == 1;
         } else if (key == "primarySize") {
             primarySize = persist.getValueFor("primarySize");
         } else if (key == "translationSize") {
@@ -178,7 +183,7 @@ ListView
         ImagePaintDefinition
         {
             id: headerBackground
-            imageSource: "images/header_bg.png"
+            imageSource: "images/backgrounds/header_bg.png"
         },
         
         TextStyleDefinition
@@ -257,7 +262,7 @@ ListView
                     
                     if (inputField.maximumLength > 15) { // bookmark
                         app.bookmarkVerse(bookmarkName, chapterNumber, data);
-                        persist.showToast( qsTr("Bookmarked %1:%2").arg(chapterName).arg(data.verse_id), "", "asset:///images/ic_bookmark_add.png" );
+                        persist.showToast( qsTr("Bookmarked %1:%2").arg(chapterName).arg(data.verse_id), "", "asset:///images/menu/ic_bookmark_add.png" );
                     } else {
                         app.addToHomeScreen(chapterNumber, data.verse_id, bookmarkName);
                     }

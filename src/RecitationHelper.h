@@ -18,6 +18,7 @@ class RecitationHelper : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(int queued READ queued NOTIFY queueChanged)
+    Q_PROPERTY(bool repeat READ repeat NOTIFY repeatChanged)
 
     QueueDownloader m_queue;
     Persistance* m_persistance;
@@ -36,8 +37,9 @@ private slots:
     void settingChanged(QString const& key);
 
 signals:
-    void queueChanged();
     void currentIndexChanged(int index);
+    void queueChanged();
+    void repeatChanged();
 
 public:
     RecitationHelper(Persistance* p, QObject* parent=NULL);
@@ -50,6 +52,7 @@ public:
     Q_INVOKABLE void memorize(int chapter, int fromVerse, int toVerse);
     Q_SLOT void abort();
     int queued() const;
+    bool repeat() const;
 };
 
 } /* namespace quran */

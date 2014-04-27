@@ -91,7 +91,7 @@ Page
                     {
                         id: rootItem
                         title: ListItemData.description
-                        imageSource: "images/ic_tafsir_show.png"
+                        imageSource: "images/menu/ic_tafsir_show.png"
                     }
                 }
             ]
