@@ -178,6 +178,7 @@ Sheet
                 NavigationButton
                 {
                     defaultImageSource: "images/title/ic_prev.png"
+                    disabledImageSource: "images/title/ic_prev_disabled.png"
                     verticalAlignment: VerticalAlignment.Center
                     enabled: currentPage < 604
                     
@@ -191,6 +192,7 @@ Sheet
                 {
                     multiplier: -1
                     defaultImageSource: "images/title/ic_next.png"
+                    disabledImageSource: "images/title/ic_next_disabled.png"
                     horizontalAlignment: HorizontalAlignment.Right
                     verticalAlignment: VerticalAlignment.Center
                     enabled: currentPage > 1
@@ -210,5 +212,10 @@ Sheet
     
     onOpened: {
         mushaf.requestPage(currentPage);
+        
+        persist.tutorial( "tutorialMushaf", qsTr("You can pinch on the page to zoom in and out and scroll up and down."), "asset:///images/menu/ic_mushaf.png" );
+        
+        if ( persist.tutorial( "tutorialNavigation", qsTr("Use the left and right arrows to switch pages."), "asset:///images/title/ic_prev.png" ) ) {}
+        else if ( persist.tutorial( "tutorialJump", qsTr("Tap on the screen, then on the bottom action bar you will see the Jump icon. Use this to trigger the dropdown menu to jump to a specific surah in the mushaf."), "asset:///images/menu/ic_jump.png" ) ) {}
     }
 }

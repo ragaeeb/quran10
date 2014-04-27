@@ -13,7 +13,6 @@ NavigationPane
     {
         id: mainPage
         actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
-        titleBar: QuranTitleBar {}
         
         actions: [
             DeleteActionItem
@@ -162,6 +161,8 @@ NavigationPane
 
                         listDelegate.control.dataModel.clear();
                         listDelegate.control.dataModel.append(bookmarks);
+                        
+                        if ( persist.tutorial( "tutorialBookmarkDel", qsTr("To delete an existing bookmark, simply press-and-hold on it and choose 'Remove' from the menu."), "asset:///images/menu/ic_bookmark_delete.png" ) ) {}
                     } else {
                         noElements.delegateActive = true;
                         listDelegate.delegateActive = false;

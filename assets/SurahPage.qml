@@ -61,11 +61,6 @@ Page
         } else if (id == QueryId.FetchTafsirForSurah) {
             var verseModel = listView.dataModel;
             
-            if ( !persist.contains("tafsirTutorialCount") ) {
-                persist.showToast( qsTr("Press-and-hold on a verse with a grey highlight to find explanations on it."), qsTr("OK"), "asset:///images/toast/ic_tafsir.png" );
-                persist.saveValueFor("tafsirTutorialCount", 1);
-            }
-            
             for (var i = data.length-1; i >= 0; i--)
             {
                 var target = [ data[i].verse_id-1, 0 ];
@@ -73,6 +68,17 @@ Page
                 verseData["hasTafsir"] = true;
                 verseModel.updateItem(target, verseData);
             }
+            
+            if ( persist.tutorial( "tutorialZoom", qsTr("You can do a pinch gesture anytime to increase and decrease the font size of the Arabic/Transliteration text!"), "asset:///images/ic_quran.png" ) ) { }
+            else if ( persist.tutorial( "tafsirTutorialCount", qsTr("Tap on a verse with a grey highlight to find explanations on it."), "asset:///images/toast/ic_tafsir.png" ) ) { }
+            else if ( persist.tutorial( "tutorialSurahNavigation", qsTr("Tap the left/right arrow keys to navigate to the previous and next chapters respectively."), "asset:///images/title/ic_next.png" ) ) {}
+            else if ( persist.tutorial( "tutorialFollow", qsTr("Use the follow button at the center of the left/right buttons if you want to follow the verses automatically as they are being recited."), "asset:///images/title/ic_follow_on.png" ) ) {}
+            else if ( persist.tutorial( "tutorialRepeat", qsTr("Tap on the repeat action at the bottom to enable or disable repeating the recitation in a loop once it finishes."), "asset:///images/menu/ic_repeat_on.png" ) ) {}
+            else if ( persist.tutorial( "tutorialCopyShare", qsTr("Press-and-hold any ayat and choose the Copy or Share action to easily share the verse."), "asset:///images/ic_copy.png" ) ) {}
+            else if ( persist.tutorial( "tutorialMemorize", qsTr("Press-and-hold any ayat and choose the Memorize action to play the next 8 verses in iteration to help you memorize them!"), "asset:///images/menu/ic_memorize.png" ) ) {}
+            else if ( persist.tutorial( "tutorialRange", qsTr("Did you know you can press-and-hold on any verse and tap on the 'Select Range' action to only play recitations for those, or copy/share them to your contacts?"), "asset:///images/menu/ic_range.png" ) ) {}
+            else if ( persist.tutorial( "tutorialHome", qsTr("Want to dock a certain ayat right to your home screen? Press-and-hold on it and choose 'Add To Home Screen' and name it!"), "asset:///images/menu/ic_home.png" ) ) {}
+            else if ( persist.tutorial( "tutorialBookmark", qsTr("Do you know how to set bookmarks? You can easily mark certain ayats as favourites by pressing-and-holding on them and choosing 'Add Bookmark' on them! This is a very easy way to track our progress as you read the Qu'ran to quickly find where you left off."), "asset:///images/menu/ic_bookmark_add.png" ) ) {}
         }
     }
     
@@ -170,6 +176,10 @@ Page
             title: recitation.repeat ? qsTr("Disable Repeat") + Retranslate.onLanguageChanged : qsTr("Enable Repeat") + Retranslate.onLanguageChanged
             imageSource: recitation.repeat ? "images/menu/ic_repeat_off.png" : "images/menu/ic_repeat_on.png"
             ActionBar.placement: ActionBarPlacement.OnBar
+            
+            onTriggered: {
+                persist.saveValueFor("repeat", recitation.repeat ? 0 : 1);
+            }
         },
 
         ActionItem {

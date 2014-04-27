@@ -276,7 +276,7 @@ ListView
         {
             type: "header"
             
-            CanadaIncHeaderListItem {
+            AyatHeaderListItem {
                 id: headerRoot
                 labelValue: qsTr("%1:%2").arg(headerRoot.ListItem.view.chapterNumber).arg(ListItemData)
             }

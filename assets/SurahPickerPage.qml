@@ -19,14 +19,13 @@ Page
         TextField
         {
             id: textField
-            hintText: qsTr("Search surah name...") + Retranslate.onLanguageChanged
+            hintText: qsTr("Search surah name or number (ie: '2' for Surah Al-Baqara)...") + Retranslate.onLanguageChanged
             bottomMargin: 0
             horizontalAlignment: HorizontalAlignment.Fill
             inputRoute.primaryKeyTarget: true;
             
             onCreationCompleted: {
                 translate.play();
-                
                 input.keyLayout = 7;
             }
             
@@ -58,6 +57,10 @@ Page
                     id: translate
                     fromX: 1000
                     duration: 500
+                    
+                    onEnded: {
+                        textField.requestFocus();
+                    }
                 }
             ]
         }
