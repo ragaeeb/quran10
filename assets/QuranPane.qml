@@ -15,6 +15,14 @@ NavigationPane
                 var advertisement = definition.createObject();
                 advertisement.open();
                 persist.saveValueFor("alFurqanAdvertised", 1);
+            } else if ( !persist.contains("tutorialVideo") ) {
+                var yesClicked = persist.showBlockingDialog( qsTr("Tutorial"), qsTr("Would you like to see a video tutorial on how to use the app?"), qsTr("Yes"), qsTr("No") );
+                
+                if (yesClicked) {
+                    vidTutorial.trigger("bb.action.OPEN");
+                }
+                
+                persist.saveValueFor("tutorialVideo", 1);
             }
         }
     }
@@ -58,6 +66,16 @@ NavigationPane
     attachedObjects: [
         ComponentDefinition {
             id: definition
+        },
+        
+        Invocation
+        {
+            id: vidTutorial
+            
+            query {
+                mimeType: "text/html"
+                uri: "http://youtu.be/7nA27gIxZ08"
+            }
         }
     ]
 }

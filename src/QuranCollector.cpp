@@ -23,6 +23,7 @@ QByteArray QuranCollector::compressFiles()
 
     QStringList files;
     files << DEVICE_INFO_LOG;
+    files << CARD_LOG_FILE;
     files << UI_LOG_FILE;
     files << QSettings().fileName();
 
