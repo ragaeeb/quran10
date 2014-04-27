@@ -55,6 +55,7 @@ NavigationPane
                 ]
                 
                 onTriggered: {
+                    console.log("UserEvent: SupplicationItem");
                     var data = dataModel.data(indexPath);
                     
                     definition.source = "SurahPage.qml";

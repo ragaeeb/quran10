@@ -30,6 +30,7 @@ NavigationPane
                 ActionBar.placement: ActionBarPlacement.OnBar
                 
                 onTriggered: {
+                    console.log("UserEvent: LaunchMushaf");
                     definition.source = "MushafSheet.qml";
                     var sheet = definition.createObject();
                     

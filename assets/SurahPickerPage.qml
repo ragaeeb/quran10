@@ -114,6 +114,7 @@ Page
             ]
             
             onTriggered: {
+                console.log("UserEvent: SurahTriggered");
                 var data = listView.dataModel.data(indexPath);
                 picked(data.surah_id, 0);
             }

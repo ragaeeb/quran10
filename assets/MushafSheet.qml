@@ -22,6 +22,7 @@ Sheet
                 imageSource: "images/menu/ic_jump.png"
                 
                 onTriggered: {
+                    console.log("UserEvent: JumpMushaf");
                     hiddenTitle.visibility = ChromeVisibility.Hidden;
                     dropDownDelegate.visible = dropDownDelegate.delegateActive = true;
                     timer.stop();
@@ -47,6 +48,7 @@ Sheet
                 title: qsTr("Back") + Retranslate.onLanguageChanged
                 
                 onTriggered: {
+                    console.log("UserEvent: MushafBack");
                     onAboutToQuit();
                     sheet.close();
                 }

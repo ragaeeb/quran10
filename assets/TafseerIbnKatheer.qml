@@ -28,6 +28,7 @@ Page
             ActionBar.placement: ActionBarPlacement.OnBar
 
             onTriggered: {
+                console.log("UserEvent: IbnKatheerJumpTop");
                 listView.scrollToPosition(ScrollPosition.Beginning, ScrollAnimation.Default);
             }
             
@@ -45,6 +46,7 @@ Page
             ActionBar.placement: ActionBarPlacement.OnBar
 
             onTriggered: {
+                console.log("UserEvent: IbnKatheerJumpEnd");
                 listView.scrollToPosition(ScrollPosition.End, ScrollAnimation.Default);
             }
             
@@ -158,10 +160,13 @@ Page
                                 title: headerLabel.text
                                 subtitle: bodyLabel.text
 
-                                ActionItem {
+                                ActionItem
+                                {
                                     title: qsTr("Copy") + Retranslate.onLanguageChanged
                                     imageSource: "images/ic_copy.png"
+                                    
                                     onTriggered: {
+                                        console.log("UserEvent: IbnKatheerCopyTriggered");
                                         tafsirItemRoot.ListItem.view.copyItem(ListItemData)
                                     }
                                 }
@@ -177,6 +182,7 @@ Page
                                     }
 
                                     onTriggered: {
+                                        console.log("UserEvent: IbnKatheerShareTriggered");
                                         data = tafsirItemRoot.ListItem.view.shareItem(ListItemData)
                                     }
                                 }
