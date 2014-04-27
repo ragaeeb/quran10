@@ -155,7 +155,7 @@ void QueryHelper::fetchTafsirForAyat(QObject* caller, int chapterNumber, int ver
 
     if (translation == "english")
     {
-        executeQuery( caller, QString("SELECT id,verse_id,description FROM tafsir_english WHERE surah_id=%1 AND verse_id=%2").arg(chapterNumber).arg(verseId), QueryId::FetchTafsirForAyat );
+        executeQuery( caller, QString("SELECT id,verse_id,explainer,description FROM tafsir_english WHERE surah_id=%1 AND verse_id=%2").arg(chapterNumber).arg(verseId), QueryId::FetchTafsirForAyat );
     }
 }
 
@@ -180,9 +180,9 @@ void QueryHelper::fetchTafsirForSurah(QObject* caller, int chapterNumber, bool e
     //LOGGER(chapterNumber);
 
     if (excludeVerses) {
-        executeQuery( caller, QString("SELECT id,description,verse_id FROM tafsir_english WHERE surah_id=%1 AND verse_id ISNULL").arg(chapterNumber), QueryId::FetchTafsirForSurah );
+        executeQuery( caller, QString("SELECT id,description,verse_id,explainer FROM tafsir_english WHERE surah_id=%1 AND verse_id ISNULL").arg(chapterNumber), QueryId::FetchTafsirForSurah );
     } else {
-        executeQuery( caller, QString("SELECT id,verse_id FROM tafsir_english WHERE surah_id=%1 AND verse_id NOT NULL").arg(chapterNumber), QueryId::FetchTafsirForSurah );
+        executeQuery( caller, QString("SELECT id,verse_id,explainer FROM tafsir_english WHERE surah_id=%1 AND verse_id NOT NULL").arg(chapterNumber), QueryId::FetchTafsirForSurah );
     }
 }
 

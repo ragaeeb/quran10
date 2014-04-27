@@ -44,7 +44,7 @@ Page
         if (verseNumber > 0) {
             helper.fetchTafsirForAyat(root, chapterNumber, verseNumber);
         } else {
-            adm.append({'id': 0, 'description': 'Ibn Katheer Tafsir'});
+            adm.append({'id': 0, 'description': 'Ibn Katheer Tafsir', 'explainer': 'Ibn Katheer'});
             helper.fetchTafsirForSurah(root, chapterNumber);
         }
     }
@@ -90,7 +90,8 @@ Page
                     StandardListItem
                     {
                         id: rootItem
-                        title: ListItemData.description
+                        title: ListItemData.explainer
+                        description: ListItemData.description
                         imageSource: "images/menu/ic_tafsir_show.png"
                     }
                 }
