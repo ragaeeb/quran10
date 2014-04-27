@@ -22,6 +22,7 @@ NavigationPane
                 title: qsTr("Clear Bookmarks") + Retranslate.onLanguageChanged
                 
                 onTriggered: {
+                    console.log("UserEvent: ClearBookmarks");
                     prompt.show();
                 }
             }
@@ -98,6 +99,7 @@ NavigationPane
                                                 title: qsTr("Remove") + Retranslate.onLanguageChanged
 
                                                 onTriggered: {
+                                                    console.log("UserEvent: RemoveBookmark");
                                                     itemDeletedAnim.play();
                                                 }
                                             }
@@ -123,6 +125,7 @@ NavigationPane
                         ]
 
                         onTriggered: {
+                            console.log("UserEvent: Bookmark Triggered");
                             var data = dataModel.data(indexPath);
 
 							definition.source = "SurahPage.qml";

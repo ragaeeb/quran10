@@ -129,6 +129,7 @@ Page
             }
             
             onTriggered: {
+                console.log("UserEvent: SearchItemTriggered");
                 if (indexPath.length > 1) {
                     var data = dataModel.data(indexPath)
                     

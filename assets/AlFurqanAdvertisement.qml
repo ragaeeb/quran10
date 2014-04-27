@@ -16,6 +16,7 @@ Sheet
                 imageSource: "images/title/ic_prev.png"
                 
                 onTriggered: {
+                    console.log("UserEvent: AlFurqanBack");
                     root.close();
                 }
             }

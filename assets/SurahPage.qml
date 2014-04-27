@@ -79,6 +79,7 @@ Page
             else if ( persist.tutorial( "tutorialRange", qsTr("Did you know you can press-and-hold on any verse and tap on the 'Select Range' action to only play recitations for those, or copy/share them to your contacts?"), "asset:///images/menu/ic_range.png" ) ) {}
             else if ( persist.tutorial( "tutorialHome", qsTr("Want to dock a certain ayat right to your home screen? Press-and-hold on it and choose 'Add To Home Screen' and name it!"), "asset:///images/menu/ic_home.png" ) ) {}
             else if ( persist.tutorial( "tutorialBookmark", qsTr("Do you know how to set bookmarks? You can easily mark certain ayats as favourites by pressing-and-holding on them and choosing 'Add Bookmark' on them! This is a very easy way to track our progress as you read the Qu'ran to quickly find where you left off."), "asset:///images/menu/ic_bookmark_add.png" ) ) {}
+            else if ( persist.tutorial( "donateNotice", qsTr("As'salaamu alaykum wa rahmatullahi wabarakathu,\n\nJazakAllahu khair for using Quran10. While our Islamic apps will always remain free of charge for your benefit, we encourage you to please donate whatever you can in order to support development. This will motivate the developers to continue to update the app, add new features and bug fixes. To donate, simply swipe-down from the top-bezel and tap the 'Donate' button to send money via PayPal.\n\nMay Allah reward you, and bless you and your family."), "asset:///images/ic_donate.png" ) ) {}
         }
     }
     
@@ -109,6 +110,7 @@ Page
             imageSource: "file:///usr/share/icons/ic_go.png"
 
             onTriggered: {
+                console.log("UserEvent: SurahJumpTop");
                 listView.scrollToPosition(ScrollPosition.Beginning, ScrollAnimation.None);
             }
             
@@ -126,6 +128,7 @@ Page
             imageSource: "images/menu/ic_scroll_end.png"
 
             onTriggered: {
+                console.log("UserEvent: SurahJumpEnd");
                 listView.scrollToPosition(ScrollPosition.End, ScrollAnimation.None);
             }
             
@@ -151,6 +154,8 @@ Page
             
             onTriggered:
             {
+                console.log("UserEvent: PlayAll");
+                
                 if ( !persist.contains("hideDataWarning") )
                 {
                     var yesClicked = persist.showBlockingDialog( qsTr("Confirmation"), qsTr("We are about to download a whole bunch of MP3 recitations, you should only attempt to do this if you have either an unlimited data plan, or are connected via Wi-Fi. Otherwise you might incur a lot of data charges. Are you sure you want to continue? If you select No you can always attempt to download again later."), qsTr("Yes"), qsTr("No") );
@@ -174,10 +179,11 @@ Page
         ActionItem
         {
             title: recitation.repeat ? qsTr("Disable Repeat") + Retranslate.onLanguageChanged : qsTr("Enable Repeat") + Retranslate.onLanguageChanged
-            imageSource: recitation.repeat ? "images/menu/ic_repeat_off.png" : "images/menu/ic_repeat_on.png"
+            imageSource: recitation.repeat ? "images/menu/ic_repeat_on.png" : "images/menu/ic_repeat_off.png"
             ActionBar.placement: ActionBarPlacement.OnBar
             
             onTriggered: {
+                console.log("UserEvent: RepeatAction");
                 persist.saveValueFor("repeat", recitation.repeat ? 0 : 1);
             }
         },
@@ -188,6 +194,7 @@ Page
             imageSource: "images/menu/ic_tafsir_show.png"
 
             onTriggered: {
+                console.log("UserEvent: TafsirAction");
                 ctb.navigationExpanded = false;
                 var page = tafsirDelegate.createObject();
 
@@ -249,6 +256,7 @@ Page
                 chapterName: qsTr("%1 (%2)").arg(ctb.titleText).arg(ctb.subtitleText)
                 
                 onTriggered: {
+                    console.log("UserEvent: VerseTriggered");
                     ctb.navigationExpanded = false;
                     var data = dataModel.data(indexPath);
                     

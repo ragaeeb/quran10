@@ -156,7 +156,7 @@ QVariantList RecitationHelper::generatePlaylist(int chapter, int fromVerse, int 
     {
         QDir output( m_persistance->getValueFor("output").toString() );
 
-        if ( !output.exists() ) {
+        if ( !m_persistance->contains("output") || !output.exists() ) {
             m_persistance->saveValueFor( "output", IOUtils::setupOutputDirectory("downloads", "quran10") );
         }
 

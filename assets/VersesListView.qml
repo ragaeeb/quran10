@@ -69,6 +69,7 @@ ListView
                 imageSource: "images/menu/ic_play.png"
 
                 onTriggered: {
+                    console.log("UserEvent: MultiPlayTriggered");
                     var selectedIndices = listView.selectionList();
                     var first = selectedIndices[0][0];
                     var last = selectedIndices[selectedIndices.length-1][0];
