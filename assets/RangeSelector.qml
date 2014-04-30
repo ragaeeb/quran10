@@ -17,15 +17,24 @@ QtObject
     function onSelectionChanged()
     {
         var all = parent.selectionList();
-        var n = all.length;
-        var first = all[0][0];
-        var last = all[n-1][0];
-
-        for (var i = first; i < last; i ++) {
-            parent.select([i,0], true);
-        }
         
-        parent.multiSelectHandler.status = qsTr("%n %1 selected", "", last-first+1).arg(itemName) + Retranslate.onLanguageChanged;
+        if (!all) {
+            all = [];
+        }
+
+        var n = all.length;
+        
+        if (n > 0)
+        {
+            var first = all[0][0];
+            var last = all[n-1][0];
+            
+            for (var i = first; i < last; i ++) {
+                parent.select([i,0], true);
+            }
+            
+            parent.multiSelectHandler.status = qsTr("%n %1 selected", "", last-first+1).arg(itemName) + Retranslate.onLanguageChanged;
+        }
         
         var multiActions = parent.multiSelectHandler.actions;
         
