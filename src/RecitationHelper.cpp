@@ -263,6 +263,10 @@ bool RecitationHelper::repeat() const {
     return m_persistance->getValueFor("repeat").toInt() == 1;
 }
 
+QObject* RecitationHelper::player() {
+    return &m_player;
+}
+
 
 RecitationHelper::~RecitationHelper()
 {

@@ -53,6 +53,8 @@ public:
     Q_SLOT void abort();
     int queued() const;
     bool repeat() const;
+
+    QObject* player();
 };
 
 } /* namespace quran */
