@@ -40,8 +40,8 @@ Page
             content: Container
             {
                 topPadding: 15
-                leftPadding: 20
-                rightPadding: 20
+                leftPadding: 10
+                rightPadding: 10
                 
                 horizontalAlignment: HorizontalAlignment.Fill
                 verticalAlignment: VerticalAlignment.Center

@@ -91,7 +91,7 @@ Page
                     {
                         id: rootItem
                         title: ListItemData.explainer
-                        description: ListItemData.description
+                        description: ListItemData.description.replace(/\n/g, " ").substr(0, 120) + "..."
                         imageSource: "images/menu/ic_tafsir_show.png"
                     }
                 }
