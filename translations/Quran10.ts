@@ -218,32 +218,12 @@ Finally, there is built-in support to do efficient and fast lookups for any sura
 <context>
     <name>QuranPane</name>
     <message>
-        <location filename="../assets/QuranPane.qml" line="19"/>
-        <source>Tutorial</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/QuranPane.qml" line="19"/>
-        <source>Would you like to see a video tutorial on how to use the app?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/QuranPane.qml" line="19"/>
-        <source>Yes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/QuranPane.qml" line="19"/>
-        <source>No</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/QuranPane.qml" line="36"/>
+        <location filename="../assets/QuranPane.qml" line="33"/>
         <source>Mushaf</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="50"/>
+        <location filename="../assets/QuranPane.qml" line="47"/>
         <source>M</source>
         <translation type="unfinished"></translation>
     </message>
@@ -303,7 +283,7 @@ You can also select an ayat above the current one to start there and end at the 
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../assets/RangeSelector.qml" line="28"/>
+        <location filename="../assets/RangeSelector.qml" line="36"/>
         <source>%n %1 selected</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -523,7 +503,7 @@ You can also select an ayat above the current one to start there and end at the 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SearchPage.qml" line="82"/>
+        <location filename="../assets/SearchPage.qml" line="87"/>
         <source>There were no matches for your search. Please try another query.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -770,6 +750,36 @@ https://www.youtube.com/watch?v=BDY8i9VQeZM</source>
     <message>
         <location filename="../assets/SettingsPage.qml" line="165"/>
         <source>No translation will be displayed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ShaddaTutorial</name>
+    <message>
+        <location filename="../assets/ShaddaTutorial.qml" line="11"/>
+        <source>Shadda Tutorial</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/ShaddaTutorial.qml" line="16"/>
+        <source>Back</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/ShaddaTutorial.qml" line="60"/>
+        <source>Some users have left reviews that there are mistakes in the text. Please note that the above two in Arabic are identical!
+
+If the vowel is on top of the shadda (w) it takes the ruling of a fatha. If the vowel is underneath the shadda, it would sound exactly like if the vowel was underneath the letter itself. Both ways are a valid, and thus this is just a matter of choice.
+
+If you are not used to reading this way, please familiarize yourself with this rule in Arabic, or use the Mushaf feature to read the Qu&apos;ran instead which uses the other style. JazakAllahu khair.
+
+If you would like to read up on the Shadda rules please see here:
+https://en.wikipedia.org/wiki/Shadda</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/ShaddaTutorial.qml" line="76"/>
+        <source>I Understand</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
