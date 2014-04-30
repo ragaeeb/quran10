@@ -5,12 +5,13 @@ ImageButton
     pressedImageSource: defaultImageSource
     property int multiplier: 1
     rotationZ: 180*multiplier
+    translationX: 1000*multiplier
     
     animations: [
         SequentialAnimation
         {
             id: prevTransition
-            delay: 250
+            delay: 1000
             
             TranslateTransition
             {
