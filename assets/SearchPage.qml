@@ -49,12 +49,17 @@ Page
                     animations: [
                         FadeTransition
                         {
+                            id: fader
                             fromOpacity: 0
                             toOpacity: 1
                             duration: 500
                             
                             onEnded: {
                                 searchField.requestFocus();
+                            }
+                            
+                            onCreationCompleted: {
+                                play();
                             }
                         }
                     ]
