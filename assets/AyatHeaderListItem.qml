@@ -3,7 +3,7 @@ import bb.cascades 1.0
 Container {
     id: headerRoot
     property string labelValue
-    background: ListItem.view.background.imagePaint
+    background: ListItem.view.background ? ListItem.view.background.imagePaint : undefined
     horizontalAlignment: HorizontalAlignment.Fill
     topPadding: 5
     bottomPadding: 5
