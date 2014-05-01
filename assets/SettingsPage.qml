@@ -215,9 +215,14 @@ Page
 			        }
 			        
 			        onCreationCompleted: {
-			            var outDir = persist.getValueFor("output")
-			            filePicker.directories = [outDir, "/accounts/1000/shared/quran10"]
-			            outputDirectory = outDir
+			            var outDir = persist.getValueFor("output");
+			            
+			            if (!outDir) {
+                            outDir = "/accounts/1000/shared/misc/quran10";
+			            }
+			            
+                        filePicker.directories = [outDir, "/accounts/1000/shared/misc/quran10"];
+                        outputDirectory = outDir;
 			        }
 	            }
 	            
