@@ -927,7 +927,7 @@ May Allah reward you, and bless you and your family.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="314"/>
+        <location filename="../assets/SurahPage.qml" line="318"/>
         <source>%1</source>
         <translation type="unfinished"></translation>
     </message>

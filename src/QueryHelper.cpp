@@ -151,12 +151,7 @@ void QueryHelper::fetchRandomAyat(QObject* caller)
 void QueryHelper::fetchTafsirForAyat(QObject* caller, int chapterNumber, int verseId)
 {
     //LOGGER(chapterNumber << verseId);
-    QString translation = m_persist->getValueFor("translation").toString();
-
-    if (translation == "english")
-    {
-        executeQuery( caller, QString("SELECT id,verse_id,explainer,description FROM tafsir_english WHERE surah_id=%1 AND verse_id=%2").arg(chapterNumber).arg(verseId), QueryId::FetchTafsirForAyat );
-    }
+    executeQuery( caller, QString("SELECT id,verse_id,explainer,description FROM tafsir_english WHERE surah_id=%1 AND verse_id=%2").arg(chapterNumber).arg(verseId), QueryId::FetchTafsirForAyat );
 }
 
 

@@ -23,7 +23,7 @@ Page
         
         if (translation == "english") {
             helper.fetchTafsirForSurah(surahPage, surahId, false);
-            surahPage.addAction(tafsirAction);   
+            surahPage.addAction(tafsirAction, ActionBarPlacement.OnBar);   
         } else {
             surahPage.removeAction(tafsirAction);
         }
@@ -266,14 +266,18 @@ Page
                 
                 onTriggered: {
                     console.log("UserEvent: VerseTriggered");
-                    ctb.navigationExpanded = false;
-                    var data = dataModel.data(indexPath);
                     
-                    var created = tp.createObject();
-                    created.chapterNumber = surahId;
-                    created.verseNumber = data.verse_id;
-                    
-                    navigationPane.push(created);
+                    if ( persist.getValueFor("translation") == "english" )
+                    {
+                        ctb.navigationExpanded = false;
+                        var data = dataModel.data(indexPath);
+                        
+                        var created = tp.createObject();
+                        created.chapterNumber = surahId;
+                        created.verseNumber = data.verse_id;
+                        
+                        navigationPane.push(created);
+                    }
                 }
                 
                 attachedObjects: [
