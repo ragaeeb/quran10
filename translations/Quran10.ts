@@ -536,22 +536,22 @@ You can also select an ayat above the current one to start there and end at the 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="240"/>
+        <location filename="../assets/SettingsPage.qml" line="245"/>
         <source>Translation Font Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="247"/>
+        <location filename="../assets/SettingsPage.qml" line="252"/>
         <source>The translation font size will be small</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="249"/>
+        <location filename="../assets/SettingsPage.qml" line="254"/>
         <source>The translation font size will be medium</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="251"/>
+        <location filename="../assets/SettingsPage.qml" line="256"/>
         <source>The translation font size will be large</source>
         <translation type="unfinished"></translation>
     </message>
@@ -688,7 +688,7 @@ https://www.youtube.com/watch?v=BDY8i9VQeZM</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="227"/>
+        <location filename="../assets/SettingsPage.qml" line="232"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -803,7 +803,7 @@ https://en.wikipedia.org/wiki/Shadda</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="265"/>
+        <location filename="../assets/SurahPage.qml" line="267"/>
         <source>%1 (%2)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -927,7 +927,7 @@ May Allah reward you, and bless you and your family.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="318"/>
+        <location filename="../assets/SurahPage.qml" line="320"/>
         <source>%1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1000,63 +1000,63 @@ May Allah reward you, and bless you and your family.</source>
 <context>
     <name>VersesListView</name>
     <message>
-        <location filename="../assets/VersesListView.qml" line="244"/>
+        <location filename="../assets/VersesListView.qml" line="245"/>
         <source>%1:%2-%3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="69"/>
+        <location filename="../assets/VersesListView.qml" line="70"/>
         <source>Play</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="83"/>
+        <location filename="../assets/VersesListView.qml" line="84"/>
         <source>None selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="145"/>
-        <location filename="../assets/VersesListView.qml" line="285"/>
+        <location filename="../assets/VersesListView.qml" line="146"/>
+        <location filename="../assets/VersesListView.qml" line="286"/>
         <source>%1:%2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="165"/>
+        <location filename="../assets/VersesListView.qml" line="166"/>
         <source>Enter a name for this bookmark</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="173"/>
+        <location filename="../assets/VersesListView.qml" line="174"/>
         <source>Enter a name for this shortcut:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="256"/>
+        <location filename="../assets/VersesListView.qml" line="257"/>
         <source>Enter Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="257"/>
+        <location filename="../assets/VersesListView.qml" line="258"/>
         <source>Enter a meaningful name...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="258"/>
+        <location filename="../assets/VersesListView.qml" line="259"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="259"/>
+        <location filename="../assets/VersesListView.qml" line="260"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="269"/>
+        <location filename="../assets/VersesListView.qml" line="270"/>
         <source>Bookmarked %1:%2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="207"/>
+        <location filename="../assets/VersesListView.qml" line="208"/>
         <source>ayahs</source>
         <translation type="unfinished"></translation>
     </message>

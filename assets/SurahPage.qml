@@ -238,6 +238,8 @@ Page
             } else {
                 --surahId;
             }
+            
+            player.stop();
         }
     }
 

@@ -57,6 +57,7 @@ ListView
     
     function play(from, to)
     {
+        clearPrevious();
         previousPlayedIndex = -1;
         recitation.downloadAndPlay(chapterNumber, from, to);
     }
