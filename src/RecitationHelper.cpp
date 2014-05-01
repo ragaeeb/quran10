@@ -31,21 +31,15 @@ RecitationHelper::RecitationHelper(Persistance* p, QObject* parent) :
     connect( &m_queue, SIGNAL( requestComplete(QVariant const&, QByteArray const&) ), this, SLOT( onRequestComplete(QVariant const&, QByteArray const&) ) );
     connect( &m_queue, SIGNAL( queueChanged() ), this, SIGNAL( queueChanged() ) );
     connect( &m_future, SIGNAL( finished() ), this, SLOT( onFinished() ) );
-    connect( &m_player, SIGNAL( metaDataChanged(QVariantMap const&) ), this, SLOT( metaDataChanged(QVariantMap const&) ) );
-    connect( p, SIGNAL( settingChanged(QString const&) ), this, SLOT( settingChanged(QString const&) ) );
-
-    settingChanged("repeat");
 }
 
 
-void RecitationHelper::metaDataChanged(QVariantMap const& m)
+int RecitationHelper::extractIndex(QVariantMap const& m)
 {
     QString uri = m.value("uri").toString();
     uri = uri.mid( uri.lastIndexOf("/")+1 );
     uri = uri.left( uri.lastIndexOf(".") );
-    int index = uri.mid(3).toInt();
-
-    emit currentIndexChanged(index);
+    return uri.mid(3).toInt();
 }
 
 
@@ -157,7 +151,7 @@ QVariantList RecitationHelper::generatePlaylist(int chapter, int fromVerse, int 
         QDir output( m_persistance->getValueFor("output").toString() );
 
         if ( !m_persistance->contains("output") || !output.exists() ) {
-            m_persistance->saveValueFor( "output", IOUtils::setupOutputDirectory("downloads", "quran10") );
+            m_persistance->saveValueFor( "output", IOUtils::setupOutputDirectory("downloads", "quran10"), false );
         }
 
         QStringList playlist;
@@ -216,15 +210,6 @@ void RecitationHelper::onFinished()
 }
 
 
-void RecitationHelper::settingChanged(QString const& key)
-{
-    if (key == "repeat") {
-        m_player.setRepeat( m_persistance->getValueFor("repeat").toInt() == 1 );
-        emit repeatChanged();
-    }
-}
-
-
 void RecitationHelper::onRequestComplete(QVariant const& cookie, QByteArray const& data)
 {
     QFutureWatcher<void>* qfw = new QFutureWatcher<void>(this);
@@ -243,9 +228,8 @@ void RecitationHelper::onWritten()
 }
 
 
-void RecitationHelper::startPlayback()
-{
-    m_player.play( QUrl::fromLocalFile(PLAYLIST_TARGET) );
+void RecitationHelper::startPlayback() {
+    emit readyToPlay( QUrl::fromLocalFile(PLAYLIST_TARGET) );
 }
 
 
@@ -256,15 +240,6 @@ int RecitationHelper::queued() const {
 
 void RecitationHelper::abort() {
     m_queue.abort();
-}
-
-
-bool RecitationHelper::repeat() const {
-    return m_persistance->getValueFor("repeat").toInt() == 1;
-}
-
-QObject* RecitationHelper::player() {
-    return &m_player;
 }
 
 

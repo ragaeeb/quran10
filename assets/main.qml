@@ -81,7 +81,7 @@ TabbedPane
     onCreationCompleted: {
         if ( !persist.contains("firstTime") ) {
             menuDef.settings.triggered();
-            persist.saveValueFor("firstTime", 1);
+            persist.saveValueFor("firstTime", 1, false);
         }
     }
 }

@@ -58,7 +58,7 @@ Sheet
                 }
                 
                 function onAboutToQuit() {
-                    persist.saveValueFor("savedPage", currentPage);
+                    persist.saveValueFor("savedPage", currentPage, false);
                 }
                 
                 onCreationCompleted: {

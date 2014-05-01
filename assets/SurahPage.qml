@@ -1,6 +1,5 @@
 import bb.cascades 1.0
 import bb.device 1.0
-import bb.multimedia 1.0
 import com.canadainc.data 1.0
 
 Page
@@ -152,11 +151,19 @@ Page
                 }
             ]
             
+            function onReady(uri) {
+                player.play(uri);
+            }
+            
+            onCreationCompleted: {
+                recitation.readyToPlay.connect(onReady);
+            }
+            
             onTriggered:
             {
                 console.log("UserEvent: PlayAll");
                 
-                if ( !persist.contains("hideDataWarning") && !player.playing )
+                if ( !persist.contains("hideDataWarning") && !player.active )
                 {
                     var yesClicked = persist.showBlockingDialog( qsTr("Confirmation"), qsTr("We are about to download a whole bunch of MP3 recitations, you should only attempt to do this if you have either an unlimited data plan, or are connected via Wi-Fi. Otherwise you might incur a lot of data charges. Are you sure you want to continue? If you select No you can always attempt to download again later."), qsTr("Yes"), qsTr("No") );
                     
@@ -164,9 +171,9 @@ Page
                         return;
                     }
 
-                    persist.saveValueFor("hideDataWarning", 1);
+                    persist.saveValueFor("hideDataWarning", 1, false);
                 }
-
+                
 				if (player.active) {
 				    player.togglePlayback();
 				} else {
@@ -178,17 +185,19 @@ Page
         
         ActionItem
         {
-            title: recitation.repeat ? qsTr("Disable Repeat") + Retranslate.onLanguageChanged : qsTr("Enable Repeat") + Retranslate.onLanguageChanged
-            imageSource: recitation.repeat ? "images/menu/ic_repeat_on.png" : "images/menu/ic_repeat_off.png"
+            title: player.repeat ? qsTr("Disable Repeat") + Retranslate.onLanguageChanged : qsTr("Enable Repeat") + Retranslate.onLanguageChanged
+            imageSource: player.repeat ? "images/menu/ic_repeat_on.png" : "images/menu/ic_repeat_off.png"
             ActionBar.placement: ActionBarPlacement.OnBar
             
             onTriggered: {
                 console.log("UserEvent: RepeatAction");
-                persist.saveValueFor("repeat", recitation.repeat ? 0 : 1);
+                player.repeat = !player.repeat;
+                persist.saveValueFor("repeat", player.repeat ? 1 : 0, false);
             }
         },
 
-        ActionItem {
+        ActionItem
+        {
             id: tafsirAction
             title: qsTr("Tafsir") + Retranslate.onLanguageChanged
             imageSource: "images/menu/ic_tafsir_show.png"
@@ -309,5 +318,12 @@ Page
                 recitation.abort();
             }
         }
+        
+        attachedObjects: [
+            LazyMediaPlayer {
+                id: player
+                repeat: persist.getValueFor("repeat") == 1
+            }
+        ]
     }
 }

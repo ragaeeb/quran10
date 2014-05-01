@@ -18,7 +18,7 @@ Sheet
                 
                 onTriggered: {
                     console.log("UserEvent: ShaddaBack");
-                    persist.saveValueFor("shaddaTutorial", 1);
+                    persist.saveValueFor("shaddaTutorial", 1, false);
                     root.close();
                 }
             }

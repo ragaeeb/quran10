@@ -1,7 +1,6 @@
 #ifndef RECITATIONHELPER_H_
 #define RECITATIONHELPER_H_
 
-#include "LazyMediaPlayer.h"
 #include "QueueDownloader.h"
 
 #include <QFutureWatcher>
@@ -18,28 +17,23 @@ class RecitationHelper : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(int queued READ queued NOTIFY queueChanged)
-    Q_PROPERTY(bool repeat READ repeat NOTIFY repeatChanged)
 
     QueueDownloader m_queue;
     Persistance* m_persistance;
     QFutureWatcher<QVariantList> m_future;
-    LazyMediaPlayer m_player;
 
     void startPlayback();
     QVariantList generatePlaylist(int chapter, int fromVerse, int toVerse, bool write);
     QVariantList generateMemorization(int chapter, int fromVerse, int toVerse);
 
 private slots:
-    void metaDataChanged(QVariantMap const& m);
     void onFinished();
     void onRequestComplete(QVariant const& cookie, QByteArray const& data);
     void onWritten();
-    void settingChanged(QString const& key);
 
 signals:
-    void currentIndexChanged(int index);
     void queueChanged();
-    void repeatChanged();
+    void readyToPlay(QUrl const& uri);
 
 public:
     RecitationHelper(Persistance* p, QObject* parent=NULL);
@@ -51,8 +45,8 @@ public:
     Q_INVOKABLE void downloadAndPlay(int chapter, int fromVerse, int toVerse);
     Q_INVOKABLE void memorize(int chapter, int fromVerse, int toVerse);
     Q_SLOT void abort();
+    Q_INVOKABLE static int extractIndex(QVariantMap const& m);
     int queued() const;
-    bool repeat() const;
 
     QObject* player();
 };

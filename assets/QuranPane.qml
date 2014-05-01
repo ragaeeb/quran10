@@ -18,7 +18,7 @@ NavigationPane
                 definition.source = "AlFurqanAdvertisement.qml";
                 var advertisement = definition.createObject();
                 advertisement.open();
-                persist.saveValueFor("alFurqanAdvertised", 1);
+                persist.saveValueFor("alFurqanAdvertised", 1, false);
             } else if ( persist.tutorialVideo("http://youtu.be/7nA27gIxZ08") ) {}
         }
     }

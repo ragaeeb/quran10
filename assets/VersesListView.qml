@@ -91,8 +91,10 @@ ListView
         verseModel.updateItem(actual, data);
     }
     
-    function onIndexChanged(index)
+    function onMetaDataChanged(metaData)
     {
+        var index = recitation.extractIndex(metaData);
+        
         if (previousPlayedIndex >= 0) {
             clearPrevious();
         }
@@ -112,7 +114,7 @@ ListView
     
     onCreationCompleted: {
         persist.settingChanged.connect(settingChanged);
-        recitation.currentIndexChanged.connect(onIndexChanged);
+        player.metaDataChanged.connect(onMetaDataChanged);
         player.playbackCompleted.connect(clearPrevious);
     }
 
