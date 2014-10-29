@@ -151,7 +151,6 @@
     <asset path="../canadainc/assets/EmptyDelegate.qml">assets/EmptyDelegate.qml</asset>
     <asset path="../canadainc/assets/PersistCheckBox.qml">assets/PersistCheckBox.qml</asset>
     <asset path="../canadainc/assets/PersistDropDown.qml">assets/PersistDropDown.qml</asset>
-    <asset path="../canadainc/assets/PlainTextActionSet.qml">assets/PlainTextActionSet.qml</asset>
     <asset path="../canadainc/assets/PlainTextMultiselector.qml">assets/PlainTextMultiselector.qml</asset>
     <asset path="../canadainc/assets/SliderPair.qml">assets/SliderPair.qml</asset>
     

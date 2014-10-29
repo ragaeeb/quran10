@@ -242,6 +242,7 @@ Page
             
             SliderPair
             {
+                enabled: !none.selected
                 labelValue: qsTr("Translation Font Size") + Retranslate.onLanguageChanged
                 from: 1
                 to: 3

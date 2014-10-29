@@ -1,3 +1,19 @@
+sqlite3 quran_arabic.db
+CREATE TABLE surahs (id INTEGER PRIMARY KEY, name TEXT);
+CREATE TABLE verses (id INTEGER PRIMARY KEY, surah_id INTEGER REFERENCES surahs(id), verse_number INTEGER, content TEXT, UNIQUE(surah_id,verse_number) ON CONFLICT REPLACE);
+CREATE TABLE IF NOT EXISTS surah_metadata (surah_id INTEGER REFERENCES surahs(id), verse_count INTEGER, start INTEGER, type INTEGER, revelation_order INTEGER, rukus INTEGER);
+CREATE TABLE IF NOT EXISTS juzs (id INTEGER PRIMARY KEY, surah_id INTEGER REFERENCES surahs(id), verse_number INTEGER, UNIQUE(surah_id,verse_number) ON CONFLICT REPLACE);
+CREATE TABLE IF NOT EXISTS hizbs (id INTEGER PRIMARY KEY, surah_id INTEGER REFERENCES surahs(id), verse_number INTEGER, UNIQUE(surah_id,verse_number) ON CONFLICT REPLACE);
+CREATE TABLE IF NOT EXISTS manzils (id INTEGER PRIMARY KEY, surah_id INTEGER REFERENCES surahs(id), verse_number INTEGER, UNIQUE(surah_id,verse_number) ON CONFLICT REPLACE);
+CREATE TABLE IF NOT EXISTS rukus (surah_id INTEGER REFERENCES surahs(id), verse_number INTEGER, UNIQUE(surah_id,verse_number) ON CONFLICT REPLACE);
+CREATE TABLE IF NOT EXISTS sajdas (surah_id INTEGER REFERENCES surahs(id), verse_number INTEGER, type INTEGER, UNIQUE(surah_id,verse_number) ON CONFLICT REPLACE);
+CREATE TABLE mushaf_pages (page_number INTEGER PRIMARY KEY, surah_id INTEGER REFERENCES surahs(id), verse_number INTEGER, UNIQUE(surah_id,verse_number) ON CONFLICT REPLACE);
+CREATE TABLE supplications (surah_id INTEGER REFERENCES surahs(id), verse_number_start INTEGER, verse_number_end INTEGER, UNIQUE(surah_id,verse_number_start) ON CONFLICT REPLACE);
+
+sqlite3 quran_english.db
+CREATE TABLE surahs (id INTEGER PRIMARY KEY, transliteration TEXT, translation TEXT);
+CREATE TABLE verses (id INTEGER PRIMARY KEY, surah_id INTEGER REFERENCES surahs(id), verse_number INTEGER, content TEXT, UNIQUE(surah_id,verse_number) ON CONFLICT REPLACE);
+
 Quran10: make downloading one long one
 
 sqlite> SELECT COUNT() FROM (select name from sqlite_master where type='table' AND name='bengalix');

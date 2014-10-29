@@ -9,10 +9,7 @@ TabbedPane
     {
         id: menuDef
         allowDonations: true
-        bbWorldID: "27022877"
         projectName: "quran10"
-        promoteChannel: true
-        showSubmitLogs: true
     }
 
 	Tab
@@ -23,6 +20,10 @@ TabbedPane
         imageSource: "images/tabs/ic_quran_open.png"
         unreadContentCount: 114
         delegateActivationPolicy: TabDelegateActivationPolicy.ActivateWhenSelected
+	    
+        onTriggered: {
+            console.log("UserEvent: QuranTab");
+        }
 	    
         delegate: Delegate {
             source: "QuranPane.qml"
@@ -37,6 +38,10 @@ TabbedPane
         title: qsTr("Bookmarks") + Retranslate.onLanguageChanged
         unreadContentCount: helper.totalBookmarks
 
+        onTriggered: {
+            console.log("UserEvent: FavouritesTab");
+        }
+
         delegate: Delegate {
             source: "BookmarksPane.qml"
         }
@@ -48,6 +53,10 @@ TabbedPane
         description: qsTr("Find") + Retranslate.onLanguageChanged
         imageSource: "images/tabs/ic_search.png"
         delegateActivationPolicy: TabDelegateActivationPolicy.ActivateWhenSelected
+
+        onTriggered: {
+            console.log("UserEvent: SearchTab");
+        }
 
         delegate: Delegate {
             source: "SearchPane.qml"
@@ -61,6 +70,10 @@ TabbedPane
         imageSource: "images/tabs/ic_radio.png"
         delegateActivationPolicy: TabDelegateActivationPolicy.ActivateWhenSelected
         
+        onTriggered: {
+            console.log("UserEvent: RadioTab");
+        }
+        
         delegate: Delegate {
             source: "RadioPane.qml"
         }
@@ -72,6 +85,10 @@ TabbedPane
         description: qsTr("Du'a from the Qu'ran") + Retranslate.onLanguageChanged
         imageSource: "images/tabs/ic_supplications.png"
         delegateActivationPolicy: TabDelegateActivationPolicy.ActivatedWhileSelected
+        
+        onTriggered: {
+            console.log("UserEvent: SupplicationsTab");
+        }
         
         delegate: Delegate {
             source: "SupplicationsPane.qml"

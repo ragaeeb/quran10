@@ -12,19 +12,38 @@ class QueryId
 
 public:
     enum Type {
+        AddTafsir,
+        AddTafsirPage,
+        ClearAllBookmarks,
+        EditTafsir,
+        EditTafsirPage,
         FetchAllAyats,
+        FetchAllBookmarks,
         FetchAllDuaa,
+        FetchAllTafsir,
+        FetchAllTafsirForSuite,
         FetchChapters,
         FetchPageNumbers,
         FetchRandomAyat,
         FetchSurahHeader,
-        FetchTafsirContent,
         FetchTafsirForAyat,
         FetchTafsirForSurah,
         FetchTafsirIbnKatheerForSurah,
         FetchTafsirIbnKatheerHeader,
+        FetchTafsirContent,
+        FetchTafsirHeader,
+        LinkingAyats,
+        LinkAyats,
+        LinkAyatsToTafsir,
+        RemoveBookmark,
+        RemoveTafsir,
+        RemoveTafsirPage,
+        SaveBookmark,
         SearchQueryPrimary,
-        SearchQueryTranslation
+        SearchQueryTranslation,
+        SearchTafsir,
+        Setup,
+        UpdatePlugins
     };
 };
 
