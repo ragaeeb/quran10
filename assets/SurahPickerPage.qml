@@ -26,7 +26,7 @@ Page
             
             onCreationCompleted: {
                 translate.play();
-                input.keyLayout = 7;
+                input["keyLayout"] = 7;
             }
             
             onTextChanging: {

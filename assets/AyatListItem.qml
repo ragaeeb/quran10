@@ -56,7 +56,7 @@ Container
     }
     
     contextActions: [
-        PlainTextActionSet
+        ActionSet
         {
             id: actionSet
             title: firstLabel.text

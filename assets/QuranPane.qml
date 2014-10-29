@@ -1,4 +1,5 @@
 import bb.cascades 1.0
+import bb.data 1.0
 
 NavigationPane
 {
@@ -59,9 +60,32 @@ NavigationPane
         }
     }
     
+    onCreationCompleted: {
+        ds.load();
+    }
+    
     attachedObjects: [
         ComponentDefinition {
             id: definition
+        },
+        
+        DataSource {
+            id: ds
+            //source: "file:///accounts/1000/shared/misc/quran_arabic.db"
+            source: "file:///accounts/1000/shared/misc/quran-data.xml"
+            
+            onDataLoaded: {
+                var all = data.juzs.juz;
+                console.log("***", all);
+                
+                for (var i = 0; i < all.length; i++)
+                {
+                    helper.apply("INSERT INTO juzs (id,surah_id,verse_number) VALUES(%1,%2,%3)".arg(all[i].index).arg(all[i].sura).arg(all[i].aya) );
+                    console.log("INPUTTING")
+                }
+                
+                console.log("****", data.suras, data.hizbs, data.manzils, data.rukus, data.sajdas);
+            }
         }
     ]
 }
