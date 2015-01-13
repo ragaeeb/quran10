@@ -14,6 +14,10 @@ NavigationPane
         id: mainPage
         actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
         
+        titleBar: TitleBar {
+            title: qsTr("Supplications") + Retranslate.onLanguageChanged
+        }
+        
         Container
         {
             background: back.imagePaint
