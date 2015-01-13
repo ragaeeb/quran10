@@ -18,7 +18,7 @@ NavigationPane
             DeleteActionItem
             {
                 enabled: listView.visible
-                imageSource: "images/menu/ic_bookmark_delete.png"
+                imageSource: "images/menu/ic_clear_bookmarks.png"
                 title: qsTr("Clear Bookmarks") + Retranslate.onLanguageChanged
                 
                 onTriggered: {
