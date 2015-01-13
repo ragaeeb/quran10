@@ -22,7 +22,7 @@ Sheet
             ActionItem
             {
                 title: qsTr("Jump") + Retranslate.onLanguageChanged
-                ActionBar.placement: ActionBarPlacement.OnBar
+                ActionBar.placement: 'Signature' in ActionBarPlacement ? ActionBarPlacement["Signature"] : ActionBarPlacement.OnBar
                 imageSource: "images/menu/ic_jump.png"
                 
                 onTriggered: {

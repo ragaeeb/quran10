@@ -4,33 +4,34 @@ Page
 {
     actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
     
-    titleBar: AboutTitleBar {
+    titleBar: AboutTitleBar
+    {
         id: atb
+        textColor: Color.White
     }
     
     actions: [
-        InvokeActionItem
+        ActionItem
         {
             imageSource: "images/menu/ic_channel.png"
             title: atb.channelTitle
-            ActionBar.placement: ActionBarPlacement.OnBar
+            ActionBar.placement: 'Signature' in ActionBarPlacement ? ActionBarPlacement["Signature"] : ActionBarPlacement.OnBar
             
-            query {
-                invokeTargetId: atb.invokeTargetId
-                uri: atb.channelUri
+            onTriggered: {
+                console.log("UserEvent: OpenChannelTriggered");
+                persist.openChannel();
             }
         },
         
-        InvokeActionItem
+        ActionItem
         {
             imageSource: "images/menu/ic_video_tutorial.png"
             title: qsTr("Video Tutorial") + Retranslate.onLanguageChanged
-            ActionBar.placement: ActionBarPlacement.OnBar
+            ActionBar.placement: 'Signature' in ActionBarPlacement ? ActionBarPlacement["Signature"] : ActionBarPlacement.OnBar
             
-            query {
-                mimeType: "text/html"
-                uri: "http://youtu.be/7nA27gIxZ08"
-                invokeActionId: "bb.action.OPEN"
+            onTriggered: {
+                console.log("UserEvent: VideoTutorialTriggered");
+                persist.tutorialVideo("http://youtu.be/7nA27gIxZ08", false);
             }
         }
     ]

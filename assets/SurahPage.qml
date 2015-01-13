@@ -143,7 +143,7 @@ Page
             id: playAllAction
             title: player.playing ? qsTr("Pause") : qsTr("Play All")
             imageSource: player.playing ? "images/menu/ic_pause.png" : "images/menu/ic_play.png"
-            ActionBar.placement: ActionBarPlacement.OnBar
+            ActionBar.placement: 'Signature' in ActionBarPlacement ? ActionBarPlacement["Signature"] : ActionBarPlacement.OnBar
             
             shortcuts: [
                 Shortcut {
