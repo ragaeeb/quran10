@@ -9,7 +9,11 @@ TabbedPane
     {
         id: menuDef
         allowDonations: true
+        help.imageSource: "images/menu/ic_help.png"
+        help.title: qsTr("Help") + Retranslate.onLanguageChanged
         projectName: "quran10"
+        settings.imageSource: "images/menu/ic_settings.png"
+        settings.title: qsTr("Settings") + Retranslate.onLanguageChanged
     }
 
 	Tab
