@@ -49,7 +49,7 @@ NavigationPane
                             title: ListItemData.english_name
                             description: ListItemData.arabic_name
                             status: ListItemData.verse_id
-                            imageSource: "images/ic_quran.png"
+                            imageSource: "images/list/ic_supplication.png"
                         }
                     }
                 ]
