@@ -41,7 +41,7 @@ Page
                     text: qsTr("Transliteration") + Retranslate.onLanguageChanged
                     description: qsTr("English Transliteration") + Retranslate.onLanguageChanged
                     value: "transliteration"
-                    imageSource: "images/dropdown/ic_script.png"
+                    imageSource: "images/dropdown/ic_transliteration.png"
                 }
 
                 onSelectedOptionChanged: {
