@@ -69,14 +69,14 @@ PersistDropDown
     }
     
     Option {
-        imageSource: "images/dropdown/ic_reciter.png"
+        imageSource: "images/dropdown/ic_reciter_hudhaify.png"
         text: qsTr("Ali Abdur-rahman al-Hudhaify") + Retranslate.onLanguageChanged
         description: qsTr("Low Quality") + Retranslate.onLanguageChanged
         value: "Hudhaify_64kbps"
     }
     
     Option {
-        imageSource: "images/dropdown/ic_reciter.png"
+        imageSource: "images/dropdown/ic_reciter_hudhaify.png"
         text: qsTr("Ali Abdur-rahman al-Hudhaify") + Retranslate.onLanguageChanged
         description: qsTr("Medium Quality") + Retranslate.onLanguageChanged
         value: "Hudhaify_128kbps"
