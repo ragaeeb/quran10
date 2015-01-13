@@ -27,6 +27,10 @@ NavigationPane
                 }
             }
         ]
+        
+        titleBar: TitleBar {
+            title: qsTr("Bookmarks") + Retranslate.onLanguageChanged
+        }
 
         Container
         {
