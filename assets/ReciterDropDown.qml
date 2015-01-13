@@ -83,6 +83,34 @@ PersistDropDown
     }
     
     Option {
+        imageSource: "images/dropdown/ic_reciter_husary.png"
+        text: qsTr("Mahmoud Khalil al-Husary") + Retranslate.onLanguageChanged
+        description: qsTr("Low Quality") + Retranslate.onLanguageChanged
+        value: "Husary_64kbps"
+    }
+    
+    Option {
+        imageSource: "images/dropdown/ic_reciter_husary.png"
+        text: qsTr("Mahmoud Khalil al-Husary") + Retranslate.onLanguageChanged
+        description: qsTr("Medium Quality") + Retranslate.onLanguageChanged
+        value: "Husary_128kbps"
+    }
+    
+    Option {
+        imageSource: "images/dropdown/ic_reciter_husary.png"
+        text: qsTr("Mahmoud Khalil al-Husary") + Retranslate.onLanguageChanged
+        description: qsTr("Low Quality (Mujawaad)") + Retranslate.onLanguageChanged
+        value: "Husary_Mujawwad_64kbps"
+    }
+    
+    Option {
+        imageSource: "images/dropdown/ic_reciter_husary.png"
+        text: qsTr("Mahmoud Khalil al-Husary") + Retranslate.onLanguageChanged
+        description: qsTr("Medium Quality (Mujawaad)") + Retranslate.onLanguageChanged
+        value: "Husary_128kbps_Mujawwad"
+    }
+    
+    Option {
         imageSource: "images/dropdown/ic_reciter.png"
         text: qsTr("Hani ar-Rifai") + Retranslate.onLanguageChanged
         description: qsTr("Low Quality") + Retranslate.onLanguageChanged
