@@ -30,10 +30,11 @@ class ApplicationUI : public QObject
 	QueryHelper m_helper;
 	MushafHelper m_mushaf;
 	RecitationHelper m_recitation;
-	int m_verseId;
+	bb::system::InvokeRequest m_request;
+	QObject* m_root;
 
     ApplicationUI(bb::cascades::Application *app);
-    QObject* init(QString const& qml, bool invoked=false);
+    void init(QString const& qml);
     void finishWithToast(QString const& message);
 
 private slots:
@@ -45,6 +46,7 @@ private slots:
 
 signals:
     void initialize();
+    void lazyInitComplete();
 
 public:
 	static void create(bb::cascades::Application* app);
