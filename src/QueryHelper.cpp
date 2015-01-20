@@ -39,8 +39,6 @@ void QueryHelper::showPluginsUpdatedToast() {
 
 void QueryHelper::lazyInit()
 {
-    m_translation = m_persist->getValueFor("translation").toString();
-
     settingChanged("translation");
     m_sql.attachIfNecessary(TRANSLATION, m_translation != "english"); // since english translation is loaded by default
 }
@@ -50,8 +48,11 @@ void QueryHelper::settingChanged(QString const& key)
 {
     if (key == "translation")
     {
-        m_sql.detach(TAFSIR);
-        m_sql.detach(TRANSLATION);
+        if ( showTranslation() )
+        {
+            m_sql.detach(TAFSIR);
+            m_sql.detach(TRANSLATION);
+        }
 
         m_translation = m_persist->getValueFor("translation").toString();
         emit textualChange();
@@ -62,6 +63,8 @@ void QueryHelper::settingChanged(QString const& key)
 void QueryHelper::fetchAllBookmarks(QObject* caller)
 {
     LOGGER("fetchAllBookmarks");
+
+    m_sql.attachIfNecessary("bookmarks", true);
     QString query = "SELECT id as bid,aid as id,collection,hadithNumber,name,tag,timestamp FROM bookmarks ORDER BY timestamp DESC";
 
     m_sql.executeQuery(caller, query, QueryId::FetchAllBookmarks);
@@ -88,6 +91,7 @@ void QueryHelper::fetchChapters(QObject* caller, QString const& text)
 
     static QRegExp chapterAyatNumeric = QRegExp(AYAT_NUMERIC_PATTERN);
     static QRegExp chapterNumeric = QRegExp("^\\d{1,3}$");
+    QVariantList args;
 
     if ( chapterAyatNumeric.exactMatch(text) || chapterNumeric.exactMatch(text) )
     {
@@ -97,33 +101,28 @@ void QueryHelper::fetchChapters(QObject* caller, QString const& text)
             query = QString("SELECT surah_id,arabic_name,english_name,english_translation FROM chapters WHERE surah_id=%1").arg(chapter);
         }
     } else if ( text.length() > 2 ) {
-        query = QString("SELECT surah_id,arabic_name,english_name,english_translation FROM chapters WHERE english_name like '%%1%' OR arabic_name like '%%1%'").arg(text);
+        query = "SELECT a.id AS surah_id,name,transliteration FROM surahs a INNER JOIN chapters t ON a.id=t.id WHERE name LIKE '%' || ? || '%' OR transliteration LIKE '%' || ? || '%'";
+        args << text;
+        args << text;
     } else if ( text.isEmpty() ) {
         query = "SELECT a.id AS surah_id,name,transliteration FROM surahs a INNER JOIN chapters t ON a.id=t.id";
     }
 
     if ( !query.isNull() ) {
-        m_sql.executeQuery(caller, query, QueryId::FetchChapters);
+        m_sql.executeQuery(caller, query, QueryId::FetchChapters, args);
     }
 }
 
 
 void QueryHelper::fetchRandomAyat(QObject* caller)
 {
-    //LOGGER("fetchRandomAyat");
+    LOGGER("fetchRandomAyat");
 
-    QString table = m_persist->getValueFor("translation").toString();
-
-    if ( table.isEmpty() )
-    {
-        table = m_persist->getValueFor("primary").toString();
-
-        if (table == "transliteration") {
-            table = "arabic_uthmani";
-        }
+    if ( !showTranslation() ) {
+        m_sql.executeQuery(caller, "SELECT surah_id,verse_number AS verse_id,content AS text FROM ayahs WHERE RANDOM() % 6236 = 0 LIMIT 1", QueryId::FetchRandomAyat);
+    } else {
+        m_sql.executeQuery(caller, "SELECT surah_id,verse_number AS verse_id,translation AS text FROM ayahs a INNER JOIN verses v ON a.id=v.id WHERE RANDOM() % 6236 = 0 LIMIT 1", QueryId::FetchRandomAyat);
     }
-
-    m_sql.executeQuery( caller, QString("SELECT * FROM %1 ORDER BY RANDOM() LIMIT 1").arg(table), QueryId::FetchRandomAyat );
 }
 
 
@@ -145,7 +144,11 @@ void QueryHelper::fetchSurahHeader(QObject* caller, int chapterNumber)
 {
     //LOGGER(chapterNumber);
 
-    m_sql.executeQuery( caller, QString("SELECT english_name, english_translation, arabic_name FROM chapters WHERE surah_id=%1").arg(chapterNumber), QueryId::FetchSurahHeader );
+    if ( showTranslation() ) {
+        m_sql.executeQuery( caller, QString("SELECT name,translation,transliteration FROM surahs s INNER JOIN chapters c ON s.id=c.id WHERE s.id=%1").arg(chapterNumber), QueryId::FetchSurahHeader );
+    } else {
+        m_sql.executeQuery( caller, QString("SELECT name FROM surahs WHERE id=%1").arg(chapterNumber), QueryId::FetchSurahHeader );
+    }
 }
 
 
@@ -167,7 +170,7 @@ void QueryHelper::fetchAllAyats(QObject* caller, int chapterNumber)
 
     QString query;
 
-    if ( !m_translation.isEmpty() ) {
+    if ( showTranslation() ) {
         query = QString("SELECT content AS arabic,verse_number AS verse_id,translation FROM ayahs INNER JOIN verses on ayahs.id=verses.id AND surah_id=%1").arg(chapterNumber);
     } else {
         //query = QString("SELECT text as arabic,verse_id FROM %1 WHERE surah_id=%2").arg(primary).arg(chapterNumber);
@@ -358,6 +361,11 @@ void QueryHelper::clearAllBookmarks(QObject* caller)
 
 bool QueryHelper::pluginsExist() {
     return QFile::exists( QString("%1/%2.db").arg( QDir::homePath() ).arg(SIMILAR_DB) ) && QFile::exists( QString("%1/%2.db").arg( QDir::homePath() ).arg(TAFSIR) );
+}
+
+
+bool QueryHelper::showTranslation() const {
+    return !m_translation.isEmpty();
 }
 
 
