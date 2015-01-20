@@ -70,42 +70,47 @@ Pin - 2B77C09E</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/BookmarksPane.qml" line="40"/>
+        <location filename="../assets/BookmarksPane.qml" line="32"/>
+        <source>Bookmarks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/BookmarksPane.qml" line="44"/>
         <source>You have no favourites. To mark a favourite, press-and-hold on an ayat or tafsir and choose &apos;Mark Favourite&apos; from the context-menu.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/BookmarksPane.qml" line="63"/>
+        <location filename="../assets/BookmarksPane.qml" line="67"/>
         <source>Removed bookmark!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/BookmarksPane.qml" line="90"/>
+        <location filename="../assets/BookmarksPane.qml" line="94"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/BookmarksPane.qml" line="162"/>
+        <location filename="../assets/BookmarksPane.qml" line="166"/>
         <source>To delete an existing bookmark, simply press-and-hold on it and choose &apos;Remove&apos; from the menu.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/BookmarksPane.qml" line="178"/>
+        <location filename="../assets/BookmarksPane.qml" line="182"/>
         <source>Confirmation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/BookmarksPane.qml" line="179"/>
+        <location filename="../assets/BookmarksPane.qml" line="183"/>
         <source>Are you sure you want to clear all bookmarks?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/BookmarksPane.qml" line="180"/>
+        <location filename="../assets/BookmarksPane.qml" line="184"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/BookmarksPane.qml" line="181"/>
+        <location filename="../assets/BookmarksPane.qml" line="185"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>
@@ -152,12 +157,12 @@ Pin - 2B77C09E</source>
 <context>
     <name>HelpPage</name>
     <message>
-        <location filename="../assets/HelpPage.qml" line="27"/>
+        <location filename="../assets/HelpPage.qml" line="29"/>
         <source>Video Tutorial</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/HelpPage.qml" line="55"/>
+        <location filename="../assets/HelpPage.qml" line="56"/>
         <source>
 
 This app facilitates the reading of Qu&apos;ran for Muslims using BlackBerry 10 to get a smooth and fluid native experience. It includes translations in several languages (Bengali, English, French, Indonesian, Malaysian, Thai, Turkish, Urdu, and many more) as well as the original Arabic version (which is available in both the Uthmani script and the modern simple Imla&apos;ei script). There is also support for verse-by-verse recitation to help you memorize the Qu&apos;ran. You have several reciters to choose from.
@@ -216,22 +221,35 @@ Finally, there is built-in support to do efficient and fast lookups for any sura
     </message>
 </context>
 <context>
+    <name>NotificationToast</name>
+    <message>
+        <location filename="../assets/NotificationToast.qml" line="37"/>
+        <source>Alert!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/NotificationToast.qml" line="89"/>
+        <source>Tip!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QuranPane</name>
     <message>
-        <location filename="../assets/QuranPane.qml" line="33"/>
+        <location filename="../assets/QuranPane.qml" line="11"/>
+        <source>Did you know you can quickly jump to a specific verse by typing its chapter number followed by a &apos;:&apos; and followed by the verse number.
+
+For example, to jump to Surah Al-Baqara Verse #2, type &apos;2:2&apos; into the search field!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/QuranPane.qml" line="26"/>
         <source>Mushaf</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="47"/>
+        <location filename="../assets/QuranPane.qml" line="40"/>
         <source>M</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/QuranPane.qml" line="13"/>
-        <source>Did you know you can quickly jump to a specific verse by typing its chapter number followed by a &apos;:&apos; and followed by the verse number.
-
-For example, to jump to Surah Al-Baqara Verse #2, type &apos;2:2&apos; into the search field!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -314,17 +332,18 @@ You can also select an ayat above the current one to start there and end at the 
         <location filename="../assets/ReciterDropDown.qml" line="53"/>
         <location filename="../assets/ReciterDropDown.qml" line="67"/>
         <location filename="../assets/ReciterDropDown.qml" line="81"/>
-        <location filename="../assets/ReciterDropDown.qml" line="109"/>
+        <location filename="../assets/ReciterDropDown.qml" line="95"/>
         <location filename="../assets/ReciterDropDown.qml" line="137"/>
-        <location filename="../assets/ReciterDropDown.qml" line="158"/>
-        <location filename="../assets/ReciterDropDown.qml" line="172"/>
-        <location filename="../assets/ReciterDropDown.qml" line="179"/>
-        <location filename="../assets/ReciterDropDown.qml" line="193"/>
-        <location filename="../assets/ReciterDropDown.qml" line="214"/>
+        <location filename="../assets/ReciterDropDown.qml" line="165"/>
+        <location filename="../assets/ReciterDropDown.qml" line="186"/>
+        <location filename="../assets/ReciterDropDown.qml" line="200"/>
+        <location filename="../assets/ReciterDropDown.qml" line="207"/>
+        <location filename="../assets/ReciterDropDown.qml" line="221"/>
         <location filename="../assets/ReciterDropDown.qml" line="242"/>
-        <location filename="../assets/ReciterDropDown.qml" line="256"/>
-        <location filename="../assets/ReciterDropDown.qml" line="277"/>
+        <location filename="../assets/ReciterDropDown.qml" line="270"/>
         <location filename="../assets/ReciterDropDown.qml" line="284"/>
+        <location filename="../assets/ReciterDropDown.qml" line="305"/>
+        <location filename="../assets/ReciterDropDown.qml" line="312"/>
         <source>Medium Quality</source>
         <translation type="unfinished"></translation>
     </message>
@@ -341,28 +360,29 @@ You can also select an ayat above the current one to start there and end at the 
         <location filename="../assets/ReciterDropDown.qml" line="60"/>
         <location filename="../assets/ReciterDropDown.qml" line="74"/>
         <location filename="../assets/ReciterDropDown.qml" line="88"/>
-        <location filename="../assets/ReciterDropDown.qml" line="102"/>
-        <location filename="../assets/ReciterDropDown.qml" line="123"/>
+        <location filename="../assets/ReciterDropDown.qml" line="116"/>
         <location filename="../assets/ReciterDropDown.qml" line="130"/>
-        <location filename="../assets/ReciterDropDown.qml" line="144"/>
         <location filename="../assets/ReciterDropDown.qml" line="151"/>
-        <location filename="../assets/ReciterDropDown.qml" line="165"/>
-        <location filename="../assets/ReciterDropDown.qml" line="186"/>
-        <location filename="../assets/ReciterDropDown.qml" line="207"/>
+        <location filename="../assets/ReciterDropDown.qml" line="158"/>
+        <location filename="../assets/ReciterDropDown.qml" line="172"/>
+        <location filename="../assets/ReciterDropDown.qml" line="179"/>
+        <location filename="../assets/ReciterDropDown.qml" line="193"/>
+        <location filename="../assets/ReciterDropDown.qml" line="214"/>
         <location filename="../assets/ReciterDropDown.qml" line="235"/>
-        <location filename="../assets/ReciterDropDown.qml" line="249"/>
         <location filename="../assets/ReciterDropDown.qml" line="263"/>
-        <location filename="../assets/ReciterDropDown.qml" line="270"/>
+        <location filename="../assets/ReciterDropDown.qml" line="277"/>
+        <location filename="../assets/ReciterDropDown.qml" line="291"/>
+        <location filename="../assets/ReciterDropDown.qml" line="298"/>
         <source>Low Quality</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../assets/ReciterDropDown.qml" line="32"/>
-        <location filename="../assets/ReciterDropDown.qml" line="95"/>
-        <location filename="../assets/ReciterDropDown.qml" line="116"/>
-        <location filename="../assets/ReciterDropDown.qml" line="200"/>
-        <location filename="../assets/ReciterDropDown.qml" line="221"/>
+        <location filename="../assets/ReciterDropDown.qml" line="123"/>
+        <location filename="../assets/ReciterDropDown.qml" line="144"/>
         <location filename="../assets/ReciterDropDown.qml" line="228"/>
+        <location filename="../assets/ReciterDropDown.qml" line="249"/>
+        <location filename="../assets/ReciterDropDown.qml" line="256"/>
         <source>High Quality</source>
         <translation type="unfinished"></translation>
     </message>
@@ -392,105 +412,123 @@ You can also select an ayat above the current one to start there and end at the 
     <message>
         <location filename="../assets/ReciterDropDown.qml" line="87"/>
         <location filename="../assets/ReciterDropDown.qml" line="94"/>
-        <source>Hani ar-Rifai</source>
+        <location filename="../assets/ReciterDropDown.qml" line="101"/>
+        <location filename="../assets/ReciterDropDown.qml" line="108"/>
+        <source>Mahmoud Khalil al-Husary</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ReciterDropDown.qml" line="101"/>
-        <location filename="../assets/ReciterDropDown.qml" line="108"/>
-        <source>Ibrahim Akdhar</source>
+        <location filename="../assets/ReciterDropDown.qml" line="102"/>
+        <source>Low Quality (Mujawaad)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/ReciterDropDown.qml" line="109"/>
+        <source>Medium Quality (Mujawaad)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../assets/ReciterDropDown.qml" line="115"/>
-        <source>Khalid Abdullah al-Qahtaanee</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../assets/ReciterDropDown.qml" line="122"/>
-        <source>Khalifa Al Tunaiji</source>
+        <source>Hani ar-Rifai</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../assets/ReciterDropDown.qml" line="129"/>
         <location filename="../assets/ReciterDropDown.qml" line="136"/>
-        <source>Maher bin Hamad Al-Mueaqly</source>
+        <source>Ibrahim Akdhar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../assets/ReciterDropDown.qml" line="143"/>
-        <source>Mahmoud Ali Al Banna</source>
+        <source>Khalid Abdullah al-Qahtaanee</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../assets/ReciterDropDown.qml" line="150"/>
-        <location filename="../assets/ReciterDropDown.qml" line="157"/>
-        <source>Mishary Rashid Al-Afasy</source>
+        <source>Khalifa Al Tunaiji</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../assets/ReciterDropDown.qml" line="157"/>
         <location filename="../assets/ReciterDropDown.qml" line="164"/>
+        <source>Maher bin Hamad Al-Mueaqly</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../assets/ReciterDropDown.qml" line="171"/>
-        <source>Mohammad al Tablaway</source>
+        <source>Mahmoud Ali Al Banna</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../assets/ReciterDropDown.qml" line="178"/>
-        <source>Muhammad Abdulkareem</source>
+        <location filename="../assets/ReciterDropDown.qml" line="185"/>
+        <source>Mishary Rashid Al-Afasy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ReciterDropDown.qml" line="185"/>
         <location filename="../assets/ReciterDropDown.qml" line="192"/>
         <location filename="../assets/ReciterDropDown.qml" line="199"/>
-        <source>Muhammad Ayyoub</source>
+        <source>Mohammad al Tablaway</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../assets/ReciterDropDown.qml" line="206"/>
-        <location filename="../assets/ReciterDropDown.qml" line="213"/>
-        <location filename="../assets/ReciterDropDown.qml" line="220"/>
-        <source>Muhammad Siddiq al-Minshawi</source>
+        <source>Muhammad Abdulkareem</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../assets/ReciterDropDown.qml" line="213"/>
+        <location filename="../assets/ReciterDropDown.qml" line="220"/>
         <location filename="../assets/ReciterDropDown.qml" line="227"/>
-        <source>Muhsin Al-Qasim</source>
+        <source>Muhammad Ayyoub</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../assets/ReciterDropDown.qml" line="234"/>
-        <source>Mustafa Ismail</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../assets/ReciterDropDown.qml" line="241"/>
-        <source>Nasser Alqatami</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../assets/ReciterDropDown.qml" line="248"/>
-        <source>Saad Al-Ghamidi</source>
+        <source>Muhammad Siddiq al-Minshawi</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../assets/ReciterDropDown.qml" line="255"/>
-        <source>Salah Abdulrahman Bukhatir</source>
+        <source>Muhsin Al-Qasim</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../assets/ReciterDropDown.qml" line="262"/>
-        <source>Salah Al-Budair</source>
+        <source>Mustafa Ismail</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../assets/ReciterDropDown.qml" line="269"/>
+        <source>Nasser Alqatami</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../assets/ReciterDropDown.qml" line="276"/>
-        <source>Saud al-Shuraim</source>
+        <source>Saad Al-Ghamidi</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../assets/ReciterDropDown.qml" line="283"/>
+        <source>Salah Abdulrahman Bukhatir</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/ReciterDropDown.qml" line="290"/>
+        <source>Salah Al-Budair</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/ReciterDropDown.qml" line="297"/>
+        <location filename="../assets/ReciterDropDown.qml" line="304"/>
+        <source>Saud al-Shuraim</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/ReciterDropDown.qml" line="311"/>
         <source>Yasser Ad-Dussary</source>
         <translation type="unfinished"></translation>
     </message>
@@ -754,43 +792,14 @@ https://www.youtube.com/watch?v=BDY8i9VQeZM</source>
     </message>
 </context>
 <context>
-    <name>ShaddaTutorial</name>
-    <message>
-        <location filename="../assets/ShaddaTutorial.qml" line="11"/>
-        <source>Shadda Tutorial</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/ShaddaTutorial.qml" line="16"/>
-        <source>Back</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/ShaddaTutorial.qml" line="61"/>
-        <source>
-
-السلام عليكم
-
-Some users have left reviews that there are mistakes in the text. Please note that the above two in Arabic are identical!
-
-If the vowel is on top of the shadda (w) it takes the ruling of a fatha. If the vowel is underneath the shadda, it would sound exactly like if the vowel was underneath the letter itself. Both ways are a valid, and thus this is just a matter of choice.
-
-If you are not used to reading this way, please familiarize yourself with this rule in Arabic, or use the Mushaf feature to read the Qu&apos;ran instead which uses the other style. JazakAllahu khair.
-
-If you would like to read up on the Shadda rules please see here:
-https://en.wikipedia.org/wiki/Shadda</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/ShaddaTutorial.qml" line="79"/>
-        <source>I Understand</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>SupplicationsPane</name>
     <message>
-        <location filename="../assets/SupplicationsPane.qml" line="75"/>
+        <location filename="../assets/SupplicationsPane.qml" line="18"/>
+        <source>Supplications</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/SupplicationsPane.qml" line="80"/>
         <source>These are the various duaa that are found throughout the Qu&apos;ran.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1077,52 +1086,62 @@ May Allah reward you, and bless you and your family.</source>
 <context>
     <name>main</name>
     <message>
-        <location filename="../assets/main.qml" line="18"/>
+        <location filename="../assets/main.qml" line="22"/>
         <source>Qu&apos;ran</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="19"/>
+        <location filename="../assets/main.qml" line="23"/>
         <source>القرآن</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="38"/>
+        <location filename="../assets/main.qml" line="42"/>
         <source>Bookmarks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="36"/>
+        <location filename="../assets/main.qml" line="40"/>
         <source>Favourites</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="52"/>
+        <location filename="../assets/main.qml" line="13"/>
+        <source>Help</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/main.qml" line="16"/>
+        <source>Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/main.qml" line="56"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="53"/>
+        <location filename="../assets/main.qml" line="57"/>
         <source>Find</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="68"/>
+        <location filename="../assets/main.qml" line="72"/>
         <source>Radio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="69"/>
+        <location filename="../assets/main.qml" line="73"/>
         <source>Live</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="84"/>
+        <location filename="../assets/main.qml" line="88"/>
         <source>Supplications</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="85"/>
+        <location filename="../assets/main.qml" line="89"/>
         <source>Du&apos;a from the Qu&apos;ran</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1130,32 +1149,27 @@ May Allah reward you, and bless you and your family.</source>
 <context>
     <name>quran::ApplicationUI</name>
     <message>
-        <location filename="../src/applicationui.cpp" line="152"/>
+        <location filename="../src/applicationui.cpp" line="149"/>
         <source>Invalid pattern specified!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="176"/>
-        <source>Invalid URI specified!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/applicationui.cpp" line="198"/>
+        <location filename="../src/applicationui.cpp" line="177"/>
         <source>Invalid surah specified</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="233"/>
+        <location filename="../src/applicationui.cpp" line="223"/>
         <source>Surah not found!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="259"/>
+        <location filename="../src/applicationui.cpp" line="249"/>
         <source>Added %1 to home screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="261"/>
+        <location filename="../src/applicationui.cpp" line="251"/>
         <source>Could not add %1 to home screen</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1163,16 +1177,8 @@ May Allah reward you, and bless you and your family.</source>
 <context>
     <name>quran::QueryHelper</name>
     <message>
-        <location filename="../src/QueryHelper.cpp" line="44"/>
+        <location filename="../src/QueryHelper.cpp" line="41"/>
         <source>Similar Narrations and Tafsir Databases Updated!</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>quran::RecitationHelper</name>
-    <message>
-        <location filename="../src/RecitationHelper.cpp" line="147"/>
-        <source>It appears the app does not have access to your Shared Folder. This permission is needed to download the recitation audio. Please enable the Shared Folder access in the BlackBerry 10 Application Permissions Screen.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

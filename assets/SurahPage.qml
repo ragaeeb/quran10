@@ -22,7 +22,7 @@ Page
         var translation = persist.getValueFor("translation");
         
         if (translation == "english") {
-            helper.fetchTafsirForSurah(surahPage, surahId, false);
+            //helper.fetchTafsirForSurah(surahPage, surahId, false);
             surahPage.addAction(tafsirAction, ActionBarPlacement.OnBar);   
         } else {
             surahPage.removeAction(tafsirAction);

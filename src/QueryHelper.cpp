@@ -5,8 +5,6 @@
 #include "Logger.h"
 #include "Persistance.h"
 
-#include <bb/data/XmlDataAccess>
-
 #define TAFSIR QString("tafsir_%1").arg(m_translation)
 #define ATTACH_TAFSIR m_sql.attachIfNecessary(TAFSIR, true);
 
@@ -16,7 +14,7 @@ using namespace canadainc;
 using namespace bb::data;
 
 QueryHelper::QueryHelper(Persistance* persist) :
-        m_sql( QString("%1/quran_arabic.db").arg( QDir::homePath() ) ), m_persist(persist)
+        m_sql( QString("%1/assets/dbase/quran_arabic.db").arg( QCoreApplication::applicationDirPath() ) ), m_persist(persist)
 {
     connect( persist, SIGNAL( settingChanged(QString const&) ), this, SLOT( settingChanged(QString const&) ), Qt::QueuedConnection );
     connect( &m_watcher, SIGNAL( fileChanged(QString const&) ), this, SIGNAL( bookmarksUpdated(QString const&) ) );
@@ -25,7 +23,6 @@ QueryHelper::QueryHelper(Persistance* persist) :
 
 void QueryHelper::apply(QString const& text)
 {
-    LOGGER("**** APPLY" << text);
     m_sql.executeQuery(this, text, 56);
 }
 
@@ -48,6 +45,8 @@ void QueryHelper::showPluginsUpdatedToast() {
 void QueryHelper::lazyInit()
 {
     m_translation = m_persist->getValueFor("translation").toString();
+
+    m_sql.attachIfNecessary( QString("quran_%1").arg(m_translation), m_translation != "english" ); // since english translation is loaded by default
 }
 
 
@@ -81,7 +80,7 @@ void QueryHelper::fetchAllTafsir(QObject* caller)
 
 void QueryHelper::fetchAllDuaa(QObject* caller)
 {
-    m_sql.executeQuery(caller, "SELECT supplications.surah_id,supplications.verse_id,chapters.english_name,chapters.arabic_name FROM supplications INNER JOIN chapters ON supplications.surah_id=chapters.surah_id", QueryId::FetchAllDuaa);
+    m_sql.executeQuery(caller, "SELECT surah_id,name,transliteration,verse_number_start FROM supplications INNER JOIN chapters ON supplications.surah_id=chapters.id INNER JOIN surahs ON chapters.id=surahs.id ORDER BY surah_id,verse_number_start ASC", QueryId::FetchAllDuaa);
 }
 
 
@@ -102,7 +101,7 @@ void QueryHelper::fetchChapters(QObject* caller, QString const& text)
     } else if ( text.length() > 2 ) {
         query = QString("SELECT surah_id,arabic_name,english_name,english_translation FROM chapters WHERE english_name like '%%1%' OR arabic_name like '%%1%'").arg(text);
     } else if ( text.isEmpty() ) {
-        query = "SELECT surah_id,arabic_name,english_name,english_translation FROM chapters";
+        query = "SELECT a.id AS surah_id,name,transliteration FROM surahs a INNER JOIN chapters t ON a.id=t.id";
     }
 
     if ( !query.isNull() ) {
@@ -168,14 +167,12 @@ void QueryHelper::fetchAllAyats(QObject* caller, int chapterNumber)
 {
     //LOGGER(chapterNumber);
 
-    QString primary = m_persist->getValueFor("primary").toString();
-    QString translation = m_persist->getValueFor("translation").toString();
     QString query;
 
-    if ( !translation.isEmpty() ) {
-        query = QString("SELECT %1.text as arabic,%1.verse_id,%2.text as translation FROM %1 INNER JOIN %2 on %1.surah_id=%2.surah_id AND %1.verse_id=%2.verse_id AND %1.surah_id=%3").arg(primary).arg(translation).arg(chapterNumber);
+    if ( !m_translation.isEmpty() ) {
+        query = QString("SELECT content AS arabic,verse_number AS verse_id,translation FROM ayahs INNER JOIN verses on ayahs.id=verses.id AND surah_id=%1").arg(chapterNumber);
     } else {
-        query = QString("SELECT text as arabic,verse_id FROM %1 WHERE surah_id=%2").arg(primary).arg(chapterNumber);
+        //query = QString("SELECT text as arabic,verse_id FROM %1 WHERE surah_id=%2").arg(primary).arg(chapterNumber);
     }
 
     m_sql.executeQuery(caller, query, QueryId::FetchAllAyats);

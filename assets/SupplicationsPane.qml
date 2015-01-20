@@ -31,7 +31,7 @@ NavigationPane
                 dataModel: GroupDataModel {
                     id: theDataModel
                     grouping: ItemGrouping.ByFullValue
-                    sortingKeys: ["english_name"]
+                    sortingKeys: ["surah_id"]
                 }
                 
                 listItemComponents: [
@@ -41,7 +41,7 @@ NavigationPane
                         
                         Header {
                             title: ListItemData
-                            subtitle: ListItem.sectionSize
+                            subtitle: ListItem.view.dataModel.childCount(ListItem.indexPath)
                         }
                     },
                     
@@ -50,9 +50,9 @@ NavigationPane
                         type: "item"
                         
                         StandardListItem {
-                            title: ListItemData.english_name
-                            description: ListItemData.arabic_name
-                            status: ListItemData.verse_id
+                            title: ListItemData.transliteration
+                            description: ListItemData.name
+                            status: ListItemData.verse_number_start
                             imageSource: "images/list/ic_supplication.png"
                         }
                     }
@@ -66,7 +66,7 @@ NavigationPane
                     var sp = definition.createObject();
                     navigationPane.push(sp);
                     sp.surahId = data.surah_id;
-                    sp.requestedVerse = data.verse_id;
+                    sp.requestedVerse = data.verse_number_start;
                 }
                 
                 function onDataLoaded(id, data)
@@ -75,6 +75,7 @@ NavigationPane
                     {
                         theDataModel.clear();
                         theDataModel.insertList(data);
+                        navigationPane.parent.unreadContentCount = data.length;
                         
                         if ( persist.tutorial( "tutorialSupplications", qsTr("These are the various duaa that are found throughout the Qu'ran."), "asset:///images/tabs/ic_supplications.png" ) ) {}
                     }
