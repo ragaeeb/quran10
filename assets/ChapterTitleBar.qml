@@ -146,9 +146,13 @@ TitleBar
     
     function onDataLoaded(id, data)
     {
-        if (id == QueryId.FetchSurahHeader) {
-            surahNameArabic.text = data[0].arabic_name;
-            surahNameEnglish.text = qsTr("%1 (%2)").arg(data[0].english_name).arg(data[0].english_translation);
+        if (id == QueryId.FetchSurahHeader)
+        {
+            surahNameArabic.text = data[0].name;
+            
+            if (helper.showTranslation) {
+                surahNameEnglish.text = qsTr("%1 (%2)").arg(data[0].transliteration).arg(data[0].translation);
+            }
         }
     }
 }

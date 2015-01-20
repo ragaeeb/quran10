@@ -23,6 +23,7 @@ class QueryHelper : public QObject
 {
 	Q_OBJECT
 	Q_PROPERTY(QString translation READ translation NOTIFY textualChange)
+	Q_PROPERTY(bool showTranslation READ showTranslation NOTIFY textualChange)
 
     DatabaseHelper m_sql;
     Persistance* m_persist;
@@ -66,6 +67,7 @@ public:
     void diffPlugins(QString const& similarDbase, QString const& tafsirArabicDbase, QString const& tafsirEnglishDbase, QString const& path);
 
     QString translation() const;
+    bool showTranslation() const;
 
     static bool bookmarksReady();
     bool pluginsExist();
