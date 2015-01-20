@@ -82,8 +82,8 @@ Page
                     {
                         id: sli
                         property bool peek: ListItem.view.secretPeek
-                        title: ListItemData.english_name
-                        description: ListItemData.arabic_name
+                        title: ListItemData.transliteration
+                        description: ListItemData.name
                         status: ListItemData.surah_id
                         imageSource: "images/ic_quran.png"
                         
@@ -130,10 +130,6 @@ Page
                     theDataModel.append(data);
                 }
             }
-            
-            onCreationCompleted: {
-                textField.textChanging("");
-            }
         }
         
         attachedObjects: [
@@ -142,5 +138,13 @@ Page
                 imageSource: "images/backgrounds/background.png"
             }
         ]
+    }
+    
+    function onReady() {
+        textField.textChanging("");
+    }
+    
+    onCreationCompleted: {
+        app.lazyInitComplete.connect(onReady);
     }
 }
