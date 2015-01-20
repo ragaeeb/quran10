@@ -125,7 +125,7 @@ Container
         textStyle {
             color: selection || playing ? Color.White : Color.Black;
             base: itemRoot.ListItem.view.custom.style;
-            fontFamily: "uthman_bold";
+            fontFamily: "Regular";
             textAlign: TextAlign.Center;
             fontSizeValue: itemRoot.ListItem.view.primarySize
             fontSize: FontSize.PointValue

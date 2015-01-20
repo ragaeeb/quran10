@@ -4,9 +4,54 @@ import com.canadainc.data 1.0
 Page
 {
     id: mainPage
-    actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
-    titleBar: QuranTitleBar {}
     signal picked(int chapter, int verse)
+    actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
+
+    titleBar: TitleBar
+    {
+        kind: TitleBarKind.FreeForm
+        kindProperties: FreeFormTitleBarKindProperties
+        {
+            Container
+            {
+                id: titleBar
+                background: titleBack.imagePaint
+                rightPadding: 50
+                layout: DockLayout {}
+                
+                horizontalAlignment: HorizontalAlignment.Fill
+                verticalAlignment: VerticalAlignment.Top
+                
+                ImageView {
+                    imageSource: "images/title/logo.png"
+                    topMargin: 0
+                    leftMargin: 0
+                    rightMargin: 0
+                    bottomMargin: 0
+                    loadEffect: ImageViewLoadEffect.FadeZoom
+                    horizontalAlignment: HorizontalAlignment.Right
+                    verticalAlignment: VerticalAlignment.Center
+                    
+                    animations: [
+                        FadeTransition {
+                            id: fadeInLogo
+                            easingCurve: StockCurve.CubicIn
+                            fromOpacity: 0
+                            toOpacity: 1
+                            duration: 1000
+                        }
+                    ]
+                }
+                
+                attachedObjects: [
+                    ImagePaintDefinition {
+                        id: titleBack
+                        imageSource: "images/title/title_bg.png"
+                    }
+                ]
+            }
+        }
+    }
     
     onPeekedAtChanged: {
         listView.secretPeek = peekedAt;
@@ -23,11 +68,6 @@ Page
             bottomMargin: 0
             horizontalAlignment: HorizontalAlignment.Fill
             inputRoute.primaryKeyTarget: true;
-            
-            onCreationCompleted: {
-                translate.play();
-                input["keyLayout"] = 7;
-            }
             
             onTextChanging: {
                 helper.fetchChapters(listView, text);
@@ -140,8 +180,13 @@ Page
         ]
     }
     
-    function onReady() {
+    function onReady()
+    {
         textField.textChanging("");
+        fadeInLogo.play();
+        translate.play();
+
+        textField.input["keyLayout"] = 7;
     }
     
     onCreationCompleted: {

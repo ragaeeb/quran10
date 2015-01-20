@@ -198,8 +198,8 @@ ListView
             rules: [
                 FontFaceRule {
                     id: baseStyleFontRule
-                    source: "fonts/uthman_bold.otf"
-                    fontFamily: "uthman_bold"
+                    source: "fonts/me_quran.ttf"
+                    fontFamily: "Regular"
                 }
             ]
         },

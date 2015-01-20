@@ -5,6 +5,7 @@
 #include "Logger.h"
 #include "Persistance.h"
 
+#define TRANSLATION QString("quran_%1").arg(m_translation)
 #define TAFSIR QString("tafsir_%1").arg(m_translation)
 #define ATTACH_TAFSIR m_sql.attachIfNecessary(TAFSIR, true);
 
@@ -18,12 +19,6 @@ QueryHelper::QueryHelper(Persistance* persist) :
 {
     connect( persist, SIGNAL( settingChanged(QString const&) ), this, SLOT( settingChanged(QString const&) ), Qt::QueuedConnection );
     connect( &m_watcher, SIGNAL( fileChanged(QString const&) ), this, SIGNAL( bookmarksUpdated(QString const&) ) );
-}
-
-
-void QueryHelper::apply(QString const& text)
-{
-    m_sql.executeQuery(this, text, 56);
 }
 
 
@@ -46,16 +41,19 @@ void QueryHelper::lazyInit()
 {
     m_translation = m_persist->getValueFor("translation").toString();
 
-    m_sql.attachIfNecessary( QString("quran_%1").arg(m_translation), m_translation != "english" ); // since english translation is loaded by default
+    settingChanged("translation");
+    m_sql.attachIfNecessary(TRANSLATION, m_translation != "english"); // since english translation is loaded by default
 }
 
 
 void QueryHelper::settingChanged(QString const& key)
 {
-    if (key == "translation" || key == "primary")
+    if (key == "translation")
     {
-        m_translation = m_persist->getValueFor("translation").toString();
         m_sql.detach(TAFSIR);
+        m_sql.detach(TRANSLATION);
+
+        m_translation = m_persist->getValueFor("translation").toString();
         emit textualChange();
     }
 }
