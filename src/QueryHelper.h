@@ -74,7 +74,6 @@ public:
     Q_SLOT void initForeignKeys();
     Q_SLOT void monitorBookmarks();
     void showPluginsUpdatedToast();
-    Q_INVOKABLE void apply(QString const& text);
 };
 
 } /* namespace quran */

@@ -944,7 +944,7 @@ May Allah reward you, and bless you and your family.</source>
 <context>
     <name>SurahPickerPage</name>
     <message>
-        <location filename="../assets/SurahPickerPage.qml" line="22"/>
+        <location filename="../assets/SurahPickerPage.qml" line="67"/>
         <source>Search surah name or number (ie: &apos;2&apos; for Surah Al-Baqara)...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1177,7 +1177,7 @@ May Allah reward you, and bless you and your family.</source>
 <context>
     <name>quran::QueryHelper</name>
     <message>
-        <location filename="../src/QueryHelper.cpp" line="41"/>
+        <location filename="../src/QueryHelper.cpp" line="36"/>
         <source>Similar Narrations and Tafsir Databases Updated!</source>
         <translation type="unfinished"></translation>
     </message>
