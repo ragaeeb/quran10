@@ -1,18 +1,22 @@
 import bb.cascades 1.0
-import bb.system 1.0
+import com.canadainc.data 1.0
 
 NavigationPane
 {
     id: navigationPane
-
+    
     onPopTransitionEnded: {
         page.destroy();
     }
-
+    
     Page
     {
         id: mainPage
         actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
+        
+        onCreationCompleted: {
+            deviceUtils.attachTopBottomKeys(mainPage, listView, true);
+        }
         
         actions: [
             DeleteActionItem
@@ -23,7 +27,14 @@ NavigationPane
                 
                 onTriggered: {
                     console.log("UserEvent: ClearBookmarks");
-                    prompt.show();
+                    var confirmed = persist.showBlockingDialog( qsTr("Confirmation"), qsTr("Are you sure you want to clear all bookmarks?") );
+                    
+                    if (confirmed) {
+                        console.log("UserEvent: ClearBookmarksPromptYes");
+                        helper.clearAllBookmarks(listView);
+                    } else {
+                        console.log("UserEvent: ClearBookmarksPromptNo");
+                    }
                 }
             }
         ]
@@ -31,55 +42,89 @@ NavigationPane
         titleBar: TitleBar {
             title: qsTr("Bookmarks") + Retranslate.onLanguageChanged
         }
-
+        
         Container
         {
             horizontalAlignment: HorizontalAlignment.Fill
             background: back.imagePaint
-
+            layout: DockLayout {}
+            
             EmptyDelegate
             {
                 id: noElements
                 graphic: "images/placeholders/ic_empty_bookmarks.png"
-                labelText: qsTr("You have no favourites. To mark a favourite, press-and-hold on an ayat or tafsir and choose 'Mark Favourite' from the context-menu.") + Retranslate.onLanguageChanged
+                labelText: qsTr("You have no favourites. To mark a favourite, go to a hadith, and choose 'Mark Favourite' from the bottom action bar.") + Retranslate.onLanguageChanged
             }
-
+            /*
+            ProgressControl
+            {
+                id: busy
+                asset: "images/progress/linking.png"
+                topMargin: 20; bottomMargin: 20
+            } */
+            
             ListView
             {
                 id: listView
-                dataModel: ArrayDataModel {
-                    id: adm
-                }
                 
-                function itemType(data, indexPath) {
-                    return data.type;
-                }
-                
-                function deleteBookmark(indexPath)
+                dataModel: GroupDataModel
                 {
-                    var bookmarks = persist.getValueFor("bookmarks");
-                    
-                    if (bookmarks && bookmarks.length > 0)
-                    {
-                        bookmarks.splice(indexPath, 1);
+                    id: gdm
+                    grouping: ItemGrouping.ByFullValue
+                    sortingKeys: ["tag"]
+                }
+                
+                function onDataLoaded(id, data)
+                {
+                    if (id == QueryId.SetupBookmarks) {
+                        helper.fetchAllBookmarks(listView);
+                    } else if (id == QueryId.FetchAllBookmarks) {
+                        gdm.clear();
+                        gdm.insertList(data);
                         
-                        persist.saveValueFor("bookmarks", bookmarks);
+                        noElements.delegateActive = gdm.isEmpty();
+                        listView.visible = !noElements.delegateActive;
+                        
+                        if (listView.visible && navigationPane.parent.parent.activePane == navigationPane && navigationPane.top == mainPage) {
+                            persist.tutorial( "tutorialBookmarkDel", qsTr("To delete an existing bookmark, simply press-and-hold on it and choose 'Remove' from the menu."), "asset:///images/menu/ic_bookmark_delete.png" );
+                        }
+                        
+                        navigationPane.parent.unreadContentCount = data.length;
+                    } else if (id == QueryId.ClearAllBookmarks) {
+                        persist.showToast( qsTr("Cleared all bookmarks!"), "", "asset:///images/menu/ic_bookmark_delete.png" );
+                    } else if (id == QueryId.RemoveBookmark) {
                         persist.showToast( qsTr("Removed bookmark!"), "", "asset:///images/menu/ic_bookmark_delete.png" );
                     }
                 }
                 
+                function deleteBookmark(indexPath) {
+                    helper.removeBookmark( listView, dataModel.data(indexPath).id );
+                }
+                
+                onCreationCompleted: {
+                    helper.fetchAllBookmarks(listView);
+                }
+                
                 listItemComponents: [
+                    ListItemComponent {
+                        type: "header"
+                        
+                        Header {
+                            title: ListItemData.length > 0 ? ListItemData : qsTr("Uncategorized") + Retranslate.onLanguageChanged
+                        }
+                    },
+                    
                     ListItemComponent
                     {
-                        type: "verse"
+                        type: "item"
                         
                         StandardListItem
                         {
                             id: sli
-                            title: ListItemData.surah_name
-                            status: "%1:%2".arg(ListItemData.surah_id).arg(ListItemData.verse_id)
-                            description: ListItemData.text
-                            imageSource: "images/ic_quran.png"
+                            title: ListItemData.name
+                            status: ListItemData.hadithNumber
+                            description: collections.renderAppropriate(ListItemData.collection)
+                            imageSource: collections.render(ListItemData.collection).imageSource
                             scaleX: 1
                             
                             contextActions: [
@@ -95,24 +140,8 @@ NavigationPane
                                         
                                         onTriggered: {
                                             console.log("UserEvent: RemoveBookmark");
-                                            itemDeletedAnim.play();
+                                            sli.ListItem.view.deleteBookmark(sli.ListItem.indexPath);
                                         }
-                                    }
-                                }
-                            ]
-                            
-                            animations: [
-                                ScaleTransition
-                                {
-                                    id: itemDeletedAnim
-                                    fromX: 1
-                                    toX: 0
-                                    duration: 500
-                                    easingCurve: StockCurve.CubicOut
-                                    
-                                    onEnded: {
-                                        sli.ListItem.view.deleteBookmark(sli.ListItem.indexPath);
-                                        sli.scaleX = 1;
                                     }
                                 }
                             ]
@@ -121,7 +150,7 @@ NavigationPane
                 ]
                 
                 onTriggered: {
-                    console.log("UserEvent: Bookmark Triggered");
+                    console.log("UserEvent: BookmarkTriggered");
                     var data = dataModel.data(indexPath);
                     
                     definition.source = "SurahPage.qml";
@@ -133,39 +162,6 @@ NavigationPane
                 
                 horizontalAlignment: HorizontalAlignment.Fill
                 verticalAlignment: VerticalAlignment.Fill
-                
-                attachedObjects: [
-                    ComponentDefinition {
-                        id: definition
-                    }
-                ]
-            }
-
-            onCreationCompleted: {
-                persist.settingChanged.connect(reloadNeeded);
-                reloadNeeded("bookmarks");
-            }
-
-            function reloadNeeded(key)
-            {
-                if (key == "bookmarks")
-                {
-                    var bookmarks = persist.getValueFor("bookmarks");
-
-                    if (!bookmarks) {
-                        bookmarks = [];
-                    }
-
-                    adm.clear();
-                    adm.append(bookmarks);
-
-                    noElements.delegateActive = adm.isEmpty();
-                    listView.visible = !noElements.delegateActive;
-
-                    if (listView.visible) {
-                        persist.tutorial( "tutorialBookmarkDel", qsTr("To delete an existing bookmark, simply press-and-hold on it and choose 'Remove' from the menu."), "asset:///images/menu/ic_bookmark_delete.png" );
-                    }
-                }
             }
         }
         
@@ -176,19 +172,8 @@ NavigationPane
                 imageSource: "images/backgrounds/background.png"
             },
             
-            SystemDialog
-            {
-                id: prompt
-                title: qsTr("Confirmation") + Retranslate.onLanguageChanged
-                body: qsTr("Are you sure you want to clear all bookmarks?") + Retranslate.onLanguageChanged
-                confirmButton.label: qsTr("Yes") + Retranslate.onLanguageChanged
-                cancelButton.label: qsTr("No") + Retranslate.onLanguageChanged
-                
-                onFinished: {
-                    if (result == SystemUiResult.ConfirmButtonSelection) {
-                        persist.remove("bookmarks");
-                    }
-                }
+            ComponentDefinition {
+                id: definition
             }
         ]
     }

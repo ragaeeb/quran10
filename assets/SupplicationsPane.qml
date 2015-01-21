@@ -50,7 +50,7 @@ NavigationPane
                         type: "item"
                         
                         StandardListItem {
-                            title: ListItemData.transliteration
+                            title: ListItemData.transliteration ? ListItemData.transliteration : qsTr("Chapter %1").arg(ListItemData.surah_id)
                             description: ListItemData.name
                             status: ListItemData.verse_number_start
                             imageSource: "images/list/ic_supplication.png"

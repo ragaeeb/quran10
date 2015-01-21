@@ -61,27 +61,6 @@ Delegate
         }
     }
     
-    function dismiss()
-    {
-        if (data.length > 0)
-        {
-            var allData = data;
-            var key = allData.pop().key;
-            data = allData;
-            
-            if (key.length > 0) {
-                persist.saveValueFor(key, 1, false);
-            }
-        }
-        
-        if (data.length > 0) {
-            showNext();
-            iconRotate.play();
-        } else if ( !fadeOut.isPlaying() ) {
-            fadeOut.play();
-        }
-    }
-    
     function tutorial(key, text, imageUri)
     {
         if ( !persist.contains(key) && !suppress )
@@ -100,6 +79,27 @@ Delegate
             id: root
             property alias body: bodyLabel.text
             property alias icon: toastIcon.imageSource
+            
+            function dismiss()
+            {
+                if (data.length > 0)
+                {
+                    var allData = data;
+                    var key = allData.pop().key;
+                    data = allData;
+                    
+                    if (key.length > 0) {
+                        persist.saveValueFor(key, 1, false);
+                    }
+                }
+                
+                if (data.length > 0) {
+                    showNext();
+                    iconRotate.play();
+                } else if ( !fadeOut.isPlaying() ) {
+                    fadeOut.play();
+                }
+            }
             
             onOpened: {
                 mainAnim.play();

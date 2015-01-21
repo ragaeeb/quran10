@@ -106,15 +106,18 @@ Sheet
                         
                         function onDataLoaded(id, data)
                         {
-                            if (id == QueryId.FetchPageNumbers && data.length > 0)
+                            var n = data.length;
+                            
+                            if (id == QueryId.FetchPageNumbers && n > 0)
                             {
-                                var n = data.length;
-                                
-                                for (var i = 0; i < n; i++) {
+                                for (var i = 0; i < n; i++)
+                                {
+                                    var current = data[i];
+                                    
                                     var option = optionDefinition.createObject();
-                                    option.text = data[i].arabic_name;
-                                    option.description = data[i].english_name;
-                                    option.value = data[i].page_number;
+                                    option.text = current.name;
+                                    option.description = current.translation ? current.translation : qsTr("%n verses", "", current.verse_count);
+                                    option.value = current.page_number;
                                     dropDownDelegate.control.add(option);
                                 }
                                 
@@ -132,7 +135,9 @@ Sheet
                     ComponentDefinition
                     {
                         id: optionDefinition
-                        Option {}
+                        Option {
+                            imageSource: "images/dropdown/ic_surah.png"
+                        }
                     }
                 ]
             }
