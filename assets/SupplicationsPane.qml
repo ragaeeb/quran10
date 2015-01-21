@@ -31,7 +31,7 @@ NavigationPane
                 dataModel: GroupDataModel {
                     id: theDataModel
                     grouping: ItemGrouping.ByFullValue
-                    sortingKeys: ["surah_id"]
+                    sortingKeys: ["surah_id","verse_number_start"]
                 }
                 
                 listItemComponents: [

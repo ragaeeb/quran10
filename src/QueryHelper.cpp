@@ -90,14 +90,14 @@ bool QueryHelper::initBookmarks(QObject* caller)
 void QueryHelper::fetchAllDuaa(QObject* caller)
 {
     if ( showTranslation() ) {
-        m_sql.executeQuery(caller, "SELECT surah_id,name,transliteration,verse_number_start FROM supplications INNER JOIN chapters ON supplications.surah_id=chapters.id INNER JOIN surahs ON chapters.id=surahs.id ORDER BY surah_id,verse_number_start ASC", QueryId::FetchAllDuaa);
+        m_sql.executeQuery(caller, "SELECT surah_id,name,transliteration,verse_number_start FROM supplications INNER JOIN chapters ON supplications.surah_id=chapters.id INNER JOIN surahs ON chapters.id=surahs.id", QueryId::FetchAllDuaa);
     } else {
-        m_sql.executeQuery(caller, "SELECT surah_id,name,verse_number_start FROM supplications INNER JOIN surahs ON supplications.surah_id=surahs.id ORDER BY surah_id,verse_number_start ASC", QueryId::FetchAllDuaa);
+        m_sql.executeQuery(caller, "SELECT surah_id,name,verse_number_start FROM supplications INNER JOIN surahs ON supplications.surah_id=surahs.id", QueryId::FetchAllDuaa);
     }
 }
 
 
-void QueryHelper::fetchChapters(QObject* caller, QString const& text)
+void QueryHelper::fetchChapters(QObject* caller, QString const& text, QString sortOrder)
 {
     QString query;
 
@@ -133,6 +133,15 @@ void QueryHelper::fetchChapters(QObject* caller, QString const& text)
                 query += " WHERE name LIKE '%' || ? || '%'";
                 args << text;
             }
+        }
+
+        if ( !sortOrder.isEmpty() )
+        {
+            if ( sortOrder == "name" && showTranslation() ) {
+                sortOrder = "transliteration";
+            }
+
+            query += QString(" ORDER BY %1").arg(sortOrder);
         }
     }
 

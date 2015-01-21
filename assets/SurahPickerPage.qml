@@ -50,6 +50,51 @@ Page
                     }
                 ]
             }
+            
+            expandableArea
+            {
+                expanded: sortOrder.selectedOption == null
+                
+                content: Container
+                {
+                    horizontalAlignment: HorizontalAlignment.Fill
+                    
+                    DropDown
+                    {
+                        id: sortOrder
+                        title: qsTr("Sort Order") + Retranslate.onLanguageChanged
+                        horizontalAlignment: HorizontalAlignment.Fill
+                        
+                        Option {
+                            id: alphabet
+                            text: qsTr("Alphabetical") + Retranslate.onLanguageChanged
+                            description: qsTr("Sorted by bookmark name") + Retranslate.onLanguageChanged
+                            imageSource: "images/dropdown/sort_alphabet.png"
+                            value: "name"
+                        }
+                        
+                        Option {
+                            id: oldest
+                            text: qsTr("Normal") + Retranslate.onLanguageChanged
+                            description: qsTr("The oldest bookmarks will be shown first") + Retranslate.onLanguageChanged
+                            imageSource: "images/dropdown/sort_normal.png"
+                            value: ""
+                        }
+                        
+                        Option {
+                            id: recent
+                            text: qsTr("Revelation") + Retranslate.onLanguageChanged
+                            description: qsTr("The most recent bookmarks will be shown first") + Retranslate.onLanguageChanged
+                            imageSource: "images/dropdown/sort_revelation.png"
+                            value: "revelation_order"
+                        }
+                        
+                        onSelectedValueChanged: {
+                            textField.textChanging(textField.text);
+                        }
+                    }
+                }
+            }
         }
     }
     
@@ -70,7 +115,7 @@ Page
             inputRoute.primaryKeyTarget: true;
             
             onTextChanging: {
-                helper.fetchChapters(listView, text);
+                helper.fetchChapters(listView, text, sortOrder.selectedValue);
             }
             
             input {
