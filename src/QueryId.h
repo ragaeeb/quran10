@@ -42,7 +42,8 @@ public:
         SearchQueryPrimary,
         SearchQueryTranslation,
         SearchTafsir,
-        Setup,
+        SettingUpBookmarks,
+        SetupBookmarks,
         UpdatePlugins
     };
 };

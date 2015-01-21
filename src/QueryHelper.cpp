@@ -6,8 +6,7 @@
 #include "Persistance.h"
 
 #define TRANSLATION QString("quran_%1").arg(m_translation)
-#define TAFSIR QString("tafsir_%1").arg(m_translation)
-#define ATTACH_TAFSIR m_sql.attachIfNecessary(TAFSIR, true);
+#define MIN_CHARS_FOR_SURAH_SEARCH 2
 
 namespace quran {
 
@@ -25,15 +24,7 @@ QueryHelper::QueryHelper(Persistance* persist) :
 void QueryHelper::onDataLoaded(QVariant id, QVariant data)
 {
     Q_UNUSED(data);
-
-    if ( id.toInt() == QueryId::UpdatePlugins ) {
-        showPluginsUpdatedToast();
-    }
-}
-
-
-void QueryHelper::showPluginsUpdatedToast() {
-    m_persist->showToast( tr("Similar Narrations and Tafsir Databases Updated!"), "", "asset:///images/dropdown/similar.png" );
+    Q_UNUSED(id);
 }
 
 
@@ -50,11 +41,11 @@ void QueryHelper::settingChanged(QString const& key)
     {
         if ( showTranslation() )
         {
-            m_sql.detach(TAFSIR);
             m_sql.detach(TRANSLATION);
         }
 
         m_translation = m_persist->getValueFor("translation").toString();
+
         emit textualChange();
     }
 }
@@ -64,24 +55,45 @@ void QueryHelper::fetchAllBookmarks(QObject* caller)
 {
     LOGGER("fetchAllBookmarks");
 
-    m_sql.attachIfNecessary("bookmarks", true);
-    QString query = "SELECT id as bid,aid as id,collection,hadithNumber,name,tag,timestamp FROM bookmarks ORDER BY timestamp DESC";
-
-    m_sql.executeQuery(caller, query, QueryId::FetchAllBookmarks);
+    if ( initBookmarks(caller) )
+    {
+        QString query = "SELECT id,surah_id,verse_id,name,tag,timestamp FROM bookmarks";
+        m_sql.executeQuery(caller, query, QueryId::FetchAllBookmarks);
+    }
 }
 
 
-void QueryHelper::fetchAllTafsir(QObject* caller)
+bool QueryHelper::initBookmarks(QObject* caller)
 {
-    ATTACH_TAFSIR;
-    QString query = "SELECT id,author,title FROM suites ORDER BY id DESC";
-    m_sql.executeQuery(caller, query, QueryId::FetchAllTafsir);
+    QFile bookmarksPath(BOOKMARKS_PATH);
+    bool ready = bookmarksPath.exists() && bookmarksPath.size() > 0;
+
+    if (!ready) // if no bookmarks created yet
+    {
+        m_sql.startTransaction(caller, QueryId::SettingUpBookmarks);
+
+        QStringList statements;
+        statements << "CREATE TABLE IF NOT EXISTS bookmarks.bookmarks (id INTEGER PRIMARY KEY, surah_id INTEGER REFERENCES surahs(id), verse_id INTEGER REFERENCES ayahs(id), name TEXT, tag TEXT, timestamp INTEGER)";
+        statements << "CREATE TABLE IF NOT EXISTS bookmarks.bookmarked_tafsir (id INTEGER PRIMARY KEY, tid INTEGER, author TEXT, title TEXT, name TEXT, tag TEXT, timestamp INTEGER)";
+
+        foreach (QString const& q, statements) {
+            m_sql.executeInternal(q, QueryId::SettingUpBookmarks);
+        }
+
+        m_sql.endTransaction(caller, QueryId::SetupBookmarks);
+    }
+
+    return ready;
 }
 
 
 void QueryHelper::fetchAllDuaa(QObject* caller)
 {
-    m_sql.executeQuery(caller, "SELECT surah_id,name,transliteration,verse_number_start FROM supplications INNER JOIN chapters ON supplications.surah_id=chapters.id INNER JOIN surahs ON chapters.id=surahs.id ORDER BY surah_id,verse_number_start ASC", QueryId::FetchAllDuaa);
+    if ( showTranslation() ) {
+        m_sql.executeQuery(caller, "SELECT surah_id,name,transliteration,verse_number_start FROM supplications INNER JOIN chapters ON supplications.surah_id=chapters.id INNER JOIN surahs ON chapters.id=surahs.id ORDER BY surah_id,verse_number_start ASC", QueryId::FetchAllDuaa);
+    } else {
+        m_sql.executeQuery(caller, "SELECT surah_id,name,verse_number_start FROM supplications INNER JOIN surahs ON supplications.surah_id=surahs.id ORDER BY surah_id,verse_number_start ASC", QueryId::FetchAllDuaa);
+    }
 }
 
 
@@ -92,6 +104,7 @@ void QueryHelper::fetchChapters(QObject* caller, QString const& text)
     static QRegExp chapterAyatNumeric = QRegExp(AYAT_NUMERIC_PATTERN);
     static QRegExp chapterNumeric = QRegExp("^\\d{1,3}$");
     QVariantList args;
+    int n = text.length();
 
     if ( chapterAyatNumeric.exactMatch(text) || chapterNumeric.exactMatch(text) )
     {
@@ -100,12 +113,27 @@ void QueryHelper::fetchChapters(QObject* caller, QString const& text)
         if (chapter > 0 && chapter <= 114) {
             query = QString("SELECT surah_id,arabic_name,english_name,english_translation FROM chapters WHERE surah_id=%1").arg(chapter);
         }
-    } else if ( text.length() > 2 ) {
-        query = "SELECT a.id AS surah_id,name,transliteration FROM surahs a INNER JOIN chapters t ON a.id=t.id WHERE name LIKE '%' || ? || '%' OR transliteration LIKE '%' || ? || '%'";
-        args << text;
-        args << text;
-    } else if ( text.isEmpty() ) {
-        query = "SELECT a.id AS surah_id,name,transliteration FROM surahs a INNER JOIN chapters t ON a.id=t.id";
+    } else if (n > MIN_CHARS_FOR_SURAH_SEARCH || n == 0) {
+
+        if ( showTranslation() )
+        {
+            query = "SELECT a.id AS surah_id,name,verse_count,revelation_order,transliteration FROM surahs a INNER JOIN chapters t ON a.id=t.id";
+
+            if (n > MIN_CHARS_FOR_SURAH_SEARCH)
+            {
+                query += " WHERE name LIKE '%' || ? || '%' OR transliteration LIKE '%' || ? || '%'";
+                args << text;
+                args << text;
+            }
+        } else {
+            query = "SELECT id AS surah_id,name,verse_count,revelation_order FROM surahs";
+
+            if (n > MIN_CHARS_FOR_SURAH_SEARCH)
+            {
+                query += " WHERE name LIKE '%' || ? || '%'";
+                args << text;
+            }
+        }
     }
 
     if ( !query.isNull() ) {
@@ -126,23 +154,9 @@ void QueryHelper::fetchRandomAyat(QObject* caller)
 }
 
 
-void QueryHelper::fetchTafsirForAyat(QObject* caller, int chapterNumber, int verseId)
-{
-    //LOGGER(chapterNumber << verseId);
-    m_sql.executeQuery( caller, QString("SELECT id,verse_id,explainer,description FROM tafsir_english WHERE surah_id=%1 AND verse_id=%2").arg(chapterNumber).arg(verseId), QueryId::FetchTafsirForAyat );
-}
-
-
-void QueryHelper::fetchTafsirContent(QObject* caller, QString const& tafsirId)
-{
-    //LOGGER(tafsirId);
-    m_sql.executeQuery( caller, QString("SELECT * from tafsir_english WHERE id=%1").arg(tafsirId), QueryId::FetchTafsirContent );
-}
-
-
 void QueryHelper::fetchSurahHeader(QObject* caller, int chapterNumber)
 {
-    //LOGGER(chapterNumber);
+    LOGGER(chapterNumber);
 
     if ( showTranslation() ) {
         m_sql.executeQuery( caller, QString("SELECT name,translation,transliteration FROM surahs s INNER JOIN chapters c ON s.id=c.id WHERE s.id=%1").arg(chapterNumber), QueryId::FetchSurahHeader );
@@ -152,50 +166,26 @@ void QueryHelper::fetchSurahHeader(QObject* caller, int chapterNumber)
 }
 
 
-void QueryHelper::fetchTafsirForSurah(QObject* caller, int chapterNumber, bool excludeVerses)
-{
-    //LOGGER(chapterNumber);
-
-    if (excludeVerses) {
-        m_sql.executeQuery( caller, QString("SELECT id,description,verse_id,explainer FROM tafsir_english WHERE surah_id=%1 AND verse_id ISNULL").arg(chapterNumber), QueryId::FetchTafsirForSurah );
-    } else {
-        m_sql.executeQuery( caller, QString("SELECT id,verse_id,explainer FROM tafsir_english WHERE surah_id=%1 AND verse_id NOT NULL").arg(chapterNumber), QueryId::FetchTafsirForSurah );
-    }
-}
-
-
 void QueryHelper::fetchAllAyats(QObject* caller, int chapterNumber)
 {
-    //LOGGER(chapterNumber);
+    LOGGER(chapterNumber);
 
     QString query;
 
     if ( showTranslation() ) {
         query = QString("SELECT content AS arabic,verse_number AS verse_id,translation FROM ayahs INNER JOIN verses on ayahs.id=verses.id AND surah_id=%1").arg(chapterNumber);
     } else {
-        //query = QString("SELECT text as arabic,verse_id FROM %1 WHERE surah_id=%2").arg(primary).arg(chapterNumber);
+        query = QString("SELECT content AS arabic,verse_number AS verse_id FROM ayahs WHERE surah_id=%1").arg(chapterNumber);
     }
 
     m_sql.executeQuery(caller, query, QueryId::FetchAllAyats);
 }
 
 
-void QueryHelper::fetchTafsirIbnKatheer(QObject* caller, int chapterNumber)
-{
-    //LOGGER(chapterNumber);
-
-    if (chapterNumber == 114) {
-        chapterNumber = 113;
-    }
-
-    m_sql.executeQuery(caller, QString("SELECT title,body FROM ibn_katheer_english WHERE surah_id=%1").arg(chapterNumber), QueryId::FetchTafsirIbnKatheerForSurah);
-}
-
-
 
 void QueryHelper::searchQuery(QObject* caller, QString const& trimmedText)
 {
-    //LOGGER(trimmedText);
+    LOGGER(trimmedText);
     QString table = m_persist->getValueFor("translation").toString();
     QVariantList args = QVariantList() << trimmedText;
 
@@ -213,116 +203,19 @@ void QueryHelper::searchQuery(QObject* caller, QString const& trimmedText)
 
 void QueryHelper::fetchPageNumbers(QObject* caller)
 {
-    //LOGGER("fetchPageNumbers");
-    m_sql.executeQuery(caller, "SELECT MIN(page_number) as page_number,chapters.english_name,chapters.arabic_name from mushaf_pages INNER JOIN chapters ON mushaf_pages.surah_id=chapters.surah_id GROUP BY mushaf_pages.surah_id", QueryId::FetchPageNumbers);
-}
+    LOGGER("fetchPageNumbers");
 
+    if ( showTranslation() ) {
 
-void QueryHelper::addTafsir(QObject* caller, QString const& author, QString const& translator, QString const& explainer, QString const& title, QString const& description, QString const& reference)
-{
-    LOGGER(author << translator << explainer << title << description << reference);
-
-    QString query = QString("INSERT OR IGNORE INTO suites (id,author,translator,explainer,title,description,reference) VALUES(%1,?,?,?,?,?,?)").arg( QDateTime::currentMSecsSinceEpoch() );
-    m_sql.executeQuery(caller, query, QueryId::AddTafsir, QVariantList() << author << translator << explainer << title << description << reference);
-}
-
-
-void QueryHelper::addTafsirPage(QObject* caller, qint64 suiteId, QString const& body)
-{
-    LOGGER( suiteId << body.length() );
-
-    QString query = QString("INSERT OR IGNORE INTO suite_pages (id,suite_id,body) VALUES(%1,%2,?)").arg( QDateTime::currentMSecsSinceEpoch() ).arg(suiteId);
-    m_sql.executeQuery(caller, query, QueryId::AddTafsirPage, QVariantList() << body);
-}
-
-
-void QueryHelper::editTafsir(QObject* caller, qint64 suiteId, QString const& author, QString const& translator, QString const& explainer, QString const& title, QString const& description, QString const& reference)
-{
-    LOGGER(suiteId << author << translator << explainer << title << description << reference);
-
-    QString query = QString("UPDATE suites SET author=?,translator=?,explainer=?,title=?,description=?,reference=? WHERE id=%1").arg(suiteId);
-    m_sql.executeQuery(caller, query, QueryId::EditTafsir, QVariantList() << author << translator << explainer << title << description << reference);
-}
-
-
-void QueryHelper::editTafsirPage(QObject* caller, qint64 suitePageId, QString const& body)
-{
-    LOGGER( suitePageId << body.length() );
-
-    QString query = QString("UPDATE suite_pages SET body=? WHERE id=%1").arg(suitePageId);
-    m_sql.executeQuery(caller, query, QueryId::EditTafsirPage, QVariantList() << body);
-}
-
-
-void QueryHelper::removeTafsirPage(QObject* caller, qint64 suitePageId)
-{
-    LOGGER(suitePageId);
-
-    QString query = QString("DELETE FROM suite_pages WHERE id=%1").arg(suitePageId);
-    m_sql.executeQuery(caller, query, QueryId::RemoveTafsirPage);
-}
-
-
-void QueryHelper::removeTafsir(QObject* caller, qint64 suiteId)
-{
-    LOGGER(suiteId);
-
-    QString query = QString("DELETE FROM suites WHERE id=%1").arg(suiteId);
-    m_sql.executeQuery(caller, query, QueryId::RemoveTafsir);
+        m_sql.executeQuery(caller, "SELECT MIN(page_number) as page_number,name,translation from mushaf_pages INNER JOIN surahs ON surahs.id=mushaf_pages.surah_id INNER JOIN chapters ON mushaf_pages.surah_id=chapters.id GROUP BY surah_id", QueryId::FetchPageNumbers);
+    } else {
+        m_sql.executeQuery(caller, "SELECT MIN(page_number) as page_number,name,verse_count from mushaf_pages INNER JOIN surahs ON surahs.id=mushaf_pages.surah_id GROUP BY surah_id", QueryId::FetchPageNumbers);
+    }
 }
 
 
 void QueryHelper::initForeignKeys() {
     m_sql.enableForeignKeys();
-}
-
-
-void QueryHelper::monitorBookmarks() {
-    m_watcher.addPath(BOOKMARKS_PATH);
-}
-
-
-void QueryHelper::diffPlugins(QString const& similarDbase, QString const& tafsirArabicDbase, QString const& translationDbase, QString const& path)
-{
-    LOGGER(similarDbase << tafsirArabicDbase << translationDbase << path);
-
-    m_sql.attachIfNecessary(SIMILAR_DB, true);
-    m_sql.attachIfNecessary(TAFSIR_ARABIC_DB, true);
-    m_sql.attachIfNecessary(TAFSIR, true);
-    m_sql.attachIfNecessary(similarDbase, path);
-    m_sql.attachIfNecessary(tafsirArabicDbase, path);
-    m_sql.attachIfNecessary(translationDbase, path);
-
-    m_sql.startTransaction(NULL, QueryId::UpdatePlugins);
-    m_sql.executeQuery(NULL, QString("INSERT OR IGNORE INTO tafsir_arabic.suites SELECT * FROM %1.suites").arg(tafsirArabicDbase), QueryId::AddTafsir);
-    m_sql.executeQuery(NULL, QString("INSERT OR IGNORE INTO tafsir_arabic.suite_pages SELECT * FROM %1.suite_pages").arg(tafsirArabicDbase), QueryId::AddTafsirPage);
-    m_sql.executeQuery(NULL, QString("INSERT OR IGNORE INTO tafsir_arabic.explanations SELECT * FROM %1.explanations").arg(tafsirArabicDbase), QueryId::LinkAyatsToTafsir);
-    m_sql.executeQuery(NULL, QString("INSERT OR IGNORE INTO tafsir_english.suites SELECT * FROM %1.suites").arg(translationDbase), QueryId::AddTafsir);
-    m_sql.executeQuery(NULL, QString("INSERT OR IGNORE INTO tafsir_english.suite_pages SELECT * FROM %1.suite_pages").arg(translationDbase), QueryId::AddTafsirPage);
-    m_sql.executeQuery(NULL, QString("INSERT OR IGNORE INTO tafsir_english.explanations SELECT * FROM %1.explanations").arg(translationDbase), QueryId::LinkAyatsToTafsir);
-    m_sql.endTransaction(NULL, QueryId::UpdatePlugins);
-
-    m_sql.detach(similarDbase);
-    m_sql.detach(tafsirArabicDbase);
-    m_sql.detach(translationDbase);
-}
-
-
-bool QueryHelper::initDatabase(QObject* caller)
-{
-    if ( !bookmarksReady() )
-    {
-        QStringList statements;
-        statements << "CREATE TABLE bookmarks (id INTEGER PRIMARY KEY, aid INTEGER, collection TEXT, hadithNumber TEXT, name TEXT, tag TEXT, timestamp INTEGER)";
-        statements << "CREATE TABLE bookmarked_tafsir (id INTEGER PRIMARY KEY, tid INTEGER, author TEXT, title TEXT, name TEXT, tag TEXT, timestamp INTEGER)";
-        m_sql.initSetup( caller, statements, QueryId::Setup );
-
-        return false;
-    }
-
-    monitorBookmarks();
-
-    return true;
 }
 
 
@@ -335,23 +228,6 @@ void QueryHelper::removeBookmark(QObject* caller, int id)
 }
 
 
-void QueryHelper::fetchAllTafsirForSuite(QObject* caller, qint64 suiteId)
-{
-    LOGGER(suiteId);
-
-    ATTACH_TAFSIR;
-    QString query = QString("SELECT id,body FROM suite_pages WHERE suite_id=%1 ORDER BY id DESC").arg(suiteId);
-    m_sql.executeQuery(caller, query, QueryId::FetchAllTafsirForSuite);
-}
-
-
-bool QueryHelper::bookmarksReady()
-{
-    QFile bookmarksPath(BOOKMARKS_PATH);
-    return bookmarksPath.exists() && bookmarksPath.size() > 0;
-}
-
-
 void QueryHelper::clearAllBookmarks(QObject* caller)
 {
     QString query = "DELETE FROM bookmarks";
@@ -359,18 +235,18 @@ void QueryHelper::clearAllBookmarks(QObject* caller)
 }
 
 
-bool QueryHelper::pluginsExist() {
-    return QFile::exists( QString("%1/%2.db").arg( QDir::homePath() ).arg(SIMILAR_DB) ) && QFile::exists( QString("%1/%2.db").arg( QDir::homePath() ).arg(TAFSIR) );
-}
+void QueryHelper::saveBookmark(QObject* caller, int surahId, int verseId, QString const& name, QString const& tag)
+{
+    LOGGER(surahId << verseId << name << tag);
 
+    initBookmarks(caller);
+
+    QString query = QString("INSERT INTO bookmarks (surah_id,verse_id,name,tag,timestamp) VALUES (%1,'%2',?,?,%3)").arg(surahId).arg(verseId).arg( QDateTime::currentMSecsSinceEpoch() );
+    m_sql.executeQuery(caller, query, QueryId::SaveBookmark, QVariantList() << name << tag);
+}
 
 bool QueryHelper::showTranslation() const {
     return !m_translation.isEmpty();
-}
-
-
-QString QueryHelper::translation() const {
-    return m_translation;
 }
 
 

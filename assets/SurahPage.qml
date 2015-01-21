@@ -1,5 +1,4 @@
 import bb.cascades 1.0
-import bb.device 1.0
 import com.canadainc.data 1.0
 
 Page
@@ -102,42 +101,6 @@ Page
     ]
 
     actions: [
-        ActionItem
-        {
-            id: scrollTop
-            title: qsTr("Top") + Retranslate.onLanguageChanged
-            imageSource: "file:///usr/share/icons/ic_go.png"
-
-            onTriggered: {
-                console.log("UserEvent: SurahJumpTop");
-                listView.scrollToPosition(ScrollPosition.Beginning, ScrollAnimation.None);
-            }
-            
-            onCreationCompleted: {
-                if (hw.isPhysicalKeyboardDevice) {
-                    removeAction(scrollTop);
-                }
-            }
-        },
-
-        ActionItem
-        {
-            id: scrollBottom
-            title: qsTr("Bottom") + Retranslate.onLanguageChanged
-            imageSource: "images/menu/ic_scroll_end.png"
-
-            onTriggered: {
-                console.log("UserEvent: SurahJumpEnd");
-                listView.scrollToPosition(ScrollPosition.End, ScrollAnimation.None);
-            }
-            
-            onCreationCompleted: {
-                if (hw.isPhysicalKeyboardDevice) {
-                    removeAction(scrollBottom);
-                }
-            }
-        },
-        
         ActionItem
         {
             id: playAllAction
@@ -307,10 +270,6 @@ Page
                 ComponentDefinition {
                     id: tp
                     source: "TafseerPicker.qml"
-                },
-                
-                HardwareInfo {
-                    id: hw
                 }
             ]
         }

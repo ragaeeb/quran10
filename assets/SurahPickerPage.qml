@@ -18,11 +18,11 @@ Page
                 background: titleBack.imagePaint
                 rightPadding: 50
                 layout: DockLayout {}
-                
                 horizontalAlignment: HorizontalAlignment.Fill
                 verticalAlignment: VerticalAlignment.Top
                 
-                ImageView {
+                ImageView
+                {
                     imageSource: "images/title/logo.png"
                     topMargin: 0
                     leftMargin: 0
@@ -122,17 +122,17 @@ Page
                     {
                         id: sli
                         property bool peek: ListItem.view.secretPeek
-                        title: ListItemData.transliteration
-                        description: ListItemData.name
+                        title: ListItemData.transliteration ? ListItemData.transliteration : ListItemData.name
+                        description: ListItemData.transliteration ? ListItemData.name : qsTr("%n ayahs", "", ListItemData.verse_count)
                         status: ListItemData.surah_id
                         imageSource: "images/ic_quran.png"
-                        
+
                         onPeekChanged: {
                             if (peek) {
                                 showAnim.play();
                             }
                         }
-                        
+
                         opacity: 0
                         animations: [
                             FadeTransition
@@ -143,7 +143,7 @@ Page
                                 duration: Math.min( sli.ListItem.indexInSection*300, 750 );
                             }
                         ]
-                        
+
                         ListItem.onInitializedChanged: {
                             if (initialized) {
                                 showAnim.play();
@@ -171,13 +171,6 @@ Page
                 }
             }
         }
-        
-        attachedObjects: [
-            ImagePaintDefinition {
-                id: back
-                imageSource: "images/backgrounds/background.png"
-            }
-        ]
     }
     
     function onReady()
@@ -192,4 +185,11 @@ Page
     onCreationCompleted: {
         app.lazyInitComplete.connect(onReady);
     }
+    
+    attachedObjects: [
+        ImagePaintDefinition {
+            id: back
+            imageSource: "images/backgrounds/background.png"
+        }
+    ]
 }
