@@ -46,7 +46,7 @@ public:
     Q_INVOKABLE void fetchAllBookmarks(QObject* caller);
     Q_INVOKABLE void fetchAllDuaa(QObject* caller);
     Q_INVOKABLE void fetchAllAyats(QObject* caller, int chapterNumber);
-    Q_INVOKABLE void fetchChapters(QObject* caller, QString const& text=QString());
+    Q_INVOKABLE void fetchChapters(QObject* caller, QString const& text=QString(), QString sortOrder=QString());
     Q_INVOKABLE void fetchPageNumbers(QObject* caller);
     Q_INVOKABLE void fetchRandomAyat(QObject* caller);
     Q_INVOKABLE void fetchSurahHeader(QObject* caller, int chapterNumber);
