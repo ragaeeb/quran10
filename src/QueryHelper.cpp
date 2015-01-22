@@ -258,6 +258,16 @@ bool QueryHelper::showTranslation() const {
     return !m_translation.isEmpty();
 }
 
+int QueryHelper::primarySize() const {
+    return m_persist->getValueFor("primarySize").toInt();
+}
+
+int QueryHelper::translationSize() const
+{
+    int result = m_persist->getValueFor("translationSize").toInt();
+    return result > 0 ? result : 8;
+}
+
 
 QueryHelper::~QueryHelper()
 {

@@ -8,6 +8,7 @@ Container
     property bool hasTafsir: ListItemData.hasTafsir ? ListItemData.hasTafsir : false
     property bool playing: ListItemData.playing ? ListItemData.playing : false
     property bool active: ListItem.active
+    property alias secondLine: labelDelegate
     
     function updateState()
     {
@@ -54,58 +55,6 @@ Container
             showAnim.play();
         }
     }
-    
-    contextActions: [
-        ActionSet
-        {
-            id: actionSet
-            title: firstLabel.text
-            subtitle: labelDelegate.delegateActive ? labelDelegate.control.text : qsTr("%1:%2").arg(itemRoot.ListItem.view.chapterNumber).arg(ListItemData.verse_id)
-            
-            ActionItem {
-                id: playFromHere
-                
-                title: qsTr("Play From Here") + Retranslate.onLanguageChanged
-                imageSource: "images/menu/ic_play.png"
-                
-                onTriggered: {
-                    console.log("UserEvent: PlayFromHere");
-                    itemRoot.ListItem.view.play( itemRoot.ListItem.indexPath[0]+1, itemRoot.ListItem.view.dataModel.size() );
-                }
-            }
-            
-            ActionItem {
-                title: qsTr("Bookmark") + Retranslate.onLanguageChanged
-                imageSource: "images/menu/ic_bookmark_add.png"
-                
-                onTriggered: {
-                    console.log("UserEvent: BookmarkAyatListItem");
-                    itemRoot.ListItem.view.bookmark(ListItemData)
-                }
-            }
-            
-            ActionItem {
-                title: qsTr("Add to Home Screen") + Retranslate.onLanguageChanged
-                imageSource: "images/menu/ic_home.png"
-                
-                onTriggered: {
-                    console.log("UserEvent: AddHomeScreenAyat");
-                    itemRoot.ListItem.view.addToHomeScreen(ListItemData)
-                }
-            }
-            
-            ActionItem
-            {
-                title: qsTr("Memorize") + Retranslate.onLanguageChanged
-                imageSource: "images/menu/ic_memorize.png"
-                
-                onTriggered: {
-                    console.log("UserEvent: MemorizeAyat");
-                    itemRoot.ListItem.view.memorize( itemRoot.ListItem.indexPath[0] );
-                }
-            }
-        }
-    ]
     
     topPadding: 5
     bottomPadding: 5
