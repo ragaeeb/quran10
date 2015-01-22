@@ -120,7 +120,6 @@ Container
         text: ListItemData.arabic
         multiline: true
         horizontalAlignment: HorizontalAlignment.Fill
-        scaleX: active ? 1.15 : 1
         
         textStyle {
             color: selection || playing ? Color.White : Color.Black;
