@@ -225,9 +225,16 @@ Page
         ]
         
         attachedObjects: [
-            LazyMediaPlayer {
+            LazyMediaPlayer
+            {
                 id: player
                 repeat: persist.getValueFor("repeat") == 1
+                
+                onPlayingChanged: {
+                    if ( persist.getValueFor("keepAwakeDuringPlay") == 1 ) {
+                        Application.mainWindow.screenIdleMode = player.playing ? 1 : 0;
+                    }
+                }
             }
         ]
     }

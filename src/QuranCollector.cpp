@@ -1,6 +1,7 @@
 #include "precompiled.h"
 
 #include "QuranCollector.h"
+#include "QueryHelper.h"
 #include "JlCompress.h"
 
 namespace quran {
@@ -24,6 +25,7 @@ QByteArray QuranCollector::compressFiles()
     QStringList files;
     files << DEFAULT_LOGS;
     files << CARD_LOG_FILE;
+    files << BOOKMARKS_PATH;
     files << QSettings().fileName();
 
     for (int i = files.size()-1; i >= 0; i--)
@@ -41,6 +43,7 @@ QByteArray QuranCollector::compressFiles()
     QByteArray qba = f.readAll();
     f.close();
 
+    QFile::remove(CARD_LOG_FILE);
     QFile::remove(UI_LOG_FILE);
 
     return qba;

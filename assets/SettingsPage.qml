@@ -16,10 +16,10 @@ Page
         
 	    Container
 	    {
-	        leftPadding: 20
-	        topPadding: 20
-	        rightPadding: 20
-	        bottomPadding: 20
+	        leftPadding: 10
+	        topPadding: 10
+	        rightPadding: 10
+	        bottomPadding: 10
 	        horizontalAlignment: HorizontalAlignment.Fill
 	        verticalAlignment: VerticalAlignment.Fill
 	        
@@ -255,6 +255,21 @@ Page
                         infoText.text = qsTr("The translation font size will be medium");
                     } else {
                         infoText.text = qsTr("The translation font size will be large");
+                    }
+                }
+            }
+            
+            PersistCheckBox
+            {
+                topMargin: 20
+                key: "keepAwakeDuringPlay"
+                text: qsTr("Keep Awake During Recitation") + Retranslate.onLanguageChanged
+                
+                onCheckedChanged: {
+                    if (checked) {
+                        infoText.text = qsTr("Your device screen will remain awake while the recitation is playing.") + Retranslate.onLanguageChanged
+                    } else {
+                        infoText.text = qsTr("Your device screen can go to sleep as normal while the recitation is playing.") + Retranslate.onLanguageChanged
                     }
                 }
             }
