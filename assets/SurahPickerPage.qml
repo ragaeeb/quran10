@@ -6,6 +6,7 @@ Page
     id: mainPage
     signal picked(int chapter, int verse)
     actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
+    property alias pickerList: listView
 
     titleBar: TitleBar
     {
@@ -171,7 +172,8 @@ Page
                         description: ListItemData.transliteration ? ListItemData.name : qsTr("%n ayahs", "", ListItemData.verse_count)
                         status: ListItemData.surah_id
                         imageSource: "images/ic_quran.png"
-
+                        contextActions: ActionSet {}
+                        
                         onPeekChanged: {
                             if (peek) {
                                 showAnim.play();

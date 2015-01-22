@@ -20,6 +20,39 @@ NavigationPane
     SurahPickerPage
     {
         id: pickerPage
+
+        pickerList.onSelectionChanged: {
+            var n = pickerList.selectionList().length;
+            compareAction.enabled = n > 1 && n < 5;
+            pickerList.multiSelectHandler.status = qsTr("%n chapters selected", "", n);
+        }
+        
+        pickerList.multiSelectAction: MultiSelectActionItem {}
+
+        pickerList.multiSelectHandler.actions: [
+            ActionItem
+            {
+                id: compareAction
+                enabled: false
+                title: qsTr("Compare") + Retranslate.onLanguageChanged
+                
+                onTriggered: {
+                    console.log("UserEvent: CompareSurahs");
+                    definition.source = "CompareSurahsPage.qml";
+                    var p = definition.createObject();
+                    
+                    var all = pickerPage.pickerList.selectionList();
+                    var surahIds = [];
+                    
+                    for (var i = all.length-1; i >= 0; i--) {
+                        surahIds.push( pickerPage.pickerList.dataModel.data(all[i]).surah_id );
+                    }
+                    
+                    p.surahIds = surahIds;
+                    navigationPane.push(p);
+                }
+            }
+        ]
         
         actions: [
             ActionItem {

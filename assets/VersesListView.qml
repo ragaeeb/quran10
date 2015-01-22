@@ -10,8 +10,8 @@ ListView
     property alias activeDefinition: activeDef
     property int chapterNumber
     property string chapterName
-    property int translationSize: persist.getValueFor("translationSize")
-    property int primarySize: persist.contains("primarySize") ? persist.getValueFor("primarySize") : 8
+    property int translationSize: helper.translationSize
+    property int primarySize: helper.primarySize
     property alias custom: customTextStyle
     property int previousPlayedIndex
     property bool secretPeek: false
@@ -24,35 +24,8 @@ ListView
         grouping: ItemGrouping.ByFullValue
     }
     
-    leadingVisual: ControlDelegate
-    {
+    leadingVisual: BismillahControl {
         delegateActive: chapterNumber > 1 && chapterNumber != 9
-        horizontalAlignment: HorizontalAlignment.Fill
-
-        sourceComponent: ComponentDefinition
-        {
-            Container
-            {
-                horizontalAlignment: HorizontalAlignment.Fill
-                layout: StackLayout {
-                    orientation: LayoutOrientation.LeftToRight
-                }
-                
-                Label {
-                    text: "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ"
-                    horizontalAlignment: HorizontalAlignment.Fill
-                    textStyle.textAlign: TextAlign.Center
-                    textStyle.color: Color.Black
-                    textStyle.fontSize: FontSize.PointValue
-                    textStyle.fontSizeValue: primarySize
-                    multiline: true
-                    
-                    layoutProperties: StackLayoutProperties {
-                        spaceQuota: 1
-                    }
-                }
-            }
-        }
     }
     
     function play(from, to)
@@ -123,10 +96,6 @@ ListView
     {
         if (key == "follow") {
             follow = persist.getValueFor("follow") == 1;
-        } else if (key == "primarySize") {
-            primarySize = persist.getValueFor("primarySize");
-        } else if (key == "translationSize") {
-            translationSize = persist.getValueFor("translationSize");
         }
     }
 
@@ -308,7 +277,62 @@ ListView
         {
             type: "item"
 
-			AyatListItem {}
+			AyatListItem
+			{
+			    id: ali
+			    
+                contextActions: [
+                    ActionSet
+                    {
+                        id: actionSet
+                        title: ListItemData.arabic
+                        subtitle: ali.secondLine.delegateActive ? ali.secondLine.control.text : qsTr("%1:%2").arg(ali.ListItem.view.chapterNumber).arg(ListItemData.verse_id)
+                        
+                        ActionItem {
+                            id: playFromHere
+                            
+                            title: qsTr("Play From Here") + Retranslate.onLanguageChanged
+                            imageSource: "images/menu/ic_play.png"
+                            
+                            onTriggered: {
+                                console.log("UserEvent: PlayFromHere");
+                                ali.ListItem.view.play( ali.ListItem.indexPath[0]+1, ali.ListItem.view.dataModel.size() );
+                            }
+                        }
+                        
+                        ActionItem {
+                            title: qsTr("Bookmark") + Retranslate.onLanguageChanged
+                            imageSource: "images/menu/ic_bookmark_add.png"
+                            
+                            onTriggered: {
+                                console.log("UserEvent: BookmarkAyatListItem");
+                                ali.ListItem.view.bookmark(ListItemData)
+                            }
+                        }
+                        
+                        ActionItem {
+                            title: qsTr("Add to Home Screen") + Retranslate.onLanguageChanged
+                            imageSource: "images/menu/ic_home.png"
+                            
+                            onTriggered: {
+                                console.log("UserEvent: AddHomeScreenAyat");
+                                ali.ListItem.view.addToHomeScreen(ListItemData)
+                            }
+                        }
+                        
+                        ActionItem
+                        {
+                            title: qsTr("Memorize") + Retranslate.onLanguageChanged
+                            imageSource: "images/menu/ic_memorize.png"
+                            
+                            onTriggered: {
+                                console.log("UserEvent: MemorizeAyat");
+                                ali.ListItem.view.memorize( ali.ListItem.indexPath[0] );
+                            }
+                        }
+                    }
+                ]
+			}
         }
     ]
 }

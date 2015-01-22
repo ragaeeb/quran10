@@ -23,6 +23,8 @@ class QueryHelper : public QObject
 {
 	Q_OBJECT
 	Q_PROPERTY(bool showTranslation READ showTranslation NOTIFY textualChange)
+	Q_PROPERTY(int primarySize READ primarySize NOTIFY textualChange)
+	Q_PROPERTY(int translationSize READ translationSize NOTIFY textualChange)
 
     DatabaseHelper m_sql;
     Persistance* m_persist;
@@ -55,6 +57,8 @@ public:
     Q_INVOKABLE void searchQuery(QObject* caller, QString const& trimmedText);
 
     bool showTranslation() const;
+    int primarySize() const;
+    int translationSize() const;
     Q_SLOT void lazyInit();
     Q_SLOT void initForeignKeys();
 };
