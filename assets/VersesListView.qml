@@ -183,6 +183,23 @@ ListView
         
         recitation.memorize(chapterNumber, from+1, end);
     }
+    
+    function refresh()
+    {
+        var sections = verseModel.childCount([]);
+        
+        for (var i = 0; i < sections; i++)
+        {
+            var childrenInSection = verseModel.childCount([i]);
+            
+            for (var j = 0; j < childrenInSection; j++)
+            {
+                var indexPath = [i,j];
+                var current = verseModel.data(indexPath).toMap();
+                varModel.updateItem(indexPath, current);
+            }
+        }
+    }
 
     attachedObjects: [
         ImagePaintDefinition

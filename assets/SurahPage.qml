@@ -17,22 +17,15 @@ Page
     function loadVerses()
     {
         helper.fetchAllAyats(surahPage, surahId);
-        
-        var translation = persist.getValueFor("translation");
-        
-        if (translation == "english") {
-            //helper.fetchTafsirForSurah(surahPage, surahId, false);
-            surahPage.addAction(tafsirAction, ActionBarPlacement.OnBar);   
-        } else {
-            surahPage.removeAction(tafsirAction);
-        }
     }
     
     function reloadNeeded(key)
     {
-        if (key == "translation" || key == "primary" || key == "primarySize" || key == "translationSize") {
+        if (key == "translation") {
             requestedVerse = scroller.firstVisibleItem[0];
             loadVerses();
+        } else if (key == "primarySize" || key == "translationSize") {
+            listView.refresh();
         }
     }
     
@@ -42,7 +35,8 @@ Page
     
     function onDataLoaded(id, data)
     {
-        if (id == QueryId.FetchAllAyats) {
+        if (id == QueryId.FetchAllAyats)
+        {
             listView.theDataModel.clear();
             listView.theDataModel.insertList(data);
             busy.running = false
@@ -55,16 +49,6 @@ Page
             } else if (surahId > 1 && surahId != 9) {
                 listView.scrollToPosition(0, ScrollAnimation.None);
                 listView.scroll(-100, ScrollAnimation.Smooth);
-            }
-        } else if (id == QueryId.FetchTafsirForSurah) {
-            var verseModel = listView.dataModel;
-            
-            for (var i = data.length-1; i >= 0; i--)
-            {
-                var target = [ data[i].verse_id-1, 0 ];
-                var verseData = verseModel.data(target);
-                verseData["hasTafsir"] = true;
-                verseModel.updateItem(target, verseData);
             }
             
             if ( persist.tutorial( "tutorialZoom", qsTr("You can do a pinch gesture anytime to increase and decrease the font size of the Arabic/Transliteration text!"), "asset:///images/ic_quran.png" ) ) { }
@@ -92,13 +76,6 @@ Page
         persist.settingChanged.connect(reloadNeeded);
         navigationPane.popTransitionEnded.connect(onPopEnded);
     }
-    
-    attachedObjects: [
-        ComponentDefinition {
-            id: tafsirDelegate
-            source: "TafseerPicker.qml"
-        }
-    ]
 
     actions: [
         ActionItem
@@ -157,32 +134,6 @@ Page
                 player.repeat = !player.repeat;
                 persist.saveValueFor("repeat", player.repeat ? 1 : 0, false);
             }
-        },
-
-        ActionItem
-        {
-            id: tafsirAction
-            title: qsTr("Tafsir") + Retranslate.onLanguageChanged
-            imageSource: "images/menu/ic_tafsir_show.png"
-
-            onTriggered: {
-                console.log("UserEvent: TafsirAction");
-                ctb.navigationExpanded = false;
-                var page = tafsirDelegate.createObject();
-
-                navigationPane.push(page);
-                
-                page.chapterNumber = surahId;
-                page.verseNumber = 0;
-            }
-            
-            shortcuts: [
-                Shortcut {
-                    key: qsTr("K") + Retranslate.onLanguageChanged
-                }
-            ]
-
-            ActionBar.placement: ActionBarPlacement.OnBar
         }
     ]
     
@@ -211,67 +162,42 @@ Page
         layout: DockLayout {}
         horizontalAlignment: HorizontalAlignment.Fill
         verticalAlignment: VerticalAlignment.Fill
+        background: Color.White
         
-        Container
+        VersesListView
         {
-            background: Color.White
+            id: listView
+            chapterName: qsTr("%1 (%2)").arg(ctb.titleText).arg(ctb.subtitleText)
             
-            ActivityIndicator {
-                id: busy
-                running: true
-                visible: running
-                preferredHeight: 250
-                horizontalAlignment: HorizontalAlignment.Center
-            }
-            
-            VersesListView
-            {
-                id: listView
-                chapterName: qsTr("%1 (%2)").arg(ctb.titleText).arg(ctb.subtitleText)
+            onTriggered: {
+                console.log("UserEvent: VerseTriggered");
                 
-                onTriggered: {
-                    console.log("UserEvent: VerseTriggered");
-                    
-                    if ( persist.getValueFor("translation") == "english" )
-                    {
-                        ctb.navigationExpanded = false;
-                        var data = dataModel.data(indexPath);
-                        
-                        var created = tp.createObject();
-                        created.chapterNumber = surahId;
-                        created.verseNumber = data.verse_id;
-                        
-                        navigationPane.push(created);
-                    }
-                }
-                
-                attachedObjects: [
-                    ListScrollStateHandler {
-                        id: scroller
-                    }
-                ]
-            }
-            
-            gestureHandlers: [
-                PinchHandler
+                if ( persist.getValueFor("translation") == "english" )
                 {
-                    onPinchEnded: {
-                        var newValue = Math.floor(event.pinchRatio*listView.primarySize);
-                        newValue = Math.max(8,newValue);
-                        newValue = Math.min(newValue, 24);
-                        
-                        listView.primarySize = newValue;
-                        persist.saveValueFor("primarySize", newValue);
-                    }
+                    ctb.navigationExpanded = false;
+                    var data = dataModel.data(indexPath);
+                    
+                    var created = tp.createObject();
+                    created.chapterNumber = surahId;
+                    created.verseNumber = data.verse_id;
+                    
+                    navigationPane.push(created);
                 }
-            ]
+            }
             
             attachedObjects: [
-                ComponentDefinition {
-                    id: tp
-                    source: "TafseerPicker.qml"
+                ListScrollStateHandler {
+                    id: scroller
                 }
             ]
+        }
+        
+        ActivityIndicator {
+            id: busy
+            running: true
+            visible: running
+            preferredHeight: 250
+            horizontalAlignment: HorizontalAlignment.Center
         }
         
         DownloadsOverlay
@@ -283,6 +209,20 @@ Page
                 recitation.abort();
             }
         }
+        
+        gestureHandlers: [
+            PinchHandler
+            {
+                onPinchEnded: {
+                    var newValue = Math.floor(event.pinchRatio*listView.primarySize);
+                    newValue = Math.max(8,newValue);
+                    newValue = Math.min(newValue, 24);
+                    
+                    listView.primarySize = newValue;
+                    persist.saveValueFor("primarySize", newValue);
+                }
+            }
+        ]
         
         attachedObjects: [
             LazyMediaPlayer {
