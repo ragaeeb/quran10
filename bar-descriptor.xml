@@ -153,6 +153,7 @@
     <asset path="../canadainc/assets/PersistCheckBox.qml">assets/PersistCheckBox.qml</asset>
     <asset path="../canadainc/assets/PersistDropDown.qml">assets/PersistDropDown.qml</asset>
     <asset path="../canadainc/assets/PlainTextMultiselector.qml">assets/PlainTextMultiselector.qml</asset>
+    <asset path="../canadainc/assets/ProgressControl.qml">assets/ProgressControl.qml</asset>
     <asset path="../canadainc/assets/SliderPair.qml">assets/SliderPair.qml</asset>
     
     <!-- Request permission to execute native code.  Required for native applications. -->

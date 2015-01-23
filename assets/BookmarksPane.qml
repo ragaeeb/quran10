@@ -55,13 +55,12 @@ NavigationPane
                 graphic: "images/placeholders/ic_empty_bookmarks.png"
                 labelText: qsTr("You have no favourites. To mark a favourite, go to a hadith, and choose 'Mark Favourite' from the bottom action bar.") + Retranslate.onLanguageChanged
             }
-            /*
+
             ProgressControl
             {
                 id: busy
-                asset: "images/progress/linking.png"
-                topMargin: 20; bottomMargin: 20
-            } */
+                asset: "images/progress/loading_bookmarks.png"
+            }
             
             ListView
             {
@@ -77,8 +76,11 @@ NavigationPane
                 function onDataLoaded(id, data)
                 {
                     if (id == QueryId.SetupBookmarks) {
+                        busy.delegateActive = true;
                         helper.fetchAllBookmarks(listView);
                     } else if (id == QueryId.FetchAllBookmarks) {
+                        //busy.delegateActive = false;
+                        
                         gdm.clear();
                         gdm.insertList(data);
                         
@@ -102,6 +104,7 @@ NavigationPane
                 }
                 
                 onCreationCompleted: {
+                    busy.delegateActive = true;
                     helper.fetchAllBookmarks(listView);
                 }
                 
