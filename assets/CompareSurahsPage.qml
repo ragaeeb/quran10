@@ -23,7 +23,7 @@ Page
     
     function loadVerses()
     {
-        busy.loaded = 0;
+        busy.delegateActive = true;
         listContainer.removeAll();
         
         for (var i = surahIds.length-1; i >= 0; i--)
@@ -71,18 +71,21 @@ Page
             }
         }
         
-        ActivityIndicator
+        ProgressControl
         {
             id: busy
             property int loaded: 0
-            running: true
-            visible: running
-            preferredHeight: 250
-            horizontalAlignment: HorizontalAlignment.Center
+            asset: "images/progress/loading_compare.png"
+            
+            onDelegateActiveChanged: {
+                if (delegateActive) {
+                    loaded = 0;
+                }
+            }
             
             onLoadedChanged: {
                 if (loaded == surahIds.length) {
-                    running = false;
+                    delegateActive = false;
                 }
             }
         }
