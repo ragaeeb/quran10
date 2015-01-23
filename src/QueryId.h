@@ -22,6 +22,7 @@ public:
         FetchAllDuaa,
         FetchAllTafsir,
         FetchAllTafsirForSuite,
+        FetchAyat,
         FetchChapters,
         FetchPageNumbers,
         FetchRandomAyat,
