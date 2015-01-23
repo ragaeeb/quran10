@@ -79,7 +79,7 @@ NavigationPane
                         busy.delegateActive = true;
                         helper.fetchAllBookmarks(listView);
                     } else if (id == QueryId.FetchAllBookmarks) {
-                        //busy.delegateActive = false;
+                        busy.delegateActive = false;
                         
                         gdm.clear();
                         gdm.insertList(data);
