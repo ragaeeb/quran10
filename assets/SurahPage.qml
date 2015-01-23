@@ -173,17 +173,12 @@ Page
             onTriggered: {
                 console.log("UserEvent: VerseTriggered");
                 
-                if ( persist.getValueFor("translation") == "english" )
-                {
-                    ctb.navigationExpanded = false;
-                    var data = dataModel.data(indexPath);
-                    
-                    var created = tp.createObject();
-                    created.chapterNumber = surahId;
-                    created.verseNumber = data.verse_id;
-                    
-                    navigationPane.push(created);
-                }
+                definition.source = "AyatPage.qml";
+                var ayatPage = definition.createObject();
+                ayatPage.surahId = surahId;
+                ayatPage.verseId = dataModel.data(indexPath).verse_id;
+                
+                navigationPane.push(ayatPage);
             }
             
             attachedObjects: [
@@ -222,19 +217,23 @@ Page
                 }
             }
         ]
-        
-        attachedObjects: [
-            LazyMediaPlayer
-            {
-                id: player
-                repeat: persist.getValueFor("repeat") == 1
-                
-                onPlayingChanged: {
-                    if ( persist.getValueFor("keepAwakeDuringPlay") == 1 ) {
-                        Application.mainWindow.screenIdleMode = player.playing ? 1 : 0;
-                    }
+    }
+    
+    attachedObjects: [
+        LazyMediaPlayer
+        {
+            id: player
+            repeat: persist.getValueFor("repeat") == 1
+            
+            onPlayingChanged: {
+                if ( persist.getValueFor("keepAwakeDuringPlay") == 1 ) {
+                    Application.mainWindow.screenIdleMode = player.playing ? 1 : 0;
                 }
             }
-        ]
-    }
+        },
+        
+        ComponentDefinition {
+            id: definition
+        }
+    ]
 }
