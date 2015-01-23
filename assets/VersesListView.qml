@@ -147,6 +147,10 @@ ListView
     
     function memorize(from)
     {
+        if (previousPlayedIndex >= 0) {
+            clearPrevious();
+        }
+        
         previousPlayedIndex = -1;
         var end = Math.min( from+1+8, dataModel.size() );
         
