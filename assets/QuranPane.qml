@@ -27,13 +27,16 @@ NavigationPane
             pickerList.multiSelectHandler.status = qsTr("%n chapters selected", "", n);
         }
         
-        pickerList.multiSelectAction: MultiSelectActionItem {}
+        pickerList.multiSelectAction: MultiSelectActionItem {
+            imageSource: "images/menu/ic_select_more_chapters.png"
+        }
 
         pickerList.multiSelectHandler.actions: [
             ActionItem
             {
                 id: compareAction
                 enabled: false
+                imageSource: "images/menu/ic_compare.png"
                 title: qsTr("Compare") + Retranslate.onLanguageChanged
                 
                 onTriggered: {
