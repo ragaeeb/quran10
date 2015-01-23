@@ -16,6 +16,7 @@ Page
     
     function loadVerses()
     {
+        busy.delegateActive = true;
         helper.fetchAllAyats(surahPage, surahId);
     }
     
@@ -39,7 +40,7 @@ Page
         {
             listView.theDataModel.clear();
             listView.theDataModel.insertList(data);
-            busy.running = false
+            busy.delegateActive = false;
             
             if (requestedVerse > 0) {
                 var target = [ requestedVerse - 1, 0 ]
@@ -192,12 +193,10 @@ Page
             ]
         }
         
-        ActivityIndicator {
+        ProgressControl
+        {
             id: busy
-            running: true
-            visible: running
-            preferredHeight: 250
-            horizontalAlignment: HorizontalAlignment.Center
+            asset: "images/progress/loading_surah.png"
         }
         
         DownloadsOverlay
