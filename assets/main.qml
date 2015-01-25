@@ -9,6 +9,7 @@ TabbedPane
     {
         id: menuDef
         allowDonations: true
+        bbWorldID: "27022877"
         help.imageSource: "images/menu/ic_help.png"
         help.title: qsTr("Help") + Retranslate.onLanguageChanged
         projectName: "quran10"
