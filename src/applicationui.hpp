@@ -41,19 +41,24 @@ private slots:
     void childCardDone(bb::system::CardDoneMessage const& message=bb::system::CardDoneMessage());
 	void invoked(bb::system::InvokeRequest const& request);
 	void lazyInit();
+    void onBookmarksRestored();
+	void onBookmarksSaved();
 	void onDataLoaded(QVariant id, QVariant data);
 	void onPicked(int chapter, int verse);
 
 signals:
+    void backupComplete(QString const& file);
     void initialize();
     void lazyInitComplete();
+    void restoreComplete(bool success);
 
 public:
 	static void create(bb::cascades::Application* app);
     virtual ~ApplicationUI();
 
-    Q_INVOKABLE void bookmarkVerse(QString const& surahName, int surahNumber, QVariantMap const& verseData);
     Q_INVOKABLE void addToHomeScreen(int chapter, int verse, QString const& label);
+    Q_INVOKABLE void backup(QString const& destination);
+    Q_INVOKABLE void restore(QString const& source);
 };
 
 } // quran
