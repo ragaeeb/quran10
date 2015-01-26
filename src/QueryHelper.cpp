@@ -97,7 +97,7 @@ void QueryHelper::fetchAllDuaa(QObject* caller)
 }
 
 
-bool QueryHelper::fetchChapters(QObject* caller, QString const& text, QString sortOrder)
+bool QueryHelper::fetchChapters(QObject* caller, QString const& text)
 {
     QString query;
 
@@ -229,6 +229,54 @@ void QueryHelper::fetchPageNumbers(QObject* caller)
     } else {
         m_sql.executeQuery(caller, "SELECT MIN(page_number) as page_number,name,verse_count from mushaf_pages INNER JOIN surahs ON surahs.id=mushaf_pages.surah_id GROUP BY surah_id", QueryId::FetchPageNumbers);
     }
+}
+
+
+/**
+ * Juz 1, Fatiha, s1, v1
+ * Juz 2, Baqara, s2, v142
+ * Juz 3, Baqara, s2, v253
+ *
+ * needs to turn into
+ * Juz 1, fatiha s1,v1
+ * juz2, baqara,s2,v142
+ * juz3, baqara,s2,v253
+ * juz 1, baqara s2,v1
+ */
+QVariantList QueryHelper::normalizeJuzs(QVariantList const& source)
+{
+    QVariantList result;
+    int lastJuzId = 1;
+    int n = source.size();
+
+    QMap<int,bool> processed;
+
+    for (int i = 0; i < n; i++)
+    {
+        QVariantMap current = source[i].toMap();
+
+        if ( current.value("juz_id").toInt() > 0 )
+        {
+            lastJuzId = current.value("juz_id").toInt();
+            int surah = current.value("surah_id").toInt();
+
+            if ( current.value("verse_number").toInt() > 1 && !processed.contains(surah) )
+            {
+                QVariantMap copy = current;
+                copy["juz_id"] = lastJuzId-1;
+                copy["verse_number"] = 1;
+
+                result << copy; // baqara:1
+                processed[surah] = true;
+            }
+        } else {
+            current["juz_id"] = lastJuzId;
+        }
+
+        result << current;
+    }
+
+    return result;
 }
 
 

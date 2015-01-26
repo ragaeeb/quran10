@@ -75,7 +75,7 @@ Page
                         }
                         
                         Option {
-                            id: oldest
+                            id: normal
                             text: qsTr("Normal") + Retranslate.onLanguageChanged
                             description: qsTr("The surahs will be displayed in the standard order") + Retranslate.onLanguageChanged
                             imageSource: "images/dropdown/sort_normal.png"
@@ -90,7 +90,7 @@ Page
                             value: "revelation_order"
                         }
                         
-                        onSelectedValueChanged: {
+                        onSelectedOptionChanged: {
                             textField.textChanging(textField.text);
                         }
                     }
@@ -124,7 +124,7 @@ Page
                 inputRoute.primaryKeyTarget: true;
                 
                 onTextChanging: {
-                    var ok = helper.fetchChapters(listView, text, sortOrder.selectedValue);
+                    var ok = helper.fetchChapters(listView, text);
                     busy.delegateActive = ok;
                 }
                 
@@ -236,19 +236,16 @@ Page
                     {
                         theDataModel.clear();
                         
-                        var n = data.length;
-                        var lastJuzId;
-                        
-                        for (var i = 0; i < n; i++)
-                        {
-                            var current = data[i];
-                            
-                            if (current.juz_id) {
-                                lastJuzId = current.juz_id;
-                            } else {
-                                current["juz_id"] = lastJuzId;
-                                data[i] = current;
-                            }
+                        if (sortOrder.selectedOption == alphabet) {
+                            theDataModel.sortingKeys = [helper.showTranslation ? "transliteration" : "name"];
+                            theDataModel.grouping = ItemGrouping.None;
+                        } else if (sortOrder.selectedOption == normal || sortOrder.selectedOption == null) {
+                            theDataModel.sortingKeys = ["juz_id", "surah_id", "verse_number"];
+                            theDataModel.grouping = ItemGrouping.ByFullValue;
+                            data = helper.normalizeJuzs(data);
+                        } else if (sortOrder.selectedOption == recent) {
+                            theDataModel.sortingKeys = ["revelation_order"];
+                            theDataModel.grouping = ItemGrouping.None;
                         }
                         
                         theDataModel.insertList(data);
