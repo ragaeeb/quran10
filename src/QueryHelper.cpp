@@ -117,7 +117,7 @@ bool QueryHelper::fetchChapters(QObject* caller, QString const& text, QString so
 
         if ( showTranslation() )
         {
-            query = "SELECT a.id AS surah_id,name,verse_count,revelation_order,transliteration FROM surahs a INNER JOIN chapters t ON a.id=t.id";
+            query = "SELECT a.id AS surah_id,name,verse_count,revelation_order,transliteration,j.id AS juz_id,verse_number FROM surahs a INNER JOIN chapters t ON a.id=t.id LEFT JOIN juzs j ON j.surah_id=a.id";
 
             if (n > MIN_CHARS_FOR_SURAH_SEARCH)
             {
@@ -126,22 +126,13 @@ bool QueryHelper::fetchChapters(QObject* caller, QString const& text, QString so
                 args << text;
             }
         } else {
-            query = "SELECT id AS surah_id,name,verse_count,revelation_order FROM surahs";
+            query = "SELECT id AS surah_id,name,verse_count,revelation_order,j.id AS juz_id,verse_number FROM surahs LEFT JOIN juzs j ON j.surah_id=a.id";
 
             if (n > MIN_CHARS_FOR_SURAH_SEARCH)
             {
                 query += " WHERE name LIKE '%' || ? || '%'";
                 args << text;
             }
-        }
-
-        if ( !sortOrder.isEmpty() )
-        {
-            if ( sortOrder == "name" && showTranslation() ) {
-                sortOrder = "transliteration";
-            }
-
-            query += QString(" ORDER BY %1").arg(sortOrder);
         }
     }
 

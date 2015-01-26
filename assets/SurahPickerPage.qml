@@ -63,13 +63,13 @@ Page
                     DropDown
                     {
                         id: sortOrder
-                        title: qsTr("Sort Order") + Retranslate.onLanguageChanged
+                        title: qsTr("Display Options") + Retranslate.onLanguageChanged
                         horizontalAlignment: HorizontalAlignment.Fill
                         
                         Option {
                             id: alphabet
-                            text: qsTr("Alphabetical") + Retranslate.onLanguageChanged
-                            description: qsTr("Sorted by bookmark name") + Retranslate.onLanguageChanged
+                            text: qsTr("Alphabetical Order") + Retranslate.onLanguageChanged
+                            description: qsTr("Sorted by surah name") + Retranslate.onLanguageChanged
                             imageSource: "images/dropdown/sort_alphabet.png"
                             value: "name"
                         }
@@ -77,15 +77,15 @@ Page
                         Option {
                             id: oldest
                             text: qsTr("Normal") + Retranslate.onLanguageChanged
-                            description: qsTr("The oldest bookmarks will be shown first") + Retranslate.onLanguageChanged
+                            description: qsTr("The surahs will be displayed in the standard order") + Retranslate.onLanguageChanged
                             imageSource: "images/dropdown/sort_normal.png"
                             value: ""
                         }
                         
                         Option {
                             id: recent
-                            text: qsTr("Revelation") + Retranslate.onLanguageChanged
-                            description: qsTr("The most recent bookmarks will be shown first") + Retranslate.onLanguageChanged
+                            text: qsTr("Revelation Order") + Retranslate.onLanguageChanged
+                            description: qsTr("Display chapters int he order they were revealed") + Retranslate.onLanguageChanged
                             imageSource: "images/dropdown/sort_revelation.png"
                             value: "revelation_order"
                         }
@@ -166,20 +166,32 @@ Page
                 objectName: "listView"
                 property bool secretPeek: false
                 
-                dataModel: ArrayDataModel {
+                dataModel: GroupDataModel {
                     id: theDataModel
+                    sortingKeys: ["juz_id", "surah_id"]
                 }
                 
                 listItemComponents: [
+                    ListItemComponent {
+                        type: "header"
+                        
+                        Header {
+                            title: qsTr("Juz %1").arg(ListItemData)
+                            subtitle: ListItem.view.dataModel.childCount(ListItem.indexPath)
+                        }
+                    },
+                    
                     ListItemComponent
                     {
+                        type: "item"
+                        
                         StandardListItem
                         {
                             id: sli
                             property bool peek: ListItem.view.secretPeek
                             title: ListItemData.transliteration ? ListItemData.transliteration : ListItemData.name
                             description: ListItemData.transliteration ? ListItemData.name : qsTr("%n ayahs", "", ListItemData.verse_count)
-                            status: ListItemData.surah_id
+                            status: ListItemData.verse_number ? ListItemData.verse_number : ListItemData.surah_id
                             imageSource: "images/ic_quran.png"
                             contextActions: ActionSet {}
                             
@@ -223,10 +235,24 @@ Page
                     if (id == QueryId.FetchChapters)
                     {
                         theDataModel.clear();
-                        theDataModel.append(data);
                         
+                        var n = data.length;
+                        var lastJuzId;
+                        
+                        for (var i = 0; i < n; i++)
+                        {
+                            var current = data[i];
+                            
+                            if (current.juz_id) {
+                                lastJuzId = current.juz_id;
+                            } else {
+                                current["juz_id"] = lastJuzId;
+                                data[i] = current;
+                            }
+                        }
+                        
+                        theDataModel.insertList(data);
                         busy.delegateActive = false;
-                        
                         noElements.delegateActive = theDataModel.isEmpty();
                         listView.visible = !noElements.delegateActive;
                     }
