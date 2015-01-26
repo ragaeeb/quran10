@@ -35,82 +35,209 @@ Pin - 2B77C09E</source>
     </message>
 </context>
 <context>
-    <name>AyatListItem</name>
+    <name>AyatListView</name>
     <message>
-        <location filename="../assets/AyatListItem.qml" line="63"/>
+        <location filename="../assets/AyatListView.qml" line="71"/>
         <source>%1:%2</source>
         <translation type="unfinished"></translation>
     </message>
+</context>
+<context>
+    <name>AyatPage</name>
     <message>
-        <location filename="../assets/AyatListItem.qml" line="78"/>
-        <source>Bookmark</source>
+        <location filename="../assets/AyatPage.qml" line="90"/>
+        <source>There appears to be other narrations with similar wording, choose the &apos;%1 Similar&apos; option at the top to view them in a split screen.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatListItem.qml" line="88"/>
-        <source>Add to Home Screen</source>
+        <location filename="../assets/AyatPage.qml" line="93"/>
+        <source>There are explanations of this hadith by the people of knowledge! Tap on the &apos;%1 Tafsir&apos; option at the top to view them.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatListItem.qml" line="68"/>
-        <source>Play From Here</source>
+        <location filename="../assets/AyatPage.qml" line="141"/>
+        <source>Verse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatListItem.qml" line="99"/>
-        <source>Memorize</source>
+        <location filename="../assets/AyatPage.qml" line="155"/>
+        <source>Audio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../assets/AyatPage.qml" line="176"/>
+        <source>%n similar</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../assets/AyatPage.qml" line="193"/>
+        <source>%n tafsir</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <location filename="../assets/AyatPage.qml" line="215"/>
+        <source>Mark Favourite</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/AyatPage.qml" line="234"/>
+        <source>Add Shortcut</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/AyatPage.qml" line="254"/>
+        <source>Copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/AyatPage.qml" line="266"/>
+        <source>Share</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/AyatPage.qml" line="283"/>
+        <source>Finish Editing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/AyatPage.qml" line="283"/>
+        <source>Report Mistake</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/AyatPage.qml" line="308"/>
+        <source>The narration is now editable. Please make the changes you feel are needed to correct it and then from the menu choose &apos;Report Error&apos; again.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/AyatPage.qml" line="308"/>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/AyatPage.qml" line="344"/>
+        <source>To increase and decrease the font size of the text simply do a pinch gesture here!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/AyatPage.qml" line="345"/>
+        <source>To quickly access this hadith again, tap on the &apos;Mark Favourite&apos; action at the bottom to put it in the Bookmarks tab that shows up in the start of the app.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/AyatPage.qml" line="346"/>
+        <source>To quickly access this hadith again, tap on the &apos;Add Shortcut&apos; action at the bottom to pin it to your homescreen.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/AyatPage.qml" line="347"/>
+        <source>To share this hadith with your friends tap on the &apos;Share&apos; action at the bottom.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/AyatPage.qml" line="348"/>
+        <source>If you want to link this hadith to another, you can group them together by choosing the &apos;Link&apos; action from the menu, then selecting the other narrations and tapping &apos;Save&apos;! You will then find these hadith showing up in the &apos;Similar&apos; tab at the top.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/AyatPage.qml" line="349"/>
+        <source>If you notice any mistakes with the text or the translation of the hadith, tap on the &apos;...&apos; icon at the bottom-right to use the menu, and use the &apos;Report Mistake&apos; action from the menu.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/AyatPage.qml" line="361"/>
+        <source>The hadith was not found in the database.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>BookmarksPane</name>
     <message>
-        <location filename="../assets/BookmarksPane.qml" line="26"/>
+        <location filename="../assets/BookmarksPane.qml" line="82"/>
         <source>Clear Bookmarks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/BookmarksPane.qml" line="43"/>
+        <location filename="../assets/BookmarksPane.qml" line="99"/>
         <source>Bookmarks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/BookmarksPane.qml" line="96"/>
+        <location filename="../assets/BookmarksPane.qml" line="154"/>
         <source>Removed bookmark!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/BookmarksPane.qml" line="113"/>
+        <location filename="../assets/BookmarksPane.qml" line="172"/>
         <source>Uncategorized</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/BookmarksPane.qml" line="139"/>
+        <location filename="../assets/BookmarksPane.qml" line="198"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/BookmarksPane.qml" line="89"/>
+        <location filename="../assets/BookmarksPane.qml" line="147"/>
         <source>To delete an existing bookmark, simply press-and-hold on it and choose &apos;Remove&apos; from the menu.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/BookmarksPane.qml" line="30"/>
-        <source>Confirmation</source>
+        <location filename="../assets/BookmarksPane.qml" line="25"/>
+        <source>Backup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/BookmarksPane.qml" line="30"/>
-        <source>Are you sure you want to clear all bookmarks?</source>
+        <location filename="../assets/BookmarksPane.qml" line="31"/>
+        <source>Select Destination</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/BookmarksPane.qml" line="40"/>
+        <source>Successfully backed up to %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/BookmarksPane.qml" line="50"/>
+        <source>Restore</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../assets/BookmarksPane.qml" line="56"/>
+        <source>Select File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/BookmarksPane.qml" line="65"/>
+        <source>Successfully restored! The app will now close itself so when you re-open it the restored bookmarks can take effect!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/BookmarksPane.qml" line="69"/>
+        <source>The database could not be restored. Please re-check the backup file to ensure it is valid, and if the problem persists please file a bug report. Make sure to attach the backup file with your report!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/BookmarksPane.qml" line="86"/>
+        <source>Confirmation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/BookmarksPane.qml" line="86"/>
+        <source>Are you sure you want to clear all bookmarks?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/BookmarksPane.qml" line="112"/>
         <source>You have no favourites. To mark a favourite, go to a hadith, and choose &apos;Mark Favourite&apos; from the bottom action bar.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/BookmarksPane.qml" line="94"/>
+        <location filename="../assets/BookmarksPane.qml" line="152"/>
         <source>Cleared all bookmarks!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -120,6 +247,20 @@ Pin - 2B77C09E</source>
     <message>
         <location filename="../assets/ChapterTitleBar.qml" line="154"/>
         <source>%1 (%2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>CompareSurahsPage</name>
+    <message>
+        <location filename="../assets/CompareSurahsPage.qml" line="11"/>
+        <source>Compare</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/CompareSurahsPage.qml" line="119"/>
+        <source>
+(%1)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -178,6 +319,20 @@ Finally, there is built-in support to do efficient and fast lookups for any sura
     </message>
 </context>
 <context>
+    <name>MushafProgressControl</name>
+    <message>
+        <location filename="../assets/MushafProgressControl.qml" line="75"/>
+        <source>Downloading...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/MushafProgressControl.qml" line="100"/>
+        <source>Downloading...
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>MushafSheet</name>
     <message>
         <location filename="../assets/MushafSheet.qml" line="24"/>
@@ -212,17 +367,17 @@ Finally, there is built-in support to do efficient and fast lookups for any sura
         </translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="225"/>
+        <location filename="../assets/MushafSheet.qml" line="232"/>
         <source>You can pinch on the page to zoom in and out and scroll up and down.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="227"/>
+        <location filename="../assets/MushafSheet.qml" line="234"/>
         <source>Use the left and right arrows to switch pages.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="228"/>
+        <location filename="../assets/MushafSheet.qml" line="235"/>
         <source>Tap on the screen, then on the bottom action bar you will see the Jump icon. Use this to trigger the dropdown menu to jump to a specific surah in the mushaf.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -249,13 +404,25 @@ Finally, there is built-in support to do efficient and fast lookups for any sura
 For example, to jump to Surah Al-Baqara Verse #2, type &apos;2:2&apos; into the search field!</source>
         <translation type="unfinished"></translation>
     </message>
+    <message numerus="yes">
+        <location filename="../assets/QuranPane.qml" line="27"/>
+        <source>%n chapters selected</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="26"/>
+        <location filename="../assets/QuranPane.qml" line="40"/>
+        <source>Compare</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/QuranPane.qml" line="62"/>
         <source>Mushaf</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="40"/>
+        <location filename="../assets/QuranPane.qml" line="76"/>
         <source>M</source>
         <translation type="unfinished"></translation>
     </message>
@@ -738,6 +905,21 @@ https://www.youtube.com/watch?v=BDY8i9VQeZM</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../assets/SettingsPage.qml" line="266"/>
+        <source>Keep Awake During Recitation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/SettingsPage.qml" line="270"/>
+        <source>Your device screen will remain awake while the recitation is playing.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/SettingsPage.qml" line="272"/>
+        <source>Your device screen can go to sleep as normal while the recitation is playing.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../assets/SettingsPage.qml" line="93"/>
         <source>English</source>
         <translation type="unfinished"></translation>
@@ -819,67 +1001,62 @@ https://www.youtube.com/watch?v=BDY8i9VQeZM</source>
 <context>
     <name>SurahPage</name>
     <message>
-        <location filename="../assets/SurahPage.qml" line="165"/>
-        <source>Tafsir</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/SurahPage.qml" line="230"/>
+        <location filename="../assets/SurahPage.qml" line="171"/>
         <source>%1 (%2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="70"/>
+        <location filename="../assets/SurahPage.qml" line="55"/>
         <source>You can do a pinch gesture anytime to increase and decrease the font size of the Arabic/Transliteration text!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="71"/>
+        <location filename="../assets/SurahPage.qml" line="56"/>
         <source>Tap on a verse with a grey highlight to find explanations on it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="72"/>
+        <location filename="../assets/SurahPage.qml" line="57"/>
         <source>Tap the left/right arrow keys to navigate to the previous and next chapters respectively.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="73"/>
+        <location filename="../assets/SurahPage.qml" line="58"/>
         <source>Use the follow button at the center of the left/right buttons if you want to follow the verses automatically as they are being recited.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="74"/>
+        <location filename="../assets/SurahPage.qml" line="59"/>
         <source>Tap on the repeat action at the bottom to enable or disable repeating the recitation in a loop once it finishes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="75"/>
+        <location filename="../assets/SurahPage.qml" line="60"/>
         <source>Press-and-hold any ayat and choose the Copy or Share action to easily share the verse.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="76"/>
+        <location filename="../assets/SurahPage.qml" line="61"/>
         <source>Press-and-hold any ayat and choose the Memorize action to play the next 8 verses in iteration to help you memorize them!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="77"/>
+        <location filename="../assets/SurahPage.qml" line="62"/>
         <source>Did you know you can press-and-hold on any verse and tap on the &apos;Select Range&apos; action to only play recitations for those, or copy/share them to your contacts?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="78"/>
+        <location filename="../assets/SurahPage.qml" line="63"/>
         <source>Want to dock a certain ayat right to your home screen? Press-and-hold on it and choose &apos;Add To Home Screen&apos; and name it!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="79"/>
+        <location filename="../assets/SurahPage.qml" line="64"/>
         <source>Do you know how to set bookmarks? You can easily mark certain ayats as favourites by pressing-and-holding on them and choosing &apos;Add Bookmark&apos; on them! This is a very easy way to track our progress as you read the Qu&apos;ran to quickly find where you left off.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="80"/>
+        <location filename="../assets/SurahPage.qml" line="65"/>
         <source>As&apos;salaamu alaykum wa rahmatullahi wabarakathu,
 
 JazakAllahu khair for using Quran10. While our Islamic apps will always remain free of charge for your benefit, we encourage you to please donate whatever you can in order to support development. This will motivate the developers to continue to update the app, add new features and bug fixes. To donate, simply swipe-down from the top-bezel and tap the &apos;Donate&apos; button to send money via PayPal.
@@ -888,57 +1065,52 @@ May Allah reward you, and bless you and your family.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="107"/>
+        <location filename="../assets/SurahPage.qml" line="85"/>
         <source>Pause</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="107"/>
+        <location filename="../assets/SurahPage.qml" line="85"/>
         <source>Play All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="113"/>
+        <location filename="../assets/SurahPage.qml" line="91"/>
         <source>A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="131"/>
+        <location filename="../assets/SurahPage.qml" line="109"/>
         <source>Confirmation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="131"/>
+        <location filename="../assets/SurahPage.qml" line="109"/>
         <source>We are about to download a whole bunch of MP3 recitations, you should only attempt to do this if you have either an unlimited data plan, or are connected via Wi-Fi. Otherwise you might incur a lot of data charges. Are you sure you want to continue? If you select No you can always attempt to download again later.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="131"/>
+        <location filename="../assets/SurahPage.qml" line="109"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="131"/>
+        <location filename="../assets/SurahPage.qml" line="109"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="151"/>
+        <location filename="../assets/SurahPage.qml" line="129"/>
         <source>Disable Repeat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="151"/>
+        <location filename="../assets/SurahPage.qml" line="129"/>
         <source>Enable Repeat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="181"/>
-        <source>K</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/SurahPage.qml" line="279"/>
+        <location filename="../assets/SurahPage.qml" line="199"/>
         <source>%1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -946,16 +1118,61 @@ May Allah reward you, and bless you and your family.</source>
 <context>
     <name>SurahPickerPage</name>
     <message>
-        <location filename="../assets/SurahPickerPage.qml" line="67"/>
+        <location filename="../assets/SurahPickerPage.qml" line="66"/>
+        <source>Display Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/SurahPickerPage.qml" line="71"/>
+        <source>Alphabetical Order</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/SurahPickerPage.qml" line="72"/>
+        <source>Sorted by surah name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/SurahPickerPage.qml" line="79"/>
+        <source>Normal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/SurahPickerPage.qml" line="80"/>
+        <source>The surahs will be displayed in the standard order</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/SurahPickerPage.qml" line="87"/>
+        <source>Revelation Order</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/SurahPickerPage.qml" line="88"/>
+        <source>Display chapters int he order they were revealed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/SurahPickerPage.qml" line="121"/>
         <source>Search surah name or number (ie: &apos;2&apos; for Surah Al-Baqara)...</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../assets/SurahPickerPage.qml" line="179"/>
+        <source>Juz %1</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message numerus="yes">
-        <location filename="../assets/SurahPickerPage.qml" line="126"/>
+        <location filename="../assets/SurahPickerPage.qml" line="193"/>
         <source>%n ayahs</source>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
+    </message>
+    <message>
+        <location filename="../assets/SurahPickerPage.qml" line="264"/>
+        <source>No chapters matched your search criteria. Please try a different search term.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1008,63 +1225,84 @@ May Allah reward you, and bless you and your family.</source>
 <context>
     <name>VersesListView</name>
     <message>
-        <location filename="../assets/VersesListView.qml" line="245"/>
+        <location filename="../assets/VersesListView.qml" line="235"/>
         <source>%1:%2-%3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="70"/>
+        <location filename="../assets/VersesListView.qml" line="43"/>
         <source>Play</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="84"/>
+        <location filename="../assets/VersesListView.qml" line="57"/>
         <source>None selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="146"/>
-        <location filename="../assets/VersesListView.qml" line="286"/>
+        <location filename="../assets/VersesListView.qml" line="115"/>
+        <location filename="../assets/VersesListView.qml" line="282"/>
+        <location filename="../assets/VersesListView.qml" line="299"/>
         <source>%1:%2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="166"/>
+        <location filename="../assets/VersesListView.qml" line="135"/>
         <source>Enter a name for this bookmark</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="174"/>
+        <location filename="../assets/VersesListView.qml" line="143"/>
         <source>Enter a name for this shortcut:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="257"/>
+        <location filename="../assets/VersesListView.qml" line="247"/>
         <source>Enter Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="258"/>
+        <location filename="../assets/VersesListView.qml" line="248"/>
         <source>Enter a meaningful name...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="259"/>
+        <location filename="../assets/VersesListView.qml" line="249"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="260"/>
+        <location filename="../assets/VersesListView.qml" line="250"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="270"/>
+        <location filename="../assets/VersesListView.qml" line="256"/>
         <source>Bookmarked %1:%2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="208"/>
+        <location filename="../assets/VersesListView.qml" line="304"/>
+        <source>Play From Here</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/VersesListView.qml" line="314"/>
+        <source>Bookmark</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/VersesListView.qml" line="324"/>
+        <source>Add to Home Screen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/VersesListView.qml" line="335"/>
+        <source>Memorize</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/VersesListView.qml" line="198"/>
         <source>ayahs</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1085,62 +1323,62 @@ May Allah reward you, and bless you and your family.</source>
 <context>
     <name>main</name>
     <message>
-        <location filename="../assets/main.qml" line="22"/>
+        <location filename="../assets/main.qml" line="23"/>
         <source>Qu&apos;ran</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="23"/>
+        <location filename="../assets/main.qml" line="24"/>
         <source>القرآن</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="42"/>
+        <location filename="../assets/main.qml" line="43"/>
         <source>Bookmarks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="40"/>
+        <location filename="../assets/main.qml" line="41"/>
         <source>Favourites</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="13"/>
+        <location filename="../assets/main.qml" line="14"/>
         <source>Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="16"/>
+        <location filename="../assets/main.qml" line="17"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="56"/>
+        <location filename="../assets/main.qml" line="57"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="57"/>
+        <location filename="../assets/main.qml" line="58"/>
         <source>Find</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="72"/>
+        <location filename="../assets/main.qml" line="73"/>
         <source>Radio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="73"/>
+        <location filename="../assets/main.qml" line="74"/>
         <source>Live</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="88"/>
+        <location filename="../assets/main.qml" line="89"/>
         <source>Supplications</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="89"/>
+        <location filename="../assets/main.qml" line="90"/>
         <source>Du&apos;a from the Qu&apos;ran</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1148,27 +1386,27 @@ May Allah reward you, and bless you and your family.</source>
 <context>
     <name>quran::ApplicationUI</name>
     <message>
-        <location filename="../src/applicationui.cpp" line="149"/>
+        <location filename="../src/applicationui.cpp" line="171"/>
         <source>Invalid pattern specified!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="177"/>
+        <location filename="../src/applicationui.cpp" line="199"/>
         <source>Invalid surah specified</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="223"/>
+        <location filename="../src/applicationui.cpp" line="245"/>
         <source>Surah not found!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="249"/>
+        <location filename="../src/applicationui.cpp" line="271"/>
         <source>Added %1 to home screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="251"/>
+        <location filename="../src/applicationui.cpp" line="273"/>
         <source>Could not add %1 to home screen</source>
         <translation type="unfinished"></translation>
     </message>
