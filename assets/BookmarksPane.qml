@@ -1,4 +1,5 @@
 import bb.cascades 1.0
+import bb.cascades.pickers 1.0
 import com.canadainc.data 1.0
 
 NavigationPane
@@ -19,6 +20,61 @@ NavigationPane
         }
         
         actions: [
+            ActionItem
+            {
+                title: qsTr("Backup") + Retranslate.onLanguageChanged
+                ActionBar.placement: 'Signature' in ActionBarPlacement ? ActionBarPlacement["Signature"] : ActionBarPlacement.OnBar
+                imageSource: "images/menu/ic_backup.png"
+                
+                onTriggered: {
+                    console.log("UserEvent: Backup");
+                    filePicker.title = qsTr("Select Destination");
+                    filePicker.mode = FilePickerMode.Saver
+                    filePicker.defaultSaveFileNames = ["quran_bookmarks.zip"]
+                    filePicker.allowOverwrite = true;
+                    
+                    filePicker.open();
+                }
+                
+                function onSaved(result) {
+                    tutorialToast.init( qsTr("Successfully backed up to %1").arg(result), "images/menu/ic_backup.png" );
+                }
+                
+                onCreationCompleted: {
+                    app.backupComplete.connect(onSaved);
+                }
+            },
+            
+            ActionItem
+            {
+                title: qsTr("Restore") + Retranslate.onLanguageChanged
+                ActionBar.placement: ActionBarPlacement.OnBar
+                imageSource: "images/menu/ic_restore.png"
+                
+                onTriggered: {
+                    console.log("UserEvent: Restore");
+                    filePicker.title = qsTr("Select File");
+                    filePicker.mode = FilePickerMode.Picker
+                    
+                    filePicker.open();
+                }
+                
+                function onRestored(result)
+                {
+                    if (result) {
+                        persist.showBlockingToast( qsTr("Successfully restored! The app will now close itself so when you re-open it the restored bookmarks can take effect!"), "", "asset:///images/menu/ic_restore.png" );
+                        Application.quit();
+                    } else {
+                        helper.setActive(true);
+                        tutorialToast.init( qsTr("The database could not be restored. Please re-check the backup file to ensure it is valid, and if the problem persists please file a bug report. Make sure to attach the backup file with your report!"), "images/menu/ic_restore_error.png" );
+                    }
+                }
+                
+                onCreationCompleted: {
+                    app.restoreComplete.connect(onRestored);
+                }
+            },
+            
             DeleteActionItem
             {
                 enabled: listView.visible
@@ -167,17 +223,37 @@ NavigationPane
                 verticalAlignment: VerticalAlignment.Fill
             }
         }
-        
-        attachedObjects: [
-            ImagePaintDefinition
-            {
-                id: back
-                imageSource: "images/backgrounds/background.png"
-            },
-            
-            ComponentDefinition {
-                id: definition
-            }
-        ]
     }
+    
+    attachedObjects: [
+        ImagePaintDefinition
+        {
+            id: back
+            imageSource: "images/backgrounds/background.png"
+        },
+        
+        ComponentDefinition {
+            id: definition
+        },
+        
+        FilePicker {
+            id: filePicker
+            defaultType: FileType.Other
+            filter: ["*.zip"]
+            
+            directories :  {
+                return ["/accounts/1000/removable/sdcard", "/accounts/1000/shared/misc"]
+            }
+            
+            onFileSelected : {
+                console.log("UserEvent: FileSelected", selectedFiles[0]);
+                
+                if (mode == FilePickerMode.Picker) {
+                    app.restore(selectedFiles[0]);
+                } else {
+                    app.backup(selectedFiles[0]);
+                }
+            }
+        }
+    ]
 }

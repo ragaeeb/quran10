@@ -68,6 +68,8 @@ bool QueryHelper::initBookmarks(QObject* caller)
     QFile bookmarksPath(BOOKMARKS_PATH);
     bool ready = bookmarksPath.exists() && bookmarksPath.size() > 0;
 
+    m_sql.attachIfNecessary("bookmarks", true);
+
     if (!ready) // if no bookmarks created yet
     {
         m_sql.startTransaction(caller, QueryId::SettingUpBookmarks);

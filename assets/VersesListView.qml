@@ -250,14 +250,20 @@ ListView
             cancelButton.label: qsTr("Cancel") + Retranslate.onLanguageChanged
             inputField.defaultText: data ? "(%1:%2) %3".arg(chapterNumber).arg(data.verse_id).arg(data.translation ? data.translation : data.arabic) : ""
             
+            function onDataLoaded(id, data) 
+            {
+                if (id == QueryId.SaveBookmark) {
+                    persist.showToast( qsTr("Bookmarked %1:%2").arg(chapterName).arg(data.verse_id), "", "asset:///images/menu/ic_bookmark_add.png" );
+                }
+            }
+            
             onFinished: {
                 if (result == SystemUiResult.ConfirmButtonSelection)
                 {
                     var bookmarkName = inputFieldTextEntry().trim();
                     
                     if (inputField.maximumLength > 15) { // bookmark
-                        app.bookmarkVerse(bookmarkName, chapterNumber, data);
-                        persist.showToast( qsTr("Bookmarked %1:%2").arg(chapterName).arg(data.verse_id), "", "asset:///images/menu/ic_bookmark_add.png" );
+                        helper.saveBookmark(prompt, chapterNumber, data.verse_id, bookmarkName, "");
                     } else {
                         app.addToHomeScreen(chapterNumber, data.verse_id, bookmarkName);
                     }
