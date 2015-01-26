@@ -17,7 +17,7 @@ QueryHelper::QueryHelper(Persistance* persist) :
         m_sql( QString("%1/assets/dbase/quran_arabic.db").arg( QCoreApplication::applicationDirPath() ) ), m_persist(persist)
 {
     connect( persist, SIGNAL( settingChanged(QString const&) ), this, SLOT( settingChanged(QString const&) ), Qt::QueuedConnection );
-    connect( &m_watcher, SIGNAL( fileChanged(QString const&) ), this, SIGNAL( bookmarksUpdated(QString const&) ) );
+    //connect( &m_watcher, SIGNAL( fileChanged(QString const&) ), this, SIGNAL( bookmarksUpdated(QString const&) ) );
 }
 
 
@@ -97,7 +97,7 @@ void QueryHelper::fetchAllDuaa(QObject* caller)
 }
 
 
-void QueryHelper::fetchChapters(QObject* caller, QString const& text, QString sortOrder)
+bool QueryHelper::fetchChapters(QObject* caller, QString const& text, QString sortOrder)
 {
     QString query;
 
@@ -147,7 +147,10 @@ void QueryHelper::fetchChapters(QObject* caller, QString const& text, QString so
 
     if ( !query.isNull() ) {
         m_sql.executeQuery(caller, query, QueryId::FetchChapters, args);
+        return true;
     }
+
+    return false;
 }
 
 
@@ -156,9 +159,9 @@ void QueryHelper::fetchRandomAyat(QObject* caller)
     LOGGER("fetchRandomAyat");
 
     if ( !showTranslation() ) {
-        m_sql.executeQuery(caller, "SELECT surah_id,verse_number AS verse_id,content AS text FROM ayahs WHERE RANDOM() % 6236 = 0 LIMIT 1", QueryId::FetchRandomAyat);
+        m_sql.executeQuery(caller, "SELECT surah_id,verse_number AS verse_id,content AS text FROM ayahs WHERE RANDOM() % 6000 = 0 LIMIT 1", QueryId::FetchRandomAyat);
     } else {
-        m_sql.executeQuery(caller, "SELECT surah_id,verse_number AS verse_id,translation AS text FROM ayahs a INNER JOIN verses v ON a.id=v.id WHERE RANDOM() % 6236 = 0 LIMIT 1", QueryId::FetchRandomAyat);
+        m_sql.executeQuery(caller, "SELECT surah_id,verse_number AS verse_id,translation AS text FROM ayahs a INNER JOIN verses v ON a.id=v.id WHERE RANDOM() % 6000 = 0 LIMIT 1", QueryId::FetchRandomAyat);
     }
 }
 
@@ -198,12 +201,12 @@ void QueryHelper::fetchAyat(QObject* caller, int surahId, int ayatId)
     QString query;
 
     if ( showTranslation() ) {
-        query = QString("SELECT content,verse_number,translation FROM ayahs INNER JOIN verses on ayahs.id=verses.id AND surah_id=%1").arg(chapterNumber);
+        query = QString("SELECT content,verse_number,translation FROM ayahs INNER JOIN verses on ayahs.id=verses.id AND surah_id=%1").arg(surahId);
     } else {
-        query = QString("SELECT content AS arabic,verse_number AS verse_id FROM ayahs WHERE surah_id=%1").arg(chapterNumber);
+        query = QString("SELECT content AS arabic,verse_number AS verse_id FROM ayahs WHERE surah_id=%1").arg(surahId);
     }
 
-    m_sql.executeQuery(caller, query, QueryId::FetchAllAyats);
+    m_sql.executeQuery(caller, query, QueryId::FetchAyat);
 }
 
 

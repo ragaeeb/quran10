@@ -198,6 +198,13 @@ Sheet
                     }
                 }
                 
+                MushafProgressControl
+                {
+                    horizontalAlignment: HorizontalAlignment.Center
+                    verticalAlignment: VerticalAlignment.Center
+                    visible: false
+                }
+                
                 NavigationButton
                 {
                     multiplier: -1

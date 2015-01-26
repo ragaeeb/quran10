@@ -124,8 +124,8 @@ Page
                 inputRoute.primaryKeyTarget: true;
                 
                 onTextChanging: {
-                    busy.delegateActive = true;
-                    helper.fetchChapters(listView, text, sortOrder.selectedValue);
+                    var ok = helper.fetchChapters(listView, text, sortOrder.selectedValue);
+                    busy.delegateActive = ok;
                 }
                 
                 input {
@@ -226,8 +226,23 @@ Page
                         theDataModel.append(data);
                         
                         busy.delegateActive = false;
+                        
+                        noElements.delegateActive = theDataModel.isEmpty();
+                        listView.visible = !noElements.delegateActive;
                     }
                 }
+            }
+        }
+        
+        EmptyDelegate
+        {
+            id: noElements
+            graphic: "images/placeholders/empty_chapters.png"
+            labelText: qsTr("No chapters matched your search criteria. Please try a different search term.") + Retranslate.onLanguageChanged
+            
+            onImageTapped: {
+                console.log("UserEvent: NoChaptersTapped");
+                textField.requestFocus();
             }
         }
         

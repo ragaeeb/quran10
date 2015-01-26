@@ -39,6 +39,7 @@ Page
             
             listContainer.add(l);
             helper.fetchAllAyats(l, surahId);
+            helper.fetchSurahHeader(l, surahId);
         }
     }
     
@@ -103,7 +104,7 @@ Page
                 property alias list: alv
                 horizontalAlignment: HorizontalAlignment.Fill
                 verticalAlignment: VerticalAlignment.Fill
-                
+
                 function onDataLoaded(id, data)
                 {
                     if (id == QueryId.FetchAllAyats)
@@ -111,11 +112,40 @@ Page
                         alv.theDataModel.clear();
                         alv.theDataModel.insertList(data);
                         busy.loaded = busy.loaded+1;
+                    } else if (id == QueryId.FetchSurahHeader) {
+                        var value = data[0].name;
+                        
+                        if (helper.showTranslation) {
+                            value += qsTr("\n(%1)").arg(data[0].transliteration);
+                        }
+                        
+                        titleLabel.text = value;
                     }
                 }
                 
-                layout: StackLayout {
-                    orientation: LayoutOrientation.LeftToRight
+                layoutProperties: StackLayoutProperties {
+                    spaceQuota: surahIds.length/2.0
+                }
+                
+                Container
+                {
+                    background: back.imagePaint
+                    leftPadding: 10; rightPadding: 10; bottomPadding: 10; topPadding: 10
+                    horizontalAlignment: HorizontalAlignment.Fill
+                    
+                    Label {
+                        id: titleLabel
+                        horizontalAlignment: HorizontalAlignment.Fill
+                        textStyle.textAlign: TextAlign.Center
+                        multiline: true
+                    }
+                    
+                    attachedObjects: [
+                        ImagePaintDefinition {
+                            id: back
+                            imageSource: "images/title/title_bg_compare.png"
+                        }
+                    ]
                 }
                 
                 Container
@@ -123,24 +153,30 @@ Page
                     horizontalAlignment: HorizontalAlignment.Fill
                     verticalAlignment: VerticalAlignment.Fill
                     
-                    AyatListView {
-                        id: alv
+                    layout: StackLayout {
+                        orientation: LayoutOrientation.LeftToRight
                     }
                     
-                    layoutProperties: StackLayoutProperties {
-                        spaceQuota: 1
+                    Container
+                    {
+                        horizontalAlignment: HorizontalAlignment.Fill
+                        verticalAlignment: VerticalAlignment.Fill
+                        
+                        AyatListView {
+                            id: alv
+                        }
+                        
+                        layoutProperties: StackLayoutProperties {
+                            spaceQuota: 1
+                        }
                     }
-                }
-                
-                ImageView {
-                    id: separator
-                    imageSource: "images/vertical_separator.png"
-                    verticalAlignment: VerticalAlignment.Fill
-                    leftMargin: 0; rightMargin: 0
-                }
-                
-                layoutProperties: StackLayoutProperties {
-                    spaceQuota: surahIds.length/2.0
+                    
+                    ImageView {
+                        id: separator
+                        imageSource: "images/vertical_separator.png"
+                        verticalAlignment: VerticalAlignment.Fill
+                        leftMargin: 0; rightMargin: 0
+                    }
                 }
             }
         }
