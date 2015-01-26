@@ -96,7 +96,7 @@ NavigationPane
         ]
         
         titleBar: TitleBar {
-            title: qsTr("Bookmarks") + Retranslate.onLanguageChanged
+            title: qsTr("Favourites") + Retranslate.onLanguageChanged
         }
         
         Container

@@ -38,9 +38,9 @@ TabbedPane
     Tab {
         id: bookmarks
         delegateActivationPolicy: TabDelegateActivationPolicy.ActivateWhenSelected
-        description: qsTr("Favourites") + Retranslate.onLanguageChanged
+        description: qsTr("Saved Verses") + Retranslate.onLanguageChanged
         imageSource: "images/tabs/ic_bookmarks.png"
-        title: qsTr("Bookmarks") + Retranslate.onLanguageChanged
+        title: qsTr("Favourites") + Retranslate.onLanguageChanged
         unreadContentCount: helper.totalBookmarks
 
         onTriggered: {
