@@ -1,5 +1,4 @@
 import bb.cascades 1.2
-import bb.system 1.0
 import com.canadainc.data 1.0
 
 ListView
@@ -12,7 +11,6 @@ ListView
     property string chapterName
     property int translationSize: helper.translationSize
     property int primarySize: helper.primarySize
-    property alias custom: customTextStyle
     property int previousPlayedIndex
     property bool secretPeek: false
     property bool follow: persist.getValueFor("follow") == 1
@@ -20,7 +18,7 @@ ListView
     dataModel: GroupDataModel
     {
         id: verseModel
-        sortingKeys: [ "verse_id" ]
+        sortingKeys: ["verse_id"]
         grouping: ItemGrouping.ByFullValue
     }
     
@@ -128,22 +126,6 @@ ListView
         result = persist.convertToUtf8(result)
         return result;
     }
-
-    function bookmark(ListItemData)
-    {
-        prompt.data = ListItemData;
-        prompt.body = qsTr("Enter a name for this bookmark");
-        prompt.inputField.maximumLength = 50;
-        prompt.show();
-    }
-    
-    function addToHomeScreen(ListItemData)
-    {
-        prompt.data = ListItemData;
-        prompt.body = qsTr("Enter a name for this shortcut:");
-        prompt.inputField.maximumLength = 15;
-        prompt.show();
-    }
     
     function memorize(from)
     {
@@ -181,19 +163,6 @@ ListView
             imageSource: "images/backgrounds/header_bg.png"
         },
         
-        TextStyleDefinition
-        {
-            id: customTextStyle
-
-            rules: [
-                FontFaceRule {
-                    id: baseStyleFontRule
-                    source: "fonts/me_quran.ttf"
-                    fontFamily: "Regular"
-                }
-            ]
-        },
-        
         RangeSelector {
             itemName: qsTr("ayahs")
         },
@@ -202,73 +171,6 @@ ListView
         {
             id: activeDef
             imageSource: "images/list_item_pressed.amd"
-        },
-        
-        PlainTextMultiselector
-        {
-            function getSelectedTextualData()
-            {
-                var selectedIndices = selectionList()
-                var result = ""
-                var first
-                var last
-                
-                for (var i = 0; i < selectedIndices.length; i ++) {
-                    if (selectedIndices[i].length > 1) {
-                        var current = dataModel.data(selectedIndices[i])
-                        
-                        result += renderItem(current)
-                        
-                        if (i < selectedIndices.length - 1) {
-                            result += "\n"
-                        }
-                        
-                        if (! first) {
-                            first = current.verse_id
-                        }
-                        
-                        last = current.verse_id
-                    }
-                }
-                
-                if (first && last) {
-                    result += qsTr("%1:%2-%3").arg(chapterNumber).arg(first).arg(last)
-                    return result;
-                } else {
-                    return ""
-                }
-            }
-        },
-        
-        SystemPrompt
-        {
-            id: prompt
-            property variant data
-            title: qsTr("Enter Name") + Retranslate.onLanguageChanged
-            inputField.emptyText: qsTr("Enter a meaningful name...") + Retranslate.onLanguageChanged
-            confirmButton.label: qsTr("OK") + Retranslate.onLanguageChanged
-            cancelButton.label: qsTr("Cancel") + Retranslate.onLanguageChanged
-            inputField.defaultText: data ? "(%1:%2) %3".arg(chapterNumber).arg(data.verse_id).arg(data.translation ? data.translation : data.arabic) : ""
-            
-            function onDataLoaded(id, data) 
-            {
-                if (id == QueryId.SaveBookmark) {
-                    persist.showToast( qsTr("Bookmarked %1:%2").arg(chapterName).arg(data.verse_id), "", "asset:///images/menu/ic_bookmark_add.png" );
-                }
-            }
-            
-            onFinished: {
-                if (result == SystemUiResult.ConfirmButtonSelection)
-                {
-                    var bookmarkName = inputFieldTextEntry().trim();
-                    
-                    if (inputField.maximumLength > 15) { // bookmark
-                        helper.saveBookmark(prompt, chapterNumber, data.verse_id, bookmarkName, "");
-                    } else {
-                        app.addToHomeScreen(chapterNumber, data.verse_id, bookmarkName);
-                    }
-                }
-            }
         }
     ]
     
@@ -307,26 +209,6 @@ ListView
                             onTriggered: {
                                 console.log("UserEvent: PlayFromHere");
                                 ali.ListItem.view.play( ali.ListItem.indexPath[0]+1, ali.ListItem.view.dataModel.size() );
-                            }
-                        }
-                        
-                        ActionItem {
-                            title: qsTr("Bookmark") + Retranslate.onLanguageChanged
-                            imageSource: "images/menu/ic_bookmark_add.png"
-                            
-                            onTriggered: {
-                                console.log("UserEvent: BookmarkAyatListItem");
-                                ali.ListItem.view.bookmark(ListItemData)
-                            }
-                        }
-                        
-                        ActionItem {
-                            title: qsTr("Add to Home Screen") + Retranslate.onLanguageChanged
-                            imageSource: "images/menu/ic_home.png"
-                            
-                            onTriggered: {
-                                console.log("UserEvent: AddHomeScreenAyat");
-                                ali.ListItem.view.addToHomeScreen(ListItemData)
                             }
                         }
                         

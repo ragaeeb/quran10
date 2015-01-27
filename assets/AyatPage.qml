@@ -3,24 +3,26 @@ import com.canadainc.data 1.0
 
 Page
 {
+    id: root
     property int surahId
-    property int ayatId
+    property int verseId
     property variant similarVerses
     property variant explanations
     
     onSimilarVersesChanged: {
+        /*
         if (similarNarrations.length > 0) {
             titleControl.addOption(similarOption);
         } else { // unlinked everything
-            hadithOption.selected = true;
-        }
+            ayatOption.selected = true;
+        } */
     }
-    
+
     onExplanationsChanged: {
         titleControl.addOption(tafsirOption);
     }
-    
-    onAyatIdChanged: {
+
+    onVerseIdChanged: {
         reload();
     }
     
@@ -32,86 +34,41 @@ Page
             {
                 notFound.delegateActive = false;
                 
-                var hadith = data[0];
-                var english = helper.showTranslation;
+                var bodyValue = data[0].content;
                 
-                var collectionName = collections.renderAppropriate(hadith.collection);
-                var reference = "(%1 #%2)".arg(collectionName).arg(hadith.hadithNumber);
-                
-                babName.subtitle = "%1:%2".arg(hadith.bookID).arg(hadith.inBookNumber);
-                
-                if (hadith.babNumber > 0) {
-                    babName.title = "%1 %2".arg(hadith.babNumber).arg(english ? hadith.translated_chapter : hadith.arabic_chapter);
-                }
-                
-                var bodyValue = hadith.arabic_text;
-                
-                if (english) {
-                    bodyValue += "\n\n" + hadith.translated_text;
-                }
-                
-                if (arabicId == 0 && data.length > 1) // we were invoked, and this is part of a series
-                {
-                    for (var i = 1; i < data.length; i++)
-                    {
-                        var nextHadith = data[i];
-                        body += "\n\n" + nextHadith.arabic_text;
-                        
-                        if (english) {
-                            bodyValue += "\n\n" + nextHadith.translated_text;
-                        }
-                    }
-                }
-                
-                bodyValue += "\n\n"+reference;
-                
-                if (reporter.isAdmin) {
-                    bodyValue = hadith.id+"\n\n"+bodyValue;
+                if (data[0].translation) {
+                    bodyValue += "\n\n"+data[0].translation;
                 }
                 
                 body.value = bodyValue;
                 
-                helper.fetchSimilarHadith(root, hadith.id);
-                helper.fetchAllTafsirForHadith(root, hadith.id);
-                helper.fetchHadithGrade(gradeLabel, hadith.id);
-                helper.fetchBookName(root, hadith.collection, hadith.bookID);
-                
-                arabicId = hadith.id;
-                collection = hadith.collection;
-                hadithNumber = hadith.hadithNumber;
+                helper.fetchSimilarAyat(root, surahId, verseId);
+                helper.fetchAllTafsirForAyat(root, surahId, verseId);
+                helper.fetchSurahHeader(root, surahId);
                 busy.delegateActive = false;
             } else { // erroneous ID entered
                 notFound.delegateActive = true;
                 busy.delegateActive = false;
-                console.log("Hadith not found!");
+                console.log("AyatNotFound!");
             }
-        } else if (id == QueryId.FetchSimilarHadith && data.length > 0) {
-            similarNarrations = data;
+        } else if (id == QueryId.FetchSimilarAyat && data.length > 0) {
+            //similarNarrations = data;
             if ( persist.tutorial( "tutorialSimilarHadith", qsTr("There appears to be other narrations with similar wording, choose the '%1 Similar' option at the top to view them in a split screen.").arg(data.length), "asset:///images/dropdown/similar.png" ) ) {}
-        } else if (id == QueryId.FetchAllTafsirForHadith && data.length > 0) {
+        } else if (id == QueryId.FetchAllTafsirForAyat && data.length > 0) {
             explanations = data;
             if ( persist.tutorial( "tutorialTafsir", qsTr("There are explanations of this hadith by the people of knowledge! Tap on the '%1 Tafsir' option at the top to view them.").arg(data.length), "asset:///images/dropdown/tafsir.png" ) ) {}
-        } else if (id == QueryId.FetchHadithContent && data.length > 0 && similarOption.selected) {
+        } else if (id == QueryId.FetchSimilarAyatContent && data.length > 0 && similarOption.selected) {
             pluginsDelegate.control.applyData(data);
-        } else if (id == QueryId.FetchBookName && data.length > 0) {
-            var bookTitle = helper.showTranslation ? data[0].translated_name : data[0].arabic_name;
-            var collectionName = collections.renderAppropriate(collection);
-            
-            if (babName.title.length == 0) {
-                babName.title = bookTitle.length == 0 ? collectionName : bookTitle;
-            }
-            
-            if (bookTitle.length == 0) {
-                bookTitle = collectionName;
-            }
-            
-            hadithOption.text = bookTitle;
+        } else if (id == QueryId.FetchSurahHeader && data.length > 0) {
+            ayatOption.text = data[0].translation ? data[0].translation : data[0].name;
+            babName.title = data[0].transliteration ? data[0].transliteration : data[0].name;
+            babName.subtitle = "%1:%2".arg(surahId).arg(verseId);
         }
     }
     
     function showExplanation(id)
     {
-        definition.source = "HadithTafsirDialog.qml";
+        definition.source = "AyatTafsirDialog.qml";
         var htd = definition.createObject();
         htd.suitePageId = id;
         htd.open();
@@ -120,11 +77,8 @@ Page
     function reload()
     {
         busy.delegateActive = true;
-        
-        if (ayatId > 0 && ayatId <= 286) {
-            busy.delegateActive = true;
-            helper.fetchHadith(root, arabicId);
-        }
+
+        helper.fetchAyat(root, surahId, verseId);
     }
     
     onCreationCompleted: {
@@ -137,13 +91,13 @@ Page
         kind: TitleBarKind.Segmented
         options: [
             Option {
-                id: hadithOption
+                id: ayatOption
                 text: qsTr("Verse") + Retranslate.onLanguageChanged
-                imageSource: "images/dropdown/original_hadith.png"
+                imageSource: "images/dropdown/original_ayat.png"
                 
                 onSelectedChanged: {
                     if (selected) {
-                        console.log("UserEvent: HadithOptionSelected");
+                        console.log("UserEvent: AyatOptionSelected");
                         pluginsDelegate.delegateActive = false;
                     }
                 }
@@ -173,16 +127,16 @@ Page
         attachedObjects: [
             Option {
                 id: similarOption
-                text: similarNarrations ? qsTr("%n similar", "", similarNarrations.length) : ""
+                text: /*similarNarrations ? qsTr("%n similar", "", similarNarrations.length) : */""
                 imageSource: "images/dropdown/similar.png"
                 
                 onSelectedChanged: {
                     if (selected)
                     {
                         console.log("UserEvent: SimilarOptionSelected");
-                        helper.fetchHadithContent(root, similarNarrations);
+                        helper.fetchSimilarAyatContent(root, similarNarrations);
                         
-                        pluginsDelegate.source = "SimilarHadithControl.qml";
+                        pluginsDelegate.source = "SimilarAyatControl.qml";
                         pluginsDelegate.delegateActive = true;
                     }
                 }
@@ -197,7 +151,7 @@ Page
                     if (selected)
                     {
                         console.log("UserEvent: TafsirOptionSelected");
-                        pluginsDelegate.source = "HadithTafsirPicker.qml";
+                        pluginsDelegate.source = "AyatTafsirPicker.qml";
                         pluginsDelegate.delegateActive = true;
                         
                         if (explanations.length == 1) {
@@ -223,16 +177,20 @@ Page
             
             onTriggered: {
                 console.log("UserEvent: BookmarkTriggered");
+                var name = persist.showBlockingPrompt( qsTr("Enter name"), qsTr("You can use this to quickly recognize this ayah in the favourites tab."), "(%1:%2) %3".arg(surahId).arg(verseId).arg(body), qsTr("Bookmark name..."), true, 50, qsTr("Save") );
                 
-                shortcut.active = true;
-                shortcut.object.bookmarkPrompt.show(); 
+                if (name.length > 0)
+                {
+                    var tag = persist.showBlockingPrompt( qsTr("Enter tag"), qsTr("You can use this to categorize related verses together."), "", qsTr("Enter a tag for this bookmark (ie: ramadan). You can leave this blank if you don't want to use a tag."), false, 50, qsTr("Save") );
+                    helper.saveBookmark(listView, surahId, verseId, name, tag);
+                }
             }
         },
         
         ActionItem {
             enabled: !notFound.delegateActive
             title: qsTr("Add Shortcut") + Retranslate.onLanguageChanged
-            imageSource: "images/menu/ic_home_add.png"
+            imageSource: "images/menu/ic_home.png"
             ActionBar.placement: ActionBarPlacement.OnBar
             
             shortcuts: [
@@ -243,9 +201,8 @@ Page
             
             onTriggered: {
                 console.log("UserEvent: AddShortcutTriggered");
-                
-                shortcut.active = true;
-                shortcut.object.homePrompt.show(); 
+                var name = persist.showBlockingPrompt( qsTr("Enter name"), qsTr("You can use this to quickly recognize this ayah on your home screen."), "(%1:%2) %3".arg(surahId).arg(verseId).arg(body), qsTr("Shortcut name..."), true, 15, qsTr("Save") );
+                app.addToHomeScreen(surahId, verseId, name);
             }
         },
         
@@ -305,7 +262,7 @@ Page
                     body.text = body.value;
                 } else {
                     body.editable = true;
-                    persist.showBlockingToast( qsTr("The narration is now editable. Please make the changes you feel are needed to correct it and then from the menu choose 'Report Error' again."), qsTr("OK"), "asset:///images/menu/ic_report_error.png" );
+                    persist.showBlockingToast( qsTr("The ayah is now editable. Please make the changes you feel are needed to correct it and then from the menu choose 'Report Error' again."), qsTr("OK"), "asset:///images/menu/ic_report_error.png" );
                     body.requestFocus();
                 }
             }
@@ -314,12 +271,18 @@ Page
     
     Container
     {
+        background: bg.imagePaint
         horizontalAlignment: HorizontalAlignment.Fill
         verticalAlignment: VerticalAlignment.Fill
-        background: bg.imagePaint
-        
         layout: DockLayout {}
-        
+
+        attachedObjects: [
+            ImagePaintDefinition {
+                id: bg
+                imageSource: "images/backgrounds/background_ayat_page.jpg"
+            }
+        ]
+
         Container
         {
             horizontalAlignment: HorizontalAlignment.Fill
@@ -341,6 +304,7 @@ Page
                     }
                     
                     onEnded: {
+                        /*
                         if ( persist.tutorial( "tutorialPinchHadith", qsTr("To increase and decrease the font size of the text simply do a pinch gesture here!"), "asset:///images/menu/ic_top.png" ) ) {}
                         else if ( persist.tutorial( "tutorialMarkFav", qsTr("To quickly access this hadith again, tap on the 'Mark Favourite' action at the bottom to put it in the Bookmarks tab that shows up in the start of the app."), "asset:///images/menu/ic_bookmark_add.png" ) ) {}
                         else if ( persist.tutorial( "tutorialAddShortcutHome", qsTr("To quickly access this hadith again, tap on the 'Add Shortcut' action at the bottom to pin it to your homescreen."), "asset:///images/menu/ic_home_add.png" ) ) {}
@@ -348,7 +312,7 @@ Page
                         else if ( persist.tutorial( "tutorialLinkFromBook", qsTr("If you want to link this hadith to another, you can group them together by choosing the 'Link' action from the menu, then selecting the other narrations and tapping 'Save'! You will then find these hadith showing up in the 'Similar' tab at the top."), "asset:///images/menu/ic_link.png" ) ) {}
                         else if ( persist.tutorial( "tutorialReportMistake", qsTr("If you notice any mistakes with the text or the translation of the hadith, tap on the '...' icon at the bottom-right to use the menu, and use the 'Report Mistake' action from the menu."), "asset:///images/menu/ic_report_error.png" ) ) {}
                         else if ( persist.reviewed() ) {}
-                        else if ( reporter.performCII() ) {}
+                        else if ( reporter.performCII() ) {} */
                     }
                 }
             ]
@@ -358,19 +322,19 @@ Page
         {
             id: notFound
             graphic: "images/placeholders/no_match.png"
-            labelText: qsTr("The hadith was not found in the database.") + Retranslate.onLanguageChanged
+            labelText: qsTr("The ayat was not found in the database.") + Retranslate.onLanguageChanged
         }
         
         Container
         {
             horizontalAlignment: HorizontalAlignment.Fill
             verticalAlignment: VerticalAlignment.Fill
-            
+
             ControlDelegate
             {
                 id: pluginsDelegate
                 topMargin: 0; bottomMargin: 0
-                source: "HadithTafsirPicker.qml"
+                source: "AyatTafsirPicker.qml"
             }
             
             Header
@@ -398,7 +362,7 @@ Page
                     PinchHandler
                     {
                         onPinchEnded: {
-                            console.log("UserEvent: HadithPagePinched");
+                            console.log("UserEvent: AyatPagePinched");
                             var newValue = Math.floor(event.pinchRatio*body.textStyle.fontSizeValue);
                             newValue = Math.max(6,newValue);
                             newValue = Math.min(newValue, 30);
@@ -418,7 +382,7 @@ Page
                     editable: false
                     textStyle.fontSize: FontSize.PointValue
                     textStyle.fontSizeValue: persist.getValueFor("fontSize")
-                    //textStyle.base: collections.textFont
+                    textStyle.base: global.textFont
                     input.flags: TextInputFlag.AutoCapitalizationOff | TextInputFlag.AutoCorrectionOff | TextInputFlag.SpellCheckOff | TextInputFlag.WordSubstitutionOff | TextInputFlag.AutoPeriodOff
                     
                     onValueChanged: {
@@ -431,24 +395,13 @@ Page
         ProgressControl
         {
             id: busy
-            asset: "images/title/logo.png"
+            asset: "images/progress/loading_ayat.png"
         }
     }
     
     attachedObjects: [
         ComponentDefinition {
             id: definition
-        },
-        
-        ImagePaintDefinition {
-            id: bg
-            imageSource: "images/backgrounds/hadith_page_bg.png"
-        },
-        
-        Delegate {
-            id: shortcut
-            active: false
-            source: "ShortcutHelper.qml"
         }
     ]
 }

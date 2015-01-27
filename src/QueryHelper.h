@@ -48,10 +48,12 @@ public:
     Q_INVOKABLE void fetchAllBookmarks(QObject* caller);
     Q_INVOKABLE void fetchAllDuaa(QObject* caller);
     Q_INVOKABLE void fetchAllAyats(QObject* caller, int chapterNumber);
+    Q_INVOKABLE void fetchAllTafsirForAyat(QObject* caller, int chapterNumber, int verseNumber);
     Q_INVOKABLE void fetchAyat(QObject* caller, int surahId, int ayatId);
     Q_INVOKABLE bool fetchChapters(QObject* caller, QString const& text=QString());
     Q_INVOKABLE void fetchPageNumbers(QObject* caller);
     Q_INVOKABLE void fetchRandomAyat(QObject* caller);
+    Q_INVOKABLE void fetchSimilarAyat(QObject* caller, int chapterNumber, int verseNumber);
     Q_INVOKABLE void fetchSurahHeader(QObject* caller, int chapterNumber);
     Q_INVOKABLE void removeBookmark(QObject* caller, int id);
     Q_INVOKABLE void saveBookmark(QObject* caller, int surahId, int verseId, QString const& name, QString const& tag);

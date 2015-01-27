@@ -17,7 +17,6 @@ QueryHelper::QueryHelper(Persistance* persist) :
         m_sql( QString("%1/assets/dbase/quran_arabic.db").arg( QCoreApplication::applicationDirPath() ) ), m_persist(persist)
 {
     connect( persist, SIGNAL( settingChanged(QString const&) ), this, SLOT( settingChanged(QString const&) ), Qt::QueuedConnection );
-    //connect( &m_watcher, SIGNAL( fileChanged(QString const&) ), this, SIGNAL( bookmarksUpdated(QString const&) ) );
 }
 
 
@@ -187,6 +186,21 @@ void QueryHelper::fetchAllAyats(QObject* caller, int chapterNumber)
 }
 
 
+void QueryHelper::fetchAllTafsirForAyat(QObject* caller, int chapterNumber, int verseNumber)
+{
+    LOGGER(chapterNumber << verseNumber);
+
+    //m_sql.executeQuery(caller, "", QueryId::FetchTafsirForAyat);
+}
+
+
+void QueryHelper::fetchSimilarAyat(QObject* caller, int chapterNumber, int verseNumber)
+{
+    LOGGER(chapterNumber << verseNumber);
+    //m_sql.executeQuery(caller, "", QueryId::FetchSimilarAyat);
+}
+
+
 void QueryHelper::fetchAyat(QObject* caller, int surahId, int ayatId)
 {
     LOGGER(surahId << ayatId);
@@ -194,9 +208,9 @@ void QueryHelper::fetchAyat(QObject* caller, int surahId, int ayatId)
     QString query;
 
     if ( showTranslation() ) {
-        query = QString("SELECT content,verse_number,translation FROM ayahs INNER JOIN verses on ayahs.id=verses.id AND surah_id=%1").arg(surahId);
+        query = QString("SELECT content,translation FROM ayahs INNER JOIN verses on ayahs.id=verses.id WHERE ayahs.surah_id=%1 AND ayahs.verse_number=%2").arg(surahId).arg(ayatId);
     } else {
-        query = QString("SELECT content AS arabic,verse_number AS verse_id FROM ayahs WHERE surah_id=%1").arg(surahId);
+        query = QString("SELECT content FROM ayahs WHERE surah_id=%1 AND verse_number=%2").arg(surahId).arg(ayatId);
     }
 
     m_sql.executeQuery(caller, query, QueryId::FetchAyat);
