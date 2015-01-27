@@ -63,6 +63,8 @@ Page
             ayatOption.text = data[0].translation ? data[0].translation : data[0].name;
             babName.title = data[0].transliteration ? data[0].transliteration : data[0].name;
             babName.subtitle = "%1:%2".arg(surahId).arg(verseId);
+        } else if (id == QueryId.SaveBookmark) {
+            persist.showToast( qsTr("Bookmark added for Chapter %1, Verse %2").arg(surahId).arg(verseId), "", "asset:///images/menu/ic_bookmark_add.png" );
         }
     }
     
@@ -177,12 +179,12 @@ Page
             
             onTriggered: {
                 console.log("UserEvent: BookmarkTriggered");
-                var name = persist.showBlockingPrompt( qsTr("Enter name"), qsTr("You can use this to quickly recognize this ayah in the favourites tab."), "(%1:%2) %3".arg(surahId).arg(verseId).arg(body), qsTr("Bookmark name..."), true, 50, qsTr("Save") );
+                var name = persist.showBlockingPrompt( qsTr("Enter name"), qsTr("You can use this to quickly recognize this ayah in the favourites tab."), "(%1:%2) %3".arg(surahId).arg(verseId).arg(body.value), qsTr("Bookmark name..."), 50, true, qsTr("Save") );
                 
                 if (name.length > 0)
                 {
-                    var tag = persist.showBlockingPrompt( qsTr("Enter tag"), qsTr("You can use this to categorize related verses together."), "", qsTr("Enter a tag for this bookmark (ie: ramadan). You can leave this blank if you don't want to use a tag."), false, 50, qsTr("Save") );
-                    helper.saveBookmark(listView, surahId, verseId, name, tag);
+                    var tag = persist.showBlockingPrompt( qsTr("Enter tag"), qsTr("You can use this to categorize related verses together."), "", qsTr("Enter a tag for this bookmark (ie: ramadan). You can leave this blank if you don't want to use a tag."), 50, false, qsTr("Save") );
+                    helper.saveBookmark(root, surahId, verseId, name, tag);
                 }
             }
         },
@@ -201,8 +203,11 @@ Page
             
             onTriggered: {
                 console.log("UserEvent: AddShortcutTriggered");
-                var name = persist.showBlockingPrompt( qsTr("Enter name"), qsTr("You can use this to quickly recognize this ayah on your home screen."), "(%1:%2) %3".arg(surahId).arg(verseId).arg(body), qsTr("Shortcut name..."), true, 15, qsTr("Save") );
-                app.addToHomeScreen(surahId, verseId, name);
+                var name = persist.showBlockingPrompt( qsTr("Enter name"), qsTr("You can use this to quickly recognize this ayah on your home screen."), "(%1:%2) %3".arg(surahId).arg(verseId).arg(body.value), qsTr("Shortcut name..."), 15, true, qsTr("Save") );
+                
+                if (name.length > 0) {
+                    app.addToHomeScreen(surahId, verseId, name);
+                }
             }
         },
         

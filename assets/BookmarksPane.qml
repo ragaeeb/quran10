@@ -170,6 +170,7 @@ NavigationPane
                         
                         Header {
                             title: ListItemData.length > 0 ? ListItemData : qsTr("Uncategorized") + Retranslate.onLanguageChanged
+                            subtitle: ListItem.view.dataModel.childCount(ListItem.indexPath)
                         }
                     },
                     
@@ -181,10 +182,9 @@ NavigationPane
                         {
                             id: sli
                             title: ListItemData.name
-                            status: ListItemData.hadithNumber
-                            description: collections.renderAppropriate(ListItemData.collection)
-                            imageSource: collections.render(ListItemData.collection).imageSource
-                            scaleX: 1
+                            status: ListItemData.verse_id
+                            description: ListItemData.surah_name
+                            imageSource: "images/list/ic_bookmark.png"
                             
                             contextActions: [
                                 ActionSet
