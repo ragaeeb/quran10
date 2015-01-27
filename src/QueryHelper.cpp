@@ -56,7 +56,7 @@ void QueryHelper::fetchAllBookmarks(QObject* caller)
 
     if ( initBookmarks(caller) )
     {
-        QString query = "SELECT id,surah_id,verse_id,name,tag,timestamp FROM bookmarks";
+        QString query = "SELECT bookmarks.id AS id,surah_id,verse_id,bookmarks.name AS name,tag,timestamp,surahs.name AS surah_name FROM bookmarks INNER JOIN surahs ON surahs.id=surah_id";
         m_sql.executeQuery(caller, query, QueryId::FetchAllBookmarks);
     }
 }
