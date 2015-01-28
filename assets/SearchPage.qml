@@ -3,66 +3,191 @@ import com.canadainc.data 1.0
 
 Page
 {
-    property alias searchText: searchField.text
+    id: searchRoot
+    property string searchText
+    property variant queryFields: []
+    property bool andMode: true
+    property alias listControl: listView
+    property alias busyControl: busy
+    property alias def: definition
+    property alias model: adm
+    signal performSearch()
+    signal itemTapped(variant indexPath);
+    signal totalResultsFound(int total)
+    
     actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
+    
+    onSearchTextChanged: {
+        searchField.text = searchText;
+        searchField.input.submitted(searchField);
+    }
+    
+    onCreationCompleted: {
+        deviceUtils.attachTopBottomKeys(searchRoot, listView);
+    }
+    
+    onPerformSearch: {
+        var trimmed = searchField.text.trim();
+        
+        if (trimmed.length > 0)
+        {
+            titleBar.kindProperties.expandableArea.expanded = false;
+            busy.delegateActive = true;
+            noElements.delegateActive = false;
+            
+            var additional = [];
+            
+            for (var i = queryFields.length-1; i >= 0; i--)
+            {
+                var current = queryFields[i];
+                additional.push( current.queryValue.trim() );
+            }
+            
+            helper.searchQuery(listView, trimmed, additional, andMode, shortNarrations.checked);
+        }
+    }
+    
+    function updateState()
+    {
+        noElements.delegateActive = adm.isEmpty();
+        listView.visible = !adm.isEmpty();
+        
+        if (listView.opacity == 0) {
+            fader.play();
+        }
+        
+        totalResultsFound( adm.size() );
+    }
+    
+    actions: [
+        ActionItem {
+            id: searchAction
+            imageSource: "images/menu/ic_search.png"
+            title: qsTr("Search") + Retranslate.onLanguageChanged
+            ActionBar.placement: 'Signature' in ActionBarPlacement ? ActionBarPlacement["Signature"] : ActionBarPlacement.OnBar
+            
+            onTriggered: {
+                console.log("UserEvent: SearchActionTriggered");
+                performSearch();
+            }
+        },
+        
+        ActionItem {
+            imageSource: "images/menu/ic_add_search.png"
+            title: qsTr("Add") + Retranslate.onLanguageChanged
+            ActionBar.placement: ActionBarPlacement.OnBar
+            
+            onTriggered: {
+                console.log("UserEvent: AddSearchFieldTriggered");
+                
+                definition.source = "SearchConstraint.qml";
+                var additional = definition.createObject();
+                searchContainer.insert(1, additional);
+                
+                additional.textField.requestFocus();
+                
+                additional.startSearch.connect(performSearch);
+                var queryFieldsLocal = queryFields;
+                queryFieldsLocal.push(additional);
+                queryFields = queryFieldsLocal;
+            }
+        },
+        
+        ActionItem
+        {
+            imageSource: "images/menu/ic_search_append.png"
+            title: qsTr("Append") + Retranslate.onLanguageChanged
+            
+            function onNarrationsSelected(ids)
+            {
+                adm.insert(0, ids);
+                
+                while (navigationPane.top != searchRoot) {
+                    navigationPane.pop();
+                }
+                
+                updateState();
+                
+                listView.scrollToPosition(ScrollPosition.Beginning, ScrollAnimation.Smooth);
+            }
+            
+            onTriggered: {
+                definition.source = "SearchPickerPage.qml";
+                var searchPage = definition.createObject();
+                searchPage.doAppend = true;
+                
+                searchPage.narrationsSelected.connect(onNarrationsSelected);
+                navigationPane.push(searchPage);
+            }
+        },
+        
+        DeleteActionItem
+        {
+            id: removeSearchAction
+            imageSource: "images/menu/ic_search_remove.png"
+            title: qsTr("Remove Search Fields") + Retranslate.onLanguageChanged
+            
+            onTriggered: {
+                console.log("UserEvent: RemoveSearchFields");
+                
+                for (var i = queryFields.length-1; i >= 0; i--) {
+                    searchContainer.remove(queryFields[i]);
+                }
+                
+                var newFields = [];
+                queryFields = newFields;
+                searchField.resetText();
+                searchField.requestFocus();
+            }
+        }
+    ]
     
     titleBar: TitleBar
     {
+        id: tb
         kind: TitleBarKind.FreeForm
         kindProperties: FreeFormTitleBarKindProperties
         {
             Container
             {
-                topPadding: 10; rightPadding: 10; leftPadding: 10
-                background: back.imagePaint
+                horizontalAlignment: HorizontalAlignment.Fill
+                verticalAlignment: VerticalAlignment.Fill
+                topPadding: 10; bottomPadding: 20; leftPadding: 10
                 
-                TextField
+                Label {
+                    text: qsTr("Search") + Retranslate.onLanguageChanged
+                    verticalAlignment: VerticalAlignment.Center
+                    textStyle.base: SystemDefaults.TextStyles.BigText
+                }
+            }
+            
+            expandableArea
+            {
+                onExpandedChanged: {
+                    console.log("UserEvent: ExcludeExpanded", expanded);
+                }
+                
+                content: ScrollView
                 {
-                    id: searchField
-                    hintText: qsTr("Enter text to search...") + Retranslate.onLanguageChanged
                     horizontalAlignment: HorizontalAlignment.Fill
                     verticalAlignment: VerticalAlignment.Fill
-                    inputRoute.primaryKeyTarget: true;
-                    bottomMargin: 0; topMargin: 0
                     
-                    onTextChanged: {
-                        input.submitted(undefined);
-                    }
-                    
-                    input {
-                        submitKey: SubmitKey.Submit
+                    Container
+                    {
+                        id: excludeContainer
+                        horizontalAlignment: HorizontalAlignment.Fill
+                        topPadding: 5
                         
-                        onSubmitted: {
-                            var trimmedText = text.replace(/^\s+|\s+$/g, "");
+                        Container
+                        {
+                            leftPadding: 10; rightPadding: 10
                             
-                            if (trimmedText.length > 1)
-                            {
-                                theDataModel.clear()
-                                listView.translationLoaded = listView.arabicLoaded = false;
-                                
-                                busy.running = true;
-                                helper.searchQuery(listView, trimmedText);
+                            CheckBox {
+                                id: shortNarrations
+                                text: qsTr("Short Narrations Only") + Retranslate.onLanguageChanged
                             }
                         }
                     }
-                    
-                    animations: [
-                        FadeTransition
-                        {
-                            id: fader
-                            fromOpacity: 0
-                            toOpacity: 1
-                            duration: 500
-                            
-                            onEnded: {
-                                searchField.requestFocus();
-                            }
-                            
-                            onCreationCompleted: {
-                                play();
-                            }
-                        }
-                    ]
                 }
             }
         }
@@ -70,151 +195,241 @@ Page
     
     Container
     {
-        background: back.imagePaint
+        id: searchContainer
+        horizontalAlignment: HorizontalAlignment.Fill
+        verticalAlignment: VerticalAlignment.Fill
+        background: bg.imagePaint
         
-        ActivityIndicator {
-            id: busy
-            running: false
-            visible: running
-            preferredHeight: 250
-            horizontalAlignment: HorizontalAlignment.Center
-        }
-        
-        EmptyDelegate
+        TextField
         {
-            id: noElements
-            graphic: "images/placeholders/empty_search.png"
-            labelText: qsTr("There were no matches for your search. Please try another query.") + Retranslate.onLanguageChanged
-        }
-        
-        ListView
-        {
-            id: listView
-            property alias background: bg
-            property bool translationLoaded: false
-            property bool arabicLoaded: false
+            id: searchField
+            hintText: qsTr("Enter text to search...") + Retranslate.onLanguageChanged
+            horizontalAlignment: HorizontalAlignment.Fill
+            bottomMargin: 0
             
-            attachedObjects: [
-                ImagePaintDefinition {
-                    id: bg
+            input {
+                submitKey: SubmitKey.Search
+                flags: TextInputFlag.AutoCapitalizationOff | TextInputFlag.SpellCheck | TextInputFlag.WordSubstitution | TextInputFlag.AutoPeriodOff | TextInputFlag.AutoCorrection
+                submitKeyFocusBehavior: SubmitKeyFocusBehavior.Lose
+                
+                onSubmitted: {
+                    performSearch();
+                }
+            }
+            
+            onCreationCompleted: {
+                input["keyLayout"] = 7;
+            }
+            
+            animations: [
+                TranslateTransition {
+                    fromY: -200
+                    toY: 0
+                    easingCurve: StockCurve.SineOut
+                    duration: 350
+                    
+                    onCreationCompleted: {
+                        play();
+                    }
+                    
+                    onStarted: {
+                        searchField.requestFocus();
+                    }
+                    
+                    onEnded: {
+                        if ( persist.tutorial( "tutorialSearchField", qsTr("Type your search query in the text field and press the Enter key on the keyboard."), "asset:///images/tabs/ic_search.png" ) ) {}
+                        else if ( persist.tutorial( "tutorialSearchLink", qsTr("If you find similar narrations in your search results that you want to group together, you can press-and-hold one of them choose 'Select More' from the menu and tap on the similar ones, then choose 'Link Narrations' from the menu."), "asset:///images/menu/ic_link.png" ) ) {}
+                        else if ( persist.tutorial( "tutorialConstraint", qsTr("Tap on the icon at the bottom of the action bar if you want to add additional constraints to the search."), "asset:///images/menu/ic_add.png" ) ) {}
+                        else if ( persist.tutorial( "tutorialTipSearchHome", qsTr("Tip: You can start a search query directly from your home screen without even opening the app! Simply tap on the 'Search' icon on your home screen (or begin typing at the home screen on Q10/Q5 devices) and choose 'Sunnah10' from the search results. That will launch the app and initiate the search."), "asset:///images/menu/ic_bio.png" ) ) {}
+                        else if ( persist.tutorial( "tutorialTipSearchHome", qsTr("Tip: If you want to start at the Search tab instead of the Bookmarks/Favourites tab, swipe-down from the top-bezel, go to Settings, and enable 'Start At Search Tab'."), "asset:///images/menu/ic_settings.png" ) ) {}
+                    }
+                }
+            ]
+        }
+        
+        Container
+        {
+            layout: DockLayout {}
+            horizontalAlignment: HorizontalAlignment.Fill
+            verticalAlignment: VerticalAlignment.Fill
+            
+            layoutProperties: StackLayoutProperties {
+                spaceQuota: 1
+            }
+            
+            Container
+            {
+                horizontalAlignment: HorizontalAlignment.Fill
+                verticalAlignment: VerticalAlignment.Fill
+                background: Color.Black
+                opacity: 0
+                
+                animations: [
+                    FadeTransition {
+                        id: bgFader
+                        fromOpacity: 0
+                        toOpacity: 0.4
+                        duration: 1000
+                        delay: 500
+                        easingCurve: StockCurve.CubicOut
+                    }
+                ]
+            }
+            
+            EmptyDelegate
+            {
+                id: noElements
+                graphic: "images/placeholders/empty_search.png"
+                labelText: qsTr("No results found for your query. Try another query.") + Retranslate.onLanguageChanged
+                
+                onImageTapped: {
+                    searchField.requestFocus();
+                }
+            }
+            
+            ListView
+            {
+                id: listView
+                opacity: 0
+
+                layout: StackListLayout {
+                    headerMode: ListHeaderMode.Sticky
+                }
+                
+                property ImagePaintDefinition selectedItemBack: ImagePaintDefinition {
                     imageSource: "images/backgrounds/header_bg.png"
-                },
+                }
                 
-                ComponentDefinition {
-                    id: definition
-                    source: "SurahPage.qml"
-                }
-            ]
-            
-            function onDataLoaded(id, data)
-            {
-                theDataModel.insertList(data);
-
-                var primary = persist.getValueFor("primary");
-                var translation = persist.getValueFor("translation");
-
-                if (id == QueryId.SearchQueryTranslation) {
-                    translationLoaded = true;
-                } else if (id == QueryId.SearchQueryPrimary) {
-                    arabicLoaded = true;
-                }
-
-                if ( (translationLoaded && arabicLoaded) || (translation == "" && arabicLoaded) || (primary == "transliteration") ) {
-                    busy.running = false;
-                }
-
-                noElements.delegateActive = theDataModel.isEmpty();
-                listView.visible = !theDataModel.isEmpty();
-            }
-
-            dataModel: GroupDataModel
-            {
-                id: theDataModel
-                sortingKeys: [ "name", "verse_id" ]
-                grouping: ItemGrouping.ByFullValue
-            }
-            
-            onTriggered: {
-                console.log("UserEvent: SearchItemTriggered");
-                if (indexPath.length > 1) {
-                    var data = dataModel.data(indexPath)
-                    
-                    var surahPage = definition.createObject()
-                    surahPage.surahId = data.surah_id
-                    surahPage.requestedVerse = data.verse_id
-                    
-                    navigationPane.push(surahPage)
-                }
-            }
-            
-            listItemComponents: [
-                
-                ListItemComponent
+                function open(ListItemData)
                 {
-                    type: "header"
+                    definition.source = "AyatPage.qml";
+                    var page = definition.createObject();
+                    page.arabicId = ListItemData.id;
                     
-                    Container {
-                        id: headerRoot
-                        horizontalAlignment: HorizontalAlignment.Fill
-                        topPadding: 5
-                        bottomPadding: 5
-                        leftPadding: 5
-                        background: ListItem.view.background.imagePaint
+                    navigationPane.push(page);
+                }
+                
+                animations: [
+                    FadeTransition
+                    {
+                        id: fader
+                        fromOpacity: 0
+                        toOpacity: 1
+                        easingCurve: StockCurve.QuinticIn
+                        duration: 750
                         
-                        layout: StackLayout {
-                            orientation: LayoutOrientation.LeftToRight
+                        onEnded: {
+                            bgFader.play();
                         }
-                        
-                        Label {
-                            text: ListItemData
+                    }
+                ]
+                
+                dataModel: ArrayDataModel {
+                    id: adm
+                }
+                
+                listItemComponents: [
+                    ListItemComponent
+                    {
+                        Container
+                        {
+                            id: rootItem
                             horizontalAlignment: HorizontalAlignment.Fill
-                            textStyle.fontSize: FontSize.XXSmall
-                            textStyle.color: Color.White
-                            textStyle.fontWeight: FontWeight.Bold
-                            textStyle.textAlign: TextAlign.Center
+                            verticalAlignment: VerticalAlignment.Fill
+                            background: ListItem.active || ListItem.selected ? ListItem.view.selectedItemBack.imagePaint : undefined
                             
-                            layoutProperties: StackLayoutProperties {
-                                spaceQuota: 1
+                            Header {
+                                id: header
+                                title: collections.renderAppropriate(ListItemData.collection)
+                                subtitle: ListItemData.hadithNumber
                             }
+                            
+                            Container
+                            {
+                                horizontalAlignment: HorizontalAlignment.Fill
+                                leftPadding: 10; rightPadding: 10; bottomPadding: 10
+                                
+                                Label {
+                                    id: bodyLabel
+                                    content.flags: TextContentFlag.ActiveText | TextContentFlag.EmoticonsOff
+                                    multiline: true
+                                    text: ListItemData.hadithText
+                                    textStyle.color: rootItem.ListItem.active || rootItem.ListItem.selected ? Color.Black : undefined
+                                    textStyle.base: global.textFont
+                                }
+                            }
+                            
+                            opacity: 0
+                            animations: [
+                                FadeTransition
+                                {
+                                    id: showAnim
+                                    fromOpacity: 0
+                                    toOpacity: 1
+                                    easingCurve: StockCurve.QuinticOut
+                                    duration: Math.max( 200, Math.min( rootItem.ListItem.indexPath[0]*300, 750 ) );
+                                }
+                            ]
+                            
+                            ListItem.onInitializedChanged: {
+                                if (initialized) {
+                                    showAnim.play();
+                                }
+                            }
+                            
+                            contextActions: [
+                                ActionSet {
+                                    title: header.title
+                                    subtitle: bodyLabel.text.substring( 0, Math.min(bodyLabel.text.length, 15) ).replace(/\n/g, " ")
+                                    
+                                    ActionItem {
+                                        title: qsTr("Open") + Retranslate.onLanguageChanged
+                                        imageSource: "images/menu/ic_bio.png"
+                                        
+                                        onTriggered: {
+                                            rootItem.ListItem.view.open(ListItemData);
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     }
-                },
+                ]
                 
-                ListItemComponent
+                function onDataLoaded(id, data)
                 {
-                    type: "item"
-                    
-                    Container {
-                        id: itemRoot
-                        leftPadding: 5
-                        rightPadding: 5
-                        bottomPadding: 5
-                        horizontalAlignment: HorizontalAlignment.Fill
-                        preferredWidth: 1280
+                    if (id == QueryId.SearchNarrations)
+                    {
+                        adm.clear();
+                        adm.append(data);
+                        busy.delegateActive = false;
                         
-                        Divider {
-                            visible: itemRoot.ListItem.indexPath[1] != 0
-                            bottomMargin: 0
-                        }
-                        
-                        Label {
-                            text: ListItemData.text
-                            multiline: true
-                            horizontalAlignment: HorizontalAlignment.Fill
-                            textStyle.color: Color.White
-                            textStyle.textAlign: TextAlign.Center
-                            topMargin: 0
-                        }
+                        updateState();
                     }
                 }
-            ]
-        }
-        
-        attachedObjects: [
-            ImagePaintDefinition {
-                id: back
-                imageSource: "images/backgrounds/background.png"
+                
+                onTriggered: {
+                    console.log("UserEvent: HadithTriggeredFromSearch");
+                    itemTapped(indexPath);
+                }
             }
-        ]
+            
+            ProgressControl
+            {
+                id: busy
+                asset: "images/progress/search_loading.png"
+            }
+        }
     }
+    
+    attachedObjects: [
+        ImagePaintDefinition {
+            id: bg
+            imageSource: "images/backgrounds/background.png"
+        },
+        
+        ComponentDefinition {
+            id: definition
+        }
+    ]
 }
