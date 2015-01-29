@@ -225,7 +225,7 @@ void QueryHelper::searchQuery(QObject* caller, QString const& trimmedText, QVari
     QStringList constraints;
     QVariantList params = QVariantList() << trimmedText;
     bool isArabic = trimmedText.isRightToLeft() || !showTranslation();
-    QString textField = isArabic ? "searchable" : "translation";
+    QString textField = isArabic ? "searchable" : "verses.translation";
     QString query;
 
     foreach (QVariant const& entry, additional)
@@ -247,7 +247,7 @@ void QueryHelper::searchQuery(QObject* caller, QString const& trimmedText, QVari
     if (isArabic) {
         query = QString("SELECT surah_id,verse_id,content,name FROM ayahs INNER JOIN surahs ON ayahs.surah_id=surahs.id WHERE (%1").arg(textField).arg(LIKE_CLAUSE);
     } else {
-        query = QString("SELECT ayahs.surah_id AS surah_id,ayahs.verse_number AS verse_id,verses.translation AS translation,transliteration,%1 FROM verses INNER JOIN ayahs ON verses.id=ayahs.id INNER JOIN chapters ON ayahs.surah_id=chapters.id WHERE (%2").arg(textField).arg(LIKE_CLAUSE);
+        query = QString("SELECT ayahs.surah_id AS surah_id,ayahs.verse_number AS verse_id,verses.translation AS ayatText,transliteration AS name,%1 FROM verses INNER JOIN ayahs ON verses.id=ayahs.id INNER JOIN chapters ON ayahs.surah_id=chapters.id WHERE (%2").arg(textField).arg(LIKE_CLAUSE);
     }
 
     if ( !constraints.isEmpty() ) {

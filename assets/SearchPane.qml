@@ -16,7 +16,10 @@ NavigationPane
         onItemTapped: {
             def.source = "AyatPage.qml";
             var page = def.createObject();
-            page.arabicId = model.data(indexPath).id;
+            
+            var d = model.data(indexPath);
+            page.surahId = d.surah_id;
+            page.verseId = d.verse_id;
 
             navigationPane.push(page);
         }

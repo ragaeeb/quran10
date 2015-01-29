@@ -256,25 +256,6 @@ Page
                 spaceQuota: 1
             }
             
-            Container
-            {
-                horizontalAlignment: HorizontalAlignment.Fill
-                verticalAlignment: VerticalAlignment.Fill
-                background: Color.Black
-                opacity: 0
-                
-                animations: [
-                    FadeTransition {
-                        id: bgFader
-                        fromOpacity: 0
-                        toOpacity: 0.4
-                        duration: 1000
-                        delay: 500
-                        easingCurve: StockCurve.CubicOut
-                    }
-                ]
-            }
-            
             EmptyDelegate
             {
                 id: noElements
@@ -307,10 +288,6 @@ Page
                         toOpacity: 1
                         easingCurve: StockCurve.QuinticIn
                         duration: 750
-                        
-                        onEnded: {
-                            bgFader.play();
-                        }
                     }
                 ]
                 
@@ -374,6 +351,18 @@ Page
                 {
                     if (id == QueryId.SearchAyats)
                     {
+                        for (var i = data.length-1; i >= 0; i--)
+                        {
+                            var t = data[i].ayatText;
+                            var j = t.indexOf(searchField.text);
+                            
+                            if (j >= 0) {
+                                t = t.substring(0,j)+"<span style='font-style:italic;font-weight:bold;color:lightgreen'>"+t.substr(j,searchField.text.length)+"</span>"+t.substring(j+searchField.text.length);
+                                t = "<html>"+t+"</html>";
+                                data[i].ayatText = t;
+                            }
+                        }
+                        
                         adm.clear();
                         adm.append(data);
                         busy.delegateActive = false;
