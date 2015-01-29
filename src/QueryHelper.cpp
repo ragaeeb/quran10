@@ -256,6 +256,8 @@ void QueryHelper::searchQuery(QObject* caller, QString const& trimmedText, QVari
         query += ")";
     }
 
+    query += " ORDER BY surah_id,verse_id";
+
     /*
     if (shortThreshold > 0) {
         query += QString(" AND length(%1) < %2").arg(textField).arg(shortThreshold);

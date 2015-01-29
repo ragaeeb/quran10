@@ -135,37 +135,37 @@ Pin - 2B77C09E</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="213"/>
+        <location filename="../assets/AyatPage.qml" line="216"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="225"/>
+        <location filename="../assets/AyatPage.qml" line="228"/>
         <source>Share</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="242"/>
+        <location filename="../assets/AyatPage.qml" line="245"/>
         <source>Finish Editing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="242"/>
+        <location filename="../assets/AyatPage.qml" line="245"/>
         <source>Report Mistake</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="267"/>
+        <location filename="../assets/AyatPage.qml" line="270"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="267"/>
+        <location filename="../assets/AyatPage.qml" line="270"/>
         <source>The ayah is now editable. Please make the changes you feel are needed to correct it and then from the menu choose &apos;Report Error&apos; again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="327"/>
+        <location filename="../assets/AyatPage.qml" line="330"/>
         <source>The ayat was not found in the database.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -893,15 +893,94 @@ You can also select an ayat above the current one to start there and end at the 
     </message>
 </context>
 <context>
+    <name>SearchConstraint</name>
+    <message>
+        <location filename="../assets/SearchConstraint.qml" line="18"/>
+        <source>AND</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/SearchConstraint.qml" line="18"/>
+        <source>OR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/SearchConstraint.qml" line="43"/>
+        <source>Enter search query</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SearchPage</name>
     <message>
-        <location filename="../assets/SearchPage.qml" line="22"/>
+        <location filename="../assets/SearchPage.qml" line="73"/>
+        <location filename="../assets/SearchPage.qml" line="165"/>
+        <source>Search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/SearchPage.qml" line="84"/>
+        <source>Add</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/SearchPage.qml" line="106"/>
+        <source>Append</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/SearchPage.qml" line="135"/>
+        <source>Remove Search Fields</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/SearchPage.qml" line="194"/>
+        <source>Short Narrations Only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/SearchPage.qml" line="213"/>
         <source>Enter text to search...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SearchPage.qml" line="87"/>
-        <source>There were no matches for your search. Please try another query.</source>
+        <location filename="../assets/SearchPage.qml" line="247"/>
+        <source>Type your search query in the text field and press the Enter key on the keyboard.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/SearchPage.qml" line="248"/>
+        <source>Tap on the icon at the bottom of the action bar if you want to add additional constraints to the search.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/SearchPage.qml" line="249"/>
+        <source>Tip: You can start a search query directly from your home screen without even opening the app! Simply tap on the &apos;Search&apos; icon on your home screen (or begin typing at the home screen on Q10/Q5 devices) and choose &apos;Sunnah10&apos; from the search results. That will launch the app and initiate the search.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/SearchPage.qml" line="250"/>
+        <source>Tip: If you want to start at the Search tab instead of the Bookmarks/Favourites tab, swipe-down from the top-bezel, go to Settings, and enable &apos;Start At Search Tab&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/SearchPage.qml" line="270"/>
+        <source>No results found for your query. Try another query.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SearchPickerPage</name>
+    <message numerus="yes">
+        <location filename="../assets/SearchPickerPage.qml" line="12"/>
+        <source>%n narrations selected</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <location filename="../assets/SearchPickerPage.qml" line="25"/>
+        <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1544,27 +1623,27 @@ May Allah reward you, and bless you and your family.</source>
 <context>
     <name>quran::ApplicationUI</name>
     <message>
-        <location filename="../src/applicationui.cpp" line="177"/>
+        <location filename="../src/applicationui.cpp" line="205"/>
         <source>Invalid pattern specified!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="205"/>
+        <location filename="../src/applicationui.cpp" line="233"/>
         <source>Invalid surah specified</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="251"/>
+        <location filename="../src/applicationui.cpp" line="279"/>
         <source>Surah not found!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="277"/>
+        <location filename="../src/applicationui.cpp" line="305"/>
         <source>Added %1 to home screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="279"/>
+        <location filename="../src/applicationui.cpp" line="307"/>
         <source>Could not add %1 to home screen</source>
         <translation type="unfinished"></translation>
     </message>
