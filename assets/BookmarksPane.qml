@@ -63,7 +63,7 @@ NavigationPane
                 {
                     if (result) {
                         persist.showBlockingToast( qsTr("Successfully restored! The app will now close itself so when you re-open it the restored bookmarks can take effect!"), "", "asset:///images/menu/ic_restore.png" );
-                        Application.quit();
+                        Application.requestExit();
                     } else {
                         helper.setActive(true);
                         tutorialToast.init( qsTr("The database could not be restored. Please re-check the backup file to ensure it is valid, and if the problem persists please file a bug report. Make sure to attach the backup file with your report!"), "images/menu/ic_restore_error.png" );
