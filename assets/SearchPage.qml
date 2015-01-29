@@ -330,6 +330,7 @@ Page
                                     text: ListItemData.ayatText
                                     textStyle.color: rootItem.ListItem.active || rootItem.ListItem.selected ? Color.Black : undefined
                                     textStyle.base: global.textFont
+                                    textStyle.fontSize: FontSize.XLarge
                                 }
                             }
                             
