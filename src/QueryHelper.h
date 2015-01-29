@@ -57,7 +57,7 @@ public:
     Q_INVOKABLE void fetchSurahHeader(QObject* caller, int chapterNumber);
     Q_INVOKABLE void removeBookmark(QObject* caller, int id);
     Q_INVOKABLE void saveBookmark(QObject* caller, int surahId, int verseId, QString const& name, QString const& tag);
-    Q_INVOKABLE void searchQuery(QObject* caller, QString const& trimmedText);
+    Q_INVOKABLE void searchQuery(QObject* caller, QString const& trimmedText, QVariantList additional=QVariantList(), bool andMode=true, bool shortNarrations=false);
     Q_INVOKABLE QVariantList normalizeJuzs(QVariantList const& source);
 
     bool showTranslation() const;

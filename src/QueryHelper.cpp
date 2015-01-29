@@ -7,6 +7,7 @@
 
 #define TRANSLATION QString("quran_%1").arg(m_translation)
 #define MIN_CHARS_FOR_SURAH_SEARCH 2
+#define LIKE_CLAUSE QString("(%1 LIKE '%' || ? || '%')").arg(textField)
 
 namespace quran {
 
@@ -217,21 +218,50 @@ void QueryHelper::fetchAyat(QObject* caller, int surahId, int ayatId)
 }
 
 
-void QueryHelper::searchQuery(QObject* caller, QString const& trimmedText)
+void QueryHelper::searchQuery(QObject* caller, QString const& trimmedText, QVariantList additional, bool andMode, bool shortNarrations)
 {
-    LOGGER(trimmedText);
-    QString table = m_persist->getValueFor("translation").toString();
-    QVariantList args = QVariantList() << trimmedText;
+    LOGGER(trimmedText << additional << andMode << shortNarrations);
 
-    if ( !table.isEmpty() ) {
-        m_sql.executeQuery(caller, QString("select %1.surah_id,%1.verse_id,%1.text,chapters.english_name as name, chapters.english_name, chapters.arabic_name, chapters.english_translation from %1 INNER JOIN chapters on chapters.surah_id=%1.surah_id AND %1.text LIKE '%' || ? || '%'").arg(table), QueryId::SearchQueryTranslation, args);
+    QStringList constraints;
+    QVariantList params = QVariantList() << trimmedText;
+    bool isArabic = trimmedText.isRightToLeft() || !showTranslation();
+    QString textField = isArabic ? "searchable" : "translation";
+    QString query;
+
+    foreach (QVariant const& entry, additional)
+    {
+        QString queryValue = entry.toString();
+
+        if ( !queryValue.isEmpty() )
+        {
+            if (andMode) {
+                constraints << QString("AND %1").arg(LIKE_CLAUSE);
+            } else {
+                constraints << QString("OR %1").arg(LIKE_CLAUSE);
+            }
+
+            params << queryValue;
+        }
     }
 
-    table = m_persist->getValueFor("primary").toString();
-
-    if (table != "transliteration") {
-        m_sql.executeQuery(caller, QString("select %1.surah_id,%1.verse_id,%1.text,chapters.arabic_name as name, chapters.english_name, chapters.arabic_name, chapters.english_translation from %1 INNER JOIN chapters on chapters.surah_id=%1.surah_id AND %1.text LIKE '%' || ? || '%'").arg(table), QueryId::SearchQueryPrimary, args);
+    if (isArabic) {
+        query = QString("SELECT surah_id,verse_id,content,name FROM ayahs INNER JOIN surahs ON ayahs.surah_id=surahs.id WHERE (%1").arg(textField).arg(LIKE_CLAUSE);
+    } else {
+        query = QString("SELECT ayahs.surah_id AS surah_id,ayahs.verse_number AS verse_id,verses.translation AS translation,transliteration,%1 FROM verses INNER JOIN ayahs ON verses.id=ayahs.id INNER JOIN chapters ON ayahs.surah_id=chapters.id WHERE (%2").arg(textField).arg(LIKE_CLAUSE);
     }
+
+    if ( !constraints.isEmpty() ) {
+        query += " "+constraints.join(" ")+")";
+    } else {
+        query += ")";
+    }
+
+    /*
+    if (shortThreshold > 0) {
+        query += QString(" AND length(%1) < %2").arg(textField).arg(shortThreshold);
+    } */
+
+    m_sql.executeQuery(caller, query, QueryId::SearchAyats, params);
 }
 
 
