@@ -121,7 +121,7 @@ Page
                 hintText: qsTr("Search surah name or number (ie: '2' for Surah Al-Baqara)...") + Retranslate.onLanguageChanged
                 bottomMargin: 0
                 horizontalAlignment: HorizontalAlignment.Fill
-                inputRoute.primaryKeyTarget: true;
+                //inputRoute.primaryKeyTarget: true;
                 
                 onTextChanging: {
                     var ok = helper.fetchChapters(listView, text);
