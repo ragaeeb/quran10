@@ -238,7 +238,6 @@ Page
                     
                     onEnded: {
                         if ( persist.tutorial( "tutorialSearchField", qsTr("Type your search query in the text field and press the Enter key on the keyboard."), "asset:///images/tabs/ic_search.png" ) ) {}
-                        else if ( persist.tutorial( "tutorialSearchLink", qsTr("If you find similar narrations in your search results that you want to group together, you can press-and-hold one of them choose 'Select More' from the menu and tap on the similar ones, then choose 'Link Narrations' from the menu."), "asset:///images/menu/ic_link.png" ) ) {}
                         else if ( persist.tutorial( "tutorialConstraint", qsTr("Tap on the icon at the bottom of the action bar if you want to add additional constraints to the search."), "asset:///images/menu/ic_add.png" ) ) {}
                         else if ( persist.tutorial( "tutorialTipSearchHome", qsTr("Tip: You can start a search query directly from your home screen without even opening the app! Simply tap on the 'Search' icon on your home screen (or begin typing at the home screen on Q10/Q5 devices) and choose 'Sunnah10' from the search results. That will launch the app and initiate the search."), "asset:///images/menu/ic_bio.png" ) ) {}
                         else if ( persist.tutorial( "tutorialTipSearchHome", qsTr("Tip: If you want to start at the Search tab instead of the Bookmarks/Favourites tab, swipe-down from the top-bezel, go to Settings, and enable 'Start At Search Tab'."), "asset:///images/menu/ic_settings.png" ) ) {}
@@ -300,15 +299,6 @@ Page
                     imageSource: "images/backgrounds/header_bg.png"
                 }
                 
-                function open(ListItemData)
-                {
-                    definition.source = "AyatPage.qml";
-                    var page = definition.createObject();
-                    page.arabicId = ListItemData.id;
-                    
-                    navigationPane.push(page);
-                }
-                
                 animations: [
                     FadeTransition
                     {
@@ -340,8 +330,8 @@ Page
                             
                             Header {
                                 id: header
-                                title: collections.renderAppropriate(ListItemData.collection)
-                                subtitle: ListItemData.hadithNumber
+                                title: ListItemData.name
+                                subtitle: "%1:%2".arg(ListItemData.surah_id).arg(ListItemData.verse_id)
                             }
                             
                             Container
@@ -353,7 +343,7 @@ Page
                                     id: bodyLabel
                                     content.flags: TextContentFlag.ActiveText | TextContentFlag.EmoticonsOff
                                     multiline: true
-                                    text: ListItemData.hadithText
+                                    text: ListItemData.ayatText
                                     textStyle.color: rootItem.ListItem.active || rootItem.ListItem.selected ? Color.Black : undefined
                                     textStyle.base: global.textFont
                                 }
@@ -376,29 +366,13 @@ Page
                                     showAnim.play();
                                 }
                             }
-                            
-                            contextActions: [
-                                ActionSet {
-                                    title: header.title
-                                    subtitle: bodyLabel.text.substring( 0, Math.min(bodyLabel.text.length, 15) ).replace(/\n/g, " ")
-                                    
-                                    ActionItem {
-                                        title: qsTr("Open") + Retranslate.onLanguageChanged
-                                        imageSource: "images/menu/ic_bio.png"
-                                        
-                                        onTriggered: {
-                                            rootItem.ListItem.view.open(ListItemData);
-                                        }
-                                    }
-                                }
-                            ]
                         }
                     }
                 ]
                 
                 function onDataLoaded(id, data)
                 {
-                    if (id == QueryId.SearchNarrations)
+                    if (id == QueryId.SearchAyats)
                     {
                         adm.clear();
                         adm.append(data);
@@ -409,7 +383,7 @@ Page
                 }
                 
                 onTriggered: {
-                    console.log("UserEvent: HadithTriggeredFromSearch");
+                    console.log("UserEvent: AyatTriggeredFromSearch");
                     itemTapped(indexPath);
                 }
             }
@@ -417,7 +391,7 @@ Page
             ProgressControl
             {
                 id: busy
-                asset: "images/progress/search_loading.png"
+                asset: "images/progress/loading_search.png"
             }
         }
     }

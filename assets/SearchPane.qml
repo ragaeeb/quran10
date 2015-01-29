@@ -24,16 +24,5 @@ NavigationPane
         onTotalResultsFound: {
             navigationPane.parent.unreadContentCount = total;
         }
-        
-        attachedObjects: [
-            HadithLinkHelper
-            {
-                listView: searchPage.listControl
-                
-                onLinkingProgress: {
-                    searchPage.busyControl.delegateActive = started;
-                }
-            }
-        ]
     }
 }
