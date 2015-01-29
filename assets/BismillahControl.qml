@@ -21,6 +21,8 @@ ControlDelegate
                 textStyle.color: Color.Black
                 textStyle.fontSize: FontSize.PointValue
                 textStyle.fontSizeValue: primarySize
+                textStyle.base: global.textFont
+                
                 multiline: true
                 
                 layoutProperties: StackLayoutProperties {
