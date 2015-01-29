@@ -16,9 +16,10 @@ Container
     Button
     {
         text: andMode ? qsTr("AND") + Retranslate.onLanguageChanged : qsTr("OR") + Retranslate.onLanguageChanged
-        maxWidth: 100
+        maxWidth: 150
         rightMargin: 0
         translationX: -200
+        imageSource: andMode ? "images/dropdown/similar.png" : "images/dropdown/sort_revelation.png"
         
         onClicked: {
             andMode = !andMode;
