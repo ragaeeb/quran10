@@ -1623,27 +1623,27 @@ May Allah reward you, and bless you and your family.</source>
 <context>
     <name>quran::ApplicationUI</name>
     <message>
-        <location filename="../src/applicationui.cpp" line="205"/>
+        <location filename="../src/applicationui.cpp" line="208"/>
         <source>Invalid pattern specified!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="233"/>
+        <location filename="../src/applicationui.cpp" line="236"/>
         <source>Invalid surah specified</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="279"/>
+        <location filename="../src/applicationui.cpp" line="282"/>
         <source>Surah not found!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="305"/>
+        <location filename="../src/applicationui.cpp" line="308"/>
         <source>Added %1 to home screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="307"/>
+        <location filename="../src/applicationui.cpp" line="310"/>
         <source>Could not add %1 to home screen</source>
         <translation type="unfinished"></translation>
     </message>
