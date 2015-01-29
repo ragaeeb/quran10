@@ -45,6 +45,7 @@ private slots:
 	void onBookmarksSaved();
 	void onDataLoaded(QVariant id, QVariant data);
 	void onPicked(int chapter, int verse);
+	void onResultsDecorated();
 
 signals:
     void backupComplete(QString const& file);
@@ -59,6 +60,7 @@ public:
     Q_INVOKABLE void addToHomeScreen(int chapter, int verse, QString const& label);
     Q_INVOKABLE void backup(QString const& destination);
     Q_INVOKABLE void restore(QString const& source);
+    Q_INVOKABLE void decorateSearchResults(QVariantList const& input, QString const& searchText, bb::cascades::ArrayDataModel* adm, QVariantList const& additional=QVariantList());
 };
 
 } // quran
