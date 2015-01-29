@@ -26,6 +26,19 @@ Page
         deviceUtils.attachTopBottomKeys(searchRoot, listView);
     }
     
+    function getAdditionalQueries()
+    {
+        var additional = [];
+        
+        for (var i = queryFields.length-1; i >= 0; i--)
+        {
+            var current = queryFields[i];
+            additional.push( current.queryValue.trim() );
+        }
+        
+        return additional;
+    }
+    
     onPerformSearch: {
         var trimmed = searchField.text.trim();
         
@@ -35,13 +48,7 @@ Page
             busy.delegateActive = true;
             noElements.delegateActive = false;
             
-            var additional = [];
-            
-            for (var i = queryFields.length-1; i >= 0; i--)
-            {
-                var current = queryFields[i];
-                additional.push( current.queryValue.trim() );
-            }
+            var additional = getAdditionalQueries();
             
             helper.searchQuery(listView, trimmed, additional, andMode, shortNarrations.checked);
         }
@@ -351,23 +358,13 @@ Page
                 {
                     if (id == QueryId.SearchAyats)
                     {
-                        for (var i = data.length-1; i >= 0; i--)
-                        {
-                            var t = data[i].ayatText;
-                            var j = t.indexOf(searchField.text);
-                            
-                            if (j >= 0) {
-                                t = t.substring(0,j)+"<span style='font-style:italic;font-weight:bold;color:lightgreen'>"+t.substr(j,searchField.text.length)+"</span>"+t.substring(j+searchField.text.length);
-                                t = "<html>"+t+"</html>";
-                                data[i].ayatText = t;
-                            }
-                        }
-                        
                         adm.clear();
                         adm.append(data);
                         busy.delegateActive = false;
                         
                         updateState();
+                        
+                        app.decorateSearchResults(data, searchField.text, adm, getAdditionalQueries());
                     }
                 }
                 
