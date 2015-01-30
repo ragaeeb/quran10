@@ -368,13 +368,19 @@ Finally, there is built-in support to do efficient and fast lookups for any sura
 <context>
     <name>MushafProgressControl</name>
     <message>
-        <location filename="../assets/MushafProgressControl.qml" line="75"/>
+        <location filename="../assets/MushafProgressControl.qml" line="90"/>
         <source>Downloading...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafProgressControl.qml" line="100"/>
+        <location filename="../assets/MushafProgressControl.qml" line="115"/>
         <source>Downloading...
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/MushafProgressControl.qml" line="127"/>
+        <source>Uncompressing...
 </source>
         <translation type="unfinished"></translation>
     </message>
@@ -1628,27 +1634,27 @@ May Allah reward you, and bless you and your family.</source>
 <context>
     <name>quran::ApplicationUI</name>
     <message>
-        <location filename="../src/applicationui.cpp" line="208"/>
+        <location filename="../src/applicationui.cpp" line="218"/>
         <source>Invalid pattern specified!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="236"/>
+        <location filename="../src/applicationui.cpp" line="246"/>
         <source>Invalid surah specified</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="282"/>
+        <location filename="../src/applicationui.cpp" line="292"/>
         <source>Surah not found!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="308"/>
+        <location filename="../src/applicationui.cpp" line="318"/>
         <source>Added %1 to home screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="310"/>
+        <location filename="../src/applicationui.cpp" line="320"/>
         <source>Could not add %1 to home screen</source>
         <translation type="unfinished"></translation>
     </message>
