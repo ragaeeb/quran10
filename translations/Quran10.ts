@@ -392,39 +392,44 @@ Finally, there is built-in support to do efficient and fast lookups for any sura
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="47"/>
+        <location filename="../assets/MushafSheet.qml" line="44"/>
+        <source>Download All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/MushafSheet.qml" line="59"/>
         <source>Page %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="52"/>
+        <location filename="../assets/MushafSheet.qml" line="64"/>
         <source>Back</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="101"/>
+        <location filename="../assets/MushafSheet.qml" line="113"/>
         <source>Surah</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../assets/MushafSheet.qml" line="119"/>
+        <location filename="../assets/MushafSheet.qml" line="131"/>
         <source>%n verses</source>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="232"/>
+        <location filename="../assets/MushafSheet.qml" line="244"/>
         <source>You can pinch on the page to zoom in and out and scroll up and down.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="234"/>
+        <location filename="../assets/MushafSheet.qml" line="246"/>
         <source>Use the left and right arrows to switch pages.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="235"/>
+        <location filename="../assets/MushafSheet.qml" line="247"/>
         <source>Tap on the screen, then on the bottom action bar you will see the Jump icon. Use this to trigger the dropdown menu to jump to a specific surah in the mushaf.</source>
         <translation type="unfinished"></translation>
     </message>
