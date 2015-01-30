@@ -43,7 +43,7 @@ Sheet
             {
                 title: qsTr("Download All") + Retranslate.onLanguageChanged
                 ActionBar.placement: 'Signature' in ActionBarPlacement ? ActionBarPlacement["Signature"] : ActionBarPlacement.OnBar
-                imageSource: "images/menu/ic_memorize.png"
+                imageSource: "images/menu/ic_download_mushaf.png"
                 
                 onTriggered: {
                     console.log("UserEvent: DownoloadFullMushaf");

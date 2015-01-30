@@ -19,7 +19,7 @@ Container
         maxWidth: 150
         rightMargin: 0
         translationX: -200
-        imageSource: andMode ? "images/dropdown/similar.png" : "images/dropdown/sort_revelation.png"
+        imageSource: andMode ? "images/dropdown/search_and.png" : "images/dropdown/search_or.png"
         
         onClicked: {
             andMode = !andMode;
