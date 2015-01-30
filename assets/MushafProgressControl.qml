@@ -11,6 +11,9 @@ Container
         if (visible) {
             progressBar.scaleX = 1;
             opacity = 1;
+            rt.play();
+        } else {
+            rt.stop();
         }
     }
     
@@ -52,8 +55,20 @@ Container
             horizontalAlignment: HorizontalAlignment.Center
             verticalAlignment: VerticalAlignment.Center
             imageSource: "images/progress/mushaf_circle.png"
-            preferredHeight: 150
-            preferredWidth: 150
+            preferredHeight: 200
+            preferredWidth: 200
+            
+            animations: [
+                RotateTransition
+                {
+                    id: rt
+                    fromAngleZ: 0
+                    toAngleZ: 360
+                    duration: 2000
+                    easingCurve: StockCurve.SineInOut
+                    repeatCount: AnimationRepeatCount.Forever
+                }
+            ]
         }
         
         Container
@@ -105,7 +120,16 @@ Container
         }
     }
     
+    function onDeflationProgressChanged(current, total)
+    {
+        visible = true;
+        label.text = qsTr("Uncompressing...\n") + ( (100.0*current)/total ).toFixed(1) + "%";
+        progressBar.scaleX = current/total;
+    }
+    
     onCreationCompleted: {
         mushaf.downloadProgress.connect(onProgressChanged);
+        mushaf.deflationProgress.connect(onDeflationProgressChanged);
+        mushaf.deflationDone.connect(st.play);
     }
 }
