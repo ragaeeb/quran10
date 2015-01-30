@@ -127,9 +127,18 @@ Container
         progressBar.scaleX = current/total;
     }
     
+    function onDone(sucess, message)
+    {
+        if (!success) {
+            persist.showToast(message, "", "asset:///images/ic_review.png");
+        }
+        
+        st.play();
+    }
+    
     onCreationCompleted: {
         mushaf.downloadProgress.connect(onProgressChanged);
         mushaf.deflationProgress.connect(onDeflationProgressChanged);
-        mushaf.deflationDone.connect(st.play);
+        mushaf.deflationDone.connect(onDone);
     }
 }
