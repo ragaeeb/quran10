@@ -20,6 +20,7 @@ public:
         FetchAllAyats,
         FetchAllBookmarks,
         FetchAllDuaa,
+        FetchAllRecitations,
         FetchAllTafsir,
         FetchAllTafsirForSuite,
         FetchAyat,
