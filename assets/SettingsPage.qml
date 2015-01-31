@@ -1,5 +1,6 @@
 import bb.cascades 1.0
 import bb.cascades.pickers 1.0
+import com.canadainc.data 1.0
 
 Page
 {
@@ -171,11 +172,65 @@ Page
 	            }
 	        }
             
-            ReciterDropDown
+            DropDown
             {
+                id: reciter
+                title: qsTr("Reciter") + Retranslate.onLanguageChanged
+                
+                function onDataLoaded(id, data)
+                {
+                    if (id == QueryId.FetchAllRecitations)
+                    {
+                        var qareeValue = persist.getValueFor("reciter");
+                        var n = data.length;
+                        var selectedQaree;
+                        
+                        for (var i = 0; i < n; i++)
+                        {
+                            var current = data[i];
+
+                            var opt = qareeDef.createObject();
+                            opt.text = current.name;
+                            opt.description = current.description;
+                            opt.value = current.value;
+                            
+                            if (current.id == 6) {
+                                opt.imageSource = "images/dropdown/ic_reciter_hudhaify.png";
+                            } else if (current.id == 7) {
+                                opt.imageSource = "images/dropdown/ic_reciter_husary.png";
+                            }
+                            
+                            reciter.add(opt);
+                            
+                            if (current.value == qareeValue) {
+                                selectedQaree = opt;
+                            }
+                        }
+                        
+                        if (selectedQaree) {
+                            selectedOption = selectedQaree;
+                        }
+                    }
+                }
+                
+                onCreationCompleted: {
+                    helper.fetchAllQarees(reciter, 1);
+                }
+                
                 onSelectedOptionChanged: {
                     infoText.text = qsTr("The verse recitations will be that of %1.").arg(selectedOption.text) + Retranslate.onLanguageChanged
                 }
+                
+                attachedObjects: [
+                    ComponentDefinition
+                    {
+                        id: qareeDef
+                        
+                        Option {
+                            imageSource: "images/dropdown/ic_reciter.png"
+                        }
+                    }
+                ]
             }
 
             Container
