@@ -44,10 +44,41 @@ Sheet
                 title: qsTr("Download All") + Retranslate.onLanguageChanged
                 ActionBar.placement: 'Signature' in ActionBarPlacement ? ActionBarPlacement["Signature"] : ActionBarPlacement.OnBar
                 imageSource: "images/menu/ic_download_mushaf.png"
+                property variant totalSize: 0
+                
+                function onDeflated(success, error) {
+                    enabled = true;
+                }
+                
+                function onMushafSizeFetched(total)
+                {
+                    totalSize = total;
+
+                    var confirmed = persist.showBlockingDialog( qsTr("Confirmation"), qsTr("The total size of the mushaf is ~%1 and it will need to be downloaded. Make sure you are on a good Wi-Fi connection or have a good data plan. Do you wish to continue?").arg( app.bytesToSize(total) ) );
+                    
+                    if (confirmed) {
+                        console.log("UserEvent: DownoloadMushafPromptYes");
+                        mushaf.requestEntireMushaf();
+                        mushaf.deflationDone.connect(onDeflated);
+                    } else {
+                        console.log("UserEvent: DownoloadMushafPromptNo");
+                        enabled = true;
+                    }
+                }
+                
+                onCreationCompleted: {
+                    mushaf.mushafSizeFetched.connect(onMushafSizeFetched);
+                }
                 
                 onTriggered: {
-                    console.log("UserEvent: DownoloadFullMushaf");
-                    mushaf.requestEntireMushaf();
+                    console.log("UserEvent: MushafDownloadAll");
+                    enabled = false;
+                    
+                    if (totalSize > 0) {
+                        onMushafSizeFetched(totalSize);
+                    } else {
+                        mushaf.fetchMushafSize();
+                    }
                 }
             }
         ]

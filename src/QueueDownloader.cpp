@@ -9,6 +9,7 @@ QueueDownloader::QueueDownloader(QStringList const& sortingKeys, QObject* parent
     connect( &m_network, SIGNAL( requestComplete(QVariant const&, QByteArray const&) ), this, SLOT( onRequestComplete(QVariant const&, QByteArray const&) ) );
     connect( &m_network, SIGNAL( requestComplete(QVariant const&, QByteArray const&) ), this, SIGNAL( requestComplete(QVariant const&, QByteArray const&) ) );
     connect( &m_network, SIGNAL( downloadProgress(QVariant const&, qint64, qint64) ), this, SIGNAL( downloadProgress(QVariant const&, qint64, qint64) ) );
+    connect( &m_network, SIGNAL( sizeFetched(QVariant const&, qint64) ), this, SIGNAL( sizeFetched(QVariant const&, qint64) ) );
 
     connect( &m_model, SIGNAL( itemAdded(QVariantList) ), this, SIGNAL( itemAdded(QVariantList) ) );
     connect( &m_model, SIGNAL( itemUpdated(QVariantList) ), this, SIGNAL( itemUpdated(QVariantList) ) );
@@ -25,6 +26,12 @@ QueueDownloader::QueueDownloader(QStringList const& sortingKeys, QObject* parent
 
 QueueDownloader::~QueueDownloader()
 {
+}
+
+
+void QueueDownloader::checkSize(QVariant const& cookie, QString const& uri)
+{
+    m_network.getFileSize(uri, cookie);
 }
 
 
