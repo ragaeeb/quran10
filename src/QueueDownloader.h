@@ -37,6 +37,7 @@ public:
     Q_INVOKABLE void process(QVariantList const& toProcess);
     Q_INVOKABLE void abort();
     int queued() const;
+    void checkSize(QVariant const& cookie, QString const& uri);
 
 signals:
     void downloadProgress(QVariant const& cookie, qint64 bytesReceived, qint64 bytesTotal);
@@ -46,6 +47,7 @@ signals:
     void itemsChanged(bb::cascades::DataModelChangeType::Type, QSharedPointer<bb::cascades::DataModel::IndexMapper>);
     void queueChanged();
     void requestComplete(QVariant const& cookie, QByteArray const& data);
+    void sizeFetched(QVariant const& cookie, qint64 size);
 };
 
 

@@ -3,7 +3,8 @@ import bb.cascades 1.0
 Sheet
 {
     id: root
-    property int arabicId
+    property int surahId
+    property int verseId
     property string body
     property alias expectedText: expectedField.text
     
@@ -49,7 +50,7 @@ Sheet
                     enabled = false;
                     scrollView.scrollToPoint(0, 0, ScrollAnimation.Smooth);
                     progressIndicator.visible = true;
-                    var notes = "mistake_type:%1;email_address:%2;expected_value:%3;actual_value:%4;user_comments:%5;arabicID:%6".arg(typeDropDown.selectedValue).arg( emailField.text.trim() ).arg( expectedField.text.trim() ).arg( actual.text.trim() ).arg( commentsField.text.trim() ).arg(arabicId);
+                    var notes = "mistake_type:%1;email_address:%2;expected_value:%3;actual_value:%4;user_comments:%5;surahId:%6;verseId:%7".arg(typeDropDown.selectedValue).arg( emailField.text.trim() ).arg( expectedField.text.trim() ).arg( actual.text.trim() ).arg( commentsField.text.trim() ).arg(surahId).arg(verseId);
                     reporter.submitLogs(notes);
                 }
 
