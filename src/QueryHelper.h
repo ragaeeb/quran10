@@ -51,6 +51,7 @@ public:
     Q_INVOKABLE void fetchAllTafsirForAyat(QObject* caller, int chapterNumber, int verseNumber);
     Q_INVOKABLE void fetchAyat(QObject* caller, int surahId, int ayatId);
     Q_INVOKABLE bool fetchChapters(QObject* caller, QString const& text=QString());
+    Q_INVOKABLE void fetchChapter(QObject* caller, int chapter);
     Q_INVOKABLE void fetchPageNumbers(QObject* caller);
     Q_INVOKABLE void fetchAllQarees(QObject* caller, int minLevel=1);
     Q_INVOKABLE void fetchRandomAyat(QObject* caller);

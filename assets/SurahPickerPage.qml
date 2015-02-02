@@ -124,7 +124,17 @@ Page
                 //inputRoute.primaryKeyTarget: true;
                 
                 onTextChanging: {
-                    var ok = helper.fetchChapters(listView, text);
+                    var ok = true;
+                    
+                    if ( text.match(/^\d{1,3}:\d{1,3}$/) || text.match(/^\d{1,3}$/) )
+                    {
+                        var tokens = text.split(":");
+                        var surah = parseInt(tokens[0]);
+                        helper.fetchChapter(listView, surah);
+                    } else {
+                        ok = helper.fetchChapters(listView, text);
+                    }
+                    
                     busy.delegateActive = ok;
                 }
                 
