@@ -99,6 +99,18 @@ void QueryHelper::fetchAllDuaa(QObject* caller)
 }
 
 
+void QueryHelper::fetchAllChapters(QObject* caller)
+{
+    QString query = "SELECT id AS surah_id,name,verse_count,revelation_order,j.id AS juz_id,verse_number FROM surahs LEFT JOIN juzs j ON j.surah_id=a.id";
+
+    if ( showTranslation() ) {
+        query = "SELECT a.id AS surah_id,name,verse_count,revelation_order,transliteration,j.id AS juz_id,verse_number FROM surahs a INNER JOIN chapters t ON a.id=t.id LEFT JOIN juzs j ON j.surah_id=a.id";
+    }
+
+    m_sql.executeQuery(caller, query, QueryId::FetchAllChapters);
+}
+
+
 bool QueryHelper::fetchChapters(QObject* caller, QString const& text)
 {
     QString query;
@@ -110,7 +122,7 @@ bool QueryHelper::fetchChapters(QObject* caller, QString const& text)
     {
         if ( showTranslation() )
         {
-            query = "SELECT a.id AS surah_id,name,verse_count,revelation_order,transliteration,j.id AS juz_id,verse_number FROM surahs a INNER JOIN chapters t ON a.id=t.id LEFT JOIN juzs j ON j.surah_id=a.id";
+            query = "SELECT a.id AS surah_id,name,verse_count,revelation_order,transliteration FROM surahs a INNER JOIN chapters t ON a.id=t.id";
 
             if (n > MIN_CHARS_FOR_SURAH_SEARCH)
             {
@@ -119,7 +131,7 @@ bool QueryHelper::fetchChapters(QObject* caller, QString const& text)
                 args << text;
             }
         } else {
-            query = "SELECT id AS surah_id,name,verse_count,revelation_order,j.id AS juz_id,verse_number FROM surahs LEFT JOIN juzs j ON j.surah_id=a.id";
+            query = "SELECT id AS surah_id,name,verse_count,revelation_order, FROM surahs";
 
             if (n > MIN_CHARS_FOR_SURAH_SEARCH)
             {

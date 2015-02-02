@@ -125,14 +125,16 @@ Page
                 
                 onTextChanging: {
                     var ok = true;
+                    var textValue = text.trim();
                     
-                    if ( text.match(/^\d{1,3}:\d{1,3}$/) || text.match(/^\d{1,3}$/) )
-                    {
-                        var tokens = text.split(":");
+                    if (textValue.length == 0) {
+                        helper.fetchAllChapters(listView);
+                    } else if ( textValue.match(/^\d{1,3}:\d{1,3}$/) || textValue.match(/^\d{1,3}$/) ) {
+                        var tokens = textValue.split(":");
                         var surah = parseInt(tokens[0]);
                         helper.fetchChapter(listView, surah);
                     } else {
-                        ok = helper.fetchChapters(listView, text);
+                        ok = helper.fetchChapters(listView, textValue);
                     }
                     
                     busy.delegateActive = ok;
@@ -142,9 +144,11 @@ Page
                     submitKey: SubmitKey.Submit
                     
                     onSubmitted: {
-                        if ( text.match(/^\d{1,3}:\d{1,3}$/) || text.match(/^\d{1,3}$/) )
+                        var textValue = text.trim();
+                        
+                        if ( textValue.match(/^\d{1,3}:\d{1,3}$/) || textValue.match(/^\d{1,3}$/) )
                         {
-                            var tokens = text.split(":");
+                            var tokens = textValue.split(":");
                             var surah = parseInt(tokens[0]);
                             
                             if (tokens.length > 0) {
@@ -177,8 +181,9 @@ Page
                 property bool secretPeek: false
                 
                 dataModel: GroupDataModel {
-                    id: theDataModel
-                    sortingKeys: ["juz_id", "surah_id"]
+                    id: gdm
+                    sortingKeys: ["surah_id"]
+                    grouping: ItemGrouping.ByFullValue
                 }
                 
                 listItemComponents: [
@@ -244,25 +249,30 @@ Page
                 {
                     if (id == QueryId.FetchChapters)
                     {
-                        theDataModel.clear();
+                        console.log("**** data");
+                        gdm.grouping = ItemGrouping.None;
                         
                         if (sortOrder.selectedOption == alphabet) {
-                            theDataModel.sortingKeys = [helper.showTranslation ? "transliteration" : "name"];
-                            theDataModel.grouping = ItemGrouping.None;
+                            gdm.sortingKeys = [helper.showTranslation ? "transliteration" : "name"];
                         } else if (sortOrder.selectedOption == normal || sortOrder.selectedOption == null) {
-                            theDataModel.sortingKeys = ["juz_id", "surah_id", "verse_number"];
-                            theDataModel.grouping = ItemGrouping.ByFullValue;
-                            data = helper.normalizeJuzs(data);
+                            gdm.sortingKeys = ["surah_id"];
                         } else if (sortOrder.selectedOption == recent) {
-                            theDataModel.sortingKeys = ["revelation_order"];
-                            theDataModel.grouping = ItemGrouping.None;
+                            gdm.sortingKeys = ["revelation_order"];
                         }
                         
-                        theDataModel.insertList(data);
-                        busy.delegateActive = false;
-                        noElements.delegateActive = theDataModel.isEmpty();
-                        listView.visible = !noElements.delegateActive;
+                        console.log("**** no grouping");
+                    } else if (id == QueryId.FetchAllChapters) {
+                        gdm.grouping = ItemGrouping.ByFullValue;
+                        gdm.sortingKeys = ["juz_id", "surah_id", "verse_number"];
+                        data = helper.normalizeJuzs(data);
+                        console.log("***group by full value");
                     }
+                    
+                    gdm.clear();
+                    gdm.insertList(data);
+                    noElements.delegateActive = gdm.isEmpty();
+                    listView.visible = !noElements.delegateActive;
+                    busy.delegateActive = false;
                 }
             }
         }

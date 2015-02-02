@@ -19,6 +19,7 @@ public:
         EditTafsirPage,
         FetchAllAyats,
         FetchAllBookmarks,
+        FetchAllChapters,
         FetchAllDuaa,
         FetchAllRecitations,
         FetchAllTafsir,
