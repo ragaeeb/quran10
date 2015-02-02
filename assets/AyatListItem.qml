@@ -56,56 +56,85 @@ Container
         }
     }
     
-    topPadding: 5
-    bottomPadding: 5
-    leftPadding: 5
-    rightPadding: 5
     horizontalAlignment: HorizontalAlignment.Fill
-    preferredWidth: 1280
     
-    Label
+    Container
     {
-        id: firstLabel
-        text: ListItemData.arabic
-        multiline: true
+        id: headerRoot
+        background: itemRoot.ListItem.view.background ? itemRoot.ListItem.view.background.imagePaint : undefined
         horizontalAlignment: HorizontalAlignment.Fill
+        topPadding: 5
+        bottomPadding: 5
+        leftPadding: 5
         
-        textStyle {
-            color: selection || playing ? Color.White : Color.Black;
-            base: global.textFont
-            fontFamily: "Regular";
-            textAlign: TextAlign.Center;
-            fontSizeValue: itemRoot.ListItem.view.primarySize
-            fontSize: FontSize.PointValue
+        layout: StackLayout {
+            orientation: LayoutOrientation.LeftToRight
+        }
+        
+        Label {
+            text: qsTr("%1:%2").arg(ListItemData.surah_id).arg(ListItemData.verse_id)
+            horizontalAlignment: HorizontalAlignment.Fill
+            textStyle.fontSize: FontSize.XXSmall
+            textStyle.color: Color.White
+            textStyle.fontWeight: FontWeight.Bold
+            textStyle.textAlign: TextAlign.Center
+            
+            layoutProperties: StackLayoutProperties {
+                spaceQuota: 1
+            }
         }
     }
     
-    ControlDelegate
+    Container
     {
-        id: labelDelegate
-        delegateActive: ListItemData.translation ? true : false
+        topPadding: 5; bottomPadding: 5; leftPadding: 5; rightPadding: 5
         horizontalAlignment: HorizontalAlignment.Fill
-        sourceComponent: ComponentDefinition
+        verticalAlignment: VerticalAlignment.Fill
+     
+        Label
         {
-            id: labelDefinition
+            id: firstLabel
+            text: ListItemData.arabic
+            multiline: true
+            horizontalAlignment: HorizontalAlignment.Fill
             
-            Label {
-                id: translationLabel
-                text: ListItemData.translation
-                multiline: true
-                horizontalAlignment: HorizontalAlignment.Fill
-                textStyle.color: selection || playing ? Color.White : Color.Black
-                textStyle.textAlign: TextAlign.Center
-                visible: text.length > 0;
-                textStyle.fontSize: {
-                    var translationSize = itemRoot.ListItem.view.translationSize;
-                    
-                    if (translationSize == 1) {
-                        return FontSize.Small;
-                    } else if (translationSize == 2) {
-                        return FontSize.Medium;
-                    } else {
-                        return FontSize.XXLarge;
+            textStyle {
+                color: selection || playing ? Color.White : Color.Black;
+                base: global.textFont
+                fontFamily: "Regular";
+                textAlign: TextAlign.Center;
+                fontSizeValue: itemRoot.ListItem.view.primarySize
+                fontSize: FontSize.PointValue
+            }
+        }
+        
+        ControlDelegate
+        {
+            id: labelDelegate
+            delegateActive: ListItemData.translation ? true : false
+            horizontalAlignment: HorizontalAlignment.Fill
+            sourceComponent: ComponentDefinition
+            {
+                id: labelDefinition
+                
+                Label {
+                    id: translationLabel
+                    text: ListItemData.translation
+                    multiline: true
+                    horizontalAlignment: HorizontalAlignment.Fill
+                    textStyle.color: selection || playing ? Color.White : Color.Black
+                    textStyle.textAlign: TextAlign.Center
+                    visible: text.length > 0;
+                    textStyle.fontSize: {
+                        var translationSize = itemRoot.ListItem.view.translationSize;
+                        
+                        if (translationSize == 1) {
+                            return FontSize.Small;
+                        } else if (translationSize == 2) {
+                            return FontSize.Medium;
+                        } else {
+                            return FontSize.XXLarge;
+                        }
                     }
                 }
             }
