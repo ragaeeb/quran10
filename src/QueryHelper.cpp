@@ -103,20 +103,11 @@ bool QueryHelper::fetchChapters(QObject* caller, QString const& text)
 {
     QString query;
 
-    static QRegExp chapterAyatNumeric = QRegExp(AYAT_NUMERIC_PATTERN);
-    static QRegExp chapterNumeric = QRegExp("^\\d{1,3}$");
     QVariantList args;
     int n = text.length();
 
-    if ( chapterAyatNumeric.exactMatch(text) || chapterNumeric.exactMatch(text) )
+    if (n > MIN_CHARS_FOR_SURAH_SEARCH || n == 0)
     {
-        int chapter = text.split(":").first().toInt();
-
-        if (chapter > 0 && chapter <= 114) {
-            query = QString("SELECT surah_id,arabic_name,english_name,english_translation FROM chapters WHERE surah_id=%1").arg(chapter);
-        }
-    } else if (n > MIN_CHARS_FOR_SURAH_SEARCH || n == 0) {
-
         if ( showTranslation() )
         {
             query = "SELECT a.id AS surah_id,name,verse_count,revelation_order,transliteration,j.id AS juz_id,verse_number FROM surahs a INNER JOIN chapters t ON a.id=t.id LEFT JOIN juzs j ON j.surah_id=a.id";
@@ -144,6 +135,18 @@ bool QueryHelper::fetchChapters(QObject* caller, QString const& text)
     }
 
     return false;
+}
+
+
+void QueryHelper::fetchChapter(QObject* caller, int chapter)
+{
+    LOGGER(chapter);
+
+    if ( showTranslation() ) {
+        m_sql.executeQuery(caller, QString("SELECT a.id AS surah_id,name,verse_count,revelation_order,transliteration,j.id AS juz_id,verse_number FROM surahs a INNER JOIN chapters t ON a.id=t.id LEFT JOIN juzs j ON j.surah_id=a.id WHERE a.id=%1").arg(chapter), QueryId::FetchChapters);
+    } else {
+        m_sql.executeQuery(caller, QString("SELECT id AS surah_id,name,verse_count,revelation_order,j.id AS juz_id,verse_number FROM surahs LEFT JOIN juzs j ON j.surah_id=a.id WHERE id=%1").arg(chapter), QueryId::FetchChapters );
+    }
 }
 
 
