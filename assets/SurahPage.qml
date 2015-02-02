@@ -38,8 +38,6 @@ Page
     {
         if (id == QueryId.FetchAllAyats)
         {
-            data = app.decorateAyats(data);
-            
             listView.theDataModel.clear();
             listView.theDataModel.insertList(data);
             busy.delegateActive = false;

@@ -123,13 +123,6 @@ Sheet
                     horizontalAlignment: HorizontalAlignment.Fill
                     
                     Option {
-                        text: qsTr("Arabic/English Mismatch") + Retranslate.onLanguageChanged
-                        description: qsTr("The Arabic is pointing to one narration and the English is pointing to another") + Retranslate.onLanguageChanged
-                        imageSource: "images/dropdown/report_mismatched_link.png"
-                        value: "mismatch"
-                    }
-                    
-                    Option {
                         text: qsTr("Spelling Mistake") + Retranslate.onLanguageChanged
                         description: qsTr("Typo in the Arabic or English") + Retranslate.onLanguageChanged
                         imageSource: "images/dropdown/report_typo.png"
