@@ -259,7 +259,8 @@ Page
                     definition.source = "ReportMistakeSheet.qml";
                     var sheet = definition.createObject();
                     sheet.body = body.value;
-                    sheet.arabicId = arabicId;
+                    sheet.surahId = surahId;
+                    sheet.verseId = verseId;
                     sheet.expectedText = body.text;
                     sheet.open();
                     
