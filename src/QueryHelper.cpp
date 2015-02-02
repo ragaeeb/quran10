@@ -193,9 +193,9 @@ void QueryHelper::fetchAllAyats(QObject* caller, int chapterNumber)
     QString query;
 
     if ( showTranslation() ) {
-        query = QString("SELECT content AS arabic,verse_number AS verse_id,translation FROM ayahs INNER JOIN verses on ayahs.id=verses.id AND surah_id=%1").arg(chapterNumber);
+        query = QString("SELECT surah_id,content AS arabic,verse_number AS verse_id,translation FROM ayahs INNER JOIN verses on ayahs.id=verses.id AND surah_id=%1").arg(chapterNumber);
     } else {
-        query = QString("SELECT content AS arabic,verse_number AS verse_id FROM ayahs WHERE surah_id=%1").arg(chapterNumber);
+        query = QString("SELECT surah_id,content AS arabic,verse_number AS verse_id FROM ayahs WHERE surah_id=%1").arg(chapterNumber);
     }
 
     m_sql.executeQuery(caller, query, QueryId::FetchAllAyats);

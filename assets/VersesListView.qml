@@ -8,18 +8,14 @@ ListView
     property alias background: headerBackground
     property alias activeDefinition: activeDef
     property int chapterNumber
-    property string chapterName
     property int translationSize: helper.translationSize
     property int primarySize: helper.primarySize
     property int previousPlayedIndex
     property bool secretPeek: false
     property bool follow: persist.getValueFor("follow") == 1
 
-    dataModel: GroupDataModel
-    {
+    dataModel: ArrayDataModel {
         id: verseModel
-        sortingKeys: ["verse_id"]
-        grouping: ItemGrouping.ByFullValue
     }
     
     leadingVisual: BismillahControl {
@@ -141,18 +137,8 @@ ListView
     
     function refresh()
     {
-        var sections = verseModel.childCount([]);
-        
-        for (var i = 0; i < sections; i++)
-        {
-            var childrenInSection = verseModel.childCount([i]);
-            
-            for (var j = 0; j < childrenInSection; j++)
-            {
-                var indexPath = [i,j];
-                var current = verseModel.data(indexPath).toMap();
-                varModel.updateItem(indexPath, current);
-            }
+        for (var j = verseModel.size()-1; j >= 0; j--) {
+            verseModel.replace( j, verseModel.value(j) );
         }
     }
 
@@ -177,22 +163,10 @@ ListView
     listItemComponents: [
         ListItemComponent
         {
-            type: "header"
-            
-            AyatHeaderListItem {
-                id: headerRoot
-                labelValue: qsTr("%1:%2").arg(headerRoot.ListItem.view.chapterNumber).arg(ListItemData)
-            }
-        },
-
-        ListItemComponent
-        {
-            type: "item"
-
-			AyatListItem
-			{
-			    id: ali
-			    
+            AyatListItem
+            {
+                id: ali
+                
                 contextActions: [
                     ActionSet
                     {
@@ -224,7 +198,7 @@ ListView
                         }
                     }
                 ]
-			}
+            }
         }
     ]
 }

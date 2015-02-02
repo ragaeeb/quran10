@@ -39,7 +39,7 @@ Page
         if (id == QueryId.FetchAllAyats)
         {
             listView.theDataModel.clear();
-            listView.theDataModel.insertList(data);
+            listView.theDataModel.append(data);
             busy.delegateActive = false;
             
             if (requestedVerse > 0) {
@@ -168,7 +168,6 @@ Page
         VersesListView
         {
             id: listView
-            chapterName: qsTr("%1 (%2)").arg(ctb.titleText).arg(ctb.subtitleText)
             
             onTriggered: {
                 console.log("UserEvent: VerseTriggered");
