@@ -260,12 +260,10 @@ Page
                             gdm.sortingKeys = ["revelation_order"];
                         }
                         
-                        console.log("**** no grouping");
                     } else if (id == QueryId.FetchAllChapters) {
                         gdm.grouping = ItemGrouping.ByFullValue;
                         gdm.sortingKeys = ["juz_id", "surah_id", "verse_number"];
                         data = helper.normalizeJuzs(data);
-                        console.log("***group by full value");
                     }
                     
                     gdm.clear();
