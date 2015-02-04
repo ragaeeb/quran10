@@ -8,14 +8,14 @@ Container
     property real ratio: 0.4
     property real screenHeight: 1280
     
-    function applyData(data, mainText)
+    function applyData(data, bodyControl)
     {
         adm.clear();
         adm.append(data);
         
         relatedHeader.subtitle = data.length;
         
-        app.decorateSimilarResults(data, mainText, adm);
+        app.decorateSimilarResults(data, bodyControl.value, adm, bodyControl);
     }
     
     onCreationCompleted: {

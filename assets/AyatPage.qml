@@ -63,8 +63,7 @@ Page
             explanations = data;
             if ( persist.tutorial( "tutorialTafsir", qsTr("There are explanations of this hadith by the people of knowledge! Tap on the '%1 Tafsir' option at the top to view them.").arg(data.length), "asset:///images/dropdown/tafsir.png" ) ) {}
         } else if (id == QueryId.FetchSimilarAyatContent && data.length > 0 && similarOption.selected) {
-            pluginsDelegate.control.applyData(data, body.value);
-            body.text = app.decorateBodyForSimilar(body.text, data[0].content);
+            pluginsDelegate.control.applyData(data, body);
         } else if (id == QueryId.FetchSurahHeader && data.length > 0) {
             ayatOption.text = data[0].translation ? data[0].translation : data[0].name;
             babName.title = data[0].transliteration ? data[0].transliteration : data[0].name;
