@@ -4,7 +4,7 @@
 
 namespace canadainc {
 
-QueueDownloader::QueueDownloader(QStringList const& sortingKeys, QObject* parent) : DataModel(parent)
+QueueDownloader::QueueDownloader(QObject* parent) : DataModel(parent)
 {
     connect( &m_network, SIGNAL( requestComplete(QVariant const&, QByteArray const&) ), this, SLOT( onRequestComplete(QVariant const&, QByteArray const&) ) );
     connect( &m_network, SIGNAL( requestComplete(QVariant const&, QByteArray const&) ), this, SIGNAL( requestComplete(QVariant const&, QByteArray const&) ) );
@@ -21,7 +21,7 @@ QueueDownloader::QueueDownloader(QStringList const& sortingKeys, QObject* parent
     connect( &m_model, SIGNAL( itemsChanged(bb::cascades::DataModelChangeType::Type, QSharedPointer<bb::cascades::DataModel::IndexMapper>) ), this, SIGNAL( queueChanged() ) );
 
     m_model.setGrouping(ItemGrouping::ByFullValue);
-    m_model.setSortingKeys(sortingKeys);
+    m_model.setSortingKeys( QStringList() << "timestamp" );
 }
 
 QueueDownloader::~QueueDownloader()
@@ -41,12 +41,18 @@ void QueueDownloader::processNext()
     {
         QVariantList firstIndex = m_model.first();
         QVariantMap current = m_model.data(firstIndex).toMap();
+        current["timestamp"] = QDateTime::currentMSecsSinceEpoch();
 
         LOGGER("Request completed, now processing" << current);
         m_network.doGet( current.value("uri").toString() , current );
 
         m_model.removeAt(firstIndex);
     }
+}
+
+
+void QueueDownloader::process(QVariantMap const& toProcess) {
+    process( QVariantList() << toProcess );
 }
 
 

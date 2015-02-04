@@ -34,8 +34,8 @@ class QueryHelper : public QObject
     bool initBookmarks(QObject* caller);
 
 private slots:
-    void settingChanged(QString const& key);
     void onDataLoaded(QVariant id, QVariant data);
+    void settingChanged(QString const& key);
 
 signals:
     void textualChange();
@@ -68,6 +68,7 @@ public:
     int translationSize() const;
     Q_SLOT void lazyInit();
     Q_SLOT void initForeignKeys();
+    QString tafsirName() const;
 };
 
 } /* namespace quran */

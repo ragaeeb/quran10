@@ -23,19 +23,20 @@ private slots:
     void onRequestComplete(QVariant const& cookie, QByteArray const& data);
 
 public:
-    QueueDownloader(QStringList const& sortingKeys, QObject* parent=NULL);
+    QueueDownloader(QObject* parent=NULL);
     virtual ~QueueDownloader();
-    int childCount(const QVariantList &indexPath);
-    bool hasChildren(const QVariantList &indexPath);
-    QString itemType(const QVariantList &indexPath);
-    QVariant data(const QVariantList &indexPath);
+    int childCount(QVariantList const& indexPath);
+    bool hasChildren(QVariantList const& indexPath);
+    QString itemType(QVariantList const& indexPath);
+    QVariant data(QVariantList const& indexPath);
 
     /**
      * Queues up a batch of requests.
      * @param toProcess The first key is the URL to download, and the second is the cookie.
      */
     Q_INVOKABLE void process(QVariantList const& toProcess);
-    Q_INVOKABLE void abort();
+    Q_INVOKABLE void process(QVariantMap const& toProcess);
+    Q_SLOT void abort();
     int queued() const;
     void checkSize(QVariant const& cookie, QString const& uri);
 

@@ -5,6 +5,7 @@
 #include "MushafHelper.h"
 #include "Persistance.h"
 #include "QueryHelper.h"
+#include "QueueDownloader.h"
 #include "RecitationHelper.h"
 
 #include <bb/system/CardDoneMessage>
@@ -28,10 +29,11 @@ class ApplicationUI : public QObject
 	LazySceneCover m_sceneCover;
 	Persistance m_persistance;
 	QueryHelper m_helper;
-	MushafHelper m_mushaf;
-	RecitationHelper m_recitation;
 	bb::system::InvokeRequest m_request;
 	QObject* m_root;
+	QueueDownloader m_queue;
+    MushafHelper m_mushaf;
+    RecitationHelper m_recitation;
 
     ApplicationUI(bb::cascades::Application *app);
     void init(QString const& qml);
@@ -46,6 +48,8 @@ private slots:
 	void onDataLoaded(QVariant id, QVariant data);
 	void onPicked(int chapter, int verse);
 	void onResultsDecorated();
+    void onTafsirDownloaded(QVariant const& cookie, QByteArray const& data);
+    void onTafsirWritten();
 
 signals:
     void backupComplete(QString const& file);

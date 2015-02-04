@@ -68,6 +68,8 @@ Page
             ayatOption.text = data[0].translation ? data[0].translation : data[0].name;
             babName.title = data[0].transliteration ? data[0].transliteration : data[0].name;
             babName.subtitle = "%1:%2".arg(surahId).arg(verseId);
+            
+            body.value = body.value + "\n\n(" + babName.title + " " + babName.subtitle + ")";
         } else if (id == QueryId.SaveBookmark) {
             persist.showToast( qsTr("Bookmark added for Chapter %1, Verse %2").arg(surahId).arg(verseId), "", "asset:///images/menu/ic_bookmark_add.png" );
         }
@@ -390,7 +392,7 @@ Page
                     id: body
                     property string value
                     backgroundVisible: false
-                    content.flags: TextContentFlag.ActiveText | TextContentFlag.EmoticonsOff
+                    content.flags: TextContentFlag.ActiveTextOff | TextContentFlag.EmoticonsOff
                     editable: false
                     textStyle.fontSize: FontSize.PointValue
                     textStyle.fontSizeValue: persist.getValueFor("fontSize")

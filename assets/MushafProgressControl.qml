@@ -128,7 +128,7 @@ Container
     }
     
     onCreationCompleted: {
-        mushaf.downloadProgress.connect(onProgressChanged);
+        queue.downloadProgress.connect(onProgressChanged);
         mushaf.deflationProgress.connect(onDeflationProgressChanged);
         mushaf.deflationDone.connect(st.play);
     }

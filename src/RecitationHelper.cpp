@@ -25,11 +25,10 @@ namespace quran {
 
 using namespace canadainc;
 
-RecitationHelper::RecitationHelper(Persistance* p, QObject* parent) :
-        QObject(parent), m_queue( QStringList() << "chapter" << "verse" ), m_persistance(p)
+RecitationHelper::RecitationHelper(QueueDownloader* queue, Persistance* p, QObject* parent) :
+        QObject(parent), m_queue(queue), m_persistance(p)
 {
-    connect( &m_queue, SIGNAL( requestComplete(QVariant const&, QByteArray const&) ), this, SLOT( onRequestComplete(QVariant const&, QByteArray const&) ) );
-    connect( &m_queue, SIGNAL( queueChanged() ), this, SIGNAL( queueChanged() ) );
+    connect( queue, SIGNAL( requestComplete(QVariant const&, QByteArray const&) ), this, SLOT( onRequestComplete(QVariant const&, QByteArray const&) ) );
     connect( &m_future, SIGNAL( finished() ), this, SLOT( onFinished() ) );
 }
 
@@ -180,6 +179,8 @@ QVariantList RecitationHelper::generatePlaylist(int chapter, int fromVerse, int 
                 q["local"] = absolutePath;
                 q["chapter"] = chapter;
                 q["verse"] = verse;
+                q["name"] = tr("%1:%2 recitation").arg(chapter).arg(verse);
+                q["recitation"] = true;
 
                 queue << q;
             }
@@ -203,7 +204,7 @@ void RecitationHelper::onFinished()
     QVariantList queue = m_future.result();
 
     if ( !queue.isEmpty() ) {
-        m_queue.process(queue);
+        m_queue->process(queue);
     } else {
         startPlayback();
     }
@@ -212,34 +213,28 @@ void RecitationHelper::onFinished()
 
 void RecitationHelper::onRequestComplete(QVariant const& cookie, QByteArray const& data)
 {
-    QFutureWatcher<void>* qfw = new QFutureWatcher<void>(this);
-    connect( qfw, SIGNAL( finished() ), this, SLOT( onWritten() ) );
+    if ( cookie.toMap().contains("recitation") )
+    {
+        QFutureWatcher<void>* qfw = new QFutureWatcher<void>(this);
+        connect( qfw, SIGNAL( finished() ), this, SLOT( onWritten() ) );
 
-    QFuture<void> future = QtConcurrent::run(writeVerse, cookie, data);
-    qfw->setFuture(future);
+        QFuture<void> future = QtConcurrent::run(writeVerse, cookie, data);
+        qfw->setFuture(future);
+    }
 }
 
 
 void RecitationHelper::onWritten()
 {
+    /*
     if ( queued() == 0 ) { // last one
         startPlayback();
-    }
+    } */
 }
 
 
 void RecitationHelper::startPlayback() {
     emit readyToPlay( QUrl::fromLocalFile(PLAYLIST_TARGET) );
-}
-
-
-int RecitationHelper::queued() const {
-    return m_queue.queued();
-}
-
-
-void RecitationHelper::abort() {
-    m_queue.abort();
 }
 
 

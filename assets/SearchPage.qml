@@ -192,7 +192,7 @@ Page
                                 orientation: LayoutOrientation.LeftToRight
                             }
                             
-                            StandardListItem
+                            StandardPickerItem
                             {
                                 id: included
                                 property int surahId

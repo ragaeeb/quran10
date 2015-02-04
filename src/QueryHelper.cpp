@@ -400,6 +400,11 @@ int QueryHelper::translationSize() const
 }
 
 
+QString QueryHelper::tafsirName() const {
+    return QString("quran_tafsir_%1").arg(m_translation);
+}
+
+
 QueryHelper::~QueryHelper()
 {
 }

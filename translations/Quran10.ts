@@ -70,117 +70,117 @@ Pin - 2B77C09E</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="72"/>
+        <location filename="../assets/AyatPage.qml" line="74"/>
         <source>Bookmark added for Chapter %1, Verse %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="102"/>
+        <location filename="../assets/AyatPage.qml" line="104"/>
         <source>Verse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="116"/>
+        <location filename="../assets/AyatPage.qml" line="118"/>
         <source>Audio</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../assets/AyatPage.qml" line="155"/>
+        <location filename="../assets/AyatPage.qml" line="157"/>
         <source>%n tafsir</source>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="177"/>
+        <location filename="../assets/AyatPage.qml" line="179"/>
         <source>Mark Favourite</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="188"/>
-        <location filename="../assets/AyatPage.qml" line="212"/>
+        <location filename="../assets/AyatPage.qml" line="190"/>
+        <location filename="../assets/AyatPage.qml" line="214"/>
         <source>Enter name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="188"/>
+        <location filename="../assets/AyatPage.qml" line="190"/>
         <source>You can use this to quickly recognize this ayah in the favourites tab.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="188"/>
+        <location filename="../assets/AyatPage.qml" line="190"/>
         <source>Bookmark name...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="188"/>
-        <location filename="../assets/AyatPage.qml" line="192"/>
-        <location filename="../assets/AyatPage.qml" line="212"/>
+        <location filename="../assets/AyatPage.qml" line="190"/>
+        <location filename="../assets/AyatPage.qml" line="194"/>
+        <location filename="../assets/AyatPage.qml" line="214"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="192"/>
+        <location filename="../assets/AyatPage.qml" line="194"/>
         <source>Enter tag</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="192"/>
+        <location filename="../assets/AyatPage.qml" line="194"/>
         <source>You can use this to categorize related verses together.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="192"/>
+        <location filename="../assets/AyatPage.qml" line="194"/>
         <source>Enter a tag for this bookmark (ie: ramadan). You can leave this blank if you don&apos;t want to use a tag.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="200"/>
+        <location filename="../assets/AyatPage.qml" line="202"/>
         <source>Add Shortcut</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="212"/>
+        <location filename="../assets/AyatPage.qml" line="214"/>
         <source>You can use this to quickly recognize this ayah on your home screen.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="212"/>
+        <location filename="../assets/AyatPage.qml" line="214"/>
         <source>Shortcut name...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="222"/>
+        <location filename="../assets/AyatPage.qml" line="224"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="234"/>
+        <location filename="../assets/AyatPage.qml" line="236"/>
         <source>Share</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="251"/>
+        <location filename="../assets/AyatPage.qml" line="253"/>
         <source>Finish Editing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="251"/>
+        <location filename="../assets/AyatPage.qml" line="253"/>
         <source>Report Mistake</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="277"/>
+        <location filename="../assets/AyatPage.qml" line="279"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="277"/>
+        <location filename="../assets/AyatPage.qml" line="279"/>
         <source>The ayah is now editable. Please make the changes you feel are needed to correct it and then from the menu choose &apos;Report Error&apos; again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="337"/>
+        <location filename="../assets/AyatPage.qml" line="339"/>
         <source>The ayat was not found in the database.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -418,49 +418,49 @@ Finally, there is built-in support to do efficient and fast lookups for any sura
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="57"/>
+        <location filename="../assets/MushafSheet.qml" line="59"/>
         <source>Confirmation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="57"/>
+        <location filename="../assets/MushafSheet.qml" line="59"/>
         <source>The total size of the mushaf is ~%1 and it will need to be downloaded. Make sure you are on a good Wi-Fi connection or have a good data plan. Do you wish to continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="90"/>
+        <location filename="../assets/MushafSheet.qml" line="93"/>
         <source>Page %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="95"/>
+        <location filename="../assets/MushafSheet.qml" line="98"/>
         <source>Back</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="144"/>
+        <location filename="../assets/MushafSheet.qml" line="147"/>
         <source>Surah</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../assets/MushafSheet.qml" line="162"/>
+        <location filename="../assets/MushafSheet.qml" line="165"/>
         <source>%n verses</source>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="275"/>
+        <location filename="../assets/MushafSheet.qml" line="278"/>
         <source>You can pinch on the page to zoom in and out and scroll up and down.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="277"/>
+        <location filename="../assets/MushafSheet.qml" line="280"/>
         <source>Use the left and right arrows to switch pages.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="278"/>
+        <location filename="../assets/MushafSheet.qml" line="281"/>
         <source>Tap on the screen, then on the bottom action bar you will see the Jump icon. Use this to trigger the dropdown menu to jump to a specific surah in the mushaf.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -488,24 +488,24 @@ For example, to jump to Surah Al-Baqara Verse #2, type &apos;2:2&apos; into the 
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../assets/QuranPane.qml" line="27"/>
+        <location filename="../assets/QuranPane.qml" line="28"/>
         <source>%n chapters selected</source>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="40"/>
+        <location filename="../assets/QuranPane.qml" line="41"/>
         <source>Compare</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="62"/>
+        <location filename="../assets/QuranPane.qml" line="63"/>
         <source>Mushaf</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="76"/>
+        <location filename="../assets/QuranPane.qml" line="77"/>
         <source>M</source>
         <translation type="unfinished"></translation>
     </message>
@@ -740,42 +740,47 @@ You can also select an ayat above the current one to start there and end at the 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SearchPage.qml" line="222"/>
-        <source>Edit</source>
+        <location filename="../assets/SearchPage.qml" line="224"/>
+        <source>Remove Restriction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SearchPage.qml" line="244"/>
-        <source>Cancel</source>
+        <location filename="../assets/SearchPage.qml" line="225"/>
+        <source>Don&apos;t restrict to %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SearchPage.qml" line="268"/>
+        <location filename="../assets/SearchPage.qml" line="242"/>
+        <source>Restrict to Chapter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/SearchPage.qml" line="284"/>
         <source>Enter text to search...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SearchPage.qml" line="302"/>
+        <location filename="../assets/SearchPage.qml" line="318"/>
         <source>Type your search query in the text field and press the Enter key on the keyboard.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SearchPage.qml" line="303"/>
+        <location filename="../assets/SearchPage.qml" line="319"/>
         <source>Tap on the icon at the bottom of the action bar if you want to add additional constraints to the search.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SearchPage.qml" line="304"/>
+        <location filename="../assets/SearchPage.qml" line="320"/>
         <source>Tip: You can start a search query directly from your home screen without even opening the app! Simply tap on the &apos;Search&apos; icon on your home screen (or begin typing at the home screen on Q10/Q5 devices) and choose &apos;Sunnah10&apos; from the search results. That will launch the app and initiate the search.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SearchPage.qml" line="305"/>
+        <location filename="../assets/SearchPage.qml" line="321"/>
         <source>Tip: If you want to start at the Search tab instead of the Bookmarks/Favourites tab, swipe-down from the top-bezel, go to Settings, and enable &apos;Start At Search Tab&apos;.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SearchPage.qml" line="325"/>
+        <location filename="../assets/SearchPage.qml" line="341"/>
         <source>No results found for your query. Try another query.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1206,52 +1211,52 @@ May Allah reward you, and bless you and your family.</source>
 <context>
     <name>SurahPickerPage</name>
     <message>
-        <location filename="../assets/SurahPickerPage.qml" line="66"/>
+        <location filename="../assets/SurahPickerPage.qml" line="67"/>
         <source>Display Options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPickerPage.qml" line="71"/>
+        <location filename="../assets/SurahPickerPage.qml" line="72"/>
         <source>Alphabetical Order</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPickerPage.qml" line="72"/>
+        <location filename="../assets/SurahPickerPage.qml" line="73"/>
         <source>Sorted by surah name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPickerPage.qml" line="79"/>
+        <location filename="../assets/SurahPickerPage.qml" line="80"/>
         <source>Normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPickerPage.qml" line="80"/>
+        <location filename="../assets/SurahPickerPage.qml" line="81"/>
         <source>The surahs will be displayed in the standard order</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPickerPage.qml" line="87"/>
+        <location filename="../assets/SurahPickerPage.qml" line="88"/>
         <source>Revelation Order</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPickerPage.qml" line="88"/>
+        <location filename="../assets/SurahPickerPage.qml" line="89"/>
         <source>Display chapters int he order they were revealed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPickerPage.qml" line="121"/>
+        <location filename="../assets/SurahPickerPage.qml" line="122"/>
         <source>Search surah name or number (ie: &apos;2&apos; for Surah Al-Baqara)...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPickerPage.qml" line="194"/>
+        <location filename="../assets/SurahPickerPage.qml" line="195"/>
         <source>Juz %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../assets/SurahPickerPage.qml" line="208"/>
+        <location filename="../assets/SurahPickerPage.qml" line="209"/>
         <source>%n ayahs</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -1311,6 +1316,14 @@ May Allah reward you, and bless you and your family.</source>
     </message>
 </context>
 <context>
+    <name>TransfersPane</name>
+    <message>
+        <location filename="../assets/TransfersPane.qml" line="14"/>
+        <source>Transfers</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>VersesListView</name>
     <message>
         <location filename="../assets/VersesListView.qml" line="37"/>
@@ -1347,12 +1360,12 @@ May Allah reward you, and bless you and your family.</source>
 <context>
     <name>canadainc::QueueDownloader</name>
     <message>
-        <location filename="../src/QueueDownloader.cpp" line="56"/>
+        <location filename="../src/QueueDownloader.cpp" line="62"/>
         <source>It seems your device is offline, please connect to Wi-Fi or enable your data connection to proceed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/QueueDownloader.cpp" line="56"/>
+        <location filename="../src/QueueDownloader.cpp" line="62"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1423,28 +1436,54 @@ May Allah reward you, and bless you and your family.</source>
 <context>
     <name>quran::ApplicationUI</name>
     <message>
-        <location filename="../src/applicationui.cpp" line="158"/>
+        <location filename="../src/applicationui.cpp" line="160"/>
         <source>Invalid pattern specified!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="186"/>
+        <location filename="../src/applicationui.cpp" line="188"/>
         <source>Invalid surah specified</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="232"/>
+        <location filename="../src/applicationui.cpp" line="206"/>
+        <source>Tafsir</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/applicationui.cpp" line="250"/>
         <source>Surah not found!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="258"/>
+        <location filename="../src/applicationui.cpp" line="276"/>
         <source>Added %1 to home screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="260"/>
+        <location filename="../src/applicationui.cpp" line="278"/>
         <source>Could not add %1 to home screen</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>quran::MushafHelper</name>
+    <message>
+        <location filename="../src/MushafHelper.cpp" line="55"/>
+        <source>Mushaf Page #%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MushafHelper.cpp" line="82"/>
+        <source>Mushaf Download</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>quran::RecitationHelper</name>
+    <message>
+        <location filename="../src/RecitationHelper.cpp" line="182"/>
+        <source>%1:%2 recitation</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

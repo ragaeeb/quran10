@@ -2,6 +2,7 @@
 
 #include "ThreadUtils.h"
 #include "AppLogFetcher.h"
+#include "IOUtils.h"
 #include "JlCompress.h"
 #include "QueryHelper.h"
 #include "TextUtils.h"
@@ -11,6 +12,7 @@
 namespace quran {
 
 using namespace bb::cascades;
+using namespace canadainc;
 
 SimilarReference::SimilarReference() : adm(NULL), textControl(NULL)
 {
@@ -100,6 +102,16 @@ SimilarReference ThreadUtils::decorateSimilar(QVariantList input, ArrayDataModel
     s.input = input;
 
     return s;
+}
+
+
+QString ThreadUtils::writeTafsirArchive(QVariant const& q, QByteArray const& data)
+{
+    QString tafsirPath = q.toMap().value("tafsirPath").toString();
+    QString target = QString("%1/%2.zip").arg( QDir::tempPath() ).arg(tafsirPath);
+
+    bool written = IOUtils::writeFile(target, data);
+    return written ? target : QString();
 }
 
 } /* namespace quran */
