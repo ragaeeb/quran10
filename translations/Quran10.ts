@@ -35,6 +35,14 @@ Pin - 2B77C09E</source>
     </message>
 </context>
 <context>
+    <name>AyatListItem</name>
+    <message>
+        <location filename="../assets/AyatListItem.qml" line="75"/>
+        <source>%1:%2</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>AyatListView</name>
     <message>
         <location filename="../assets/AyatListView.qml" line="71"/>
@@ -44,128 +52,135 @@ Pin - 2B77C09E</source>
 </context>
 <context>
     <name>AyatPage</name>
+    <message numerus="yes">
+        <location filename="../assets/AyatPage.qml" line="48"/>
+        <source>%n similar</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="56"/>
+        <location filename="../assets/AyatPage.qml" line="51"/>
         <source>There appears to be other narrations with similar wording, choose the &apos;%1 Similar&apos; option at the top to view them in a split screen.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="59"/>
+        <location filename="../assets/AyatPage.qml" line="64"/>
         <source>There are explanations of this hadith by the people of knowledge! Tap on the &apos;%1 Tafsir&apos; option at the top to view them.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="67"/>
+        <location filename="../assets/AyatPage.qml" line="73"/>
         <source>Bookmark added for Chapter %1, Verse %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="97"/>
+        <location filename="../assets/AyatPage.qml" line="103"/>
         <source>Verse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="111"/>
+        <location filename="../assets/AyatPage.qml" line="117"/>
         <source>Audio</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../assets/AyatPage.qml" line="149"/>
+        <location filename="../assets/AyatPage.qml" line="156"/>
         <source>%n tafsir</source>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="171"/>
+        <location filename="../assets/AyatPage.qml" line="178"/>
         <source>Mark Favourite</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="182"/>
-        <location filename="../assets/AyatPage.qml" line="206"/>
+        <location filename="../assets/AyatPage.qml" line="189"/>
+        <location filename="../assets/AyatPage.qml" line="213"/>
         <source>Enter name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="182"/>
+        <location filename="../assets/AyatPage.qml" line="189"/>
         <source>You can use this to quickly recognize this ayah in the favourites tab.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="182"/>
+        <location filename="../assets/AyatPage.qml" line="189"/>
         <source>Bookmark name...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="182"/>
-        <location filename="../assets/AyatPage.qml" line="186"/>
-        <location filename="../assets/AyatPage.qml" line="206"/>
+        <location filename="../assets/AyatPage.qml" line="189"/>
+        <location filename="../assets/AyatPage.qml" line="193"/>
+        <location filename="../assets/AyatPage.qml" line="213"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="186"/>
+        <location filename="../assets/AyatPage.qml" line="193"/>
         <source>Enter tag</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="186"/>
+        <location filename="../assets/AyatPage.qml" line="193"/>
         <source>You can use this to categorize related verses together.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="186"/>
+        <location filename="../assets/AyatPage.qml" line="193"/>
         <source>Enter a tag for this bookmark (ie: ramadan). You can leave this blank if you don&apos;t want to use a tag.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="194"/>
+        <location filename="../assets/AyatPage.qml" line="201"/>
         <source>Add Shortcut</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="206"/>
+        <location filename="../assets/AyatPage.qml" line="213"/>
         <source>You can use this to quickly recognize this ayah on your home screen.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="206"/>
+        <location filename="../assets/AyatPage.qml" line="213"/>
         <source>Shortcut name...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="216"/>
+        <location filename="../assets/AyatPage.qml" line="223"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="228"/>
+        <location filename="../assets/AyatPage.qml" line="235"/>
         <source>Share</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="245"/>
+        <location filename="../assets/AyatPage.qml" line="252"/>
         <source>Finish Editing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="245"/>
+        <location filename="../assets/AyatPage.qml" line="252"/>
         <source>Report Mistake</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="270"/>
+        <location filename="../assets/AyatPage.qml" line="278"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="270"/>
+        <location filename="../assets/AyatPage.qml" line="278"/>
         <source>The ayah is now editable. Please make the changes you feel are needed to correct it and then from the menu choose &apos;Report Error&apos; again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="330"/>
+        <location filename="../assets/AyatPage.qml" line="338"/>
         <source>The ayat was not found in the database.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -599,96 +614,86 @@ You can also select an ayat above the current one to start there and end at the 
     </message>
     <message>
         <location filename="../assets/ReportMistakeSheet.qml" line="126"/>
-        <source>Arabic/English Mismatch</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/ReportMistakeSheet.qml" line="127"/>
-        <source>The Arabic is pointing to one narration and the English is pointing to another</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/ReportMistakeSheet.qml" line="133"/>
         <source>Spelling Mistake</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ReportMistakeSheet.qml" line="134"/>
+        <location filename="../assets/ReportMistakeSheet.qml" line="127"/>
         <source>Typo in the Arabic or English</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ReportMistakeSheet.qml" line="140"/>
+        <location filename="../assets/ReportMistakeSheet.qml" line="133"/>
         <source>Incomplete Text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ReportMistakeSheet.qml" line="141"/>
+        <location filename="../assets/ReportMistakeSheet.qml" line="134"/>
         <source>The narration is missing a portion that is supposed to be there</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ReportMistakeSheet.qml" line="147"/>
+        <location filename="../assets/ReportMistakeSheet.qml" line="140"/>
         <source>Mistranslation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ReportMistakeSheet.qml" line="148"/>
+        <location filename="../assets/ReportMistakeSheet.qml" line="141"/>
         <source>The translation is incorrect</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ReportMistakeSheet.qml" line="154"/>
+        <location filename="../assets/ReportMistakeSheet.qml" line="147"/>
         <source>Other</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ReportMistakeSheet.qml" line="155"/>
+        <location filename="../assets/ReportMistakeSheet.qml" line="148"/>
         <source>Any other issues</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ReportMistakeSheet.qml" line="163"/>
+        <location filename="../assets/ReportMistakeSheet.qml" line="156"/>
         <source>Your email address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ReportMistakeSheet.qml" line="169"/>
+        <location filename="../assets/ReportMistakeSheet.qml" line="162"/>
         <source>In case we need more information from you</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ReportMistakeSheet.qml" line="178"/>
+        <location filename="../assets/ReportMistakeSheet.qml" line="171"/>
         <source>Invalid email address entered</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ReportMistakeSheet.qml" line="190"/>
+        <location filename="../assets/ReportMistakeSheet.qml" line="183"/>
         <source>Expected text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ReportMistakeSheet.qml" line="195"/>
+        <location filename="../assets/ReportMistakeSheet.qml" line="188"/>
         <source>What you believe the text should have been</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ReportMistakeSheet.qml" line="204"/>
+        <location filename="../assets/ReportMistakeSheet.qml" line="197"/>
         <source>Actual text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ReportMistakeSheet.qml" line="209"/>
+        <location filename="../assets/ReportMistakeSheet.qml" line="202"/>
         <source>What the incorrect text actually was</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ReportMistakeSheet.qml" line="217"/>
+        <location filename="../assets/ReportMistakeSheet.qml" line="210"/>
         <source>Details/Comments</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/ReportMistakeSheet.qml" line="222"/>
+        <location filename="../assets/ReportMistakeSheet.qml" line="215"/>
         <source>Any additional details and comments you feel are necessary</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1053,23 +1058,13 @@ https://www.youtube.com/watch?v=BDY8i9VQeZM</source>
 <context>
     <name>SimilarAyatControl</name>
     <message>
-        <location filename="../assets/SimilarAyatControl.qml" line="20"/>
+        <location filename="../assets/SimilarAyatControl.qml" line="22"/>
         <source>You can expand this top section by tapping on the &apos;Related&apos; header. To minimize it, tap on the hadith header at the bottom pane.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SimilarAyatControl.qml" line="25"/>
+        <location filename="../assets/SimilarAyatControl.qml" line="27"/>
         <source>Related</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/SimilarAyatControl.qml" line="52"/>
-        <source>Naration unlinked, it should no longer show up under the Similar option.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/SimilarAyatControl.qml" line="105"/>
-        <source>Unlink</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1093,11 +1088,6 @@ https://www.youtube.com/watch?v=BDY8i9VQeZM</source>
 </context>
 <context>
     <name>SurahPage</name>
-    <message>
-        <location filename="../assets/SurahPage.qml" line="171"/>
-        <source>%1 (%2)</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <location filename="../assets/SurahPage.qml" line="55"/>
         <source>You can do a pinch gesture anytime to increase and decrease the font size of the Arabic/Transliteration text!</source>
@@ -1203,7 +1193,7 @@ May Allah reward you, and bless you and your family.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="199"/>
+        <location filename="../assets/SurahPage.qml" line="198"/>
         <source>%1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1251,19 +1241,19 @@ May Allah reward you, and bless you and your family.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPickerPage.qml" line="179"/>
+        <location filename="../assets/SurahPickerPage.qml" line="194"/>
         <source>Juz %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../assets/SurahPickerPage.qml" line="193"/>
+        <location filename="../assets/SurahPickerPage.qml" line="208"/>
         <source>%n ayahs</source>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../assets/SurahPickerPage.qml" line="264"/>
+        <location filename="../assets/SurahPickerPage.qml" line="284"/>
         <source>No chapters matched your search criteria. Please try a different search term.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1318,34 +1308,33 @@ May Allah reward you, and bless you and your family.</source>
 <context>
     <name>VersesListView</name>
     <message>
-        <location filename="../assets/VersesListView.qml" line="41"/>
+        <location filename="../assets/VersesListView.qml" line="37"/>
         <source>Play</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="55"/>
+        <location filename="../assets/VersesListView.qml" line="51"/>
         <source>None selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="113"/>
-        <location filename="../assets/VersesListView.qml" line="184"/>
-        <location filename="../assets/VersesListView.qml" line="201"/>
+        <location filename="../assets/VersesListView.qml" line="109"/>
+        <location filename="../assets/VersesListView.qml" line="175"/>
         <source>%1:%2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="206"/>
+        <location filename="../assets/VersesListView.qml" line="180"/>
         <source>Play From Here</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="217"/>
+        <location filename="../assets/VersesListView.qml" line="191"/>
         <source>Memorize</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/VersesListView.qml" line="167"/>
+        <location filename="../assets/VersesListView.qml" line="153"/>
         <source>ayahs</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1429,27 +1418,27 @@ May Allah reward you, and bless you and your family.</source>
 <context>
     <name>quran::ApplicationUI</name>
     <message>
-        <location filename="../src/applicationui.cpp" line="218"/>
+        <location filename="../src/applicationui.cpp" line="238"/>
         <source>Invalid pattern specified!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="246"/>
+        <location filename="../src/applicationui.cpp" line="266"/>
         <source>Invalid surah specified</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="292"/>
+        <location filename="../src/applicationui.cpp" line="317"/>
         <source>Surah not found!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="318"/>
+        <location filename="../src/applicationui.cpp" line="343"/>
         <source>Added %1 to home screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="320"/>
+        <location filename="../src/applicationui.cpp" line="345"/>
         <source>Could not add %1 to home screen</source>
         <translation type="unfinished"></translation>
     </message>

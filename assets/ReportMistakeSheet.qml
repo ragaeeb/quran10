@@ -40,7 +40,7 @@ Sheet
             
             acceptAction: ActionItem
             {
-                imageSource: "images/title/ic_accept.png"
+                imageSource: "images/dropdown/ic_accept_mistake.png"
                 title: qsTr("Send") + Retranslate.onLanguageChanged
                 enabled: typeDropDown.selectedOptionSet && emailValidator.valid && actual.text.length > 0 && (expectedField.text.length > 0 || commentsField.text.length > 0)
                 
@@ -70,7 +70,7 @@ Sheet
             
             dismissAction: ActionItem
             {
-                imageSource: "images/title/ic_cancel.png"
+                imageSource: "images/dropdown/ic_cancel_mistake.png"
                 title: qsTr("Cancel") + Retranslate.onLanguageChanged
                 
                 onTriggered: {
