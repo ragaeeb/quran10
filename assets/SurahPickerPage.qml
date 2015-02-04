@@ -7,6 +7,7 @@ Page
     signal picked(int chapter, int verse)
     actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
     property alias pickerList: listView
+    property bool showJuz: false
 
     titleBar: TitleBar
     {
@@ -127,7 +128,7 @@ Page
                     var ok = true;
                     var textValue = text.trim();
                     
-                    if (textValue.length == 0) {
+                    if (textValue.length == 0 && showJuz) {
                         helper.fetchAllChapters(listView);
                     } else if ( textValue.match(/^\d{1,3}:\d{1,3}$/) || textValue.match(/^\d{1,3}$/) ) {
                         var tokens = textValue.split(":");
@@ -249,7 +250,6 @@ Page
                 {
                     if (id == QueryId.FetchChapters)
                     {
-                        console.log("**** data");
                         gdm.grouping = ItemGrouping.None;
                         
                         if (sortOrder.selectedOption == alphabet) {
@@ -294,17 +294,13 @@ Page
         }
     }
     
-    function onReady()
+    function ready()
     {
         textField.textChanging("");
         fadeInLogo.play();
         translate.play();
 
         textField.input["keyLayout"] = 7;
-    }
-    
-    onCreationCompleted: {
-        app.lazyInitComplete.connect(onReady);
     }
     
     attachedObjects: [
