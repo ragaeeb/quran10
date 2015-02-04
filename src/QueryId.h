@@ -28,7 +28,6 @@ public:
         FetchChapters,
         FetchPageNumbers,
         FetchRandomAyat,
-        FetchSimilarAyat,
         FetchSimilarAyatContent,
         FetchSurahHeader,
         FetchTafsirForAyat,
