@@ -4,10 +4,8 @@ Page
 {
     actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
     
-    titleBar: AboutTitleBar
-    {
+    titleBar: AboutTitleBar {
         id: atb
-        textColor: Color.White
     }
     
     actions: [
