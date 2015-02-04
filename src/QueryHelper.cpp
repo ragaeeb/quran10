@@ -5,6 +5,7 @@
 #include "Logger.h"
 #include "Persistance.h"
 
+#define ATTACH_TAFSIR m_sql.attachIfNecessary( showTranslation() ? tafsirName() : "quran_tafsir_arabic", true );
 #define TRANSLATION QString("quran_%1").arg(m_translation)
 #define MIN_CHARS_FOR_SURAH_SEARCH 2
 #define LIKE_CLAUSE QString("(%1 LIKE '%' || ? || '%')").arg(textField)
@@ -206,7 +207,8 @@ void QueryHelper::fetchAllTafsirForAyat(QObject* caller, int chapterNumber, int 
 {
     LOGGER(chapterNumber << verseNumber);
 
-    //m_sql.executeQuery(caller, "", QueryId::FetchTafsirForAyat);
+    ATTACH_TAFSIR;
+    m_sql.executeQuery(caller, QString("SELECT suite_page_id FROM explanations WHERE surah_id=%1 AND from_verse_number=%2").arg(chapterNumber).arg(verseNumber), QueryId::FetchTafsirForAyat);
 }
 
 

@@ -59,7 +59,7 @@ Page
                 busy.delegateActive = false;
                 console.log("AyatNotFound!");
             }
-        } else if (id == QueryId.FetchAllTafsirForAyat && data.length > 0) {
+        } else if (id == QueryId.FetchTafsirForAyat && data.length > 0) {
             explanations = data;
             if ( persist.tutorial( "tutorialTafsir", qsTr("There are explanations of this hadith by the people of knowledge! Tap on the '%1 Tafsir' option at the top to view them.").arg(data.length), "asset:///images/dropdown/tafsir.png" ) ) {}
         } else if (id == QueryId.FetchSimilarAyatContent && data.length > 0 && similarOption.selected) {
@@ -165,7 +165,7 @@ Page
                         pluginsDelegate.delegateActive = true;
                         
                         if (explanations.length == 1) {
-                            showExplanation(explanations[0].id);
+                            showExplanation(explanations[0].suite_page_id);
                         }
                     }
                 }
