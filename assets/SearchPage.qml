@@ -50,7 +50,7 @@ Page
             
             var additional = getAdditionalQueries();
             
-            helper.searchQuery(listView, trimmed, additional, andMode, shortNarrations.checked);
+            helper.searchQuery(listView, trimmed, included.surahId, additional, andMode);
         }
     }
     
@@ -183,15 +183,70 @@ Page
                     {
                         id: excludeContainer
                         horizontalAlignment: HorizontalAlignment.Fill
-                        topPadding: 5
                         
                         Container
                         {
-                            leftPadding: 10; rightPadding: 10
+                            layout: StackLayout {
+                                orientation: LayoutOrientation.LeftToRight
+                            }
                             
-                            CheckBox {
-                                id: shortNarrations
-                                text: qsTr("Short Narrations Only") + Retranslate.onLanguageChanged
+                            StandardListItem
+                            {
+                                id: included
+                                property int surahId
+                                visible: surahId > 0
+                                
+                                function onDataLoaded(id, data)
+                                {
+                                    included.title = data[0].name;
+                                    included.imageSource = "images/ic_quran.png";
+                                    
+                                    if (helper.showTranslation) {
+                                        included.description = data[0].transliteration;
+                                    }
+                                }
+                                
+                                onSurahIdChanged: {
+                                    if (surahId > 0) {
+                                        helper.fetchSurahHeader(included, surahId);
+                                    } else {
+                                        included.resetTitle();
+                                        included.resetDescription();
+                                        included.resetImageSource();
+                                    }
+                                }
+                            }
+                            
+                            Button {
+                                imageSource: "images/dropdown/edit_search_surah.png"
+                                text: qsTr("Edit") + Retranslate.onLanguageChanged
+                                
+                                function onPicked(chapter, verse) {
+                                    included.surahId = chapter;
+                                    navigationPane.pop();
+                                }
+                                
+                                onClicked: {
+                                    console.log("UserEvent: EditIncluded");
+                                    
+                                    definition.source = "SurahPickerPage.qml";
+                                    var picker = definition.createObject();
+                                    
+                                    picker.picked.connect(onPicked);
+                                    navigationPane.push(picker);
+                                    
+                                    picker.onReady();
+                                }
+                            }
+                            
+                            Button {
+                                imageSource: "images/dropdown/cancel_search_surah.png"
+                                text: qsTr("Cancel") + Retranslate.onLanguageChanged
+                                
+                                onClicked: {
+                                    console.log("UserEvent: CancelIncluded");
+                                    included.surahId = 0;
+                                }
                             }
                         }
                     }

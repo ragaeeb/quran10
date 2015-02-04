@@ -238,9 +238,9 @@ void QueryHelper::fetchAyat(QObject* caller, int surahId, int ayatId)
 }
 
 
-void QueryHelper::searchQuery(QObject* caller, QString const& trimmedText, QVariantList additional, bool andMode, bool shortNarrations)
+void QueryHelper::searchQuery(QObject* caller, QString const& trimmedText, int chapterNumber, QVariantList additional, bool andMode)
 {
-    LOGGER(trimmedText << additional << andMode << shortNarrations);
+    LOGGER(trimmedText << additional << andMode << chapterNumber);
 
     QStringList constraints;
     QVariantList params = QVariantList() << trimmedText;
@@ -276,12 +276,11 @@ void QueryHelper::searchQuery(QObject* caller, QString const& trimmedText, QVari
         query += ")";
     }
 
-    query += " ORDER BY surah_id,verse_id";
+    if (chapterNumber > 0) {
+        query += QString(" AND ayahs.surah_id=%1").arg(chapterNumber);
+    }
 
-    /*
-    if (shortThreshold > 0) {
-        query += QString(" AND length(%1) < %2").arg(textField).arg(shortThreshold);
-    } */
+    query += " ORDER BY surah_id,verse_id";
 
     m_sql.executeQuery(caller, query, QueryId::SearchAyats, params);
 }
