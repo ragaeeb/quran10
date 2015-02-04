@@ -50,24 +50,27 @@ Sheet
                     enabled = true;
                 }
                 
-                function onMushafSizeFetched(total)
+                function onMushafSizeFetched(cookie, total)
                 {
-                    totalSize = total;
-
-                    var confirmed = persist.showBlockingDialog( qsTr("Confirmation"), qsTr("The total size of the mushaf is ~%1 and it will need to be downloaded. Make sure you are on a good Wi-Fi connection or have a good data plan. Do you wish to continue?").arg( app.bytesToSize(total) ) );
-                    
-                    if (confirmed) {
-                        console.log("UserEvent: DownoloadMushafPromptYes");
-                        mushaf.requestEntireMushaf();
-                        mushaf.deflationDone.connect(onDeflated);
-                    } else {
-                        console.log("UserEvent: DownoloadMushafPromptNo");
-                        enabled = true;
+                    if (cookie == "mushafSize")
+                    {
+                        totalSize = total;
+                        
+                        var confirmed = persist.showBlockingDialog( qsTr("Confirmation"), qsTr("The total size of the mushaf is ~%1 and it will need to be downloaded. Make sure you are on a good Wi-Fi connection or have a good data plan. Do you wish to continue?").arg( app.bytesToSize(total) ) );
+                        
+                        if (confirmed) {
+                            console.log("UserEvent: DownoloadMushafPromptYes");
+                            mushaf.requestEntireMushaf();
+                            mushaf.deflationDone.connect(onDeflated);
+                        } else {
+                            console.log("UserEvent: DownoloadMushafPromptNo");
+                            enabled = true;
+                        }
                     }
                 }
                 
                 onCreationCompleted: {
-                    mushaf.mushafSizeFetched.connect(onMushafSizeFetched);
+                    queue.sizeFetched.connect(onMushafSizeFetched);
                 }
                 
                 onTriggered: {

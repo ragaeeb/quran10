@@ -16,9 +16,8 @@ using namespace canadainc;
 class RecitationHelper : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(int queued READ queued NOTIFY queueChanged)
 
-    QueueDownloader m_queue;
+    QueueDownloader* m_queue;
     Persistance* m_persistance;
     QFutureWatcher<QVariantList> m_future;
 
@@ -32,11 +31,10 @@ private slots:
     void onWritten();
 
 signals:
-    void queueChanged();
     void readyToPlay(QUrl const& uri);
 
 public:
-    RecitationHelper(Persistance* p, QObject* parent=NULL);
+    RecitationHelper(QueueDownloader* queue, Persistance* p, QObject* parent=NULL);
     virtual ~RecitationHelper();
 
     /**
@@ -44,11 +42,7 @@ public:
      */
     Q_INVOKABLE void downloadAndPlay(int chapter, int fromVerse, int toVerse);
     Q_INVOKABLE void memorize(int chapter, int fromVerse, int toVerse);
-    Q_SLOT void abort();
     Q_INVOKABLE static int extractIndex(QVariantMap const& m);
-    int queued() const;
-
-    QObject* player();
 };
 
 } /* namespace quran */
