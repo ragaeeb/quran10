@@ -20,6 +20,7 @@ NavigationPane
     SurahPickerPage
     {
         id: pickerPage
+        showJuz: true
 
         pickerList.onSelectionChanged: {
             var n = pickerList.selectionList().length;
@@ -86,6 +87,10 @@ NavigationPane
             
             surahPage.surahId = chapter;            
             surahPage.requestedVerse = verse;
+        }
+        
+        onCreationCompleted: {
+            app.lazyInitComplete.connect(ready);
         }
     }
     

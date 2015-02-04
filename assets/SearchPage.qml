@@ -186,6 +186,8 @@ Page
                         
                         Container
                         {
+                            horizontalAlignment: HorizontalAlignment.Fill
+                            
                             layout: StackLayout {
                                 orientation: LayoutOrientation.LeftToRight
                             }
@@ -215,11 +217,31 @@ Page
                                         included.resetImageSource();
                                     }
                                 }
+                                
+                                contextActions: [
+                                    ActionSet
+                                    {
+                                        title: qsTr("Remove Restriction") + Retranslate.onLanguageChanged
+                                        subtitle: qsTr("Don't restrict to %1").arg(included.title)
+                                        
+                                        DeleteActionItem
+                                        {
+                                            imageSource: "images/dropdown/cancel_search_surah.png"
+                                            
+                                            onTriggered: {
+                                                console.log("UserEvent: CancelRestrictSurahSearch");
+                                                included.surahId = 0;
+                                            }
+                                        }
+                                    }
+                                ]
                             }
                             
                             Button {
                                 imageSource: "images/dropdown/edit_search_surah.png"
-                                text: qsTr("Edit") + Retranslate.onLanguageChanged
+                                text: qsTr("Restrict to Chapter") + Retranslate.onLanguageChanged
+                                horizontalAlignment: HorizontalAlignment.Fill
+                                visible: !included.visible
                                 
                                 function onPicked(chapter, verse) {
                                     included.surahId = chapter;
@@ -227,7 +249,7 @@ Page
                                 }
                                 
                                 onClicked: {
-                                    console.log("UserEvent: EditIncluded");
+                                    console.log("UserEvent: EditRestrictSurahSearch");
                                     
                                     definition.source = "SurahPickerPage.qml";
                                     var picker = definition.createObject();
@@ -235,17 +257,11 @@ Page
                                     picker.picked.connect(onPicked);
                                     navigationPane.push(picker);
                                     
-                                    picker.onReady();
+                                    picker.ready();
                                 }
-                            }
-                            
-                            Button {
-                                imageSource: "images/dropdown/cancel_search_surah.png"
-                                text: qsTr("Cancel") + Retranslate.onLanguageChanged
                                 
-                                onClicked: {
-                                    console.log("UserEvent: CancelIncluded");
-                                    included.surahId = 0;
+                                layoutProperties: StackLayoutProperties {
+                                    spaceQuota: 1
                                 }
                             }
                         }
