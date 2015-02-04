@@ -58,6 +58,7 @@ public:
     Q_INVOKABLE void fetchRandomAyat(QObject* caller);
     Q_INVOKABLE void fetchSimilarAyatContent(QObject* caller, int chapterNumber, int verseNumber);
     Q_INVOKABLE void fetchSurahHeader(QObject* caller, int chapterNumber);
+    Q_INVOKABLE void fetchTafsirContent(QObject* caller, qint64 suitePageId);
     Q_INVOKABLE void removeBookmark(QObject* caller, int id);
     Q_INVOKABLE void saveBookmark(QObject* caller, int surahId, int verseId, QString const& name, QString const& tag);
     Q_INVOKABLE void searchQuery(QObject* caller, QString const& trimmedText, int chapterNumber=0, QVariantList additional=QVariantList(), bool andMode=true);
