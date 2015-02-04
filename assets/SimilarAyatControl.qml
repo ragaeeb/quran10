@@ -8,12 +8,14 @@ Container
     property real ratio: 0.4
     property real screenHeight: 1280
     
-    function applyData(data)
+    function applyData(data, mainText)
     {
         adm.clear();
         adm.append(data);
         
         relatedHeader.subtitle = data.length;
+        
+        app.decorateSimilarResults(data, mainText, adm);
     }
     
     onCreationCompleted: {
@@ -38,36 +40,9 @@ Container
     {
         id: similarList
         maxHeight: screenHeight*ratio
-        property variant appRef: app
-        property int unlinkIndex: -1
         
         dataModel: ArrayDataModel {
             id: adm
-        }
-        
-        function onDataLoaded(id, data)
-        {
-            if (id == QueryId.UnlinkNarrationFromSimilar)
-            {
-                persist.showToast( qsTr("Naration unlinked, it should no longer show up under the Similar option."), "", "asset:///images/menu/ic_unlink.png" );
-                
-                if (unlinkIndex >= 0)
-                {
-                    adm.removeAt(unlinkIndex);
-                    
-                    unlinkIndex = -1;
-                }
-            }
-        }
-        
-        function unlink(indexPath)
-        {
-            var data = adm.data(indexPath);
-            helper.unlinkNarrationFromSimilar(similarList, data.id);
-            unlinkIndex = indexPath[0];
-            var similar = root.similarNarrations;
-            similar.splice(unlinkIndex,1);
-            root.similarNarrations = similar;
         }
         
         listItemComponents: [
@@ -81,10 +56,15 @@ Container
                     Label
                     {
                         id: body
-                        content.flags: TextContentFlag.ActiveText | TextContentFlag.EmoticonsOff
+                        content.flags: TextContentFlag.ActiveTextOff | TextContentFlag.EmoticonsOff
                         multiline: true
-                        //textStyle.base: collections.textFont
-                        text: "%1\n\n(%2 #%3)\n".arg(ListItemData.hadithText).arg( collections.renderAppropriate(ListItemData.collection) ).arg(ListItemData.hadithNumber)
+                        textStyle.base: global.textFont
+                        text: ListItemData.content
+                    }
+                    
+                    Label {
+                        content.flags: TextContentFlag.ActiveText | TextContentFlag.EmoticonsOff
+                        text: "(%1 %2:%3)\n".arg(ListItemData.name).arg(ListItemData.surah_id).arg(ListItemData.verse_id)
                     }
                     
                     ImageView {
@@ -92,25 +72,6 @@ Container
                         horizontalAlignment: HorizontalAlignment.Center
                         visible: itemRoot.ListItem.indexInSection < itemRoot.ListItem.sectionSize-1
                     }
-                    
-                    contextActions: [
-                        ActionSet
-                        {
-                            title: collections.renderAppropriate(ListItemData.collection)
-                            subtitle: ListItemData.hadithNumber
-                            
-                            DeleteActionItem
-                            {
-                                imageSource: "images/menu/ic_unlink.png"
-                                title: qsTr("Unlink") + Retranslate.onLanguageChanged
-                                
-                                onTriggered: {
-                                    console.log("UserEvent: UnlinkNarrationFromOthers");
-                                    itemRoot.ListItem.view.unlink(itemRoot.ListItem.indexPath);
-                                }
-                            }
-                        }
-                    ]
                 }
             }
         ]

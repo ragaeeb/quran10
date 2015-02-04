@@ -42,7 +42,15 @@ Page
                 
                 body.value = bodyValue;
                 
-                helper.fetchSimilarAyat(root, surahId, verseId);
+                var n = data[0].total_similar;
+                
+                if (n > 0) {
+                    similarOption.text = qsTr("%n similar", "", n);
+                    titleControl.addOption(similarOption);
+                    
+                    if ( persist.tutorial( "tutorialSimilarHadith", qsTr("There appears to be other narrations with similar wording, choose the '%1 Similar' option at the top to view them in a split screen.").arg(data.length), "asset:///images/dropdown/similar.png" ) ) {}
+                }
+                
                 helper.fetchAllTafsirForAyat(root, surahId, verseId);
                 helper.fetchSurahHeader(root, surahId);
                 busy.delegateActive = false;
@@ -51,14 +59,12 @@ Page
                 busy.delegateActive = false;
                 console.log("AyatNotFound!");
             }
-        } else if (id == QueryId.FetchSimilarAyat && data.length > 0) {
-            //similarNarrations = data;
-            if ( persist.tutorial( "tutorialSimilarHadith", qsTr("There appears to be other narrations with similar wording, choose the '%1 Similar' option at the top to view them in a split screen.").arg(data.length), "asset:///images/dropdown/similar.png" ) ) {}
         } else if (id == QueryId.FetchAllTafsirForAyat && data.length > 0) {
             explanations = data;
             if ( persist.tutorial( "tutorialTafsir", qsTr("There are explanations of this hadith by the people of knowledge! Tap on the '%1 Tafsir' option at the top to view them.").arg(data.length), "asset:///images/dropdown/tafsir.png" ) ) {}
         } else if (id == QueryId.FetchSimilarAyatContent && data.length > 0 && similarOption.selected) {
-            pluginsDelegate.control.applyData(data);
+            pluginsDelegate.control.applyData(data, body.value);
+            body.text = app.decorateBodyForSimilar(body.text, data[0].content);
         } else if (id == QueryId.FetchSurahHeader && data.length > 0) {
             ayatOption.text = data[0].translation ? data[0].translation : data[0].name;
             babName.title = data[0].transliteration ? data[0].transliteration : data[0].name;
@@ -129,17 +135,18 @@ Page
         attachedObjects: [
             Option {
                 id: similarOption
-                text: /*similarNarrations ? qsTr("%n similar", "", similarNarrations.length) : */""
                 imageSource: "images/dropdown/similar.png"
                 
                 onSelectedChanged: {
                     if (selected)
                     {
                         console.log("UserEvent: SimilarOptionSelected");
-                        helper.fetchSimilarAyatContent(root, similarNarrations);
+                        helper.fetchSimilarAyatContent(root, surahId, verseId);
                         
                         pluginsDelegate.source = "SimilarAyatControl.qml";
                         pluginsDelegate.delegateActive = true;
+                    } else if (body.text != body.value) {
+                        body.text = body.value;
                     }
                 }
             },
