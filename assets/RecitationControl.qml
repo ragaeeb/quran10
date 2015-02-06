@@ -1,4 +1,5 @@
 import bb.cascades 1.2
+import com.canadainc.data 1.0
 
 Container
 {
@@ -7,11 +8,11 @@ Container
     verticalAlignment: VerticalAlignment.Fill
     property bool downloaded: false
     property bool played: false
-    
+
     layout: StackLayout {
         orientation: LayoutOrientation.LeftToRight
     }
-    
+
     ImageButton
     {
         id: actionButton
@@ -32,8 +33,8 @@ Container
             console.log("UserEvent: DownloadPlayButtonClicked");
             
             if (!downloaded) {
-                app.progress.connect(progress.onNetworkProgressChanged);
-                app.download(root.collection, root.hadithNumber);
+                queue.downloadProgress.connect(progress.onNetworkProgressChanged);
+                recitation.downloadAndPlay(root.surahId, root.verseId, root.verseId);
             } else {
                 if (!played) {
                     player.durationChanged.connect(progress.onDurationChanged);
@@ -41,7 +42,7 @@ Container
                     player.playingChanged.connect(updateImage);
                     player.activeChanged.connect(updateImage);
                     player.error.connect(onError);
-                    app.play(root.collection, root.hadithNumber);
+                    recitation.downloadAndPlay(root.surahId, root.verseId, root.verseId);
                     played = true;
                 } else {
                     player.togglePlayback();
@@ -83,7 +84,7 @@ Container
         
         function onNetworkProgressChanged(cookie, current, total)
         {
-            if (cookie.hadithNumber == root.hadithNumber && cookie.collection == root.collection)
+            if (cookie.chapter == root.surahId && cookie.verse == root.verseId)
             {
                 value = current;
                 toValue = total;
@@ -97,26 +98,38 @@ Container
     
     function updateState()
     {
-        downloaded = app.isDownloaded(root.collection, root.hadithNumber);
+        downloaded = recitation.isDownloaded(root.surahId, root.verseId);
         
         if (downloaded) {
             actionButton.defaultImageSource = player.active && played ? "images/menu/ic_pause.png" : "images/menu/ic_play.png";
         } else {
-            actionButton.defaultImageSource = "images/audio/download.png";
+            actionButton.defaultImageSource = "images/ic_download.png";
         }
         
         rotator.play();
     }
     
-    function onAudioAvailable(collection, hadithNumber)
+    function onAudioAvailable(chapter, verse)
     {
-        if (collection == root.collection && hadithNumber == root.hadithNumber) {
+        if (chapter == root.surahId && verse == root.verseId) {
             updateState();
         }
     }
     
+    function onReady(uri) {
+        player.play(uri);
+    }
+    
     onCreationCompleted: {
         updateState();
-        app.audioAvailable.connect(onAudioAvailable);
+        recitation.audioAvailable.connect(onAudioAvailable);
+        recitation.readyToPlay.connect(onReady);
     }
+    
+    attachedObjects: [
+        LazyMediaPlayer {
+            id: player
+            repeat: true
+        }
+    ]
 }
