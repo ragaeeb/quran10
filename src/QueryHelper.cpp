@@ -216,7 +216,7 @@ void QueryHelper::fetchTafsirContent(QObject* caller, qint64 suitePageId)
 {
     LOGGER(suitePageId);
     ATTACH_TAFSIR;
-    QString query = QString("SELECT author,translator,explainer,title,description,reference,body FROM suites INNER JOIN suite_pages ON suites.id=suite_pages.suite_id WHERE suite_pages.id=%1").arg(suitePageId);
+    QString query = QString("SELECT x.name AS author,y.name AS translator,z.name AS explainer,title,description,reference,body FROM suites INNER JOIN suite_pages ON suites.id=suite_pages.suite_id INNER JOIN individuals x ON suites.author=x.id LEFT JOIN individuals y ON suites.translator=y.id LEFT JOIN individuals z ON suites.explainer=z.id WHERE suite_pages.id=%1").arg(suitePageId);
 
     m_sql.executeQuery(caller, query, QueryId::FetchTafsirContent);
 }
