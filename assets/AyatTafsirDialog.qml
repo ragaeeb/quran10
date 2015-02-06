@@ -91,18 +91,17 @@ FullScreenDialog
             {
                 background: strip.imagePaint
                 horizontalAlignment: HorizontalAlignment.Fill
-                leftPadding: 40; rightPadding: 10
+                leftPadding: 50; rightPadding: 10; bottomPadding: 10; topPadding: 10
                 
                 Label {
                     id: titleLabel
                     horizontalAlignment: HorizontalAlignment.Fill
-                    //textStyle.base: collections.textFont
                 }
                 
                 attachedObjects: [
                     ImagePaintDefinition {
                         id: strip
-                        imageSource: "images/backgrounds/dialog_strip.amd"
+                        imageSource: "images/title/tafsir_title.amd"
                     }
                 ]
             }
@@ -136,11 +135,10 @@ FullScreenDialog
                     content.flags: TextContentFlag.ActiveText | TextContentFlag.EmoticonsOff
                     input.flags: TextInputFlag.AutoCapitalizationOff | TextInputFlag.AutoCorrectionOff | TextInputFlag.SpellCheckOff | TextInputFlag.WordSubstitutionOff | TextInputFlag.AutoPeriodOff
                     opacity: 0
-                    textStyle.color: Color.Black
+                    textStyle.color: Color.White
                     topPadding: 0;
                     textStyle.fontSize: FontSize.PointValue
                     textStyle.fontSizeValue: persist.getValueFor("tafsirSize")
-                    //textStyle.base: collections.textFont
                     
                     onTextChanged: {
                         fader.play();
@@ -158,10 +156,17 @@ FullScreenDialog
                 }
             }
             
+            Container
+            {
+                background: strip.imagePaint
+                horizontalAlignment: HorizontalAlignment.Fill
+                minWidth: 500
+            }
+            
             attachedObjects: [
                 ImagePaintDefinition {
                     id: bg
-                    imageSource: "images/backgrounds/dialog_bg.amd"
+                    imageSource: "images/backgrounds/downloads_bg.amd"
                 }
             ]
             
