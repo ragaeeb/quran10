@@ -80,6 +80,7 @@ FullScreenDialog
         
         Container
         {
+            id: contentContainer
             horizontalAlignment: HorizontalAlignment.Center
             verticalAlignment: VerticalAlignment.Center
             background: bg.imagePaint
@@ -139,6 +140,7 @@ FullScreenDialog
                     topPadding: 0;
                     textStyle.fontSize: FontSize.PointValue
                     textStyle.fontSizeValue: persist.getValueFor("tafsirSize")
+                    bottomPadding: 0; bottomMargin: 0
                     
                     onTextChanged: {
                         fader.play();
@@ -147,10 +149,11 @@ FullScreenDialog
                     animations: [
                         FadeTransition {
                             id: fader
+                            delay: 500
                             fromOpacity: 0
                             toOpacity: 1
                             duration: 750
-                            easingCurve: StockCurve.BackOut
+                            easingCurve: StockCurve.QuinticOut
                         }
                     ]
                 }
@@ -158,9 +161,11 @@ FullScreenDialog
             
             Container
             {
+                id: footer
                 background: strip.imagePaint
                 horizontalAlignment: HorizontalAlignment.Fill
-                minWidth: 500
+                bottomPadding: 10; topPadding: 10
+                visible: false
             }
             
             attachedObjects: [
@@ -177,11 +182,12 @@ FullScreenDialog
                     fromY: 0
                     toY: 1
                     duration: 1000
-                    easingCurve: StockCurve.QuinticOut
+                    easingCurve: StockCurve.ExponentialOut
                     
                     onEnded: {
                         if (tafsir) {
                             process();
+                            footer.visible = true;
                         }
                     }
                 },
@@ -192,7 +198,7 @@ FullScreenDialog
                     fromY: 1
                     toY: 0
                     duration: 750
-                    easingCurve: StockCurve.QuinticIn
+                    easingCurve: StockCurve.ExponentialIn
                     
                     onEnded: {
                         root.close();
@@ -205,4 +211,18 @@ FullScreenDialog
     onOpened: {
         scaler.play();
     }
+    
+    attachedObjects: [
+        OrientationHandler {
+            id: rotationHandler
+            
+            onOrientationChanged: {
+                contentContainer.maxHeight = orientation == UIOrientation.Portrait ? deviceUtils.pixelSize.height-150 : deviceUtils.pixelSize.width;
+            }
+            
+            onCreationCompleted: {
+                orientationChanged(orientation);
+            }
+        }
+    ]
 }
