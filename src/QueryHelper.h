@@ -53,6 +53,7 @@ public:
     Q_INVOKABLE void fetchAyat(QObject* caller, int surahId, int ayatId);
     Q_INVOKABLE bool fetchChapters(QObject* caller, QString const& text=QString());
     Q_INVOKABLE void fetchChapter(QObject* caller, int chapter);
+    Q_INVOKABLE void fetchJuzInfo(QObject* caller, int juzId);
     Q_INVOKABLE void fetchPageNumbers(QObject* caller);
     Q_INVOKABLE void fetchAllQarees(QObject* caller, int minLevel=1);
     Q_INVOKABLE void fetchRandomAyat(QObject* caller);
@@ -63,6 +64,7 @@ public:
     Q_INVOKABLE void saveBookmark(QObject* caller, int surahId, int verseId, QString const& name, QString const& tag);
     Q_INVOKABLE void searchQuery(QObject* caller, QString const& trimmedText, int chapterNumber=0, QVariantList additional=QVariantList(), bool andMode=true);
     Q_INVOKABLE QVariantList normalizeJuzs(QVariantList const& source);
+    Q_INVOKABLE QVariantList removeOutOfRange(QVariantList input, int fromChapter, int fromVerse, int toChapter, int toVerse);
 
     bool showTranslation() const;
     int primarySize() const;

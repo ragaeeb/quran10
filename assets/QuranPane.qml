@@ -23,9 +23,14 @@ NavigationPane
         showJuz: true
 
         pickerList.onSelectionChanged: {
-            var n = pickerList.selectionList().length;
-            compareAction.enabled = n > 1 && n < 5;
-            pickerList.multiSelectHandler.status = qsTr("%n chapters selected", "", n);
+            if (indexPath.length > 1) // actual surah tapped
+            {
+                var all = pickerList.selectionList();
+                var n = all.length;
+                compareAction.enabled = n > 1 && n < 5;
+                openAction.enabled = n > 0;
+                pickerList.multiSelectHandler.status = qsTr("%n chapters selected", "", n);
+            }
         }
         
         pickerList.multiSelectAction: MultiSelectActionItem {
@@ -55,6 +60,25 @@ NavigationPane
                     p.surahIds = surahIds;
                     navigationPane.push(p);
                 }
+            },
+            
+            ActionItem
+            {
+                id: openAction
+                enabled: false
+                imageSource: "images/menu/ic_compare.png"
+                title: qsTr("Open") + Retranslate.onLanguageChanged
+                
+                onTriggered: {
+                    console.log("UserEvent: OpenSurahs");
+                    definition.source = "SurahPage.qml";
+                    var p = definition.createObject();
+                    
+                    var all = pickerPage.pickerList.selectionList();
+                    p.fromSurahId = pickerPage.pickerList.dataModel.data(all[0]).surah_id;
+                    p.toSurahId = pickerPage.pickerList.dataModel.data(all[all.length-1]).surah_id;
+                    navigationPane.push(p);
+                }
             }
         ]
         
@@ -80,13 +104,21 @@ NavigationPane
             }
         ]
         
+        onJuzPicked: {
+            definition.source = "JuzPage.qml";
+            var surahPage = definition.createObject();
+            navigationPane.push(surahPage);
+            
+            surahPage.juzId = juzId;
+        }
+        
         onPicked: {
             definition.source = "SurahPage.qml";
             var surahPage = definition.createObject();
             navigationPane.push(surahPage);
             
             surahPage.fromSurahId = chapter;
-            surahPage.toSurahId = chapter;            
+            surahPage.toSurahId = chapter;
             //surahPage.requestedVerse = verse;
         }
         
