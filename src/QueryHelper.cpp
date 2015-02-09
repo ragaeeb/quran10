@@ -187,16 +187,20 @@ void QueryHelper::fetchSurahHeader(QObject* caller, int chapterNumber)
 }
 
 
-void QueryHelper::fetchAllAyats(QObject* caller, int chapterNumber)
+void QueryHelper::fetchAllAyats(QObject* caller, int fromChapter, int toChapter)
 {
-    LOGGER(chapterNumber);
+    LOGGER(fromChapter << toChapter);
+
+    if (toChapter == 0) {
+        toChapter = fromChapter;
+    }
 
     QString query;
 
     if ( showTranslation() ) {
-        query = QString("SELECT surah_id,content AS arabic,verse_number AS verse_id,translation FROM ayahs INNER JOIN verses on ayahs.id=verses.id AND surah_id=%1").arg(chapterNumber);
+        query = QString("SELECT surah_id,content AS arabic,verse_number AS verse_id,translation FROM ayahs INNER JOIN verses on ayahs.id=verses.id AND surah_id BETWEEN %1 AND %2").arg(fromChapter).arg(toChapter);
     } else {
-        query = QString("SELECT surah_id,content AS arabic,verse_number AS verse_id FROM ayahs WHERE surah_id=%1").arg(chapterNumber);
+        query = QString("SELECT surah_id,content AS arabic,verse_number AS verse_id FROM ayahs WHERE surah_id BETWEEN %1 AND %2").arg(fromChapter).arg(toChapter);
     }
 
     m_sql.executeQuery(caller, query, QueryId::FetchAllAyats);

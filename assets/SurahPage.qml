@@ -4,27 +4,22 @@ import com.canadainc.data 1.0
 Page
 {
     id: surahPage
-    property int surahId
-    property int requestedVerse: 0
+    property int fromSurahId
+    property int toSurahId
     actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
 
-    onSurahIdChanged:
+    onToSurahIdChanged:
     {
-	    listView.chapterNumber = surahId;
-        loadVerses();
-    }
-    
-    function loadVerses()
-    {
+        listView.chapterNumber = fromSurahId;
         busy.delegateActive = true;
-        helper.fetchAllAyats(surahPage, surahId);
+        helper.fetchAllAyats(surahPage, fromSurahId, toSurahId);
     }
     
     function reloadNeeded(key)
     {
         if (key == "translation") {
             requestedVerse = scroller.firstVisibleItem[0];
-            loadVerses();
+            toSurahIdChanged();
         } else if (key == "primarySize" || key == "translationSize") {
             listView.refresh();
         }
@@ -47,7 +42,7 @@ Page
                 listView.scrollToItem(target, ScrollAnimation.None);
                 listView.select(target,true);
                 requestedVerse = -1;
-            } else if (surahId > 1 && surahId != 9) {
+            } else if (fromSurahId > 1 && fromSurahId != 9) {
                 listView.scrollToPosition(0, ScrollAnimation.None);
                 listView.scroll(-100, ScrollAnimation.Smooth);
             }
@@ -119,7 +114,7 @@ Page
 				    player.togglePlayback();
 				} else {
 				    listView.previousPlayedIndex = -1;
-                    recitation.downloadAndPlay( surahId, 1, listView.dataModel.size() );
+                    recitation.downloadAndPlay( fromSurahId, 1, listView.dataModel.size() );
 				}
             }
         },
@@ -143,15 +138,15 @@ Page
         id: ctb
         bgSource: "images/title/title_bg_alt.png"
         bottomPad: 0
-        chapterNumber: surahId
+        chapterNumber: fromSurahId
         showNavigation: true
         navigationExpanded: true
         
         onNavigationTapped: {
             if (right) {
-                ++surahId;
+                ++fromSurahId;
             } else {
-                --surahId;
+                --fromSurahId;
             }
             
             player.stop();
@@ -171,11 +166,12 @@ Page
             
             onTriggered: {
                 console.log("UserEvent: VerseTriggered");
+                var d = dataModel.data(indexPath);
                 
                 definition.source = "AyatPage.qml";
                 var ayatPage = definition.createObject();
-                ayatPage.surahId = surahId;
-                ayatPage.verseId = dataModel.data(indexPath).verse_id;
+                ayatPage.surahId = d.surah_id;
+                ayatPage.verseId = d.verse_id;
                 
                 navigationPane.push(ayatPage);
             }

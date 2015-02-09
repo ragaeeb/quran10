@@ -12,6 +12,7 @@ TitleBar
     property bool showNavigation: false
     property bool navigationExpanded: false
     signal navigationTapped(bool right);
+    scrollBehavior: TitleBarScrollBehavior.NonSticky
     
     onChapterNumberChanged: {
         helper.fetchSurahHeader(titleControl, chapterNumber);

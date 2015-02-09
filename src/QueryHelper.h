@@ -48,7 +48,7 @@ public:
     Q_INVOKABLE void fetchAllBookmarks(QObject* caller);
     Q_INVOKABLE void fetchAllChapters(QObject* caller);
     Q_INVOKABLE void fetchAllDuaa(QObject* caller);
-    Q_INVOKABLE void fetchAllAyats(QObject* caller, int chapterNumber);
+    Q_INVOKABLE void fetchAllAyats(QObject* caller, int fromChapter, int toChapter=0);
     Q_INVOKABLE void fetchAllTafsirForAyat(QObject* caller, int chapterNumber, int verseNumber);
     Q_INVOKABLE void fetchAyat(QObject* caller, int surahId, int ayatId);
     Q_INVOKABLE bool fetchChapters(QObject* caller, QString const& text=QString());
