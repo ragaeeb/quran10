@@ -110,7 +110,7 @@ Page
                     if (id == QueryId.FetchAllAyats)
                     {
                         alv.theDataModel.clear();
-                        alv.theDataModel.insertList(data);
+                        alv.theDataModel.append(data);
                         busy.loaded = busy.loaded+1;
                     } else if (id == QueryId.FetchSurahHeader) {
                         var value = data[0].name;

@@ -4,6 +4,7 @@
 #include "customsqldatasource.h"
 #include "Logger.h"
 #include "Persistance.h"
+#include "TextUtils.h"
 
 #define ATTACH_TAFSIR m_sql.attachIfNecessary( showTranslation() ? tafsirName() : "quran_tafsir_arabic", true ); m_sql.attachIfNecessary( showTranslation() ? QString("articles_%1").arg(m_translation) : "articles_arabic", true );
 #define TRANSLATION QString("quran_%1").arg(m_translation)
@@ -33,6 +34,9 @@ void QueryHelper::lazyInit()
 {
     settingChanged("translation");
     m_sql.attachIfNecessary(TRANSLATION, m_translation != "english"); // since english translation is loaded by default
+
+    QTime time = QTime::currentTime();
+    qsrand( (uint)time.msec() );
 }
 
 
@@ -166,11 +170,12 @@ void QueryHelper::fetchChapter(QObject* caller, int chapter)
 void QueryHelper::fetchRandomAyat(QObject* caller)
 {
     LOGGER("fetchRandomAyat");
+    int x = TextUtils::randInt(1, 6236);
 
     if ( !showTranslation() ) {
-        m_sql.executeQuery(caller, "SELECT surah_id,verse_number AS verse_id,content AS text FROM ayahs WHERE RANDOM() % 6000 = 0 LIMIT 1", QueryId::FetchRandomAyat);
+        m_sql.executeQuery(caller, QString("SELECT surah_id,verse_number AS verse_id,content AS text FROM ayahs WHERE id=%1").arg(x), QueryId::FetchRandomAyat);
     } else {
-        m_sql.executeQuery(caller, "SELECT surah_id,verse_number AS verse_id,translation AS text FROM ayahs a INNER JOIN verses v ON a.id=v.id WHERE RANDOM() % 6000 = 0 LIMIT 1", QueryId::FetchRandomAyat);
+        m_sql.executeQuery(caller, QString("SELECT surah_id,verse_number AS verse_id,translation AS text FROM ayahs a INNER JOIN verses v ON a.id=v.id WHERE a.id=%1").arg(x), QueryId::FetchRandomAyat);
     }
 }
 
@@ -204,6 +209,14 @@ void QueryHelper::fetchAllAyats(QObject* caller, int fromChapter, int toChapter)
     }
 
     m_sql.executeQuery(caller, query, QueryId::FetchAllAyats);
+}
+
+
+void QueryHelper::fetchJuzInfo(QObject* caller, int juzId)
+{
+    LOGGER(juzId);
+
+    m_sql.executeQuery(caller, QString("SELECT surah_id,verse_number FROM juzs WHERE id BETWEEN %1 AND %2").arg(juzId).arg(juzId+1), QueryId::FetchJuz);
 }
 
 
@@ -418,6 +431,26 @@ int QueryHelper::translationSize() const
 
 QString QueryHelper::tafsirName() const {
     return QString("quran_tafsir_%1").arg(m_translation);
+}
+
+
+QVariantList QueryHelper::removeOutOfRange(QVariantList input, int fromChapter, int fromVerse, int toChapter, int toVerse)
+{
+    int n = input.size();
+
+    QMutableListIterator<QVariant> i(input);
+    while ( i.hasNext() )
+    {
+        QVariantMap c = i.next().toMap();
+        int chapter = c.value("surah_id").toInt();
+        int verse = c.value("verse_id").toInt();
+
+        if ( (chapter == fromChapter && verse < fromVerse) || (chapter == toChapter && verse >= toVerse) ) {
+            i.remove();
+        }
+    }
+
+    return input;
 }
 
 

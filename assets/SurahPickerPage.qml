@@ -5,6 +5,7 @@ Page
 {
     id: mainPage
     signal picked(int chapter, int verse)
+    signal juzPicked(int juzId)
     actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
     property alias pickerList: listView
     property bool showJuz: false
@@ -238,9 +239,16 @@ Page
                 ]
                 
                 onTriggered: {
-                    console.log("UserEvent: SurahTriggered");
                     var data = listView.dataModel.data(indexPath);
-                    picked(data.surah_id, 0);
+                    
+                    if (indexPath.length > 1)
+                    {
+                        console.log("UserEvent: SurahTriggered");
+                        picked(data.surah_id, 0);
+                    } else {
+                        console.log("UserEvent: JuzTriggered", data);
+                        juzPicked(data);
+                    }
                 }
                 
                 horizontalAlignment: HorizontalAlignment.Fill
@@ -301,6 +309,8 @@ Page
         translate.play();
 
         textField.input["keyLayout"] = 7;
+        
+        deviceUtils.attachTopBottomKeys(mainPage, listView, true);
     }
     
     attachedObjects: [

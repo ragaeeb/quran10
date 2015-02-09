@@ -12,11 +12,8 @@ ListView
     property int primarySize: helper.primarySize
     property alias custom: customTextStyle
     
-    dataModel: GroupDataModel
-    {
+    dataModel: ArrayDataModel {
         id: verseModel
-        sortingKeys: [ "verse_id" ]
-        grouping: ItemGrouping.ByFullValue
     }
     
     leadingVisual: BismillahControl {
@@ -34,7 +31,7 @@ ListView
             for (var j = 0; j < childrenInSection; j++)
             {
                 var indexPath = [i,j];
-                var current = verseModel.data(indexPath).toMap();
+                var current = verseModel.data(indexPath);
                 varModel.updateItem(indexPath, current);
             }
         }
@@ -62,20 +59,7 @@ ListView
     ]
     
     listItemComponents: [
-        ListItemComponent
-        {
-            type: "header"
-            
-            AyatHeaderListItem {
-                id: headerRoot
-                labelValue: qsTr("%1:%2").arg(headerRoot.ListItem.view.chapterNumber).arg(ListItemData)
-            }
-        },
-        
-        ListItemComponent
-        {
-            type: "item"
-            
+        ListItemComponent {
             AyatListItem {}
         }
     ]

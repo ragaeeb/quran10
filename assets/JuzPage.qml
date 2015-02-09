@@ -3,24 +3,28 @@ import com.canadainc.data 1.0
 
 Page
 {
-    id: surahPage
-    property int fromSurahId
-    property int toSurahId
+    id: juzPage
+    property int juzId
+    property variant ranges
     actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
 
-    onToSurahIdChanged:
+    onJuzIdChanged:
     {
-        listView.chapterNumber = fromSurahId;
-        ctb.chapterNumber = fromSurahId;
         busy.delegateActive = true;
-        helper.fetchAllAyats(surahPage, fromSurahId, toSurahId);
+        helper.fetchJuzInfo(juzPage, juzId);
+    }
+    
+    onRangesChanged: {
+        listView.chapterNumber = ranges.from_surah_id;
+        ctb.chapterNumber = ranges.from_surah_id;
+        helper.fetchAllAyats(juzPage, ranges.from_surah_id, ranges.to_surah_id);
     }
     
     function reloadNeeded(key)
     {
         if (key == "translation") {
             requestedVerse = scroller.firstVisibleItem[0];
-            toSurahIdChanged();
+            juzIdChanged();
         } else if (key == "primarySize" || key == "translationSize") {
             listView.refresh();
         }
@@ -34,37 +38,27 @@ Page
     {
         if (id == QueryId.FetchAllAyats)
         {
+            data = helper.removeOutOfRange(data, ranges.from_surah_id, ranges.from_verse_id, ranges.to_surah_id, ranges.to_verse_id);
+            
             listView.theDataModel.clear();
             listView.theDataModel.append(data);
             busy.delegateActive = false;
+        } else if (id == QueryId.FetchJuz) {
+            var toChapter = 114;
+            var toVerse = 300;
             
-            if (requestedVerse > 0) {
-                var target = [ requestedVerse - 1, 0 ]
-                listView.scrollToItem(target, ScrollAnimation.None);
-                listView.select(target,true);
-                requestedVerse = -1;
-            } else if (fromSurahId > 1 && fromSurahId != 9) {
-                listView.scrollToPosition(0, ScrollAnimation.None);
-                listView.scroll(-100, ScrollAnimation.Smooth);
+            if (data.length > 1) {
+                toChapter = data[1].surah_id;
+                toVerse = data[1].verse_number;
             }
             
-            if ( persist.tutorial( "tutorialZoom", qsTr("You can do a pinch gesture anytime to increase and decrease the font size of the Arabic/Transliteration text!"), "asset:///images/ic_quran.png" ) ) { }
-            else if ( persist.tutorial( "tafsirTutorialCount", qsTr("Tap on a verse with a grey highlight to find explanations on it."), "asset:///images/toast/ic_tafsir.png" ) ) { }
-            else if ( persist.tutorial( "tutorialSurahNavigation", qsTr("Tap the left/right arrow keys to navigate to the previous and next chapters respectively."), "asset:///images/title/ic_next.png" ) ) {}
-            else if ( persist.tutorial( "tutorialFollow", qsTr("Use the follow button at the center of the left/right buttons if you want to follow the verses automatically as they are being recited."), "asset:///images/title/ic_follow_on.png" ) ) {}
-            else if ( persist.tutorial( "tutorialRepeat", qsTr("Tap on the repeat action at the bottom to enable or disable repeating the recitation in a loop once it finishes."), "asset:///images/menu/ic_repeat_on.png" ) ) {}
-            else if ( persist.tutorial( "tutorialCopyShare", qsTr("Press-and-hold any ayat and choose the Copy or Share action to easily share the verse."), "asset:///images/ic_copy.png" ) ) {}
-            else if ( persist.tutorial( "tutorialMemorize", qsTr("Press-and-hold any ayat and choose the Memorize action to play the next 8 verses in iteration to help you memorize them!"), "asset:///images/menu/ic_memorize.png" ) ) {}
-            else if ( persist.tutorial( "tutorialRange", qsTr("Did you know you can press-and-hold on any verse and tap on the 'Select Range' action to only play recitations for those, or copy/share them to your contacts?"), "asset:///images/menu/ic_range.png" ) ) {}
-            else if ( persist.tutorial( "tutorialHome", qsTr("Want to dock a certain ayat right to your home screen? Press-and-hold on it and choose 'Add To Home Screen' and name it!"), "asset:///images/menu/ic_home.png" ) ) {}
-            else if ( persist.tutorial( "tutorialBookmark", qsTr("Do you know how to set bookmarks? You can easily mark certain ayats as favourites by pressing-and-holding on them and choosing 'Add Bookmark' on them! This is a very easy way to track our progress as you read the Qu'ran to quickly find where you left off."), "asset:///images/menu/ic_bookmark_add.png" ) ) {}
-            else if ( persist.tutorial( "donateNotice", qsTr("As'salaamu alaykum wa rahmatullahi wabarakathu,\n\nJazakAllahu khair for using Quran10. While our Islamic apps will always remain free of charge for your benefit, we encourage you to please donate whatever you can in order to support development. This will motivate the developers to continue to update the app, add new features and bug fixes. To donate, simply swipe-down from the top-bezel and tap the 'Donate' button to send money via PayPal.\n\nMay Allah reward you, and bless you and your family."), "asset:///images/ic_donate.png" ) ) {}
+            ranges = {'from_surah_id': data[0].surah_id, 'from_verse_id': data[0].verse_id, 'to_surah_id': toChapter, 'to_verse_id': toVerse};
         }
     }
     
     function onPopEnded(page)
     {
-        if (navigationPane.top == surahPage) {
+        if (navigationPane.top == juzPage) {
             ctb.navigationExpanded = true;
         }
     }
@@ -73,7 +67,7 @@ Page
         persist.settingChanged.connect(reloadNeeded);
         navigationPane.popTransitionEnded.connect(onPopEnded);
         
-        deviceUtils.attachTopBottomKeys(surahPage, listView);
+        deviceUtils.attachTopBottomKeys(juzPage, listView);
     }
 
     actions: [
@@ -146,15 +140,9 @@ Page
         
         onNavigationTapped: {
             if (right) {
-                ++fromSurahId;
+                ++juzId;
             } else {
-                --fromSurahId;
-            }
-            
-            if (toSurahId > 0) {
-                toSurahId = 0;
-            } else {
-                toSurahIdChanged();
+                --juzId;
             }
 
             player.stop();
