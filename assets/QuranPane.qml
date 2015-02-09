@@ -85,8 +85,9 @@ NavigationPane
             var surahPage = definition.createObject();
             navigationPane.push(surahPage);
             
-            surahPage.surahId = chapter;            
-            surahPage.requestedVerse = verse;
+            surahPage.fromSurahId = chapter;
+            surahPage.toSurahId = chapter;            
+            //surahPage.requestedVerse = verse;
         }
         
         onCreationCompleted: {

@@ -26,6 +26,7 @@ public:
         FetchAllTafsirForSuite,
         FetchAyat,
         FetchChapters,
+        FetchJuz,
         FetchPageNumbers,
         FetchRandomAyat,
         FetchSimilarAyatContent,
