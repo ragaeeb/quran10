@@ -170,7 +170,9 @@ Page
                         duration: 500
                         
                         onEnded: {
-                            textField.requestFocus();
+                            if (deviceUtils.isPhysicalKeyboardDevice) {
+                                textField.requestFocus();
+                            }
                         }
                     }
                 ]
