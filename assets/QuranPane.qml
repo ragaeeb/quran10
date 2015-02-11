@@ -112,7 +112,7 @@ NavigationPane
             
             ActionItem {
                 title: qsTr("Select All") + Retranslate.onLanguageChanged
-                imageSource: "images/menu/ic_mushaf.png"
+                imageSource: "images/menu/ic_select_all.png"
                 enabled: pickerPage.sortValue != "juz"
                 
                 onTriggered: {
