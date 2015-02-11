@@ -23,22 +23,25 @@ NavigationPane
         showJuz: true
 
         pickerList.onSelectionChanged: {
-            if (indexPath.length > 1) // actual surah tapped
-            {
+            if (sortValue == "juz" && indexPath.length == 1) { // don't allow selection of headers
+                pickerList.select(indexPath, false);
+            } else {
                 var all = pickerList.selectionList();
                 var n = all.length;
                 compareAction.enabled = n > 1 && n < 5;
                 openAction.enabled = n > 0;
                 pickerList.multiSelectHandler.status = qsTr("%n chapters selected", "", n);
-                
-                for (var i = 0; i < all.length; i++) {
-                    console.log("**", all[i]);
-                }
             }
         }
         
         pickerList.multiSelectAction: MultiSelectActionItem {
             imageSource: "images/menu/ic_select_more_chapters.png"
+        }
+        
+        pickerList.multiSelectHandler.onActiveChanged: {
+            if (!active) {
+                pickerList.clearSelection();
+            }
         }
 
         pickerList.multiSelectHandler.actions: [
@@ -71,7 +74,7 @@ NavigationPane
                 id: openAction
                 enabled: false
                 imageSource: "images/menu/ic_compare.png"
-                title: qsTr("Open") + Retranslate.onLanguageChanged
+                title: qsTr("Open Range") + Retranslate.onLanguageChanged
                 
                 onTriggered: {
                     console.log("UserEvent: OpenSurahs");
@@ -103,6 +106,24 @@ NavigationPane
                 shortcuts: [
                     Shortcut {
                         key: qsTr("M") + Retranslate.onLanguageChanged
+                    }
+                ]
+            },
+            
+            ActionItem {
+                title: qsTr("Select All") + Retranslate.onLanguageChanged
+                imageSource: "images/menu/ic_mushaf.png"
+                enabled: pickerPage.sortValue != "juz"
+                
+                onTriggered: {
+                    console.log("UserEvent: SelectAll");
+                    pickerPage.pickerList.multiSelectHandler.active = true;
+                    pickerPage.pickerList.selectAll();
+                }
+                
+                shortcuts: [
+                    Shortcut {
+                        key: qsTr("A") + Retranslate.onLanguageChanged
                     }
                 ]
             }

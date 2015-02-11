@@ -4,12 +4,12 @@ SearchPage
 {
     id: searchPage
     property bool doAppend: false
-    signal narrationsSelected(variant ids);
+    signal versesSelected(variant ids);
     
     listControl.onSelectionChanged: {
         var n = listControl.selectionList().length;
         var msh = listControl.multiSelectHandler;
-        msh.status = qsTr("%n narrations selected", "", n);
+        msh.status = qsTr("%n verses selected", "", n);
         
         var numActions = msh.actionCount();
         var enableActions = n > 0;
@@ -43,7 +43,7 @@ SearchPage
                     }
                 }
                 
-                narrationsSelected(ids);
+                versesSelected(ids);
             }
         }
     ]
