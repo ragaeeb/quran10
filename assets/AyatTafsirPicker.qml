@@ -40,7 +40,7 @@ Container
                     property real startAngle: ListItem.indexInSection & 1 ? 360 : 0
                     property real endAngle: ListItem.indexInSection & 1 ? 0 : 360
                     horizontalAlignment: HorizontalAlignment.Center
-                    imageSource: "images/ic_tafsir.png"
+                    imageSource: "images/list/ic_tafsir.png"
                     rotationZ: startAngle
                     
                     animations: [

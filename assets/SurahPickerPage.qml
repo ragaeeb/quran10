@@ -84,7 +84,7 @@ Page
                             id: juzOption
                             text: qsTr("Juz") + Retranslate.onLanguageChanged
                             description: qsTr("The surahs will be displayed separated in juz") + Retranslate.onLanguageChanged
-                            imageSource: "images/dropdown/sort_normal.png"
+                            imageSource: "images/dropdown/sort_juz.png"
                             value: "juz"
                         }
                         

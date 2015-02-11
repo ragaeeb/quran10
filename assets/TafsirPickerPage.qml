@@ -159,7 +159,7 @@ Page
                 {
                     id: rootItem
                     description: ListItemData.author
-                    imageSource: "images/ic_tafsir.png"
+                    imageSource: "images/list/ic_tafsir.png"
                     title: ListItemData.title
                     
                     contextActions: [
@@ -170,7 +170,7 @@ Page
                             
                             ActionItem
                             {
-                                imageSource: "images/menu/ic_edit.png"
+                                imageSource: "images/menu/ic_edit_suite.png"
                                 title: qsTr("Edit") + Retranslate.onLanguageChanged
                                 
                                 onTriggered: {
@@ -181,6 +181,8 @@ Page
                             
                             DeleteActionItem
                             {
+                                imageSource: "images/menu/ic_remove_suite.png"
+                                
                                 onTriggered: {
                                     console.log("UserEvent: AdminDeleteTafsirTriggered");
                                     rootItem.ListItem.view.removeItem(ListItemData);

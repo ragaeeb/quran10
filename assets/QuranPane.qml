@@ -73,7 +73,7 @@ NavigationPane
             {
                 id: openAction
                 enabled: false
-                imageSource: "images/menu/ic_compare.png"
+                imageSource: "images/menu/ic_open_range.png"
                 title: qsTr("Open Range") + Retranslate.onLanguageChanged
                 
                 onTriggered: {

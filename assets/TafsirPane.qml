@@ -22,7 +22,7 @@ NavigationPane
     {
         if (id == QueryId.AddTafsir)
         {
-            persist.showToast( qsTr("Tafsir added!"), "", "asset:///images/ic_tafsir.png" );
+            persist.showToast( qsTr("Tafsir added!"), "", "asset:///images/list/ic_tafsir.png" );
             tafsirPicker.reload();
         }
     }
@@ -43,7 +43,7 @@ NavigationPane
         actions: [
             ActionItem
             {
-                imageSource: "images/menu/ic_add.png"
+                imageSource: "images/menu/ic_add_suite.png"
                 title: qsTr("Add") + Retranslate.onLanguageChanged
                 ActionBar.placement: 'Signature' in ActionBarPlacement ? ActionBarPlacement["Signature"] : ActionBarPlacement.OnBar
                 
