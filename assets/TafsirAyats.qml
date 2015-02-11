@@ -21,7 +21,7 @@ Page
         ActionItem
         {
             id: addAction
-            imageSource: "images/menu/ic_add.png"
+            imageSource: "images/menu/ic_link_ayat_to_tafsir.png"
             title: qsTr("Add") + Retranslate.onLanguageChanged
             ActionBar.placement: 'Signature' in ActionBarPlacement ? ActionBarPlacement["Signature"] : ActionBarPlacement.OnBar
             
@@ -47,6 +47,7 @@ Page
         multiSelectHandler.actions: [
             DeleteActionItem
             {
+                imageSource: "images/menu/ic_tafsir_ayat.png"
                 title: qsTr("Unlink") + Retranslate.onLanguageChanged
                 
                 onTriggered: {
@@ -145,6 +146,7 @@ Page
                             
                             DeleteActionItem
                             {
+                                imageSource: "images/menu/ic_tafsir_ayat.png"
                                 title: qsTr("Unlink") + Retranslate.onLanguageChanged
                                 
                                 onTriggered: {

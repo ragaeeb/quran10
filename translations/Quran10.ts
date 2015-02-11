@@ -1301,19 +1301,19 @@ May Allah reward you, and bless you and your family.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPickerPage.qml" line="196"/>
+        <location filename="../assets/SurahPickerPage.qml" line="198"/>
         <source>Juz %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../assets/SurahPickerPage.qml" line="210"/>
+        <location filename="../assets/SurahPickerPage.qml" line="212"/>
         <source>%n ayahs</source>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../assets/SurahPickerPage.qml" line="290"/>
+        <location filename="../assets/SurahPickerPage.qml" line="292"/>
         <source>No chapters matched your search criteria. Please try a different search term.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1486,32 +1486,32 @@ May Allah reward you, and bless you and your family.</source>
 <context>
     <name>quran::ApplicationUI</name>
     <message>
-        <location filename="../src/applicationui.cpp" line="160"/>
+        <location filename="../src/applicationui.cpp" line="156"/>
         <source>Invalid pattern specified!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="188"/>
+        <location filename="../src/applicationui.cpp" line="184"/>
         <source>Invalid surah specified</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="206"/>
+        <location filename="../src/applicationui.cpp" line="202"/>
         <source>Tafsir</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="250"/>
+        <location filename="../src/applicationui.cpp" line="246"/>
         <source>Surah not found!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="276"/>
+        <location filename="../src/applicationui.cpp" line="272"/>
         <source>Added %1 to home screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="278"/>
+        <location filename="../src/applicationui.cpp" line="274"/>
         <source>Could not add %1 to home screen</source>
         <translation type="unfinished"></translation>
     </message>

@@ -25,7 +25,7 @@ Page
         ActionItem
         {
             id: addAction
-            imageSource: "images/menu/ic_add.png"
+            imageSource: "images/menu/ic_add_suite_page.png"
             title: qsTr("Add") + Retranslate.onLanguageChanged
             ActionBar.placement: 'Signature' in ActionBarPlacement ? ActionBarPlacement["Signature"] : ActionBarPlacement.OnBar
             
@@ -62,7 +62,7 @@ Page
                                 title: !sheet.suitePageId ? qsTr("New Page") + Retranslate.onLanguageChanged : qsTr("Edit Page") + Retranslate.onLanguageChanged
                                 
                                 dismissAction: ActionItem {
-                                    imageSource: "images/dropdown/no_translation.png"
+                                    imageSource: "images/dropdown/suite_changes_cancel.png"
                                     title: qsTr("Cancel") + Retranslate.onLanguageChanged
                                     
                                     onTriggered: {
@@ -74,7 +74,7 @@ Page
                                 acceptAction: ActionItem
                                 {
                                     id: saveAction
-                                    imageSource: "images/menu/ic_select_more.png"
+                                    imageSource: "images/dropdown/suite_changes_accept.png"
                                     title: qsTr("Save") + Retranslate.onLanguageChanged
                                     
                                     onTriggered: {
@@ -103,7 +103,6 @@ Page
                                 backgroundVisible: false
                                 content.flags: TextContentFlag.ActiveText | TextContentFlag.EmoticonsOff
                                 text: sheet.currentText
-                                //textStyle.base: collections.textFont
                                 hintText: qsTr("Enter tafsir body here...") + Retranslate.onLanguageChanged
                                 input.flags: TextInputFlag.AutoCapitalizationOff | TextInputFlag.AutoCorrectionOff | TextInputFlag.SpellCheckOff | TextInputFlag.WordSubstitutionOff | TextInputFlag.AutoPeriodOff
                                 
@@ -203,7 +202,7 @@ Page
                             
                             ActionItem
                             {
-                                imageSource: "images/menu/ic_edit.png"
+                                imageSource: "images/menu/ic_edit_suite_page.png"
                                 title: qsTr("Edit") + Retranslate.onLanguageChanged
                                 
                                 onTriggered: {
@@ -214,7 +213,7 @@ Page
                             
                             DeleteActionItem
                             {
-                                imageSource: "images/menu/ic_remove_tafsir.png"
+                                imageSource: "images/menu/ic_delete_suite_page.png"
                                 
                                 onTriggered: {
                                     console.log("UserEvent: RemoveTafsirPageTriggered");

@@ -126,7 +126,7 @@ TabbedPane
             id: tafsirTab
             title: qsTr("Tafsir") + Retranslate.onLanguageChanged
             description: qsTr("Explanations") + Retranslate.onLanguageChanged
-            imageSource: "images/ic_tafsir.png"
+            imageSource: "images/tabs/ic_tafsir.png"
             delegateActivationPolicy: TabDelegateActivationPolicy.ActivateWhenSelected
             
             onTriggered: {
