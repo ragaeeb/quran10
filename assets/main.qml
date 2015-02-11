@@ -100,10 +100,42 @@ TabbedPane
         }
     }
     
-    onCreationCompleted: {
-        if ( !persist.contains("firstTime") ) {
-            menuDef.settings.triggered();
-            persist.saveValueFor("firstTime", 1, false);
+    function onSidebarVisualStateChanged(newState)
+    {
+        sidebarStateChanged.disconnect(onSidebarVisualStateChanged);
+        
+        if (reporter.isAdmin) {
+            add(tafsirTab);
+        } else {
+            reporter.adminEnabledChanged.connect( function()
+            {
+                 if (reporter.isAdmin) {
+                     add(tafsirTab);
+                 }
+            });
         }
     }
+    
+    onCreationCompleted: {
+        sidebarStateChanged.connect(onSidebarVisualStateChanged);
+    }
+    
+    attachedObjects: [
+        Tab
+        {
+            id: tafsirTab
+            title: qsTr("Tafsir") + Retranslate.onLanguageChanged
+            description: qsTr("Explanations") + Retranslate.onLanguageChanged
+            imageSource: "images/ic_tafsir.png"
+            delegateActivationPolicy: TabDelegateActivationPolicy.ActivateWhenSelected
+            
+            onTriggered: {
+                console.log("UserEvent: TafsirTab");
+            }
+            
+            delegate: Delegate {
+                source: "TafsirPane.qml"
+            }
+        }
+    ]
 }

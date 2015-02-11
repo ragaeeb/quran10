@@ -6,18 +6,8 @@ Page
     id: root
     property int surahId
     property int verseId
-    property variant similarVerses
     property variant explanations
     
-    onSimilarVersesChanged: {
-        /*
-        if (similarNarrations.length > 0) {
-            titleControl.addOption(similarOption);
-        } else { // unlinked everything
-            ayatOption.selected = true;
-        } */
-    }
-
     onExplanationsChanged: {
         titleControl.addOption(tafsirOption);
     }
@@ -48,7 +38,7 @@ Page
                     similarOption.text = qsTr("%n similar", "", n);
                     titleControl.addOption(similarOption);
                     
-                    if ( persist.tutorial( "tutorialSimilarHadith", qsTr("There appears to be other narrations with similar wording, choose the '%1 Similar' option at the top to view them in a split screen.").arg(data.length), "asset:///images/dropdown/similar.png" ) ) {}
+                    if ( persist.tutorial( "tutorialSimilarAyat", qsTr("There appears to be other verses with similar wording, choose the '%1 Similar' option at the top to view them in a split screen.").arg(data.length), "asset:///images/dropdown/similar.png" ) ) {}
                 }
                 
                 helper.fetchAllTafsirForAyat(root, surahId, verseId);
@@ -323,7 +313,6 @@ Page
                         else if ( persist.tutorial( "tutorialMarkFav", qsTr("To quickly access this hadith again, tap on the 'Mark Favourite' action at the bottom to put it in the Bookmarks tab that shows up in the start of the app."), "asset:///images/menu/ic_bookmark_add.png" ) ) {}
                         else if ( persist.tutorial( "tutorialAddShortcutHome", qsTr("To quickly access this hadith again, tap on the 'Add Shortcut' action at the bottom to pin it to your homescreen."), "asset:///images/menu/ic_home_add.png" ) ) {}
                         else if ( persist.tutorial( "tutorialShare", qsTr("To share this hadith with your friends tap on the 'Share' action at the bottom."), "asset:///images/menu/ic_share.png" ) ) {}
-                        else if ( persist.tutorial( "tutorialLinkFromBook", qsTr("If you want to link this hadith to another, you can group them together by choosing the 'Link' action from the menu, then selecting the other narrations and tapping 'Save'! You will then find these hadith showing up in the 'Similar' tab at the top."), "asset:///images/menu/ic_link.png" ) ) {}
                         else if ( persist.tutorial( "tutorialReportMistake", qsTr("If you notice any mistakes with the text or the translation of the hadith, tap on the '...' icon at the bottom-right to use the menu, and use the 'Report Mistake' action from the menu."), "asset:///images/menu/ic_report_error.png" ) ) {}
                         else if ( persist.reviewed() ) {}
                         else if ( reporter.performCII() ) {} */

@@ -220,12 +220,49 @@ void QueryHelper::fetchJuzInfo(QObject* caller, int juzId)
 }
 
 
+void QueryHelper::fetchAllTafsir(QObject* caller)
+{
+    LOGGER("fetchAllTafsir");
+
+    ATTACH_TAFSIR;
+    QString query = "SELECT suites.id AS id,individuals.name AS author,title FROM suites INNER JOIN individuals ON individuals.id=suites.author ORDER BY id DESC";
+    m_sql.executeQuery(caller, query, QueryId::FetchAllTafsir);
+}
+
+
 void QueryHelper::fetchAllTafsirForAyat(QObject* caller, int chapterNumber, int verseNumber)
 {
     LOGGER(chapterNumber << verseNumber);
 
     ATTACH_TAFSIR;
     m_sql.executeQuery(caller, QString("SELECT suite_page_id FROM explanations WHERE surah_id=%1 AND from_verse_number=%2").arg(chapterNumber).arg(verseNumber), QueryId::FetchTafsirForAyat);
+}
+
+
+void QueryHelper::fetchAllTafsirForSuite(QObject* caller, qint64 suiteId)
+{
+    LOGGER(suiteId);
+
+    ATTACH_TAFSIR;
+    QString query = QString("SELECT id,body FROM suite_pages WHERE suite_id=%1 ORDER BY id DESC").arg(suiteId);
+    m_sql.executeQuery(caller, query, QueryId::FetchAllTafsirForSuite);
+}
+
+
+void QueryHelper::fetchAyatsForTafsir(QObject* caller, qint64 suitePageId)
+{
+    LOGGER(suitePageId);
+    ATTACH_TAFSIR;
+
+    QString query;
+
+    if ( showTranslation() ) {
+        query = QString("SELECT a.surah_id,a.verse_number AS verse_id,v.translation AS content,c.transliteration as name FROM ayahs a INNER JOIN verses v ON a.id=v.id INNER JOIN explanations x ON a.surah_id=x.surah_id AND a.verse_number=x.from_verse_number INNER JOIN chapters c ON a.surah_id=c.id WHERE x.suite_page_id=%1").arg(suitePageId);
+    } else {
+        query = QString("SELECT a.surah_id,a.verse_number AS verse_id,content,s.name FROM ayahs a INNER JOIN explanations x ON a.surah_id=x.surah_id AND a.verse_number=x.from_verse_number INNER JOIN surahs s ON a.surah_id=s.id WHERE x.suite_page_id=%1").arg(suitePageId);
+    }
+
+    m_sql.executeQuery(caller, query, QueryId::FetchAyatsForTafsir);
 }
 
 

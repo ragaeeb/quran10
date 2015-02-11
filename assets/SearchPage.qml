@@ -100,34 +100,6 @@ Page
             }
         },
         
-        ActionItem
-        {
-            imageSource: "images/menu/ic_search_append.png"
-            title: qsTr("Append") + Retranslate.onLanguageChanged
-            
-            function onNarrationsSelected(ids)
-            {
-                adm.insert(0, ids);
-                
-                while (navigationPane.top != searchRoot) {
-                    navigationPane.pop();
-                }
-                
-                updateState();
-                
-                listView.scrollToPosition(ScrollPosition.Beginning, ScrollAnimation.Smooth);
-            }
-            
-            onTriggered: {
-                definition.source = "SearchPickerPage.qml";
-                var searchPage = definition.createObject();
-                searchPage.doAppend = true;
-                
-                searchPage.narrationsSelected.connect(onNarrationsSelected);
-                navigationPane.push(searchPage);
-            }
-        },
-        
         DeleteActionItem
         {
             id: removeSearchAction

@@ -9,6 +9,7 @@ Page
     actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
     property alias pickerList: listView
     property bool showJuz: false
+    property alias sortValue: sortOrder.selectedValue
 
     titleBar: TitleBar
     {
