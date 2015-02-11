@@ -105,6 +105,7 @@ Page
                                 text: sheet.currentText
                                 hintText: qsTr("Enter tafsir body here...") + Retranslate.onLanguageChanged
                                 input.flags: TextInputFlag.AutoCapitalizationOff | TextInputFlag.AutoCorrectionOff | TextInputFlag.SpellCheckOff | TextInputFlag.WordSubstitutionOff | TextInputFlag.AutoPeriodOff
+                                topPadding: 0; topMargin: 0
                                 
                                 onTextChanging: {
                                     saveAction.enabled = text.trim().length > 10;
