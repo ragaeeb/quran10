@@ -257,7 +257,7 @@ void QueryHelper::fetchAyatsForTafsir(QObject* caller, qint64 suitePageId)
     QString query;
 
     if ( showTranslation() ) {
-        query = QString("SELECT a.surah_id,a.verse_number AS verse_id,v.translation AS content,c.transliteration as name FROM ayahs a INNER JOIN verses v ON a.id=v.id INNER JOIN explanations x ON a.surah_id=x.surah_id AND a.verse_number=x.from_verse_number INNER JOIN chapters c ON a.surah_id=c.id WHERE x.suite_page_id=%1").arg(suitePageId);
+        query = QString("SELECT a.surah_id,a.verse_number AS verse_id,v.translation AS content,c.transliteration as name FROM ayahs a INNER JOIN verses v ON a.id=v.id INNER JOIN explanations x ON a.surah_id=x.surah_id AND (a.verse_number=x.from_verse_number OR x.from_verse_number ISNULL) INNER JOIN chapters c ON a.surah_id=c.id WHERE x.suite_page_id=%1").arg(suitePageId);
     } else {
         query = QString("SELECT a.surah_id,a.verse_number AS verse_id,content,s.name FROM ayahs a INNER JOIN explanations x ON a.surah_id=x.surah_id AND a.verse_number=x.from_verse_number INNER JOIN surahs s ON a.surah_id=s.id WHERE x.suite_page_id=%1").arg(suitePageId);
     }
