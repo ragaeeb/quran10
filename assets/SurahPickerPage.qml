@@ -56,17 +56,20 @@ Page
             
             expandableArea
             {
-                expanded: sortOrder.selectedOption == null
+                expanded: showJuz
+                indicatorVisibility: TitleBarExpandableAreaIndicatorVisibility.Hidden
                 
                 content: Container
                 {
                     horizontalAlignment: HorizontalAlignment.Fill
+                    visible: showJuz
                     
-                    DropDown
+                    PersistDropDown
                     {
                         id: sortOrder
                         title: qsTr("Display Options") + Retranslate.onLanguageChanged
                         horizontalAlignment: HorizontalAlignment.Fill
+                        key: "surahPickerOption"
                         
                         Option {
                             id: alphabet
@@ -77,11 +80,19 @@ Page
                         }
                         
                         Option {
+                            id: juzOption
+                            text: qsTr("Juz") + Retranslate.onLanguageChanged
+                            description: qsTr("The surahs will be displayed separated in juz") + Retranslate.onLanguageChanged
+                            imageSource: "images/dropdown/sort_normal.png"
+                            value: "juz"
+                        }
+                        
+                        Option {
                             id: normal
                             text: qsTr("Normal") + Retranslate.onLanguageChanged
                             description: qsTr("The surahs will be displayed in the standard order") + Retranslate.onLanguageChanged
                             imageSource: "images/dropdown/sort_normal.png"
-                            value: ""
+                            value: "normal"
                         }
                         
                         Option {
@@ -129,7 +140,7 @@ Page
                     var ok = true;
                     var textValue = text.trim();
                     
-                    if (textValue.length == 0 && showJuz) {
+                    if (textValue.length == 0 && sortOrder.selectedOption == juzOption) {
                         helper.fetchAllChapters(listView);
                     } else if ( textValue.match(/^\d{1,3}:\d{1,3}$/) || textValue.match(/^\d{1,3}$/) ) {
                         var tokens = textValue.split(":");

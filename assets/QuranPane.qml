@@ -30,6 +30,10 @@ NavigationPane
                 compareAction.enabled = n > 1 && n < 5;
                 openAction.enabled = n > 0;
                 pickerList.multiSelectHandler.status = qsTr("%n chapters selected", "", n);
+                
+                for (var i = 0; i < all.length; i++) {
+                    console.log("**", all[i]);
+                }
             }
         }
         
@@ -119,7 +123,7 @@ NavigationPane
             
             surahPage.fromSurahId = chapter;
             surahPage.toSurahId = chapter;
-            //surahPage.requestedVerse = verse;
+            surahPage.requestedVerse = verse;
         }
         
         onCreationCompleted: {

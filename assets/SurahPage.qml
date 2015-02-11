@@ -6,6 +6,7 @@ Page
     id: surahPage
     property int fromSurahId
     property int toSurahId
+    property int requestedVerse
     actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
 
     onToSurahIdChanged:
@@ -19,7 +20,6 @@ Page
     function reloadNeeded(key)
     {
         if (key == "translation") {
-            requestedVerse = scroller.firstVisibleItem[0];
             toSurahIdChanged();
         } else if (key == "primarySize" || key == "translationSize") {
             listView.refresh();
@@ -34,15 +34,19 @@ Page
     {
         if (id == QueryId.FetchAllAyats)
         {
-            listView.theDataModel.clear();
-            listView.theDataModel.append(data);
-            busy.delegateActive = false;
+            if ( listView.theDataModel.isEmpty() ) {
+                listView.theDataModel.append(data);
+            } else {
+                for (var i = data.length-1; i >= 0; i--) {
+                    listView.theDataModel.replace(i, data[i]);
+                }
+            }
             
             if (requestedVerse > 0) {
-                var target = [ requestedVerse - 1, 0 ]
+                var target = [requestedVerse-1]
                 listView.scrollToItem(target, ScrollAnimation.None);
                 listView.select(target,true);
-                requestedVerse = -1;
+                requestedVerse = 0;
             } else if (fromSurahId > 1 && fromSurahId != 9) {
                 listView.scrollToPosition(0, ScrollAnimation.None);
                 listView.scroll(-100, ScrollAnimation.Smooth);
@@ -59,6 +63,8 @@ Page
             else if ( persist.tutorial( "tutorialHome", qsTr("Want to dock a certain ayat right to your home screen? Press-and-hold on it and choose 'Add To Home Screen' and name it!"), "asset:///images/menu/ic_home.png" ) ) {}
             else if ( persist.tutorial( "tutorialBookmark", qsTr("Do you know how to set bookmarks? You can easily mark certain ayats as favourites by pressing-and-holding on them and choosing 'Add Bookmark' on them! This is a very easy way to track our progress as you read the Qu'ran to quickly find where you left off."), "asset:///images/menu/ic_bookmark_add.png" ) ) {}
             else if ( persist.tutorial( "donateNotice", qsTr("As'salaamu alaykum wa rahmatullahi wabarakathu,\n\nJazakAllahu khair for using Quran10. While our Islamic apps will always remain free of charge for your benefit, we encourage you to please donate whatever you can in order to support development. This will motivate the developers to continue to update the app, add new features and bug fixes. To donate, simply swipe-down from the top-bezel and tap the 'Donate' button to send money via PayPal.\n\nMay Allah reward you, and bless you and your family."), "asset:///images/ic_donate.png" ) ) {}
+            
+            busy.delegateActive = false;
         }
     }
     
