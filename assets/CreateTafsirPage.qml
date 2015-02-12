@@ -3,7 +3,8 @@ import bb.cascades 1.0
 Page
 {
     id: createPage
-    signal createTafsir(string author, string translator, string explainer, string title, string description, string reference)
+    signal createTafsir(variant author, variant translator, variant explainer, string title, string description, string reference)
+    actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
     
     titleBar: TitleBar
     {
@@ -12,7 +13,7 @@ Page
         acceptAction: ActionItem
         {
             title: qsTr("Save") + Retranslate.onLanguageChanged
-            imageSource: "images/menu/ic_select_more.png"
+            imageSource: "images/dropdown/ic_accept_new_suite.png"
             enabled: true
             
             onTriggered: {
@@ -27,8 +28,6 @@ Page
         }
     }
     
-    actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
-    
     ScrollView
     {
         horizontalAlignment: HorizontalAlignment.Fill
@@ -39,51 +38,32 @@ Page
             horizontalAlignment: HorizontalAlignment.Fill
             verticalAlignment: VerticalAlignment.Fill
             
-            TextField
+            IndividualTextField
             {
                 id: authorField
                 hintText: qsTr("Author name") + Retranslate.onLanguageChanged
-                horizontalAlignment: HorizontalAlignment.Fill
-                content.flags: TextContentFlag.ActiveTextOff | TextContentFlag.EmoticonsOff
-                input.flags: TextInputFlag.SpellCheckOff | TextInputFlag.AutoPeriodOff | TextInputFlag.AutoCorrection
                 
                 validator: Validator
                 {
-                    errorMessage: qsTr("Author name must be at least 3 characters long...") + Retranslate.onLanguageChanged
+                    errorMessage: qsTr("Author name cannot be empty...") + Retranslate.onLanguageChanged
                     mode: ValidationMode.FocusLost
                     
                     onValidate: {
-                        valid = authorField.text.trim().length > 3;
+                        valid = authorField.text.trim().length > 0;
                     }
                 }
             }
             
-            TextField
+            IndividualTextField
             {
                 id: translatorField
                 hintText: qsTr("Translator") + Retranslate.onLanguageChanged
-                horizontalAlignment: HorizontalAlignment.Fill
-                content.flags: TextContentFlag.ActiveTextOff | TextContentFlag.EmoticonsOff
-                input.flags: TextInputFlag.SpellCheckOff | TextInputFlag.AutoPeriodOff | TextInputFlag.AutoCorrection
-                
-                animations: [
-                    TranslateTransition
-                    {
-                        id: tt2
-                        fromX: -100
-                        toX: 0
-                        easingCurve: StockCurve.QuadraticIn
-                    }
-                ]
             }
             
-            TextField
+            IndividualTextField
             {
                 id: explainerField
                 hintText: qsTr("Explainer") + Retranslate.onLanguageChanged
-                horizontalAlignment: HorizontalAlignment.Fill
-                content.flags: TextContentFlag.ActiveTextOff | TextContentFlag.EmoticonsOff
-                input.flags: TextInputFlag.SpellCheckOff | TextInputFlag.AutoPeriodOff | TextInputFlag.AutoCorrection
             }
             
             TextField
@@ -143,4 +123,11 @@ Page
             ]
         }
     }
+    
+    attachedObjects: [
+        ComponentDefinition {
+            id: definition
+            source: "IndividualPickerPage.qml"
+        }
+    ]
 }

@@ -237,6 +237,7 @@ Page
                                 FadeTransition
                                 {
                                     id: showAnim
+                                    easingCurve: StockCurve.SineOut
                                     fromOpacity: 0
                                     toOpacity: 1
                                     duration: Math.min( sli.ListItem.indexInSection*300, 750 );

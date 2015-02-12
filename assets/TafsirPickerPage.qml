@@ -11,7 +11,9 @@ Page
         deviceUtils.attachTopBottomKeys(tafsirPickerPage, listView, true);
     }
     
-    function reload() {
+    function reload()
+    {
+        busy.delegateActive = true;
         helper.fetchAllTafsir(listView);
     }
     
@@ -46,6 +48,7 @@ Page
                                 adm.clear();
                                 reload();
                             } else {
+                                busy.delegateActive = true;
                                 helper.searchTafsir(listView, searchColumn.selectedValue, query);
                             }
                         }
@@ -109,121 +112,138 @@ Page
         }
     }
     
-    ListView
+    Container
     {
-        id: listView
-        property variant editIndexPath
+        horizontalAlignment: HorizontalAlignment.Fill
+        verticalAlignment: VerticalAlignment.Fill
+        layout: DockLayout {}
         
-        dataModel: ArrayDataModel {
-            id: adm
-        }
-        
-        function onEdit(id, author, translator, explainer, title, description, reference)
+        ListView
         {
-            helper.editTafsir(listView, id, author, translator, explainer, title, description, reference);
+            id: listView
+            property variant editIndexPath
             
-            var current = dataModel.data(editIndexPath);
-            current["author"] = author;
-            current["explainer"] = explainer;
-            current["title"] = title;
-            current["description"] = description;
-            current["reference"] = reference;
-            
-            dataModel.replace(editIndexPath[0], current);
-            
-            while (navigationPane.top != tafsirPickerPage) {
-                navigationPane.pop();
+            dataModel: ArrayDataModel {
+                id: adm
             }
-        }
-        
-        function editItem(indexPath, ListItemData)
-        {
-            editIndexPath = indexPath;
             
-            definition.source = "EditTafsirPage.qml";
-            var page = definition.createObject();
-            page.suiteId = ListItemData.id;
-            page.editTafsir.connect(onEdit);
-            
-            navigationPane.push(page);
-        }
-        
-        function removeItem(ListItemData) {
-            helper.removeTafsir(listView, ListItemData.id);
-        }
-        
-        listItemComponents: [
-            ListItemComponent
+            function onEdit(id, author, translator, explainer, title, description, reference)
             {
-                StandardListItem
-                {
-                    id: rootItem
-                    description: ListItemData.author
-                    imageSource: "images/list/ic_tafsir.png"
-                    title: ListItemData.title
-                    
-                    contextActions: [
-                        ActionSet
-                        {
-                            title: rootItem.title
-                            subtitle: rootItem.description
-                            
-                            ActionItem
-                            {
-                                imageSource: "images/menu/ic_edit_suite.png"
-                                title: qsTr("Edit") + Retranslate.onLanguageChanged
-                                
-                                onTriggered: {
-                                    console.log("UserEvent: EditTafsirTriggered");
-                                    rootItem.ListItem.view.editItem(rootItem.ListItem.indexPath, ListItemData);
-                                }
-                            }
-                            
-                            DeleteActionItem
-                            {
-                                imageSource: "images/menu/ic_remove_suite.png"
-                                
-                                onTriggered: {
-                                    console.log("UserEvent: AdminDeleteTafsirTriggered");
-                                    rootItem.ListItem.view.removeItem(ListItemData);
-                                    rootItem.ListItem.view.dataModel.removeAt(rootItem.ListItem.indexPath[0]);
-                                }
-                            }
-                        }
-                    ]
+                busy.delegateActive = true;
+                helper.editTafsir(listView, id, author, translator, explainer, title, description, reference);
+                
+                var current = dataModel.data(editIndexPath);
+                current["author"] = author;
+                current["explainer"] = explainer;
+                current["title"] = title;
+                current["description"] = description;
+                current["reference"] = reference;
+                
+                dataModel.replace(editIndexPath[0], current);
+                
+                while (navigationPane.top != tafsirPickerPage) {
+                    navigationPane.pop();
                 }
             }
-        ]
-        
-        onTriggered: {
-            console.log("UserEvent: AdminTafsirTriggered");
-            tafsirPicked( dataModel.data(indexPath) );
-        }
-        
-        function onDataLoaded(id, data)
-        {
-            if (id == QueryId.FetchAllTafsir && data.length > 0)
+            
+            function editItem(indexPath, ListItemData)
             {
-                if ( adm.isEmpty() ) {
+                editIndexPath = indexPath;
+                
+                definition.source = "EditTafsirPage.qml";
+                var page = definition.createObject();
+                page.suiteId = ListItemData.id;
+                page.editTafsir.connect(onEdit);
+                
+                navigationPane.push(page);
+            }
+            
+            function removeItem(ListItemData) {
+                busy.delegateActive = true;
+                helper.removeTafsir(listView, ListItemData.id);
+            }
+            
+            listItemComponents: [
+                ListItemComponent
+                {
+                    StandardListItem
+                    {
+                        id: rootItem
+                        description: ListItemData.author
+                        imageSource: "images/list/ic_tafsir.png"
+                        title: ListItemData.title
+                        
+                        contextActions: [
+                            ActionSet
+                            {
+                                title: rootItem.title
+                                subtitle: rootItem.description
+                                
+                                ActionItem
+                                {
+                                    imageSource: "images/menu/ic_edit_suite.png"
+                                    title: qsTr("Edit") + Retranslate.onLanguageChanged
+                                    
+                                    onTriggered: {
+                                        console.log("UserEvent: EditTafsirTriggered");
+                                        rootItem.ListItem.view.editItem(rootItem.ListItem.indexPath, ListItemData);
+                                    }
+                                }
+                                
+                                DeleteActionItem
+                                {
+                                    imageSource: "images/menu/ic_remove_suite.png"
+                                    
+                                    onTriggered: {
+                                        console.log("UserEvent: AdminDeleteTafsirTriggered");
+                                        rootItem.ListItem.view.removeItem(ListItemData);
+                                        rootItem.ListItem.view.dataModel.removeAt(rootItem.ListItem.indexPath[0]);
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+            
+            onTriggered: {
+                console.log("UserEvent: AdminTafsirTriggered");
+                tafsirPicked( dataModel.data(indexPath) );
+            }
+            
+            function onDataLoaded(id, data)
+            {
+                if (id == QueryId.FetchAllTafsir && data.length > 0)
+                {
+                    if ( adm.isEmpty() ) {
+                        adm.append(data);
+                    } else {
+                        adm.insert(0, data[0]); // add the latest value to avoid refreshing entire list
+                        listView.scrollToPosition(ScrollPosition.Beginning, ScrollAnimation.Smooth);
+                    }
+                    
+                    navigationPane.parent.unreadContentCount = data.length;
+                } else if (id == QueryId.RemoveTafsir) {
+                    persist.showToast( qsTr("Tafsir removed!"), "", "file:///usr/share/icons/bb_action_delete.png" );
+                } else if (id == QueryId.EditTafsir) {
+                    persist.showToast( qsTr("Tafsir updated!"), "", "asset:///images/menu/ic_edit.png" );
+                } else if (id == QueryId.SearchTafsir) {
+                    adm.clear();
                     adm.append(data);
-                } else {
-                    adm.insert(0, data[0]); // add the latest value to avoid refreshing entire list
-                    listView.scrollToPosition(ScrollPosition.Beginning, ScrollAnimation.Smooth);
                 }
                 
-                navigationPane.parent.unreadContentCount = data.length;
-            } else if (id == QueryId.RemoveTafsir) {
-                persist.showToast( qsTr("Tafsir removed!"), "", "file:///usr/share/icons/bb_action_delete.png" );
-            } else if (id == QueryId.EditTafsir) {
-                persist.showToast( qsTr("Tafsir updated!"), "", "asset:///images/menu/ic_edit.png" );
-            } else if (id == QueryId.SearchTafsir) {
-                adm.clear();
-                adm.append(data);
+                busy.delegateActive = false;
+            }
+            
+            onCreationCompleted: {
+                reload();
             }
         }
         
-        onCreationCompleted: {
-            reload();
+        ProgressControl
+        {
+            id: busy
+            asset: "images/progress/loading_suites.png"
         }
-    }
+    }   
 }

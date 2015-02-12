@@ -10,6 +10,7 @@ Page
     actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
     
     onSuiteIdChanged: {
+        busy.delegateActive = true;
         helper.fetchAllTafsirForSuite(listView, suiteId);
     }
     
@@ -118,114 +119,143 @@ Page
         }
     ]
     
-    ListView
+    Container
     {
-        id: listView
+        horizontalAlignment: HorizontalAlignment.Fill
+        verticalAlignment: VerticalAlignment.Fill
+        layout: DockLayout {}
         
-        dataModel: ArrayDataModel {
-            id: adm
-        }
-        
-        function onDataLoaded(id, data)
+        ListView
         {
-            if (id == QueryId.FetchAllTafsirForSuite)
-            {
-                if ( adm.isEmpty() ) {
-                    adm.append(data);
-                } else {
-                    adm.insert(0, data[0]); // add the latest value to avoid refreshing entire list
-                    listView.scrollToPosition(ScrollPosition.Beginning, ScrollAnimation.Smooth);
-                }
-                
-                if ( adm.isEmpty() ) {
-                    addAction.triggered();
-                }
-            } else if (id == QueryId.AddTafsirPage) {
-                persist.showToast( qsTr("Tafsir page added!"), "", "asset:///images/menu/ic_add.png" );
-                idChanged();
-            } else if (id == QueryId.RemoveTafsirPage) {
-                persist.showToast( qsTr("Tafsir page removed!"), "", "file:///usr/share/icons/bb_action_delete.png" );
-            } else if (id == QueryId.EditTafsirPage) {
-                persist.showToast( qsTr("Tafsir page updated!"), "", "asset:///images/menu/ic_edit.png" );
-            }
-        }
-
-        function removeItem(ListItemData) {
-            helper.removeTafsirPage(listView, ListItemData.id);
-        }
-        
-        function editItem(indexPath, ListItemData)
-        {
-            var sheetControl = contentDef.createObject();
-            sheetControl.suitePageId = ListItemData.id;
-            sheetControl.currentText = ListItemData.body;
-            sheetControl.indexPath = indexPath;
-            sheetControl.open();
-        }
-        
-        onTriggered: {
-            console.log("UserEvent: TafsirContentTriggered");
-            definition.source = "TafsirAyats.qml";
-            var page = definition.createObject();
-            page.suitePageId = dataModel.data(indexPath).id;
+            id: listView
             
-            navigationPane.push(page);
-        }
-        
-        listItemComponents: [
-            ListItemComponent
+            dataModel: ArrayDataModel {
+                id: adm
+            }
+            
+            function onDataLoaded(id, data)
             {
-                Container
+                if (id == QueryId.FetchAllTafsirForSuite)
                 {
-                    id: rootItem
-                    horizontalAlignment: HorizontalAlignment.Fill
-                    verticalAlignment: VerticalAlignment.Fill
-
-                    Header {
-                        id: header
-                        title: ListItemData.id
-                    }
-
-                    Label
-                    {
-                        content.flags: TextContentFlag.ActiveTextOff | TextContentFlag.EmoticonsOff
-                        horizontalAlignment: HorizontalAlignment.Fill
-                        verticalAlignment: VerticalAlignment.Fill
-                        multiline: true
-                        text: ListItemData.body
+                    if ( adm.isEmpty() ) {
+                        adm.append(data);
+                    } else {
+                        adm.insert(0, data[0]); // add the latest value to avoid refreshing entire list
+                        listView.scrollToPosition(ScrollPosition.Beginning, ScrollAnimation.Smooth);
                     }
                     
-                    contextActions: [
-                        ActionSet
-                        {
-                            title: header.title
-                            subtitle: ListItemData.body
-                            
-                            ActionItem
-                            {
-                                imageSource: "images/menu/ic_edit_suite_page.png"
-                                title: qsTr("Edit") + Retranslate.onLanguageChanged
-                                
-                                onTriggered: {
-                                    console.log("UserEvent: EditTafsirContentTriggered");
-                                    rootItem.ListItem.view.editItem(rootItem.ListItem.indexPath, ListItemData);
-                                }
-                            }
-                            
-                            DeleteActionItem
-                            {
-                                imageSource: "images/menu/ic_delete_suite_page.png"
-                                
-                                onTriggered: {
-                                    console.log("UserEvent: RemoveTafsirPageTriggered");
-                                    rootItem.ListItem.view.removeItem(ListItemData);
-                                    rootItem.ListItem.view.dataModel.removeAt(rootItem.ListItem.indexPath[0]);
-                                }
-                            }
-                        }
-                    ]
+                    if ( adm.isEmpty() ) {
+                        addAction.triggered();
+                    }
+                } else if (id == QueryId.AddTafsirPage) {
+                    persist.showToast( qsTr("Tafsir page added!"), "", "asset:///images/menu/ic_add.png" );
+                    idChanged();
+                } else if (id == QueryId.RemoveTafsirPage) {
+                    persist.showToast( qsTr("Tafsir page removed!"), "", "file:///usr/share/icons/bb_action_delete.png" );
+                } else if (id == QueryId.EditTafsirPage) {
+                    persist.showToast( qsTr("Tafsir page updated!"), "", "asset:///images/menu/ic_edit.png" );
                 }
+                
+                busy.delegateActive = false;
+                listView.visible = !adm.isEmpty();
+                noElements.delegateActive = !listView.visible;
             }
-        ]
+            
+            function removeItem(ListItemData) {
+                helper.removeTafsirPage(listView, ListItemData.id);
+                busy.delegateActive = true;
+            }
+            
+            function editItem(indexPath, ListItemData)
+            {
+                var sheetControl = contentDef.createObject();
+                sheetControl.suitePageId = ListItemData.id;
+                sheetControl.currentText = ListItemData.body;
+                sheetControl.indexPath = indexPath;
+                sheetControl.open();
+            }
+            
+            onTriggered: {
+                console.log("UserEvent: TafsirContentTriggered");
+                definition.source = "TafsirAyats.qml";
+                var page = definition.createObject();
+                page.suitePageId = dataModel.data(indexPath).id;
+                
+                navigationPane.push(page);
+            }
+            
+            listItemComponents: [
+                ListItemComponent
+                {
+                    Container
+                    {
+                        id: rootItem
+                        horizontalAlignment: HorizontalAlignment.Fill
+                        verticalAlignment: VerticalAlignment.Fill
+                        
+                        Header {
+                            id: header
+                            title: ListItemData.id
+                        }
+                        
+                        Label
+                        {
+                            content.flags: TextContentFlag.ActiveTextOff | TextContentFlag.EmoticonsOff
+                            horizontalAlignment: HorizontalAlignment.Fill
+                            verticalAlignment: VerticalAlignment.Fill
+                            multiline: true
+                            text: ListItemData.body
+                        }
+                        
+                        contextActions: [
+                            ActionSet
+                            {
+                                title: header.title
+                                subtitle: ListItemData.body
+                                
+                                ActionItem
+                                {
+                                    imageSource: "images/menu/ic_edit_suite_page.png"
+                                    title: qsTr("Edit") + Retranslate.onLanguageChanged
+                                    
+                                    onTriggered: {
+                                        console.log("UserEvent: EditTafsirContentTriggered");
+                                        rootItem.ListItem.view.editItem(rootItem.ListItem.indexPath, ListItemData);
+                                    }
+                                }
+                                
+                                DeleteActionItem
+                                {
+                                    imageSource: "images/menu/ic_delete_suite_page.png"
+                                    
+                                    onTriggered: {
+                                        console.log("UserEvent: RemoveTafsirPageTriggered");
+                                        rootItem.ListItem.view.removeItem(ListItemData);
+                                        rootItem.ListItem.view.dataModel.removeAt(rootItem.ListItem.indexPath[0]);
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+        
+        EmptyDelegate
+        {
+            id: noElements
+            graphic: "images/placeholders/empty_individuals.png"
+            labelText: qsTr("No elements found. Tap on the Add button to add a new one.") + Retranslate.onLanguageChanged
+            
+            onImageTapped: {
+                addAction.triggered();
+            }
+        }
+        
+        ProgressControl
+        {
+            id: busy
+            asset: "images/progress/loading_suite_pages.png"
+        }
     }
 }

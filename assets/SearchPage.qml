@@ -259,7 +259,7 @@ Page
             
             input {
                 submitKey: SubmitKey.Search
-                flags: TextInputFlag.AutoCapitalizationOff | TextInputFlag.SpellCheck | TextInputFlag.WordSubstitution | TextInputFlag.AutoPeriodOff | TextInputFlag.AutoCorrection
+                flags: TextInputFlag.AutoCapitalizationOff | TextInputFlag.SpellCheck | TextInputFlag.WordSubstitutionOff | TextInputFlag.AutoPeriodOff | TextInputFlag.AutoCorrectionOff
                 submitKeyFocusBehavior: SubmitKeyFocusBehavior.Lose
                 
                 onSubmitted: {
