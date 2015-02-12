@@ -352,6 +352,14 @@ void QueryHelper::searchQuery(QObject* caller, QString const& trimmedText, int c
 }
 
 
+void QueryHelper::searchIndividuals(QObject* caller, QString const& trimmedText)
+{
+    LOGGER(trimmedText);
+
+    m_sql.executeQuery(caller, "SELECT id,prefix,name,kunya,uri,hidden,biography FROM individuals WHERE name LIKE '%' || ? || '%'", QueryId::SearchIndividuals, QVariantList() << trimmedText);
+}
+
+
 void QueryHelper::fetchPageNumbers(QObject* caller)
 {
     LOGGER("fetchPageNumbers");
@@ -436,8 +444,7 @@ void QueryHelper::removeBookmark(QObject* caller, int id)
 
 void QueryHelper::clearAllBookmarks(QObject* caller)
 {
-    QString query = "DELETE FROM bookmarks";
-    m_sql.executeQuery(caller, query, QueryId::ClearAllBookmarks);
+    m_sql.executeQuery(caller, "DELETE FROM bookmarks", QueryId::ClearAllBookmarks);
 }
 
 

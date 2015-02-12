@@ -66,6 +66,7 @@ public:
     Q_INVOKABLE void removeBookmark(QObject* caller, int id);
     Q_INVOKABLE void saveBookmark(QObject* caller, int surahId, int verseId, QString const& name, QString const& tag);
     Q_INVOKABLE void searchQuery(QObject* caller, QString const& trimmedText, int chapterNumber=0, QVariantList additional=QVariantList(), bool andMode=true);
+    Q_INVOKABLE void searchIndividuals(QObject* caller, QString const& trimmedText);
     Q_INVOKABLE QVariantList normalizeJuzs(QVariantList const& source);
     Q_INVOKABLE QVariantList removeOutOfRange(QVariantList input, int fromChapter, int fromVerse, int toChapter, int toVerse);
 

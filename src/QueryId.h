@@ -42,6 +42,7 @@ public:
         RemoveTafsirPage,
         SaveBookmark,
         SearchAyats,
+        SearchIndividuals,
         SearchTafsir,
         SettingUpBookmarks,
         SetupBookmarks,
