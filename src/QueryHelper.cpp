@@ -11,21 +11,6 @@
 #define MIN_CHARS_FOR_SURAH_SEARCH 2
 #define LIKE_CLAUSE QString("(%1 LIKE '%' || ? || '%')").arg(textField)
 
-namespace {
-
-qint64 getFieldId(QString const& value)
-{
-    static QRegExp allNumbers = QRegExp("\\d+");
-
-    if ( allNumbers.exactMatch(value) ) {
-        return value.toLongLong();
-    } else {
-        return QDateTime::currentMSecsSinceEpoch();
-    }
-}
-
-}
-
 namespace quran {
 
 using namespace canadainc;
@@ -285,12 +270,48 @@ void QueryHelper::addTafsir(QObject* caller, QString const& author, QString cons
 {
     LOGGER(author << translator << explainer << title << description << reference);
 
-    qint64 authorId = getFieldId(author);
-    qint64 translatorId = getFieldId(translator);
-    qint64 explainerId = getFieldId(explainer);
+    qint64 authorId = generateIndividualField(caller, author);
+    qint64 translatorId = generateIndividualField(caller, translator);
+    qint64 explainerId = generateIndividualField(caller, explainer);
 
     QString query = QString("INSERT OR IGNORE INTO suites (id,author,translator,explainer,title,description,reference) VALUES(%1,%2,%3,%4,?,?,?)").arg( QDateTime::currentMSecsSinceEpoch() ).arg(authorId).arg(translatorId).arg(explainerId);
     m_sql.executeQuery(caller, query, QueryId::AddTafsir, QVariantList() << title << description << reference);
+}
+
+
+void QueryHelper::editTafsir(QObject* caller, qint64 suiteId, QString const& author, QString const& translator, QString const& explainer, QString const& title, QString const& description, QString const& reference)
+{
+    LOGGER(suiteId << author << translator << explainer << title << description << reference);
+
+    qint64 authorId = generateIndividualField(caller, author);
+    qint64 translatorId = generateIndividualField(caller, translator);
+    qint64 explainerId = generateIndividualField(caller, explainer);
+
+    QString query = QString("UPDATE suites SET author=%2,translator=%3,explainer=%4,title=?,description=?,reference=? WHERE id=%1").arg(suiteId).arg(authorId).arg(translatorId).arg(explainerId);
+    m_sql.executeQuery(caller, query, QueryId::EditTafsir, QVariantList() << title << description << reference);
+}
+
+
+void QueryHelper::editTafsirPage(QObject* caller, qint64 suitePageId, QString const& body)
+{
+    LOGGER( suitePageId << body.length() );
+
+    QString query = QString("UPDATE suite_pages SET body=? WHERE id=%1").arg(suitePageId);
+    m_sql.executeQuery(caller, query, QueryId::EditTafsirPage, QVariantList() << body);
+}
+
+
+qint64 QueryHelper::generateIndividualField(QObject* caller, QString const& value)
+{
+    static QRegExp allNumbers = QRegExp("\\d+");
+
+    if ( allNumbers.exactMatch(value) ) {
+        return value.toLongLong();
+    } else {
+        qint64 id = QDateTime::currentMSecsSinceEpoch();
+        m_sql.executeQuery(caller, QString("INSERT INTO individuals (id,name) VALUES (%1,?)").arg(id), QueryId::AddIndividual, QVariantList() << value);
+        return id;
+    }
 }
 
 
