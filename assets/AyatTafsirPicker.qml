@@ -1,13 +1,18 @@
 import bb.cascades 1.0
+import com.canadainc.data 1.0
 
 Container
 {
+    horizontalAlignment: HorizontalAlignment.Fill
+    verticalAlignment: VerticalAlignment.Fill
+    
     Header {
         title: qsTr("Explanations") + Retranslate.onLanguageChanged
     }
     
     ListView
     {
+        id: tafsirList
         maxHeight: 125
         
         layout: StackListLayout {
@@ -34,13 +39,14 @@ Container
         listItemComponents: [
             ListItemComponent
             {
-                ImageView
+                Container
                 {
                     id: rootItem
+                    horizontalAlignment: HorizontalAlignment.Fill
+                    verticalAlignment: VerticalAlignment.Fill
                     property real startAngle: ListItem.indexInSection & 1 ? 360 : 0
                     property real endAngle: ListItem.indexInSection & 1 ? 0 : 360
-                    horizontalAlignment: HorizontalAlignment.Center
-                    imageSource: "images/list/ic_tafsir.png"
+                    topPadding: 10; leftPadding: 10; rightPadding: 10; bottomPadding: 10
                     rotationZ: startAngle
                     
                     animations: [
@@ -69,7 +75,7 @@ Container
                             ActionItem
                             {
                                 title: qsTr("Add Shortcut") + Retranslate.onLanguageChanged
-                                imageSource: "images/menu/ic_home_add.png"
+                                imageSource: "images/menu/ic_home.png"
                                 
                                 onTriggered: {
                                     console.log("UserEvent: AddTafsirShortcutFromPickerTriggered");
@@ -78,12 +84,31 @@ Container
                             }
                         }
                     ]
+                    
+                    ImageView
+                    {
+                        horizontalAlignment: HorizontalAlignment.Center
+                        verticalAlignment: VerticalAlignment.Center
+                        imageSource: "images/list/ic_tafsir.png"
+                    }
                 }
             }
         ]
         
+        function onDataLoaded(id, data)
+        {
+            if (id == QueryId.FetchTafsirForAyat)
+            {
+                adm.append(data);
+                
+                if (data.length == 1) {
+                    showExplanation(data[0].id);
+                }
+            }
+        }
+        
         onCreationCompleted: {
-            adm.append(explanations);
+            helper.fetchAllTafsirForAyat(tafsirList, root.surahId, root.verseId);
         }
     }
 }

@@ -35,6 +35,7 @@ public:
         FetchSimilarAyatContent,
         FetchSurahHeader,
         FetchTafsirForAyat,
+        FetchTafsirCountForAyat,
         FetchTafsirForSurah,
         FetchTafsirContent,
         FetchTafsirHeader,

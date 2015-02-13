@@ -212,11 +212,11 @@ NavigationPane
                     console.log("UserEvent: BookmarkTriggered");
                     var data = dataModel.data(indexPath);
                     
-                    definition.source = "SurahPage.qml";
+                    definition.source = "AyatPage.qml";
                     var sp = definition.createObject();
                     navigationPane.push(sp);
-                    sp.fromSurahId = data.surah_id;
-                    //sp.requestedVerse = data.verse_id;
+                    sp.surahId = data.surah_id;
+                    sp.verseId = data.verse_id;
                 }
                 
                 horizontalAlignment: HorizontalAlignment.Fill
