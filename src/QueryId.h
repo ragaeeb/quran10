@@ -12,6 +12,7 @@ class QueryId
 
 public:
     enum Type {
+        AddIndividual,
         AddTafsir,
         AddTafsirPage,
         ClearAllBookmarks,
