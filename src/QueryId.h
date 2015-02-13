@@ -15,6 +15,7 @@ public:
         AddTafsir,
         AddTafsirPage,
         ClearAllBookmarks,
+        EditIndividual,
         EditTafsir,
         EditTafsirPage,
         FetchAllAyats,

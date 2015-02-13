@@ -114,11 +114,21 @@ Page
                     id: adm
                 }
                 
+                function onSaveClicked(indexPath, id, prefix, name, kunya, uri, bio, hidden)
+                {
+                    helper.editIndividual(listView, id, prefix, name, kunya, uri, bio, hidden);
+                    editDelegate.object.close();
+                    
+                    adm.replace(indexPath[0], {'id': id, 'prefix': prefix, 'name': name, 'kunya': kunya, 'uri': uri, 'bio': bio, 'hidden': hidden});
+                }
+                
                 function edit(indexPath)
                 {
                     var d = dataModel.data(indexPath);
                     editDelegate.active = true;
                     editDelegate.object.data = d;
+                    editDelegate.object.indexPath = indexPath;
+                    editDelegate.object.savedClicked.connect(onSavedClicked);
                 }
                 
                 listItemComponents: [
@@ -188,6 +198,8 @@ Page
                         adm.clear();
                         adm.append(data);
                         busy.delegateActive = false;
+                    } else if (id == QueryId.EditIndividual) {
+                        persist.showToast( qsTr("Successfully edited individual"), "", "asset:///images/dropdown/ic_save_individual.png" );
                     }
                 }
                 
