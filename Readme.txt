@@ -49,7 +49,7 @@ CREATE TABLE suites (id INTEGER PRIMARY KEY, author INTEGER REFERENCES individua
 CREATE TABLE suite_pages (id INTEGER PRIMARY KEY, suite_id INTEGER REFERENCES suites(id) ON DELETE CASCADE, body TEXT, surah_id INTEGER, verse_id INTEGER);
 
 sqlite3 quran_tafsir_english.db
-CREATE TABLE explanations (surah_id INTEGER NOT NULL, from_verse_number INTEGER, to_verse_number INTEGER, suite_page_id INTEGER NOT NULL REFERENCES suite_pages(id) ON DELETE CASCADE, UNIQUE(surah_id, from_verse_number, to_verse_number, suite_page_id) ON CONFLICT IGNORE);
+CREATE TABLE explanations (id INTEGER PRIMARY KEY, surah_id INTEGER NOT NULL, from_verse_number INTEGER, to_verse_number INTEGER, suite_page_id INTEGER NOT NULL REFERENCES suite_pages(id) ON DELETE CASCADE, UNIQUE(surah_id, from_verse_number, to_verse_number, suite_page_id) ON CONFLICT IGNORE);
 
 sqlite3 quran_similar.db
 CREATE TABLE related (surah_id INTEGER NOT NULL, verse_id INTEGER NOT NULL, other_surah_id INTEGER NOT NULL, other_verse_id INTEGER NOT NULL, UNIQUE(arabic_id, other_id) ON CONFLICT IGNORE);

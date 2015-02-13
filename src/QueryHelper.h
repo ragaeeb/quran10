@@ -69,10 +69,12 @@ public:
     Q_INVOKABLE void fetchSimilarAyatContent(QObject* caller, int chapterNumber, int verseNumber);
     Q_INVOKABLE void fetchSurahHeader(QObject* caller, int chapterNumber);
     Q_INVOKABLE void fetchTafsirContent(QObject* caller, qint64 suitePageId);
+    Q_INVOKABLE void linkAyatToTafsir(QObject* caller, qint64 suitePageId, int chapter, int fromVerse=0, int toVerse=0);
     Q_INVOKABLE void removeBookmark(QObject* caller, int id);
     Q_INVOKABLE void saveBookmark(QObject* caller, int surahId, int verseId, QString const& name, QString const& tag);
     Q_INVOKABLE void searchQuery(QObject* caller, QString const& trimmedText, int chapterNumber=0, QVariantList additional=QVariantList(), bool andMode=true);
     Q_INVOKABLE void searchIndividuals(QObject* caller, QString const& trimmedText);
+    Q_INVOKABLE void unlinkAyatsForTafsir(QObject* caller, QVariantList const& ids, qint64 suitePageId);
     Q_INVOKABLE QVariantList normalizeJuzs(QVariantList const& source);
     Q_INVOKABLE QVariantList removeOutOfRange(QVariantList input, int fromChapter, int fromVerse, int toChapter, int toVerse);
 

@@ -11,6 +11,21 @@
 #define MIN_CHARS_FOR_SURAH_SEARCH 2
 #define LIKE_CLAUSE QString("(%1 LIKE '%' || ? || '%')").arg(textField)
 
+namespace {
+
+QString combine(QVariantList const& arabicIds)
+{
+    QStringList ids;
+
+    foreach (QVariant const& entry, arabicIds) {
+        ids << QString::number( entry.toInt() );
+    }
+
+    return ids.join(",");
+}
+
+}
+
 namespace quran {
 
 using namespace canadainc;
@@ -257,12 +272,21 @@ void QueryHelper::fetchAyatsForTafsir(QObject* caller, qint64 suitePageId)
     QString query;
 
     if ( showTranslation() ) {
-        query = QString("SELECT a.surah_id,a.verse_number AS verse_id,v.translation AS content,c.transliteration as name FROM ayahs a INNER JOIN verses v ON a.id=v.id INNER JOIN explanations x ON a.surah_id=x.surah_id AND (a.verse_number=x.from_verse_number OR x.from_verse_number ISNULL) INNER JOIN chapters c ON a.surah_id=c.id WHERE x.suite_page_id=%1").arg(suitePageId);
+        query = QString("SELECT x.id AS id,a.surah_id,a.verse_number AS verse_id,v.translation AS content,c.transliteration as name FROM ayahs a INNER JOIN verses v ON a.id=v.id INNER JOIN explanations x ON a.surah_id=x.surah_id AND (a.verse_number=x.from_verse_number OR x.from_verse_number ISNULL) INNER JOIN chapters c ON a.surah_id=c.id WHERE x.suite_page_id=%1").arg(suitePageId);
     } else {
-        query = QString("SELECT a.surah_id,a.verse_number AS verse_id,content,s.name FROM ayahs a INNER JOIN explanations x ON a.surah_id=x.surah_id AND a.verse_number=x.from_verse_number INNER JOIN surahs s ON a.surah_id=s.id WHERE x.suite_page_id=%1").arg(suitePageId);
+        query = QString("SELECT x.id AS id,a.surah_id,a.verse_number AS verse_id,content,s.name FROM ayahs a INNER JOIN explanations x ON a.surah_id=x.surah_id AND a.verse_number=x.from_verse_number INNER JOIN surahs s ON a.surah_id=s.id WHERE x.suite_page_id=%1").arg(suitePageId);
     }
 
     m_sql.executeQuery(caller, query, QueryId::FetchAyatsForTafsir);
+}
+
+
+void QueryHelper::unlinkAyatsForTafsir(QObject* caller, QVariantList const& ids, qint64 suitePageId)
+{
+    LOGGER(ids << suitePageId);
+
+    QString query = QString("DELETE FROM explanations WHERE id IN (%1) AND suite_page_id=%2").arg( combine(ids) ).arg(suitePageId);
+    m_sql.executeQuery(caller, query, QueryId::UnlinkAyatsFromTafsir);
 }
 
 
@@ -311,6 +335,24 @@ qint64 QueryHelper::generateIndividualField(QObject* caller, QString const& valu
         qint64 id = QDateTime::currentMSecsSinceEpoch();
         m_sql.executeQuery(caller, QString("INSERT INTO individuals (id,name) VALUES (%1,?)").arg(id), QueryId::AddIndividual, QVariantList() << value);
         return id;
+    }
+}
+
+
+void QueryHelper::linkAyatToTafsir(QObject* caller, qint64 suitePageId, int chapter, int fromVerse, int toVerse)
+{
+    LOGGER(suitePageId << chapter << fromVerse << toVerse);
+    QString query;
+
+    if (chapter > 0)
+    {
+        if (fromVerse == 0) {
+            query = QString("INSERT OR IGNORE INTO explanations (surah_id,suite_page_id) VALUES(%1,%2)").arg(chapter).arg(suitePageId);
+        } else {
+            query = QString("INSERT OR IGNORE INTO explanations (surah_id,from_verse_number,to_verse_number,suite_page_id) VALUES(%1,%2,%3,%4)").arg(chapter).arg(fromVerse).arg(toVerse).arg(suitePageId);
+        }
+
+        m_sql.executeQuery(caller, query, QueryId::LinkAyatsToTafsir);
     }
 }
 
