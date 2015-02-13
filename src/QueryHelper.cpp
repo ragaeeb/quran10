@@ -273,6 +273,17 @@ void QueryHelper::fetchAllTafsirForSuite(QObject* caller, qint64 suiteId)
 }
 
 
+void QueryHelper::fetchTafsirMetadata(QObject* caller, qint64 suiteId)
+{
+    LOGGER(suiteId);
+
+    ATTACH_TAFSIR;
+    QString query = QString("SELECT author,translator,explainer,title,description,reference FROM suites WHERE id=%1").arg(suiteId);
+
+    m_sql.executeQuery(caller, query, QueryId::FetchTafsirHeader);
+}
+
+
 void QueryHelper::fetchAyatsForTafsir(QObject* caller, qint64 suitePageId)
 {
     LOGGER(suitePageId);

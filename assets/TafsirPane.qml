@@ -9,7 +9,7 @@ NavigationPane
         page.destroy();
     }
     
-    function onCreate(author, translator, explainer, title, description, reference)
+    function onCreate(id, author, translator, explainer, title, description, reference)
     {
         helper.addTafsir(navigationPane, author, translator, explainer, title, description, reference);
         

@@ -150,10 +150,10 @@ Page
             {
                 editIndexPath = indexPath;
                 
-                definition.source = "EditTafsirPage.qml";
+                definition.source = "CreateTafsirPage.qml";
                 var page = definition.createObject();
                 page.suiteId = ListItemData.id;
-                page.editTafsir.connect(onEdit);
+                page.createTafsir.connect(onEdit);
                 
                 navigationPane.push(page);
             }
@@ -226,7 +226,7 @@ Page
                 } else if (id == QueryId.RemoveTafsir) {
                     persist.showToast( qsTr("Tafsir removed!"), "", "file:///usr/share/icons/bb_action_delete.png" );
                 } else if (id == QueryId.EditTafsir) {
-                    persist.showToast( qsTr("Tafsir updated!"), "", "asset:///images/menu/ic_edit.png" );
+                    persist.showToast( qsTr("Tafsir updated!"), "", "asset:///images/menu/ic_edit_suite.png" );
                 } else if (id == QueryId.SearchTafsir) {
                     adm.clear();
                     adm.append(data);
