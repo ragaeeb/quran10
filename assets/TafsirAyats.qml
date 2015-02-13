@@ -43,7 +43,7 @@ Page
         multiSelectHandler.actions: [
             DeleteActionItem
             {
-                imageSource: "images/menu/ic_tafsir_ayat.png"
+                imageSource: "images/menu/ic_unlink_tafsir_ayat.png"
                 title: qsTr("Unlink") + Retranslate.onLanguageChanged
                 
                 onTriggered: {
@@ -134,7 +134,7 @@ Page
                             
                             DeleteActionItem
                             {
-                                imageSource: "images/menu/ic_tafsir_ayat.png"
+                                imageSource: "images/menu/ic_unlink_tafsir_ayat.png"
                                 title: qsTr("Unlink") + Retranslate.onLanguageChanged
                                 
                                 onTriggered: {

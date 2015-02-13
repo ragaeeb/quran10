@@ -1,39 +1,21 @@
 import bb.cascades 1.0
-import com.canadainc.data 1.0
 
-Container
+ResizableContainer
 {
-    horizontalAlignment: HorizontalAlignment.Fill
-    verticalAlignment: VerticalAlignment.Fill
-    property real ratio: 0.4
-    property real screenHeight: 1280
+    headerTitle: qsTr("Related") + Retranslate.onLanguageChanged
+    
+    onCreationCompleted: {
+        persist.tutorial( "tutorialRelatedExpand", qsTr("You can expand this top section by tapping on the 'Related' header. To minimize it, tap on the hadith header at the bottom pane."), "asset:///images/dropdown/similar.png" );
+    }
     
     function applyData(data, bodyControl)
     {
         adm.clear();
         adm.append(data);
         
-        relatedHeader.subtitle = data.length;
+        headerSubtitle = data.length;
         
         app.decorateSimilarResults(data, bodyControl.value, adm, bodyControl);
-    }
-    
-    onCreationCompleted: {
-        persist.tutorial( "tutorialRelatedExpand", qsTr("You can expand this top section by tapping on the 'Related' header. To minimize it, tap on the hadith header at the bottom pane."), "asset:///images/dropdown/similar.png" );
-    }
-    
-    Header {
-        id: relatedHeader
-        title: qsTr("Related") + Retranslate.onLanguageChanged
-        
-        gestureHandlers: [
-            TapHandler
-            {
-                onTapped: {
-                    ratio = 0.7;
-                }
-            }
-        ]
     }
     
     ListView
@@ -76,18 +58,4 @@ Container
             }
         ]
     }
-    
-    attachedObjects: [
-        OrientationHandler {
-            id: rotationHandler
-            
-            onOrientationChanged: {
-                screenHeight = orientation == UIOrientation.Portrait ? deviceUtils.pixelSize.height : deviceUtils.pixelSize.width;
-            }
-            
-            onCreationCompleted: {
-                orientationChanged(orientation);
-            }
-        }
-    ]
 }

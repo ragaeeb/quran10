@@ -165,6 +165,14 @@ Page
 
             player.stop();
         }
+        
+        onTitleTapped: {
+            definition.source = "ChapterTafsirPicker.qml";
+            var p = definition.createObject();
+            p.chapterNumber = chapterNumber;
+            
+            navigationPane.push(p);
+        }
     }
 
     Container

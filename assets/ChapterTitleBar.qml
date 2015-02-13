@@ -12,6 +12,7 @@ TitleBar
     property bool showNavigation: false
     property bool navigationExpanded: false
     signal navigationTapped(bool right);
+    signal titleTapped();
     scrollBehavior: TitleBarScrollBehavior.Sticky
     
     onChapterNumberChanged: {
@@ -24,10 +25,18 @@ TitleBar
         content: Container
         {
             topPadding: 10; bottomPadding: bottomPad
-            
             horizontalAlignment: HorizontalAlignment.Fill
             verticalAlignment: VerticalAlignment.Top
             background: back.imagePaint
+            
+            gestureHandlers: [
+                TapHandler {
+                    onTapped: {
+                        console.log("UserEvent: ChapterTitleTapped");
+                        titleTapped();
+                    }
+                }
+            ]
             
             attachedObjects: [
                 ImagePaintDefinition {
@@ -58,7 +67,7 @@ TitleBar
         expandableArea
         {
             expanded: showNavigation && navigationExpanded
-            indicatorVisibility: showNavigation ? TitleBarExpandableAreaIndicatorVisibility.Visible : TitleBarExpandableAreaIndicatorVisibility.Hidden
+            indicatorVisibility: TitleBarExpandableAreaIndicatorVisibility.Hidden
             
             content: ControlDelegate
             {
