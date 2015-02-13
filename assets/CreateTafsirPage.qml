@@ -3,7 +3,7 @@ import bb.cascades 1.0
 Page
 {
     id: createPage
-    signal createTafsir(variant author, variant translator, variant explainer, string title, string description, string reference)
+    signal createTafsir(string author, string translator, string explainer, string title, string description, string reference)
     actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
     
     titleBar: TitleBar

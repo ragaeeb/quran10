@@ -44,7 +44,10 @@ public:
 	QueryHelper(Persistance* persist);
 	virtual ~QueryHelper();
 
+    Q_INVOKABLE void addTafsir(QObject* caller, QString const& author, QString const& translator, QString const& explainer, QString const& title, QString const& description, QString const& reference);
+    Q_INVOKABLE void addTafsirPage(QObject* caller, qint64 suiteId, QString const& body);
     Q_INVOKABLE void clearAllBookmarks(QObject* caller);
+    Q_INVOKABLE void editIndividual(QObject* caller, qint64 id, QString const& prefix, QString const& name, QString const& kunya, QString const& url, QString const& bio, bool hidden);
     Q_INVOKABLE void fetchAllBookmarks(QObject* caller);
     Q_INVOKABLE void fetchAllChapters(QObject* caller);
     Q_INVOKABLE void fetchAllDuaa(QObject* caller);

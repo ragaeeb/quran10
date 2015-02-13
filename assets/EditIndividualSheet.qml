@@ -3,7 +3,9 @@ import bb.cascades 1.0
 Sheet
 {
     id: sheet
+    property variant indexPath
     property variant data
+    signal saveClicked(variant indexPath, variant id, string prefix, string name, string kunya, string uri, string bio, bool hidden)
     
     onCreationCompleted: {
         open();
@@ -43,14 +45,55 @@ Sheet
     {
         actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
         
+        titleBar: TitleBar
+        {
+            title: qsTr("Edit") + Retranslate.onLanguageChanged
+
+            dismissAction: ActionItem
+            {
+                id: cancelAction
+                imageSource: "images/dropdown/ic_cancel_individual.png"
+                title: qsTr("Cancel") + Retranslate.onLanguageChanged
+                
+                onTriggered: {
+                    console.log("UserEvent: CancelEditIndividual");
+                    sheet.close();
+                }
+            }
+
+            acceptAction: ActionItem
+            {
+                id: saveAction
+                imageSource: "images/dropdown/ic_save_individual.png"
+                title: qsTr("Save") + Retranslate.onLanguageChanged
+                
+                onTriggered: {
+                    console.log("UserEvent: SaveEditIndividual");
+                    
+                    name.validator.validate();
+                    uri.validator.validate();
+                    
+                    if (name.validator.valid && uri.validator.valid) {
+                        saveClicked(indexPath, data.id, prefix.text, name.text, kunya.text, uri.text.trim(), bio.text.trim(), hidden.checked);
+                    }
+                }
+            }
+        }
+        
         Container
         {
+            topPadding: 10
             horizontalAlignment: HorizontalAlignment.Fill
             verticalAlignment: VerticalAlignment.Fill
             
-            CheckBox {
-                id: hidden
-                text: qsTr("Hidden") + Retranslate.onLanguageChanged
+            Container
+            {
+                leftPadding: 10; rightPadding: 10
+                
+                CheckBox {
+                    id: hidden
+                    text: qsTr("Hidden") + Retranslate.onLanguageChanged
+                }
             }
             
             TextField
@@ -69,6 +112,16 @@ Sheet
                 horizontalAlignment: HorizontalAlignment.Fill
                 content.flags: TextContentFlag.ActiveTextOff | TextContentFlag.EmoticonsOff
                 input.flags: TextInputFlag.SpellCheckOff | TextInputFlag.AutoPeriodOff | TextInputFlag.AutoCorrectionOff
+                
+                validator: Validator
+                {
+                    errorMessage: qsTr("Invalid name") + Retranslate.onLanguageChanged
+                    mode: ValidationMode.FocusLost
+                    
+                    onValidate: { 
+                        valid = name.text.trim().length > 3;
+                    }
+                }
             }
             
             TextField
@@ -100,7 +153,7 @@ Sheet
                     }
                 }
             }
-            
+
             TextArea {
                 id: bio
                 hintText: qsTr("Biography...") + Retranslate.onLanguageChanged

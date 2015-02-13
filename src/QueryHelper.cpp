@@ -11,6 +11,21 @@
 #define MIN_CHARS_FOR_SURAH_SEARCH 2
 #define LIKE_CLAUSE QString("(%1 LIKE '%' || ? || '%')").arg(textField)
 
+namespace {
+
+qint64 getFieldId(QString const& value)
+{
+    static QRegExp allNumbers = QRegExp("\\d+");
+
+    if ( allNumbers.exactMatch(value) ) {
+        return value.toLongLong();
+    } else {
+        return QDateTime::currentMSecsSinceEpoch();
+    }
+}
+
+}
+
 namespace quran {
 
 using namespace canadainc;
@@ -266,6 +281,28 @@ void QueryHelper::fetchAyatsForTafsir(QObject* caller, qint64 suitePageId)
 }
 
 
+void QueryHelper::addTafsir(QObject* caller, QString const& author, QString const& translator, QString const& explainer, QString const& title, QString const& description, QString const& reference)
+{
+    LOGGER(author << translator << explainer << title << description << reference);
+
+    qint64 authorId = getFieldId(author);
+    qint64 translatorId = getFieldId(translator);
+    qint64 explainerId = getFieldId(explainer);
+
+    QString query = QString("INSERT OR IGNORE INTO suites (id,author,translator,explainer,title,description,reference) VALUES(%1,%2,%3,%4,?,?,?)").arg( QDateTime::currentMSecsSinceEpoch() ).arg(authorId).arg(translatorId).arg(explainerId);
+    m_sql.executeQuery(caller, query, QueryId::AddTafsir, QVariantList() << title << description << reference);
+}
+
+
+void QueryHelper::addTafsirPage(QObject* caller, qint64 suiteId, QString const& body)
+{
+    LOGGER( suiteId << body.length() );
+
+    QString query = QString("INSERT OR IGNORE INTO suite_pages (id,suite_id,body) VALUES(%1,%2,?)").arg( QDateTime::currentMSecsSinceEpoch() ).arg(suiteId);
+    m_sql.executeQuery(caller, query, QueryId::AddTafsirPage, QVariantList() << body);
+}
+
+
 void QueryHelper::fetchTafsirContent(QObject* caller, qint64 suitePageId)
 {
     LOGGER(suitePageId);
@@ -349,6 +386,23 @@ void QueryHelper::searchQuery(QObject* caller, QString const& trimmedText, int c
     query += " ORDER BY surah_id,verse_id";
 
     m_sql.executeQuery(caller, query, QueryId::SearchAyats, params);
+}
+
+
+void QueryHelper::editIndividual(QObject* caller, qint64 id, QString const& prefix, QString const& name, QString const& kunya, QString const& url, QString const& bio, bool hidden)
+{
+    LOGGER( id << prefix << name << kunya << url << bio.length() << hidden );
+
+    QString query = QString("UPDATE individuals SET prefix=?, name=?, kunya=?, url=?, bio=?, hidden=%1 WHERE id=%2").arg(hidden ? 1 : 0).arg(id);
+
+    QVariantList args;
+    args << prefix.trimmed();
+    args << name.trimmed();
+    args << kunya.trimmed();
+    args << url.trimmed();
+    args << bio.trimmed();
+
+    m_sql.executeQuery(caller, query, QueryId::EditIndividual, args);
 }
 
 
