@@ -1,14 +1,35 @@
 import bb.cascades 1.0
+import com.canadainc.data 1.0
 
 Page
 {
     id: createPage
-    signal createTafsir(string author, string translator, string explainer, string title, string description, string reference)
+    property variant suiteId
+    signal createTafsir(variant id, string author, string translator, string explainer, string title, string description, string reference)
     actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
+    
+    onSuiteIdChanged: {
+        helper.fetchTafsirMetadata(createPage, suiteId);
+    }
+    
+    function onDataLoaded(id, results)
+    {
+        if (id == QueryId.FetchTafsirHeader && results.length > 0)
+        {
+            var data = results[0];
+            
+            authorField.text = data.author;
+            translatorField.text = data.translator;
+            explainerField.text = data.explainer;
+            titleField.text = data.title;
+            descriptionField.text = data.description;
+            referenceField.text = data.reference;
+        }
+    }
     
     titleBar: TitleBar
     {
-        title: qsTr("New Tafsir") + Retranslate.onLanguageChanged
+        title: suiteId > 0 ? qsTr("Edit Tafsir") + Retranslate.onLanguageChanged : qsTr("New Tafsir") + Retranslate.onLanguageChanged
         
         acceptAction: ActionItem
         {
@@ -22,7 +43,7 @@ Page
                 titleField.validator.validate();
                 
                 if (authorField.validator.valid && titleField.validator.valid) {
-                    createTafsir( authorField.text.trim(), translatorField.text.trim(), explainerField.text.trim(), titleField.text.trim(), descriptionField.text.trim(), referenceField.text.trim() );
+                    createTafsir( suiteId, authorField.text.trim(), translatorField.text.trim(), explainerField.text.trim(), titleField.text.trim(), descriptionField.text.trim(), referenceField.text.trim() );
                 }
             }
         }
@@ -102,25 +123,6 @@ Page
                 content.flags: TextContentFlag.EmoticonsOff | TextContentFlag.ActiveText
                 input.flags: TextInputFlag.AutoCapitalization | TextInputFlag.AutoCorrectionOff | TextInputFlag.SpellCheckOff | TextInputFlag.WordSubstitutionOff | TextInputFlag.AutoPeriodOff
             }
-            
-            animations: [
-                FadeTransition
-                {
-                    id: fader
-                    fromOpacity: 0
-                    toOpacity: 1
-                    easingCurve: StockCurve.QuadraticIn
-                    duration: 500
-                    
-                    onCreationCompleted: {
-                        play();
-                    }
-                    
-                    onEnded: {
-                        authorField.requestFocus();
-                    }
-                }
-            ]
         }
     }
     
