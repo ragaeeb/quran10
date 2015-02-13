@@ -151,7 +151,7 @@ Page
                     persist.showToast( qsTr("Tafsir page added!"), "", "asset:///images/menu/ic_add.png" );
                     idChanged();
                 } else if (id == QueryId.RemoveTafsirPage) {
-                    persist.showToast( qsTr("Tafsir page removed!"), "", "file:///usr/share/icons/bb_action_delete.png" );
+                    persist.showToast( qsTr("Tafsir page removed!"), "", "asset:///images/menu/ic_delete_suite_page.png" );
                 } else if (id == QueryId.EditTafsirPage) {
                     persist.showToast( qsTr("Tafsir page updated!"), "", "asset:///images/menu/ic_edit.png" );
                 }

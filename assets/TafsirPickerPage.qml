@@ -224,7 +224,7 @@ Page
                     
                     navigationPane.parent.unreadContentCount = data.length;
                 } else if (id == QueryId.RemoveTafsir) {
-                    persist.showToast( qsTr("Tafsir removed!"), "", "file:///usr/share/icons/bb_action_delete.png" );
+                    persist.showToast( qsTr("Tafsir removed!"), "", "asset:///images/menu/ic_remove_suite.png" );
                 } else if (id == QueryId.EditTafsir) {
                     persist.showToast( qsTr("Tafsir updated!"), "", "asset:///images/menu/ic_edit_suite.png" );
                 } else if (id == QueryId.SearchTafsir) {

@@ -579,6 +579,24 @@ void QueryHelper::removeBookmark(QObject* caller, int id)
 }
 
 
+void QueryHelper::removeTafsirPage(QObject* caller, qint64 suitePageId)
+{
+    LOGGER(suitePageId);
+
+    QString query = QString("DELETE FROM suite_pages WHERE id=%1").arg(suitePageId);
+    m_sql.executeQuery(caller, query, QueryId::RemoveTafsirPage);
+}
+
+
+void QueryHelper::removeTafsir(QObject* caller, qint64 suiteId)
+{
+    LOGGER(suiteId);
+
+    QString query = QString("DELETE FROM suites WHERE id=%1").arg(suiteId);
+    m_sql.executeQuery(caller, query, QueryId::RemoveTafsir);
+}
+
+
 void QueryHelper::clearAllBookmarks(QObject* caller)
 {
     m_sql.executeQuery(caller, "DELETE FROM bookmarks", QueryId::ClearAllBookmarks);
