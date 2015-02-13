@@ -256,12 +256,12 @@ Page
                 onTriggered: {
                     var data = listView.dataModel.data(indexPath);
                     
-                    if (indexPath.length > 1)
+                    if ( sortOrder.selectedOption != juzOption || indexPath.length > 1 )
                     {
                         console.log("UserEvent: SurahTriggered");
                         picked(data.surah_id, 0);
                     } else {
-                        console.log("UserEvent: JuzTriggered", data);
+                        console.log("UserEvent: JuzTriggered");
                         juzPicked(data);
                     }
                 }
