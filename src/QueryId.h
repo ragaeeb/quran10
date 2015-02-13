@@ -48,6 +48,7 @@ public:
         SearchTafsir,
         SettingUpBookmarks,
         SetupBookmarks,
+        UnlinkAyatsFromTafsir,
         UpdatePlugins
     };
 };

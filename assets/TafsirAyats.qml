@@ -26,7 +26,7 @@ Page
             ActionBar.placement: 'Signature' in ActionBarPlacement ? ActionBarPlacement["Signature"] : ActionBarPlacement.OnBar
             
             onTriggered: {
-                console.log("UserEvent: TafsirNarrationAddTriggered");
+                console.log("UserEvent: TafsirAyatAddTriggered");
                 prompt.show();
             }
         }
@@ -75,23 +75,15 @@ Page
                 if ( adm.isEmpty() ) {
                     addAction.triggered();
                 }
-            } else if (id == QueryId.UnlinkNarrationForTafsir) {
-                persist.showToast( qsTr("Narration unlinked from tafsir"), "", "file:///usr/share/icons/bb_action_delete.png" );
-            } else if (id == QueryId.LinkNarrationsToTafsir) {
-                persist.showToast( qsTr("Narration linked to tafsir!"), "", "asset:///images/menu/ic_add.png" );
+            } else if (id == QueryId.UnlinkAyatsForTafsir) {
+                persist.showToast( qsTr("Ayat unlinked from tafsir"), "", "file:///usr/share/icons/bb_action_delete.png" );
+            } else if (id == QueryId.LinkAyatsToTafsir) {
+                persist.showToast( qsTr("Ayat linked to tafsir!"), "", "asset:///images/menu/ic_link_ayat_to_tafsir.png" );
                 suitePageIdChanged();
                 
                 while (navigationPane.top != narrationsPage) {
                     navigationPane.pop();
                 }
-            } else if (id == QueryId.FetchSimilarHadith) {
-                var ids = prompt.arabicIds;
-                
-                for (var i = data.length-1; i >= 0; i--) {
-                    ids.push(data[i].id);
-                }
-                
-                helper.linkNarrationsToTafsir(listView, suitePageId, ids);
             }
         }
         
@@ -107,7 +99,7 @@ Page
         }
         
         function unlink(ListItemData) {
-            helper.unlinkNarrationsForTafsir(listView, [ListItemData.id], suitePageId);
+            helper.unlinkAyatsForTafsir(listView, [ListItemData.id], suitePageId);
         }
         
         listItemComponents: [
@@ -167,6 +159,38 @@ Page
             inputField.emptyText: qsTr("(ie: 2:4 for Surah Baqara verse #4)") + Retranslate.onLanguageChanged
             inputField.maximumLength: 6
             title: qsTr("Enter verse") + Retranslate.onLanguageChanged
+            
+            onFinished: {
+                if (value == SystemUiResult.ConfirmButtonSelection)
+                {
+                    var inputted = inputFieldTextEntry().trim();
+                    var tokens = inputted.split(":");
+                    var chapter = parseInt(tokens[0]);
+                    
+                    if (chapter > 0)
+                    {
+                        var fromVerse = 0;
+                        var toVerse = 0;
+                        
+                        if (tokens.length > 1)
+                        {
+                            tokens = tokens[1].split("-");
+                            
+                            fromVerse = parseInt(tokens[0]);
+                            
+                            if (tokens.length > 1) {
+                                toVerse = parseInt(tokens[1]);
+                            } else {
+                                toVerse = fromVerse;
+                            }
+                        }
+                        
+                        helper.linkAyatToTafsir(listView, suitePageId, chapter, fromVerse, toVerse);
+                    } else {
+                        persist.showToast( qsTr("Invalid entry specified. Please enter something with the Chapter:Verse scheme (ie: 2:55 for Surah Baqara vese #55)"), "", "asset:///images/toast/invalid_entry.png" );
+                    }
+                }
+            }
         }
     ]
 }
