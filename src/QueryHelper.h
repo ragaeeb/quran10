@@ -73,6 +73,8 @@ public:
     Q_INVOKABLE void fetchTafsirMetadata(QObject* caller, qint64 suiteId);
     Q_INVOKABLE void linkAyatToTafsir(QObject* caller, qint64 suitePageId, int chapter, int fromVerse=0, int toVerse=0);
     Q_INVOKABLE void removeBookmark(QObject* caller, int id);
+    Q_INVOKABLE void removeTafsir(QObject* caller, qint64 suiteId);
+    Q_INVOKABLE void removeTafsirPage(QObject* caller, qint64 suitePageId);
     Q_INVOKABLE void saveBookmark(QObject* caller, int surahId, int verseId, QString const& name, QString const& tag);
     Q_INVOKABLE void searchQuery(QObject* caller, QString const& trimmedText, int chapterNumber=0, QVariantList additional=QVariantList(), bool andMode=true);
     Q_INVOKABLE void searchIndividuals(QObject* caller, QString const& trimmedText);
