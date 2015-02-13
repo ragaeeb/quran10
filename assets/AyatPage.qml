@@ -6,11 +6,6 @@ Page
     id: root
     property int surahId
     property int verseId
-    property variant explanations
-    
-    onExplanationsChanged: {
-        titleControl.addOption(tafsirOption);
-    }
 
     onVerseIdChanged: {
         reload();
@@ -41,7 +36,7 @@ Page
                     if ( persist.tutorial( "tutorialSimilarAyat", qsTr("There appears to be other verses with similar wording, choose the '%1 Similar' option at the top to view them in a split screen.").arg(data.length), "asset:///images/dropdown/similar.png" ) ) {}
                 }
                 
-                helper.fetchAllTafsirForAyat(root, surahId, verseId);
+                helper.fetchTafsirCountForAyat(root, surahId, verseId);
                 helper.fetchSurahHeader(root, surahId);
                 busy.delegateActive = false;
             } else { // erroneous ID entered
@@ -49,9 +44,10 @@ Page
                 busy.delegateActive = false;
                 console.log("AyatNotFound!");
             }
-        } else if (id == QueryId.FetchTafsirForAyat && data.length > 0) {
-            explanations = data;
-            if ( persist.tutorial( "tutorialTafsir", qsTr("There are explanations of this hadith by the people of knowledge! Tap on the '%1 Tafsir' option at the top to view them.").arg(data.length), "asset:///images/dropdown/tafsir.png" ) ) {}
+        } else if (id == QueryId.FetchTafsirCountForAyat && data.length > 0 && data[0].tafsir_count > 0) {
+            tafsirOption.tafsirCount = data[0].tafsir_count;
+            titleControl.addOption(tafsirOption);
+            if ( persist.tutorial( "tutorialTafsir", qsTr("There are explanations of this verse by the people of knowledge! Tap on the '%1 Tafsir' option at the top to view them.").arg(data.length), "asset:///images/dropdown/tafsir.png" ) ) {}
         } else if (id == QueryId.FetchSimilarAyatContent && data.length > 0 && similarOption.selected) {
             pluginsDelegate.control.applyData(data, body);
         } else if (id == QueryId.FetchSurahHeader && data.length > 0) {
@@ -144,7 +140,8 @@ Page
             
             Option {
                 id: tafsirOption
-                text: explanations ? qsTr("%n tafsir", "", explanations.length) : ""
+                property int tafsirCount
+                text: qsTr("%n tafsir", "", tafsirCount) + Retranslate.onLanguageChanged
                 imageSource: "images/dropdown/tafsir.png"
                 
                 onSelectedChanged: {
@@ -153,10 +150,6 @@ Page
                         console.log("UserEvent: TafsirOptionSelected");
                         pluginsDelegate.source = "AyatTafsirPicker.qml";
                         pluginsDelegate.delegateActive = true;
-                        
-                        if (explanations.length == 1) {
-                            showExplanation(explanations[0].suite_page_id);
-                        }
                     }
                 }
             }

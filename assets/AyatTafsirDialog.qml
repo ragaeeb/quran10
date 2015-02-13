@@ -14,34 +14,36 @@ FullScreenDialog
     function process()
     {
         titleLabel.text = tafsir.title;
-        var bodyText = qsTr("Author: %1").arg(tafsir.author);
+        var bodyText = "";
         
-        if (tafsir.translator.length > 0) {
-            bodyText += "\nTranslator: %1".arg(tafsir.translator);
+        if ( (tafsir.author_hidden == 1 || tafsir.translator_hidden == 1 || tafsir.explainer_hidden == 1) && !reporter.isAdmin ) {
+            bodyText = qsTr("[This tafsir is being intentionally suppressed. It may be released in a future update.]");
+        } else {
+            bodyText = qsTr("Author: %1").arg(tafsir.author);
+            
+            if (tafsir.translator.length > 0) {
+                bodyText += "\nTranslator: %1".arg(tafsir.translator);
+            }
+            
+            if (tafsir.explainer.length > 0) {
+                bodyText += "\nExplained by: %1".arg(tafsir.explainer);
+            }
+            
+            if (tafsir.description.length > 0) {
+                bodyText += "\n\n%1".arg(tafsir.description);
+            }
+            
+            bodyText += "\n\n%1".arg(tafsir.body);
+            
+            if (tafsir.reference.length > 0) {
+                bodyText += "\n\n(%1)".arg(tafsir.reference);
+            }
+            
+            if ( persist.tutorial( "tutorialTafsirExit", qsTr("To exit this dialog simply tap any area outside of the dialog!"), "asset:///images/menu/tafsir.png" ) ) {}
+            else if ( persist.tutorial( "tutorialTafsirPinch", qsTr("If the font size is too small, you can simply pinch in to increase the font size!"), "asset:///images/dropdown/ic_info.png" ) ) {}
         }
         
-        if (tafsir.explainer.length > 0) {
-            bodyText += "\nExplained by: %1".arg(tafsir.explainer);
-        }
-        
-        if (tafsir.description.length > 0) {
-            bodyText += "\n\n%1".arg(tafsir.description);
-        }
-        
-        bodyText += "\n\n%1".arg(tafsir.body);
-        
-        if (tafsir.reference.length > 0) {
-            bodyText += "\n\n(%1)".arg(tafsir.reference);
-        }
-        
-        if (reporter.isAdmin) {
-            bodyText = suitePageId+"\n\n"+bodyText;
-        }
-
         body.text = "\n"+bodyText+"\n";
-        
-        if ( persist.tutorial( "tutorialTafsirExit", qsTr("To exit this dialog simply tap any area outside of the dialog!"), "asset:///images/menu/tafsir.png" ) ) {}
-        else if ( persist.tutorial( "tutorialTafsirPinch", qsTr("If the font size is too small, you can simply pinch in to increase the font size!"), "asset:///images/dropdown/ic_info.png" ) ) {}
     }
     
     function onDataLoaded(id, data)
