@@ -58,6 +58,7 @@ Page
         {
             horizontalAlignment: HorizontalAlignment.Fill
             verticalAlignment: VerticalAlignment.Fill
+            topPadding: 10
             
             IndividualTextField
             {

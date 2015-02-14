@@ -105,11 +105,13 @@ TabbedPane
         sidebarStateChanged.disconnect(onSidebarVisualStateChanged);
         
         if (reporter.isAdmin) {
+            add(quotesTab);
             add(tafsirTab);
         } else {
             reporter.adminEnabledChanged.connect( function()
             {
                  if (reporter.isAdmin) {
+                     add(quotesTab);
                      add(tafsirTab);
                  }
             });
@@ -121,6 +123,23 @@ TabbedPane
     }
     
     attachedObjects: [
+        Tab
+        {
+            id: quotesTab
+            title: qsTr("Quotes") + Retranslate.onLanguageChanged
+            description: qsTr("Sayings of the Salaf") + Retranslate.onLanguageChanged
+            imageSource: "images/tabs/ic_quotes.png"
+            delegateActivationPolicy: TabDelegateActivationPolicy.ActivateWhenSelected
+            
+            onTriggered: {
+                console.log("UserEvent: Quotes");
+            }
+            
+            delegate: Delegate {
+                source: "QuotesPane.qml"
+            }
+        },
+        
         Tab
         {
             id: tafsirTab

@@ -5,26 +5,11 @@
 #include "Logger.h"
 #include "Persistance.h"
 #include "TextUtils.h"
+#include "ThreadUtils.h"
 
-#define ATTACH_TAFSIR m_sql.attachIfNecessary( showTranslation() ? tafsirName() : "quran_tafsir_arabic", true ); m_sql.attachIfNecessary( showTranslation() ? QString("articles_%1").arg(m_translation) : "articles_arabic", true );
+#define ATTACH_ARTICLES m_sql.attachIfNecessary( showTranslation() ? QString("articles_%1").arg(m_translation) : "articles_arabic", true );
+#define ATTACH_TAFSIR m_sql.attachIfNecessary( showTranslation() ? tafsirName() : "quran_tafsir_arabic", true ); ATTACH_ARTICLES;
 #define TRANSLATION QString("quran_%1").arg(m_translation)
-#define MIN_CHARS_FOR_SURAH_SEARCH 2
-#define LIKE_CLAUSE QString("(%1 LIKE '%' || ? || '%')").arg(textField)
-
-namespace {
-
-QString combine(QVariantList const& arabicIds)
-{
-    QStringList ids;
-
-    foreach (QVariant const& entry, arabicIds) {
-        ids << QString::number( entry.toInt() );
-    }
-
-    return ids.join(",");
-}
-
-}
 
 namespace quran {
 
@@ -32,7 +17,8 @@ using namespace canadainc;
 using namespace bb::data;
 
 QueryHelper::QueryHelper(Persistance* persist) :
-        m_sql( QString("%1/assets/dbase/quran_arabic.db").arg( QCoreApplication::applicationDirPath() ) ), m_persist(persist)
+        m_sql( QString("%1/assets/dbase/quran_arabic.db").arg( QCoreApplication::applicationDirPath() ) ),
+        m_persist(persist), m_tafsirHelper(&m_sql)
 {
     connect( persist, SIGNAL( settingChanged(QString const&) ), this, SLOT( settingChanged(QString const&) ), Qt::QueuedConnection );
 }
@@ -59,8 +45,7 @@ void QueryHelper::settingChanged(QString const& key)
 {
     if (key == "translation")
     {
-        if ( showTranslation() )
-        {
+        if ( showTranslation() ) {
             m_sql.detach(TRANSLATION);
         }
 
@@ -133,33 +118,8 @@ void QueryHelper::fetchAllChapters(QObject* caller)
 
 bool QueryHelper::fetchChapters(QObject* caller, QString const& text)
 {
-    QString query;
-
     QVariantList args;
-    int n = text.length();
-
-    if (n > MIN_CHARS_FOR_SURAH_SEARCH || n == 0)
-    {
-        if ( showTranslation() )
-        {
-            query = "SELECT a.id AS surah_id,name,verse_count,revelation_order,transliteration FROM surahs a INNER JOIN chapters t ON a.id=t.id";
-
-            if (n > MIN_CHARS_FOR_SURAH_SEARCH)
-            {
-                query += " WHERE name LIKE '%' || ? || '%' OR transliteration LIKE '%' || ? || '%'";
-                args << text;
-                args << text;
-            }
-        } else {
-            query = "SELECT id AS surah_id,name,verse_count,revelation_order FROM surahs";
-
-            if (n > MIN_CHARS_FOR_SURAH_SEARCH)
-            {
-                query += " WHERE name LIKE '%' || ? || '%'";
-                args << text;
-            }
-        }
-    }
+    QString query = ThreadUtils::buildChaptersQuery( args, text, showTranslation() );
 
     if ( !query.isNull() ) {
         m_sql.executeQuery(caller, query, QueryId::FetchChapters, args);
@@ -192,6 +152,13 @@ void QueryHelper::fetchRandomAyat(QObject* caller)
     } else {
         m_sql.executeQuery(caller, QString("SELECT surah_id,verse_number AS verse_id,translation AS text FROM ayahs a INNER JOIN verses v ON a.id=v.id WHERE a.id=%1").arg(x), QueryId::FetchRandomAyat);
     }
+}
+
+
+void QueryHelper::fetchRandomQuote(QObject* caller)
+{
+    ATTACH_ARTICLES;
+    m_sql.executeQuery(caller, QString("SELECT individuals.name AS author,body,reference FROM quotes INNER JOIN individuals ON individuals.id=quotes.author WHERE quotes.id=( ABS( RANDOM() % (SELECT COUNT() AS total_quotes FROM quotes) )+1 )"), QueryId::FetchRandomQuote);
 }
 
 
@@ -237,11 +204,8 @@ void QueryHelper::fetchJuzInfo(QObject* caller, int juzId)
 
 void QueryHelper::fetchAllTafsir(QObject* caller)
 {
-    LOGGER("fetchAllTafsir");
-
     ATTACH_TAFSIR;
-    QString query = "SELECT suites.id AS id,individuals.name AS author,title FROM suites INNER JOIN individuals ON individuals.id=suites.author ORDER BY id DESC";
-    m_sql.executeQuery(caller, query, QueryId::FetchAllTafsir);
+    m_tafsirHelper.fetchAllTafsir(caller);
 }
 
 
@@ -288,8 +252,17 @@ void QueryHelper::fetchTafsirMetadata(QObject* caller, qint64 suiteId)
 
     ATTACH_TAFSIR;
     QString query = QString("SELECT author,translator,explainer,title,description,reference FROM suites WHERE id=%1").arg(suiteId);
-
     m_sql.executeQuery(caller, query, QueryId::FetchTafsirHeader);
+}
+
+
+void QueryHelper::fetchQuote(QObject* caller, qint64 id)
+{
+    LOGGER(id);
+
+    ATTACH_TAFSIR;
+    QString query = QString("SELECT individuals.name AS author,body,reference FROM quotes INNER JOIN individuals ON individuals.id=quotes.author WHERE quotes.id=%1").arg(id);
+    m_sql.executeQuery(caller, query, QueryId::FetchQuote);
 }
 
 
@@ -310,38 +283,28 @@ void QueryHelper::fetchAyatsForTafsir(QObject* caller, qint64 suitePageId)
 }
 
 
-void QueryHelper::unlinkAyatsForTafsir(QObject* caller, QVariantList const& ids, qint64 suitePageId)
-{
-    LOGGER(ids << suitePageId);
-
-    QString query = QString("DELETE FROM explanations WHERE id IN (%1) AND suite_page_id=%2").arg( combine(ids) ).arg(suitePageId);
-    m_sql.executeQuery(caller, query, QueryId::UnlinkAyatsFromTafsir);
+void QueryHelper::unlinkAyatsForTafsir(QObject* caller, QVariantList const& ids, qint64 suitePageId) {
+    m_tafsirHelper.unlinkAyatsForTafsir(caller, ids, suitePageId);
 }
 
 
-void QueryHelper::addTafsir(QObject* caller, QString const& author, QString const& translator, QString const& explainer, QString const& title, QString const& description, QString const& reference)
-{
-    LOGGER(author << translator << explainer << title << description << reference);
-
-    qint64 authorId = generateIndividualField(caller, author);
-    qint64 translatorId = generateIndividualField(caller, translator);
-    qint64 explainerId = generateIndividualField(caller, explainer);
-
-    QString query = QString("INSERT OR IGNORE INTO suites (id,author,translator,explainer,title,description,reference) VALUES(%1,%2,%3,%4,?,?,?)").arg( QDateTime::currentMSecsSinceEpoch() ).arg(authorId).arg(translatorId).arg(explainerId);
-    m_sql.executeQuery(caller, query, QueryId::AddTafsir, QVariantList() << title << description << reference);
+void QueryHelper::addQuote(QObject* caller, QString const& author, QString const& body, QString const& reference) {
+    m_tafsirHelper.addQuote(caller, author, body, reference);
 }
 
 
-void QueryHelper::editTafsir(QObject* caller, qint64 suiteId, QString const& author, QString const& translator, QString const& explainer, QString const& title, QString const& description, QString const& reference)
-{
-    LOGGER(suiteId << author << translator << explainer << title << description << reference);
+void QueryHelper::addTafsir(QObject* caller, QString const& author, QString const& translator, QString const& explainer, QString const& title, QString const& description, QString const& reference) {
+    m_tafsirHelper.addTafsir(caller, author, translator, explainer, title, description, reference);
+}
 
-    qint64 authorId = generateIndividualField(caller, author);
-    qint64 translatorId = generateIndividualField(caller, translator);
-    qint64 explainerId = generateIndividualField(caller, explainer);
 
-    QString query = QString("UPDATE suites SET author=%2,translator=%3,explainer=%4,title=?,description=?,reference=? WHERE id=%1").arg(suiteId).arg(authorId).arg(translatorId).arg(explainerId);
-    m_sql.executeQuery(caller, query, QueryId::EditTafsir, QVariantList() << title << description << reference);
+void QueryHelper::editQuote(QObject* caller, qint64 quoteId, QString const& author, QString const& body, QString const& reference) {
+    m_tafsirHelper.editQuote(caller, quoteId, author, body, reference);
+}
+
+
+void QueryHelper::editTafsir(QObject* caller, qint64 suiteId, QString const& author, QString const& translator, QString const& explainer, QString const& title, QString const& description, QString const& reference) {
+    m_tafsirHelper.editTafsir(caller, suiteId, author, translator, explainer, title, description, reference);
 }
 
 
@@ -354,35 +317,8 @@ void QueryHelper::editTafsirPage(QObject* caller, qint64 suitePageId, QString co
 }
 
 
-qint64 QueryHelper::generateIndividualField(QObject* caller, QString const& value)
-{
-    static QRegExp allNumbers = QRegExp("\\d+");
-
-    if ( allNumbers.exactMatch(value) ) {
-        return value.toLongLong();
-    } else {
-        qint64 id = QDateTime::currentMSecsSinceEpoch();
-        m_sql.executeQuery(caller, QString("INSERT INTO individuals (id,name) VALUES (%1,?)").arg(id), QueryId::AddIndividual, QVariantList() << value);
-        return id;
-    }
-}
-
-
-void QueryHelper::linkAyatToTafsir(QObject* caller, qint64 suitePageId, int chapter, int fromVerse, int toVerse)
-{
-    LOGGER(suitePageId << chapter << fromVerse << toVerse);
-    QString query;
-
-    if (chapter > 0)
-    {
-        if (fromVerse == 0) {
-            query = QString("INSERT OR IGNORE INTO explanations (surah_id,suite_page_id) VALUES(%1,%2)").arg(chapter).arg(suitePageId);
-        } else {
-            query = QString("INSERT OR IGNORE INTO explanations (surah_id,from_verse_number,to_verse_number,suite_page_id) VALUES(%1,%2,%3,%4)").arg(chapter).arg(fromVerse).arg(toVerse).arg(suitePageId);
-        }
-
-        m_sql.executeQuery(caller, query, QueryId::LinkAyatsToTafsir);
-    }
+void QueryHelper::linkAyatToTafsir(QObject* caller, qint64 suitePageId, int chapter, int fromVerse, int toVerse) {
+    m_tafsirHelper.linkAyatToTafsir(caller, suitePageId, chapter, fromVerse, toVerse);
 }
 
 
@@ -433,75 +369,26 @@ void QueryHelper::fetchAyat(QObject* caller, int surahId, int ayatId)
 }
 
 
-void QueryHelper::searchQuery(QObject* caller, QString const& trimmedText, int chapterNumber, QVariantList additional, bool andMode)
+void QueryHelper::searchQuery(QObject* caller, QString const& trimmedText, int chapterNumber, QVariantList const& additional, bool andMode)
 {
     LOGGER(trimmedText << additional << andMode << chapterNumber);
 
-    QStringList constraints;
     QVariantList params = QVariantList() << trimmedText;
     bool isArabic = trimmedText.isRightToLeft() || !showTranslation();
-    QString textField = isArabic ? "searchable" : "verses.translation";
-    QString query;
-
-    foreach (QVariant const& entry, additional)
-    {
-        QString queryValue = entry.toString();
-
-        if ( !queryValue.isEmpty() )
-        {
-            if (andMode) {
-                constraints << QString("AND %1").arg(LIKE_CLAUSE);
-            } else {
-                constraints << QString("OR %1").arg(LIKE_CLAUSE);
-            }
-
-            params << queryValue;
-        }
-    }
-
-    if (isArabic) {
-        query = QString("SELECT surah_id,verse_number AS verse_id,searchable AS ayatText,name FROM ayahs INNER JOIN surahs ON ayahs.surah_id=surahs.id WHERE (%1").arg(LIKE_CLAUSE);
-    } else {
-        query = QString("SELECT ayahs.surah_id AS surah_id,ayahs.verse_number AS verse_id,verses.translation AS ayatText,transliteration AS name,%1 FROM verses INNER JOIN ayahs ON verses.id=ayahs.id INNER JOIN chapters ON ayahs.surah_id=chapters.id WHERE (%2").arg(textField).arg(LIKE_CLAUSE);
-    }
-
-    if ( !constraints.isEmpty() ) {
-        query += " "+constraints.join(" ")+")";
-    } else {
-        query += ")";
-    }
-
-    if (chapterNumber > 0) {
-        query += QString(" AND ayahs.surah_id=%1").arg(chapterNumber);
-    }
-
-    query += " ORDER BY surah_id,verse_id";
+    QString query = ThreadUtils::buildSearchQuery(params, isArabic, trimmedText, chapterNumber, additional, andMode);
 
     m_sql.executeQuery(caller, query, QueryId::SearchAyats, params);
 }
 
 
-void QueryHelper::editIndividual(QObject* caller, qint64 id, QString const& prefix, QString const& name, QString const& kunya, QString const& url, QString const& bio, bool hidden)
-{
-    LOGGER( id << prefix << name << kunya << url << bio.length() << hidden );
-
-    QString query = QString("UPDATE individuals SET prefix=?, name=?, kunya=?, url=?, bio=?, hidden=%1 WHERE id=%2").arg(hidden ? 1 : 0).arg(id);
-
-    QVariantList args;
-    args << prefix.trimmed();
-    args << name.trimmed();
-    args << kunya.trimmed();
-    args << url.trimmed();
-    args << bio.trimmed();
-
-    m_sql.executeQuery(caller, query, QueryId::EditIndividual, args);
+void QueryHelper::editIndividual(QObject* caller, qint64 id, QString const& prefix, QString const& name, QString const& kunya, QString const& url, QString const& bio, bool hidden) {
+    m_tafsirHelper.editIndividual(caller, id, prefix, name, kunya, url, bio, hidden);
 }
 
 
 void QueryHelper::searchIndividuals(QObject* caller, QString const& trimmedText)
 {
     LOGGER(trimmedText);
-
     m_sql.executeQuery(caller, "SELECT id,prefix,name,kunya,uri,hidden,biography FROM individuals WHERE name LIKE '%' || ? || '%'", QueryId::SearchIndividuals, QVariantList() << trimmedText);
 }
 
@@ -526,51 +413,17 @@ void QueryHelper::fetchAllQarees(QObject* caller, int minLevel)
 }
 
 
-/**
- * Juz 1, Fatiha, s1, v1
- * Juz 2, Baqara, s2, v142
- * Juz 3, Baqara, s2, v253
- *
- * needs to turn into
- * Juz 1, fatiha s1,v1
- * juz2, baqara,s2,v142
- * juz3, baqara,s2,v253
- * juz 1, baqara s2,v1
- */
-QVariantList QueryHelper::normalizeJuzs(QVariantList const& source)
+void QueryHelper::fetchAllQuotes(QObject* caller)
 {
-    QVariantList result;
-    int lastJuzId = 1;
-    int n = source.size();
+    LOGGER("fetchAllQuotes");
 
-    QMap<int,bool> processed;
+    ATTACH_ARTICLES;
+    m_sql.executeQuery(caller, QString("SELECT quotes.id AS id,individuals.name AS author,body FROM quotes INNER JOIN individuals ON individuals.id=quotes.author ORDER BY id DESC"), QueryId::FetchAllQuotes);
+}
 
-    for (int i = 0; i < n; i++)
-    {
-        QVariantMap current = source[i].toMap();
 
-        if ( current.value("juz_id").toInt() > 0 )
-        {
-            lastJuzId = current.value("juz_id").toInt();
-            int surah = current.value("surah_id").toInt();
-
-            if ( current.value("verse_number").toInt() > 1 && !processed.contains(surah) )
-            {
-                QVariantMap copy = current;
-                copy["juz_id"] = lastJuzId-1;
-                copy["verse_number"] = 1;
-
-                result << copy; // baqara:1
-                processed[surah] = true;
-            }
-        } else {
-            current["juz_id"] = lastJuzId;
-        }
-
-        result << current;
-    }
-
-    return result;
+QVariantList QueryHelper::normalizeJuzs(QVariantList const& source) {
+    return ThreadUtils::normalizeJuzs(source);
 }
 
 
@@ -603,6 +456,14 @@ void QueryHelper::removeTafsir(QObject* caller, qint64 suiteId)
 
     QString query = QString("DELETE FROM suites WHERE id=%1").arg(suiteId);
     m_sql.executeQuery(caller, query, QueryId::RemoveTafsir);
+}
+
+
+void QueryHelper::removeQuote(QObject* caller, qint64 id)
+{
+    LOGGER(id);
+    QString query = QString("DELETE FROM quotes WHERE id=%1").arg(id);
+    m_sql.executeQuery(caller, query, QueryId::RemoveQuote);
 }
 
 
@@ -642,23 +503,8 @@ QString QueryHelper::tafsirName() const {
 }
 
 
-QVariantList QueryHelper::removeOutOfRange(QVariantList input, int fromChapter, int fromVerse, int toChapter, int toVerse)
-{
-    int n = input.size();
-
-    QMutableListIterator<QVariant> i(input);
-    while ( i.hasNext() )
-    {
-        QVariantMap c = i.next().toMap();
-        int chapter = c.value("surah_id").toInt();
-        int verse = c.value("verse_id").toInt();
-
-        if ( (chapter == fromChapter && verse < fromVerse) || (chapter == toChapter && verse >= toVerse) ) {
-            i.remove();
-        }
-    }
-
-    return input;
+QVariantList QueryHelper::removeOutOfRange(QVariantList input, int fromChapter, int fromVerse, int toChapter, int toVerse) {
+    return ThreadUtils::removeOutOfRange(input, fromChapter, fromVerse, toChapter, toVerse);
 }
 
 
