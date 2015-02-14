@@ -22,7 +22,7 @@ NavigationPane
     {
         if (id == QueryId.AddTafsir)
         {
-            persist.showToast( qsTr("Tafsir added!"), "", "asset:///images/list/ic_tafsir.png" );
+            persist.showToast( qsTr("Tafsir added!"), "", "asset:///images/menu/ic_add_suite.png" );
             tafsirPicker.reload();
         }
     }
