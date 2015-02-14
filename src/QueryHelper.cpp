@@ -151,7 +151,7 @@ bool QueryHelper::fetchChapters(QObject* caller, QString const& text)
                 args << text;
             }
         } else {
-            query = "SELECT id AS surah_id,name,verse_count,revelation_order, FROM surahs";
+            query = "SELECT id AS surah_id,name,verse_count,revelation_order FROM surahs";
 
             if (n > MIN_CHARS_FOR_SURAH_SEARCH)
             {
