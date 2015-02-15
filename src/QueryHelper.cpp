@@ -157,6 +157,8 @@ void QueryHelper::fetchRandomAyat(QObject* caller)
 
 void QueryHelper::fetchRandomQuote(QObject* caller)
 {
+    LOGGER("fetchRandomQuote");
+
     ATTACH_ARTICLES;
     m_sql.executeQuery(caller, QString("SELECT individuals.name AS author,body,reference FROM quotes INNER JOIN individuals ON individuals.id=quotes.author WHERE quotes.id=( ABS( RANDOM() % (SELECT COUNT() AS total_quotes FROM quotes) )+1 )"), QueryId::FetchRandomQuote);
 }
