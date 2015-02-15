@@ -143,9 +143,8 @@ QVariantList RecitationHelper::generatePlaylist(int chapter, int fromVerse, int 
     LOGGER(chapter << fromVerse << toVerse << write);
 
     QVariantList queue;
-    //bool sharedOK = InvocationUtils::validateSharedFolderAccess( tr("It appears the app does not have access to your Shared Folder. This permission is needed to download the recitation audio. Please enable the Shared Folder access in the BlackBerry 10 Application Permissions Screen.") );
 
-    if (true && chapter > 0)
+    if (chapter > 0)
     {
         QDir output( m_persistance->getValueFor("output").toString() );
 

@@ -59,7 +59,7 @@ ControlDelegate
                     toY: 500
                     easingCurve: StockCurve.ExponentialIn
                     duration: 1000
-                    delay: 3500
+                    delay: 4000+benefitText.length*5
                     
                     onEnded: {
                         delegateActive = false;

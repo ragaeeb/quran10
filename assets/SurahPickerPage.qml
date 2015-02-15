@@ -319,6 +319,30 @@ Page
         QuoteOverlay {
             id: quote
         }
+        
+        PermissionToast
+        {
+            id: tm
+            horizontalAlignment: HorizontalAlignment.Center
+            
+            function process()
+            {
+                var allMessages = [];
+                var allIcons = [];
+                
+                if ( !persist.hasSharedFolderAccess() ) {
+                    allMessages.push("Warning: It seems like the app does not have access to your Shared Folder. This permission is needed to download the recitation audio and the mushaf pages. If you leave this permission off, some features may not work properly.");
+                    allIcons.push("images/toast/ic_no_shared_folder.png");
+                }
+                
+                if (allMessages.length > 0)
+                {
+                    messages = allMessages;
+                    icons = allIcons;
+                    delegateActive = true;
+                }
+            }
+        }
     }
     
     function ready()
@@ -330,7 +354,11 @@ Page
         textField.input["keyLayout"] = 7;
         
         deviceUtils.attachTopBottomKeys(mainPage, listView, true);
-        quote.process();
+        
+        if (showJuz) {
+            quote.process();
+            tm.process();
+        }
     }
     
     attachedObjects: [
