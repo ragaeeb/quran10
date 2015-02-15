@@ -315,6 +315,10 @@ Page
             id: busy
             asset: "images/progress/loading_chapters.png"
         }
+        
+        QuoteOverlay {
+            id: quote
+        }
     }
     
     function ready()
@@ -326,6 +330,7 @@ Page
         textField.input["keyLayout"] = 7;
         
         deviceUtils.attachTopBottomKeys(mainPage, listView, true);
+        quote.process();
     }
     
     attachedObjects: [

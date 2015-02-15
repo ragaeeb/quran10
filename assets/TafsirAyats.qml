@@ -157,7 +157,7 @@ Page
             body: qsTr("Enter the chapter and verse associated with this tafsir:") + Retranslate.onLanguageChanged
             inputField.inputMode: SystemUiInputMode.NumbersAndPunctuation
             inputField.emptyText: qsTr("(ie: 2:4 for Surah Baqara verse #4)") + Retranslate.onLanguageChanged
-            inputField.maximumLength: 6
+            inputField.maximumLength: 9
             title: qsTr("Enter verse") + Retranslate.onLanguageChanged
             
             onFinished: {
