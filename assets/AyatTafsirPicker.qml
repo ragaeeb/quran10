@@ -19,6 +19,7 @@ ResizableContainer
             if (id == QueryId.FetchTafsirForAyat)
             {
                 adm.append(data);
+                app.decorateTafsir(adm);
                 
                 if (data.length == 1) {
                     showExplanation(data[0].id);
@@ -51,9 +52,9 @@ ResizableContainer
                 StandardListItem
                 {
                     id: rootItem
-                    title: ListItem.data.author
-                    description: ListItem.data.title
-                    imageSource: "images/list/ic_tafsir.png"
+                    title: ListItemData.author
+                    description: ListItemData.title
+                    imageSource: ListItemData.imageSource
                     
                     contextActions: [
                         ActionSet
