@@ -216,7 +216,7 @@ void QueryHelper::fetchAllTafsirForAyat(QObject* caller, int chapterNumber, int 
     LOGGER(chapterNumber << verseNumber);
 
     ATTACH_TAFSIR;
-    m_sql.executeQuery(caller, QString("SELECT suite_page_id AS id,name AS author,title FROM explanations INNER JOIN suite_pages ON suite_pages.id=explanations.suite_page_id INNER JOIN suites ON suites.id=suite_pages.suite_id INNER JOIN individuals ON individuals.id=suites.author WHERE explanations.surah_id=%1 AND from_verse_number=%2").arg(chapterNumber).arg(verseNumber), QueryId::FetchTafsirForAyat);
+    m_sql.executeQuery(caller, QString("SELECT suite_page_id AS id,name AS author,title,body FROM explanations INNER JOIN suite_pages ON suite_pages.id=explanations.suite_page_id INNER JOIN suites ON suites.id=suite_pages.suite_id INNER JOIN individuals ON individuals.id=suites.author WHERE explanations.surah_id=%1 AND from_verse_number=%2").arg(chapterNumber).arg(verseNumber), QueryId::FetchTafsirForAyat);
 }
 
 

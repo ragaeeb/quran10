@@ -38,6 +38,7 @@ struct ThreadUtils
     static QString writeTafsirArchive(QVariant const& cookie, QByteArray const& data);
     static QVariantList removeOutOfRange(QVariantList input, int fromChapter, int fromVerse, int toChapter, int toVerse);
     static QVariantList normalizeJuzs(QVariantList const& source);
+    static void onResultsDecorated(SimilarReference const& result);
 };
 
 } /* namespace quran */

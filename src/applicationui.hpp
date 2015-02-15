@@ -66,6 +66,7 @@ public:
     Q_INVOKABLE void restore(QString const& source);
     Q_INVOKABLE void decorateSearchResults(QVariantList const& input, QString const& searchText, bb::cascades::ArrayDataModel* adm, QVariantList const& additional=QVariantList());
     Q_INVOKABLE void decorateSimilarResults(QVariantList const& input, QString const& mainText, bb::cascades::ArrayDataModel* adm, bb::cascades::AbstractTextControl* atc);
+    Q_INVOKABLE void decorateTafsir(bb::cascades::ArrayDataModel* adm);
     Q_INVOKABLE QString bytesToSize(qint64 size);
 };
 

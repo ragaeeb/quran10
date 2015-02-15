@@ -248,6 +248,25 @@ QString ThreadUtils::buildChaptersQuery(QVariantList& args, QString const& text,
 }
 
 
+void ThreadUtils::onResultsDecorated(SimilarReference const& result)
+{
+    QVariantList data = result.input;
+
+    if (result.adm)
+    {
+        ArrayDataModel* adm = result.adm;
+
+        for (int i = data.size()-1; i >= 0; i--) {
+            adm->replace(i, data[i]);
+        }
+    }
+
+    if (result.textControl) {
+        result.textControl->setText(result.body);
+    }
+}
+
+
 QString ThreadUtils::writeTafsirArchive(QVariant const& q, QByteArray const& data)
 {
     QString tafsirPath = q.toMap().value("tafsirPath").toString();
