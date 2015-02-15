@@ -28,6 +28,7 @@ NavigationPane
         actions: [
             ActionItem
             {
+                id: addAction
                 imageSource: "images/menu/ic_add_quote.png"
                 title: qsTr("Add") + Retranslate.onLanguageChanged
                 ActionBar.placement: 'Signature' in ActionBarPlacement ? ActionBarPlacement["Signature"] : ActionBarPlacement.OnBar
@@ -100,7 +101,6 @@ NavigationPane
                     helper.editQuote(listView, id, author, body, reference);
                     
                     var current = dataModel.data(editIndexPath);
-                    current["author"] = author;
                     current["body"] = body;
                     current["reference"] = reference;
                     
@@ -111,16 +111,28 @@ NavigationPane
                     }
                 }
                 
-                function editItem(indexPath, ListItemData)
+                function openQuote(ListItemData)
                 {
-                    editIndexPath = indexPath;
-                    
                     definition.source = "CreateQuotePage.qml";
                     var page = definition.createObject();
                     page.quoteId = ListItemData.id;
-                    page.createQuote.connect(onEdit);
                     
                     navigationPane.push(page);
+                    
+                    return page;
+                }
+                
+                function duplicateQuote(ListItemData)
+                {
+                    var page = openQuote(ListItemData);
+                    page.createQuote.connect(addAction.onCreate);
+                }
+                
+                function editItem(indexPath, ListItemData)
+                {
+                    editIndexPath = indexPath;
+                    var page = openPage(ListItemData);
+                    page.createQuote.connect(onEdit);
                 }
                 
                 function removeItem(ListItemData) {
@@ -146,11 +158,22 @@ NavigationPane
                                     
                                     ActionItem
                                     {
+                                        imageSource: "images/menu/ic_copy_quote.png"
+                                        title: qsTr("Duplicate") + Retranslate.onLanguageChanged
+                                        
+                                        onTriggered: {
+                                            console.log("UserEvent: DuplicateQuote");
+                                            rootItem.ListItem.view.duplicateQuote(ListItemData);
+                                        }
+                                    }
+                                    
+                                    ActionItem
+                                    {
                                         imageSource: "images/menu/ic_edit_quote.png"
                                         title: qsTr("Edit") + Retranslate.onLanguageChanged
                                         
                                         onTriggered: {
-                                            console.log("UserEvent: EditQuoteTriggered");
+                                            console.log("UserEvent: EditQuote");
                                             rootItem.ListItem.view.editItem(rootItem.ListItem.indexPath, ListItemData);
                                         }
                                     }

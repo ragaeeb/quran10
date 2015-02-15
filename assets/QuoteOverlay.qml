@@ -28,9 +28,9 @@ ControlDelegate
         Container
         {
             id: quoteContainer
-            leftPadding: 10; rightPadding: 10; topPadding: 5; bottomPadding: 5
+            leftPadding: 10; rightPadding: 10; topPadding: 5; bottomPadding: 13+benefitText.length*0.1
             background: bg.imagePaint
-            maxWidth: 400
+            maxWidth: 500
             minHeight: 275
             horizontalAlignment: HorizontalAlignment.Center
             verticalAlignment: VerticalAlignment.Bottom
