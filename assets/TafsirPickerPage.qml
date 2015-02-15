@@ -133,8 +133,6 @@ Page
                 helper.editTafsir(listView, id, author, translator, explainer, title, description, reference);
                 
                 var current = dataModel.data(editIndexPath);
-                current["author"] = author;
-                current["explainer"] = explainer;
                 current["title"] = title;
                 current["description"] = description;
                 current["reference"] = reference;

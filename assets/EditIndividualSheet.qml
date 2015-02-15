@@ -149,7 +149,7 @@ Sheet
                     
                     onValidate: { 
                         var regex=/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/
-                        valid = uri.text.trim().length > 0 && regex.test( uri.text.trim() );
+                        valid = uri.text.trim().length == 0 || regex.test( uri.text.trim() );
                     }
                 }
             }
