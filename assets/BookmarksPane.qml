@@ -65,7 +65,6 @@ NavigationPane
                         persist.showBlockingToast( qsTr("Successfully restored! The app will now close itself so when you re-open it the restored bookmarks can take effect!"), "", "asset:///images/menu/ic_restore.png" );
                         Application.requestExit();
                     } else {
-                        helper.setActive(true);
                         tutorialToast.init( qsTr("The database could not be restored. Please re-check the backup file to ensure it is valid, and if the problem persists please file a bug report. Make sure to attach the backup file with your report!"), "images/menu/ic_restore_error.png" );
                     }
                 }
@@ -82,14 +81,14 @@ NavigationPane
                 title: qsTr("Clear Bookmarks") + Retranslate.onLanguageChanged
                 
                 onTriggered: {
-                    console.log("UserEvent: ClearBookmarks");
+                    console.log("UserEvent: ClearFavourites");
                     var confirmed = persist.showBlockingDialog( qsTr("Confirmation"), qsTr("Are you sure you want to clear all bookmarks?") );
                     
                     if (confirmed) {
-                        console.log("UserEvent: ClearBookmarksPromptYes");
-                        helper.clearAllBookmarks(listView);
+                        console.log("UserEvent: ClearFavouritesPromptYes");
+                        bookmarkHelper.clearAllBookmarks(listView);
                     } else {
-                        console.log("UserEvent: ClearBookmarksPromptNo");
+                        console.log("UserEvent: ClearFavouritesPromptNo");
                     }
                 }
             }
@@ -133,7 +132,7 @@ NavigationPane
                 {
                     if (id == QueryId.SetupBookmarks) {
                         busy.delegateActive = true;
-                        helper.fetchAllBookmarks(listView);
+                        bookmarkHelper.fetchAllBookmarks(listView);
                     } else if (id == QueryId.FetchAllBookmarks) {
                         busy.delegateActive = false;
                         
@@ -144,24 +143,24 @@ NavigationPane
                         listView.visible = !noElements.delegateActive;
                         
                         if (listView.visible && navigationPane.parent.parent.activePane == navigationPane && navigationPane.top == mainPage) {
-                            persist.tutorial( "tutorialBookmarkDel", qsTr("To delete an existing bookmark, simply press-and-hold on it and choose 'Remove' from the menu."), "asset:///images/menu/ic_bookmark_delete.png" );
+                            persist.tutorial( "tutorialBookmarkDel", qsTr("To delete an existing bookmark, simply press-and-hold on it and choose 'Remove' from the menu."), "asset:///images/menu/ic_favourite_remove.png" );
                         }
                         
                         navigationPane.parent.unreadContentCount = data.length;
                     } else if (id == QueryId.ClearAllBookmarks) {
-                        persist.showToast( qsTr("Cleared all bookmarks!"), "", "asset:///images/menu/ic_bookmark_delete.png" );
+                        persist.showToast( qsTr("Cleared all bookmarks!"), "", "asset:///images/menu/ic_favourite_remove.png" );
                     } else if (id == QueryId.RemoveBookmark) {
-                        persist.showToast( qsTr("Removed bookmark!"), "", "asset:///images/menu/ic_bookmark_delete.png" );
+                        persist.showToast( qsTr("Removed bookmark!"), "", "asset:///images/menu/ic_favourite_remove.png" );
                     }
                 }
                 
                 function deleteBookmark(indexPath) {
-                    helper.removeBookmark( listView, dataModel.data(indexPath).id );
+                    bookmarkHelper.removeBookmark( listView, dataModel.data(indexPath).id );
                 }
                 
                 onCreationCompleted: {
                     busy.delegateActive = true;
-                    helper.fetchAllBookmarks(listView);
+                    bookmarkHelper.fetchAllBookmarks(listView);
                 }
                 
                 listItemComponents: [
@@ -194,11 +193,11 @@ NavigationPane
                                     
                                     DeleteActionItem
                                     {
-                                        imageSource: "images/menu/ic_bookmark_delete.png"
+                                        imageSource: "images/menu/ic_favourite_remove.png"
                                         title: qsTr("Remove") + Retranslate.onLanguageChanged
                                         
                                         onTriggered: {
-                                            console.log("UserEvent: RemoveBookmark");
+                                            console.log("UserEvent: RemoveFavourite");
                                             sli.ListItem.view.deleteBookmark(sli.ListItem.indexPath);
                                         }
                                     }
@@ -209,7 +208,7 @@ NavigationPane
                 ]
                 
                 onTriggered: {
-                    console.log("UserEvent: BookmarkTriggered");
+                    console.log("UserEvent: FavouriteTriggered");
                     var data = dataModel.data(indexPath);
                     
                     definition.source = "AyatPage.qml";

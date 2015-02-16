@@ -125,13 +125,14 @@ NavigationPane
                 function duplicateQuote(ListItemData)
                 {
                     var page = openQuote(ListItemData);
+                    page.showAuthorId = true;
                     page.createQuote.connect(addAction.onCreate);
                 }
                 
                 function editItem(indexPath, ListItemData)
                 {
                     editIndexPath = indexPath;
-                    var page = openPage(ListItemData);
+                    var page = openQuote(ListItemData);
                     page.createQuote.connect(onEdit);
                 }
                 

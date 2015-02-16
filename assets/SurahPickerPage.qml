@@ -28,10 +28,6 @@ Page
                 ImageView
                 {
                     imageSource: "images/title/logo.png"
-                    topMargin: 0
-                    leftMargin: 0
-                    rightMargin: 0
-                    bottomMargin: 0
                     loadEffect: ImageViewLoadEffect.FadeZoom
                     horizontalAlignment: HorizontalAlignment.Right
                     verticalAlignment: VerticalAlignment.Center
@@ -45,6 +41,41 @@ Page
                             duration: 1000
                         }
                     ]
+                }
+                
+                Container
+                {
+                    id: button
+                    leftPadding: 15;
+                    verticalAlignment: VerticalAlignment.Center
+                    visible: false
+                    
+                    Button
+                    {
+                        id: buttonControl
+                        property variant progressData
+                        text: progressData ? progressData.surah_id+":"+progressData.verse_id : ""
+                        imageSource: "images/dropdown/saved_bookmark.png"
+                        maxWidth: 150
+                        
+                        onClicked: {
+                            console.log("UserEvent: SavedBookmarkClicked");
+                            picked(progressData.surah_id, progressData.verse_id);
+                        }
+                    }
+                    
+                    function onDataLoaded(id, data)
+                    {
+                        if (id == QueryId.FetchLastProgress && data.length > 0)
+                        {
+                            buttonControl.progressData = data[0];
+                            button.visible = true;
+                        }
+                    }
+                    
+                    function onLastPositionUpdated() {
+                        bookmarkHelper.fetchLastProgress(button);
+                    }
                 }
                 
                 attachedObjects: [
@@ -135,7 +166,6 @@ Page
                 hintText: qsTr("Search surah name or number (ie: '2' for Surah Al-Baqara)...") + Retranslate.onLanguageChanged
                 bottomMargin: 0
                 horizontalAlignment: HorizontalAlignment.Fill
-                //inputRoute.primaryKeyTarget: true;
                 
                 onTextChanging: {
                     var ok = true;
@@ -358,6 +388,8 @@ Page
         if (showJuz) {
             quote.process();
             tm.process();
+            bookmarkHelper.fetchLastProgress(button);
+            global.lastPositionUpdated.connect(button.onLastPositionUpdated);
         }
     }
     

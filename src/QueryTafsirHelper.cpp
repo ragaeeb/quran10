@@ -4,6 +4,7 @@
 #include "DatabaseHelper.h"
 #include "Logger.h"
 #include "QueryId.h"
+#include "TextUtils.h"
 
 namespace {
 
@@ -41,12 +42,42 @@ void QueryTafsirHelper::addTafsir(QObject* caller, QString const& author, QStrin
 {
     LOGGER(author << translator << explainer << title << description << reference);
 
-    qint64 authorId = generateIndividualField(caller, author);
-    qint64 translatorId = generateIndividualField(caller, translator);
-    qint64 explainerId = generateIndividualField(caller, explainer);
+    QStringList fields = QStringList() << "id";
+    QVariantList args = QVariantList() << QDateTime::currentMSecsSinceEpoch();
+    populateTafsirFields(caller, fields, args, author, translator, explainer, title, description, reference);
 
-    QString query = QString("INSERT OR IGNORE INTO suites (id,author,translator,explainer,title,description,reference) VALUES(%1,%2,%3,%4,?,?,?)").arg( QDateTime::currentMSecsSinceEpoch() ).arg(authorId).arg(translatorId).arg(explainerId);
-    m_sql->executeQuery(caller, query, QueryId::AddTafsir, QVariantList() << title << description << reference);
+    QString query = QString("INSERT OR IGNORE INTO suites (%1) VALUES(%2)").arg( fields.join(",") ).arg( TextUtils::getPlaceHolders( args.size() ) );
+    m_sql->executeQuery(caller, query, QueryId::AddTafsir, args);
+}
+
+
+void QueryTafsirHelper::populateTafsirFields(QObject* caller, QStringList& fields, QVariantList& args, QString const& author, QString const& translator, QString const& explainer, QString const& title, QString const& description, QString const& reference)
+{
+    fields << "author" << "title" << "description" << "reference";
+    args << generateIndividualField(caller, author) << title << description << reference;
+
+    if ( !translator.isEmpty() ) {
+        fields << "translator";
+        args << generateIndividualField(caller, translator);
+    }
+
+    if ( !explainer.isEmpty() ) {
+        fields << "explainer";
+        args << generateIndividualField(caller, explainer);
+    }
+}
+
+
+void QueryTafsirHelper::editTafsir(QObject* caller, qint64 suiteId, QString const& author, QString const& translator, QString const& explainer, QString const& title, QString const& description, QString const& reference)
+{
+    LOGGER(suiteId << author << translator << explainer << title << description << reference);
+
+    QStringList fields;
+    QVariantList args;
+    populateTafsirFields(caller, fields, args, author, translator, explainer, title, description, reference);
+
+    QString query = QString("UPDATE suites SET author=%2,translator=%3,explainer=%4,title=?,description=?,reference=? WHERE id=%1").arg(suiteId).arg( fields.join(",") ).arg( TextUtils::getPlaceHolders( args.size() ) );
+    m_sql->executeQuery(caller, query, QueryId::EditTafsir, args);
 }
 
 
@@ -74,19 +105,6 @@ void QueryTafsirHelper::editQuote(QObject* caller, qint64 quoteId, QString const
     qint64 authorId = generateIndividualField(caller, author);
     QString query = QString("UPDATE quotes SET author=%2,body=?,reference=? WHERE id=%1").arg(quoteId).arg(authorId);
     m_sql->executeQuery(caller, query, QueryId::EditQuote, QVariantList() << body << reference);
-}
-
-
-void QueryTafsirHelper::editTafsir(QObject* caller, qint64 suiteId, QString const& author, QString const& translator, QString const& explainer, QString const& title, QString const& description, QString const& reference)
-{
-    LOGGER(suiteId << author << translator << explainer << title << description << reference);
-
-    qint64 authorId = generateIndividualField(caller, author);
-    qint64 translatorId = generateIndividualField(caller, translator);
-    qint64 explainerId = generateIndividualField(caller, explainer);
-
-    QString query = QString("UPDATE suites SET author=%2,translator=%3,explainer=%4,title=?,description=?,reference=? WHERE id=%1").arg(suiteId).arg(authorId).arg(translatorId).arg(explainerId);
-    m_sql->executeQuery(caller, query, QueryId::EditTafsir, QVariantList() << title << description << reference);
 }
 
 

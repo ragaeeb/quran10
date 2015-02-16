@@ -5,10 +5,10 @@
 
 #include "DatabaseHelper.h"
 #include "QueryId.h"
+#include "QueryBookmarkHelper.h"
 #include "QueryTafsirHelper.h"
 
 #define AYAT_NUMERIC_PATTERN "^\\d{1,3}:\\d{1,3}$"
-#define BOOKMARKS_PATH QString("%1/bookmarks.db").arg( QDir::homePath() )
 #define SIMILAR_DB "similar"
 #define TAFSIR_ARABIC_DB "tafsir_arabic"
 
@@ -32,8 +32,7 @@ class QueryHelper : public QObject
     QString m_translation;
     QFileSystemWatcher m_watcher;
     QueryTafsirHelper m_tafsirHelper;
-
-    bool initBookmarks(QObject* caller);
+    QueryBookmarkHelper m_bookmarkHelper;
 
 private slots:
     void onDataLoaded(QVariant id, QVariant data);
@@ -50,13 +49,11 @@ public:
     Q_INVOKABLE bool fetchChapters(QObject* caller, QString const& text=QString());
     Q_INVOKABLE void addTafsir(QObject* caller, QString const& author, QString const& translator, QString const& explainer, QString const& title, QString const& description, QString const& reference);
     Q_INVOKABLE void addTafsirPage(QObject* caller, qint64 suiteId, QString const& body);
-    Q_INVOKABLE void clearAllBookmarks(QObject* caller);
     Q_INVOKABLE void editIndividual(QObject* caller, qint64 id, QString const& prefix, QString const& name, QString const& kunya, QString const& url, QString const& bio, bool hidden);
     Q_INVOKABLE void editQuote(QObject* caller, qint64 quoteId, QString const& author, QString const& body, QString const& reference);
     Q_INVOKABLE void editTafsir(QObject* caller, qint64 suiteId, QString const& author, QString const& translator, QString const& explainer, QString const& title, QString const& description, QString const& reference);
     Q_INVOKABLE void editTafsirPage(QObject* caller, qint64 suitePageId, QString const& body);
     Q_INVOKABLE void fetchAllAyats(QObject* caller, int fromChapter, int toChapter=0);
-    Q_INVOKABLE void fetchAllBookmarks(QObject* caller);
     Q_INVOKABLE void fetchAllChapters(QObject* caller);
     Q_INVOKABLE void fetchAllDuaa(QObject* caller);
     Q_INVOKABLE void fetchAllQarees(QObject* caller, int minLevel=1);
@@ -79,11 +76,9 @@ public:
     Q_INVOKABLE void fetchTafsirCountForAyat(QObject* caller, int chapterNumber, int verseNumber);
     Q_INVOKABLE void fetchTafsirMetadata(QObject* caller, qint64 suiteId);
     Q_INVOKABLE void linkAyatToTafsir(QObject* caller, qint64 suitePageId, int chapter, int fromVerse=0, int toVerse=0);
-    Q_INVOKABLE void removeBookmark(QObject* caller, int id);
     Q_INVOKABLE void removeQuote(QObject* caller, qint64 id);
     Q_INVOKABLE void removeTafsir(QObject* caller, qint64 suiteId);
     Q_INVOKABLE void removeTafsirPage(QObject* caller, qint64 suitePageId);
-    Q_INVOKABLE void saveBookmark(QObject* caller, int surahId, int verseId, QString const& name, QString const& tag);
     Q_INVOKABLE void searchIndividuals(QObject* caller, QString const& trimmedText);
     Q_INVOKABLE void searchQuery(QObject* caller, QString const& trimmedText, int chapterNumber=0, QVariantList const& additional=QVariantList(), bool andMode=true);
     Q_INVOKABLE void unlinkAyatsForTafsir(QObject* caller, QVariantList const& ids, qint64 suitePageId);
@@ -96,6 +91,7 @@ public:
     Q_SLOT void lazyInit();
     Q_SLOT void initForeignKeys();
     QString tafsirName() const;
+    QObject* getBookmarkHelper();
 };
 
 } /* namespace quran */

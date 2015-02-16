@@ -135,6 +135,18 @@ ListView
         recitation.memorize(chapterNumber, from+1, end);
     }
     
+    function onDataLoaded(id, data)
+    {
+        if (id == QueryId.SaveLastProgress) {
+            persist.showToast( qsTr("Successfully saved bookmark!"), "", "asset:///images/menu/ic_bookmark_add.png" );
+            global.lastPositionUpdated();
+        }
+    }
+    
+    function setBookmark(ListItemData) {
+        bookmarkHelper.saveLastProgress(listView, ListItemData.surah_id, ListItemData.verse_id);
+    }
+    
     function refresh()
     {
         for (var j = verseModel.size()-1; j >= 0; j--) {
@@ -174,6 +186,17 @@ ListView
                         title: ListItemData.arabic
                         subtitle: ali.secondLine.delegateActive ? ali.secondLine.control.text : qsTr("%1:%2").arg(ali.ListItem.view.chapterNumber).arg(ListItemData.verse_id)
                         
+                        ActionItem
+                        {
+                            title: qsTr("Memorize") + Retranslate.onLanguageChanged
+                            imageSource: "images/menu/ic_memorize.png"
+                            
+                            onTriggered: {
+                                console.log("UserEvent: MemorizeAyat");
+                                ali.ListItem.view.memorize( ali.ListItem.indexPath[0] );
+                            }
+                        }
+                        
                         ActionItem {
                             id: playFromHere
                             
@@ -188,12 +211,12 @@ ListView
                         
                         ActionItem
                         {
-                            title: qsTr("Memorize") + Retranslate.onLanguageChanged
-                            imageSource: "images/menu/ic_memorize.png"
+                            title: qsTr("Set Bookmark") + Retranslate.onLanguageChanged
+                            imageSource: "images/menu/ic_bookmark_add.png"
                             
                             onTriggered: {
-                                console.log("UserEvent: MemorizeAyat");
-                                ali.ListItem.view.memorize( ali.ListItem.indexPath[0] );
+                                console.log("UserEvent: SetBookmark");
+                                ali.ListItem.view.setBookmark(ali.ListItem.data);
                             }
                         }
                     }
