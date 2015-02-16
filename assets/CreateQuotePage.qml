@@ -4,6 +4,7 @@ import com.canadainc.data 1.0
 Page
 {
     id: createPage
+    property bool showAuthorId: false
     property variant quoteId
     signal createQuote(variant id, string author, string body, string reference)
     actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
@@ -18,7 +19,7 @@ Page
         {
             var data = results[0];
             
-            authorField.text = data.author;
+            authorField.text = showAuthorId ? data.author_id : data.author;
             bodyField.text = data.body;
             referenceField.text = data.reference;
         }

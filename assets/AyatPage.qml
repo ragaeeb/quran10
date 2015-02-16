@@ -57,7 +57,7 @@ Page
             
             body.value = body.value + "\n\n(" + babName.title + " " + babName.subtitle + ")";
         } else if (id == QueryId.SaveBookmark) {
-            persist.showToast( qsTr("Bookmark added for Chapter %1, Verse %2").arg(surahId).arg(verseId), "", "asset:///images/menu/ic_bookmark_add.png" );
+            persist.showToast( qsTr("Favourite added for Chapter %1, Verse %2").arg(surahId).arg(verseId), "", "asset:///images/menu/ic_bookmark_add.png" );
         }
     }
     
@@ -160,7 +160,7 @@ Page
         ActionItem {
             enabled: !notFound.delegateActive
             title: qsTr("Mark Favourite") + Retranslate.onLanguageChanged
-            imageSource: "images/menu/ic_bookmark_add.png"
+            imageSource: "images/menu/ic_mark_favourite.png"
             ActionBar.placement: 'Signature' in ActionBarPlacement ? ActionBarPlacement["Signature"] : ActionBarPlacement.OnBar
             shortcuts: [
                 SystemShortcut {
@@ -169,8 +169,8 @@ Page
             ]
             
             onTriggered: {
-                console.log("UserEvent: BookmarkTriggered");
-                var name = persist.showBlockingPrompt( qsTr("Enter name"), qsTr("You can use this to quickly recognize this ayah in the favourites tab."), "(%1:%2) %3".arg(surahId).arg(verseId).arg(body.value), qsTr("Bookmark name..."), 50, true, qsTr("Save") );
+                console.log("UserEvent: MarkFavourite");
+                var name = persist.showBlockingPrompt( qsTr("Enter name"), qsTr("You can use this to quickly recognize this ayah in the favourites tab."), "(%1:%2) %3".arg(surahId).arg(verseId).arg(body.value), qsTr("Name..."), 50, true, qsTr("Save") );
                 
                 if (name.length > 0)
                 {

@@ -18,7 +18,7 @@ using namespace bb::data;
 
 QueryHelper::QueryHelper(Persistance* persist) :
         m_sql( QString("%1/assets/dbase/quran_arabic.db").arg( QCoreApplication::applicationDirPath() ) ),
-        m_persist(persist), m_tafsirHelper(&m_sql)
+        m_persist(persist), m_tafsirHelper(&m_sql), m_bookmarkHelper(&m_sql)
 {
     connect( persist, SIGNAL( settingChanged(QString const&) ), this, SLOT( settingChanged(QString const&) ), Qt::QueuedConnection );
 }
@@ -53,44 +53,6 @@ void QueryHelper::settingChanged(QString const& key)
 
         emit textualChange();
     }
-}
-
-
-void QueryHelper::fetchAllBookmarks(QObject* caller)
-{
-    LOGGER("fetchAllBookmarks");
-
-    if ( initBookmarks(caller) )
-    {
-        QString query = "SELECT bookmarks.id AS id,surah_id,verse_id,bookmarks.name AS name,tag,timestamp,surahs.name AS surah_name FROM bookmarks INNER JOIN surahs ON surahs.id=surah_id";
-        m_sql.executeQuery(caller, query, QueryId::FetchAllBookmarks);
-    }
-}
-
-
-bool QueryHelper::initBookmarks(QObject* caller)
-{
-    QFile bookmarksPath(BOOKMARKS_PATH);
-    bool ready = bookmarksPath.exists() && bookmarksPath.size() > 0;
-
-    m_sql.attachIfNecessary("bookmarks", true);
-
-    if (!ready) // if no bookmarks created yet
-    {
-        m_sql.startTransaction(caller, QueryId::SettingUpBookmarks);
-
-        QStringList statements;
-        statements << "CREATE TABLE IF NOT EXISTS bookmarks.bookmarks (id INTEGER PRIMARY KEY, surah_id INTEGER REFERENCES surahs(id), verse_id INTEGER REFERENCES ayahs(id), name TEXT, tag TEXT, timestamp INTEGER)";
-        statements << "CREATE TABLE IF NOT EXISTS bookmarks.bookmarked_tafsir (id INTEGER PRIMARY KEY, tid INTEGER, author TEXT, title TEXT, name TEXT, tag TEXT, timestamp INTEGER)";
-
-        foreach (QString const& q, statements) {
-            m_sql.executeInternal(q, QueryId::SettingUpBookmarks);
-        }
-
-        m_sql.endTransaction(caller, QueryId::SetupBookmarks);
-    }
-
-    return ready;
 }
 
 
@@ -263,7 +225,7 @@ void QueryHelper::fetchQuote(QObject* caller, qint64 id)
     LOGGER(id);
 
     ATTACH_TAFSIR;
-    QString query = QString("SELECT individuals.name AS author,body,reference FROM quotes INNER JOIN individuals ON individuals.id=quotes.author WHERE quotes.id=%1").arg(id);
+    QString query = QString("SELECT individuals.name AS author,quotes.author AS author_id, body,reference FROM quotes INNER JOIN individuals ON individuals.id=quotes.author WHERE quotes.id=%1").arg(id);
     m_sql.executeQuery(caller, query, QueryId::FetchQuote);
 }
 
@@ -391,7 +353,7 @@ void QueryHelper::editIndividual(QObject* caller, qint64 id, QString const& pref
 void QueryHelper::searchIndividuals(QObject* caller, QString const& trimmedText)
 {
     LOGGER(trimmedText);
-    m_sql.executeQuery(caller, "SELECT id,prefix,name,kunya,uri,hidden,biography FROM individuals WHERE name LIKE '%' || ? || '%'", QueryId::SearchIndividuals, QVariantList() << trimmedText);
+    m_sql.executeQuery(caller, "SELECT id,prefix,name,kunya,uri,hidden,biography FROM individuals WHERE name LIKE '%' || ? || '%' OR kunya LIKE '%' || ? || '%'", QueryId::SearchIndividuals, QVariantList() << trimmedText << trimmedText);
 }
 
 
@@ -434,15 +396,6 @@ void QueryHelper::initForeignKeys() {
 }
 
 
-void QueryHelper::removeBookmark(QObject* caller, int id)
-{
-    LOGGER(id);
-
-    QString query = QString("DELETE FROM bookmarks WHERE id=%1").arg(id);
-    m_sql.executeQuery(caller, query, QueryId::RemoveBookmark);
-}
-
-
 void QueryHelper::removeTafsirPage(QObject* caller, qint64 suitePageId)
 {
     LOGGER(suitePageId);
@@ -469,22 +422,6 @@ void QueryHelper::removeQuote(QObject* caller, qint64 id)
 }
 
 
-void QueryHelper::clearAllBookmarks(QObject* caller)
-{
-    m_sql.executeQuery(caller, "DELETE FROM bookmarks", QueryId::ClearAllBookmarks);
-}
-
-
-void QueryHelper::saveBookmark(QObject* caller, int surahId, int verseId, QString const& name, QString const& tag)
-{
-    LOGGER(surahId << verseId << name << tag);
-
-    initBookmarks(caller);
-
-    QString query = QString("INSERT INTO bookmarks (surah_id,verse_id,name,tag,timestamp) VALUES (%1,'%2',?,?,%3)").arg(surahId).arg(verseId).arg( QDateTime::currentMSecsSinceEpoch() );
-    m_sql.executeQuery(caller, query, QueryId::SaveBookmark, QVariantList() << name << tag);
-}
-
 bool QueryHelper::showTranslation() const {
     return !m_translation.isEmpty();
 }
@@ -507,6 +444,11 @@ QString QueryHelper::tafsirName() const {
 
 QVariantList QueryHelper::removeOutOfRange(QVariantList input, int fromChapter, int fromVerse, int toChapter, int toVerse) {
     return ThreadUtils::removeOutOfRange(input, fromChapter, fromVerse, toChapter, toVerse);
+}
+
+
+QObject* QueryHelper::getBookmarkHelper() {
+    return &m_bookmarkHelper;
 }
 
 

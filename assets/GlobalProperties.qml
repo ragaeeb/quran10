@@ -3,6 +3,7 @@ import bb.cascades 1.2
 QtObject
 {
     property alias textFont: customFontDef.style
+    signal lastPositionUpdated();
 
     property variant customFont: TextStyleDefinition
     {
