@@ -46,7 +46,7 @@ void QueryTafsirHelper::addTafsir(QObject* caller, QString const& author, QStrin
     QVariantList args = QVariantList() << QDateTime::currentMSecsSinceEpoch();
     populateTafsirFields(caller, fields, args, author, translator, explainer, title, description, reference);
 
-    QString query = QString("INSERT OR IGNORE INTO suites (%1) VALUES(%2)").arg( fields.join(",") ).arg( TextUtils::getPlaceHolders( args.size() ) );
+    QString query = QString("INSERT OR IGNORE INTO suites (%1) VALUES(%2)").arg( fields.join(",") ).arg( TextUtils::getPlaceHolders( args.size(), false ) );
     m_sql->executeQuery(caller, query, QueryId::AddTafsir, args);
 }
 
@@ -76,7 +76,7 @@ void QueryTafsirHelper::editTafsir(QObject* caller, qint64 suiteId, QString cons
     QVariantList args;
     populateTafsirFields(caller, fields, args, author, translator, explainer, title, description, reference);
 
-    QString query = QString("UPDATE suites SET author=%2,translator=%3,explainer=%4,title=?,description=?,reference=? WHERE id=%1").arg(suiteId).arg( fields.join(",") ).arg( TextUtils::getPlaceHolders( args.size() ) );
+    QString query = QString("UPDATE suites SET author=%2,translator=%3,explainer=%4,title=?,description=?,reference=? WHERE id=%1").arg(suiteId).arg( fields.join(",") ).arg( TextUtils::getPlaceHolders( args.size(), false ) );
     m_sql->executeQuery(caller, query, QueryId::EditTafsir, args);
 }
 
