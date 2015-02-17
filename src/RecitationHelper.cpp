@@ -232,6 +232,19 @@ void RecitationHelper::onWritten()
 }
 
 
+void RecitationHelper::downloadAndPlayAll(bb::cascades::ArrayDataModel* adm)
+{
+    QList< QPair<int,int> > all;
+    int n = adm->size();
+
+    for (int i = 0; i < n; i++)
+    {
+        QVariantMap q = adm->value(i).toMap();
+        all << qMakePair<int,int>( q.value("surah_id").toInt(), q.value("verse_id").toInt() );
+    }
+}
+
+
 void RecitationHelper::startPlayback() {
     emit readyToPlay( QUrl::fromLocalFile(PLAYLIST_TARGET) );
 }

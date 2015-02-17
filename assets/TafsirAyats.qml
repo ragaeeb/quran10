@@ -27,10 +27,45 @@ Page
             
             onTriggered: {
                 console.log("UserEvent: TafsirAyatAddTriggered");
+                prompt.inputField.resetDefaultText();
                 prompt.show();
             }
         }
     ]
+    
+    titleBar: TitleBar
+    {
+        title: qsTr("Ayats") + Retranslate.onLanguageChanged
+        
+        acceptAction: ActionItem
+        {
+            imageSource: "images/dropdown/search_reference.png"
+            title: qsTr("Lookup") + Retranslate.onLanguageChanged
+            
+            function onPicked(chapter, verse)
+            {
+                navigationPane.pop();
+                
+                if (verse > 0) {
+                    prompt.inputField.defaultText = chapter+":"+verse;
+                } else {
+                    prompt.inputField.defaultText = chapter;
+                } 
+                
+                prompt.show();
+            }
+            
+            onTriggered: {
+                console.log("UserEvent: LookupChapter");
+                definition.source = "SurahPickerPage.qml";
+                var p = definition.createObject();
+                p.picked.connect(onPicked);
+                p.ready();
+                
+                navigationPane.push(p);
+            }
+        }
+    }
     
     Container
     {
@@ -45,31 +80,6 @@ Page
             dataModel: ArrayDataModel {
                 id: adm
             }
-            
-            multiSelectHandler.actions: [
-                DeleteActionItem
-                {
-                    imageSource: "images/menu/ic_unlink_tafsir_ayat.png"
-                    title: qsTr("Unlink") + Retranslate.onLanguageChanged
-                    
-                    onTriggered: {
-                        console.log("UserEvent: UnlinkAyatsFromTafsirTriggered");
-                        
-                        var all = listView.selectionList();
-                        var ids = [];
-                        
-                        for (var i = all.length-1; i >= 0; i--) {
-                            ids.push( adm.data(all[i]).id );
-                        }
-                        
-                        helper.unlinkNarrationsForTafsir(listView, ids, suitePageId);
-                        
-                        for (var i = all.length-1; i >= 0; i--) {
-                            adm.removeAt( all[i][0] );
-                        }
-                    }
-                }
-            ]
             
             function onDataLoaded(id, data)
             {
@@ -119,32 +129,18 @@ Page
             listItemComponents: [
                 ListItemComponent
                 {
-                    Container
+                    StandardListItem
                     {
                         id: rootItem
-                        horizontalAlignment: HorizontalAlignment.Fill
-                        verticalAlignment: VerticalAlignment.Fill
-                        background: ListItem.selected ? Color.DarkGray : undefined
-                        
-                        Header {
-                            id: header
-                            title: ListItemData.name
-                            subtitle: "%1:%2".arg(ListItemData.surah_id).arg(ListItemData.verse_id)
-                        }
-                        
-                        Label
-                        {
-                            id: body
-                            multiline: true
-                            horizontalAlignment: HorizontalAlignment.Fill
-                            verticalAlignment: VerticalAlignment.Fill
-                            text: ListItemData.content
-                        }
+                        description: ListItemData.from_verse_number+"-"+ListItemData.to_verse_number
+                        imageSource: "images/list/ic_tafsir.png"
+                        title: ListItemData.surah_id
+                        status: ListItemData.id
                         
                         contextActions: [
                             ActionSet {
-                                title: header.title
-                                subtitle: header.subtitle
+                                title: rootItem.id
+                                subtitle: rootItem.status
                                 
                                 DeleteActionItem
                                 {
