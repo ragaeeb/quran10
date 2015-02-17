@@ -9,6 +9,12 @@ namespace canadainc {
     class Persistance;
 }
 
+namespace bb {
+    namespace cascades {
+        class ArrayDataModel;
+    }
+}
+
 namespace quran {
 
 using namespace canadainc;
@@ -41,6 +47,7 @@ public:
      * @pre The directory must have been set up.
      */
     Q_INVOKABLE void downloadAndPlay(int chapter, int fromVerse, int toVerse);
+    Q_INVOKABLE void downloadAndPlayAll(bb::cascades::ArrayDataModel* adm);
     Q_INVOKABLE void memorize(int chapter, int fromVerse, int toVerse);
     Q_INVOKABLE static int extractIndex(QVariantMap const& m);
 };
