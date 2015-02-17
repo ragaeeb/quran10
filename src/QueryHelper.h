@@ -26,6 +26,7 @@ class QueryHelper : public QObject
 	Q_PROPERTY(bool showTranslation READ showTranslation NOTIFY textualChange)
 	Q_PROPERTY(int primarySize READ primarySize NOTIFY textualChange)
 	Q_PROPERTY(int translationSize READ translationSize NOTIFY textualChange)
+	Q_PROPERTY(QString translation READ translation NOTIFY textualChange)
 
     DatabaseHelper m_sql;
     Persistance* m_persist;
@@ -91,6 +92,7 @@ public:
     Q_SLOT void lazyInit();
     Q_SLOT void initForeignKeys();
     QString tafsirName() const;
+    QString translation() const;
     QObject* getBookmarkHelper();
 };
 
