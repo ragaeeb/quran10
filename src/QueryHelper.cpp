@@ -442,6 +442,11 @@ QString QueryHelper::tafsirName() const {
 }
 
 
+QString QueryHelper::translation() const {
+    return m_translation;
+}
+
+
 QVariantList QueryHelper::removeOutOfRange(QVariantList input, int fromChapter, int fromVerse, int toChapter, int toVerse) {
     return ThreadUtils::removeOutOfRange(input, fromChapter, fromVerse, toChapter, toVerse);
 }
