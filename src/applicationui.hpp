@@ -1,6 +1,7 @@
 #ifndef ApplicationUI_HPP_
 #define ApplicationUI_HPP_
 
+#include "AdminHelper.h"
 #include "LazySceneCover.h"
 #include "MushafHelper.h"
 #include "Persistance.h"
@@ -34,6 +35,7 @@ class ApplicationUI : public QObject
 	QueueDownloader m_queue;
     MushafHelper m_mushaf;
     RecitationHelper m_recitation;
+    AdminHelper m_admin;
 
     ApplicationUI(bb::cascades::Application *app);
     void init(QString const& qml);

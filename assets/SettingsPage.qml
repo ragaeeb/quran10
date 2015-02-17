@@ -4,6 +4,7 @@ import com.canadainc.data 1.0
 
 Page
 {
+    id: settingsPage
     actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
     
     titleBar: TitleBar {
@@ -328,6 +329,29 @@ Page
                     }
                 }
             }
+            
+            ProgressIndicator
+            {
+                id: progressIndicator
+                horizontalAlignment: HorizontalAlignment.Center
+                verticalAlignment: VerticalAlignment.Center
+                value: 0
+                fromValue: 0
+                toValue: 100
+                opacity: value == 0 ? 0 : value/100
+                state: ProgressIndicatorState.Progress
+                topMargin: 0; bottomMargin: 0; leftMargin: 0; rightMargin: 0;
+                
+                function onNetworkProgressChanged(cookie, current, total)
+                {
+                    value = current;
+                    toValue = total;
+                }
+                
+                onCreationCompleted: {
+                    admin.uploadProgress.connect(onNetworkProgressChanged);
+                }
+            }
 	        
 	        Label {
 	            id: infoText
@@ -339,5 +363,9 @@ Page
 	            horizontalAlignment: HorizontalAlignment.Center
 	        }
 	    }
+    }
+    
+    onCreationCompleted: {
+        admin.initPage(settingsPage);
     }
 }
