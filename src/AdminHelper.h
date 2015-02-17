@@ -1,7 +1,7 @@
 #ifndef ADMINHELPER_H_
 #define ADMINHELPER_H_
 
-#include <QObject>
+#include "NetworkProcessor.h"
 
 namespace canadainc {
     class NetworkProcessor;
@@ -10,7 +10,7 @@ namespace canadainc {
 
 #define PLUGINS_ZIPPED_PATH QString("%1/plugins.zip").arg( QDir::tempPath() )
 
-namespace sunnah {
+namespace quran {
 
 using namespace canadainc;
 
@@ -18,18 +18,21 @@ class AdminHelper : public QObject
 {
     Q_OBJECT
 
-    NetworkProcessor* m_network;
+    NetworkProcessor m_network;
     Persistance* m_persist;
 
     void prepare(QString const& remoteFunc);
 
 private slots:
     void onCompressed();
-    void submitUpdates();
+    void onRequestComplete(QVariant const& cookie, QByteArray const& data);
     void uploadUpdates();
 
+signals:
+    void uploadProgress(QVariant const& cookie, qint64 bytesSent, qint64 bytesTotal);
+
 public:
-    AdminHelper(NetworkProcessor* network, Persistance* persist);
+    AdminHelper(Persistance* persist);
     virtual ~AdminHelper();
 
     Q_SLOT void downloadPlugins(bool force=true, QString const& cookie="plugins");
