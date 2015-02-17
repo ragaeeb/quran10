@@ -19,6 +19,10 @@ QString combine(QVariantList const& arabicIds)
     return ids.join(",");
 }
 
+QVariant protect(QString const& a) {
+    return a.isEmpty() ? QVariant() : a;
+}
+
 }
 
 namespace quran {
@@ -42,19 +46,8 @@ void QueryTafsirHelper::addTafsir(QObject* caller, QString const& author, QStrin
 {
     LOGGER(author << translator << explainer << title << description << reference);
 
-    QStringList fields = QStringList() << "id";
-    QVariantList args = QVariantList() << QDateTime::currentMSecsSinceEpoch();
-    populateTafsirFields(caller, fields, args, author, translator, explainer, title, description, reference);
-
-    QString query = QString("INSERT OR IGNORE INTO suites (%1) VALUES(%2)").arg( fields.join(",") ).arg( TextUtils::getPlaceHolders( args.size(), false ) );
-    m_sql->executeQuery(caller, query, QueryId::AddTafsir, args);
-}
-
-
-void QueryTafsirHelper::populateTafsirFields(QObject* caller, QStringList& fields, QVariantList& args, QString const& author, QString const& translator, QString const& explainer, QString const& title, QString const& description, QString const& reference)
-{
-    fields << "author" << "title" << "description" << "reference";
-    args << generateIndividualField(caller, author) << title << description << reference;
+    QStringList fields = QStringList() << "id" << "author" << "title" << "description" << "reference";
+    QVariantList args = QVariantList() << QDateTime::currentMSecsSinceEpoch() << generateIndividualField(caller, author) << title << protect(description) << reference;
 
     if ( !translator.isEmpty() ) {
         fields << "translator";
@@ -65,6 +58,9 @@ void QueryTafsirHelper::populateTafsirFields(QObject* caller, QStringList& field
         fields << "explainer";
         args << generateIndividualField(caller, explainer);
     }
+
+    QString query = QString("INSERT OR IGNORE INTO suites (%1) VALUES(%2)").arg( fields.join(",") ).arg( TextUtils::getPlaceHolders( args.size(), false ) );
+    m_sql->executeQuery(caller, query, QueryId::AddTafsir, args);
 }
 
 
@@ -72,11 +68,25 @@ void QueryTafsirHelper::editTafsir(QObject* caller, qint64 suiteId, QString cons
 {
     LOGGER(suiteId << author << translator << explainer << title << description << reference);
 
-    QStringList fields;
-    QVariantList args;
-    populateTafsirFields(caller, fields, args, author, translator, explainer, title, description, reference);
+    QStringList fields = QStringList() << "author=?" << "title=?" << "description=?" << "reference=?" << "translator=?" << "explainer=?";
+    QVariantList args = QVariantList() << generateIndividualField(caller, author);
+    args << title;
+    args << protect(description);
+    args << reference;
 
-    QString query = QString("UPDATE suites SET author=%2,translator=%3,explainer=%4,title=?,description=?,reference=? WHERE id=%1").arg(suiteId).arg( fields.join(",") ).arg( TextUtils::getPlaceHolders( args.size(), false ) );
+    if ( translator.isEmpty() ) {
+        args << QVariant();
+    } else {
+        args << generateIndividualField(caller, translator);
+    }
+
+    if ( explainer.isEmpty() ) {
+        args << QVariant();
+    } else {
+        args << generateIndividualField(caller, explainer);
+    }
+
+    QString query = QString("UPDATE suites SET %2 WHERE id=%1").arg(suiteId).arg( fields.join(",") );
     m_sql->executeQuery(caller, query, QueryId::EditTafsir, args);
 }
 
@@ -85,14 +95,14 @@ void QueryTafsirHelper::editIndividual(QObject* caller, qint64 id, QString const
 {
     LOGGER( id << prefix << name << kunya << url << bio.length() << hidden );
 
-    QString query = QString("UPDATE individuals SET prefix=?, name=?, kunya=?, url=?, bio=?, hidden=%1 WHERE id=%2").arg(hidden ? 1 : 0).arg(id);
+    QString query = QString("UPDATE individuals SET prefix=?, name=?, kunya=?, uri=?, biography=?, hidden=%1 WHERE id=%2").arg(hidden ? 1 : 0).arg(id);
 
     QVariantList args;
-    args << prefix.trimmed();
-    args << name.trimmed();
-    args << kunya.trimmed();
-    args << url.trimmed();
-    args << bio.trimmed();
+    args << protect(prefix);
+    args << name;
+    args << protect(kunya);
+    args << protect(url);
+    args << protect(bio);
 
     m_sql->executeQuery(caller, query, QueryId::EditIndividual, args);
 }

@@ -74,7 +74,9 @@ Sheet
                     uri.validator.validate();
                     
                     if (name.validator.valid && uri.validator.valid) {
-                        saveClicked(indexPath, data.id, prefix.text, name.text, kunya.text, uri.text.trim(), bio.text.trim(), hidden.checked);
+                        saveClicked(indexPath, data.id, prefix.text.trim(), name.text.trim(), kunya.text.trim(), uri.text.trim(), bio.text.trim(), hidden.checked);
+                    } else {
+                        persist.showToast( qsTr("One of the fields is incomplete!"), "", "asset:///images/menu/ic_bookmark_delete.png" );
                     }
                 }
             }
