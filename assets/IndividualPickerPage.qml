@@ -114,21 +114,10 @@ Page
                     id: adm
                 }
                 
-                function onSaveClicked(indexPath, id, prefix, name, kunya, uri, bio, hidden)
-                {
-                    helper.editIndividual(listView, id, prefix, name, kunya, uri, bio, hidden);
-                    editDelegate.object.close();
-                    
-                    adm.replace(indexPath[0], {'id': id, 'prefix': prefix, 'name': name, 'kunya': kunya, 'uri': uri, 'bio': bio, 'hidden': hidden});
-                }
-                
                 function edit(indexPath)
                 {
-                    var d = dataModel.data(indexPath);
+                    editDelegate.indexPath = indexPath;
                     editDelegate.active = true;
-                    editDelegate.object.data = d;
-                    editDelegate.object.indexPath = indexPath;
-                    editDelegate.object.savedClicked.connect(onSavedClicked);
                 }
                 
                 listItemComponents: [
@@ -222,7 +211,24 @@ Page
         Delegate
         {
             id: editDelegate
+            property variant indexPath
             source: "EditIndividualSheet.qml"
+            
+            function onSaveClicked(indexPath, id, prefix, name, kunya, uri, bio, hidden)
+            {
+                console.log("*** SDLFJSDKFLzzzz");
+                helper.editIndividual(listView, id, prefix, name, kunya, uri, bio, hidden);
+                editDelegate.object.close();
+                adm.replace(indexPath[0], {'id': id, 'prefix': prefix, 'name': name, 'kunya': kunya, 'uri': uri, 'bio': bio, 'hidden': hidden});
+            }
+            
+            onObjectChanged: {
+                if (object) {
+                    object.data = adm.data(indexPath);
+                    object.indexPath = indexPath;
+                    object.saveClicked.connect(onSaveClicked);
+                }
+            }
         }        
     ]
 }

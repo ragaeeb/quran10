@@ -17,7 +17,6 @@ class QueryTafsirHelper
     DatabaseHelper* m_sql;
 
     qint64 generateIndividualField(QObject* caller, QString const& value);
-    void populateTafsirFields(QObject* caller, QStringList& fields, QVariantList& args, QString const& author, QString const& translator, QString const& explainer, QString const& title, QString const& description, QString const& reference);
 
 public:
     QueryTafsirHelper(DatabaseHelper* sql);

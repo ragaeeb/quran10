@@ -148,12 +148,12 @@ Page
                         addAction.triggered();
                     }
                 } else if (id == QueryId.AddTafsirPage) {
-                    persist.showToast( qsTr("Tafsir page added!"), "", "asset:///images/menu/ic_add.png" );
-                    idChanged();
+                    persist.showToast( qsTr("Tafsir page added!"), "", "asset:///images/menu/ic_add_suite_page.png" );
+                    suiteIdChanged();
                 } else if (id == QueryId.RemoveTafsirPage) {
                     persist.showToast( qsTr("Tafsir page removed!"), "", "asset:///images/menu/ic_delete_suite_page.png" );
                 } else if (id == QueryId.EditTafsirPage) {
-                    persist.showToast( qsTr("Tafsir page updated!"), "", "asset:///images/menu/ic_edit.png" );
+                    persist.showToast( qsTr("Tafsir page updated!"), "", "asset:///images/menu/ic_edit_suite_page.png" );
                 }
                 
                 busy.delegateActive = false;
@@ -244,7 +244,7 @@ Page
         EmptyDelegate
         {
             id: noElements
-            graphic: "images/placeholders/empty_individuals.png"
+            graphic: "images/placeholders/empty_suite_pages.png"
             labelText: qsTr("No elements found. Tap on the Add button to add a new one.") + Retranslate.onLanguageChanged
             
             onImageTapped: {
