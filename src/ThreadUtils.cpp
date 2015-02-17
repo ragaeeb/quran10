@@ -173,7 +173,7 @@ QVariantList ThreadUtils::removeOutOfRange(QVariantList input, int fromChapter, 
 }
 
 
-QString ThreadUtils::buildSearchQuery(QVariantList& params, bool isArabic, QString const& trimmedText, int chapterNumber, QVariantList additional, bool andMode)
+QString ThreadUtils::buildSearchQuery(QVariantList& params, bool isArabic, int chapterNumber, QVariantList additional, bool andMode)
 {
     QStringList constraints;
     QString textField = isArabic ? "searchable" : "verses.translation";

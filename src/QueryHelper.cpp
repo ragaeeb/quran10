@@ -332,7 +332,7 @@ void QueryHelper::searchQuery(QObject* caller, QString const& trimmedText, int c
 
     QVariantList params = QVariantList() << trimmedText;
     bool isArabic = trimmedText.isRightToLeft() || !showTranslation();
-    QString query = ThreadUtils::buildSearchQuery(params, isArabic, trimmedText, chapterNumber, additional, andMode);
+    QString query = ThreadUtils::buildSearchQuery(params, isArabic, chapterNumber, additional, andMode);
 
     m_sql.executeQuery(caller, query, QueryId::SearchAyats, params);
 }

@@ -28,7 +28,7 @@ struct SimilarReference
 
 struct ThreadUtils
 {
-    static QString buildSearchQuery(QVariantList& params, bool isArabic, QString const& trimmedText, int chapterNumber, QVariantList additional, bool andMode);
+    static QString buildSearchQuery(QVariantList& params, bool isArabic, int chapterNumber, QVariantList additional, bool andMode);
     static QString buildChaptersQuery(QVariantList& args, QString const& text, bool showTranslation);
     static QString compressBookmarks(QString const& destinationZip);
     static void compressFiles(QSet<QString>& attachments);
