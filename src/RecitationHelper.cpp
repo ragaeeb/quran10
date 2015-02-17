@@ -13,17 +13,48 @@
 #define ITERATION 20
 #define CHUNK_SIZE 4
 
+using namespace canadainc;
+
 namespace {
 
 void writeVerse(QVariant const& cookie, QByteArray const& data) {
     canadainc::IOUtils::writeFile( cookie.toMap().value("local").toString(), data );
 }
 
+QVariantMap processPlaylist(QString const& reciter, QString const& outputDirectory, QList< QPair<int,int> > const& playlist)
+{
+    QVariantMap result;
+
+    if ( !Persistance::hasSharedFolderAccess() ) {
+        result["error"] = QObject::tr("Quran10 does not have access to your Shared Folder. The app cannot download any recitations without this permission.");
+        return result;
+    }
+
+    QDir q( QString("%1/%2").arg(outputDirectory).arg(reciter) );
+    if ( !q.exists() ) {
+        q.mkpath(".");
+    }
+
+    if ( !q.exists() ) {
+        result["error"] = QObject::tr("Quran10 does not seem to be able to write to the output folder. Please try selecting a different output folder or restart your device.");
+        return result;
+    }
+
+
+
+    int n = playlist.size();
+
+    for (int i = 0; i < n; i++)
+    {
+        QPair<int,int> track = playlist[i];
+    }
+
+    return result;
+}
+
 }
 
 namespace quran {
-
-using namespace canadainc;
 
 RecitationHelper::RecitationHelper(QueueDownloader* queue, Persistance* p, QObject* parent) :
         QObject(parent), m_queue(queue), m_persistance(p)
