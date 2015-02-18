@@ -29,6 +29,8 @@ private slots:
     void uploadUpdates();
 
 signals:
+    void compressed();
+    void compressing();
     void uploadProgress(QVariant const& cookie, qint64 bytesSent, qint64 bytesTotal);
 
 public:
