@@ -40,13 +40,31 @@ QVariantMap processPlaylist(QString const& reciter, QString const& outputDirecto
         return result;
     }
 
-
-
     int n = playlist.size();
+    QVariantList queue;
+    QStringList toPlay;
 
     for (int i = 0; i < n; i++)
     {
         QPair<int,int> track = playlist[i];
+
+        QString fileName = QString("%1%2.mp3").arg( normalize(track.first) ).arg( normalize(track.second) );
+        QString absolutePath = QString("%1/%2").arg( q.path() ).arg(fileName);
+
+        if ( !QFile(absolutePath).exists() )
+        {
+            QVariantMap q;
+            q["uri"] = QString("%1/%2/%3").arg(remote).arg(reciter).arg(fileName);
+            q["local"] = absolutePath;
+            q["chapter"] = chapter;
+            q["verse"] = verse;
+            q["name"] = tr("%1:%2 recitation").arg(chapter).arg(verse);
+            q["recitation"] = true;
+
+            queue << q;
+        } else {
+            toPlay << absolutePath;
+        }
     }
 
     return result;
