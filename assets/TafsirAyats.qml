@@ -117,7 +117,7 @@ Page
                 definition.source = "AyatPage.qml";
                 var page = definition.createObject();
                 page.surahId = dataModel.data(indexPath).surah_id;
-                page.verseId = dataModel.data(indexPath).verse_id;
+                page.verseId = dataModel.data(indexPath).from_verse_number;
                 
                 navigationPane.push(page);
             }
