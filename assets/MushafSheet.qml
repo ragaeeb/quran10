@@ -7,6 +7,7 @@ Sheet
     id: sheet
     peekEnabled: false
     property int currentPage: persist.contains("savedPage") ? persist.getValueFor("savedPage") : 1
+    property variant currentImageSource
     
     onCurrentPageChanged: {
         mushaf.requestPage(currentPage);
@@ -42,7 +43,7 @@ Sheet
             ActionItem
             {
                 title: qsTr("Download All") + Retranslate.onLanguageChanged
-                ActionBar.placement: 'Signature' in ActionBarPlacement ? ActionBarPlacement["Signature"] : ActionBarPlacement.OnBar
+                ActionBar.placement: ActionBarPlacement.OnBar
                 imageSource: "images/menu/ic_download_mushaf.png"
                 property variant totalSize: 0
                 
@@ -82,6 +83,31 @@ Sheet
                     } else {
                         mushaf.fetchMushafSize();
                     }
+                }
+            },
+            
+            ActionItem
+            {
+                id: stretchAction
+                property bool stretchMushaf: false
+                title: stretchMushaf ? qsTr("Aspect Fill") + Retranslate.onLanguageChanged : qsTr("Stretch") + Retranslate.onLanguageChanged
+                ActionBar.placement: ActionBarPlacement.OnBar
+                
+                function onSettingChanged(key)
+                {
+                    if (key == "stretchMushaf") {
+                        stretchMushaf = persist.getValueFor("stretchMushaf") == 1;
+                    }
+                }
+                
+                onCreationCompleted: {
+                    persist.settingChanged.connect(onSettingChanged);
+                    onSettingChanged("stretchMushaf");
+                }
+                
+                onTriggered: {
+                    persist.saveValueFor("stretchMushaf", stretchMushaf ? 1 : 0, false);
+                    stretchMushaf = !stretchMushaf;
                 }
             }
         ]
@@ -181,6 +207,7 @@ Sheet
                     ComponentDefinition
                     {
                         id: optionDefinition
+
                         Option {
                             imageSource: "images/dropdown/ic_surah.png"
                         }
@@ -190,44 +217,93 @@ Sheet
             
             Container
             {
+                id: rootContainer
                 layout: DockLayout {}
                 horizontalAlignment: HorizontalAlignment.Fill
                 verticalAlignment: VerticalAlignment.Fill
                 
-                ScrollView
+                ControlDelegate
                 {
-                    id: scrollView
-                    horizontalAlignment: HorizontalAlignment.Center
-                    verticalAlignment: VerticalAlignment.Center
-                    scrollViewProperties.pinchToZoomEnabled: true
-                    scrollViewProperties.overScrollEffectMode: OverScrollEffectMode.OnPinch
+                    delegateActive: stretchAction.stretchMushaf
+                    horizontalAlignment: HorizontalAlignment.Fill
+                    verticalAlignment: VerticalAlignment.Fill
                     
-                    ImageView
+                    sourceComponent: ComponentDefinition
                     {
-                        id: pageImage
-                        scalingMethod: ScalingMethod.AspectFill
-                        horizontalAlignment: HorizontalAlignment.Center
-                        verticalAlignment: VerticalAlignment.Center
-                        loadEffect: ImageViewLoadEffect.FadeZoom
-                        
-                        onTouch: {
-                            hiddenTitle.visibility = ChromeVisibility.Overlay;
-                            mainPage.actionBarVisibility = ChromeVisibility.Overlay;
-                            timer.restart();
+                        ImageView
+                        {
+                            horizontalAlignment: HorizontalAlignment.Center
+                            verticalAlignment: VerticalAlignment.Center
+                            loadEffect: ImageViewLoadEffect.FadeZoom
+                            imageSource: currentImageSource
                             
-                            if ( event.isDown() ) {
-                                opacity = 0.7;
-                            } else if ( event.isUp() || event.isCancel() ) {
-                                opacity = 1;
+                            onTouch: {
+                                hiddenTitle.visibility = ChromeVisibility.Overlay;
+                                mainPage.actionBarVisibility = ChromeVisibility.Overlay;
+                                timer.restart();
+                                
+                                if ( event.isDown() ) {
+                                    opacity = 0.7;
+                                } else if ( event.isUp() || event.isCancel() ) {
+                                    opacity = 1;
+                                }
+                            }
+                            
+                            function onPageReady(imageData) {
+                                currentImageSource = imageData.localUri;
+                            }
+                            
+                            onCreationCompleted: {
+                                mushaf.mushafPageReady.connect(onPageReady);
                             }
                         }
-                        
-                        function onPageReady(imageData) {
-                            imageSource = imageData.localUri;
-                        }
-                        
-                        onCreationCompleted: {
-                            mushaf.mushafPageReady.connect(onPageReady);
+                    }
+                }
+                
+                ControlDelegate
+                {
+                    delegateActive: !stretchAction.stretchMushaf
+                    horizontalAlignment: HorizontalAlignment.Center
+                    verticalAlignment: VerticalAlignment.Center
+                    
+                    sourceComponent: ComponentDefinition
+                    {
+                        ScrollView
+                        {
+                            id: scrollView
+                            horizontalAlignment: HorizontalAlignment.Center
+                            verticalAlignment: VerticalAlignment.Center
+                            scrollViewProperties.pinchToZoomEnabled: true
+                            scrollViewProperties.overScrollEffectMode: OverScrollEffectMode.OnPinch
+                            
+                            ImageView
+                            {
+                                scalingMethod: ScalingMethod.AspectFill
+                                horizontalAlignment: HorizontalAlignment.Center
+                                verticalAlignment: VerticalAlignment.Center
+                                loadEffect: ImageViewLoadEffect.FadeZoom
+                                imageSource: currentImageSource
+                                
+                                onTouch: {
+                                    hiddenTitle.visibility = ChromeVisibility.Overlay;
+                                    mainPage.actionBarVisibility = ChromeVisibility.Overlay;
+                                    timer.restart();
+                                    
+                                    if ( event.isDown() ) {
+                                        opacity = 0.7;
+                                    } else if ( event.isUp() || event.isCancel() ) {
+                                        opacity = 1;
+                                    }
+                                }
+                                
+                                function onPageReady(imageData) {
+                                    currentImageSource = imageData.localUri;
+                                }
+                                
+                                onCreationCompleted: {
+                                    mushaf.mushafPageReady.connect(onPageReady);
+                                }
+                            }
                         }
                     }
                 }

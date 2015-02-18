@@ -5,15 +5,9 @@ TitleBar
 {
     id: titleControl
     property int chapterNumber
-    property alias titleText: surahNameArabic.text
-    property alias subtitleText: surahNameEnglish.text
     property variant bgSource: "images/title/title_bg_tafseer.amd"
     property double bottomPad: 25
-    property bool showNavigation: false
-    property bool navigationExpanded: false
-    signal navigationTapped(bool right);
     signal titleTapped();
-    scrollBehavior: TitleBarScrollBehavior.Sticky
     
     onChapterNumberChanged: {
         helper.fetchSurahHeader(titleControl, chapterNumber);
@@ -24,6 +18,7 @@ TitleBar
     {
         content: Container
         {
+            id: titleContainer
             topPadding: 10; bottomPadding: bottomPad
             horizontalAlignment: HorizontalAlignment.Fill
             verticalAlignment: VerticalAlignment.Top
@@ -62,93 +57,11 @@ TitleBar
                 textStyle.fontWeight: FontWeight.Bold
                 topMargin: 0
             }
-        }
-        
-        expandableArea
-        {
-            expanded: showNavigation && navigationExpanded
-            indicatorVisibility: TitleBarExpandableAreaIndicatorVisibility.Hidden
             
-            content: ControlDelegate
-            {
-                delegateActive: showNavigation
-                
-                sourceComponent: ComponentDefinition
-                {
-                    Container
-                    {
-                        background: orangeBg.imagePaint
-                        horizontalAlignment: HorizontalAlignment.Fill
-                        verticalAlignment: VerticalAlignment.Fill
-                        layout: DockLayout {}
-                        
-                        Container
-                        {
-                            leftPadding: 10; rightPadding: 10; topPadding: 5; bottomPadding: 5
-                            background: Color.create(0.0, 0.0, 0.0, 0.5)
-                            horizontalAlignment: HorizontalAlignment.Fill
-                            verticalAlignment: VerticalAlignment.Fill
-                            
-                            layout: StackLayout {
-                                orientation: LayoutOrientation.LeftToRight
-                            }
-                            
-                            NavigationButton
-                            {
-                                defaultImageSource: "images/title/ic_prev.png"
-                                disabledImageSource: "images/title/ic_prev_disabled.png"
-                                enabled: chapterNumber > 1
-                                
-                                onClicked: {
-                                    navigationTapped(false);
-                                }
-                            }
-                            
-                            Container
-                            {
-                                horizontalAlignment: HorizontalAlignment.Fill
-                                verticalAlignment: VerticalAlignment.Fill
-                                
-                                layoutProperties: StackLayoutProperties {
-                                    spaceQuota: 1
-                                }
-                                
-                                ImageToggleButton
-                                {
-                                    checked: persist.getValueFor("follow") == 1
-                                    imageSourceChecked: "images/title/ic_follow_on.png"
-                                    imageSourceDefault: "images/title/ic_follow_off.png"
-                                    imageSourcePressedChecked: imageSourceDefault
-                                    imageSourcePressedUnchecked: imageSourceChecked
-                                    horizontalAlignment: HorizontalAlignment.Center
-                                    
-                                    onCheckedChanged: {
-                                        persist.saveValueFor("follow", checked ? 1 : 0);
-                                    }
-                                }
-                            }
-                            
-                            NavigationButton
-                            {
-                                horizontalAlignment: HorizontalAlignment.Right
-                                defaultImageSource: "images/title/ic_next.png"
-                                disabledImageSource: "images/title/ic_next_disabled.png"
-                                enabled: chapterNumber < 114
-                                multiplier: -1
-                                
-                                onClicked: {
-                                    navigationTapped(true);
-                                }
-                            }
-                            
-                            attachedObjects: [
-                                ImagePaintDefinition {
-                                    id: orangeBg
-                                    imageSource: "images/title/title_bg.png"
-                                }
-                            ]
-                        }
-                    }
+            onCreationCompleted: {
+                if ( "navigation" in titleContainer ) {
+                    var nav = titleContainer.navigation;
+                    nav.focusPolicy = 0x2;
                 }
             }
         }
