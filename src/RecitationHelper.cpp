@@ -56,9 +56,9 @@ QVariantMap processPlaylist(QString const& reciter, QString const& outputDirecto
             QVariantMap q;
             q["uri"] = QString("%1/%2/%3").arg(remote).arg(reciter).arg(fileName);
             q["local"] = absolutePath;
-//            q["chapter"] = chapter;
-//            q["verse"] = verse;
-//            q["name"] = tr("%1:%2 recitation").arg(chapter).arg(verse);
+            q["chapter"] = track.first;
+            q["verse"] = track.second;
+            q["name"] = QObject::tr("%1:%2 recitation").arg(track.first).arg(track.second);
             q["recitation"] = true;
 
             queue << q;
