@@ -275,6 +275,7 @@ Sheet
                             verticalAlignment: VerticalAlignment.Center
                             scrollViewProperties.pinchToZoomEnabled: true
                             scrollViewProperties.overScrollEffectMode: OverScrollEffectMode.OnPinch
+                            scrollRole: ScrollRole.Main
                             
                             ImageView
                             {

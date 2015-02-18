@@ -65,7 +65,8 @@ NavigationPane
                     definition.source = "SurahPage.qml";
                     var sp = definition.createObject();
                     navigationPane.push(sp);
-                    sp.surahId = data.surah_id;
+                    sp.fromSurahId = data.surah_id;
+                    sp.toSurahId = data.surah_id;
                     sp.requestedVerse = data.verse_number_start;
                 }
                 
