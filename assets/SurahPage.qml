@@ -147,24 +147,6 @@ Page
         id: ctb
         bgSource: "images/title/title_bg_alt.png"
         bottomPad: 0
-        showNavigation: true
-        navigationExpanded: true
-        
-        onNavigationTapped: {
-            if (right) {
-                ++fromSurahId;
-            } else {
-                --fromSurahId;
-            }
-            
-            if (toSurahId > 0) {
-                toSurahId = 0;
-            } else {
-                toSurahIdChanged();
-            }
-
-            player.stop();
-        }
         
         onTitleTapped: {
             definition.source = "ChapterTafsirPicker.qml";
@@ -182,35 +164,77 @@ Page
         verticalAlignment: VerticalAlignment.Fill
         background: Color.White
         
-        VersesListView
+        Container
         {
-            id: listView
+            horizontalAlignment: HorizontalAlignment.Fill
+            verticalAlignment: VerticalAlignment.Fill
             
-            onTriggered: {
-                console.log("UserEvent: VerseTriggered");
-                var d = dataModel.data(indexPath);
+            ChapterNavigationBar
+            {
+                id: cnb
+                chapterNumber: ctb.chapterNumber
                 
-                definition.source = "AyatPage.qml";
-                var ayatPage = definition.createObject();
-                ayatPage.surahId = d.surah_id;
-                ayatPage.verseId = d.verse_id;
-                
-                navigationPane.push(ayatPage);
+                onNavigationTapped: {
+                    if (right) {
+                        ++fromSurahId;
+                    } else {
+                        --fromSurahId;
+                    }
+                    
+                    if (toSurahId > 0) {
+                        toSurahId = 0;
+                    } else {
+                        toSurahIdChanged();
+                    }
+                    
+                    player.stop();
+                }
             }
             
-            attachedObjects: [
-                ListScrollStateHandler {
-                    id: scroller
+            VersesListView
+            {
+                id: listView
+                
+                onTriggered: {
+                    console.log("UserEvent: VerseTriggered");
+                    var d = dataModel.data(indexPath);
                     
-                    onFirstVisibleItemChanged: {
-                        if (firstVisibleItem.length > 0)
-                        {
-                            var current = listView.theDataModel.data(firstVisibleItem);
-                            
-                            if (current.surah_id != ctb.chapterNumber) {
-                                ctb.chapterNumber = current.surah_id;
+                    definition.source = "AyatPage.qml";
+                    var ayatPage = definition.createObject();
+                    ayatPage.surahId = d.surah_id;
+                    ayatPage.verseId = d.verse_id;
+                    
+                    navigationPane.push(ayatPage);
+                }
+                
+                attachedObjects: [
+                    ListScrollStateHandler {
+                        id: scroller
+                        
+                        onFirstVisibleItemChanged: {
+                            if (firstVisibleItem.length > 0)
+                            {
+                                var current = listView.theDataModel.data(firstVisibleItem);
+                                
+                                if (current.surah_id != ctb.chapterNumber) {
+                                    ctb.chapterNumber = current.surah_id;
+                                }
                             }
                         }
+                    }
+                ]
+            }
+            
+            gestureHandlers: [
+                PinchHandler
+                {
+                    onPinchEnded: {
+                        var newValue = Math.floor(event.pinchRatio*listView.primarySize);
+                        newValue = Math.max(8,newValue);
+                        newValue = Math.min(newValue, 24);
+                        
+                        listView.primarySize = newValue;
+                        persist.saveValueFor("primarySize", newValue);
                     }
                 }
             ]
@@ -231,20 +255,6 @@ Page
                 recitation.abort();
             }
         }
-        
-        gestureHandlers: [
-            PinchHandler
-            {
-                onPinchEnded: {
-                    var newValue = Math.floor(event.pinchRatio*listView.primarySize);
-                    newValue = Math.max(8,newValue);
-                    newValue = Math.min(newValue, 24);
-                    
-                    listView.primarySize = newValue;
-                    persist.saveValueFor("primarySize", newValue);
-                }
-            }
-        ]
     }
     
     attachedObjects: [

@@ -86,6 +86,13 @@ ControlDelegate
                     }
                 }
             ]
+            
+            onCreationCompleted: {
+                if ( "navigation" in quoteContainer ) {
+                    var nav = quoteContainer.navigation;
+                    nav.focusPolicy = 0x2;
+                }
+            }
         }
     }
 }

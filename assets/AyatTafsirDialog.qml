@@ -1,4 +1,4 @@
-import bb.cascades 1.0
+import bb.cascades 1.2
 import com.canadainc.data 1.0
 
 FullScreenDialog
@@ -44,6 +44,7 @@ FullScreenDialog
         }
         
         body.text = "\n"+bodyText+"\n";
+        body.requestFocus();
     }
     
     function onDataLoaded(id, data)
@@ -58,6 +59,14 @@ FullScreenDialog
         }
     }
     
+    function finish()
+    {
+        fader.fromOpacity = 1;
+        fader.toOpacity = 0;
+        fader.play();
+        scaleExit.play();
+    }
+    
     dialogContent: Container
     {
         bottomPadding: 30
@@ -68,13 +77,10 @@ FullScreenDialog
         gestureHandlers: [
             TapHandler {
                 onTapped: {
-                    console.log("UserEvent: HadithTafsirDialogTapped");
+                    console.log("UserEvent: AyatTafsirDialogTapped");
                     
                     if (event.propagationPhase == PropagationPhase.AtTarget) {
-                        fader.fromOpacity = 1;
-                        fader.toOpacity = 0;
-                        fader.play();
-                        scaleExit.play();
+                        finish();
                     }
                 }
             }
@@ -224,6 +230,21 @@ FullScreenDialog
             
             onCreationCompleted: {
                 orientationChanged(orientation);
+            }
+        },
+        
+        Delegate {
+            source: "ClassicBackDelegate.qml"
+            
+            onCreationCompleted: {
+                active = 'locallyFocused' in contentContainer;
+            }
+            
+            onObjectChanged: {
+                if (object) {
+                    object.parentControl = mainContainer;
+                    object.triggered.connect(finish);
+                }
             }
         }
     ]

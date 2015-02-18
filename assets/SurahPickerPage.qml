@@ -85,62 +85,6 @@ Page
                     }
                 ]
             }
-            
-            expandableArea
-            {
-                expanded: showJuz
-                indicatorVisibility: TitleBarExpandableAreaIndicatorVisibility.Hidden
-                
-                content: Container
-                {
-                    horizontalAlignment: HorizontalAlignment.Fill
-                    visible: showJuz
-                    
-                    PersistDropDown
-                    {
-                        id: sortOrder
-                        title: qsTr("Display Options") + Retranslate.onLanguageChanged
-                        horizontalAlignment: HorizontalAlignment.Fill
-                        key: "surahPickerOption"
-                        
-                        Option {
-                            id: alphabet
-                            text: qsTr("Alphabetical Order") + Retranslate.onLanguageChanged
-                            description: qsTr("Sorted by surah name") + Retranslate.onLanguageChanged
-                            imageSource: "images/dropdown/sort_alphabet.png"
-                            value: "name"
-                        }
-                        
-                        Option {
-                            id: juzOption
-                            text: qsTr("Juz") + Retranslate.onLanguageChanged
-                            description: qsTr("The surahs will be displayed separated in juz") + Retranslate.onLanguageChanged
-                            imageSource: "images/dropdown/sort_juz.png"
-                            value: "juz"
-                        }
-                        
-                        Option {
-                            id: normal
-                            text: qsTr("Normal") + Retranslate.onLanguageChanged
-                            description: qsTr("The surahs will be displayed in the standard order") + Retranslate.onLanguageChanged
-                            imageSource: "images/dropdown/sort_normal.png"
-                            value: "normal"
-                        }
-                        
-                        Option {
-                            id: recent
-                            text: qsTr("Revelation Order") + Retranslate.onLanguageChanged
-                            description: qsTr("Display chapters int he order they were revealed") + Retranslate.onLanguageChanged
-                            imageSource: "images/dropdown/sort_revelation.png"
-                            value: "revelation_order"
-                        }
-                        
-                        onSelectedOptionChanged: {
-                            textField.textChanging(textField.text);
-                        }
-                    }
-                }
-            }
         }
     }
     
@@ -160,12 +104,59 @@ Page
             horizontalAlignment: HorizontalAlignment.Fill
             verticalAlignment: VerticalAlignment.Fill
             
+            PersistDropDown
+            {
+                id: sortOrder
+                title: qsTr("Display Options") + Retranslate.onLanguageChanged
+                horizontalAlignment: HorizontalAlignment.Fill
+                key: "surahPickerOption"
+                topMargin: 0; bottomMargin: 0
+                visible: showJuz
+                
+                Option {
+                    id: alphabet
+                    text: qsTr("Alphabetical Order") + Retranslate.onLanguageChanged
+                    description: qsTr("Sorted by surah name") + Retranslate.onLanguageChanged
+                    imageSource: "images/dropdown/sort_alphabet.png"
+                    value: "name"
+                }
+                
+                Option {
+                    id: juzOption
+                    text: qsTr("Juz") + Retranslate.onLanguageChanged
+                    description: qsTr("The surahs will be displayed separated in juz") + Retranslate.onLanguageChanged
+                    imageSource: "images/dropdown/sort_juz.png"
+                    value: "juz"
+                }
+                
+                Option {
+                    id: normal
+                    text: qsTr("Normal") + Retranslate.onLanguageChanged
+                    description: qsTr("The surahs will be displayed in the standard order") + Retranslate.onLanguageChanged
+                    imageSource: "images/dropdown/sort_normal.png"
+                    value: "normal"
+                }
+                
+                Option {
+                    id: recent
+                    text: qsTr("Revelation Order") + Retranslate.onLanguageChanged
+                    description: qsTr("Display chapters int he order they were revealed") + Retranslate.onLanguageChanged
+                    imageSource: "images/dropdown/sort_revelation.png"
+                    value: "revelation_order"
+                }
+                
+                onSelectedOptionChanged: {
+                    textField.textChanging(textField.text);
+                }
+            }
+            
             TextField
             {
                 id: textField
                 hintText: qsTr("Search surah name or number (ie: '2' for Surah Al-Baqara)...") + Retranslate.onLanguageChanged
                 bottomMargin: 0
                 horizontalAlignment: HorizontalAlignment.Fill
+                topMargin: 0; topPadding: 0
                 
                 onTextChanging: {
                     var ok = true;
