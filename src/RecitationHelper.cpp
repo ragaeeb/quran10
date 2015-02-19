@@ -56,8 +56,6 @@ QVariantMap processPlaylist(QString const& reciter, QString const& outputDirecto
             QVariantMap q;
             q["uri"] = QString("%1/%2/%3").arg(remote).arg(reciter).arg(fileName);
             q["local"] = absolutePath;
-            q["chapter"] = track.first;
-            q["verse"] = track.second;
             q["name"] = QObject::tr("%1:%2 recitation").arg(track.first).arg(track.second);
             q["recitation"] = true;
 
@@ -65,6 +63,17 @@ QVariantMap processPlaylist(QString const& reciter, QString const& outputDirecto
         } else {
             toPlay << absolutePath;
         }
+    }
+
+    result["queue"] = queue;
+
+    bool written = IOUtils::writeTextFile( PLAYLIST_TARGET, playlist.join("\n"), true, false );
+    LOGGER(written);
+
+    if (written) {
+        result["playlist"] = PLAYLIST_TARGET;
+    } else {
+        result["error"] = QObject::tr("Quran10 could not write the playlist. Please try restarting your device.");
     }
 
     return result;
@@ -236,11 +245,8 @@ QVariantList RecitationHelper::generatePlaylist(int chapter, int fromVerse, int 
             playlist << absolutePath;
         }
 
-        if (write)
-        {
-            bool written = IOUtils::writeTextFile( PLAYLIST_TARGET, playlist.join("\n"), true, false );
-            LOGGER(written);
-        }
+        bool written = IOUtils::writeTextFile( PLAYLIST_TARGET, playlist.join("\n"), true, false );
+        LOGGER(written);
     }
 
     return queue;

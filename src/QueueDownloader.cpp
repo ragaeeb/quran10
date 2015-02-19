@@ -4,33 +4,21 @@
 
 namespace canadainc {
 
-QueueDownloader::QueueDownloader(QObject* parent) : DataModel(parent)
+QueueDownloader::QueueDownloader(QObject* parent) : QObject(parent), m_currentIndex(-1)
 {
     connect( &m_network, SIGNAL( requestComplete(QVariant const&, QByteArray const&) ), this, SLOT( onRequestComplete(QVariant const&, QByteArray const&) ) );
-    connect( &m_network, SIGNAL( requestComplete(QVariant const&, QByteArray const&) ), this, SIGNAL( requestComplete(QVariant const&, QByteArray const&) ) );
-    connect( &m_network, SIGNAL( downloadProgress(QVariant const&, qint64, qint64) ), this, SIGNAL( downloadProgress(QVariant const&, qint64, qint64) ) );
+    connect( &m_network, SIGNAL( downloadProgress(QVariant const&, qint64, qint64) ), this, SLOT( onDownloadProgress(QVariant const&, qint64, qint64) ) );
     connect( &m_network, SIGNAL( sizeFetched(QVariant const&, qint64) ), this, SIGNAL( sizeFetched(QVariant const&, qint64) ) );
 
-    connect( &m_model, SIGNAL( itemAdded(QVariantList) ), this, SIGNAL( itemAdded(QVariantList) ) );
-    connect( &m_model, SIGNAL( itemUpdated(QVariantList) ), this, SIGNAL( itemUpdated(QVariantList) ) );
-    connect( &m_model, SIGNAL( itemRemoved(QVariantList) ), this, SIGNAL( itemRemoved(QVariantList) ) );
-    connect( &m_model, SIGNAL( itemsChanged(bb::cascades::DataModelChangeType::Type, QSharedPointer<bb::cascades::DataModel::IndexMapper>) ), this, SIGNAL( itemsChanged(bb::cascades::DataModelChangeType::Type, QSharedPointer<bb::cascades::DataModel::IndexMapper>) ) );
-
-    connect( &m_model, SIGNAL( itemAdded(QVariantList) ), this, SIGNAL( queueChanged() ) );
-    connect( &m_model, SIGNAL( itemRemoved(QVariantList) ), this, SIGNAL( queueChanged() ) );
-    connect( &m_model, SIGNAL( itemsChanged(bb::cascades::DataModelChangeType::Type, QSharedPointer<bb::cascades::DataModel::IndexMapper>) ), this, SIGNAL( queueChanged() ) );
-
-    m_model.setGrouping(ItemGrouping::ByFullValue);
-    m_model.setSortingKeys( QStringList() << "timestamp" );
+    m_model.setParent(this);
 }
 
-QueueDownloader::~QueueDownloader()
-{
+QueueDownloader::~QueueDownloader() {
+    m_model.setParent(NULL);
 }
 
 
-void QueueDownloader::checkSize(QVariant const& cookie, QString const& uri)
-{
+void QueueDownloader::checkSize(QVariant const& cookie, QString const& uri) {
     m_network.getFileSize(uri, cookie);
 }
 
@@ -39,66 +27,65 @@ void QueueDownloader::processNext()
 {
     if ( !m_model.isEmpty() )
     {
-        QVariantList firstIndex = m_model.first();
-        QVariantMap current = m_model.data(firstIndex).toMap();
+        ++m_currentIndex;
+        QVariantMap current = m_model.value(m_currentIndex).toMap();
         current["timestamp"] = QDateTime::currentMSecsSinceEpoch();
 
         LOGGER("Request completed, now processing" << current);
-        m_network.doGet( current.value("uri").toString() , current );
+        QString uri = current.value("uri").toString();
 
-        m_model.removeAt(firstIndex);
+        m_uriToIndex.insert(uri, m_currentIndex);
+        m_network.doGet(uri, current);
     }
 }
 
 
 void QueueDownloader::process(QVariantMap const& toProcess) {
-    process( QVariantList() << toProcess );
+    m_model.append(toProcess);
 }
 
 
 void QueueDownloader::process(QVariantList const& toProcess)
 {
-    if ( !m_network.online() ) {
-        Persistance::showBlockingToast( tr("It seems your device is offline, please connect to Wi-Fi or enable your data connection to proceed."), tr("OK"), "asset:///images/toast/ic_offline.png" );
-    } else {
-        m_model.insertList(toProcess);
-        processNext();
+    m_model.append(toProcess);
+    processNext();
+}
+
+
+void QueueDownloader::onDownloadProgress(QVariant const& cookie, qint64 bytesReceived, qint64 bytesTotal)
+{
+    QVariantMap element = cookie.toMap();
+
+    element["current"] = bytesReceived;
+    element["total"] = bytesTotal;
+
+    QString uri = element.value("uri").toString();
+
+    if ( m_uriToIndex.contains(uri) )
+    {
+        int i = m_uriToIndex.value(uri);
+        m_model.replace(i, element);
     }
+
+    emit downloadProgress(cookie, bytesReceived, bytesTotal);
 }
 
 
 void QueueDownloader::onRequestComplete(QVariant const& cookie, QByteArray const& data)
 {
-    Q_UNUSED(data);
-    Q_UNUSED(cookie);
     processNext();
+
+    emit requestComplete(cookie, data);
 }
 
 
-int QueueDownloader::childCount(const QVariantList &indexPath) {
-    return m_model.childCount(indexPath);
+QObject* QueueDownloader::model() {
+    return &m_model;
 }
 
 
-bool QueueDownloader::hasChildren(const QVariantList &indexPath) {
-    return m_model.hasChildren(indexPath);
-}
-
-
-QString QueueDownloader::itemType(const QVariantList &indexPath) {
-    return m_model.itemType(indexPath);
-}
-
-
-QVariant QueueDownloader::data(const QVariantList &indexPath) {
-    return m_model.data(indexPath);
-}
-
-
-void QueueDownloader::abort()
-{
+void QueueDownloader::abort() {
 	m_network.abort();
-	m_model.clear();
 }
 
 
