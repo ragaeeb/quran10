@@ -1,7 +1,7 @@
 #ifndef QUEUEDOWNLOADER_H_
 #define QUEUEDOWNLOADER_H_
 
-#include <bb/cascades/GroupDataModel>
+#include <bb/cascades/ArrayDataModel>
 
 #include "NetworkProcessor.h"
 
@@ -9,26 +9,26 @@ namespace canadainc {
 
 using namespace bb::cascades;
 
-class QueueDownloader : public DataModel
+class QueueDownloader : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(int queued READ queued NOTIFY queueChanged)
+    Q_PROPERTY(QObject* model READ model FINAL)
 
-    GroupDataModel m_model;
+    ArrayDataModel m_model;
     NetworkProcessor m_network;
+    int m_currentIndex;
+    QMap<QString, int> m_uriToIndex;
 
     void processNext();
 
 private slots:
+    void onDownloadProgress(QVariant const& cookie, qint64 bytesReceived, qint64 bytesTotal);
     void onRequestComplete(QVariant const& cookie, QByteArray const& data);
 
 public:
     QueueDownloader(QObject* parent=NULL);
     virtual ~QueueDownloader();
-    int childCount(QVariantList const& indexPath);
-    bool hasChildren(QVariantList const& indexPath);
-    QString itemType(QVariantList const& indexPath);
-    QVariant data(QVariantList const& indexPath);
 
     /**
      * Queues up a batch of requests.
@@ -39,13 +39,10 @@ public:
     Q_SLOT void abort();
     int queued() const;
     void checkSize(QVariant const& cookie, QString const& uri);
+    QObject* model();
 
 signals:
     void downloadProgress(QVariant const& cookie, qint64 bytesReceived, qint64 bytesTotal);
-    void itemAdded(QVariantList);
-    void itemUpdated(QVariantList);
-    void itemRemoved(QVariantList);
-    void itemsChanged(bb::cascades::DataModelChangeType::Type, QSharedPointer<bb::cascades::DataModel::IndexMapper>);
     void queueChanged();
     void requestComplete(QVariant const& cookie, QByteArray const& data);
     void sizeFetched(QVariant const& cookie, qint64 size);
