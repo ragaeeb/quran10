@@ -26,6 +26,8 @@ class RecitationHelper : public QObject
     QueueDownloader* m_queue;
     Persistance* m_persistance;
     QFutureWatcher<QVariantList> m_future;
+    QFutureWatcher<QVariantMap> m_futureResult;
+    QString m_anchor;
 
     void startPlayback();
     QVariantList generatePlaylist(int chapter, int fromVerse, int toVerse, bool write);
@@ -33,6 +35,7 @@ class RecitationHelper : public QObject
 
 private slots:
     void onFinished();
+    void onPlaylistReady();
     void onRequestComplete(QVariant const& cookie, QByteArray const& data);
     void onWritten();
 

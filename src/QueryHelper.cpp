@@ -7,8 +7,8 @@
 #include "TextUtils.h"
 #include "ThreadUtils.h"
 
-#define ATTACH_ARTICLES m_sql.attachIfNecessary( showTranslation() ? QString("articles_%1").arg(m_translation) : "articles_arabic", true );
-#define ATTACH_TAFSIR m_sql.attachIfNecessary( showTranslation() ? tafsirName() : "quran_tafsir_arabic", true ); ATTACH_ARTICLES;
+#define ATTACH_ARTICLES m_sql.attachIfNecessary( QString("articles_%1").arg(m_translation), true );
+#define ATTACH_TAFSIR m_sql.attachIfNecessary( tafsirName(), true ); ATTACH_ARTICLES;
 #define TRANSLATION QString("quran_%1").arg(m_translation)
 
 namespace quran {
@@ -416,7 +416,7 @@ void QueryHelper::removeQuote(QObject* caller, qint64 id)
 
 
 bool QueryHelper::showTranslation() const {
-    return !m_translation.isEmpty();
+    return m_translation != "arabic";
 }
 
 int QueryHelper::primarySize() const {

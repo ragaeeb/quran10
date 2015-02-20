@@ -76,6 +76,13 @@ Page
                     function onLastPositionUpdated() {
                         bookmarkHelper.fetchLastProgress(button);
                     }
+                    
+                    contextActions: [
+                        ActionSet {
+                            title: buttonControl.text
+                            subtitle: buttonControl.progressData ? Qt.formatDateTime(buttonControl.progressData.timestamp) : ""
+                        }
+                    ]
                 }
                 
                 attachedObjects: [

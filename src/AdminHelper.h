@@ -25,7 +25,7 @@ class AdminHelper : public QObject
 
 private slots:
     void onCompressed();
-    void onRequestComplete(QVariant const& cookie, QByteArray const& data);
+    void onRequestComplete(QVariant const& cookie, QByteArray const& data, bool error);
     void uploadUpdates();
 
 signals:
