@@ -36,9 +36,11 @@ struct ThreadUtils
     static SimilarReference decorateResults(QVariantList input, ArrayDataModel* adm, QString const& mainSearch, QVariantList const& additional);
     static SimilarReference decorateSimilar(QVariantList input, ArrayDataModel* adm, AbstractTextControl* atc, QString body);
     static QString writeTafsirArchive(QVariant const& cookie, QByteArray const& data);
+    static QString writeTranslationArchive(QVariant const& cookie, QByteArray const& data);
     static QVariantList removeOutOfRange(QVariantList input, int fromChapter, int fromVerse, int toChapter, int toVerse);
     static QVariantList normalizeJuzs(QVariantList const& source);
     static void onResultsDecorated(SimilarReference const& result);
+    static void prepareDecompression(QObject* sender, QObject* obj, const char* progressSlot, bool singleFile);
 };
 
 } /* namespace quran */

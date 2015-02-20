@@ -55,6 +55,25 @@ ResizableContainer
                     title: ListItemData.author
                     description: ListItemData.title
                     imageSource: ListItemData.imageSource
+                    translationY: -150
+                    
+                    animations: [
+                        TranslateTransition
+                        {
+                            id: tt
+                            fromY: -150
+                            toY: 0
+                            delay: Math.min( 1250, rootItem.ListItem.indexPath[0]*150 )
+                            easingCurve: StockCurve.CircularOut
+                            duration: 750
+                        }
+                    ]
+                    
+                    ListItem.onInitializedChanged: {
+                        if (initialized) {
+                            tt.play();
+                        }
+                    }
                     
                     contextActions: [
                         ActionSet
@@ -68,7 +87,7 @@ ResizableContainer
                                 imageSource: "images/menu/ic_home.png"
                                 
                                 onTriggered: {
-                                    console.log("UserEvent: AddTafsirShortcutFromPickerTriggered");
+                                    console.log("UserEvent: AddTafsirShortcutFromPicker");
                                     rootItem.ListItem.view.addToHomeScreen(rootItem.ListItem.data); 
                                 }
                             }

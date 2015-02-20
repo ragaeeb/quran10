@@ -18,11 +18,13 @@ Delegate
             
             onCreationCompleted: {
                 open();
-                queue.queueCompleted.connect(out.play);
+                queue.queueCompleted.connect(root.finish);
             }
             
             function finish() {
-                out.play();
+                if ( !out.isPlaying() ) {
+                    //out.play();
+                }
             }
             
             onOpened: {
@@ -65,6 +67,7 @@ Delegate
                     rightPadding: 30
                     translationX: 400
                     bottomPadding: 20
+                    layout: DockLayout {}
                     
                     animations: [
                         TranslateTransition {
@@ -98,68 +101,113 @@ Delegate
                         }
                     ]
                     
-                    Header {
-                        subtitle: queue.queued
-                        title: qsTr("Download Queue") + Retranslate.onLanguageChanged
+                    Container
+                    {
+                        topPadding: 30
+                        
+                        EmptyDelegate
+                        {
+                            delegateActive: queue.queued == 0
+                            graphic: "images/placeholders/empty_downloads.png"
+                            labelText: qsTr("No downloads queued or active yet.") + Retranslate.onLanguageChanged
+                        }
                     }
                     
-                    ListView
+                    Container
                     {
-                        id: listView
-                        dataModel: queue.model
-                        maxWidth: 400
-                        maxHeight: 400
+                        horizontalAlignment: HorizontalAlignment.Fill
+                        verticalAlignment: VerticalAlignment.Fill
+                        visible: queue.queued > 0
                         
-                        function itemType(data, indexPath)
-                        {
-                            if (data.tafsirPath) {
-                                return "tafsir";
-                            } else if (data.mushaf) {
-                                return "mushaf";
-                            } else if (data.recitation) {
-                                return "recitation";
-                            } else {
-                                return "transfer";
-                            }
+                        Header {
+                            subtitle: queue.queued
+                            title: qsTr("Download Queue") + Retranslate.onLanguageChanged
                         }
                         
-                        listItemComponents: [
-                            ListItemComponent
-                            {
-                                type: "tafsir"
-                                
-                                TransferListItem {
-                                    successImageSource: "images/list/ic_tafsir.png"
-                                }
-                            },
+                        ListView
+                        {
+                            id: listView
+                            maxWidth: 400
+                            maxHeight: 400
                             
-                            ListItemComponent
-                            {
-                                type: "mushaf"
-                                
-                                TransferListItem {
-                                    successImageSource: "images/list/ic_mushaf_page.png"
-                                }
-                            },
+                            onCreationCompleted: {
+                                dataModel = queue.model;
+                            }
                             
-                            ListItemComponent
+                            function itemType(data, indexPath)
                             {
-                                type: "recitation"
-                                
-                                TransferListItem {
-                                    successImageSource: "images/list/mime_mp3.png"
-                                }
-                            },
-                            
-                            ListItemComponent
-                            {
-                                type: "transfer"
-                                
-                                TransferListItem {
-                                    successImageSource: "images/list/ic_tafsir.png"
+                                if (data.tafsirPath) {
+                                    return "tafsir";
+                                } else if (data.mushaf) {
+                                    return "mushaf";
+                                } else if (data.recitation) {
+                                    return "recitation";
+                                } else {
+                                    return "transfer";
                                 }
                             }
-                        ]
+                            
+                            listItemComponents: [
+                                ListItemComponent
+                                {
+                                    type: "tafsir"
+                                    
+                                    TransferListItem {
+                                        successImageSource: "images/list/ic_tafsir.png"
+                                    }
+                                },
+                                
+                                ListItemComponent
+                                {
+                                    type: "mushaf"
+                                    
+                                    TransferListItem {
+                                        successImageSource: "images/list/ic_mushaf_page.png"
+                                    }
+                                },
+                                
+                                ListItemComponent
+                                {
+                                    type: "recitation"
+                                    
+                                    TransferListItem {
+                                        successImageSource: "images/list/mime_mp3.png"
+                                    }
+                                },
+                                
+                                ListItemComponent
+                                {
+                                    type: "transfer"
+                                    
+                                    TransferListItem {
+                                        successImageSource: "images/list/ic_tafsir.png"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+                
+                CircularProgressControl
+                {
+                    id: cpc
+                    horizontalAlignment: HorizontalAlignment.Center
+                    verticalAlignment: VerticalAlignment.Center
+                    visible: false
+                    
+                    function onDeflationProgressChanged(current, total)
+                    {
+                        visible = true;
+                        labelText = qsTr("Uncompressing...\n") + ( (100.0*current)/total ).toFixed(1) + "%";
+                        progressValue = (current*100.0)/total;
+                    }
+                    
+                    onCreationCompleted: {
+                        app.tafsirDeflationProgress.connect(onDeflationProgressChanged);
+                        app.translationDeflationProgress.connect(onDeflationProgressChanged);
+                        app.deflationDone.connect(cpc.finish);
+                        mushaf.deflationProgress.connect(onDeflationProgressChanged);
+                        mushaf.deflationDone.connect(cpc.finish);
                     }
                 }
             }

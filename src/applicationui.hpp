@@ -40,6 +40,8 @@ class ApplicationUI : public QObject
     ApplicationUI(bb::cascades::Application *app);
     void init(QString const& qml);
     void finishWithToast(QString const& message);
+    void processInvoke();
+    void initGlobals();
 
 private slots:
     void childCardDone(bb::system::CardDoneMessage const& message=bb::system::CardDoneMessage());
@@ -51,10 +53,16 @@ private slots:
 	void onPicked(int chapter, int verse);
 	void onResultsDecorated();
     void onTafsirDownloaded(QVariant const& cookie, QByteArray const& data);
+    void onTafsirMissing(QString const& tafsirName);
     void onTafsirWritten();
+    void onTranslationMissing(QString const& language);
+    void onTranslationWritten();
 
 signals:
     void backupComplete(QString const& file);
+    void deflationDone(bool success, QString const& error);
+    void tafsirDeflationProgress(int current, int entries);
+    void translationDeflationProgress(qint64 current, qint64 total);
     void initialize();
     void lazyInitComplete();
     void restoreComplete(bool success);
