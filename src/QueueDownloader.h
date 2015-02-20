@@ -20,11 +20,11 @@ class QueueDownloader : public QObject
     int m_currentIndex;
     QMap<QString, int> m_uriToIndex;
 
-    void processNext();
+    bool processNext();
 
 private slots:
     void onDownloadProgress(QVariant const& cookie, qint64 bytesReceived, qint64 bytesTotal);
-    void onRequestComplete(QVariant const& cookie, QByteArray const& data);
+    void onRequestComplete(QVariant const& cookie, QByteArray const& data, bool error);
 
 public:
     QueueDownloader(QObject* parent=NULL);
@@ -44,6 +44,7 @@ public:
 signals:
     void downloadProgress(QVariant const& cookie, qint64 bytesReceived, qint64 bytesTotal);
     void queueChanged();
+    void queueCompleted();
     void requestComplete(QVariant const& cookie, QByteArray const& data);
     void sizeFetched(QVariant const& cookie, qint64 size);
 };

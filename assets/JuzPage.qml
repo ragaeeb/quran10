@@ -228,16 +228,6 @@ Page
             id: busy
             asset: "images/progress/loading_surah.png"
         }
-        
-        DownloadsOverlay
-        {
-            downloadText: qsTr("%1").arg(recitation.queued) + Retranslate.onLanguageChanged
-            delegateActive: recitation.queued > 0
-            
-            onCancelClicked: {
-                recitation.abort();
-            }
-        }
     }
     
     attachedObjects: [

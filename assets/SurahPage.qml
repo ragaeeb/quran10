@@ -123,7 +123,7 @@ Page
 				    player.togglePlayback();
 				} else {
 				    listView.previousPlayedIndex = -1;
-                    recitation.downloadAndPlay( fromSurahId, 1, listView.dataModel.size() );
+                    recitation.downloadAndPlayAll(listView.dataModel);
 				}
             }
         },
@@ -244,16 +244,6 @@ Page
         {
             id: busy
             asset: "images/progress/loading_surah.png"
-        }
-        
-        DownloadsOverlay
-        {
-            downloadText: qsTr("%1").arg(recitation.queued) + Retranslate.onLanguageChanged
-            delegateActive: recitation.queued > 0
-            
-            onCancelClicked: {
-                recitation.abort();
-            }
         }
     }
     

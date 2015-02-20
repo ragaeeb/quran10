@@ -71,15 +71,8 @@ Page
                         id: none
                         text: qsTr("None") + Retranslate.onLanguageChanged
                         description: qsTr("Do not show any additional languages.") + Retranslate.onLanguageChanged
-                        value: ""
+                        value: "arabic"
                         imageSource: "images/dropdown/ic_delete.png"
-                    }
-                    
-                    Option {
-                        text: qsTr("Arabic") + Retranslate.onLanguageChanged
-                        description: qsTr("King Fahad Quran Complex") + Retranslate.onLanguageChanged
-                        value: "tafsir_arabic_king_fahad"
-                        imageSource: "images/dropdown/ic_translation.png"
                     }
                     
                     Option {

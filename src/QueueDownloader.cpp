@@ -6,7 +6,7 @@ namespace canadainc {
 
 QueueDownloader::QueueDownloader(QObject* parent) : QObject(parent), m_currentIndex(-1)
 {
-    connect( &m_network, SIGNAL( requestComplete(QVariant const&, QByteArray const&) ), this, SLOT( onRequestComplete(QVariant const&, QByteArray const&) ) );
+    connect( &m_network, SIGNAL( requestComplete(QVariant const&, QByteArray const&, bool) ), this, SLOT( onRequestComplete(QVariant const&, QByteArray const&, bool) ) );
     connect( &m_network, SIGNAL( downloadProgress(QVariant const&, qint64, qint64) ), this, SLOT( onDownloadProgress(QVariant const&, qint64, qint64) ) );
     connect( &m_network, SIGNAL( sizeFetched(QVariant const&, qint64) ), this, SIGNAL( sizeFetched(QVariant const&, qint64) ) );
 
@@ -23,9 +23,9 @@ void QueueDownloader::checkSize(QVariant const& cookie, QString const& uri) {
 }
 
 
-void QueueDownloader::processNext()
+bool QueueDownloader::processNext()
 {
-    if ( !m_model.isEmpty() )
+    if ( !m_model.isEmpty() && m_currentIndex < m_model.size()-1 )
     {
         ++m_currentIndex;
         QVariantMap current = m_model.value(m_currentIndex).toMap();
@@ -36,12 +36,20 @@ void QueueDownloader::processNext()
 
         m_uriToIndex.insert(uri, m_currentIndex);
         m_network.doGet(uri, current);
+
+        return true;
     }
+
+    return false;
 }
 
 
-void QueueDownloader::process(QVariantMap const& toProcess) {
+void QueueDownloader::process(QVariantMap const& toProcess)
+{
     m_model.append(toProcess);
+    processNext();
+
+    emit queueChanged();
 }
 
 
@@ -49,20 +57,21 @@ void QueueDownloader::process(QVariantList const& toProcess)
 {
     m_model.append(toProcess);
     processNext();
+
+    emit queueChanged();
 }
 
 
 void QueueDownloader::onDownloadProgress(QVariant const& cookie, qint64 bytesReceived, qint64 bytesTotal)
 {
     QVariantMap element = cookie.toMap();
-
-    element["current"] = bytesReceived;
-    element["total"] = bytesTotal;
-
     QString uri = element.value("uri").toString();
 
     if ( m_uriToIndex.contains(uri) )
     {
+        element["current"] = round( (bytesReceived*100.0)/bytesTotal );
+        element["total"] = 100;
+
         int i = m_uriToIndex.value(uri);
         m_model.replace(i, element);
     }
@@ -71,11 +80,31 @@ void QueueDownloader::onDownloadProgress(QVariant const& cookie, qint64 bytesRec
 }
 
 
-void QueueDownloader::onRequestComplete(QVariant const& cookie, QByteArray const& data)
+void QueueDownloader::onRequestComplete(QVariant const& cookie, QByteArray const& data, bool error)
 {
-    processNext();
+    QVariantMap element = cookie.toMap();
+    QString uri = element.value("uri").toString();
 
-    emit requestComplete(cookie, data);
+    if ( m_uriToIndex.contains(uri) )
+    {
+        element["current"] = element["total"] = 100;
+
+        if (error) {
+            LOGGER("Error" << cookie);
+            element["error"] = true;
+        }
+
+        int i = m_uriToIndex.value(uri);
+        m_model.replace(i, element);
+    }
+
+    if ( !processNext() ) {
+        emit queueCompleted();
+    }
+
+    if (!error) {
+        emit requestComplete(cookie, data);
+    }
 }
 
 

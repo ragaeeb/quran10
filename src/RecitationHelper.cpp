@@ -17,8 +17,12 @@ using namespace canadainc;
 
 namespace {
 
-void writeVerse(QVariant const& cookie, QByteArray const& data) {
-    canadainc::IOUtils::writeFile( cookie.toMap().value("local").toString(), data );
+QVariantMap writeVerse(QVariant const& cookie, QByteArray const& data)
+{
+    QVariantMap q = cookie.toMap();
+
+    canadainc::IOUtils::writeFile( q.value("local").toString(), data );
+    return q;
 }
 
 QVariantMap processPlaylist(QString const& reciter, QString const& outputDirectory, QList< QPair<int,int> > const& playlist)
@@ -60,18 +64,22 @@ QVariantMap processPlaylist(QString const& reciter, QString const& outputDirecto
             q["recitation"] = true;
 
             queue << q;
-        } else {
-            toPlay << absolutePath;
         }
+
+        toPlay << absolutePath;
     }
 
-    result["queue"] = queue;
+    if ( !queue.isEmpty() )
+    {
+        result["queue"] = queue;
+        result["anchor"] = queue.last().toMap().value("uri").toString();
+    }
 
-    bool written = IOUtils::writeTextFile( PLAYLIST_TARGET, playlist.join("\n"), true, false );
+    bool written = !toPlay.isEmpty() ? IOUtils::writeTextFile( PLAYLIST_TARGET, toPlay.join("\n"), true, false ) : false;
     LOGGER(written);
 
     if (written) {
-        result["playlist"] = PLAYLIST_TARGET;
+        result["playlist"] = QUrl::fromLocalFile(PLAYLIST_TARGET);
     } else {
         result["error"] = QObject::tr("Quran10 could not write the playlist. Please try restarting your device.");
     }
@@ -88,6 +96,7 @@ RecitationHelper::RecitationHelper(QueueDownloader* queue, Persistance* p, QObje
 {
     connect( queue, SIGNAL( requestComplete(QVariant const&, QByteArray const&) ), this, SLOT( onRequestComplete(QVariant const&, QByteArray const&) ) );
     connect( &m_future, SIGNAL( finished() ), this, SLOT( onFinished() ) );
+    connect( &m_futureResult, SIGNAL( finished() ), this, SLOT( onPlaylistReady() ) );
 }
 
 
@@ -269,10 +278,10 @@ void RecitationHelper::onRequestComplete(QVariant const& cookie, QByteArray cons
 {
     if ( cookie.toMap().contains("recitation") )
     {
-        QFutureWatcher<void>* qfw = new QFutureWatcher<void>(this);
+        QFutureWatcher<QVariantMap>* qfw = new QFutureWatcher<QVariantMap>(this);
         connect( qfw, SIGNAL( finished() ), this, SLOT( onWritten() ) );
 
-        QFuture<void> future = QtConcurrent::run(writeVerse, cookie, data);
+        QFuture<QVariantMap> future = QtConcurrent::run(writeVerse, cookie, data);
         qfw->setFuture(future);
     }
 }
@@ -280,22 +289,52 @@ void RecitationHelper::onRequestComplete(QVariant const& cookie, QByteArray cons
 
 void RecitationHelper::onWritten()
 {
-    /*
-    if ( queued() == 0 ) { // last one
+    QFutureWatcher<QVariantMap>* qfw = static_cast< QFutureWatcher<QVariantMap>* >( sender() );
+    QVariantMap result = qfw->result();
+
+    if ( !m_anchor.isEmpty() && m_anchor == result.value("uri").toString() ) {
         startPlayback();
-    } */
+    }
+
+    qfw->deleteLater();
+}
+
+
+void RecitationHelper::onPlaylistReady()
+{
+    QVariantMap result = m_futureResult.result();
+
+    LOGGER(result);
+
+    if ( result.contains("error") ) {
+        m_persistance->showToast( result.value("error").toString(), "", "asset:///images/menu/ic_bookmark_delete.png" );
+    } else if ( result.contains("queue") ) {
+        QVariantList queue = result.value("queue").toList();
+        m_anchor = result.value("anchor").toString();
+        m_queue->process(queue);
+    } else if ( result.contains("playlist") ) {
+        startPlayback();
+    }
 }
 
 
 void RecitationHelper::downloadAndPlayAll(bb::cascades::ArrayDataModel* adm)
 {
-    QList< QPair<int,int> > all;
-    int n = adm->size();
+    LOGGER( adm->size() );
 
-    for (int i = 0; i < n; i++)
+    if ( !m_futureResult.isRunning() )
     {
-        QVariantMap q = adm->value(i).toMap();
-        all << qMakePair<int,int>( q.value("surah_id").toInt(), q.value("verse_id").toInt() );
+        QList< QPair<int,int> > all;
+        int n = adm->size();
+
+        for (int i = 0; i < n; i++)
+        {
+            QVariantMap q = adm->value(i).toMap();
+            all << qMakePair<int,int>( q.value("surah_id").toInt(), q.value("verse_id").toInt() );
+        }
+
+        QFuture<QVariantMap> future = QtConcurrent::run(processPlaylist, m_persistance->getValueFor("reciter").toString(), m_persistance->getValueFor("output").toString(), all);
+        m_futureResult.setFuture(future);
     }
 }
 

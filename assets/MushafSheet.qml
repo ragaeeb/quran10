@@ -90,6 +90,7 @@ Sheet
             {
                 id: stretchAction
                 property bool stretchMushaf: false
+                imageSource: stretchMushaf ? "images/menu/ic_aspect_fill.png" : "images/menu/ic_stretch.png"
                 title: stretchMushaf ? qsTr("Aspect Fill") + Retranslate.onLanguageChanged : qsTr("Stretch") + Retranslate.onLanguageChanged
                 ActionBar.placement: ActionBarPlacement.OnBar
                 

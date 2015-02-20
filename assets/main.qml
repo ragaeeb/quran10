@@ -100,6 +100,19 @@ TabbedPane
         }
     }
     
+    Tab {
+        title: qsTr("Transfers") + Retranslate.onLanguageChanged
+        description: qsTr("Download Manager") + Retranslate.onLanguageChanged
+        imageSource: "images/tabs/ic_transfers.png"
+        delegateActivationPolicy: TabDelegateActivationPolicy.ActivatedWhileSelected
+        unreadContentCount: queue.queued
+        
+        onTriggered: {
+            console.log("UserEvent: TransfersTab");
+            transfers.active = true;
+        }
+    }
+    
     function onSidebarVisualStateChanged(newState)
     {
         sidebarStateChanged.disconnect(onSidebarVisualStateChanged);
