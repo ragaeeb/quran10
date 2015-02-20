@@ -129,7 +129,7 @@ Delegate
                                 type: "tafsir"
                                 
                                 TransferListItem {
-                                    imageSource: "images/list/ic_tafsir.png"
+                                    successImageSource: "images/list/ic_tafsir.png"
                                 }
                             },
                             
@@ -138,7 +138,7 @@ Delegate
                                 type: "mushaf"
                                 
                                 TransferListItem {
-                                    imageSource: "images/list/ic_mushaf_page.png"
+                                    successImageSource: "images/list/ic_mushaf_page.png"
                                 }
                             },
                             
@@ -147,7 +147,7 @@ Delegate
                                 type: "recitation"
                                 
                                 TransferListItem {
-                                    imageSource: "images/list/mime_mp3.png"
+                                    successImageSource: "images/list/mime_mp3.png"
                                 }
                             },
                             
@@ -156,7 +156,7 @@ Delegate
                                 type: "transfer"
                                 
                                 TransferListItem {
-                                    imageSource: "images/list/ic_tafsir.png"
+                                    successImageSource: "images/list/ic_tafsir.png"
                                 }
                             }
                         ]
