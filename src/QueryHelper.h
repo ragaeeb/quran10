@@ -40,7 +40,9 @@ private slots:
     void settingChanged(QString const& key);
 
 signals:
+    void tafsirMissing(QString const& tafsirName);
     void textualChange();
+    void translationMissing(QString const& translation);
 
 public:
 	QueryHelper(Persistance* persist);
@@ -82,6 +84,7 @@ public:
     Q_INVOKABLE void removeTafsirPage(QObject* caller, qint64 suitePageId);
     Q_INVOKABLE void searchIndividuals(QObject* caller, QString const& trimmedText);
     Q_INVOKABLE void searchQuery(QObject* caller, QString const& trimmedText, int chapterNumber=0, QVariantList const& additional=QVariantList(), bool andMode=true);
+    Q_INVOKABLE void searchTafsir(QObject* caller, QString const& fieldName, QString const& searchTerm);
     Q_INVOKABLE void unlinkAyatsForTafsir(QObject* caller, QVariantList const& ids, qint64 suitePageId);
     Q_INVOKABLE QVariantList normalizeJuzs(QVariantList const& source);
     Q_INVOKABLE QVariantList removeOutOfRange(QVariantList input, int fromChapter, int fromVerse, int toChapter, int toVerse);

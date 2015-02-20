@@ -159,6 +159,20 @@ void QueryTafsirHelper::linkAyatToTafsir(QObject* caller, qint64 suitePageId, in
 }
 
 
+void QueryTafsirHelper::searchTafsir(QObject* caller, QString const& fieldName, QString const& searchTerm)
+{
+    QString query;
+
+    if (fieldName != "body") {
+        query = QString("SELECT suites.id,individuals.name AS author,title FROM suites INNER JOIN individuals ON individuals.id=suites.author WHERE %1 LIKE '%' || ? || '%' ORDER BY suites.id DESC").arg(fieldName);
+    } else {
+        query = "SELECT suites.id,individuals.name AS author,title FROM suites INNER JOIN individuals ON individuals.id=suites.author INNER JOIN suite_pages ON suites.id=suite_pages.suite_id WHERE body LIKE '%' || ? || '%' ORDER BY suites.id DESC";
+    }
+
+    m_sql->executeQuery(caller, query, QueryId::SearchTafsir, QVariantList() << searchTerm);
+}
+
+
 void QueryTafsirHelper::unlinkAyatsForTafsir(QObject* caller, QVariantList const& ids, qint64 suitePageId)
 {
     LOGGER(ids << suitePageId);

@@ -39,6 +39,16 @@ Page
                             fromOpacity: 0
                             toOpacity: 1
                             duration: 1000
+                            
+                            onEnded: {
+                                if (showJuz)
+                                {
+                                    quote.process();
+                                    tm.process();
+                                    bookmarkHelper.fetchLastProgress(button);
+                                    global.lastPositionUpdated.connect(button.onLastPositionUpdated);
+                                }
+                            }
                         }
                     ]
                 }
@@ -47,8 +57,10 @@ Page
                 {
                     id: button
                     leftPadding: 15;
-                    verticalAlignment: VerticalAlignment.Center
+                    horizontalAlignment: HorizontalAlignment.Fill
+                    verticalAlignment: VerticalAlignment.Fill
                     visible: false
+                    layout: DockLayout {}
                     
                     Button
                     {
@@ -56,12 +68,48 @@ Page
                         property variant progressData
                         text: progressData ? progressData.surah_id+":"+progressData.verse_id : ""
                         imageSource: "images/dropdown/saved_bookmark.png"
+                        verticalAlignment: VerticalAlignment.Center
                         maxWidth: 150
+                        translationX: -250
+                        scaleX: 1.1
+                        scaleY: 1.1
                         
                         onClicked: {
                             console.log("UserEvent: SavedBookmarkClicked");
                             picked(progressData.surah_id, progressData.verse_id);
                         }
+                        
+                        animations: [
+                            SequentialAnimation
+                            {
+                                id: rotator
+                                
+                                TranslateTransition
+                                {
+                                    fromX: -250
+                                    toX: 0
+                                    easingCurve: StockCurve.QuinticOut
+                                    duration: 750
+                                }
+                                
+                                RotateTransition {
+                                    fromAngleZ: 360
+                                    toAngleZ: 0
+                                    easingCurve: StockCurve.ExponentialOut
+                                    duration: 750
+                                }
+                                
+                                ScaleTransition
+                                {
+                                    fromX: 1.1
+                                    fromY: 1.1
+                                    toX: 1
+                                    toY: 1
+                                    duration: 500
+                                    easingCurve: StockCurve.DoubleElasticOut
+                                }
+                            }
+                        ]
                     }
                     
                     function onDataLoaded(id, data)
@@ -116,7 +164,6 @@ Page
                 id: sortOrder
                 title: qsTr("Display Options") + Retranslate.onLanguageChanged
                 horizontalAlignment: HorizontalAlignment.Fill
-                key: "surahPickerOption"
                 topMargin: 0; bottomMargin: 0
                 visible: showJuz
                 
@@ -163,7 +210,7 @@ Page
                 hintText: qsTr("Search surah name or number (ie: '2' for Surah Al-Baqara)...") + Retranslate.onLanguageChanged
                 bottomMargin: 0
                 horizontalAlignment: HorizontalAlignment.Fill
-                topMargin: 0; topPadding: 0
+                topMargin: 0;
                 
                 onTextChanging: {
                     var ok = true;
@@ -213,6 +260,11 @@ Page
                             if (deviceUtils.isPhysicalKeyboardDevice) {
                                 textField.requestFocus();
                             }
+                            
+                            textField.input["keyLayout"] = 7;
+                            deviceUtils.attachTopBottomKeys(mainPage, listView, true);
+                            
+                            rotator.play();
                         }
                     }
                 ]
@@ -375,20 +427,9 @@ Page
     
     function ready()
     {
-        textField.textChanging("");
+        sortOrder.key = "surahPickerOption";
         fadeInLogo.play();
         translate.play();
-
-        textField.input["keyLayout"] = 7;
-        
-        deviceUtils.attachTopBottomKeys(mainPage, listView, true);
-        
-        if (showJuz) {
-            quote.process();
-            tm.process();
-            bookmarkHelper.fetchLastProgress(button);
-            global.lastPositionUpdated.connect(button.onLastPositionUpdated);
-        }
     }
     
     attachedObjects: [

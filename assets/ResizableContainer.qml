@@ -12,12 +12,28 @@ Container
     Header
     {
         id: header
+        translationX: 1400
         
         gestureHandlers: [
             TapHandler
             {
                 onTapped: {
                     ratio = 0.7;
+                }
+            }
+        ]
+        
+        animations: [
+            TranslateTransition {
+                id: tt
+                fromX: 1400
+                toX: 0
+                duration: 1000
+                easingCurve: StockCurve.QuadraticOut
+                delay: 250
+                
+                onCreationCompleted: {
+                    tt.play();
                 }
             }
         ]

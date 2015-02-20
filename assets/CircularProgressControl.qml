@@ -6,6 +6,12 @@ Container
     verticalAlignment: VerticalAlignment.Fill
     leftPadding: 10; rightPadding: 10
     layout: DockLayout {}
+    property alias labelText: label.text
+    property alias progressValue: progressBar.scaleX
+    
+    function finish() {
+        st.play();
+    }
     
     onVisibleChanged: {
         if (visible) {
@@ -87,7 +93,6 @@ Container
                 textStyle.fontWeight: FontWeight.Bold
                 textStyle.color: Color.White
                 opacity: 0.8
-                text: qsTr("Downloading...") + Retranslate.onLanguageChanged
                 multiline: true
             }
         }
@@ -108,28 +113,4 @@ Container
             }
         }
     ]
-    
-    function onProgressChanged(cookie, current, total)
-    {
-        visible = true;
-        label.text = qsTr("Downloading...\n") + ( (100.0*current)/total ).toFixed(1) + "%";
-        progressBar.scaleX = current/total;
-        
-        if (current == total) {
-            st.play();
-        }
-    }
-    
-    function onDeflationProgressChanged(current, total)
-    {
-        visible = true;
-        label.text = qsTr("Uncompressing...\n") + ( (100.0*current)/total ).toFixed(1) + "%";
-        progressBar.scaleX = current/total;
-    }
-    
-    onCreationCompleted: {
-        queue.downloadProgress.connect(onProgressChanged);
-        mushaf.deflationProgress.connect(onDeflationProgressChanged);
-        mushaf.deflationDone.connect(st.play);
-    }
 }

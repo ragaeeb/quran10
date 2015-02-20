@@ -7,7 +7,8 @@
 #include "TextUtils.h"
 #include "ThreadUtils.h"
 
-#define ATTACH_ARTICLES m_sql.attachIfNecessary( QString("articles_%1").arg(m_translation), true );
+#define ARTICLES_NAME QString("articles_%1").arg(m_translation)
+#define ATTACH_ARTICLES m_sql.attachIfNecessary(ARTICLES_NAME, true);
 #define ATTACH_TAFSIR m_sql.attachIfNecessary( tafsirName(), true ); ATTACH_ARTICLES;
 #define TRANSLATION QString("quran_%1").arg(m_translation)
 
@@ -34,7 +35,6 @@ void QueryHelper::onDataLoaded(QVariant id, QVariant data)
 void QueryHelper::lazyInit()
 {
     settingChanged("translation");
-    m_sql.attachIfNecessary(TRANSLATION, m_translation != "english"); // since english translation is loaded by default
 
     QTime time = QTime::currentTime();
     qsrand( (uint)time.msec() );
@@ -49,7 +49,25 @@ void QueryHelper::settingChanged(QString const& key)
             m_sql.detach(TRANSLATION);
         }
 
+        m_sql.detach( tafsirName() );
+
         m_translation = m_persist->getValueFor("translation").toString();
+        bool inHome = m_translation != "english" && m_translation != "arabic";
+        QString translationDir = inHome ? QDir::homePath() : QString("%1/assets/dbase").arg( QCoreApplication::applicationDirPath() );
+        QFile translationFile( QString("%1/%2.db").arg(translationDir).arg(TRANSLATION) );
+
+        if ( !translationFile.exists() || translationFile.size() == 0 ) { // translation doesn't exist, download it
+            emit translationMissing(TRANSLATION);
+        } else {
+            m_sql.attachIfNecessary(TRANSLATION, inHome); // since english translation is loaded by default
+        }
+
+        QFile articlesFile( QString("%1/%2.db").arg( QDir::homePath() ).arg(ARTICLES_NAME) );
+        QFile tafsirFile( QString("%1/%2.db").arg( QDir::homePath() ).arg( tafsirName() ) );
+
+        if ( !articlesFile.exists() || articlesFile.size() == 0 || !tafsirFile.exists() || tafsirFile.size() == 0 ) { // translation doesn't exist, download it
+            emit tafsirMissing( tafsirName() );
+        }
 
         emit textualChange();
     }
@@ -335,6 +353,13 @@ void QueryHelper::searchQuery(QObject* caller, QString const& trimmedText, int c
     QString query = ThreadUtils::buildSearchQuery(params, isArabic, chapterNumber, additional, andMode);
 
     m_sql.executeQuery(caller, query, QueryId::SearchAyats, params);
+}
+
+
+void QueryHelper::searchTafsir(QObject* caller, QString const& fieldName, QString const& searchTerm)
+{
+    LOGGER(fieldName << searchTerm);
+    m_tafsirHelper.searchTafsir(caller, fieldName, searchTerm);
 }
 
 

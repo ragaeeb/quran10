@@ -4,8 +4,10 @@
 #include "AppLogFetcher.h"
 #include "IOUtils.h"
 #include "JlCompress.h"
+#include "Logger.h"
 #include "QueryHelper.h"
 #include "TextUtils.h"
+#include "ZipThread.h"
 
 #define BACKUP_ZIP_PASSWORD "X4*13f3*3qYk3_*"
 #define LIKE_CLAUSE QString("(%1 LIKE '%' || ? || '%')").arg(textField)
@@ -267,6 +269,31 @@ void ThreadUtils::onResultsDecorated(SimilarReference const& result)
 }
 
 
+void ThreadUtils::prepareDecompression(QObject* sender, QObject* obj, const char* progressSlot, bool singleFile)
+{
+    QFutureWatcher<QString>* qfw = static_cast< QFutureWatcher<QString>* >(sender);
+    QString result = qfw->result();
+
+    LOGGER(result);
+
+    if ( !result.isEmpty() )
+    {
+        ZipThread* zt = new ZipThread(result);
+        QObject::connect( zt, SIGNAL( done(bool, QString const&) ), obj, SIGNAL( deflationDone(bool, QString const&) ) );
+
+        if (singleFile) {
+            QObject::connect( zt, SIGNAL( deflationProgress(qint64, qint64) ), obj, progressSlot );
+        } else {
+            QObject::connect( zt, SIGNAL( progress(int, int) ), obj, progressSlot );
+        }
+
+        IOUtils::startThread(zt);
+    }
+
+    sender->deleteLater();
+}
+
+
 QString ThreadUtils::writeTafsirArchive(QVariant const& q, QByteArray const& data)
 {
     QString tafsirPath = q.toMap().value("tafsirPath").toString();
@@ -275,5 +302,16 @@ QString ThreadUtils::writeTafsirArchive(QVariant const& q, QByteArray const& dat
     bool written = IOUtils::writeFile(target, data);
     return written ? target : QString();
 }
+
+
+QString ThreadUtils::writeTranslationArchive(QVariant const& q, QByteArray const& data)
+{
+    QString translationPath = q.toMap().value("translation").toString();
+    QString target = QString("%1/%2.zip").arg( QDir::tempPath() ).arg(translationPath);
+
+    bool written = IOUtils::writeFile(target, data);
+    return written ? target : QString();
+}
+
 
 } /* namespace quran */

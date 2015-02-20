@@ -29,6 +29,7 @@ public:
     void editTafsir(QObject* caller, qint64 suiteId, QString const& author, QString const& translator, QString const& explainer, QString const& title, QString const& description, QString const& reference);
     void fetchAllTafsir(QObject* caller);
     void linkAyatToTafsir(QObject* caller, qint64 suitePageId, int chapter, int fromVerse, int toVerse);
+    void searchTafsir(QObject* caller, QString const& fieldName, QString const& searchTerm);
     void unlinkAyatsForTafsir(QObject* caller, QVariantList const& ids, qint64 suitePageId);
 };
 
