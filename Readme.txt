@@ -38,13 +38,11 @@ PlainTextMultiselector
 
 
 
-sqlite3 articles_english.db;
+sqlite3 quran_tafsir_english.db;
 CREATE TABLE individuals (id INTEGER PRIMARY KEY, prefix TEXT, name TEXT, kunya TEXT, uri TEXT, hidden INTEGER, biography TEXT);
 CREATE TABLE suites (id INTEGER PRIMARY KEY, author INTEGER REFERENCES individuals(id) ON DELETE CASCADE, translator INTEGER REFERENCES individuals(id) ON DELETE CASCADE, explainer INTEGER REFERENCES individuals(id) ON DELETE CASCADE, title TEXT, description TEXT, reference TEXT);
 CREATE TABLE suite_pages (id INTEGER PRIMARY KEY, suite_id INTEGER REFERENCES suites(id) ON DELETE CASCADE, body TEXT);
 CREATE TABLE quotes (id INTEGER PRIMARY KEY, author INTEGER REFERENCES individuals(id) ON DELETE CASCADE, body TEXT, reference TEXT);
-
-sqlite3 quran_tafsir_english.db
 CREATE TABLE explanations (id INTEGER PRIMARY KEY, surah_id INTEGER NOT NULL, from_verse_number INTEGER, to_verse_number INTEGER, suite_page_id INTEGER NOT NULL REFERENCES suite_pages(id) ON DELETE CASCADE, UNIQUE(surah_id, from_verse_number, to_verse_number, suite_page_id) ON CONFLICT IGNORE);
 
 sqlite3 quran_english.db

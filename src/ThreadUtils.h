@@ -40,7 +40,7 @@ struct ThreadUtils
     static QVariantList removeOutOfRange(QVariantList input, int fromChapter, int fromVerse, int toChapter, int toVerse);
     static QVariantList normalizeJuzs(QVariantList const& source);
     static void onResultsDecorated(SimilarReference const& result);
-    static void prepareDecompression(QObject* sender, QObject* obj, const char* progressSlot, bool singleFile);
+    static void prepareDecompression(QObject* sender, QObject* obj, const char* progressSlot);
 };
 
 } /* namespace quran */

@@ -269,7 +269,7 @@ void ThreadUtils::onResultsDecorated(SimilarReference const& result)
 }
 
 
-void ThreadUtils::prepareDecompression(QObject* sender, QObject* obj, const char* progressSlot, bool singleFile)
+void ThreadUtils::prepareDecompression(QObject* sender, QObject* obj, const char* progressSlot)
 {
     QFutureWatcher<QString>* qfw = static_cast< QFutureWatcher<QString>* >(sender);
     QString result = qfw->result();
@@ -280,12 +280,7 @@ void ThreadUtils::prepareDecompression(QObject* sender, QObject* obj, const char
     {
         ZipThread* zt = new ZipThread(result);
         QObject::connect( zt, SIGNAL( done(bool, QString const&) ), obj, SIGNAL( deflationDone(bool, QString const&) ) );
-
-        if (singleFile) {
-            QObject::connect( zt, SIGNAL( deflationProgress(qint64, qint64) ), obj, progressSlot );
-        } else {
-            QObject::connect( zt, SIGNAL( progress(int, int) ), obj, progressSlot );
-        }
+        QObject::connect( zt, SIGNAL( deflationProgress(qint64, qint64) ), obj, progressSlot );
 
         IOUtils::startThread(zt);
     }
