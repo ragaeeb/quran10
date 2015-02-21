@@ -5,10 +5,10 @@ Container
     id: itemRoot
     property bool peek: ListItem.view.secretPeek
     property bool selection: ListItem.selected
-    property bool hasTafsir: ListItemData.hasTafsir ? ListItemData.hasTafsir : false
     property bool playing: ListItemData.playing ? ListItemData.playing : false
     property bool active: ListItem.active
     property alias secondLine: labelDelegate
+    horizontalAlignment: HorizontalAlignment.Fill
     
     function updateState()
     {
@@ -16,8 +16,6 @@ Container
             background = Color.create("#ffff8c00")
         } else if (selection) {
             background = Color.DarkGreen
-        } else if (hasTafsir) {
-            background = Color.create("#ffe0e0e0")
         } else if (active) {
             background = ListItem.view.activeDefinition.imagePaint
         } else {
@@ -28,7 +26,6 @@ Container
     onCreationCompleted: {
         selectionChanged.connect(updateState);
         playingChanged.connect(updateState);
-        hasTafsirChanged.connect(updateState);
         activeChanged.connect(updateState);
         updateState();
     }
@@ -47,6 +44,7 @@ Container
             fromOpacity: 0
             toOpacity: 1
             duration: Math.max( 200, Math.min( itemRoot.ListItem.indexPath[0]*300, 750 ) );
+            easingCurve: StockCurve.QuadraticIn
         }
     ]
     
@@ -56,12 +54,15 @@ Container
         }
     }
     
-    horizontalAlignment: HorizontalAlignment.Fill
+    ListItem.onViewChanged: {
+        if (view) {
+            headerRoot.background = itemRoot.ListItem.view.background.imagePaint;
+        }
+    }
     
     Container
     {
         id: headerRoot
-        background: itemRoot.ListItem.view.background ? itemRoot.ListItem.view.background.imagePaint : undefined
         horizontalAlignment: HorizontalAlignment.Fill
         topPadding: 5
         bottomPadding: 5
@@ -72,7 +73,7 @@ Container
         }
         
         Label {
-            text: qsTr("%1:%2").arg(ListItemData.surah_id).arg(ListItemData.verse_id)
+            text: "%1:%2".arg(ListItemData.surah_id).arg(ListItemData.verse_id)
             horizontalAlignment: HorizontalAlignment.Fill
             textStyle.fontSize: FontSize.XXSmall
             textStyle.color: Color.White

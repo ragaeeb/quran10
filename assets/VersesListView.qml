@@ -67,7 +67,7 @@ ListView
             clearPrevious();
         }
         
-        var target = index-1;
+        var target = index;
         var data = dataModel.value(target);
         
         data["playing"] = true;
@@ -77,7 +77,7 @@ ListView
             listView.scrollToItem([target], ScrollAnimation.None);
         }
         
-        previousPlayedIndex = index-1;
+        previousPlayedIndex = index;
     }
     
     onCreationCompleted: {
@@ -130,9 +130,9 @@ ListView
         }
         
         previousPlayedIndex = -1;
-        var end = Math.min( from+1+8, dataModel.size() );
+        var end = Math.min( from+8, dataModel.size() );
         
-        recitation.memorize(chapterNumber, from+1, end);
+        recitation.memorize(verseModel, from, end);
     }
     
     function onDataLoaded(id, data)
