@@ -95,6 +95,14 @@
 		</icon>
 	</invoke-target>
 	
+	<invoke-target id="com.canadainc.Quran10.tafsir.previewer">
+	<invoke-target-type>card.previewer</invoke-target-type>
+	<invoke-target-name>Quran10</invoke-target-name>
+		<icon>
+			<image>icon.png</image>
+		</icon>
+	</invoke-target>
+	
 	<invoke-target id="com.canadainc.Quran10.previewer">
 		<invoke-target-type>card.previewer</invoke-target-type>
 		<invoke-target-name>Quran10</invoke-target-name> 
@@ -157,7 +165,7 @@
     <asset path="../canadainc/assets/PlainTextMultiselector.qml">assets/PlainTextMultiselector.qml</asset>
     <asset path="../canadainc/assets/ProgressControl.qml">assets/ProgressControl.qml</asset>
     <asset path="../canadainc/assets/SliderPair.qml">assets/SliderPair.qml</asset>
-    
+
     <!-- Request permission to execute native code.  Required for native applications. -->
     <permission system="true">run_native</permission>
     <permission>access_shared</permission>

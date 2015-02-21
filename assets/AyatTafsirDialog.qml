@@ -44,7 +44,6 @@ FullScreenDialog
         }
         
         body.text = "\n"+bodyText+"\n";
-        body.requestFocus();
     }
     
     function onDataLoaded(id, data)
@@ -61,10 +60,13 @@ FullScreenDialog
     
     function finish()
     {
-        fader.fromOpacity = 1;
-        fader.toOpacity = 0;
-        fader.play();
-        scaleExit.play();
+        if ( !fader.isPlaying() )
+        {
+            fader.fromOpacity = 1;
+            fader.toOpacity = 0;
+            fader.play();
+            scaleExit.play();
+        }
     }
     
     dialogContent: Container
@@ -149,6 +151,7 @@ FullScreenDialog
                     textStyle.fontSize: FontSize.PointValue
                     textStyle.fontSizeValue: persist.getValueFor("tafsirSize")
                     bottomPadding: 0; bottomMargin: 0
+                    verticalAlignment: VerticalAlignment.Fill
                     
                     onTextChanged: {
                         fader.play();

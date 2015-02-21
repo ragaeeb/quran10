@@ -41,35 +41,11 @@ PlainTextMultiselector
 sqlite3 articles_english.db;
 CREATE TABLE individuals (id INTEGER PRIMARY KEY, prefix TEXT, name TEXT, kunya TEXT, uri TEXT, hidden INTEGER, biography TEXT);
 CREATE TABLE suites (id INTEGER PRIMARY KEY, author INTEGER REFERENCES individuals(id) ON DELETE CASCADE, translator INTEGER REFERENCES individuals(id) ON DELETE CASCADE, explainer INTEGER REFERENCES individuals(id) ON DELETE CASCADE, title TEXT, description TEXT, reference TEXT);
-CREATE TABLE suite_pages (id INTEGER PRIMARY KEY, suite_id INTEGER REFERENCES suites(id) ON DELETE CASCADE, body TEXT, surah_id INTEGER, verse_id INTEGER);
-CREATE TABLE quotes (id INTEGER PRIMARY KEY, author INTEGER REFERENCES individuals(id) ON DELETE CASCADE, body TEXT, reference TEXT);
-
-sqlite3 articles_arabic.db;
-CREATE TABLE individuals (id INTEGER PRIMARY KEY, prefix TEXT, name TEXT, kunya TEXT, uri TEXT, hidden INTEGER, biography TEXT);
-CREATE TABLE suites (id INTEGER PRIMARY KEY, author INTEGER REFERENCES individuals(id) ON DELETE CASCADE, translator INTEGER REFERENCES individuals(id) ON DELETE CASCADE, explainer INTEGER REFERENCES individuals(id) ON DELETE CASCADE, title TEXT, description TEXT, reference TEXT);
-CREATE TABLE suite_pages (id INTEGER PRIMARY KEY, suite_id INTEGER REFERENCES suites(id) ON DELETE CASCADE, body TEXT, surah_id INTEGER, verse_id INTEGER);
+CREATE TABLE suite_pages (id INTEGER PRIMARY KEY, suite_id INTEGER REFERENCES suites(id) ON DELETE CASCADE, body TEXT);
 CREATE TABLE quotes (id INTEGER PRIMARY KEY, author INTEGER REFERENCES individuals(id) ON DELETE CASCADE, body TEXT, reference TEXT);
 
 sqlite3 quran_tafsir_english.db
 CREATE TABLE explanations (id INTEGER PRIMARY KEY, surah_id INTEGER NOT NULL, from_verse_number INTEGER, to_verse_number INTEGER, suite_page_id INTEGER NOT NULL REFERENCES suite_pages(id) ON DELETE CASCADE, UNIQUE(surah_id, from_verse_number, to_verse_number, suite_page_id) ON CONFLICT IGNORE);
-
-sqlite3 quran_similar.db
-CREATE TABLE related (surah_id INTEGER NOT NULL, verse_id INTEGER NOT NULL, other_surah_id INTEGER NOT NULL, other_verse_id INTEGER NOT NULL, UNIQUE(arabic_id, other_id) ON CONFLICT IGNORE);
-
-
-sqlite3 quran_arabic.db
-CREATE TABLE IF NOT EXISTS surahs (id INTEGER PRIMARY KEY, name TEXT);
-CREATE TABLE IF NOT EXISTS verses (id INTEGER PRIMARY KEY, surah_id INTEGER REFERENCES surahs(id), verse_number INTEGER, content TEXT, UNIQUE(surah_id,verse_number) ON CONFLICT REPLACE);
-CREATE TABLE IF NOT EXISTS surah_metadata (surah_id INTEGER REFERENCES surahs(id), verse_count INTEGER, start INTEGER, type INTEGER, revelation_order INTEGER, rukus INTEGER);
-CREATE TABLE IF NOT EXISTS juzs (id INTEGER PRIMARY KEY, surah_id INTEGER REFERENCES surahs(id), verse_number INTEGER, UNIQUE(surah_id,verse_number) ON CONFLICT REPLACE);
-CREATE TABLE IF NOT EXISTS hizbs (id INTEGER PRIMARY KEY, surah_id INTEGER REFERENCES surahs(id), verse_number INTEGER, UNIQUE(surah_id,verse_number) ON CONFLICT REPLACE);
-CREATE TABLE IF NOT EXISTS manzils (id INTEGER PRIMARY KEY, surah_id INTEGER REFERENCES surahs(id), verse_number INTEGER, UNIQUE(surah_id,verse_number) ON CONFLICT REPLACE);
-CREATE TABLE IF NOT EXISTS rukus (surah_id INTEGER REFERENCES surahs(id), verse_number INTEGER, UNIQUE(surah_id,verse_number) ON CONFLICT REPLACE);
-CREATE TABLE IF NOT EXISTS sajdas (surah_id INTEGER REFERENCES surahs(id), verse_number INTEGER, type INTEGER, UNIQUE(surah_id,verse_number) ON CONFLICT REPLACE);
-CREATE TABLE IF NOT EXISTS mushaf_pages (page_number INTEGER PRIMARY KEY, surah_id INTEGER REFERENCES surahs(id), verse_number INTEGER, UNIQUE(surah_id,verse_number) ON CONFLICT REPLACE);
-CREATE TABLE IF NOT EXISTS supplications (surah_id INTEGER REFERENCES surahs(id), verse_number_start INTEGER, verse_number_end INTEGER, UNIQUE(surah_id,verse_number_start) ON CONFLICT REPLACE);
-CREATE TABLE IF NOT EXISTS qarees (id INTEGER PRIMARY KEY, name TEXT NOT NULL, bio TEXT, level INTEGER DEFAULT 1);
-CREATE TABLE IF NOT EXISTS recitations (qaree_id INTEGER REFERENCES qarees(id) ON DELETE CASCADE, description TEXT, value TEXT NOT NULL);
 
 sqlite3 quran_english.db
 CREATE TABLE IF NOT EXISTS surahs (id INTEGER PRIMARY KEY, transliteration TEXT, translation TEXT);

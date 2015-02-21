@@ -72,6 +72,7 @@ public:
     virtual ~ApplicationUI();
 
     Q_INVOKABLE void addToHomeScreen(int chapter, int verse, QString const& label);
+    Q_INVOKABLE void addToHomeScreen(qint64 suitePageId, QString const& label);
     Q_INVOKABLE void backup(QString const& destination);
     Q_INVOKABLE void restore(QString const& source);
     Q_INVOKABLE void decorateSearchResults(QVariantList const& input, QString const& searchText, bb::cascades::ArrayDataModel* adm, QVariantList const& additional=QVariantList());

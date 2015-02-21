@@ -84,11 +84,13 @@ Page
     {
         id: titleControl
         kind: TitleBarKind.Segmented
+        selectedOption: ayatOption
         options: [
             Option {
                 id: ayatOption
                 text: qsTr("Verse") + Retranslate.onLanguageChanged
                 imageSource: "images/dropdown/original_ayat.png"
+                selected: true
                 
                 onSelectedChanged: {
                     if (selected) {
@@ -330,7 +332,6 @@ Page
             {
                 id: pluginsDelegate
                 topMargin: 0; bottomMargin: 0
-                source: "AyatTafsirPicker.qml"
             }
             
             Header
@@ -380,6 +381,7 @@ Page
                     textStyle.fontSizeValue: persist.getValueFor("fontSize")
                     textStyle.base: global.textFont
                     input.flags: TextInputFlag.AutoCapitalizationOff | TextInputFlag.AutoCorrectionOff | TextInputFlag.SpellCheckOff | TextInputFlag.WordSubstitutionOff | TextInputFlag.AutoPeriodOff
+                    verticalAlignment: VerticalAlignment.Fill
                     
                     onValueChanged: {
                         text = value;
