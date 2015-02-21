@@ -47,15 +47,15 @@ QVariantMap processPlaylist(QString const& reciter, QString const& outputDirecto
     int n = playlist.size();
     QVariantList queue;
     QStringList toPlay;
+    QSet<QString> alreadyQueued; // we maintain this to avoid putting duplicates in the queue (ie: during memorization mode)
 
     for (int i = 0; i < n; i++)
     {
         QPair<int,int> track = playlist[i];
-
         QString fileName = QString("%1%2.mp3").arg( normalize(track.first) ).arg( normalize(track.second) );
         QString absolutePath = QString("%1/%2").arg( q.path() ).arg(fileName);
 
-        if ( !QFile(absolutePath).exists() )
+        if ( !QFile(absolutePath).exists() && !alreadyQueued.contains(absolutePath) )
         {
             QVariantMap q;
             q["uri"] = QString("%1/%2/%3").arg(remote).arg(reciter).arg(fileName);
@@ -64,6 +64,7 @@ QVariantMap processPlaylist(QString const& reciter, QString const& outputDirecto
             q["recitation"] = true;
 
             queue << q;
+            alreadyQueued << absolutePath;
         }
 
         toPlay << absolutePath;
@@ -109,87 +110,57 @@ int RecitationHelper::extractIndex(QVariantMap const& m)
 }
 
 
-void RecitationHelper::memorize(int chapter, int fromVerse, int toVerse)
-{
-    LOGGER(chapter << fromVerse << toVerse);
-
-    if ( !m_future.isRunning() )
-    {
-        QFuture<QVariantList> future = QtConcurrent::run(this, &RecitationHelper::generateMemorization, chapter, fromVerse, toVerse);
-        m_future.setFuture(future);
-    }
-}
-
-
-QVariantList RecitationHelper::generateMemorization(int chapter, int from, int toVerse)
+void RecitationHelper::memorize(int chapter, int from, int toVerse)
 {
     LOGGER(chapter << from << toVerse);
 
-    QVariantList queue = generatePlaylist(chapter, from, toVerse, false);
-
-    QStringList playlist;
-
-    QString chapterNumber = normalize(chapter);
-    QString reciter = m_persistance->getValueFor("reciter").toString();
-    QString directory = QString("%1/%2").arg( m_persistance->getValueFor("output").toString() ).arg(reciter);
-
-    int k = 0;
-    int fromVerse = from;
-
-    while (k < 2)
+    if ( !m_futureResult.isRunning() )
     {
-        int endPoint = fromVerse+CHUNK_SIZE;
+        QList< QPair<int,int> > all;
+        int k = 0;
+        int fromVerse = from;
 
-        if (endPoint > toVerse) {
-            endPoint = toVerse+1;
-        }
-
-        for (int verse = fromVerse; verse < endPoint; verse++)
+        while (k < 2)
         {
-            QString currentVerse = QString::number(verse);
-            QString fileName = QString("%1%2.mp3").arg(chapterNumber).arg( normalize(verse) );
-            QString absolutePath = QString("%1/%2").arg(directory).arg(fileName);
+            int endPoint = fromVerse+CHUNK_SIZE;
 
-            for (int j = 0; j < ITERATION; j++) {
-                playlist << absolutePath;
+            if (endPoint > toVerse) {
+                endPoint = toVerse+1;
             }
+
+            for (int verse = fromVerse; verse < endPoint; verse++)
+            {
+                for (int j = 0; j < ITERATION; j++) {
+                    all << qMakePair<int,int>(chapter, verse);
+                }
+            }
+
+            for (int j = 0; j < ITERATION; j++)
+            {
+                for (int verse = fromVerse; verse < endPoint; verse++) {
+                    all << qMakePair<int,int>(chapter, verse);
+                }
+            }
+
+            fromVerse += CHUNK_SIZE;
+
+            if (fromVerse > endPoint) {
+                break;
+            }
+
+            ++k;
         }
 
         for (int j = 0; j < ITERATION; j++)
         {
-            for (int verse = fromVerse; verse < endPoint; verse++)
-            {
-                QString currentVerse = QString::number(verse);
-                QString fileName = QString("%1%2.mp3").arg(chapterNumber).arg( normalize(verse) );
-                QString absolutePath = QString("%1/%2").arg(directory).arg(fileName);
-                playlist << absolutePath;
+            for (int verse = from; verse <= toVerse; verse++) {
+                all << qMakePair<int,int>(chapter, verse);
             }
         }
 
-        fromVerse += CHUNK_SIZE;
-
-        if (fromVerse > endPoint) {
-            break;
-        }
-
-        ++k;
+        QFuture<QVariantMap> future = QtConcurrent::run(processPlaylist, m_persistance->getValueFor("reciter").toString(), m_persistance->getValueFor("output").toString(), all);
+        m_futureResult.setFuture(future);
     }
-
-    for (int j = 0; j < ITERATION; j++)
-    {
-        for (int verse = from; verse <= toVerse; verse++)
-        {
-            QString currentVerse = QString::number(verse);
-            QString fileName = QString("%1%2.mp3").arg(chapterNumber).arg( normalize(verse) );
-            QString absolutePath = QString("%1/%2").arg(directory).arg(fileName);
-            playlist << absolutePath;
-        }
-    }
-
-    bool written = IOUtils::writeTextFile( PLAYLIST_TARGET, playlist.join("\n"), true, false );
-    LOGGER(written);
-
-    return queue;
 }
 
 
@@ -318,16 +289,16 @@ void RecitationHelper::onPlaylistReady()
 }
 
 
-void RecitationHelper::downloadAndPlayAll(bb::cascades::ArrayDataModel* adm)
+void RecitationHelper::downloadAndPlayAll(bb::cascades::ArrayDataModel* adm, int from, int to)
 {
-    LOGGER( adm->size() );
+    LOGGER( adm->size() << from << to );
 
     if ( !m_futureResult.isRunning() )
     {
         QList< QPair<int,int> > all;
-        int n = adm->size();
+        int n = to >= from ? to : adm->size()-1;
 
-        for (int i = 0; i < n; i++)
+        for (int i = from; i <= n; i++)
         {
             QVariantMap q = adm->value(i).toMap();
             all << qMakePair<int,int>( q.value("surah_id").toInt(), q.value("verse_id").toInt() );

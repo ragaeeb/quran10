@@ -111,7 +111,7 @@ Page
 				    player.togglePlayback();
 				} else {
 				    listView.previousPlayedIndex = -1;
-                    recitation.downloadAndPlay( fromSurahId, 1, listView.dataModel.size() );
+                    recitation.downloadAndPlayAll(listView.dataModel);
 				}
             }
         },
