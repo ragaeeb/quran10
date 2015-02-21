@@ -31,7 +31,6 @@ class RecitationHelper : public QObject
 
     void startPlayback();
     QVariantList generatePlaylist(int chapter, int fromVerse, int toVerse, bool write);
-    QVariantList generateMemorization(int chapter, int fromVerse, int toVerse);
 
 private slots:
     void onFinished();
@@ -50,7 +49,7 @@ public:
      * @pre The directory must have been set up.
      */
     Q_INVOKABLE void downloadAndPlay(int chapter, int fromVerse, int toVerse);
-    Q_INVOKABLE void downloadAndPlayAll(bb::cascades::ArrayDataModel* adm);
+    Q_INVOKABLE void downloadAndPlayAll(bb::cascades::ArrayDataModel* adm, int from=0, int to=-1);
     Q_INVOKABLE void memorize(int chapter, int fromVerse, int toVerse);
     Q_INVOKABLE static int extractIndex(QVariantMap const& m);
 };

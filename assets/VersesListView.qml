@@ -26,12 +26,13 @@ ListView
     {
         clearPrevious();
         previousPlayedIndex = -1;
-        recitation.downloadAndPlay(chapterNumber, from, to);
+        recitation.downloadAndPlayAll(verseModel, from, to);
     }
 
     multiSelectHandler {
         actions: [
-            ActionItem {
+            ActionItem
+            {
                 id: multiPlayAction
 
                 title: qsTr("Play") + Retranslate.onLanguageChanged
@@ -42,8 +43,8 @@ ListView
                     var selectedIndices = listView.selectionList();
                     var first = selectedIndices[0][0];
                     var last = selectedIndices[selectedIndices.length-1][0];
-                    
-                    play(first+1, last+1);
+
+                    play(first, last);
                 }
             }
         ]
@@ -53,10 +54,9 @@ ListView
     
     function clearPrevious()
     {
-        var actual = [ previousPlayedIndex, 0 ];
-        var data = verseModel.data(actual);
+        var data = verseModel.value(previousPlayedIndex);
         data.playing = false;
-        verseModel.updateItem(actual, data);
+        verseModel.replace(previousPlayedIndex, data);
     }
     
     function onMetaDataChanged(metaData)
@@ -67,14 +67,14 @@ ListView
             clearPrevious();
         }
         
-        var target = [ index-1, 0 ];
-        var data = dataModel.data(target);
+        var target = index-1;
+        var data = dataModel.value(target);
         
         data["playing"] = true;
-        verseModel.updateItem(target, data);
+        verseModel.replace(target, data);
         
         if (follow) {
-            listView.scrollToItem(target, ScrollAnimation.None);
+            listView.scrollToItem([target], ScrollAnimation.None);
         }
         
         previousPlayedIndex = index-1;
@@ -205,7 +205,7 @@ ListView
                             
                             onTriggered: {
                                 console.log("UserEvent: PlayFromHere");
-                                ali.ListItem.view.play( ali.ListItem.indexPath[0]+1, ali.ListItem.view.dataModel.size() );
+                                ali.ListItem.view.play(ali.ListItem.indexPath[0], -1);
                             }
                         }
                         

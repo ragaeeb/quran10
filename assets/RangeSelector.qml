@@ -30,7 +30,7 @@ QtObject
             var last = all[n-1][0];
             
             for (var i = first; i < last; i ++) {
-                parent.select([i,0], true);
+                parent.select([i], true);
             }
             
             parent.multiSelectHandler.status = qsTr("%n %1 selected", "", last-first+1).arg(itemName) + Retranslate.onLanguageChanged;
