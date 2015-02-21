@@ -8,7 +8,7 @@
 #include "TextUtils.h"
 
 #define normalize(a) TextUtils::zeroFill(a,3)
-#define PLAYLIST_TARGET "/var/tmp/playlist.m3u"
+#define PLAYLIST_TARGET QString("%1/playlist.m3u").arg( QDir::tempPath() )
 #define remote "http://www.everyayah.com/data"
 #define ITERATION 20
 #define CHUNK_SIZE 4
@@ -79,6 +79,8 @@ QVariantMap processPlaylist(QString const& reciter, QString const& outputDirecto
     bool written = !toPlay.isEmpty() ? IOUtils::writeTextFile( PLAYLIST_TARGET, toPlay.join("\n"), true, false ) : false;
     LOGGER(written);
 
+    toPlay.removeDuplicates();
+
     if (written) {
         result["playlist"] = QUrl::fromLocalFile(PLAYLIST_TARGET);
     } else {
@@ -106,39 +108,55 @@ int RecitationHelper::extractIndex(QVariantMap const& m)
     QString uri = m.value("uri").toString();
     uri = uri.mid( uri.lastIndexOf("/")+1 );
     uri = uri.left( uri.lastIndexOf(".") );
-    return uri.mid(3).toInt();
+    int verse = uri.mid(3).toInt();
+    int chapter = uri.left(3).toInt();
+
+    return m_ayatToIndex.value( qMakePair<int,int>(chapter,verse) );
 }
 
 
-void RecitationHelper::memorize(int chapter, int from, int toVerse)
+void RecitationHelper::memorize(bb::cascades::ArrayDataModel* adm, int from, int to)
 {
-    LOGGER(chapter << from << toVerse);
+    LOGGER(adm->size() << from << to);
 
     if ( !m_futureResult.isRunning() )
     {
+        m_ayatToIndex.clear();
+
+        for (int i = from; i <= to; i++)
+        {
+            QVariantMap q = adm->value(i).toMap();
+            QPair<int,int> ayat = qMakePair<int,int>( q.value("surah_id").toInt(), q.value("verse_id").toInt() );
+            m_ayatToIndex.insert(ayat, i);
+        }
+
         QList< QPair<int,int> > all;
         int k = 0;
         int fromVerse = from;
 
         while (k < 2)
         {
-            int endPoint = fromVerse+CHUNK_SIZE;
+            int endPoint = from+CHUNK_SIZE;
 
-            if (endPoint > toVerse) {
-                endPoint = toVerse+1;
+            if (endPoint > to) {
+                endPoint = to+1;
             }
 
             for (int verse = fromVerse; verse < endPoint; verse++)
             {
-                for (int j = 0; j < ITERATION; j++) {
-                    all << qMakePair<int,int>(chapter, verse);
+                for (int j = 0; j < ITERATION; j++)
+                {
+                    QVariantMap q = adm->value(verse).toMap();
+                    all << qMakePair<int,int>( q.value("surah_id").toInt(), q.value("verse_id").toInt() );
                 }
             }
 
             for (int j = 0; j < ITERATION; j++)
             {
-                for (int verse = fromVerse; verse < endPoint; verse++) {
-                    all << qMakePair<int,int>(chapter, verse);
+                for (int verse = fromVerse; verse < endPoint; verse++)
+                {
+                    QVariantMap q = adm->value(verse).toMap();
+                    all << qMakePair<int,int>( q.value("surah_id").toInt(), q.value("verse_id").toInt() );
                 }
             }
 
@@ -153,8 +171,10 @@ void RecitationHelper::memorize(int chapter, int from, int toVerse)
 
         for (int j = 0; j < ITERATION; j++)
         {
-            for (int verse = from; verse <= toVerse; verse++) {
-                all << qMakePair<int,int>(chapter, verse);
+            for (int verse = from; verse <= to; verse++)
+            {
+                QVariantMap q = adm->value(verse).toMap();
+                all << qMakePair<int,int>( q.value("surah_id").toInt(), q.value("verse_id").toInt() );
             }
         }
 
@@ -297,11 +317,14 @@ void RecitationHelper::downloadAndPlayAll(bb::cascades::ArrayDataModel* adm, int
     {
         QList< QPair<int,int> > all;
         int n = to >= from ? to : adm->size()-1;
+        m_ayatToIndex.clear();
 
         for (int i = from; i <= n; i++)
         {
             QVariantMap q = adm->value(i).toMap();
-            all << qMakePair<int,int>( q.value("surah_id").toInt(), q.value("verse_id").toInt() );
+            QPair<int,int> ayat = qMakePair<int,int>( q.value("surah_id").toInt(), q.value("verse_id").toInt() );
+            all << ayat;
+            m_ayatToIndex.insert(ayat, i);
         }
 
         QFuture<QVariantMap> future = QtConcurrent::run(processPlaylist, m_persistance->getValueFor("reciter").toString(), m_persistance->getValueFor("output").toString(), all);

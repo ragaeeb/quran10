@@ -28,6 +28,7 @@ class RecitationHelper : public QObject
     QFutureWatcher<QVariantList> m_future;
     QFutureWatcher<QVariantMap> m_futureResult;
     QString m_anchor;
+    QMap< QPair<int,int>, int > m_ayatToIndex;
 
     void startPlayback();
     QVariantList generatePlaylist(int chapter, int fromVerse, int toVerse, bool write);
@@ -50,8 +51,8 @@ public:
      */
     Q_INVOKABLE void downloadAndPlay(int chapter, int fromVerse, int toVerse);
     Q_INVOKABLE void downloadAndPlayAll(bb::cascades::ArrayDataModel* adm, int from=0, int to=-1);
-    Q_INVOKABLE void memorize(int chapter, int fromVerse, int toVerse);
-    Q_INVOKABLE static int extractIndex(QVariantMap const& m);
+    Q_INVOKABLE void memorize(bb::cascades::ArrayDataModel* adm, int from, int to);
+    Q_INVOKABLE int extractIndex(QVariantMap const& m);
 };
 
 } /* namespace quran */

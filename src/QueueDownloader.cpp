@@ -69,7 +69,7 @@ void QueueDownloader::onDownloadProgress(QVariant const& cookie, qint64 bytesRec
 
     if ( m_uriToIndex.contains(uri) )
     {
-        element["current"] = round( (bytesReceived*100.0)/bytesTotal );
+        element["current"] = QString::number( (bytesReceived*100.0)/bytesTotal, 'f', 2 );
         element["total"] = 100;
 
         int i = m_uriToIndex.value(uri);
