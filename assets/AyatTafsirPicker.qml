@@ -31,10 +31,11 @@ ResizableContainer
         
         function addToHomeScreen(ListItemData)
         {
-            shortcut.active = true;
-            shortcut.object.homeTafsirPrompt.suitePageId = ListItemData.id;
-            shortcut.object.homeTafsirPrompt.inputField.defaultText = ListItemData.title;
-            shortcut.object.homeTafsirPrompt.show();
+            var name = persist.showBlockingPrompt( qsTr("Enter name"), qsTr("You can use this to quickly recognize this tafsir on your home screen."), ListItemData.title, qsTr("Shortcut name..."), 15, true, qsTr("Save") );
+            
+            if (name.length > 0) {
+                app.addToHomeScreen(ListItemData.id, name);
+            }
         }
         
         onTriggered: {
