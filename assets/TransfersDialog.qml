@@ -23,7 +23,7 @@ Delegate
             
             function finish() {
                 if ( !out.isPlaying() ) {
-                    //out.play();
+                    out.play();
                 }
             }
             
@@ -203,9 +203,8 @@ Delegate
                     }
                     
                     onCreationCompleted: {
-                        app.tafsirDeflationProgress.connect(onDeflationProgressChanged);
-                        app.translationDeflationProgress.connect(onDeflationProgressChanged);
                         app.deflationDone.connect(cpc.finish);
+                        app.archiveDeflationProgress.connect(onDeflationProgressChanged);
                         mushaf.deflationProgress.connect(onDeflationProgressChanged);
                         mushaf.deflationDone.connect(cpc.finish);
                     }

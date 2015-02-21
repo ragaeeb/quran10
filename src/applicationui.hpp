@@ -47,6 +47,7 @@ private slots:
     void childCardDone(bb::system::CardDoneMessage const& message=bb::system::CardDoneMessage());
 	void invoked(bb::system::InvokeRequest const& request);
 	void lazyInit();
+    void onArchiveWritten();
     void onBookmarksRestored();
 	void onBookmarksSaved();
 	void onDataLoaded(QVariant id, QVariant data);
@@ -54,15 +55,12 @@ private slots:
 	void onResultsDecorated();
     void onTafsirDownloaded(QVariant const& cookie, QByteArray const& data);
     void onTafsirMissing(QString const& tafsirName);
-    void onTafsirWritten();
     void onTranslationMissing(QString const& language);
-    void onTranslationWritten();
 
 signals:
     void backupComplete(QString const& file);
     void deflationDone(bool success, QString const& error);
-    void tafsirDeflationProgress(int current, int entries);
-    void translationDeflationProgress(qint64 current, qint64 total);
+    void archiveDeflationProgress(qint64 current, qint64 total);
     void initialize();
     void lazyInitComplete();
     void restoreComplete(bool success);

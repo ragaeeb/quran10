@@ -7,9 +7,7 @@
 #include "TextUtils.h"
 #include "ThreadUtils.h"
 
-#define ARTICLES_NAME QString("articles_%1").arg(m_translation)
-#define ATTACH_ARTICLES m_sql.attachIfNecessary(ARTICLES_NAME, true);
-#define ATTACH_TAFSIR m_sql.attachIfNecessary( tafsirName(), true ); ATTACH_ARTICLES;
+#define ATTACH_TAFSIR m_sql.attachIfNecessary( tafsirName(), true );
 #define TRANSLATION QString("quran_%1").arg(m_translation)
 
 namespace quran {
@@ -62,10 +60,9 @@ void QueryHelper::settingChanged(QString const& key)
             m_sql.attachIfNecessary(TRANSLATION, inHome); // since english translation is loaded by default
         }
 
-        QFile articlesFile( QString("%1/%2.db").arg( QDir::homePath() ).arg(ARTICLES_NAME) );
         QFile tafsirFile( QString("%1/%2.db").arg( QDir::homePath() ).arg( tafsirName() ) );
 
-        if ( !articlesFile.exists() || articlesFile.size() == 0 || !tafsirFile.exists() || tafsirFile.size() == 0 ) { // translation doesn't exist, download it
+        if ( !tafsirFile.exists() || tafsirFile.size() == 0 ) { // translation doesn't exist, download it
             emit tafsirMissing( tafsirName() );
         }
 
@@ -139,7 +136,7 @@ void QueryHelper::fetchRandomQuote(QObject* caller)
 {
     LOGGER("fetchRandomQuote");
 
-    ATTACH_ARTICLES;
+    ATTACH_TAFSIR;
     m_sql.executeQuery(caller, QString("SELECT individuals.name AS author,body,reference FROM quotes INNER JOIN individuals ON individuals.id=quotes.author WHERE quotes.id=( ABS( RANDOM() % (SELECT COUNT() AS total_quotes FROM quotes) )+1 )"), QueryId::FetchRandomQuote);
 }
 
@@ -400,7 +397,7 @@ void QueryHelper::fetchAllQuotes(QObject* caller)
 {
     LOGGER("fetchAllQuotes");
 
-    ATTACH_ARTICLES;
+    ATTACH_TAFSIR;
     m_sql.executeQuery(caller, QString("SELECT quotes.id AS id,individuals.name AS author,body FROM quotes INNER JOIN individuals ON individuals.id=quotes.author ORDER BY id DESC"), QueryId::FetchAllQuotes);
 }
 
