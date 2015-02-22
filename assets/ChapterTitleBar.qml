@@ -5,8 +5,6 @@ TitleBar
 {
     id: titleControl
     property int chapterNumber
-    property variant bgSource: "images/title/title_bg_tafseer.amd"
-    property double bottomPad: 25
     signal titleTapped();
     
     onChapterNumberChanged: {
@@ -19,10 +17,17 @@ TitleBar
         content: Container
         {
             id: titleContainer
-            topPadding: 10; bottomPadding: bottomPad
+            topPadding: 10; bottomPadding: 10
             horizontalAlignment: HorizontalAlignment.Fill
-            verticalAlignment: VerticalAlignment.Top
+            verticalAlignment: VerticalAlignment.Fill
             background: back.imagePaint
+            
+            onCreationCompleted: {
+                if ( "navigation" in titleContainer ) {
+                    var nav = titleContainer.navigation;
+                    nav.focusPolicy = 0x2;
+                }
+            }
             
             gestureHandlers: [
                 TapHandler {
@@ -36,32 +41,21 @@ TitleBar
             attachedObjects: [
                 ImagePaintDefinition {
                     id: back
-                    imageSource: bgSource
+                    imageSource: "images/title/title_bg_alt.png"
                 }
             ]
             
             Label {
                 id: surahNameArabic
                 horizontalAlignment: HorizontalAlignment.Fill
+                verticalAlignment: VerticalAlignment.Fill
                 textStyle.textAlign: TextAlign.Center
                 textStyle.fontSize: FontSize.XXSmall
                 textStyle.fontWeight: FontWeight.Bold
-                bottomMargin: 5
-            }
-            
-            Label {
-                id: surahNameEnglish
-                horizontalAlignment: HorizontalAlignment.Fill
-                textStyle.textAlign: TextAlign.Center
-                textStyle.fontSize: FontSize.XXSmall
-                textStyle.fontWeight: FontWeight.Bold
-                topMargin: 0
-            }
-            
-            onCreationCompleted: {
-                if ( "navigation" in titleContainer ) {
-                    var nav = titleContainer.navigation;
-                    nav.focusPolicy = 0x2;
+                multiline: true
+                
+                layoutProperties: StackLayoutProperties {
+                    spaceQuota: 1
                 }
             }
         }
@@ -71,11 +65,13 @@ TitleBar
     {
         if (id == QueryId.FetchSurahHeader)
         {
-            surahNameArabic.text = data[0].name;
+            var surahName = data[0].name;
             
             if (helper.showTranslation) {
-                surahNameEnglish.text = qsTr("%1 (%2)").arg(data[0].transliteration).arg(data[0].translation);
+                surahName += "\n"+qsTr("%1 (%2)").arg(data[0].transliteration).arg(data[0].translation);
             }
+            
+            surahNameArabic.text = surahName;
         }
     }
 }

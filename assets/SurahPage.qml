@@ -138,8 +138,6 @@ Page
     titleBar: ChapterTitleBar
     {
         id: ctb
-        bgSource: "images/title/title_bg_alt.png"
-        bottomPad: 0
         
         onTitleTapped: {
             openChapterTafsir(chapterNumber);
