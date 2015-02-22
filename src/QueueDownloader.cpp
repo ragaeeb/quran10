@@ -25,7 +25,7 @@ void QueueDownloader::checkSize(QVariant const& cookie, QString const& uri) {
 
 bool QueueDownloader::processNext()
 {
-    if ( !m_model.isEmpty() && m_currentIndex < m_model.size()-1 )
+    if ( !m_model.isEmpty() && m_currentIndex <= m_model.size()-1 )
     {
         ++m_currentIndex;
         QVariantMap current = m_model.value(m_currentIndex).toMap();

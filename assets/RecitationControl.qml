@@ -29,20 +29,23 @@ Container
             defaultImageSource = "images/menu/ic_play.png";
         }
         
+        onCreationCompleted: {
+            player.durationChanged.connect(progress.onDurationChanged);
+            player.positionChanged.connect(progress.onPositionChanged);
+            player.playingChanged.connect(updateImage);
+            player.activeChanged.connect(updateImage);
+            player.error.connect(onError);
+        }
+        
         onClicked: {
             console.log("UserEvent: DownloadPlayButtonClicked");
             
             if (!downloaded) {
                 queue.downloadProgress.connect(progress.onNetworkProgressChanged);
-                recitation.downloadAndPlay(root.surahId, root.verseId, root.verseId);
+                recitation.downloadAndPlay(root.surahId, root.verseId);
             } else {
                 if (!played) {
-                    player.durationChanged.connect(progress.onDurationChanged);
-                    player.positionChanged.connect(progress.onPositionChanged);
-                    player.playingChanged.connect(updateImage);
-                    player.activeChanged.connect(updateImage);
-                    player.error.connect(onError);
-                    recitation.downloadAndPlay(root.surahId, root.verseId, root.verseId);
+                    recitation.downloadAndPlay(root.surahId, root.verseId);
                     played = true;
                 } else {
                     player.togglePlayback();
@@ -103,26 +106,20 @@ Container
         if (downloaded) {
             actionButton.defaultImageSource = player.active && played ? "images/menu/ic_pause.png" : "images/menu/ic_play.png";
         } else {
-            actionButton.defaultImageSource = "images/ic_download.png";
+            actionButton.defaultImageSource = "images/menu/ic_download_mushaf.png";
         }
         
         rotator.play();
     }
     
-    function onAudioAvailable(chapter, verse)
+    function onReady(uri)
     {
-        if (chapter == root.surahId && verse == root.verseId) {
-            updateState();
-        }
-    }
-    
-    function onReady(uri) {
         player.play(uri);
+        updateState();
     }
     
     onCreationCompleted: {
         updateState();
-        recitation.audioAvailable.connect(onAudioAvailable);
         recitation.readyToPlay.connect(onReady);
     }
     
