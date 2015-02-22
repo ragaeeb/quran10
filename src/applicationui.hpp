@@ -42,6 +42,7 @@ class ApplicationUI : public QObject
     void finishWithToast(QString const& message);
     void processInvoke();
     void initGlobals();
+    void complain(QString const& message);
 
 private slots:
     void childCardDone(bb::system::CardDoneMessage const& message=bb::system::CardDoneMessage());

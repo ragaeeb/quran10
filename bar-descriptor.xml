@@ -125,6 +125,14 @@
 			<image>icon.png</image>
 		</icon>
 	</invoke-target>
+	
+	<invoke-target id="com.canadainc.Quran10.ayat.picker">
+		<invoke-target-type>card.picker</invoke-target-type>
+		<invoke-target-name>Quran10</invoke-target-name> 
+		<icon>
+			<image>icon.png</image>
+		</icon>
+	</invoke-target>
   
 	<invoke-target id="com.canadainc.Quran10.shortcut">
 		<invoke-target-type>application</invoke-target-type>
