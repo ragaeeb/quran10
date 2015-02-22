@@ -33,36 +33,6 @@ Page
                 
                 PersistDropDown
                 {
-                    key: "primary"
-                    title: qsTr("Primary Text") + Retranslate.onLanguageChanged
-                    
-                    Option {
-                        id: primaryUthmani
-                        text: qsTr("Uthmani Script") + Retranslate.onLanguageChanged
-                        description: qsTr("An old-fashion Arabic script used by the third Caliph, Uthman, to produce the first standard quran manuscript.") + Retranslate.onLanguageChanged
-                        value: "arabic_uthmani"
-                        imageSource: "images/dropdown/ic_script.png"
-                    }
-                    
-                    Option {
-                        id: primaryTransliteration
-                        text: qsTr("Transliteration") + Retranslate.onLanguageChanged
-                        description: qsTr("English Transliteration") + Retranslate.onLanguageChanged
-                        value: "transliteration"
-                        imageSource: "images/dropdown/ic_transliteration.png"
-                    }
-                    
-                    onSelectedOptionChanged: {
-                        if (selectedOption == primaryTransliteration) {
-                            infoText.text = qsTr("English transliteration will be displayed in place of Arabic text.") + Retranslate.onLanguageChanged
-                        } else {
-                            infoText.text = qsTr("Old-fashioned Arabic glyphs will be rendered for the primary text.") + Retranslate.onLanguageChanged
-                        }
-                    }
-                }
-                
-                PersistDropDown
-                {
                     title: qsTr("Translation") + Retranslate.onLanguageChanged
                     horizontalAlignment: HorizontalAlignment.Fill
                     key: "translation"
@@ -94,7 +64,7 @@ Page
                         text: qsTr("English") + Retranslate.onLanguageChanged
                         description: qsTr("Muhammad al-Hilali & Muhsin Khan") + Retranslate.onLanguageChanged
                         value: "english"
-                        imageSource: "images/dropdown/ic_translation.png"
+                        imageSource: "images/dropdown/ic_transliteration.png"
                     }
                     
                     Option {

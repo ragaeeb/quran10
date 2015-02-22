@@ -376,8 +376,7 @@ Page
                         id: transFade
                         fromOpacity: 0
                         toOpacity: 1
-                        delay: 250
-                        duration: 1000
+                        duration: 500
                         easingCurve: StockCurve.ExponentialIn
                     }
                 ]

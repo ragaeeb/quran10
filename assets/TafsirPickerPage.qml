@@ -231,10 +231,24 @@ Page
                 }
                 
                 busy.delegateActive = false;
+                listView.visible = !adm.isEmpty();
+                noElements.delegateActive = !listView.visible;
             }
             
             onCreationCompleted: {
                 reload();
+            }
+        }
+        
+        EmptyDelegate
+        {
+            id: noElements
+            graphic: "images/placeholders/empty_suites.png"
+            labelText: qsTr("No suites matched your search criteria. Please try a different search term.") + Retranslate.onLanguageChanged
+            
+            onImageTapped: {
+                console.log("UserEvent: NoSuitesTapped");
+                searchField.requestFocus();
             }
         }
         
