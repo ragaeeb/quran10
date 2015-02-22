@@ -13,6 +13,7 @@ ListView
     property int previousPlayedIndex
     property bool secretPeek: false
     property bool follow: persist.getValueFor("follow") == 1
+    property bool showContextMenu: true
 
     dataModel: ArrayDataModel {
         id: verseModel
@@ -28,13 +29,18 @@ ListView
         previousPlayedIndex = -1;
         recitation.downloadAndPlayAll(verseModel, from, to);
     }
+    
+    onSelectionChanged: {
+        var n = selectionList().length;
+        multiPlayAction.enabled = n > 0;
+    }
 
     multiSelectHandler {
         actions: [
             ActionItem
             {
                 id: multiPlayAction
-
+                enabled: false
                 title: qsTr("Play") + Retranslate.onLanguageChanged
                 imageSource: "images/menu/ic_play.png"
 
@@ -96,36 +102,6 @@ ListView
             follow = persist.getValueFor("follow") == 1;
         }
     }
-
-    function renderItem(ListItemData)
-    {
-        var result = ListItemData.arabic + "\n"
-
-        if (ListItemData.translation && ListItemData.translation.length > 0) {
-            result += ListItemData.translation + "\n"
-        }
-
-        return result
-    }
-
-    function getTextualData(ListItemData) {
-        var result = renderItem(ListItemData)
-        result += qsTr("%1:%2").arg(chapterNumber).arg(ListItemData.verse_id)
-        return result;
-    }
-
-    function copyItem(ListItemData)
-    {
-        var result = getTextualData(ListItemData)
-        persist.copyToClipboard(result)
-    }
-
-    function shareItem(ListItemData)
-    {
-        var result = getTextualData(ListItemData)
-        result = persist.convertToUtf8(result)
-        return result;
-    }
     
     function memorize(from)
     {
@@ -182,6 +158,16 @@ ListView
             AyatListItem
             {
                 id: ali
+                
+                contextMenuHandler: [
+                    ContextMenuHandler {
+                        onPopulating: {
+                            if (!ali.ListItem.view.showContextMenu) {
+                                event.abort();
+                            }
+                        }
+                    }
+                ]
                 
                 contextActions: [
                     ActionSet

@@ -11,6 +11,6 @@
 #include <bb/cascades/NavigationPane>
 #include <bb/cascades/QmlDocument>
 
-#include <QtConcurrentRun>
-
 #include <QFutureWatcher>
+
+#include <QtConcurrentRun>

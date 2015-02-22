@@ -7,6 +7,7 @@ Page
     property int fromSurahId
     property int toSurahId
     property int requestedVerse
+    property alias showContextMenu: listView.showContextMenu
     actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
     signal picked(int surahId, int verseId)
     signal openChapterTafsir(int surahId)

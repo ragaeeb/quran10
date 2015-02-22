@@ -23,21 +23,18 @@ Container
         onCreationCompleted: {
             player.durationChanged.connect(progress.onDurationChanged);
             player.positionChanged.connect(progress.onPositionChanged);
+            
+            rotator.play();
         }
         
         onClicked: {
             console.log("UserEvent: DownloadPlayButtonClicked");
             
-            if (!downloaded) {
-                queue.downloadProgress.connect(progress.onNetworkProgressChanged);
+            if (!played) {
                 recitation.downloadAndPlay(root.surahId, root.verseId);
+                played = true;
             } else {
-                if (!played) {
-                    recitation.downloadAndPlay(root.surahId, root.verseId);
-                    played = true;
-                } else {
-                    player.togglePlayback();
-                }
+                player.togglePlayback();
             }
         }
         
@@ -56,7 +53,7 @@ Container
     Slider
     {
         id: progress
-        enabled: downloaded
+        enabled: player.playing
         verticalAlignment: VerticalAlignment.Center
         
         function onPositionChanged(position) {
@@ -73,41 +70,17 @@ Container
             }
         }
         
-        function onNetworkProgressChanged(cookie, current, total)
-        {
-            if (cookie.chapter == root.surahId && cookie.verse == root.verseId)
-            {
-                value = current;
-                toValue = total;
-            }
-        }
-        
         layoutProperties: StackLayoutProperties {
             spaceQuota: 1
         }
     }
     
-    function updateState()
-    {
-        downloaded = recitation.isDownloaded(root.surahId, root.verseId);
-        
-        if (downloaded) {
-            actionButton.defaultImageSource = player.active && played ? "images/menu/ic_pause.png" : "images/menu/ic_play.png";
-        } else {
-            actionButton.defaultImageSource = "images/menu/ic_download_mushaf.png";
-        }
-        
+    function onReady(uri) {
+        player.play(uri);
         rotator.play();
     }
     
-    function onReady(uri)
-    {
-        player.play(uri);
-        updateState();
-    }
-    
     onCreationCompleted: {
-        updateState();
         recitation.readyToPlay.connect(onReady);
     }
     
