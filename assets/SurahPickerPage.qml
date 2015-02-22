@@ -159,48 +159,55 @@ Page
             horizontalAlignment: HorizontalAlignment.Fill
             verticalAlignment: VerticalAlignment.Fill
             
-            PersistDropDown
+            Container
             {
-                id: sortOrder
-                title: qsTr("Display Options") + Retranslate.onLanguageChanged
+                layout: DockLayout {}
+                background: Color.Black
                 horizontalAlignment: HorizontalAlignment.Fill
-                topMargin: 0; bottomMargin: 0
                 visible: showJuz
                 
-                Option {
-                    id: alphabet
-                    text: qsTr("Alphabetical Order") + Retranslate.onLanguageChanged
-                    description: qsTr("Sorted by surah name") + Retranslate.onLanguageChanged
-                    imageSource: "images/dropdown/sort_alphabet.png"
-                    value: "name"
-                }
-                
-                Option {
-                    id: juzOption
-                    text: qsTr("Juz") + Retranslate.onLanguageChanged
-                    description: qsTr("The surahs will be displayed separated in juz") + Retranslate.onLanguageChanged
-                    imageSource: "images/dropdown/sort_juz.png"
-                    value: "juz"
-                }
-                
-                Option {
-                    id: normal
-                    text: qsTr("Normal") + Retranslate.onLanguageChanged
-                    description: qsTr("The surahs will be displayed in the standard order") + Retranslate.onLanguageChanged
-                    imageSource: "images/dropdown/sort_normal.png"
-                    value: "normal"
-                }
-                
-                Option {
-                    id: recent
-                    text: qsTr("Revelation Order") + Retranslate.onLanguageChanged
-                    description: qsTr("Display chapters int he order they were revealed") + Retranslate.onLanguageChanged
-                    imageSource: "images/dropdown/sort_revelation.png"
-                    value: "revelation_order"
-                }
-                
-                onSelectedOptionChanged: {
-                    textField.textChanging(textField.text);
+                PersistDropDown
+                {
+                    id: sortOrder
+                    title: qsTr("Display Options") + Retranslate.onLanguageChanged
+                    horizontalAlignment: HorizontalAlignment.Fill
+                    topMargin: 0; bottomMargin: 0
+                    
+                    Option {
+                        id: alphabet
+                        text: qsTr("Alphabetical Order") + Retranslate.onLanguageChanged
+                        description: qsTr("Sorted by surah name") + Retranslate.onLanguageChanged
+                        imageSource: "images/dropdown/sort_alphabet.png"
+                        value: "name"
+                    }
+                    
+                    Option {
+                        id: juzOption
+                        text: qsTr("Juz") + Retranslate.onLanguageChanged
+                        description: qsTr("The surahs will be displayed separated in juz") + Retranslate.onLanguageChanged
+                        imageSource: "images/dropdown/sort_juz.png"
+                        value: "juz"
+                    }
+                    
+                    Option {
+                        id: normal
+                        text: qsTr("Normal") + Retranslate.onLanguageChanged
+                        description: qsTr("The surahs will be displayed in the standard order") + Retranslate.onLanguageChanged
+                        imageSource: "images/dropdown/sort_normal.png"
+                        value: "normal"
+                    }
+                    
+                    Option {
+                        id: recent
+                        text: qsTr("Revelation Order") + Retranslate.onLanguageChanged
+                        description: qsTr("Display chapters int he order they were revealed") + Retranslate.onLanguageChanged
+                        imageSource: "images/dropdown/sort_revelation.png"
+                        value: "revelation_order"
+                    }
+                    
+                    onSelectedOptionChanged: {
+                        textField.textChanging(textField.text);
+                    }
                 }
             }
             

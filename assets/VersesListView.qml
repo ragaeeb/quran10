@@ -67,6 +67,10 @@ ListView
             clearPrevious();
         }
         
+        if (index == -1) {
+            return;
+        }
+        
         var target = index;
         var data = dataModel.value(target);
         

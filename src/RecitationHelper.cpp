@@ -62,6 +62,8 @@ QVariantMap processPlaylist(QString const& reciter, QString const& outputDirecto
             q["local"] = absolutePath;
             q["name"] = QObject::tr("%1:%2 recitation").arg(track.first).arg(track.second);
             q["recitation"] = true;
+            q["chapter"] = track.first;
+            q["verse"] = track.second;
 
             queue << q;
             alreadyQueued << absolutePath;
@@ -76,15 +78,18 @@ QVariantMap processPlaylist(QString const& reciter, QString const& outputDirecto
         result["anchor"] = queue.last().toMap().value("uri").toString();
     }
 
-    bool written = !toPlay.isEmpty() ? IOUtils::writeTextFile( PLAYLIST_TARGET, toPlay.join("\n"), true, false ) : false;
-    LOGGER(written);
+    if ( toPlay.size() > 1 )
+    {
+        bool written = !toPlay.isEmpty() ? IOUtils::writeTextFile( PLAYLIST_TARGET, toPlay.join("\n"), true, false ) : false;
+        LOGGER(written);
 
-    toPlay.removeDuplicates();
-
-    if (written) {
-        result["playlist"] = QUrl::fromLocalFile(PLAYLIST_TARGET);
-    } else {
-        result["error"] = QObject::tr("Quran10 could not write the playlist. Please try restarting your device.");
+        if (written) {
+            result["playlist"] = QUrl::fromLocalFile(PLAYLIST_TARGET);
+        } else {
+            result["error"] = QObject::tr("Quran10 could not write the playlist. Please try restarting your device.");
+        }
+    } else if ( toPlay.size() == 1 ) {
+        result["playlist"] = QUrl::fromLocalFile( toPlay.first() );
     }
 
     return result;
@@ -98,13 +103,16 @@ RecitationHelper::RecitationHelper(QueueDownloader* queue, Persistance* p, QObje
         QObject(parent), m_queue(queue), m_persistance(p)
 {
     connect( queue, SIGNAL( requestComplete(QVariant const&, QByteArray const&) ), this, SLOT( onRequestComplete(QVariant const&, QByteArray const&) ) );
-    connect( &m_future, SIGNAL( finished() ), this, SLOT( onFinished() ) );
     connect( &m_futureResult, SIGNAL( finished() ), this, SLOT( onPlaylistReady() ) );
 }
 
 
 int RecitationHelper::extractIndex(QVariantMap const& m)
 {
+    if ( m_ayatToIndex.isEmpty() ) {
+        return -1;
+    }
+
     QString uri = m.value("uri").toString();
     uri = uri.mid( uri.lastIndexOf("/")+1 );
     uri = uri.left( uri.lastIndexOf(".") );
@@ -184,83 +192,17 @@ void RecitationHelper::memorize(bb::cascades::ArrayDataModel* adm, int from, int
 }
 
 
-void RecitationHelper::downloadAndPlay(int chapter, int fromVerse, int toVerse)
+void RecitationHelper::downloadAndPlay(int chapter, int verse)
 {
-    LOGGER(chapter << fromVerse << toVerse);
+    LOGGER(chapter << verse);
 
-    if ( !m_future.isRunning() )
+    if ( !m_futureResult.isRunning() )
     {
-        QFuture<QVariantList> future = QtConcurrent::run(this, &RecitationHelper::generatePlaylist, chapter, fromVerse, toVerse, true);
-        m_future.setFuture(future);
-    }
-}
+        QList< QPair<int,int> > all;
+        all << qMakePair<int,int>(chapter, verse);
 
-
-QVariantList RecitationHelper::generatePlaylist(int chapter, int fromVerse, int toVerse, bool write)
-{
-    LOGGER(chapter << fromVerse << toVerse << write);
-
-    QVariantList queue;
-
-    if (chapter > 0)
-    {
-        QDir output( m_persistance->getValueFor("output").toString() );
-
-        if ( !m_persistance->contains("output") || !output.exists() ) {
-            m_persistance->saveValueFor( "output", IOUtils::setupOutputDirectory("misc", "quran10"), false );
-        }
-
-        QStringList playlist;
-
-        QString chapterNumber = normalize(chapter);
-        QString reciter = m_persistance->getValueFor("reciter").toString();
-        QString directory = QString("%1/%2").arg( m_persistance->getValueFor("output").toString() ).arg(reciter);
-        QDir outDir(directory);
-
-        if ( !outDir.exists() ) {
-            bool created = outDir.mkdir(directory);
-            LOGGER("Directory created" << created);
-        }
-
-        for (int verse = fromVerse; verse <= toVerse; verse++) // fromVerse = 1, toVerse = 100
-        {
-            QString fileName = QString("%1%2.mp3").arg(chapterNumber).arg( normalize(verse) );
-            QString absolutePath = QString("%1/%2").arg(directory).arg(fileName);
-
-            if ( !QFile(absolutePath).exists() )
-            {
-                QString remoteFile = QString("%1/%2/%3").arg(remote).arg(reciter).arg(fileName);
-
-                QVariantMap q;
-                q["uri"] = remoteFile;
-                q["local"] = absolutePath;
-                q["chapter"] = chapter;
-                q["verse"] = verse;
-                q["name"] = tr("%1:%2 recitation").arg(chapter).arg(verse);
-                q["recitation"] = true;
-
-                queue << q;
-            }
-
-            playlist << absolutePath;
-        }
-
-        bool written = IOUtils::writeTextFile( PLAYLIST_TARGET, playlist.join("\n"), true, false );
-        LOGGER(written);
-    }
-
-    return queue;
-}
-
-
-void RecitationHelper::onFinished()
-{
-    QVariantList queue = m_future.result();
-
-    if ( !queue.isEmpty() ) {
-        m_queue->process(queue);
-    } else {
-        startPlayback();
+        QFuture<QVariantMap> future = QtConcurrent::run(processPlaylist, m_persistance->getValueFor("reciter").toString(), m_persistance->getValueFor("output").toString(), all);
+        m_futureResult.setFuture(future);
     }
 }
 
@@ -303,7 +245,12 @@ void RecitationHelper::onPlaylistReady()
         QVariantList queue = result.value("queue").toList();
         m_anchor = result.value("anchor").toString();
         m_queue->process(queue);
+
+        if ( result.contains("playlist") ) {
+            m_playlistUrl = result.value("playlist").toUrl();
+        }
     } else if ( result.contains("playlist") ) {
+        m_playlistUrl = result.value("playlist").toUrl();
         startPlayback();
     }
 }
@@ -333,8 +280,18 @@ void RecitationHelper::downloadAndPlayAll(bb::cascades::ArrayDataModel* adm, int
 }
 
 
+bool RecitationHelper::isDownloaded(int chapter, int verse)
+{
+    QString fileName = QString("%1%2.mp3").arg( normalize(chapter) ).arg( normalize(verse) );
+    QDir q( QString("%1/%2").arg( m_persistance->getValueFor("output").toString() ).arg( m_persistance->getValueFor("reciter").toString() ) );
+    QString absolutePath = QString("%1/%2").arg( q.path() ).arg(fileName);
+
+    return QFile::exists(absolutePath);
+}
+
+
 void RecitationHelper::startPlayback() {
-    emit readyToPlay( QUrl::fromLocalFile(PLAYLIST_TARGET) );
+    emit readyToPlay(m_playlistUrl);
 }
 
 

@@ -25,16 +25,14 @@ class RecitationHelper : public QObject
 
     QueueDownloader* m_queue;
     Persistance* m_persistance;
-    QFutureWatcher<QVariantList> m_future;
     QFutureWatcher<QVariantMap> m_futureResult;
     QString m_anchor;
     QMap< QPair<int,int>, int > m_ayatToIndex;
+    QUrl m_playlistUrl;
 
     void startPlayback();
-    QVariantList generatePlaylist(int chapter, int fromVerse, int toVerse, bool write);
 
 private slots:
-    void onFinished();
     void onPlaylistReady();
     void onRequestComplete(QVariant const& cookie, QByteArray const& data);
     void onWritten();
@@ -49,10 +47,11 @@ public:
     /**
      * @pre The directory must have been set up.
      */
-    Q_INVOKABLE void downloadAndPlay(int chapter, int fromVerse, int toVerse);
+    Q_INVOKABLE void downloadAndPlay(int chapter, int verse);
     Q_INVOKABLE void downloadAndPlayAll(bb::cascades::ArrayDataModel* adm, int from=0, int to=-1);
     Q_INVOKABLE void memorize(bb::cascades::ArrayDataModel* adm, int from, int to);
     Q_INVOKABLE int extractIndex(QVariantMap const& m);
+    Q_INVOKABLE bool isDownloaded(int chapter, int verse);
 };
 
 } /* namespace quran */
