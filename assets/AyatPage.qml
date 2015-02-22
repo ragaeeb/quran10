@@ -339,6 +339,8 @@ Page
             Header
             {
                 id: babName
+                accessibility.name: qsTr("Chapter Name") + Retranslate.onLanguageChanged
+                accessibility.description: qsTr("Displays the chapter information") + Retranslate.onLanguageChanged
                 
                 gestureHandlers: [
                     TapHandler
