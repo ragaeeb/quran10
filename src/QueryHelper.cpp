@@ -366,10 +366,25 @@ void QueryHelper::editIndividual(QObject* caller, qint64 id, QString const& pref
 }
 
 
+void QueryHelper::fetchAllIndividuals(QObject* caller) {
+    m_sql.executeQuery(caller, "SELECT id,prefix,name,kunya,uri,hidden,biography FROM individuals ORDER BY name,kunya,prefix", QueryId::FetchAllIndividuals);
+}
+
+
+void QueryHelper::fetchTransliteration(QObject* caller, int chapter, int verse)
+{
+    LOGGER(chapter << verse);
+
+    if ( showTranslation() ) {
+        m_sql.executeQuery(caller, QString("SELECT html FROM transliteration WHERE surah_id=%1 AND verse_id=%2").arg(chapter).arg(verse), QueryId::FetchTransliteration);
+    }
+}
+
+
 void QueryHelper::searchIndividuals(QObject* caller, QString const& trimmedText)
 {
     LOGGER(trimmedText);
-    m_sql.executeQuery(caller, "SELECT id,prefix,name,kunya,uri,hidden,biography FROM individuals WHERE name LIKE '%' || ? || '%' OR kunya LIKE '%' || ? || '%'", QueryId::SearchIndividuals, QVariantList() << trimmedText << trimmedText);
+    m_sql.executeQuery(caller, "SELECT id,prefix,name,kunya,uri,hidden,biography FROM individuals WHERE name LIKE '%' || ? || '%' OR kunya LIKE '%' || ? || '%'  ORDER BY name,kunya,prefix", QueryId::SearchIndividuals, QVariantList() << trimmedText << trimmedText);
 }
 
 

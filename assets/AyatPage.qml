@@ -58,6 +58,8 @@ Page
             body.value = body.value + "\n\n(" + babName.title + " " + babName.subtitle + ")";
         } else if (id == QueryId.SaveBookmark) {
             persist.showToast( qsTr("Favourite added for Chapter %1, Verse %2").arg(surahId).arg(verseId), "", "asset:///images/menu/ic_bookmark_add.png" );
+        } else if (id == QueryId.FetchTransliteration) {
+            transliteration.text = data[0].html;
         }
     }
     
@@ -350,6 +352,37 @@ Page
                 ]
             }
             
+            TextArea {
+                id: transliteration
+                visible: text.length > 0
+                horizontalAlignment: HorizontalAlignment.Fill
+                content.flags: TextContentFlag.ActiveTextOff | TextContentFlag.EmoticonsOff
+                editable: false
+                backgroundVisible: false
+                textStyle.textAlign: TextAlign.Center
+                textStyle.fontSize: FontSize.PointValue
+                textStyle.fontSizeValue: persist.getValueFor("fontSize")
+                opacity: 0
+                
+                onVisibleChanged: {
+                    if (visible) {
+                        transFade.play();
+                    }
+                }
+                
+                animations: [
+                    FadeTransition
+                    {
+                        id: transFade
+                        fromOpacity: 0
+                        toOpacity: 1
+                        delay: 250
+                        duration: 1000
+                        easingCurve: StockCurve.ExponentialIn
+                    }
+                ]
+            }
+            
             ScrollView
             {
                 horizontalAlignment: HorizontalAlignment.Fill
@@ -386,6 +419,15 @@ Page
                     onValueChanged: {
                         text = value;
                     }
+                    
+                    gestureHandlers: [
+                        TapHandler {
+                            onTapped: {
+                                console.log("UserEvent: TappedBody");
+                                helper.fetchTransliteration(root, surahId, verseId);
+                            }
+                        }
+                    ]
                 }
             }
         }
