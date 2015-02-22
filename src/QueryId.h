@@ -25,6 +25,7 @@ public:
         FetchAllBookmarks,
         FetchAllChapters,
         FetchAllDuaa,
+        FetchAllIndividuals,
         FetchAllQuotes,
         FetchAllRecitations,
         FetchAllTafsir,
@@ -45,6 +46,7 @@ public:
         FetchTafsirForAyat,
         FetchTafsirForSurah,
         FetchTafsirHeader,
+        FetchTransliteration,
         LinkAyatsToTafsir,
         RemoveBookmark,
         RemoveQuote,
@@ -58,7 +60,6 @@ public:
         SettingUpBookmarks,
         SetupBookmarks,
         UnlinkAyatsFromTafsir,
-        UpdatePlugins
     };
 };
 

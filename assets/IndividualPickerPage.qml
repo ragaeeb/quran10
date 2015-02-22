@@ -39,6 +39,10 @@ Page
         }
     }
     
+    onCreationCompleted: {
+        helper.fetchAllIndividuals(listView);
+    }
+    
     Container
     {
         id: searchContainer
@@ -182,7 +186,7 @@ Page
                 
                 function onDataLoaded(id, data)
                 {
-                    if (id == QueryId.SearchIndividuals)
+                    if (id == QueryId.SearchIndividuals || id == QueryId.FetchAllIndividuals)
                     {
                         adm.clear();
                         adm.append(data);
