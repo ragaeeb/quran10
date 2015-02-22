@@ -8,6 +8,8 @@ Page
     property int toSurahId
     property int requestedVerse
     actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
+    signal picked(int surahId, int verseId)
+    signal openChapterTafsir(int surahId)
 
     onToSurahIdChanged:
     {
@@ -67,18 +69,9 @@ Page
             busy.delegateActive = false;
         }
     }
-    
-    function onPopEnded(page)
-    {
-        if (navigationPane.top == surahPage) {
-            ctb.navigationExpanded = true;
-        }
-    }
 
     onCreationCompleted: {
         persist.settingChanged.connect(reloadNeeded);
-        navigationPane.popTransitionEnded.connect(onPopEnded);
-        
         deviceUtils.attachTopBottomKeys(surahPage, listView);
     }
 
@@ -149,11 +142,7 @@ Page
         bottomPad: 0
         
         onTitleTapped: {
-            definition.source = "ChapterTafsirPicker.qml";
-            var p = definition.createObject();
-            p.chapterNumber = chapterNumber;
-            
-            navigationPane.push(p);
+            openChapterTafsir(chapterNumber);
         }
     }
 
@@ -198,13 +187,8 @@ Page
                 onTriggered: {
                     console.log("UserEvent: VerseTriggered");
                     var d = dataModel.data(indexPath);
-                    
-                    definition.source = "AyatPage.qml";
-                    var ayatPage = definition.createObject();
-                    ayatPage.surahId = d.surah_id;
-                    ayatPage.verseId = d.verse_id;
-                    
-                    navigationPane.push(ayatPage);
+
+                    picked(d.surah_id, d.verse_id);
                 }
                 
                 attachedObjects: [
@@ -258,10 +242,6 @@ Page
                     Application.mainWindow.screenIdleMode = player.playing ? 1 : 0;
                 }
             }
-        },
-        
-        ComponentDefinition {
-            id: definition
         }
     ]
 }

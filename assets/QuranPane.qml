@@ -17,6 +17,25 @@ NavigationPane
         }
     }
     
+    function onAyatPicked(surahId, verseId)
+    {
+        definition.source = "AyatPage.qml";
+        var ayatPage = definition.createObject();
+        ayatPage.surahId = surahId;
+        ayatPage.verseId = verseId;
+        
+        navigationPane.push(ayatPage);
+    }
+    
+    function onOpenChapter(surahId)
+    {
+        definition.source = "ChapterTafsirPicker.qml";
+        var p = definition.createObject();
+        p.chapterNumber = surahId;
+        
+        navigationPane.push(p);
+    }
+    
     SurahPickerPage
     {
         id: pickerPage
@@ -80,6 +99,8 @@ NavigationPane
                     console.log("UserEvent: OpenSurahs");
                     definition.source = "SurahPage.qml";
                     var p = definition.createObject();
+                    p.picked.connect(onAyatPicked);
+                    p.openChapterTafsir.connect(onOpenChapter);
                     
                     var all = pickerPage.pickerList.selectionList();
                     p.fromSurahId = pickerPage.pickerList.dataModel.data(all[0]).surah_id;
@@ -140,6 +161,9 @@ NavigationPane
         onPicked: {
             definition.source = "SurahPage.qml";
             var surahPage = definition.createObject();
+            surahPage.picked.connect(onAyatPicked);
+            surahPage.openChapterTafsir.connect(onOpenChapter);
+            
             navigationPane.push(surahPage);
             
             surahPage.fromSurahId = chapter;

@@ -16,25 +16,13 @@ Container
     ImageButton
     {
         id: actionButton
+        defaultImageSource: player.playing && played ? "images/menu/ic_pause.png" : "images/menu/ic_play.png";
         pressedImageSource: defaultImageSource
         verticalAlignment: VerticalAlignment.Center
-        
-        function updateImage()
-        {
-            defaultImageSource = player.playing && played ? "images/menu/ic_pause.png" : "images/menu/ic_play.png";
-            rotator.play();
-        }
-        
-        function onError(message) {
-            defaultImageSource = "images/menu/ic_play.png";
-        }
         
         onCreationCompleted: {
             player.durationChanged.connect(progress.onDurationChanged);
             player.positionChanged.connect(progress.onPositionChanged);
-            player.playingChanged.connect(updateImage);
-            player.activeChanged.connect(updateImage);
-            player.error.connect(onError);
         }
         
         onClicked: {
