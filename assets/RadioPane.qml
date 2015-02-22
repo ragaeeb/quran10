@@ -23,6 +23,10 @@ NavigationPane
             }
         ]
         
+        titleBar: TitleBar {
+            title: qsTr("Radio") + Retranslate.onLanguageChanged
+        }
+        
         Container
         {
             background: back.imagePaint
