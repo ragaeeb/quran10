@@ -334,6 +334,7 @@ Page
             {
                 id: pluginsDelegate
                 topMargin: 0; bottomMargin: 0
+                delegateActive: false
             }
             
             Header

@@ -44,10 +44,10 @@ CREATE TABLE suites (id INTEGER PRIMARY KEY, author INTEGER REFERENCES individua
 CREATE TABLE suite_pages (id INTEGER PRIMARY KEY, suite_id INTEGER REFERENCES suites(id) ON DELETE CASCADE, body TEXT);
 CREATE TABLE quotes (id INTEGER PRIMARY KEY, author INTEGER REFERENCES individuals(id) ON DELETE CASCADE, body TEXT, reference TEXT);
 CREATE TABLE explanations (id INTEGER PRIMARY KEY, surah_id INTEGER NOT NULL, from_verse_number INTEGER, to_verse_number INTEGER, suite_page_id INTEGER NOT NULL REFERENCES suite_pages(id) ON DELETE CASCADE, UNIQUE(surah_id, from_verse_number, to_verse_number, suite_page_id) ON CONFLICT IGNORE);
-
-sqlite3 quran_english.db
-CREATE TABLE IF NOT EXISTS surahs (id INTEGER PRIMARY KEY, transliteration TEXT, translation TEXT);
-CREATE TABLE IF NOT EXISTS verses (id INTEGER PRIMARY KEY, surah_id INTEGER REFERENCES surahs(id), verse_number INTEGER, content TEXT, UNIQUE(surah_id,verse_number) ON CONFLICT REPLACE);
+CREATE INDEX IF NOT EXISTS suites_index ON suites(author,translator,explainer);
+CREATE INDEX IF NOT EXISTS suite_pages_index ON suite_pages(suite_id);
+CREATE INDEX IF NOT EXISTS quotes_index ON quotes(author);
+CREATE INDEX IF NOT EXISTS explanations_index ON explanations(surah_id,from_verse_number,to_verse_number,suite_page_id);
 
 Quran10: make downloading one long one
 
