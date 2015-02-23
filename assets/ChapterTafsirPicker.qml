@@ -9,6 +9,7 @@ Page
     
     onChapterNumberChanged: {
         helper.fetchAllTafsirForChapter(root, chapterNumber);
+        helper.fetchSurahHeader(root, chapterNumber);
     }
     
     function onDataLoaded(id, data)
@@ -23,12 +24,12 @@ Page
             if (data.length == 1) {
                 listView.triggered([0]);
             }
+        } else if (id == QueryId.FetchSurahHeader) {
+            titleBar.title = helper.showTranslation ? qsTr("%1 (%2) Tafsir").arg(data[0].transliteration).arg(data[0].translation) : qsTr("%1 Tafsir").arg(data[0].name);
         }
     }
     
-    titleBar: ChapterTitleBar {
-        chapterNumber: root.chapterNumber
-    }
+    titleBar: TitleBar {}
     
     Container
     {

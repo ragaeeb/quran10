@@ -127,7 +127,7 @@ void QueryHelper::fetchRandomAyat(QObject* caller)
     if ( !showTranslation() ) {
         m_sql.executeQuery(caller, QString("SELECT surah_id,verse_number AS verse_id,content AS text FROM ayahs WHERE id=%1").arg(x), QueryId::FetchRandomAyat);
     } else {
-        m_sql.executeQuery(caller, QString("SELECT surah_id,verse_number AS verse_id,translation AS text FROM ayahs a INNER JOIN verses v ON a.id=v.id WHERE a.id=%1").arg(x), QueryId::FetchRandomAyat);
+        m_sql.executeQuery(caller, QString("SELECT surah_id,verse_number AS verse_id,translation AS text FROM ayahs a INNER JOIN verses v ON (a.surah_id=v.chapter_id AND a.verse_number=v.verse_id) WHERE a.id=%1").arg(x), QueryId::FetchRandomAyat);
     }
 }
 
@@ -164,7 +164,7 @@ void QueryHelper::fetchAllAyats(QObject* caller, int fromChapter, int toChapter)
     QString query;
 
     if ( showTranslation() ) {
-        query = QString("SELECT surah_id,content AS arabic,verse_number AS verse_id,translation FROM ayahs INNER JOIN verses on ayahs.id=verses.id AND surah_id BETWEEN %1 AND %2").arg(fromChapter).arg(toChapter);
+        query = QString("SELECT surah_id,content AS arabic,verse_number AS verse_id,translation FROM ayahs INNER JOIN verses ON (ayahs.surah_id=verses.chapter_id AND ayahs.verse_number=verses.verse_id) AND surah_id BETWEEN %1 AND %2").arg(fromChapter).arg(toChapter);
     } else {
         query = QString("SELECT surah_id,content AS arabic,verse_number AS verse_id FROM ayahs WHERE surah_id BETWEEN %1 AND %2").arg(fromChapter).arg(toChapter);
     }
@@ -318,7 +318,7 @@ void QueryHelper::fetchSimilarAyatContent(QObject* caller, int chapterNumber, in
     LOGGER(chapterNumber << verseNumber);
 
     if ( showTranslation() ) {
-        m_sql.executeQuery(caller, QString("SELECT other_surah_id AS surah_id,other_from_verse_id AS verse_id,verses.translation AS content,chapters.transliteration AS name FROM related INNER JOIN ayahs ON related.other_surah_id=ayahs.surah_id AND related.other_from_verse_id=ayahs.verse_number INNER JOIN verses ON ayahs.id=verses.id INNER JOIN chapters ON chapters.id=related.other_surah_id WHERE related.surah_id=%1 AND from_verse_id=%2").arg(chapterNumber).arg(verseNumber), QueryId::FetchSimilarAyatContent);
+        m_sql.executeQuery(caller, QString("SELECT other_surah_id AS surah_id,other_from_verse_id AS verse_id,verses.translation AS content,chapters.transliteration AS name FROM related INNER JOIN ayahs ON related.other_surah_id=ayahs.surah_id AND related.other_from_verse_id=ayahs.verse_number INNER JOIN verses ON (ayahs.surah_id=verses.chapter_id AND ayahs.verse_number=verses.verse_id) INNER JOIN chapters ON chapters.id=related.other_surah_id WHERE related.surah_id=%1 AND from_verse_id=%2").arg(chapterNumber).arg(verseNumber), QueryId::FetchSimilarAyatContent);
     } else {
         m_sql.executeQuery(caller, QString("SELECT other_surah_id AS surah_id,other_from_verse_id AS verse_id,content,name FROM related INNER JOIN ayahs ON related.other_surah_id=ayahs.surah_id AND related.other_from_verse_id=ayahs.verse_number INNER JOIN surahs ON surahs.id=related.other_surah_id WHERE related.surah_id=%1 AND from_verse_id=%2").arg(chapterNumber).arg(verseNumber), QueryId::FetchSimilarAyatContent);
     }
@@ -333,7 +333,7 @@ void QueryHelper::fetchAyat(QObject* caller, int surahId, int ayatId)
     QString fetchRelated = QString("(SELECT COUNT() FROM related WHERE surah_id=%1 AND from_verse_id=%2 AND to_verse_id=%2) AS total_similar").arg(surahId).arg(ayatId);
 
     if ( showTranslation() ) {
-        query = QString("SELECT content,translation,%3 FROM ayahs INNER JOIN verses on ayahs.id=verses.id WHERE ayahs.surah_id=%1 AND ayahs.verse_number=%2").arg(surahId).arg(ayatId).arg(fetchRelated);
+        query = QString("SELECT content,translation,%3 FROM ayahs INNER JOIN verses ON (ayahs.surah_id=verses.chapter_id AND ayahs.verse_number=verses.verse_id) WHERE ayahs.surah_id=%1 AND ayahs.verse_number=%2").arg(surahId).arg(ayatId).arg(fetchRelated);
     } else {
         query = QString("SELECT content,%3 FROM ayahs WHERE surah_id=%1 AND verse_number=%2").arg(surahId).arg(ayatId).arg(fetchRelated);
     }
@@ -376,7 +376,7 @@ void QueryHelper::fetchTransliteration(QObject* caller, int chapter, int verse)
     LOGGER(chapter << verse);
 
     if ( showTranslation() ) {
-        m_sql.executeQuery(caller, QString("SELECT html FROM transliteration WHERE surah_id=%1 AND verse_id=%2").arg(chapter).arg(verse), QueryId::FetchTransliteration);
+        m_sql.executeQuery(caller, QString("SELECT html FROM transliteration WHERE chapter_id=%1 AND verse_id=%2").arg(chapter).arg(verse), QueryId::FetchTransliteration);
     }
 }
 
