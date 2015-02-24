@@ -46,20 +46,6 @@ Page
                     }
                     
                     Option {
-                        text: qsTr("Bengali") + Retranslate.onLanguageChanged
-                        description: qsTr("Zohurul Hoque") + Retranslate.onLanguageChanged
-                        value: "bengali"
-                        imageSource: "images/dropdown/ic_translation.png"
-                    }
-                    
-                    Option {
-                        text: qsTr("Chinese") + Retranslate.onLanguageChanged
-                        description: qsTr("Ma Jian (Traditional)") + Retranslate.onLanguageChanged
-                        value: "chinese"
-                        imageSource: "images/dropdown/ic_translation.png"
-                    }
-                    
-                    Option {
                         id: english
                         text: qsTr("English") + Retranslate.onLanguageChanged
                         description: qsTr("Muhammad al-Hilali & Muhsin Khan") + Retranslate.onLanguageChanged
@@ -75,30 +61,9 @@ Page
                     }
                     
                     Option {
-                        text: qsTr("German") + Retranslate.onLanguageChanged
-                        description: qsTr("A.S.F. Bubenheim and N. Elyas") + Retranslate.onLanguageChanged
-                        value: "german"
-                        imageSource: "images/dropdown/ic_translation.png"
-                    }
-                    
-                    Option {
                         text: qsTr("Indonesian") + Retranslate.onLanguageChanged
                         description: qsTr("Indonesian Ministry of Religious Affairs") + Retranslate.onLanguageChanged
                         value: "indo"
-                        imageSource: "images/dropdown/ic_translation.png"
-                    }
-                    
-                    Option {
-                        text: qsTr("Malay") + Retranslate.onLanguageChanged
-                        description: qsTr("Abdullah Muhammad Basmeih") + Retranslate.onLanguageChanged
-                        value: "malay"
-                        imageSource: "images/dropdown/ic_translation.png"
-                    }
-                    
-                    Option {
-                        text: qsTr("Russian") + Retranslate.onLanguageChanged
-                        description: qsTr("Elmir Kuliev") + Retranslate.onLanguageChanged
-                        value: "russian"
                         imageSource: "images/dropdown/ic_translation.png"
                     }
                     
@@ -114,13 +79,6 @@ Page
                         text: qsTr("Thai") + Retranslate.onLanguageChanged
                         description: qsTr("Thailand") + Retranslate.onLanguageChanged
                         value: "thai"
-                        imageSource: "images/dropdown/ic_translation.png"
-                    }
-                    
-                    Option {
-                        text: qsTr("Turkish") + Retranslate.onLanguageChanged
-                        description: qsTr("Diyanet Vakfi") + Retranslate.onLanguageChanged
-                        value: "turkish"
                         imageSource: "images/dropdown/ic_translation.png"
                     }
                     

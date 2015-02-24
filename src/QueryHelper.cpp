@@ -125,9 +125,9 @@ void QueryHelper::fetchRandomAyat(QObject* caller)
     int x = TextUtils::randInt(1, 6236);
 
     if ( !showTranslation() ) {
-        m_sql.executeQuery(caller, QString("SELECT surah_id,verse_number AS verse_id,content AS text FROM ayahs WHERE id=%1").arg(x), QueryId::FetchRandomAyat);
+        m_sql.executeQuery(caller, QString("SELECT surah_id,verse_number AS verse_id,content AS text FROM ayahs WHERE ROWID=%1").arg(x), QueryId::FetchRandomAyat);
     } else {
-        m_sql.executeQuery(caller, QString("SELECT surah_id,verse_number AS verse_id,translation AS text FROM ayahs a INNER JOIN verses v ON (a.surah_id=v.chapter_id AND a.verse_number=v.verse_id) WHERE a.id=%1").arg(x), QueryId::FetchRandomAyat);
+        m_sql.executeQuery(caller, QString("SELECT chapter_id AS surah_id,verse_id,translation AS text FROM verses WHERE ROWID=%1").arg(x), QueryId::FetchRandomAyat);
     }
 }
 
