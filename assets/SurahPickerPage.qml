@@ -31,6 +31,7 @@ Page
                     loadEffect: ImageViewLoadEffect.FadeZoom
                     horizontalAlignment: HorizontalAlignment.Right
                     verticalAlignment: VerticalAlignment.Center
+                    opacity: 0
                     
                     animations: [
                         FadeTransition {

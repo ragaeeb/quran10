@@ -111,7 +111,7 @@ Page
                                 onTextChanging: {
                                     saveAction.enabled = text.trim().length > 10;
                                 }
-                            }    
+                            }
                         }
                     }
                 }
