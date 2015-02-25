@@ -39,6 +39,8 @@ public:
 
     Q_SLOT void downloadPlugins(bool force=true, QString const& cookie="plugins");
     Q_INVOKABLE void initPage(QObject* page);
+    Q_INVOKABLE void doDiff(QVariantList const& input, bb::cascades::ArrayDataModel* adm, QString const& key="id");
+    Q_INVOKABLE void analyzeKingFahad(QString text);
 };
 
 } /* namespace sunnah */

@@ -93,7 +93,7 @@ Page
                             addAction.triggered();
                         }
                     } else { // do diff
-                        app.doDiff(data, adm);
+                        admin.doDiff(data, adm);
                     }
                 } else if (id == QueryId.UnlinkAyatsFromTafsir) {
                     persist.showToast( qsTr("Ayat unlinked from tafsir"), "", "asset:///images/menu/ic_unlink_tafsir_ayat.png" );

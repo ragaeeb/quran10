@@ -171,14 +171,36 @@ NavigationPane
             surahPage.requestedVerse = verse;
         }
         
+        function onLazyInitComplete()
+        {
+            ready();
+            
+            if (reporter.isAdmin) {
+                addAction(editAyatsAction);
+            }
+        }
+        
         onCreationCompleted: {
-            app.lazyInitComplete.connect(ready);
+            app.lazyInitComplete.connect(onLazyInitComplete);
         }
     }
     
     attachedObjects: [
         ComponentDefinition {
             id: definition
+        },
+        
+        ActionItem
+        {
+            id: editAyatsAction
+            title: qsTr("Edit Ayats") + Retranslate.onLanguageChanged
+            
+            onTriggered: {
+                console.log("UserEvent: EditAyats");
+                definition.source = "EditAyatsSheet.qml";
+                var p = definition.createObject();
+                p.open();
+            }
         }
     ]
 }
