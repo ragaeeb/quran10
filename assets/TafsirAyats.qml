@@ -39,6 +39,7 @@ Page
         
         acceptAction: ActionItem
         {
+			id: lookupAction
             imageSource: "images/dropdown/search_reference.png"
             title: qsTr("Lookup") + Retranslate.onLanguageChanged
             
@@ -114,11 +115,24 @@ Page
             onTriggered: {
                 console.log("UserEvent: TafsirAyatTriggered");
                 
-                definition.source = "AyatPage.qml";
+				var d = dataModel.data(indexPath);
+				definition.source = "AyatPage.qml";
+
+				if (!d.from_verse_number) {
+					definition.source = "SurahPage.qml";
+				}
+				
                 var page = definition.createObject();
-                page.surahId = dataModel.data(indexPath).surah_id;
-                page.verseId = dataModel.data(indexPath).from_verse_number;
-                
+				
+				if (d.from_verse_number) {
+					page.surahId = d.surah_id;
+					page.verseId = dataModel.data(indexPath).from_verse_number;
+				} else {
+					page.fromSurahId = d.surah_id;
+					page.toSurahId = d.surah_id;
+					page.picked.connect(lookupAction.onPicked);
+				}
+				
                 navigationPane.push(page);
             }
             
