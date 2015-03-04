@@ -94,6 +94,7 @@ Page
                             infoText.text = qsTr("No translation will be displayed.") + Retranslate.onLanguageChanged
                         } else if (selectedOption == english) {
                             infoText.text = qsTr("Translation will be provided in %1 by %2. Please see why this is the only English translation we support:\nhttps://www.youtube.com/watch?v=BDY8i9VQeZM").arg(selectedOption.text).arg(selectedOption.description) + Retranslate.onLanguageChanged
+                            infoText.content.flags = TextContentFlag.ActiveText | TextContentFlag.EmoticonsOff;
                         } else {
                             infoText.text = qsTr("Translation will be provided in %1 by %2.").arg(selectedOption.text).arg(selectedOption.description) + Retranslate.onLanguageChanged
                         }
@@ -288,13 +289,20 @@ Page
                     {
                         value = current;
                         toValue = total;
+                        
+                        infoText.text = qsTr("Uploading %1/%2...").arg(current).arg(total);
                     }
                     
-                    function onCompressed() {
+                    function onCompressed()
+                    {
+                        infoText.text = qsTr("Uploading...");
+                        infoText.content.flags = TextContentFlag.ActiveTextOff | TextContentFlag.EmoticonsOff;
                         busy.delegateActive = false;
                     }
                     
-                    function onCompressing() {
+                    function onCompressing()
+                    {
+                        infoText.text = qsTr("Compressing...");
                         busy.delegateActive = true;
                     }
                     
@@ -310,7 +318,7 @@ Page
                     multiline: true
                     textStyle.fontSize: FontSize.XXSmall
                     textStyle.textAlign: TextAlign.Center
-                    content.flags: TextContentFlag.ActiveText | TextContentFlag.EmoticonsOff
+                    content.flags: TextContentFlag.ActiveTextOff | TextContentFlag.EmoticonsOff
                     verticalAlignment: VerticalAlignment.Bottom
                     horizontalAlignment: HorizontalAlignment.Center
                 }
