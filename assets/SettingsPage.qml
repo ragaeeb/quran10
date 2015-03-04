@@ -245,6 +245,21 @@ Page
                 PersistCheckBox
                 {
                     topMargin: 20
+                    key: "overlayAyatImages"
+                    text: qsTr("Overlay Ayat Images") + Retranslate.onLanguageChanged
+                    
+                    onCheckedChanged: {
+                        if (checked) {
+                            infoText.text = qsTr("Images will be placed on top of the arabic text to match the rules the Qu'ran was revealed in. Please note that this can cost you ~25 MB of space as well as have a performance impact.") + Retranslate.onLanguageChanged
+                        } else {
+                            infoText.text = qsTr("The app will render the original Arabic text of the Qu'ran, but the BlackBerry 10 OS may sometimes apply some rules to disconnect some of the letters. This should not change the sounds or the meaning but it should just be a visual difference. This will render the ayats really quickly.") + Retranslate.onLanguageChanged
+                        }
+                    }
+                }
+                
+                PersistCheckBox
+                {
+                    topMargin: 20
                     key: "keepAwakeDuringPlay"
                     text: qsTr("Keep Awake During Recitation") + Retranslate.onLanguageChanged
                     

@@ -80,6 +80,15 @@ Page
                 inputMode: TextAreaInputMode.Text
                 content.flags: TextContentFlag.EmoticonsOff | TextContentFlag.ActiveTextOff
                 input.flags: TextInputFlag.AutoCapitalization | TextInputFlag.AutoCorrectionOff | TextInputFlag.SpellCheck | TextInputFlag.WordSubstitutionOff | TextInputFlag.AutoPeriodOff
+                
+                gestureHandlers: [
+                    DoubleTapHandler {
+                        onDoubleTapped: {
+                            console.log("UserEvent: QuoteBodyDoubleTapped");
+                            bodyField.text = persist.getClipboardText();
+                        }
+                    }
+                ]
             }
 
             TextArea {
@@ -89,6 +98,15 @@ Page
                 inputMode: TextAreaInputMode.Text
                 content.flags: TextContentFlag.EmoticonsOff | TextContentFlag.ActiveText
                 input.flags: TextInputFlag.AutoCapitalization | TextInputFlag.AutoCorrectionOff | TextInputFlag.SpellCheckOff | TextInputFlag.WordSubstitutionOff | TextInputFlag.AutoPeriodOff
+                
+                gestureHandlers: [
+                    DoubleTapHandler {
+                        onDoubleTapped: {
+                            console.log("UserEvent: QuoteRefDoubleTapped");
+                            referenceField.text = persist.getClipboardText();
+                        }
+                    }
+                ]
             }
         }
     }

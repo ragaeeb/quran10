@@ -37,6 +37,8 @@ Page
     {
         if (id == QueryId.FetchAllAyats)
         {
+            data = app.transformImageData(data);
+            
             if ( listView.theDataModel.isEmpty() ) {
                 listView.theDataModel.append(data);
             } else {
@@ -70,10 +72,18 @@ Page
             busy.delegateActive = false;
         }
     }
+    
+    function onPopped(page)
+    {
+        if (page == surahPage) {
+            navigationPane.peekEnabled = true;
+        }
+    }
 
     onCreationCompleted: {
         persist.settingChanged.connect(reloadNeeded);
         deviceUtils.attachTopBottomKeys(surahPage, listView);
+        navigationPane.popTransitionEnded.connect(onPopped);
     }
 
     actions: [
@@ -186,8 +196,14 @@ Page
                 onTriggered: {
                     console.log("UserEvent: VerseTriggered");
                     var d = dataModel.data(indexPath);
-
-                    picked(d.surah_id, d.verse_id);
+                    
+                    if (!scrolled) {
+                        picked(d.surah_id, d.verse_id);
+                    }
+                }
+                
+                onBlockPeekChanged: {
+                    navigationPane.peekEnabled = !blockPeek;
                 }
                 
                 attachedObjects: [

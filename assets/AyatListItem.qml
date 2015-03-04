@@ -30,6 +30,10 @@ Container
         updateState();
     }
     
+    ListItem.onDataChanged: {
+        //scroller.scrollToPoint(1440, 0);
+    }
+    
     onPeekChanged: {
         if (peek) {
             showAnim.play();
@@ -91,7 +95,7 @@ Container
         topPadding: 5; bottomPadding: 5; leftPadding: 5; rightPadding: 5
         horizontalAlignment: HorizontalAlignment.Fill
         verticalAlignment: VerticalAlignment.Fill
-     
+
         Label
         {
             id: firstLabel
@@ -107,7 +111,48 @@ Container
                 fontSizeValue: itemRoot.ListItem.view.primarySize
                 fontSize: FontSize.PointValue
             }
-        }
+        }/*
+
+        ScrollView
+        {
+            id: scroller
+            horizontalAlignment: HorizontalAlignment.Right
+            scrollViewProperties.scrollMode: ScrollMode.Horizontal
+            scrollViewProperties.pinchToZoomEnabled: true
+            property int startX
+            property int startY
+            
+            onViewableAreaChanging: {
+                itemRoot.ListItem.view.blockPeek = true;
+            }
+            
+            onViewableAreaChanged: {
+                itemRoot.ListItem.view.blockPeek = false;
+            }
+            
+            onTouch: {
+                if ( event.isDown() )
+                {
+                    startX = event.localX;
+                    startY = event.localY;
+                } else if ( event.isUp() || event.isCancel() ) {
+                    if ( Math.abs(event.localX-startX) > 10 || Math.abs(event.localY-startY) > 10 ) {
+                        itemRoot.ListItem.view.scrolled = true;
+                    }
+                }
+            }
+            
+            Container
+            {
+                ImageView
+                {
+                    horizontalAlignment: HorizontalAlignment.Right
+                    scalingMethod: ScalingMethod.AspectFit
+                    loadEffect: ImageViewLoadEffect.FadeZoom
+                    image: ListItemData.imageData
+                }
+            }
+        } */
         
         ControlDelegate
         {

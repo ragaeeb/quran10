@@ -105,6 +105,15 @@ Page
                         valid = titleField.text.trim().length > 0;
                     }
                 }
+                
+                gestureHandlers: [
+                    DoubleTapHandler {
+                        onDoubleTapped: {
+                            console.log("UserEvent: TafsirTitleDoubleTapped");
+                            titleField.text = persist.getClipboardText();
+                        }
+                    }
+                ]
             }
             
             TextArea {
@@ -114,6 +123,15 @@ Page
                 inputMode: TextAreaInputMode.Text
                 content.flags: TextContentFlag.EmoticonsOff | TextContentFlag.ActiveTextOff
                 input.flags: TextInputFlag.AutoCapitalization | TextInputFlag.AutoCorrectionOff | TextInputFlag.SpellCheckOff | TextInputFlag.WordSubstitutionOff | TextInputFlag.AutoPeriodOff
+                
+                gestureHandlers: [
+                    DoubleTapHandler {
+                        onDoubleTapped: {
+                            console.log("UserEvent: TafsirDescDoubleTapped");
+                            descriptionField.text = persist.getClipboardText();
+                        }
+                    }
+                ]
             }
 
             TextArea {
@@ -123,6 +141,15 @@ Page
                 inputMode: TextAreaInputMode.Text
                 content.flags: TextContentFlag.EmoticonsOff | TextContentFlag.ActiveText
                 input.flags: TextInputFlag.AutoCapitalization | TextInputFlag.AutoCorrectionOff | TextInputFlag.SpellCheckOff | TextInputFlag.WordSubstitutionOff | TextInputFlag.AutoPeriodOff
+                
+                gestureHandlers: [
+                    DoubleTapHandler {
+                        onDoubleTapped: {
+                            console.log("UserEvent: TafsirRefDoubleTapped");
+                            referenceField.text = persist.getClipboardText();
+                        }
+                    }
+                ]
             }
         }
     }

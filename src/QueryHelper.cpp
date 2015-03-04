@@ -164,9 +164,9 @@ void QueryHelper::fetchAllAyats(QObject* caller, int fromChapter, int toChapter)
     QString query;
 
     if ( showTranslation() ) {
-        query = QString("SELECT surah_id,content AS arabic,verse_number AS verse_id,translation FROM ayahs INNER JOIN verses ON (ayahs.surah_id=verses.chapter_id AND ayahs.verse_number=verses.verse_id) AND surah_id BETWEEN %1 AND %2").arg(fromChapter).arg(toChapter);
+        query = QString("SELECT ayahs.surah_id,content AS arabic,ayahs.verse_number AS verse_id,imageData,translation FROM ayahs INNER JOIN verses ON (ayahs.surah_id=verses.chapter_id AND ayahs.verse_number=verses.verse_id) INNER JOIN images ON (ayahs.surah_id=images.surah_id AND ayahs.verse_number=images.verse_number) WHERE ayahs.surah_id BETWEEN %1 AND %2").arg(fromChapter).arg(toChapter);
     } else {
-        query = QString("SELECT surah_id,content AS arabic,verse_number AS verse_id FROM ayahs WHERE surah_id BETWEEN %1 AND %2").arg(fromChapter).arg(toChapter);
+        query = QString("SELECT ayahs.surah_id,content AS arabic,ayahs.verse_number,imageData AS verse_id FROM ayahs INNER JOIN images ON (ayahs.surah_id=images.surah_id AND ayahs.verse_number=images.verse_number) WHERE ayahs.surah_id BETWEEN %1 AND %2").arg(fromChapter).arg(toChapter);
     }
 
     m_sql.executeQuery(caller, query, QueryId::FetchAllAyats);

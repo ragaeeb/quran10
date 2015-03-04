@@ -111,6 +111,15 @@ Page
                                 onTextChanging: {
                                     saveAction.enabled = text.trim().length > 10;
                                 }
+                                
+                                gestureHandlers: [
+                                    DoubleTapHandler {
+                                        onDoubleTapped: {
+                                            console.log("UserEvent: TafsirBodyDoubleTapped");
+                                            bodyField.text = persist.getClipboardText();
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }

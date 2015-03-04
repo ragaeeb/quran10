@@ -1,3 +1,4 @@
+import QtQuick 1.0
 import bb.cascades 1.2
 import com.canadainc.data 1.0
 
@@ -14,9 +15,17 @@ ListView
     property bool secretPeek: false
     property bool follow: persist.getValueFor("follow") == 1
     property bool showContextMenu: true
+    property bool scrolled: false
+    property bool blockPeek: false
 
     dataModel: ArrayDataModel {
         id: verseModel
+    }
+    
+    onScrolledChanged: {
+        if (scrolled) {
+            timer.restart();
+        }
     }
     
     leadingVisual: BismillahControl {
@@ -134,24 +143,6 @@ ListView
         }
     }
 
-    attachedObjects: [
-        ImagePaintDefinition
-        {
-            id: headerBackground
-            imageSource: "images/backgrounds/header_bg.png"
-        },
-        
-        RangeSelector {
-            itemName: qsTr("ayahs")
-        },
-        
-        ImagePaintDefinition
-        {
-            id: activeDef
-            imageSource: "images/list_item_pressed.amd"
-        }
-    ]
-    
     listItemComponents: [
         ListItemComponent
         {
@@ -211,6 +202,35 @@ ListView
                         }
                     }
                 ]
+            }
+        }
+    ]
+    
+    attachedObjects: [
+        ImagePaintDefinition
+        {
+            id: headerBackground
+            imageSource: "images/backgrounds/header_bg.png"
+        },
+        
+        RangeSelector {
+            itemName: qsTr("ayahs")
+        },
+        
+        ImagePaintDefinition
+        {
+            id: activeDef
+            imageSource: "images/list_item_pressed.amd"
+        },
+        
+        Timer {
+            id: timer
+            interval: 150
+            running: false
+            repeat: false
+            
+            onTriggered: {
+                scrolled = false;
             }
         }
     ]

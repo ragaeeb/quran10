@@ -163,10 +163,17 @@ void QueryTafsirHelper::searchTafsir(QObject* caller, QString const& fieldName, 
 {
     QString query;
 
-    if (fieldName != "body") {
-        query = QString("SELECT suites.id,individuals.name AS author,title FROM suites INNER JOIN individuals ON individuals.id=suites.author WHERE %1 LIKE '%' || ? || '%' ORDER BY suites.id DESC").arg(fieldName);
-    } else {
+    if (fieldName == "author" || fieldName == "explainer" || fieldName == "translator")
+    {
+        if (fieldName == "author") {
+            query = QString("SELECT suites.id,individuals.name AS author,title FROM suites INNER JOIN individuals ON individuals.id=suites.author WHERE individuals.name LIKE '%' || ? || '%' ORDER BY suites.id DESC").arg(fieldName);
+        } else {
+            query = QString("SELECT suites.id,individuals.name AS author,title FROM suites INNER JOIN individuals ON individuals.id=suites.author INNER JOIN individuals t ON t.id=suites.%1 WHERE t.name LIKE '%' || ? || '%' ORDER BY suites.id DESC").arg(fieldName);
+        }
+    } else if (fieldName == "body") {
         query = "SELECT suites.id,individuals.name AS author,title FROM suites INNER JOIN individuals ON individuals.id=suites.author INNER JOIN suite_pages ON suites.id=suite_pages.suite_id WHERE body LIKE '%' || ? || '%' ORDER BY suites.id DESC";
+    } else {
+        query = QString("SELECT suites.id,individuals.name AS author,title FROM suites INNER JOIN individuals ON individuals.id=suites.author WHERE %1 LIKE '%' || ? || '%' ORDER BY suites.id DESC").arg(fieldName);
     }
 
     m_sql->executeQuery(caller, query, QueryId::SearchTafsir, QVariantList() << searchTerm);
