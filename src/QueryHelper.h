@@ -58,6 +58,7 @@ public:
     Q_INVOKABLE void editTafsirPage(QObject* caller, qint64 suitePageId, QString const& body);
     Q_INVOKABLE void fetchAllAyats(QObject* caller, int fromChapter, int toChapter=0);
     Q_INVOKABLE void fetchAllChapters(QObject* caller);
+    Q_INVOKABLE void fetchAllChapterAyatCount(QObject* caller);
     Q_INVOKABLE void fetchAllDuaa(QObject* caller);
     Q_INVOKABLE void fetchAllIndividuals(QObject* caller);
     Q_INVOKABLE void fetchAllQarees(QObject* caller, int minLevel=1);

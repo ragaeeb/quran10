@@ -93,6 +93,12 @@ void QueryHelper::fetchAllChapters(QObject* caller)
 }
 
 
+void QueryHelper::fetchAllChapterAyatCount(QObject* caller)
+{
+    m_sql.executeQuery(caller, "SELECT surahs.id AS surah_id,verse_count FROM surahs", QueryId::FetchAllChapterAyatCount);
+}
+
+
 bool QueryHelper::fetchChapters(QObject* caller, QString const& text)
 {
     QVariantList args;
@@ -162,14 +168,27 @@ void QueryHelper::fetchAllAyats(QObject* caller, int fromChapter, int toChapter)
     }
 
     QString query;
+    QString ayatImagePath = "";
+    QVariantList params;
 
-    if ( showTranslation() ) {
-        query = QString("SELECT ayahs.surah_id,content AS arabic,ayahs.verse_number AS verse_id,imageData,translation FROM ayahs INNER JOIN verses ON (ayahs.surah_id=verses.chapter_id AND ayahs.verse_number=verses.verse_id) INNER JOIN images ON (ayahs.surah_id=images.surah_id AND ayahs.verse_number=images.verse_number) WHERE ayahs.surah_id BETWEEN %1 AND %2").arg(fromChapter).arg(toChapter);
-    } else {
-        query = QString("SELECT ayahs.surah_id,content AS arabic,ayahs.verse_number,imageData AS verse_id FROM ayahs INNER JOIN images ON (ayahs.surah_id=images.surah_id AND ayahs.verse_number=images.verse_number) WHERE ayahs.surah_id BETWEEN %1 AND %2").arg(fromChapter).arg(toChapter);
+    if ( m_persist->getValueFor("overlayAyatImages").toInt() == 1 )
+    {
+        QDir q( QString("%1/ayats").arg( m_persist->getValueFor("output").toString() ) );
+
+        if ( q.exists() )
+        {
+            ayatImagePath = QString(",? || ayahs.surah_id || '_' || ayahs.verse_number || '.png' AS imagePath");
+            params << q.path()+"/";
+        }
     }
 
-    m_sql.executeQuery(caller, query, QueryId::FetchAllAyats);
+    if ( showTranslation() ) {
+        query = QString("SELECT ayahs.surah_id,content AS arabic,ayahs.verse_number AS verse_id,translation%3 FROM ayahs INNER JOIN verses ON (ayahs.surah_id=verses.chapter_id AND ayahs.verse_number=verses.verse_id) WHERE ayahs.surah_id BETWEEN %1 AND %2").arg(fromChapter).arg(toChapter).arg(ayatImagePath);
+    } else {
+        query = QString("SELECT ayahs.surah_id,content AS arabic,ayahs.verse_number AS verse_id%3 FROM ayahs WHERE ayahs.surah_id BETWEEN %1 AND %2").arg(fromChapter).arg(toChapter).arg(ayatImagePath);
+    }
+
+    m_sql.executeQuery(caller, query, QueryId::FetchAllAyats, params);
 }
 
 

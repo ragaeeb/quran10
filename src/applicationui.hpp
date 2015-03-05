@@ -52,6 +52,7 @@ private slots:
     void onBookmarksRestored();
 	void onBookmarksSaved();
 	void onDataLoaded(QVariant id, QVariant data);
+	void onMissingAyatImagesFinished();
 	void onPicked(int chapter, int verse);
 	void onResultsDecorated();
     void onTafsirDownloaded(QVariant const& cookie, QByteArray const& data);
@@ -73,12 +74,12 @@ public:
     Q_INVOKABLE void addToHomeScreen(int chapter, int verse, QString const& label);
     Q_INVOKABLE void addToHomeScreen(qint64 suitePageId, QString const& label);
     Q_INVOKABLE void backup(QString const& destination);
+    Q_SLOT void checkMissingAyatImages();
     Q_INVOKABLE void restore(QString const& source);
     Q_INVOKABLE void decorateSearchResults(QVariantList const& input, QString const& searchText, bb::cascades::ArrayDataModel* adm, QVariantList const& additional=QVariantList());
     Q_INVOKABLE void decorateSimilarResults(QVariantList const& input, QString const& mainText, bb::cascades::ArrayDataModel* adm, bb::cascades::AbstractTextControl* atc);
     Q_INVOKABLE void decorateTafsir(bb::cascades::ArrayDataModel* adm);
     Q_INVOKABLE QString bytesToSize(qint64 size);
-    Q_INVOKABLE QVariantList transformImageData(QVariantList input);
 };
 
 } // quran

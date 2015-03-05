@@ -31,7 +31,8 @@ Container
     }
     
     ListItem.onDataChanged: {
-        //scroller.scrollToPoint(1440, 0);
+        console.log("*** ", ListItemData.imagePath)
+        scroller.scrollToPoint(1440, 0);
     }
     
     onPeekChanged: {
@@ -102,16 +103,17 @@ Container
             text: ListItemData.arabic
             multiline: true
             horizontalAlignment: HorizontalAlignment.Fill
+            visible: !scroller.visible
             
             textStyle {
                 color: selection || playing ? Color.White : Color.Black;
                 base: global.textFont
                 fontFamily: "Regular";
-                textAlign: TextAlign.Center;
+                textAlign: TextAlign.Right;
                 fontSizeValue: itemRoot.ListItem.view.primarySize
                 fontSize: FontSize.PointValue
             }
-        }/*
+        }
 
         ScrollView
         {
@@ -121,6 +123,7 @@ Container
             scrollViewProperties.pinchToZoomEnabled: true
             property int startX
             property int startY
+            visible: ListItemData.imagePath ? true : false
             
             onViewableAreaChanging: {
                 itemRoot.ListItem.view.blockPeek = true;
@@ -149,10 +152,10 @@ Container
                     horizontalAlignment: HorizontalAlignment.Right
                     scalingMethod: ScalingMethod.AspectFit
                     loadEffect: ImageViewLoadEffect.FadeZoom
-                    image: ListItemData.imageData
+                    imageSource: "file://"+ListItemData.imagePath
                 }
             }
-        } */
+        }
         
         ControlDelegate
         {

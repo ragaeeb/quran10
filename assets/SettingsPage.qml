@@ -247,7 +247,13 @@ Page
                 {
                     topMargin: 20
                     key: "overlayAyatImages"
-                    text: qsTr("Overlay Ayat Images") + Retranslate.onLanguageChanged
+                    text: qsTr("Join Disconnected Letters") + Retranslate.onLanguageChanged
+                    
+                    onValueChanged: {
+                        if (checked) {
+                            app.checkMissingAyatImages();
+                        }
+                    }
                     
                     onCheckedChanged: {
                         if (checked) {

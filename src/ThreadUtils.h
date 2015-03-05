@@ -41,6 +41,7 @@ struct ThreadUtils
     static QVariantList normalizeJuzs(QVariantList const& source);
     static void onResultsDecorated(SimilarReference const& result);
     static void prepareDecompression(QObject* sender, QObject* obj, const char* progressSlot);
+    static bool allAyatImagesExist(QVariantList const& surahData, QString const& outputDirectory);
 };
 
 } /* namespace quran */
