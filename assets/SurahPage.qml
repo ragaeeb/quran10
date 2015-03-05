@@ -37,8 +37,6 @@ Page
     {
         if (id == QueryId.FetchAllAyats)
         {
-            data = app.transformImageData(data);
-            
             if ( listView.theDataModel.isEmpty() ) {
                 listView.theDataModel.append(data);
             } else {

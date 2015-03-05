@@ -309,4 +309,29 @@ QString ThreadUtils::writeTranslationArchive(QVariant const& q, QByteArray const
 }
 
 
+bool ThreadUtils::allAyatImagesExist(QVariantList const& surahData, QString const& outputDirectory)
+{
+    QDir q(outputDirectory);
+
+    foreach (QVariant const& surah, surahData)
+    {
+        QVariantMap s = surah.toMap();
+        int id = s.value("surah_id").toInt();
+        int n = s.value("verse_count").toInt();
+
+        for (int i = 1; i <= n; i++)
+        {
+            QString absolutePath = QString("%1/ayats/%2_%3.png").arg( q.path() ).arg(id).arg(n);
+
+            if ( !QFile::exists(absolutePath) ) {
+                LOGGER("NotFound" << absolutePath);
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
+
 } /* namespace quran */

@@ -23,6 +23,7 @@ public:
         EditTafsirPage,
         FetchAllAyats,
         FetchAllBookmarks,
+        FetchAllChapterAyatCount,
         FetchAllChapters,
         FetchAllDuaa,
         FetchAllIndividuals,

@@ -70,8 +70,8 @@ Delegate
                         background: bg.imagePaint
                         horizontalAlignment: HorizontalAlignment.Right
                         verticalAlignment: VerticalAlignment.Center
-                        minHeight: 100
-                        minWidth: 200
+                        minHeight: 200
+                        minWidth: 300
                         maxHeight: 400
                         maxWidth: 400
                         rightPadding: 30

@@ -46,16 +46,30 @@ bool QueueDownloader::processNext()
 
 void QueueDownloader::process(QVariantMap const& toProcess)
 {
-    m_model.append(toProcess);
-    processNext();
+    if ( !m_uriToIndex.contains( toProcess.value("uri").toString() ) )
+    {
+        m_model.append(toProcess);
+        processNext();
 
-    emit queueChanged();
+        emit queueChanged();
+    }
 }
 
 
 void QueueDownloader::process(QVariantList const& toProcess)
 {
-    m_model.append(toProcess);
+    QVariantList cleaned;
+
+    foreach (QVariant const& current, toProcess)
+    {
+        QVariantMap qvm = current.toMap();
+
+        if ( !m_uriToIndex.contains( qvm.value("uri").toString() ) ) {
+            cleaned << current;
+        }
+    }
+
+    m_model.append(cleaned);
     processNext();
 
     emit queueChanged();
@@ -96,6 +110,10 @@ void QueueDownloader::onRequestComplete(QVariant const& cookie, QByteArray const
 
         int i = m_uriToIndex.value(uri);
         m_model.replace(i, element);
+
+        if (error) {
+            m_uriToIndex.remove(uri); // remove it so that user can attempt to redownload it
+        }
     }
 
     if ( !processNext() ) {
