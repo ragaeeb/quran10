@@ -13,10 +13,11 @@ ListView
     property int primarySize: helper.primarySize
     property int previousPlayedIndex
     property bool secretPeek: false
-    property bool follow: persist.getValueFor("follow") == 1
+    property bool follow
     property bool showContextMenu: true
     property bool scrolled: false
     property bool blockPeek: false
+    property bool showImages
 
     dataModel: ArrayDataModel {
         id: verseModel
@@ -42,6 +43,15 @@ ListView
     onSelectionChanged: {
         var n = selectionList().length;
         multiPlayAction.enabled = n > 0;
+    }
+    
+    function itemType(data, indexPath)
+    {
+        if (helper.showTranslation) {
+            return showImages ? "imageTrans" : "trans";
+        } else {
+            return showImages ? "image" : "text";
+        }
     }
 
     multiSelectHandler {
@@ -100,15 +110,20 @@ ListView
     }
     
     onCreationCompleted: {
-        persist.settingChanged.connect(settingChanged);
+        persist.settingChanged.connect(onSettingChanged);
         player.metaDataChanged.connect(onMetaDataChanged);
         player.playbackCompleted.connect(clearPrevious);
+        
+        onSettingChanged("follow");
+        onSettingChanged("overlayAyatImages");
     }
 
-    function settingChanged(key)
+    function onSettingChanged(key)
     {
         if (key == "follow") {
             follow = persist.getValueFor("follow") == 1;
+        } else if (key == "overlayAyatImages") {
+            showImages = persist.getValueFor("overlayAyatImages") == 1;
         }
     }
     
@@ -144,8 +159,34 @@ ListView
     }
 
     listItemComponents: [
+        ListItemComponent {
+            type: "image"
+            
+            AyatImageListItem {
+                
+            }
+        },
+        
+        ListItemComponent {
+            type: "imageTrans"
+            
+            AyatImageTranslationListItem {
+            
+            }
+        },
+        
+        ListItemComponent {
+            type: "trans"
+            
+            AyatTranslationListItem {
+            
+            }
+        },
+        
         ListItemComponent
         {
+            type: "text"
+            
             AyatListItem
             {
                 id: ali
@@ -165,7 +206,7 @@ ListView
                     {
                         id: actionSet
                         title: ListItemData.arabic
-                        subtitle: ali.secondLine.delegateActive ? ali.secondLine.control.text : qsTr("%1:%2").arg(ali.ListItem.view.chapterNumber).arg(ListItemData.verse_id)
+                        subtitle: ali.secondLine ? ali.secondLine.text : qsTr("%1:%2").arg(ali.ListItem.view.chapterNumber).arg(ListItemData.verse_id)
                         
                         ActionItem
                         {

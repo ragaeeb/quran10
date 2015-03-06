@@ -176,6 +176,10 @@ Page
             {
                 id: listView
                 
+                onBlockPeekChanged: {
+                    navigationPane.peekEnabled = !blockPeek;
+                }
+                
                 onTriggered: {
                     console.log("UserEvent: VerseTriggered");
                     var d = dataModel.data(indexPath);

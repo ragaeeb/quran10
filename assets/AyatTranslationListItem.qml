@@ -7,6 +7,7 @@ Container
     property bool selection: ListItem.selected
     property bool playing: ListItemData.playing ? ListItemData.playing : false
     property bool active: ListItem.active
+    property alias secondLine: translationLabel
     horizontalAlignment: HorizontalAlignment.Fill
     
     function updateState()
@@ -85,21 +86,49 @@ Container
         }
     }
     
-    TextArea
+    Container
     {
-        id: firstLabel
-        text: ListItemData.arabic
-        editable: false
-        backgroundVisible: false
+        topPadding: 5; bottomPadding: 5; leftPadding: 5; rightPadding: 5
         horizontalAlignment: HorizontalAlignment.Fill
+        verticalAlignment: VerticalAlignment.Fill
+
+        TextArea
+        {
+            id: firstLabel
+            text: ListItemData.arabic
+            backgroundVisible: false
+            editable: false
+            horizontalAlignment: HorizontalAlignment.Fill
+            
+            textStyle {
+                color: selection || playing ? Color.White : Color.Black;
+                base: global.textFont
+                fontFamily: "Regular";
+                textAlign: TextAlign.Right;
+                fontSizeValue: itemRoot.ListItem.view.primarySize
+                fontSize: FontSize.PointValue
+            }
+        }
         
-        textStyle {
-            color: selection || playing ? Color.White : Color.Black;
-            base: global.textFont
-            fontFamily: "Regular";
-            textAlign: TextAlign.Right;
-            fontSizeValue: itemRoot.ListItem.view.primarySize
-            fontSize: FontSize.PointValue
+        Label {
+            id: translationLabel
+            text: ListItemData.translation
+            multiline: true
+            horizontalAlignment: HorizontalAlignment.Fill
+            textStyle.color: selection || playing ? Color.White : Color.Black
+            textStyle.textAlign: TextAlign.Center
+            visible: text.length > 0;
+            textStyle.fontSize: {
+                var translationSize = itemRoot.ListItem.view.translationSize;
+                
+                if (translationSize == 1) {
+                    return FontSize.Small;
+                } else if (translationSize == 2) {
+                    return FontSize.Medium;
+                } else {
+                    return FontSize.XXLarge;
+                }
+            }
         }
     }
 }
