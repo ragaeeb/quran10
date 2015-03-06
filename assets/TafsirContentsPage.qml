@@ -224,6 +224,17 @@ Page
                                 
                                 ActionItem
                                 {
+                                    imageSource: "images/menu/ic_copy.png"
+                                    title: qsTr("Copy") + Retranslate.onLanguageChanged
+                                    
+                                    onTriggered: {
+                                        console.log("UserEvent: CopyTafsirContentTriggered");
+                                        persist.copyToClipboard(ListItemData.body);
+                                    }
+                                }
+                                
+                                ActionItem
+                                {
                                     imageSource: "images/menu/ic_edit_suite_page.png"
                                     title: qsTr("Edit") + Retranslate.onLanguageChanged
                                     
