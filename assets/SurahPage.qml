@@ -22,7 +22,7 @@ Page
     
     function reloadNeeded(key)
     {
-        if (key == "translation") {
+        if (key == "translation" || key == "overlayAyatImages") {
             toSurahIdChanged();
         } else if (key == "primarySize" || key == "translationSize") {
             listView.refresh();
@@ -37,22 +37,23 @@ Page
     {
         if (id == QueryId.FetchAllAyats)
         {
-            if ( listView.theDataModel.isEmpty() ) {
+            if ( listView.theDataModel.isEmpty() )
+            {
                 listView.theDataModel.append(data);
+                
+                if (requestedVerse > 0) {
+                    var target = [requestedVerse-1]
+                    listView.scrollToItem(target, ScrollAnimation.None);
+                    listView.select(target,true);
+                    requestedVerse = 0;
+                } else if (fromSurahId > 1 && fromSurahId != 9) {
+                    listView.scrollToPosition(0, ScrollAnimation.None);
+                    listView.scroll(-100, ScrollAnimation.Smooth);
+                }
             } else {
                 for (var i = data.length-1; i >= 0; i--) {
                     listView.theDataModel.replace(i, data[i]);
                 }
-            }
-            
-            if (requestedVerse > 0) {
-                var target = [requestedVerse-1]
-                listView.scrollToItem(target, ScrollAnimation.None);
-                listView.select(target,true);
-                requestedVerse = 0;
-            } else if (fromSurahId > 1 && fromSurahId != 9) {
-                listView.scrollToPosition(0, ScrollAnimation.None);
-                listView.scroll(-100, ScrollAnimation.Smooth);
             }
             
             if ( persist.tutorial( "tutorialZoom", qsTr("You can do a pinch gesture anytime to increase and decrease the font size of the Arabic/Transliteration text!"), "asset:///images/ic_quran.png" ) ) { }
@@ -226,12 +227,15 @@ Page
                 PinchHandler
                 {
                     onPinchEnded: {
-                        var newValue = Math.floor(event.pinchRatio*listView.primarySize);
-                        newValue = Math.max(8,newValue);
-                        newValue = Math.min(newValue, 24);
-                        
-                        listView.primarySize = newValue;
-                        persist.saveValueFor("primarySize", newValue);
+                        if (!listView.showImages)
+                        {
+                            var newValue = Math.floor(event.pinchRatio*listView.primarySize);
+                            newValue = Math.max(8,newValue);
+                            newValue = Math.min(newValue, 24);
+                            
+                            listView.primarySize = newValue;
+                            persist.saveValueFor("primarySize", newValue);
+                        }
                     }
                 }
             ]

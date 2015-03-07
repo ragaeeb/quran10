@@ -6,7 +6,6 @@ ListView
 {
     id: listView
     property alias theDataModel: verseModel
-    property alias background: headerBackground
     property alias activeDefinition: activeDef
     property int chapterNumber
     property int translationSize: helper.translationSize
@@ -159,101 +158,32 @@ ListView
     }
 
     listItemComponents: [
-        ListItemComponent {
+        ListItemComponent
+        {
             type: "image"
-            
-            AyatImageListItem {
-                
-            }
+            AyatImageListItem {}
         },
         
-        ListItemComponent {
+        ListItemComponent
+        {
             type: "imageTrans"
-            
-            AyatImageTranslationListItem {
-            
-            }
+            AyatImageTranslationListItem {}
         },
         
-        ListItemComponent {
+        ListItemComponent
+        {
             type: "trans"
-            
-            AyatTranslationListItem {
-            
-            }
+            AyatTranslationListItem {}
         },
         
         ListItemComponent
         {
             type: "text"
-            
-            AyatListItem
-            {
-                id: ali
-                
-                contextMenuHandler: [
-                    ContextMenuHandler {
-                        onPopulating: {
-                            if (!ali.ListItem.view.showContextMenu) {
-                                event.abort();
-                            }
-                        }
-                    }
-                ]
-                
-                contextActions: [
-                    ActionSet
-                    {
-                        id: actionSet
-                        title: ListItemData.arabic
-                        subtitle: ali.secondLine ? ali.secondLine.text : qsTr("%1:%2").arg(ali.ListItem.view.chapterNumber).arg(ListItemData.verse_id)
-                        
-                        ActionItem
-                        {
-                            title: qsTr("Memorize") + Retranslate.onLanguageChanged
-                            imageSource: "images/menu/ic_memorize.png"
-                            
-                            onTriggered: {
-                                console.log("UserEvent: MemorizeAyat");
-                                ali.ListItem.view.memorize( ali.ListItem.indexPath[0] );
-                            }
-                        }
-                        
-                        ActionItem {
-                            id: playFromHere
-                            
-                            title: qsTr("Play From Here") + Retranslate.onLanguageChanged
-                            imageSource: "images/menu/ic_play.png"
-                            
-                            onTriggered: {
-                                console.log("UserEvent: PlayFromHere");
-                                ali.ListItem.view.play(ali.ListItem.indexPath[0], -1);
-                            }
-                        }
-                        
-                        ActionItem
-                        {
-                            title: qsTr("Set Bookmark") + Retranslate.onLanguageChanged
-                            imageSource: "images/menu/ic_bookmark_add.png"
-                            
-                            onTriggered: {
-                                console.log("UserEvent: SetBookmark");
-                                ali.ListItem.view.setBookmark(ali.ListItem.data);
-                            }
-                        }
-                    }
-                ]
-            }
+            AyatListItem {}
         }
     ]
     
     attachedObjects: [
-        ImagePaintDefinition
-        {
-            id: headerBackground
-            imageSource: "images/backgrounds/header_bg.png"
-        },
-        
         RangeSelector {
             itemName: qsTr("ayahs")
         },

@@ -6,7 +6,6 @@ ListView
 {
     id: listView
     property alias theDataModel: verseModel
-    property alias background: headerBackground
     property int chapterNumber
     property int translationSize: helper.translationSize
     property int primarySize: helper.primarySize
@@ -38,11 +37,6 @@ ListView
     }
     
     attachedObjects: [
-        ImagePaintDefinition
-        {
-            id: headerBackground
-            imageSource: "images/backgrounds/header_bg.png"
-        },
         
         TextStyleDefinition
         {
