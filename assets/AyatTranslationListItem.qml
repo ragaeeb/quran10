@@ -3,7 +3,7 @@ import bb.cascades 1.0
 AyatListItem
 {
     id: itemRoot
-    property alias secondLine: translationLabel
+    actionSetSubtitle: translationLabel.text
     
     Label
     {
@@ -11,7 +11,7 @@ AyatListItem
         text: ListItemData.translation
         multiline: true
         horizontalAlignment: HorizontalAlignment.Fill
-        textStyle.color: ListItem.selected || ListItemData.playing ? Color.White : Color.Black
+        textStyle.color: itemRoot.ListItem.selected || ListItemData.playing ? Color.White : Color.Black
         textStyle.textAlign: TextAlign.Center
         textStyle.fontSize: {
             var translationSize = itemRoot.ListItem.view.translationSize;

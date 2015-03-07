@@ -13,7 +13,7 @@ AyatListItemBase
         horizontalAlignment: HorizontalAlignment.Fill
         
         textStyle {
-            color: ListItem.selected || ListItemData.playing ? Color.White : Color.Black
+            color: itemRoot.ListItem.selected || ListItemData.playing ? Color.White : Color.Black
             base: global.textFont
             textAlign: TextAlign.Right;
             fontSizeValue: itemRoot.ListItem.view.primarySize
