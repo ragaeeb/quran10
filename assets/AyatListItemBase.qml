@@ -5,6 +5,7 @@ Container
     id: itemRoot
     property bool peek: ListItem.view.secretPeek
     property bool playing: ListItemData.playing ? ListItemData.playing : false
+    property alias actionSetSubtitle: actionSet.subtitle
     horizontalAlignment: HorizontalAlignment.Fill
     
     function updateState(selected)
@@ -21,7 +22,7 @@ Container
     }
     
     onCreationCompleted: {
-        ListItem.activationChanged.connect(upateState);
+        ListItem.activationChanged.connect(updateState);
         ListItem.selectionChanged.connect(updateState);
         playingChanged.connect(updateState);
         updateState();
@@ -94,7 +95,7 @@ Container
         {
             id: actionSet
             title: ListItemData.arabic
-            subtitle: ali.secondLine ? ali.secondLine.text : headerLabel.text
+            subtitle: headerLabel.text
             
             ActionItem
             {
