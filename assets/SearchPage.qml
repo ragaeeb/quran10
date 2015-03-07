@@ -326,10 +326,6 @@ Page
                     headerMode: ListHeaderMode.Sticky
                 }
                 
-                property ImagePaintDefinition selectedItemBack: ImagePaintDefinition {
-                    imageSource: "images/backgrounds/header_bg.png"
-                }
-                
                 animations: [
                     FadeTransition
                     {
@@ -353,7 +349,7 @@ Page
                             id: rootItem
                             horizontalAlignment: HorizontalAlignment.Fill
                             verticalAlignment: VerticalAlignment.Fill
-                            background: ListItem.active || ListItem.selected ? ListItem.view.selectedItemBack.imagePaint : undefined
+                            background: ListItem.active || ListItem.selected ? global.headerBackground.imagePaint : undefined
                             
                             Header {
                                 id: header

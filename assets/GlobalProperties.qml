@@ -8,7 +8,7 @@ QtObject
     property variant customFont: TextStyleDefinition
     {
         id: customFontDef
-        fontFamily: "uthman_bold"
+        fontFamily: "Regular"
         
         rules: [
             FontFaceRule {
@@ -16,5 +16,9 @@ QtObject
                 fontFamily: "Regular"
             }
         ]
+    }
+    
+    property variant headerBackground: ImagePaintDefinition {
+        imageSource: "images/backgrounds/header_bg.png"
     }
 }
