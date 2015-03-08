@@ -18,14 +18,14 @@ Page
             if (data.length > 0)
             {
                 titleBar.title = data[0].name;
-                body.text = "\n\n"+data[0].biography+"\n\n"+data[0].uri+"\n\n";
+                body.text = data[0].biography+"\n\n"+data[0].uri+"\n\n";
                 
                 if ( body.text.trim().length == 0 ) {
-                    body.text = "\nNo biography found for individual...";
+                    body.text = "No biography found for individual...";
                 }
             } else {
                 titleBar.title = qsTr("Quran10");
-                body.text = "\nIndividual was not found...";
+                body.text = "Individual was not found...";
             }
         }
     }
