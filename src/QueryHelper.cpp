@@ -9,6 +9,7 @@
 
 #define ATTACH_TAFSIR m_sql.attachIfNecessary( tafsirName(), true );
 #define TRANSLATION QString("quran_%1").arg(m_translation)
+#define NAME_FIELD(var) QString("(coalesce(%1.prefix,'') || ' ' || %1.name || ' ' || coalesce(%1.kunya,''))").arg(var)
 
 namespace quran {
 
@@ -67,6 +68,8 @@ void QueryHelper::settingChanged(QString const& key)
         }
 
         emit textualChange();
+    } else if (key == "translationFontSize" || key == "primarySize") {
+        emit fontSizeChanged();
     }
 }
 
@@ -138,12 +141,21 @@ void QueryHelper::fetchRandomAyat(QObject* caller)
 }
 
 
+void QueryHelper::fetchAdjacentAyat(QObject* caller, int surahId, int verseId, int delta)
+{
+    LOGGER(surahId << verseId << delta);
+
+    QString operation = delta >= 0 ? QString("+%1").arg(delta) : QString::number(delta);
+    m_sql.executeQuery(caller, QString("SELECT surah_id,verse_number AS verse_id FROM ayahs WHERE ROWID=((SELECT ROWID FROM ayahs WHERE surah_id=%1 AND verse_number=%2)%3)").arg(surahId).arg(verseId).arg(operation), QueryId::FetchAdjacentAyat);
+}
+
+
 void QueryHelper::fetchRandomQuote(QObject* caller)
 {
     LOGGER("fetchRandomQuote");
 
     ATTACH_TAFSIR;
-    m_sql.executeQuery(caller, QString("SELECT individuals.name AS author,body,reference FROM quotes INNER JOIN individuals ON individuals.id=quotes.author WHERE quotes.id=( ABS( RANDOM() % (SELECT COUNT() AS total_quotes FROM quotes) )+1 )"), QueryId::FetchRandomQuote);
+    m_sql.executeQuery(caller, QString("SELECT %1 AS author,body,reference FROM quotes INNER JOIN individuals i ON i.id=quotes.author WHERE quotes.id=( ABS( RANDOM() % (SELECT COUNT() AS total_quotes FROM quotes) )+1 )").arg( NAME_FIELD("i") ), QueryId::FetchRandomQuote);
 }
 
 
@@ -326,7 +338,7 @@ void QueryHelper::fetchTafsirContent(QObject* caller, qint64 suitePageId)
 {
     LOGGER(suitePageId);
     ATTACH_TAFSIR;
-    QString query = QString("SELECT x.name AS author,x.hidden AS author_hidden,y.name AS translator,y.hidden AS translator_hidden,z.name AS explainer,z.hidden AS explainer_hidden,title,description,reference,body FROM suites INNER JOIN suite_pages ON suites.id=suite_pages.suite_id INNER JOIN individuals x ON suites.author=x.id LEFT JOIN individuals y ON suites.translator=y.id LEFT JOIN individuals z ON suites.explainer=z.id WHERE suite_pages.id=%1").arg(suitePageId);
+    QString query = QString("SELECT %2 AS author,x.id AS author_id,x.hidden AS author_hidden,%3 AS translator,y.id AS translator_id,y.hidden AS translator_hidden,%4 AS explainer,z.id AS explainer_id,z.hidden AS explainer_hidden,title,description,reference,body FROM suites INNER JOIN suite_pages ON suites.id=suite_pages.suite_id INNER JOIN individuals x ON suites.author=x.id LEFT JOIN individuals y ON suites.translator=y.id LEFT JOIN individuals z ON suites.explainer=z.id WHERE suite_pages.id=%1").arg(suitePageId).arg( NAME_FIELD("x") ).arg( NAME_FIELD("y") ).arg( NAME_FIELD("z") );
 
     m_sql.executeQuery(caller, query, QueryId::FetchTafsirContent);
 }
@@ -358,6 +370,15 @@ void QueryHelper::fetchAyat(QObject* caller, int surahId, int ayatId)
     }
 
     m_sql.executeQuery(caller, query, QueryId::FetchAyat);
+}
+
+
+void QueryHelper::fetchBio(QObject* caller, qint64 individualId)
+{
+    LOGGER(individualId);
+
+    ATTACH_TAFSIR;
+    m_sql.executeQuery(caller, QString("SELECT %1 AS name,uri,biography FROM individuals i WHERE i.id=%2").arg( NAME_FIELD("i") ).arg(individualId), QueryId::FetchBio);
 }
 
 
@@ -482,8 +503,8 @@ int QueryHelper::primarySize() const {
 
 int QueryHelper::translationSize() const
 {
-    int result = m_persist->getValueFor("translationSize").toInt();
-    return result > 0 ? result : 8;
+    int result = m_persist->getValueFor("translationFontSize").toInt();
+    return result > 0 ? result : 12;
 }
 
 

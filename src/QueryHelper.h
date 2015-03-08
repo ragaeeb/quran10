@@ -24,8 +24,8 @@ class QueryHelper : public QObject
 {
 	Q_OBJECT
 	Q_PROPERTY(bool showTranslation READ showTranslation NOTIFY textualChange)
-	Q_PROPERTY(int primarySize READ primarySize NOTIFY textualChange)
-	Q_PROPERTY(int translationSize READ translationSize NOTIFY textualChange)
+	Q_PROPERTY(int primarySize READ primarySize NOTIFY fontSizeChanged)
+	Q_PROPERTY(int translationSize READ translationSize NOTIFY fontSizeChanged)
 	Q_PROPERTY(QString translation READ translation NOTIFY textualChange)
 
     DatabaseHelper m_sql;
@@ -40,6 +40,7 @@ private slots:
     void settingChanged(QString const& key);
 
 signals:
+    void fontSizeChanged();
     void tafsirMissing(QString const& tafsirName);
     void textualChange();
     void translationMissing(QString const& translation);
@@ -56,6 +57,7 @@ public:
     Q_INVOKABLE void editQuote(QObject* caller, qint64 quoteId, QString const& author, QString const& body, QString const& reference);
     Q_INVOKABLE void editTafsir(QObject* caller, qint64 suiteId, QString const& author, QString const& translator, QString const& explainer, QString const& title, QString const& description, QString const& reference);
     Q_INVOKABLE void editTafsirPage(QObject* caller, qint64 suitePageId, QString const& body);
+    Q_INVOKABLE void fetchAdjacentAyat(QObject* caller, int surahId, int verseId, int delta);
     Q_INVOKABLE void fetchAllAyats(QObject* caller, int fromChapter, int toChapter=0);
     Q_INVOKABLE void fetchAllChapters(QObject* caller);
     Q_INVOKABLE void fetchAllChapterAyatCount(QObject* caller);
@@ -69,6 +71,7 @@ public:
     Q_INVOKABLE void fetchAllTafsirForSuite(QObject* caller, qint64 suiteId);
     Q_INVOKABLE void fetchAyat(QObject* caller, int surahId, int ayatId);
     Q_INVOKABLE void fetchAyatsForTafsir(QObject* caller, qint64 suitePageId);
+    Q_INVOKABLE void fetchBio(QObject* caller, qint64 individualId);
     Q_INVOKABLE void fetchChapter(QObject* caller, int chapter);
     Q_INVOKABLE void fetchJuzInfo(QObject* caller, int juzId);
     Q_INVOKABLE void fetchPageNumbers(QObject* caller);

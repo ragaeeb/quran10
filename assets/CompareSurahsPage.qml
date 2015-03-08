@@ -45,7 +45,7 @@ Page
     
     function reloadNeeded(key)
     {
-        if (key == "primarySize" || key == "translationSize") {
+        if (key == "primarySize" || key == "translationFontSize") {
             loadVerses();
         }
     }

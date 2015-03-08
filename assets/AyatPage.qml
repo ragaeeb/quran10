@@ -19,13 +19,11 @@ Page
             {
                 notFound.delegateActive = false;
                 
-                var bodyValue = data[0].content;
+                body.text = data[0].content;
                 
                 if (data[0].translation) {
-                    bodyValue += "\n\n"+data[0].translation;
+                    translation.text = data[0].translation;
                 }
-                
-                body.value = bodyValue;
                 
                 var n = data[0].total_similar;
                 
@@ -36,6 +34,7 @@ Page
                     if ( persist.tutorial( "tutorialSimilarAyat", qsTr("There appears to be other verses with similar wording, choose the '%1 Similar' option at the top to view them in a split screen.").arg(data.length), "asset:///images/dropdown/similar.png" ) ) {}
                 }
                 
+                transliteration.resetText();
                 helper.fetchTafsirCountForAyat(root, surahId, verseId);
                 helper.fetchSurahHeader(root, surahId);
                 busy.delegateActive = false;
@@ -55,11 +54,18 @@ Page
             babName.title = data[0].transliteration ? data[0].transliteration : data[0].name;
             babName.subtitle = "%1:%2".arg(surahId).arg(verseId);
             
-            body.value = body.value + "\n\n(" + babName.title + " " + babName.subtitle + ")";
+            translation.text = translation.text + "\n\n(" + babName.title + " " + babName.subtitle + ")";
         } else if (id == QueryId.SaveBookmark) {
             persist.showToast( qsTr("Favourite added for Chapter %1, Verse %2").arg(surahId).arg(verseId), "", "asset:///images/menu/ic_bookmark_add.png" );
         } else if (id == QueryId.FetchTransliteration) {
             transliteration.text = data[0].html;
+        } else if (id == QueryId.FetchAdjacentAyat) {
+            if (data.length > 0) {
+                surahId = data[0].surah_id;
+                verseId = data[0].verse_id;
+            } else {
+                persist.showToast( qsTr("Ayat not found"), "", "asset:///images/toast/ic_no_ayat_found.png" );
+            }
         }
     }
     
@@ -74,7 +80,6 @@ Page
     function reload()
     {
         busy.delegateActive = true;
-
         helper.fetchAyat(root, surahId, verseId);
     }
     
@@ -136,8 +141,6 @@ Page
                         
                         pluginsDelegate.source = "SimilarAyatControl.qml";
                         pluginsDelegate.delegateActive = true;
-                    } else if (body.text != body.value) {
-                        body.text = body.value;
                     }
                 }
             },
@@ -174,7 +177,7 @@ Page
             
             onTriggered: {
                 console.log("UserEvent: MarkFavourite");
-                var name = persist.showBlockingPrompt( qsTr("Enter name"), qsTr("You can use this to quickly recognize this ayah in the favourites tab."), "(%1:%2) %3".arg(surahId).arg(verseId).arg(body.value), qsTr("Name..."), 50, true, qsTr("Save") );
+                var name = persist.showBlockingPrompt( qsTr("Enter name"), qsTr("You can use this to quickly recognize this ayah in the favourites tab."), translation.text, qsTr("Name..."), 50, true, qsTr("Save") );
                 
                 if (name.length > 0)
                 {
@@ -198,7 +201,7 @@ Page
             
             onTriggered: {
                 console.log("UserEvent: AddShortcutTriggered");
-                var name = persist.showBlockingPrompt( qsTr("Enter name"), qsTr("You can use this to quickly recognize this ayah on your home screen."), "(%1:%2) %3".arg(surahId).arg(verseId).arg(body.value), qsTr("Shortcut name..."), 15, true, qsTr("Save") );
+                var name = persist.showBlockingPrompt( qsTr("Enter name"), qsTr("You can use this to quickly recognize this ayah on your home screen."), translation.text, qsTr("Shortcut name..."), 15, true, qsTr("Save") );
                 
                 if (name.length > 0) {
                     app.addToHomeScreen(surahId, verseId, name);
@@ -213,7 +216,7 @@ Page
             
             onTriggered: {
                 console.log("UserEvent: CopyHadith");
-                persist.copyToClipboard(body.value)
+                persist.copyToClipboard(body.text+"\n\n"+translation.text);
             }
         },
         
@@ -230,42 +233,30 @@ Page
             
             onTriggered: {
                 console.log("UserEvent: ShareHadithTriggered");
-                data = persist.convertToUtf8(body.value);
+                data = persist.convertToUtf8(body.text+"\n\n"+translation.text);
             }
         },
         
         ActionItem
         {
-            enabled: !notFound.delegateActive
-            title: body.editable ? qsTr("Finish Editing") + Retranslate.onLanguageChanged : qsTr("Report Mistake") + Retranslate.onLanguageChanged
-            imageSource: "images/menu/ic_report_error.png"
-            
-            shortcuts: [
-                SystemShortcut {
-                    type: SystemShortcuts.Edit
-                }
-            ]
+            title: qsTr("Previous Verse") + Retranslate.onLanguageChanged
+            imageSource: "images/menu/ic_prev_ayat.png"
             
             onTriggered: {
-                console.log("UserEvent: ReportMistakeActionTriggered");
+                console.log("UserEvent: PrevAyat");
+                helper.fetchAdjacentAyat(root, surahId, verseId, -1);
+            }
+        },
+        
+        ActionItem
+        {
+            title: qsTr("Next Verse") + Retranslate.onLanguageChanged
+            imageSource: "images/menu/ic_next_ayat.png"
+            
+            onTriggered: {
+                console.log("UserEvent: NextAyat");
+                helper.fetchAdjacentAyat(root, surahId, verseId, 1);
                 
-                if (body.editable)
-                {
-                    definition.source = "ReportMistakeSheet.qml";
-                    var sheet = definition.createObject();
-                    sheet.body = body.value;
-                    sheet.surahId = surahId;
-                    sheet.verseId = verseId;
-                    sheet.expectedText = body.text;
-                    sheet.open();
-                    
-                    body.editable = false;
-                    body.text = body.value;
-                } else {
-                    body.editable = true;
-                    persist.showBlockingToast( qsTr("The ayah is now editable. Please make the changes you feel are needed to correct it and then from the menu choose 'Report Error' again."), qsTr("OK"), "asset:///images/menu/ic_report_error.png" );
-                    body.requestFocus();
-                }
             }
         }
     ]
@@ -355,7 +346,8 @@ Page
                 ]
             }
             
-            TextArea {
+            TextArea
+            {
                 id: transliteration
                 visible: text.length > 0
                 horizontalAlignment: HorizontalAlignment.Fill
@@ -364,7 +356,7 @@ Page
                 backgroundVisible: false
                 textStyle.textAlign: TextAlign.Center
                 textStyle.fontSize: FontSize.PointValue
-                textStyle.fontSizeValue: persist.getValueFor("fontSize")
+                textStyle.fontSizeValue: helper.translationSize
                 opacity: 0
                 
                 onVisibleChanged: {
@@ -390,43 +382,63 @@ Page
                 horizontalAlignment: HorizontalAlignment.Fill
                 verticalAlignment: VerticalAlignment.Fill
                 
-                gestureHandlers: [
-                    PinchHandler
-                    {
-                        onPinchEnded: {
-                            console.log("UserEvent: AyatPagePinched");
-                            var newValue = Math.floor(event.pinchRatio*body.textStyle.fontSizeValue);
-                            newValue = Math.max(6,newValue);
-                            newValue = Math.min(newValue, 30);
-                            
-                            persist.saveValueFor("fontSize", newValue);
-                            body.textStyle.fontSizeValue = newValue;
-                        }
-                    }
-                ]
-                
-                TextArea
+                Container
                 {
-                    id: body
-                    property string value
-                    backgroundVisible: false
-                    content.flags: TextContentFlag.ActiveTextOff | TextContentFlag.EmoticonsOff
-                    editable: false
-                    textStyle.fontSize: FontSize.PointValue
-                    textStyle.fontSizeValue: persist.getValueFor("fontSize")
-                    textStyle.base: global.textFont
-                    input.flags: TextInputFlag.AutoCapitalizationOff | TextInputFlag.AutoCorrectionOff | TextInputFlag.SpellCheckOff | TextInputFlag.WordSubstitutionOff | TextInputFlag.AutoPeriodOff
+                    horizontalAlignment: HorizontalAlignment.Fill
                     verticalAlignment: VerticalAlignment.Fill
                     
-                    onValueChanged: {
-                        text = value;
+                    TextArea
+                    {
+                        id: body
+                        backgroundVisible: false
+                        content.flags: TextContentFlag.ActiveTextOff | TextContentFlag.EmoticonsOff
+                        editable: false
+                        textStyle.fontSize: FontSize.PointValue
+                        textStyle.fontSizeValue: helper.primarySize
+                        textStyle.base: global.textFont
+                        textStyle.textAlign: TextAlign.Right
+                        input.flags: TextInputFlag.AutoCapitalizationOff | TextInputFlag.AutoCorrectionOff | TextInputFlag.SpellCheckOff | TextInputFlag.WordSubstitutionOff | TextInputFlag.AutoPeriodOff
+                        verticalAlignment: VerticalAlignment.Fill
+                        
+                        gestureHandlers: [
+                            TapHandler {
+                                onTapped: {
+                                    console.log("UserEvent: TappedAyatArabic");
+                                    
+                                    if (!transliteration.visible) {
+                                        helper.fetchTransliteration(root, surahId, verseId);
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                    
+                    TextArea
+                    {
+                        id: translation
+                        backgroundVisible: false
+                        content.flags: TextContentFlag.ActiveTextOff | TextContentFlag.EmoticonsOff
+                        editable: false
+                        textStyle.fontSize: FontSize.PointValue
+                        textStyle.fontSizeValue: helper.translationSize
+                        input.flags: TextInputFlag.AutoCapitalizationOff | TextInputFlag.AutoCorrectionOff | TextInputFlag.SpellCheckOff | TextInputFlag.WordSubstitutionOff | TextInputFlag.AutoPeriodOff
+                        verticalAlignment: VerticalAlignment.Fill
                     }
                     
                     gestureHandlers: [
-                        TapHandler {
-                            onTapped: {
-                                console.log("UserEvent: TappedBody");
-                                helper.fetchTransliteration(root, surahId, verseId);
+                        FontSizePincher
+                        {
+                            key: helper.showTranslation ? "translationFontSize" : "primarySize"
+                            minValue: helper.showTranslation ? 4 : 6
+                            maxValue: helper.showTranslation ? 20 : 30
+                            userEventId: helper.showTranslation ? "PinchedTranslation" : "PinchedArabic"
+                            
+                            onPinchUpdated: {
+                                if (helper.showTranslation) {
+                                    translation.textStyle.fontSizeValue = translation.textStyle.fontSizeValue*event.pinchRatio;
+                                } else {
+                                    body.textStyle.fontSizeValue = body.textStyle.fontSizeValue*event.pinchRatio;
+                                }
                             }
                         }
                     ]
