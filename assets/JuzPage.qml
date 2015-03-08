@@ -25,7 +25,7 @@ Page
         if (key == "translation") {
             requestedVerse = scroller.firstVisibleItem[0];
             juzIdChanged();
-        } else if (key == "primarySize" || key == "translationSize") {
+        } else if (key == "primarySize" || key == "translationFontSize") {
             listView.refresh();
         }
     }
@@ -182,14 +182,18 @@ Page
                 
                 onTriggered: {
                     console.log("UserEvent: VerseTriggered");
-                    var d = dataModel.data(indexPath);
                     
-                    definition.source = "AyatPage.qml";
-                    var ayatPage = definition.createObject();
-                    ayatPage.surahId = d.surah_id;
-                    ayatPage.verseId = d.verse_id;
-                    
-                    navigationPane.push(ayatPage);
+                    if (!scrolled)
+                    {
+                        var d = dataModel.data(indexPath);
+                        
+                        definition.source = "AyatPage.qml";
+                        var ayatPage = definition.createObject();
+                        ayatPage.surahId = d.surah_id;
+                        ayatPage.verseId = d.verse_id;
+                        
+                        navigationPane.push(ayatPage);
+                    }
                 }
                 
                 attachedObjects: [
@@ -211,16 +215,12 @@ Page
             }
             
             gestureHandlers: [
-                PinchHandler
+                FontSizePincher
                 {
-                    onPinchEnded: {
-                        var newValue = Math.floor(event.pinchRatio*listView.primarySize);
-                        newValue = Math.max(8,newValue);
-                        newValue = Math.min(newValue, 24);
-                        
-                        listView.primarySize = newValue;
-                        persist.saveValueFor("primarySize", newValue);
-                    }
+                    key: listView.showImages ? "translationFontSize" : "primarySize"
+                    minValue: listView.showImages ? 8 : 6
+                    maxValue: listView.showImages ? 20 : 30
+                    userEventId: listView.showImages ? "SurahPageTranslationPinched" : "SurahPageArabicPinched"
                 }
             ]
         }

@@ -224,25 +224,6 @@ Page
                     bottomPadding: 50
                 }
                 
-                SliderPair
-                {
-                    enabled: !none.selected
-                    labelValue: qsTr("Translation Font Size") + Retranslate.onLanguageChanged
-                    from: 1
-                    to: 3
-                    key: "translationSize"
-                    
-                    onSliderValueChanged: {
-                        if (sliderValue == 1) {
-                            infoText.text = qsTr("The translation font size will be small");   
-                        } else if (sliderValue == 2) {
-                            infoText.text = qsTr("The translation font size will be medium");
-                        } else {
-                            infoText.text = qsTr("The translation font size will be large");
-                        }
-                    }
-                }
-                
                 PersistCheckBox
                 {
                     topMargin: 20
