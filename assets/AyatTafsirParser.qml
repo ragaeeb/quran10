@@ -24,31 +24,34 @@ QtObject
         if ( (tafsir.author_hidden == 1 || tafsir.translator_hidden == 1 || tafsir.explainer_hidden == 1) && !reporter.isAdmin ) {
             bodyText = qsTr("[This tafsir is being intentionally suppressed. It may be released in a future update.]");
         } else {
-            bodyText = qsTr("Author: <a href=\"%2\">%1</a>").arg(tafsir.author).arg(tafsir.author_id);
+            var authorText = qsTr("Author: <a href=\"%2\">%1</a>").arg(tafsir.author).arg( tafsir.author_id.toString() );
             
             if (tafsir.translator.length > 0) {
-                bodyText += "\nTranslator: <a href=\"%2\">%1</a>".arg(tafsir.translator).arg(tafsir.translator_id);
+                authorText += "\nTranslator: <a href=\"%2\">%1</a>".arg(tafsir.translator).arg( tafsir.translator_id.toString() );
             }
             
             if (tafsir.explainer.length > 0) {
-                bodyText += "\nExplained by: <a href=\"%2\">%1</a>".arg(tafsir.explainer).arg(tafsir.explainer_id);
+                authorText += "\nExplained by: <a href=\"%2\">%1</a>".arg(tafsir.explainer).arg( tafsir.explainer_id.toString() );
             }
             
             if (tafsir.description.length > 0) {
-                bodyText += "\n\n%1".arg(tafsir.description);
+                bodyText = tafsir.description+"\n\n";
             }
             
-            bodyText += "\n\n%1".arg(tafsir.body);
+            bodyText += tafsir.body;
             
             if (tafsir.reference.length > 0) {
                 bodyText += "\n\n(%1)".arg(tafsir.reference);
             }
             
+            authors.text = "<html>"+authorText+"</html>";
+            console.log(authors.text);
+            
             if ( persist.tutorial( "tutorialTafsirExit", qsTr("To exit this dialog simply tap any area outside of the dialog!"), "asset:///images/menu/tafsir.png" ) ) {}
             else if ( persist.tutorial( "tutorialTafsirPinch", qsTr("If the font size is too small, you can simply pinch in to increase the font size!"), "asset:///images/dropdown/ic_info.png" ) ) {}
         }
         
-        body.text = "<html>\n"+bodyText+"\n</html>";
+        body.text = bodyText+"\n";
     }
     
     function onDataLoaded(id, data)
@@ -112,6 +115,33 @@ QtObject
             
             TextArea
             {
+                id: authors
+                editable: false
+                backgroundVisible: false
+                content.flags: TextContentFlag.ActiveText | TextContentFlag.EmoticonsOff
+                input.flags: TextInputFlag.AutoCapitalizationOff | TextInputFlag.AutoCorrectionOff | TextInputFlag.SpellCheckOff | TextInputFlag.WordSubstitutionOff | TextInputFlag.AutoPeriodOff
+                textStyle.color: Color.White
+                textStyle.fontSize: FontSize.PointValue
+                textStyle.fontSizeValue: body.textStyle.fontSizeValue
+                bottomPadding: 0; bottomMargin: 0
+                verticalAlignment: VerticalAlignment.Fill
+                
+                activeTextHandler: ActiveTextHandler
+                {
+                    onTriggered: {
+                        var link = event.href.toString();
+                        
+                        if ( link.match("\\d+") ) {
+                            persist.invoke("com.canadainc.Quran10.bio.previewer", "", "", "", link);
+                        }
+                        
+                        event.abort();
+                    }
+                }
+            }
+            
+            TextArea
+            {
                 id: body
                 editable: false
                 backgroundVisible: false
@@ -138,19 +168,6 @@ QtObject
                 
                 onTextChanged: {
                     fader.play();
-                }
-                
-                activeTextHandler: ActiveTextHandler
-                {
-                    onTriggered: {
-                        var link = event.href.toString();
-                        
-                        if ( link.match("\\d+") ) {
-                            persist.invoke("com.canadainc.Quran10.bio.previewer", "", "", "", link);
-                        }
-
-                        event.abort();
-                    }
                 }
                 
                 animations: [
