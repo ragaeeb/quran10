@@ -121,6 +121,12 @@ Delegate
                                 graphic: "images/placeholders/empty_downloads.png"
                                 labelText: qsTr("No downloads queued or active yet.") + Retranslate.onLanguageChanged
                             }
+                            
+                            OfflineDelegate
+                            {
+                                delegateActive: !reporter.online
+                                graphic: "images/toast/ic_offline.png"
+                            }
                         }
                         
                         Container
