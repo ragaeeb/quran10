@@ -17,6 +17,7 @@ ListView
     property bool scrolled: false
     property bool blockPeek: false
     property bool showImages
+    scrollRole: ScrollRole.Main
 
     dataModel: ArrayDataModel {
         id: verseModel

@@ -414,7 +414,7 @@ void QueryHelper::fetchAllIndividuals(QObject* caller) {
 
 
 void QueryHelper::fetchFrequentIndividuals(QObject* caller, int n) {
-    m_sql.executeQuery(caller, QString("SELECT author,COUNT(author) AS n FROM suites GROUP BY author UNION SELECT translator AS author,COUNT(translator) AS n FROM suites GROUP BY author UNION SELECT explainer AS author,COUNT(explainer) AS n FROM suites GROUP BY author ORDER BY n DESC LIMIT %1").arg(n), QueryId::FetchAllIndividuals);
+    m_sql.executeQuery(caller, QString("SELECT author,prefix,name,kunya,uri,hidden,biography FROM (SELECT author,COUNT(author) AS n FROM suites GROUP BY author UNION SELECT translator AS author,COUNT(translator) AS n FROM suites GROUP BY author UNION SELECT explainer AS author,COUNT(explainer) AS n FROM suites GROUP BY author ORDER BY n DESC LIMIT %1) INNER JOIN individuals ON individuals.id=author ORDER BY name,kunya,prefix").arg(n), QueryId::FetchAllIndividuals);
 }
 
 

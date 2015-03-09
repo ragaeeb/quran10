@@ -72,6 +72,7 @@ NavigationPane
             {
                 id: listView
                 property variant editIndexPath
+                scrollRole: ScrollRole.Main
                 
                 dataModel: ArrayDataModel {
                     id: adm

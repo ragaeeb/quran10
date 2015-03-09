@@ -145,6 +145,7 @@ Delegate
                                 id: listView
                                 maxWidth: 400
                                 maxHeight: 400
+                                scrollRole: ScrollRole.Main
                                 
                                 onCreationCompleted: {
                                     dataModel = queue.model;

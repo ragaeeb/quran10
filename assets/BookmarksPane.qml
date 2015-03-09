@@ -126,6 +126,7 @@ NavigationPane
             ListView
             {
                 id: listView
+                scrollRole: ScrollRole.Main
                 
                 dataModel: GroupDataModel
                 {

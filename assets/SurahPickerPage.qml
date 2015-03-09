@@ -290,6 +290,7 @@ Page
                 id: listView
                 objectName: "listView"
                 property bool secretPeek: false
+                scrollRole: ScrollRole.Main
                 
                 dataModel: GroupDataModel {
                     id: gdm

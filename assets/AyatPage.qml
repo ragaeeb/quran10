@@ -421,6 +421,18 @@ Page
                                         helper.fetchTransliteration(root, surahId, verseId);
                                     }
                                 }
+                            },
+                            
+                            FontSizePincher
+                            {
+                                key: "primarySize"
+                                minValue: 6
+                                maxValue: 30
+                                userEventId: "PinchedArabic"
+                                
+                                onPinchUpdated: {
+                                    body.textStyle.fontSizeValue = body.textStyle.fontSizeValue*event.pinchRatio;
+                                }
                             }
                         ]
                     }

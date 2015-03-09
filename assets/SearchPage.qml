@@ -329,6 +329,7 @@ Page
                 opacity: 0
                 property bool isArabicText: false
                 property int fontSize: isArabicText ? helper.primarySize : helper.translationSize
+                scrollRole: ScrollRole.Main
 
                 layout: StackListLayout {
                     headerMode: ListHeaderMode.Sticky

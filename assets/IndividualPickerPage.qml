@@ -48,7 +48,7 @@ Page
     }
     
     onCreationCompleted: {
-        //helper.fetchFrequentIndividuals(listView);
+        helper.fetchFrequentIndividuals(listView);
     }
     
     Container
@@ -121,6 +121,7 @@ Page
             {
                 id: listView
                 property bool showContextMenu
+                scrollRole: ScrollRole.Main
                 
                 dataModel: ArrayDataModel {
                     id: adm
@@ -147,9 +148,8 @@ Page
                             attachedObjects: [
                                 FadeTransition {
                                     id: fader
-                                    delay: Math.min( sli.ListItem.indexInSection*150, 500 );
                                     duration: Math.min( sli.ListItem.indexInSection*300, 750 );
-                                    easingCurve: StockCurve.BackOut
+                                    easingCurve: StockCurve.SineOut
                                     fromOpacity: 0
                                     toOpacity: 1
                                 }
