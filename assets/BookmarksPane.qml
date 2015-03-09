@@ -26,6 +26,12 @@ NavigationPane
                 ActionBar.placement: 'Signature' in ActionBarPlacement ? ActionBarPlacement["Signature"] : ActionBarPlacement.OnBar
                 imageSource: "images/menu/ic_backup.png"
                 
+                shortcuts: [
+                    SystemShortcut {
+                        type: SystemShortcuts.CreateNew
+                    }
+                ]
+                
                 onTriggered: {
                     console.log("UserEvent: Backup");
                     filePicker.title = qsTr("Select Destination");
@@ -139,14 +145,11 @@ NavigationPane
                         gdm.clear();
                         gdm.insertList(data);
                         
-                        noElements.delegateActive = gdm.isEmpty();
-                        listView.visible = !noElements.delegateActive;
+                        refresh();
                         
                         if (listView.visible && navigationPane.parent.parent.activePane == navigationPane && navigationPane.top == mainPage) {
                             persist.tutorial( "tutorialBookmarkDel", qsTr("To delete an existing bookmark, simply press-and-hold on it and choose 'Remove' from the menu."), "asset:///images/menu/ic_favourite_remove.png" );
                         }
-                        
-                        navigationPane.parent.unreadContentCount = data.length;
                     } else if (id == QueryId.ClearAllBookmarks) {
                         persist.showToast( qsTr("Cleared all bookmarks!"), "", "asset:///images/menu/ic_favourite_remove.png" );
                     } else if (id == QueryId.RemoveBookmark) {
@@ -154,13 +157,28 @@ NavigationPane
                     }
                 }
                 
+                function refresh()
+                {
+                    noElements.delegateActive = gdm.isEmpty();
+                    listView.visible = !noElements.delegateActive;
+                    
+                    navigationPane.parent.unreadContentCount = gdm.size();
+                }
+                
                 function deleteBookmark(indexPath) {
                     bookmarkHelper.removeBookmark( listView, dataModel.data(indexPath).id );
+                    gdm.removeAt(indexPath);
+                    refresh();
+                }
+                
+                function onBookmarksUpdated() {
+                    bookmarkHelper.fetchAllBookmarks(listView);
                 }
                 
                 onCreationCompleted: {
                     busy.delegateActive = true;
-                    bookmarkHelper.fetchAllBookmarks(listView);
+                    onBookmarksUpdated();
+                    global.bookmarksUpdated.connect(onBookmarksUpdated);
                 }
                 
                 listItemComponents: [

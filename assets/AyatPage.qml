@@ -57,6 +57,7 @@ Page
             translation.text = translation.text + "\n\n(" + babName.title + " " + babName.subtitle + ")";
         } else if (id == QueryId.SaveBookmark) {
             persist.showToast( qsTr("Favourite added for Chapter %1, Verse %2").arg(surahId).arg(verseId), "", "asset:///images/menu/ic_bookmark_add.png" );
+            global.bookmarksUpdated();
         } else if (id == QueryId.FetchTransliteration) {
             transliteration.text = data[0].html;
         } else if (id == QueryId.FetchAdjacentAyat) {
@@ -182,7 +183,7 @@ Page
                 if (name.length > 0)
                 {
                     var tag = persist.showBlockingPrompt( qsTr("Enter tag"), qsTr("You can use this to categorize related verses together."), "", qsTr("Enter a tag for this bookmark (ie: ramadan). You can leave this blank if you don't want to use a tag."), 50, false, qsTr("Save") );
-                    helper.saveBookmark(root, surahId, verseId, name, tag);
+                    bookmarkHelper.saveBookmark(root, surahId, verseId, name, tag);
                 }
             }
         },

@@ -42,9 +42,9 @@ bool QueryBookmarkHelper::initBookmarks(QObject* caller)
         m_sql->startTransaction(caller, QueryId::SettingUpBookmarks);
 
         QStringList statements;
-        statements << "CREATE TABLE IF NOT EXISTS bookmarks.bookmarks (id INTEGER PRIMARY KEY, surah_id INTEGER REFERENCES surahs(id), verse_id INTEGER, name TEXT, tag TEXT, timestamp INTEGER)";
+        statements << "CREATE TABLE IF NOT EXISTS bookmarks.bookmarks (id INTEGER PRIMARY KEY, surah_id INTEGER, verse_id INTEGER, name TEXT, tag TEXT, timestamp INTEGER)";
         statements << "CREATE TABLE IF NOT EXISTS bookmarks.bookmarked_tafsir (id INTEGER PRIMARY KEY, suite_page_id INTEGER, name TEXT, tag TEXT, timestamp INTEGER)";
-        statements << "CREATE TABLE IF NOT EXISTS bookmarks.progress (timestamp INTEGER PRIMARY KEY, surah_id INTEGER REFERENCES surahs(id), verse_id INTEGER, name TEXT)";
+        statements << "CREATE TABLE IF NOT EXISTS bookmarks.progress (timestamp INTEGER PRIMARY KEY, surah_id INTEGER, verse_id INTEGER, name TEXT)";
 
         foreach (QString const& q, statements) {
             m_sql->executeInternal(q, QueryId::SettingUpBookmarks);
@@ -61,9 +61,9 @@ void QueryBookmarkHelper::fetchLastProgress(QObject* caller)
 {
     LOGGER("fetchLastProgress");
 
-    if ( initBookmarks(caller) ) {
-        m_sql->executeQuery(caller, "SELECT timestamp,surah_id,verse_id FROM bookmarks.progress WHERE timestamp=(SELECT MAX(timestamp) FROM bookmarks.progress)", QueryId::FetchLastProgress);
-    }
+    initBookmarks(caller);
+
+    m_sql->executeQuery(caller, "SELECT timestamp,surah_id,verse_id FROM bookmarks.progress WHERE timestamp=(SELECT MAX(timestamp) FROM bookmarks.progress)", QueryId::FetchLastProgress);
 }
 
 
@@ -82,8 +82,28 @@ void QueryBookmarkHelper::saveBookmark(QObject* caller, int surahId, int verseId
 
     initBookmarks(caller);
 
-    QString query = QString("INSERT INTO bookmarks (surah_id,verse_id,name,tag,timestamp) VALUES (%1,'%2',?,?,%3)").arg(surahId).arg(verseId).arg( QDateTime::currentMSecsSinceEpoch() );
+    QString query = QString("INSERT INTO bookmarks (surah_id,verse_id,name,tag,timestamp) VALUES (%1,%2,?,?,%3)").arg(surahId).arg(verseId).arg( QDateTime::currentMSecsSinceEpoch() );
     m_sql->executeQuery(caller, query, QueryId::SaveBookmark, QVariantList() << name << tag);
+}
+
+
+void QueryBookmarkHelper::saveLegacyBookmarks(QObject* caller, QVariantList const& data)
+{
+    LOGGER( data.size() );
+
+    m_sql->startTransaction(caller, QueryId::SettingUpBookmarks);
+
+    foreach (QVariant const& q, data)
+    {
+        QVariantMap qvm = q.toMap();
+        int surahId = qvm.value("surah_id").toInt();
+        int verseId = qvm.value("verse_id").toInt();
+        QString name = qvm.value("surah_name").toString();
+        QString query = QString("INSERT INTO bookmarks (surah_id,verse_id,name,tag,timestamp) VALUES (%1,%2,?,?,%3)").arg(surahId).arg(verseId).arg( QDateTime::currentMSecsSinceEpoch() );
+        m_sql->executeQuery(caller, query, QueryId::SettingUpBookmarks, QVariantList() << name << "");
+    }
+
+    m_sql->endTransaction(caller, QueryId::SaveLegacyBookmarks);
 }
 
 

@@ -102,7 +102,7 @@ public:
     Q_SLOT void initForeignKeys();
     QString tafsirName() const;
     QString translation() const;
-    QObject* getBookmarkHelper();
+    QueryBookmarkHelper* getBookmarkHelper();
 };
 
 } /* namespace quran */
