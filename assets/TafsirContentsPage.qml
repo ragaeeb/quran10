@@ -30,6 +30,12 @@ Page
             title: qsTr("Add") + Retranslate.onLanguageChanged
             ActionBar.placement: 'Signature' in ActionBarPlacement ? ActionBarPlacement["Signature"] : ActionBarPlacement.OnBar
             
+            shortcuts: [
+                SystemShortcut {
+                    type: SystemShortcuts.CreateNew
+                }
+            ]
+            
             onTriggered: {
                 console.log("UserEvent: TafsirContentAddTriggered");
                 var sheetControl = contentDef.createObject();

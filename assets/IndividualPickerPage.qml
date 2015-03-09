@@ -19,6 +19,12 @@ Page
                 console.log("UserEvent: SearchActionTriggered");
                 performSearch();
             }
+            
+            shortcuts: [
+                SystemShortcut {
+                    type: SystemShortcuts.Search
+                }
+            ]
         }
     ]
     
@@ -36,11 +42,13 @@ Page
             noElements.delegateActive = false;
             
             helper.searchIndividuals(listView, trimmed);
+        } else {
+            helper.fetchAllIndividuals(listView);
         }
     }
     
     onCreationCompleted: {
-        helper.fetchAllIndividuals(listView);
+        //helper.fetchFrequentIndividuals(listView);
     }
     
     Container

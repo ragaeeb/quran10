@@ -4,7 +4,7 @@
 
 namespace canadainc {
 
-QueueDownloader::QueueDownloader(QObject* parent) : QObject(parent), m_currentIndex(-1)
+QueueDownloader::QueueDownloader(QObject* parent) : QObject(parent), m_currentIndex(0)
 {
     connect( &m_network, SIGNAL( requestComplete(QVariant const&, QByteArray const&, bool) ), this, SLOT( onRequestComplete(QVariant const&, QByteArray const&, bool) ) );
     connect( &m_network, SIGNAL( downloadProgress(QVariant const&, qint64, qint64) ), this, SLOT( onDownloadProgress(QVariant const&, qint64, qint64) ) );
@@ -25,9 +25,12 @@ void QueueDownloader::checkSize(QVariant const& cookie, QString const& uri) {
 
 bool QueueDownloader::processNext()
 {
-    if ( !m_model.isEmpty() && m_currentIndex <= m_model.size()-1 )
+    // 0 elements, -1
+    // 1 element, -1
+    // 2 elements, 0
+
+    if ( m_currentIndex < m_model.size() )
     {
-        ++m_currentIndex;
         QVariantMap current = m_model.value(m_currentIndex).toMap();
         current["timestamp"] = QDateTime::currentMSecsSinceEpoch();
 
@@ -36,6 +39,8 @@ bool QueueDownloader::processNext()
 
         m_uriToIndex.insert(uri, m_currentIndex);
         m_network.doGet(uri, current);
+
+        ++m_currentIndex;
 
         return true;
     }

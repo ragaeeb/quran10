@@ -63,6 +63,7 @@ public:
     Q_INVOKABLE void fetchAllChapterAyatCount(QObject* caller);
     Q_INVOKABLE void fetchAllDuaa(QObject* caller);
     Q_INVOKABLE void fetchAllIndividuals(QObject* caller);
+    Q_INVOKABLE void fetchFrequentIndividuals(QObject* caller, int n=7);
     Q_INVOKABLE void fetchAllQarees(QObject* caller, int minLevel=1);
     Q_INVOKABLE void fetchAllQuotes(QObject* caller);
     Q_INVOKABLE void fetchAllTafsir(QObject* caller);
@@ -89,7 +90,7 @@ public:
     Q_INVOKABLE void removeTafsir(QObject* caller, qint64 suiteId);
     Q_INVOKABLE void removeTafsirPage(QObject* caller, qint64 suitePageId);
     Q_INVOKABLE void searchIndividuals(QObject* caller, QString const& trimmedText);
-    Q_INVOKABLE void searchQuery(QObject* caller, QString const& trimmedText, int chapterNumber=0, QVariantList const& additional=QVariantList(), bool andMode=true);
+    Q_INVOKABLE bool searchQuery(QObject* caller, QString const& trimmedText, int chapterNumber=0, QVariantList const& additional=QVariantList(), bool andMode=true);
     Q_INVOKABLE void searchTafsir(QObject* caller, QString const& fieldName, QString const& searchTerm);
     Q_INVOKABLE void unlinkAyatsForTafsir(QObject* caller, QVariantList const& ids, qint64 suitePageId);
     Q_INVOKABLE QVariantList normalizeJuzs(QVariantList const& source);

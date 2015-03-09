@@ -33,6 +33,12 @@ NavigationPane
                 title: qsTr("Add") + Retranslate.onLanguageChanged
                 ActionBar.placement: 'Signature' in ActionBarPlacement ? ActionBarPlacement["Signature"] : ActionBarPlacement.OnBar
                 
+                shortcuts: [
+                    SystemShortcut {
+                        type: SystemShortcuts.CreateNew
+                    }
+                ]
+                
                 function onCreate(id, author, body, reference)
                 {
                     helper.addQuote(listView, author, body, reference);
