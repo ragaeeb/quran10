@@ -523,7 +523,7 @@ QVariantList QueryHelper::removeOutOfRange(QVariantList input, int fromChapter, 
 }
 
 
-QObject* QueryHelper::getBookmarkHelper() {
+QueryBookmarkHelper* QueryHelper::getBookmarkHelper() {
     return &m_bookmarkHelper;
 }
 

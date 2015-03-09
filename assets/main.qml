@@ -41,7 +41,6 @@ TabbedPane
         description: qsTr("Saved Verses") + Retranslate.onLanguageChanged
         imageSource: "images/tabs/ic_bookmarks.png"
         title: qsTr("Favourites") + Retranslate.onLanguageChanged
-        unreadContentCount: helper.totalBookmarks
 
         onTriggered: {
             console.log("UserEvent: FavouritesTab");

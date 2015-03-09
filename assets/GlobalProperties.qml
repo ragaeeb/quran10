@@ -4,6 +4,7 @@ QtObject
 {
     property alias textFont: customFontDef.style
     signal lastPositionUpdated();
+    signal bookmarksUpdated();
 
     property variant customFont: TextStyleDefinition
     {

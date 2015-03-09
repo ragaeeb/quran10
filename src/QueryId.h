@@ -57,6 +57,7 @@ public:
         RemoveTafsirPage,
         SaveBookmark,
         SaveLastProgress,
+        SaveLegacyBookmarks,
         SearchAyats,
         SearchIndividuals,
         SearchTafsir,

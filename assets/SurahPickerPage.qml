@@ -115,10 +115,17 @@ Page
                     
                     function onDataLoaded(id, data)
                     {
-                        if (id == QueryId.FetchLastProgress && data.length > 0)
+                        if (id == QueryId.FetchLastProgress)
                         {
-                            buttonControl.progressData = data[0];
-                            button.visible = true;
+                            if (data.length > 0) {
+                                buttonControl.progressData = data[0];
+                                button.visible = true;
+                            } else if ( persist.contains("bookmarks") ) {
+                                bookmarkHelper.saveLegacyBookmarks( button, persist.getValueFor("bookmarks") );
+                            }
+                        } else if (id == QueryId.SaveLegacyBookmarks) {
+                            persist.remove("bookmarks");
+                            persist.showToast( qsTr("Ported legacy bookmarks!"), "" , "asset:///images/menu/ic_bookmark_add.png");
                         }
                     }
                     

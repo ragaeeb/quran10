@@ -1,5 +1,7 @@
 #include <QFile>
 
+#include <bb/FileSystemInfo>
+
 #include <bb/cascades/pickers/FilePicker>
 
 #include <bb/platform/HomeScreen>
