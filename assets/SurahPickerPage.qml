@@ -443,6 +443,11 @@ Page
     function ready()
     {
         sortOrder.key = "surahPickerOption";
+        
+        if ( !persist.contains("surahPickerOption") ) {
+            normal.selected = true;
+        }
+        
         fadeInLogo.play();
         translate.play();
     }

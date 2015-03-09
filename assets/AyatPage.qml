@@ -247,6 +247,12 @@ Page
                 console.log("UserEvent: PrevAyat");
                 helper.fetchAdjacentAyat(root, surahId, verseId, -1);
             }
+            
+            shortcuts: [
+                SystemShortcut {
+                    type: SystemShortcuts.PreviousSection
+                }
+            ]
         },
         
         ActionItem
@@ -257,8 +263,13 @@ Page
             onTriggered: {
                 console.log("UserEvent: NextAyat");
                 helper.fetchAdjacentAyat(root, surahId, verseId, 1);
-                
             }
+            
+            shortcuts: [
+                SystemShortcut {
+                    type: SystemShortcuts.NextSection
+                }
+            ]
         }
     ]
     

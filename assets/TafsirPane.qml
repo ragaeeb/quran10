@@ -54,6 +54,12 @@ NavigationPane
                     
                     navigationPane.push(page);
                 }
+                
+                shortcuts: [
+                    SystemShortcut {
+                        type: SystemShortcuts.CreateNew
+                    }
+                ]
             }
         ]
     }

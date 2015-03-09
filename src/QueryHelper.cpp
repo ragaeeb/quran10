@@ -382,7 +382,7 @@ void QueryHelper::fetchBio(QObject* caller, qint64 individualId)
 }
 
 
-void QueryHelper::searchQuery(QObject* caller, QString const& trimmedText, int chapterNumber, QVariantList const& additional, bool andMode)
+bool QueryHelper::searchQuery(QObject* caller, QString const& trimmedText, int chapterNumber, QVariantList const& additional, bool andMode)
 {
     LOGGER(trimmedText << additional << andMode << chapterNumber);
 
@@ -391,6 +391,8 @@ void QueryHelper::searchQuery(QObject* caller, QString const& trimmedText, int c
     QString query = ThreadUtils::buildSearchQuery(params, isArabic, chapterNumber, additional, andMode);
 
     m_sql.executeQuery(caller, query, QueryId::SearchAyats, params);
+
+    return isArabic;
 }
 
 
@@ -408,6 +410,11 @@ void QueryHelper::editIndividual(QObject* caller, qint64 id, QString const& pref
 
 void QueryHelper::fetchAllIndividuals(QObject* caller) {
     m_sql.executeQuery(caller, "SELECT id,prefix,name,kunya,uri,hidden,biography FROM individuals ORDER BY name,kunya,prefix", QueryId::FetchAllIndividuals);
+}
+
+
+void QueryHelper::fetchFrequentIndividuals(QObject* caller, int n) {
+    m_sql.executeQuery(caller, QString("SELECT author,COUNT(author) AS n FROM suites GROUP BY author UNION SELECT translator AS author,COUNT(translator) AS n FROM suites GROUP BY author UNION SELECT explainer AS author,COUNT(explainer) AS n FROM suites GROUP BY author ORDER BY n DESC LIMIT %1").arg(n), QueryId::FetchAllIndividuals);
 }
 
 

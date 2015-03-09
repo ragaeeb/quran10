@@ -50,7 +50,7 @@ Page
             
             var additional = getAdditionalQueries();
             
-            helper.searchQuery(listView, trimmed, included.surahId, additional, andMode);
+            listView.isArabicText = helper.searchQuery(listView, trimmed, included.surahId, additional, andMode);
         }
     }
     
@@ -77,6 +77,12 @@ Page
                 console.log("UserEvent: SearchActionTriggered");
                 performSearch();
             }
+            
+            shortcuts: [
+                SystemShortcut {
+                    type: SystemShortcuts.Search
+                }
+            ]
         },
         
         ActionItem {
@@ -321,6 +327,8 @@ Page
             {
                 id: listView
                 opacity: 0
+                property bool isArabicText: false
+                property int fontSize: isArabicText ? helper.primarySize : helper.translationSize
 
                 layout: StackListLayout {
                     headerMode: ListHeaderMode.Sticky
@@ -368,8 +376,9 @@ Page
                                     multiline: true
                                     text: ListItemData.ayatText
                                     textStyle.color: rootItem.ListItem.active || rootItem.ListItem.selected ? Color.Black : undefined
-                                    textStyle.base: global.textFont
-                                    textStyle.fontSize: FontSize.XLarge
+                                    textStyle.base: rootItem.ListItem.view.isArabicText ? global.textFont : null
+                                    textStyle.fontSize: FontSize.PointValue
+                                    textStyle.fontSizeValue: rootItem.ListItem.view.fontSize
                                 }
                             }
                             
