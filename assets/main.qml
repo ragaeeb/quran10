@@ -111,27 +111,25 @@ TabbedPane
             transfers.active = true;
         }
     }
-    
-    function onSidebarVisualStateChanged(newState)
+
+    function checkAdminStatus()
     {
-        sidebarStateChanged.disconnect(onSidebarVisualStateChanged);
+        app.lazyInitComplete.disconnect(checkAdminStatus);
+        reporter.adminEnabledChanged.disconnect(checkAdminStatus);
         
-        if (reporter.isAdmin) {
+        if (reporter.isAdmin)
+        {
             add(quotesTab);
             add(tafsirTab);
+            
+            activeTab = tafsirTab;
         } else {
-            reporter.adminEnabledChanged.connect( function()
-            {
-                 if (reporter.isAdmin) {
-                     add(quotesTab);
-                     add(tafsirTab);
-                 }
-            });
+            reporter.adminEnabledChanged.connect(checkAdminStatus);
         }
     }
     
     onCreationCompleted: {
-        sidebarStateChanged.connect(onSidebarVisualStateChanged);
+        app.lazyInitComplete.connect(checkAdminStatus);
     }
     
     attachedObjects: [

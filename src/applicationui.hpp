@@ -81,6 +81,7 @@ public:
     Q_INVOKABLE void decorateTafsir(bb::cascades::ArrayDataModel* adm);
     Q_INVOKABLE QString bytesToSize(qint64 size);
     Q_INVOKABLE qint64 getFreeSpace();
+    Q_INVOKABLE QString toTitleCase(QString const& input);
 };
 
 } // quran
