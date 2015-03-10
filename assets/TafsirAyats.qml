@@ -56,7 +56,7 @@ Page
                 if (verse > 0) {
                     prompt.inputField.defaultText = chapter+":"+verse;
                 } else {
-                    prompt.inputField.defaultText = chapter;
+                    prompt.inputField.defaultText = chapter+":";
                 } 
                 
                 prompt.show();
