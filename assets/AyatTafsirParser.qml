@@ -45,7 +45,6 @@ QtObject
             }
             
             authors.text = "<html>"+authorText+"</html>";
-            console.log(authors.text);
             
             if ( persist.tutorial( "tutorialTafsirExit", qsTr("To exit this dialog simply tap any area outside of the dialog!"), "asset:///images/menu/tafsir.png" ) ) {}
             else if ( persist.tutorial( "tutorialTafsirPinch", qsTr("If the font size is too small, you can simply pinch in to increase the font size!"), "asset:///images/dropdown/ic_info.png" ) ) {}
@@ -180,6 +179,14 @@ QtObject
                         easingCurve: StockCurve.QuinticOut
                     }
                 ]
+                
+                layoutProperties: StackLayoutProperties {
+                    spaceQuota: 1
+                }
+            }
+            
+            layoutProperties: StackLayoutProperties {
+                spaceQuota: 1
             }
         }
         
