@@ -178,6 +178,29 @@ Page
                                     
                                     ActionItem
                                     {
+                                        imageSource: "images/menu/ic_copy.png"
+                                        title: qsTr("Copy") + Retranslate.onLanguageChanged
+                                        
+                                        onTriggered: {
+                                            console.log("UserEvent: CopyIndividual");
+                                            var result = "";
+                                            
+                                            if (ListItemData.prefix) {
+                                                result += ListItemData.prefix+" ";
+                                            }
+                                            
+                                            result += ListItemData.name;
+                                            
+                                            if (ListItemData.kunya) {
+                                                result += " "+ListItemData.kunya;
+                                            }
+                                            
+                                            persist.copyToClipboard(result);
+                                        }
+                                    }
+                                    
+                                    ActionItem
+                                    {
                                         imageSource: "images/menu/ic_edit_individual.png"
                                         title: qsTr("Edit") + Retranslate.onLanguageChanged
                                         
