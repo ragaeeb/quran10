@@ -10,6 +10,7 @@ Page
     property alias pickerList: listView
     property bool showJuz: false
     property alias sortValue: sortOrder.selectedValue
+    property bool focusOnSearchBar: false
 
     titleBar: TitleBar
     {
@@ -272,7 +273,7 @@ Page
                         duration: 500
                         
                         onEnded: {
-                            if (deviceUtils.isPhysicalKeyboardDevice) {
+                            if (deviceUtils.isPhysicalKeyboardDevice || focusOnSearchBar) {
                                 textField.requestFocus();
                             }
                             

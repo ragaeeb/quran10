@@ -67,6 +67,7 @@ Page
                 definition.source = "SurahPickerPage.qml";
                 var p = definition.createObject();
                 p.picked.connect(onPicked);
+                p.focusOnSearchBar = true;
                 p.ready();
                 
                 navigationPane.push(p);
