@@ -298,7 +298,7 @@ Page
                         value = current;
                         toValue = total;
                         
-                        infoText.text = qsTr("Uploading %1/%2...").arg(current).arg(total);
+                        infoText.text = qsTr("Uploading %1/%2...").arg( current.toString() ).arg( total.toString() );
                     }
                     
                     function onCompressed()

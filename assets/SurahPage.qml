@@ -75,7 +75,7 @@ Page
     }
 
     onCreationCompleted: {
-        persist.textualChange.connect(reloadNeeded);
+        helper.textualChange.connect(reloadNeeded);
         deviceUtils.attachTopBottomKeys(surahPage, listView);
         navigationPane.popTransitionEnded.connect(onPopped);
     }
