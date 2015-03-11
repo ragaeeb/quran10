@@ -1,4 +1,4 @@
-import bb.cascades 1.0
+import bb.cascades 1.3
 import com.canadainc.data 1.0
 
 Page
@@ -119,7 +119,7 @@ Page
             TextArea {
                 id: descriptionField
                 hintText: qsTr("Description...") + Retranslate.onLanguageChanged
-                minHeight: 150
+                minHeight: ui.sdu(18.75)
                 inputMode: TextAreaInputMode.Text
                 content.flags: TextContentFlag.EmoticonsOff | TextContentFlag.ActiveTextOff
                 input.flags: TextInputFlag.AutoCapitalization | TextInputFlag.AutoCorrectionOff | TextInputFlag.SpellCheckOff | TextInputFlag.WordSubstitutionOff | TextInputFlag.AutoPeriodOff
@@ -137,7 +137,7 @@ Page
             TextArea {
                 id: referenceField
                 hintText: qsTr("Reference...") + Retranslate.onLanguageChanged
-                minHeight: 150
+                minHeight: ui.sdu(18.75)
                 inputMode: TextAreaInputMode.Text
                 content.flags: TextContentFlag.EmoticonsOff | TextContentFlag.ActiveText
                 input.flags: TextInputFlag.AutoCapitalization | TextInputFlag.AutoCorrectionOff | TextInputFlag.SpellCheckOff | TextInputFlag.WordSubstitutionOff | TextInputFlag.AutoPeriodOff
