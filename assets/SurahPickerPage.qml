@@ -1,4 +1,4 @@
-import bb.cascades 1.2
+import bb.cascades 1.3
 import com.canadainc.data 1.0
 
 Page
@@ -70,7 +70,7 @@ Page
                         text: progressData ? progressData.surah_id+":"+progressData.verse_id : ""
                         imageSource: "images/dropdown/saved_bookmark.png"
                         verticalAlignment: VerticalAlignment.Center
-                        maxWidth: 150
+                        maxWidth: ui.sdu(18.75)
                         translationX: -250
                         scaleX: 1.1
                         scaleY: 1.1

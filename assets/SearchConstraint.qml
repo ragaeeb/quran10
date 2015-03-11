@@ -16,7 +16,6 @@ Container
     Button
     {
         text: andMode ? qsTr("AND") + Retranslate.onLanguageChanged : qsTr("OR") + Retranslate.onLanguageChanged
-        maxWidth: 150
         rightMargin: 0
         translationX: -200
         imageSource: andMode ? "images/dropdown/search_and.png" : "images/dropdown/search_or.png"
@@ -35,6 +34,10 @@ Container
                 easingCurve: StockCurve.QuarticOut
             }
         ]
+        
+        layoutProperties: StackLayoutProperties {
+            spaceQuota: 0.2
+        }
     }
     
     TextField
@@ -55,6 +58,10 @@ Container
         
         onCreationCompleted: {
             input["keyLayout"] = 7;
+        }
+        
+        layoutProperties: StackLayoutProperties {
+            spaceQuota: 1
         }
     }
     

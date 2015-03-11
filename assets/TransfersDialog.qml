@@ -1,4 +1,4 @@
-import bb.cascades 1.2
+import bb.cascades 1.3
 
 Delegate
 {
@@ -70,19 +70,19 @@ Delegate
                         background: bg.imagePaint
                         horizontalAlignment: HorizontalAlignment.Right
                         verticalAlignment: VerticalAlignment.Center
-                        minHeight: 200
-                        minWidth: 300
-                        maxHeight: 400
-                        maxWidth: 400
+                        minHeight: ui.sdu(25)
+                        minWidth: ui.sdu(37.5)
+                        maxHeight: ui.sdu(50)
+                        maxWidth: ui.sdu(50)
                         rightPadding: 30
-                        translationX: 400
+                        translationX: ui.sdu(50)
                         bottomPadding: 20
                         layout: DockLayout {}
                         
                         animations: [
                             TranslateTransition {
                                 id: tt
-                                fromX: 400
+                                fromX: ui.sdu(50)
                                 toX: 0
                                 easingCurve: StockCurve.ExponentialOut
                                 delay: 250
@@ -93,7 +93,7 @@ Delegate
                             {
                                 id: out
                                 fromX: 0
-                                toX: 400
+                                toX: ui.sdu(50)
                                 easingCurve: StockCurve.CircularIn
                                 delay: 250
                                 duration: 750
@@ -113,7 +113,7 @@ Delegate
                         
                         Container
                         {
-                            topPadding: 30
+                            topPadding: ui.sdu(3.75)
                             
                             EmptyDelegate
                             {
@@ -143,8 +143,8 @@ Delegate
                             ListView
                             {
                                 id: listView
-                                maxWidth: 400
-                                maxHeight: 400
+                                maxWidth: ui.sdu(50)
+                                maxHeight: ui.sdu(50)
                                 scrollRole: ScrollRole.Main
                                 
                                 onCreationCompleted: {

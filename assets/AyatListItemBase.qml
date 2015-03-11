@@ -104,7 +104,7 @@ Container
                 
                 onTriggered: {
                     console.log("UserEvent: MemorizeAyat");
-                    ali.ListItem.view.memorize( ali.ListItem.indexPath[0] );
+                    itemRoot.ListItem.view.memorize( itemRoot.ListItem.indexPath[0] );
                 }
             }
             
@@ -116,7 +116,7 @@ Container
                 
                 onTriggered: {
                     console.log("UserEvent: PlayFromHere");
-                    ali.ListItem.view.play(ali.ListItem.indexPath[0], -1);
+                    itemRoot.ListItem.view.play(itemRoot.ListItem.indexPath[0], -1);
                 }
             }
             
@@ -127,7 +127,7 @@ Container
                 
                 onTriggered: {
                     console.log("UserEvent: SetBookmark");
-                    ali.ListItem.view.setBookmark(ali.ListItem.data);
+                    itemRoot.ListItem.view.setBookmark(itemRoot.ListItem.data);
                 }
             }
         }
