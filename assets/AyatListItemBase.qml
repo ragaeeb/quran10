@@ -7,8 +7,6 @@ Container
     property bool playing: ListItemData.playing ? ListItemData.playing : false
     property alias actionSetSubtitle: actionSet.subtitle
     horizontalAlignment: HorizontalAlignment.Fill
-    topPadding: ui.sdu(1)
-    bottomPadding: ui.sdu(1)
     
     function updateState(selected)
     {

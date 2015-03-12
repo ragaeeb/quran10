@@ -442,10 +442,6 @@ Page
                                 minValue: 6
                                 maxValue: 30
                                 userEventId: "PinchedArabic"
-                                
-                                onPinchUpdated: {
-                                    body.textStyle.fontSizeValue = body.textStyle.fontSizeValue*event.pinchRatio;
-                                }
                             }
                         ]
                         
@@ -545,10 +541,6 @@ Page
                             minValue: 4 ? 4 : 6
                             maxValue: 20 ? 20 : 30
                             userEventId: "PinchedTranslation"
-                            
-                            onPinchUpdated: {
-                                translation.textStyle.fontSizeValue = translation.textStyle.fontSizeValue*event.pinchRatio;
-                            }
                         }
                     ]
                 }

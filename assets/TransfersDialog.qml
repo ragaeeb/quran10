@@ -73,7 +73,7 @@ Delegate
                         minHeight: ui.sdu(25)
                         minWidth: ui.sdu(37.5)
                         maxHeight: ui.sdu(50)
-                        maxWidth: ui.sdu(50)
+                        maxWidth: ui.sdu(75)
                         rightPadding: 30
                         translationX: ui.sdu(50)
                         bottomPadding: 20
@@ -143,7 +143,7 @@ Delegate
                             ListView
                             {
                                 id: listView
-                                maxWidth: ui.sdu(50)
+                                maxWidth: ui.sdu(75)
                                 maxHeight: ui.sdu(50)
                                 scrollRole: ScrollRole.Main
                                 

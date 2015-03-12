@@ -10,6 +10,7 @@ AyatListItem
         horizontalAlignment: HorizontalAlignment.Fill
         rightPadding: ui.sdu(1)
         leftPadding: ui.sdu(1)
+        bottomPadding: ui.sdu(1)
         
         Label
         {
