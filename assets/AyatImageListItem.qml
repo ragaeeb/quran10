@@ -8,6 +8,10 @@ AyatListItemBase
         scroller.scrollToPoint(1440,0);
     }
     
+    function updateState(selected) {
+        background = ListItem.selected || ListItem.active || playing ? ListItem.view.activeDefinition.imagePaint : undefined;
+    }
+    
     ScrollView
     {
         id: scroller

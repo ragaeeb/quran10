@@ -10,6 +10,7 @@ AyatImageListItem
         horizontalAlignment: HorizontalAlignment.Fill
         rightPadding: ui.sdu(1)
         leftPadding: ui.sdu(1)
+        bottomPadding: ui.sdu(1)
         
         Label
         {
@@ -17,7 +18,7 @@ AyatImageListItem
             text: ListItemData.translation
             multiline: true
             horizontalAlignment: HorizontalAlignment.Fill
-            textStyle.color: itemRoot.ListItem.selected || ListItemData.playing ? Color.White : Color.Black
+            textStyle.color: Color.Black
             textStyle.textAlign: TextAlign.Center
             textStyle.fontSize: FontSize.PointValue
             textStyle.fontSizeValue: itemRoot.ListItem.view.translationSize
