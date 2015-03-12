@@ -54,7 +54,8 @@ ListView
         }
     }
 
-    multiSelectHandler {
+    multiSelectHandler
+    {
         actions: [
             ActionItem
             {
@@ -64,12 +65,43 @@ ListView
                 imageSource: "images/menu/ic_play.png"
 
                 onTriggered: {
-                    console.log("UserEvent: MultiPlayTriggered");
+                    console.log("UserEvent: MultiPlay");
                     var selectedIndices = listView.selectionList();
                     var first = selectedIndices[0][0];
                     var last = selectedIndices[selectedIndices.length-1][0];
 
                     play(first, last);
+                }
+            },
+            
+            ActionItem
+            {
+                id: multiCopy
+                enabled: multiPlayAction.enabled
+                title: qsTr("Copy") + Retranslate.onLanguageChanged
+                imageSource: "images/menu/ic_copy.png"
+                
+                onTriggered: {
+                    console.log("UserEvent: MultiCopy");
+                    persist.copyToClipboard( app.textualizeAyats(verseModel, selectionList(), ctb.text) );
+                }
+            },
+            
+            InvokeActionItem
+            {
+                id: multiShare
+                enabled: multiPlayAction.enabled
+                imageSource: "images/menu/ic_share.png"
+                title: qsTr("Share") + Retranslate.onLanguageChanged
+                
+                query {
+                    mimeType: "text/plain"
+                    invokeActionId: "bb.action.SHARE"
+                }
+                
+                onTriggered: {
+                    console.log("UserEvent: MultiShare");
+                    data = persist.convertToUtf8( app.textualizeAyats(verseModel, selectionList(), ctb.text) );
                 }
             }
         ]

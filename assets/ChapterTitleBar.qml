@@ -5,6 +5,7 @@ TitleBar
 {
     id: titleControl
     property int chapterNumber
+    property alias text: surahNameArabic.text
     signal titleTapped();
     
     onChapterNumberChanged: {

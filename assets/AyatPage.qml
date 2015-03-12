@@ -219,7 +219,7 @@ Page
             imageSource: "images/menu/ic_copy.png"
             
             onTriggered: {
-                console.log("UserEvent: CopyHadith");
+                console.log("UserEvent: CopyAyat");
                 persist.copyToClipboard(body.value+"\n\n"+translation.value);
             }
         },
@@ -236,7 +236,7 @@ Page
             }
             
             onTriggered: {
-                console.log("UserEvent: ShareHadithTriggered");
+                console.log("UserEvent: ShareAyat");
                 data = persist.convertToUtf8(body.value+"\n\n"+translation.value);
             }
         },

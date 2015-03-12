@@ -82,6 +82,7 @@ public:
     Q_INVOKABLE QString bytesToSize(qint64 size);
     Q_INVOKABLE qint64 getFreeSpace();
     Q_INVOKABLE QString toTitleCase(QString const& input);
+    Q_INVOKABLE QString textualizeAyats(bb::cascades::DataModel* adm, QVariantList const& selectedIndices, QString const& chapterTitle);
 };
 
 } // quran
