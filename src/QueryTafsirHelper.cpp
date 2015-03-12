@@ -91,11 +91,11 @@ void QueryTafsirHelper::editTafsir(QObject* caller, qint64 suiteId, QString cons
 }
 
 
-void QueryTafsirHelper::editIndividual(QObject* caller, qint64 id, QString const& prefix, QString const& name, QString const& kunya, QString const& url, QString const& bio, bool hidden)
+void QueryTafsirHelper::editIndividual(QObject* caller, qint64 id, QString const& prefix, QString const& name, QString const& kunya, QString const& url, QString const& bio, bool hidden, int birth, int death)
 {
-    LOGGER( id << prefix << name << kunya << url << bio.length() << hidden );
+    LOGGER( id << prefix << name << kunya << url << bio.length() << hidden << birth << death );
 
-    QString query = QString("UPDATE individuals SET prefix=?, name=?, kunya=?, uri=?, biography=?, hidden=%1 WHERE id=%2").arg(hidden ? 1 : 0).arg(id);
+    QString query = QString("UPDATE individuals SET prefix=?, name=?, kunya=?, uri=?, biography=?, hidden=%1, birth=%3, death=%4 WHERE id=%2").arg(hidden ? 1 : 0).arg(id).arg(birth > 0 ? QString::number(birth) : QString()).arg(death > 0 ? QString::number(death) : QString());
 
     QVariantList args;
     args << protect(prefix);

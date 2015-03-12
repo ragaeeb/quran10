@@ -1,45 +1,5 @@
-PlainTextMultiselector
-        {
-            function getSelectedTextualData()
-            {
-                var selectedIndices = selectionList()
-                var result = ""
-                var first
-                var last
-                
-                for (var i = 0; i < selectedIndices.length; i ++) {
-                    if (selectedIndices[i].length > 1) {
-                        var current = dataModel.data(selectedIndices[i])
-                        
-                        result += renderItem(current)
-                        
-                        if (i < selectedIndices.length - 1) {
-                            result += "\n"
-                        }
-                        
-                        if (! first) {
-                            first = current.verse_id
-                        }
-                        
-                        last = current.verse_id
-                    }
-                }
-                
-                if (first && last) {
-                    result += qsTr("%1:%2-%3").arg(chapterNumber).arg(first).arg(last)
-                    return result;
-                } else {
-                    return ""
-                }
-            }
-        },
-
-
-
-
-
 sqlite3 quran_tafsir_english.db;
-CREATE TABLE individuals (id INTEGER PRIMARY KEY, prefix TEXT, name TEXT, kunya TEXT, uri TEXT, hidden INTEGER, biography TEXT);
+CREATE TABLE individuals (id INTEGER PRIMARY KEY, prefix TEXT, name TEXT, kunya TEXT, uri TEXT, hidden INTEGER, biography TEXT, birth INTEGER, death INTEGER);
 CREATE TABLE suites (id INTEGER PRIMARY KEY, author INTEGER REFERENCES individuals(id) ON DELETE CASCADE, translator INTEGER REFERENCES individuals(id) ON DELETE CASCADE, explainer INTEGER REFERENCES individuals(id) ON DELETE CASCADE, title TEXT, description TEXT, reference TEXT);
 CREATE TABLE suite_pages (id INTEGER PRIMARY KEY, suite_id INTEGER REFERENCES suites(id) ON DELETE CASCADE, body TEXT);
 CREATE TABLE quotes (id INTEGER PRIMARY KEY, author INTEGER REFERENCES individuals(id) ON DELETE CASCADE, body TEXT, reference TEXT);

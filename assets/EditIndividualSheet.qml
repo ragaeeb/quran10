@@ -1,11 +1,11 @@
-import bb.cascades 1.0
+import bb.cascades 1.3
 
 Sheet
 {
     id: sheet
     property variant indexPath
     property variant data
-    signal saveClicked(variant indexPath, variant id, string prefix, string name, string kunya, string uri, string bio, bool hidden)
+    signal saveClicked(variant indexPath, variant id, string prefix, string name, string kunya, string uri, string bio, bool hidden, int birth, int death)
     
     onCreationCompleted: {
         open();
@@ -32,6 +32,14 @@ Sheet
         
         if (data.biography) {
             bio.text = data.biography;
+        }
+        
+        if (data.birth && data.birth > 0) {
+            birth.text = data.birth;
+        }
+        
+        if (data.death && data.death > 0) {
+            death.text = data.death;
         }
         
         name.requestFocus();
@@ -74,7 +82,7 @@ Sheet
                     uri.validator.validate();
                     
                     if (name.validator.valid && uri.validator.valid) {
-                        saveClicked(indexPath, data.id, prefix.text.trim(), name.text.trim(), kunya.text.trim(), uri.text.trim(), bio.text.trim(), hidden.checked);
+                        saveClicked(indexPath, data.id, prefix.text.trim(), name.text.trim(), kunya.text.trim(), uri.text.trim(), bio.text.trim(), hidden.checked, parseInt( birth.text.trim() ), parseInt( death.text.trim() ) );
                     } else {
                         persist.showToast( qsTr("One of the fields is incomplete!"), "", "asset:///images/menu/ic_bookmark_delete.png" );
                     }
@@ -137,6 +145,28 @@ Sheet
             
             TextField
             {
+                id: birth
+                hintText: qsTr("Birth (AH)...") + Retranslate.onLanguageChanged
+                horizontalAlignment: HorizontalAlignment.Fill
+                content.flags: TextContentFlag.ActiveTextOff | TextContentFlag.EmoticonsOff
+                input.flags: TextInputFlag.SpellCheckOff | TextInputFlag.AutoPeriodOff | TextInputFlag.AutoCorrectionOff
+                inputMode: TextFieldInputMode.NumbersAndPunctuation
+                maximumLength: 4
+            }
+            
+            TextField
+            {
+                id: death
+                hintText: qsTr("Death (AH)...") + Retranslate.onLanguageChanged
+                horizontalAlignment: HorizontalAlignment.Fill
+                content.flags: TextContentFlag.ActiveTextOff | TextContentFlag.EmoticonsOff
+                input.flags: TextInputFlag.SpellCheckOff | TextInputFlag.AutoPeriodOff | TextInputFlag.AutoCorrectionOff
+                inputMode: TextFieldInputMode.NumbersAndPunctuation
+                maximumLength: 4
+            }
+            
+            TextField
+            {
                 id: uri
                 hintText: qsTr("URL (ie: http://www.canadainc.org)") + Retranslate.onLanguageChanged
                 horizontalAlignment: HorizontalAlignment.Fill
@@ -159,7 +189,7 @@ Sheet
             TextArea {
                 id: bio
                 hintText: qsTr("Biography...") + Retranslate.onLanguageChanged
-                minHeight: 150
+                minHeight: ui.sdu(18.75)
                 inputMode: TextAreaInputMode.Text
                 content.flags: TextContentFlag.EmoticonsOff | TextContentFlag.ActiveTextOff
                 input.flags: TextInputFlag.AutoCapitalization | TextInputFlag.AutoCorrectionOff | TextInputFlag.SpellCheckOff | TextInputFlag.WordSubstitutionOff | TextInputFlag.AutoPeriodOff

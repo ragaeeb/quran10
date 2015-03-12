@@ -249,12 +249,22 @@ Page
             property variant indexPath
             source: "EditIndividualSheet.qml"
             
-            function onSaveClicked(indexPath, id, prefix, name, kunya, uri, bio, hidden)
+            function onSaveClicked(indexPath, id, prefix, name, kunya, uri, bio, hidden, birth, death)
             {
-                console.log("*** SDLFJSDKFLzzzz");
-                helper.editIndividual(listView, id, prefix, name, kunya, uri, bio, hidden);
+                helper.editIndividual(listView, id, prefix, name, kunya, uri, bio, hidden, birth, death);
                 editDelegate.object.close();
-                adm.replace(indexPath[0], {'id': id, 'prefix': prefix, 'name': name, 'kunya': kunya, 'uri': uri, 'bio': bio, 'hidden': hidden});
+
+                var obj = {'id': id, 'prefix': prefix, 'name': name, 'kunya': kunya, 'uri': uri, 'bio': bio, 'hidden': hidden};
+                
+                if (birth > 0) {
+                    obj["birth"] = birth;
+                }
+                
+                if (death > 0) {
+                    obj["death"] = death;
+                }
+                
+                adm.replace(indexPath[0], obj);
             }
             
             onObjectChanged: {

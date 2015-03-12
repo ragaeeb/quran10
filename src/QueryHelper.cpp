@@ -403,18 +403,18 @@ void QueryHelper::searchTafsir(QObject* caller, QString const& fieldName, QStrin
 }
 
 
-void QueryHelper::editIndividual(QObject* caller, qint64 id, QString const& prefix, QString const& name, QString const& kunya, QString const& url, QString const& bio, bool hidden) {
-    m_tafsirHelper.editIndividual(caller, id, prefix, name, kunya, url, bio, hidden);
+void QueryHelper::editIndividual(QObject* caller, qint64 id, QString const& prefix, QString const& name, QString const& kunya, QString const& url, QString const& bio, bool hidden, int birth, int death) {
+    m_tafsirHelper.editIndividual(caller, id, prefix, name, kunya, url, bio, hidden, birth, death);
 }
 
 
 void QueryHelper::fetchAllIndividuals(QObject* caller) {
-    m_sql.executeQuery(caller, "SELECT id,prefix,name,kunya,uri,hidden,biography FROM individuals ORDER BY name,kunya,prefix", QueryId::FetchAllIndividuals);
+    m_sql.executeQuery(caller, "SELECT id,prefix,name,kunya,uri,hidden,biography,birth,death FROM individuals ORDER BY name,kunya,prefix", QueryId::FetchAllIndividuals);
 }
 
 
 void QueryHelper::fetchFrequentIndividuals(QObject* caller, int n) {
-    m_sql.executeQuery(caller, QString("SELECT author AS id,prefix,name,kunya,uri,hidden,biography FROM (SELECT author,COUNT(author) AS n FROM suites GROUP BY author UNION SELECT translator AS author,COUNT(translator) AS n FROM suites GROUP BY author UNION SELECT explainer AS author,COUNT(explainer) AS n FROM suites GROUP BY author ORDER BY n DESC LIMIT %1) INNER JOIN individuals ON individuals.id=author ORDER BY name,kunya,prefix").arg(n), QueryId::FetchAllIndividuals);
+    m_sql.executeQuery(caller, QString("SELECT author AS id,prefix,name,kunya,uri,hidden,biography,birth,death FROM (SELECT author,COUNT(author) AS n FROM suites GROUP BY author UNION SELECT translator AS author,COUNT(translator) AS n FROM suites GROUP BY author UNION SELECT explainer AS author,COUNT(explainer) AS n FROM suites GROUP BY author ORDER BY n DESC LIMIT %1) INNER JOIN individuals ON individuals.id=author ORDER BY name,kunya,prefix").arg(n), QueryId::FetchAllIndividuals);
 }
 
 
@@ -431,7 +431,7 @@ void QueryHelper::fetchTransliteration(QObject* caller, int chapter, int verse)
 void QueryHelper::searchIndividuals(QObject* caller, QString const& trimmedText)
 {
     LOGGER(trimmedText);
-    m_sql.executeQuery(caller, "SELECT id,prefix,name,kunya,uri,hidden,biography FROM individuals WHERE name LIKE '%' || ? || '%' OR kunya LIKE '%' || ? || '%'  ORDER BY name,kunya,prefix", QueryId::SearchIndividuals, QVariantList() << trimmedText << trimmedText);
+    m_sql.executeQuery(caller, "SELECT id,prefix,name,kunya,uri,hidden,biography,birth,death FROM individuals WHERE name LIKE '%' || ? || '%' OR kunya LIKE '%' || ? || '%'  ORDER BY name,kunya,prefix", QueryId::SearchIndividuals, QVariantList() << trimmedText << trimmedText);
 }
 
 
