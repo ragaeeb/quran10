@@ -1,4 +1,4 @@
-import bb.cascades 1.0
+import bb.cascades 1.3
 
 AyatListItemBase
 {
@@ -39,7 +39,7 @@ AyatListItemBase
         {
             horizontalAlignment: HorizontalAlignment.Fill
             verticalAlignment: VerticalAlignment.Fill
-            topPadding: 5; bottomPadding: 5; leftPadding: 5; rightPadding: 5
+            topPadding: ui.sdu(1); bottomPadding: ui.sdu(1); leftPadding: ui.sdu(1); rightPadding: ui.sdu(1)
             
             ImageView
             {

@@ -1,19 +1,26 @@
-import bb.cascades 1.0
+import bb.cascades 1.3
 
 AyatImageListItem
 {
     id: itemRoot
     actionSetSubtitle: translationLabel.text
     
-    Label
+    Container
     {
-        id: translationLabel
-        text: ListItemData.translation
-        multiline: true
         horizontalAlignment: HorizontalAlignment.Fill
-        textStyle.color: itemRoot.ListItem.selected || ListItemData.playing ? Color.White : Color.Black
-        textStyle.textAlign: TextAlign.Center
-        textStyle.fontSize: FontSize.PointValue
-        textStyle.fontSizeValue: itemRoot.ListItem.view.translationSize
+        rightPadding: ui.sdu(1)
+        leftPadding: ui.sdu(1)
+        
+        Label
+        {
+            id: translationLabel
+            text: ListItemData.translation
+            multiline: true
+            horizontalAlignment: HorizontalAlignment.Fill
+            textStyle.color: itemRoot.ListItem.selected || ListItemData.playing ? Color.White : Color.Black
+            textStyle.textAlign: TextAlign.Center
+            textStyle.fontSize: FontSize.PointValue
+            textStyle.fontSizeValue: itemRoot.ListItem.view.translationSize
+        }
     }
 }
