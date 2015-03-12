@@ -377,7 +377,7 @@ Page
                                     multiline: true
                                     text: ListItemData.ayatText
                                     textStyle.color: rootItem.ListItem.active || rootItem.ListItem.selected ? Color.Black : undefined
-                                    textStyle.base: rootItem.ListItem.view.isArabicText ? global.textFont : null
+                                    textStyle.base: rootItem.ListItem.view.isArabicText ? global.textFont : SystemDefaults.TextStyles.BodyText
                                     textStyle.fontSize: FontSize.PointValue
                                     textStyle.fontSizeValue: rootItem.ListItem.view.fontSize
                                 }

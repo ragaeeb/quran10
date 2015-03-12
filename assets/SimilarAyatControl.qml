@@ -22,6 +22,7 @@ ResizableContainer
     {
         id: similarList
         maxHeight: screenHeight*ratio
+        property bool showTranslation: helper.showTranslation
         
         dataModel: ArrayDataModel {
             id: adm
@@ -40,7 +41,7 @@ ResizableContainer
                         id: body
                         content.flags: TextContentFlag.ActiveTextOff | TextContentFlag.EmoticonsOff
                         multiline: true
-                        textStyle.base: global.textFont
+                        textStyle.base: itemRoot.ListItem.view.showTranslation ? SystemDefaults.TextStyles.BodyText : global.textFont
                         text: ListItemData.content
                     }
                     

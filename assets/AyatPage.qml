@@ -19,10 +19,10 @@ Page
             {
                 notFound.delegateActive = false;
                 
-                body.text = data[0].content;
+                body.value = data[0].content;
                 
                 if (data[0].translation) {
-                    translation.text = data[0].translation;
+                    translation.value = data[0].translation;
                 }
                 
                 var n = data[0].total_similar;
@@ -48,13 +48,13 @@ Page
             titleControl.addOption(tafsirOption);
             if ( persist.tutorial( "tutorialTafsir", qsTr("There are explanations of this verse by the people of knowledge! Tap on the '%1 Tafsir' option at the top to view them.").arg(data.length), "asset:///images/dropdown/tafsir.png" ) ) {}
         } else if (id == QueryId.FetchSimilarAyatContent && data.length > 0 && similarOption.selected) {
-            pluginsDelegate.control.applyData(data, body);
+            pluginsDelegate.control.applyData(data, helper.showTranslation ? translation : body);
         } else if (id == QueryId.FetchSurahHeader && data.length > 0) {
             ayatOption.text = data[0].translation ? data[0].translation : data[0].name;
             babName.title = data[0].transliteration ? data[0].transliteration : data[0].name;
             babName.subtitle = "%1:%2".arg(surahId).arg(verseId);
             
-            translation.text = translation.text + "\n\n(" + babName.title + " " + babName.subtitle + ")";
+            translation.value = translation.value + "\n\n(" + babName.title + " " + babName.subtitle + ")";
         } else if (id == QueryId.SaveBookmark) {
             persist.showToast( qsTr("Favourite added for Chapter %1, Verse %2").arg(surahId).arg(verseId), "", "asset:///images/menu/ic_bookmark_add.png" );
             global.bookmarksUpdated();
@@ -142,6 +142,9 @@ Page
                         
                         pluginsDelegate.source = "SimilarAyatControl.qml";
                         pluginsDelegate.delegateActive = true;
+                    } else {
+                        body.text = body.value;
+                        translation.text = translation.value;
                     }
                 }
             },
@@ -178,7 +181,7 @@ Page
             
             onTriggered: {
                 console.log("UserEvent: MarkFavourite");
-                var name = persist.showBlockingPrompt( qsTr("Enter name"), qsTr("You can use this to quickly recognize this ayah in the favourites tab."), translation.text, qsTr("Name..."), 50, true, qsTr("Save") );
+                var name = persist.showBlockingPrompt( qsTr("Enter name"), qsTr("You can use this to quickly recognize this ayah in the favourites tab."), translation.value, qsTr("Name..."), 50, true, qsTr("Save") );
                 
                 if (name.length > 0)
                 {
@@ -202,7 +205,7 @@ Page
             
             onTriggered: {
                 console.log("UserEvent: AddShortcutTriggered");
-                var name = persist.showBlockingPrompt( qsTr("Enter name"), qsTr("You can use this to quickly recognize this ayah on your home screen."), translation.text, qsTr("Shortcut name..."), 15, true, qsTr("Save") );
+                var name = persist.showBlockingPrompt( qsTr("Enter name"), qsTr("You can use this to quickly recognize this ayah on your home screen."), translation.value, qsTr("Shortcut name..."), 15, true, qsTr("Save") );
                 
                 if (name.length > 0) {
                     app.addToHomeScreen(surahId, verseId, name);
@@ -217,7 +220,7 @@ Page
             
             onTriggered: {
                 console.log("UserEvent: CopyHadith");
-                persist.copyToClipboard(body.text+"\n\n"+translation.text);
+                persist.copyToClipboard(body.value+"\n\n"+translation.value);
             }
         },
         
@@ -234,7 +237,7 @@ Page
             
             onTriggered: {
                 console.log("UserEvent: ShareHadithTriggered");
-                data = persist.convertToUtf8(body.text+"\n\n"+translation.text);
+                data = persist.convertToUtf8(body.value+"\n\n"+translation.value);
             }
         },
         
@@ -402,6 +405,7 @@ Page
                     TextArea
                     {
                         id: body
+                        property string value
                         backgroundVisible: false
                         content.flags: TextContentFlag.ActiveTextOff | TextContentFlag.EmoticonsOff
                         editable: false
@@ -411,6 +415,10 @@ Page
                         textStyle.textAlign: TextAlign.Right
                         input.flags: TextInputFlag.AutoCapitalizationOff | TextInputFlag.AutoCorrectionOff | TextInputFlag.SpellCheckOff | TextInputFlag.WordSubstitutionOff | TextInputFlag.AutoPeriodOff
                         verticalAlignment: VerticalAlignment.Fill
+                        
+                        onValueChanged: {
+                            text = value;
+                        }
                         
                         gestureHandlers: [
                             TapHandler {
@@ -440,6 +448,7 @@ Page
                     TextArea
                     {
                         id: translation
+                        property string value
                         backgroundVisible: false
                         content.flags: TextContentFlag.ActiveTextOff | TextContentFlag.EmoticonsOff
                         editable: false
@@ -447,6 +456,14 @@ Page
                         textStyle.fontSizeValue: helper.translationSize
                         input.flags: TextInputFlag.AutoCapitalizationOff | TextInputFlag.AutoCorrectionOff | TextInputFlag.SpellCheckOff | TextInputFlag.WordSubstitutionOff | TextInputFlag.AutoPeriodOff
                         verticalAlignment: VerticalAlignment.Fill
+                        
+                        onValueChanged: {
+                            text = value;
+                        }
+                        
+                        layoutProperties: StackLayoutProperties {
+                            spaceQuota: 1
+                        }
                     }
                     
                     gestureHandlers: [
@@ -466,6 +483,10 @@ Page
                             }
                         }
                     ]
+                }
+                
+                layoutProperties: StackLayoutProperties {
+                    spaceQuota: 1
                 }
             }
         }
