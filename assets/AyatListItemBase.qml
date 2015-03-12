@@ -1,4 +1,4 @@
-import bb.cascades 1.0
+import bb.cascades 1.3
 
 Container
 {
@@ -7,6 +7,8 @@ Container
     property bool playing: ListItemData.playing ? ListItemData.playing : false
     property alias actionSetSubtitle: actionSet.subtitle
     horizontalAlignment: HorizontalAlignment.Fill
+    topPadding: ui.sdu(1)
+    bottomPadding: ui.sdu(1)
     
     function updateState(selected)
     {

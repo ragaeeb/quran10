@@ -1,4 +1,4 @@
-import bb.cascades 1.2
+import bb.cascades 1.3
 import com.canadainc.data 1.0
 
 Page
@@ -361,35 +361,39 @@ Page
                 ]
             }
             
-            TextArea
+            Container
             {
-                id: transliteration
-                visible: text.length > 0
                 horizontalAlignment: HorizontalAlignment.Fill
-                content.flags: TextContentFlag.ActiveTextOff | TextContentFlag.EmoticonsOff
-                editable: false
-                backgroundVisible: false
-                textStyle.textAlign: TextAlign.Center
-                textStyle.fontSize: FontSize.PointValue
-                textStyle.fontSizeValue: helper.translationSize
-                opacity: 0
                 
-                onVisibleChanged: {
-                    if (visible) {
-                        transFade.play();
+                Label
+                {
+                    id: transliteration
+                    visible: text.length > 0
+                    horizontalAlignment: HorizontalAlignment.Fill
+                    content.flags: TextContentFlag.ActiveTextOff | TextContentFlag.EmoticonsOff
+                    multiline: true
+                    textStyle.textAlign: TextAlign.Center
+                    textStyle.fontSize: FontSize.PointValue
+                    textStyle.fontSizeValue: helper.translationSize
+                    opacity: 0
+                    
+                    onVisibleChanged: {
+                        if (visible) {
+                            transFade.play();
+                        }
                     }
+                    
+                    animations: [
+                        FadeTransition
+                        {
+                            id: transFade
+                            fromOpacity: 0
+                            toOpacity: 1
+                            duration: 500
+                            easingCurve: StockCurve.ExponentialIn
+                        }
+                    ]
                 }
-                
-                animations: [
-                    FadeTransition
-                    {
-                        id: transFade
-                        fromOpacity: 0
-                        toOpacity: 1
-                        duration: 500
-                        easingCurve: StockCurve.ExponentialIn
-                    }
-                ]
             }
             
             ScrollView
@@ -401,20 +405,21 @@ Page
                 {
                     horizontalAlignment: HorizontalAlignment.Fill
                     verticalAlignment: VerticalAlignment.Fill
+                    leftPadding: ui.sdu(1)
+                    rightPadding: ui.sdu(1)
                     
-                    TextArea
+                    Label
                     {
                         id: body
                         property string value
-                        backgroundVisible: false
                         content.flags: TextContentFlag.ActiveTextOff | TextContentFlag.EmoticonsOff
-                        editable: false
                         textStyle.fontSize: FontSize.PointValue
                         textStyle.fontSizeValue: helper.primarySize
                         textStyle.base: global.textFont
                         textStyle.textAlign: TextAlign.Right
-                        input.flags: TextInputFlag.AutoCapitalizationOff | TextInputFlag.AutoCorrectionOff | TextInputFlag.SpellCheckOff | TextInputFlag.WordSubstitutionOff | TextInputFlag.AutoPeriodOff
+                        horizontalAlignment: HorizontalAlignment.Fill
                         verticalAlignment: VerticalAlignment.Fill
+                        multiline: true
                         
                         onValueChanged: {
                             text = value;
@@ -443,43 +448,106 @@ Page
                                 }
                             }
                         ]
+                        
+                        contextActions: [
+                            ActionSet
+                            {
+                                title: translation.value
+                                
+                                ActionItem
+                                {
+                                    title: qsTr("Copy") + Retranslate.onLanguageChanged
+                                    imageSource: "images/menu/ic_copy.png"
+                                    
+                                    onTriggered: {
+                                        console.log("UserEvent: CopyArabicOnly");
+                                        persist.copyToClipboard(body.value);
+                                    }
+                                }
+                                
+                                InvokeActionItem
+                                {
+                                    imageSource: "images/menu/ic_share.png"
+                                    title: qsTr("Share") + Retranslate.onLanguageChanged
+                                    
+                                    query {
+                                        mimeType: "text/plain"
+                                        invokeActionId: "bb.action.SHARE"
+                                    }
+                                    
+                                    onTriggered: {
+                                        console.log("UserEvent: ShareArabicOnly");
+                                        data = persist.convertToUtf8(body.value);
+                                    }
+                                }
+                            }
+                        ]
                     }
                     
-                    TextArea
+                    Divider {
+                        topMargin: 0; bottomMargin: 0
+                    }
+                    
+                    Label
                     {
                         id: translation
                         property string value
-                        backgroundVisible: false
+                        multiline: true
                         content.flags: TextContentFlag.ActiveTextOff | TextContentFlag.EmoticonsOff
-                        editable: false
                         textStyle.fontSize: FontSize.PointValue
                         textStyle.fontSizeValue: helper.translationSize
-                        input.flags: TextInputFlag.AutoCapitalizationOff | TextInputFlag.AutoCorrectionOff | TextInputFlag.SpellCheckOff | TextInputFlag.WordSubstitutionOff | TextInputFlag.AutoPeriodOff
+                        horizontalAlignment: HorizontalAlignment.Fill
                         verticalAlignment: VerticalAlignment.Fill
                         
                         onValueChanged: {
                             text = value;
                         }
                         
-                        layoutProperties: StackLayoutProperties {
-                            spaceQuota: 1
-                        }
+                        contextActions: [
+                            ActionSet
+                            {
+                                title: translation.value
+                                
+                                ActionItem
+                                {
+                                    title: qsTr("Copy") + Retranslate.onLanguageChanged
+                                    imageSource: "images/menu/ic_copy.png"
+                                    
+                                    onTriggered: {
+                                        console.log("UserEvent: CopyTranslationOnly");
+                                        persist.copyToClipboard(translation.value);
+                                    }
+                                }
+                                
+                                InvokeActionItem
+                                {
+                                    imageSource: "images/menu/ic_share.png"
+                                    title: qsTr("Share") + Retranslate.onLanguageChanged
+                                    
+                                    query {
+                                        mimeType: "text/plain"
+                                        invokeActionId: "bb.action.SHARE"
+                                    }
+                                    
+                                    onTriggered: {
+                                        console.log("UserEvent: ShareTranslationOnly");
+                                        data = persist.convertToUtf8(translation.value);
+                                    }
+                                }
+                            }
+                        ]
                     }
                     
                     gestureHandlers: [
                         FontSizePincher
                         {
-                            key: helper.showTranslation ? "translationFontSize" : "primarySize"
-                            minValue: helper.showTranslation ? 4 : 6
-                            maxValue: helper.showTranslation ? 20 : 30
-                            userEventId: helper.showTranslation ? "PinchedTranslation" : "PinchedArabic"
+                            key: "translationFontSize"
+                            minValue: 4 ? 4 : 6
+                            maxValue: 20 ? 20 : 30
+                            userEventId: "PinchedTranslation"
                             
                             onPinchUpdated: {
-                                if (helper.showTranslation) {
-                                    translation.textStyle.fontSizeValue = translation.textStyle.fontSizeValue*event.pinchRatio;
-                                } else {
-                                    body.textStyle.fontSizeValue = body.textStyle.fontSizeValue*event.pinchRatio;
-                                }
+                                translation.textStyle.fontSizeValue = translation.textStyle.fontSizeValue*event.pinchRatio;
                             }
                         }
                     ]

@@ -217,16 +217,6 @@ Page
                     }
                 ]
             }
-            
-            gestureHandlers: [
-                FontSizePincher
-                {
-                    key: listView.showImages ? "translationFontSize" : "primarySize"
-                    minValue: listView.showImages ? 8 : 6
-                    maxValue: listView.showImages ? 20 : 30
-                    userEventId: listView.showImages ? "SurahPageTranslationPinched" : "SurahPageArabicPinched"
-                }
-            ]
         }
         
         ProgressControl
