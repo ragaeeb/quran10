@@ -13,13 +13,12 @@ NavigationPane
     {
         id: searchPage
         
-        onItemTapped: {
+        onPicked: {
             def.source = "AyatPage.qml";
             var page = def.createObject();
             
-            var d = model.data(indexPath);
-            page.surahId = d.surah_id;
-            page.verseId = d.verse_id;
+            page.surahId = surahId;
+            page.verseId = verseId;
 
             navigationPane.push(page);
         }
