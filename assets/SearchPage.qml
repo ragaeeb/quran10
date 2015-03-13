@@ -12,7 +12,7 @@ Page
     property alias def: definition
     property alias model: adm
     signal performSearch()
-    signal itemTapped(variant indexPath);
+    signal picked(int surahId, int verseId);
     signal totalResultsFound(int total)
     
     actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
@@ -420,7 +420,8 @@ Page
                 
                 onTriggered: {
                     console.log("UserEvent: AyatTriggeredFromSearch");
-                    itemTapped(indexPath);
+                    var d = dataModel.data(indexPath);
+                    picked(d.surah_id, d.verse_id);
                 }
             }
             

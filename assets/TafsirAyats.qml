@@ -36,6 +36,36 @@ Page
                 prompt.inputField.resetDefaultText();
                 prompt.show();
             }
+        },
+        
+        ActionItem
+        {
+            id: searchAction
+            imageSource: "images/menu/ic_search.png"
+            title: qsTr("Search") + Retranslate.onLanguageChanged
+            ActionBar.placement: ActionBarPlacement.OnBar
+            
+            shortcuts: [
+                SystemShortcut {
+                    type: SystemShortcuts.Search
+                }
+            ]
+            
+            function onPicked(chapter, verse)
+            {
+                navigationPane.pop();
+                prompt.inputField.defaultText = chapter+":"+verse;
+                prompt.show();
+            }
+            
+            onTriggered: {
+                console.log("UserEvent: LookupChapter");
+                definition.source = "SearchPage.qml";
+                var p = definition.createObject();
+                p.picked.connect(onPicked);
+                
+                navigationPane.push(p);
+            }
         }
     ]
     
@@ -47,7 +77,7 @@ Page
         {
 			id: lookupAction
             imageSource: "images/dropdown/search_reference.png"
-            title: qsTr("Lookup") + Retranslate.onLanguageChanged
+            title: qsTr("Picker") + Retranslate.onLanguageChanged
             
             function onPicked(chapter, verse)
             {
