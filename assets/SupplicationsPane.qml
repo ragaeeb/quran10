@@ -59,16 +59,31 @@ NavigationPane
                     }
                 ]
                 
+                function onPicked(surahId, verseId)
+                {
+                    definition.source = "AyatPage.qml";
+                    var ayatPage = definition.createObject();
+                    ayatPage.surahId = surahId;
+                    ayatPage.verseId = verseId;
+
+                    navigationPane.push(ayatPage);
+                }
+                
                 onTriggered: {
                     console.log("UserEvent: SupplicationItem");
-                    var data = dataModel.data(indexPath);
                     
-                    definition.source = "SurahPage.qml";
-                    var sp = definition.createObject();
-                    navigationPane.push(sp);
-                    sp.fromSurahId = data.surah_id;
-                    sp.toSurahId = data.surah_id;
-                    sp.requestedVerse = data.verse_number_start;
+                    if (indexPath.length > 1)
+                    {
+                        var data = dataModel.data(indexPath);
+                        
+                        definition.source = "SurahPage.qml";
+                        var sp = definition.createObject();
+                        sp.picked.connect(onPicked);
+                        navigationPane.push(sp);
+                        sp.fromSurahId = data.surah_id;
+                        sp.toSurahId = data.surah_id;
+                        sp.requestedVerse = data.verse_number_start;
+                    }
                 }
                 
                 function onDataLoaded(id, data)
