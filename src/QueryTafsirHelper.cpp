@@ -95,7 +95,7 @@ void QueryTafsirHelper::editIndividual(QObject* caller, qint64 id, QString const
 {
     LOGGER( id << prefix << name << kunya << url << bio.length() << hidden << birth << death );
 
-    QString query = QString("UPDATE individuals SET prefix=?, name=?, kunya=?, uri=?, biography=?, hidden=%1, birth=%3, death=%4 WHERE id=%2").arg(hidden ? 1 : 0).arg(id).arg(birth > 0 ? QString::number(birth) : QString()).arg(death > 0 ? QString::number(death) : QString());
+    QString query = QString("UPDATE individuals SET prefix=?, name=?, kunya=?, uri=?, biography=?, hidden=%1, birth=?, death=? WHERE id=%2").arg(hidden ? 1 : 0).arg(id);
 
     QVariantList args;
     args << protect(prefix);
@@ -103,6 +103,8 @@ void QueryTafsirHelper::editIndividual(QObject* caller, qint64 id, QString const
     args << protect(kunya);
     args << protect(url);
     args << protect(bio);
+    args << ( birth > 0 ? birth : QVariant() );
+    args << ( death > 0 ? death : QVariant() );
 
     m_sql->executeQuery(caller, query, QueryId::EditIndividual, args);
 }
