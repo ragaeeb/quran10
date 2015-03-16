@@ -4,6 +4,9 @@ import com.canadainc.data 1.0
 ControlDelegate
 {
     id: quoteControl
+    property string author
+    property string body
+    property string reference
     property string benefitText
     horizontalAlignment: HorizontalAlignment.Right
     verticalAlignment: VerticalAlignment.Bottom
@@ -14,7 +17,10 @@ ControlDelegate
         if (id == QueryId.FetchRandomQuote && data.length > 0)
         {
             var quote = data[0];
-            benefitText = qsTr("<html><i>\"%1\"</i>\n\n- <b>%2%4</b>\n\n[%3]\n\n\n</html>").arg(quote.body).arg(quote.author).arg(quote.reference).arg( global.getSuffix(quote.birth, quote.death) );
+            author = quote.author;
+            body = quote.body;
+            reference = quote.reference;
+            benefitText = qsTr("<html><i>“%1”</i>\n\n- <b>%2%4</b>\n\n[%3]\n\n\n</html>").arg(body).arg(author).arg(reference).arg( global.getSuffix(quote.birth, quote.death) );
             delegateActive = true;
         }
     }
@@ -82,6 +88,28 @@ ControlDelegate
                             quoteContainer.translationY = out.toY;
                             out.stop();
                             out.ended();
+                        }
+                    }
+                }
+            ]
+            
+            contextActions: [
+                ActionSet
+                {
+                    id: actionSet
+                    title: author
+                    subtitle: reference
+                    
+                    ActionItem
+                    {
+                        id: multiCopy
+                        enabled: multiPlayAction.enabled
+                        title: qsTr("Copy") + Retranslate.onLanguageChanged
+                        imageSource: "images/menu/ic_copy.png"
+                        
+                        onTriggered: {
+                            console.log("UserEvent: MultiCopy");
+                            persist.copyToClipboard( qsTr("“%1” - %2 (%3)").arg(body).arg(author).arg(reference) );
                         }
                     }
                 }
