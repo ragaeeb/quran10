@@ -22,4 +22,15 @@ QtObject
     property variant headerBackground: ImagePaintDefinition {
         imageSource: "images/backgrounds/header_bg.png"
     }
+    
+    function getSuffix(birth, death)
+    {
+        if (death) {
+            return qsTr(" (رحمه الله)");
+        } else if (birth) {
+            return qsTr(" (حفظه الله)");
+        }
+        
+        return "";
+    }
 }

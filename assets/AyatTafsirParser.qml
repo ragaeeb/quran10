@@ -24,14 +24,14 @@ QtObject
         if ( (tafsir.author_hidden == 1 || tafsir.translator_hidden == 1 || tafsir.explainer_hidden == 1) && !reporter.isAdmin ) {
             bodyText = qsTr("[This tafsir is being intentionally suppressed. It may be released in a future update.]");
         } else {
-            var authorText = qsTr("Author: <a href=\"%2\">%1</a>").arg(tafsir.author).arg( tafsir.author_id.toString() );
+            var authorText = qsTr("Author: <a href=\"%2\">%1</a>%3").arg(tafsir.author).arg( tafsir.author_id.toString() ).arg( global.getSuffix(tafsir.author_birth, tafsir.author_death) );
             
             if (tafsir.translator.length > 0) {
-                authorText += "\nTranslator: <a href=\"%2\">%1</a>".arg(tafsir.translator).arg( tafsir.translator_id.toString() );
+                authorText += qsTr("\nTranslator: <a href=\"%2\">%1</a>%3").arg(tafsir.translator).arg( tafsir.translator_id.toString() ).arg( global.getSuffix(tafsir.translator_birth, tafsir.translator_death) );
             }
             
             if (tafsir.explainer.length > 0) {
-                authorText += "\nExplained by: <a href=\"%2\">%1</a>".arg(tafsir.explainer).arg( tafsir.explainer_id.toString() );
+                authorText += qsTr("\nExplained by: <a href=\"%2\">%1</a>%3").arg(tafsir.explainer).arg( tafsir.explainer_id.toString() ).arg( global.getSuffix(tafsir.explainer_birth, tafsir.explainer_death) );
             }
             
             if (tafsir.description.length > 0) {
