@@ -17,6 +17,7 @@ public:
         AddTafsir,
         AddTafsirPage,
         ClearAllBookmarks,
+        CopyIndividualsFromSource,
         EditIndividual,
         EditQuote,
         EditTafsir,
