@@ -25,6 +25,25 @@ Page
                     type: SystemShortcuts.Search
                 }
             ]
+        },
+        
+        ActionItem
+        {
+            id: addAction
+            imageSource: "images/menu/ic_link_ayat_to_tafsir.png"
+            title: qsTr("Add") + Retranslate.onLanguageChanged
+            ActionBar.placement: ActionBarPlacement.OnBar
+            
+            shortcuts: [
+                SystemShortcut {
+                    type: SystemShortcuts.CreateNew
+                }
+            ]
+            
+            onTriggered: {
+                console.log("UserEvent: CreateNewIndividual");
+                createDelegate.active = true;
+            }
         }
     ]
     
@@ -224,6 +243,8 @@ Page
                         busy.delegateActive = false;
                     } else if (id == QueryId.EditIndividual) {
                         persist.showToast( qsTr("Successfully edited individual"), "", "asset:///images/dropdown/ic_save_individual.png" );
+                    } else if (id == QueryId.AddIndividual) {
+                        persist.showToast( qsTr("Successfully added individual"), "", "asset:///images/dropdown/ic_save_individual.png" );
                     }
                 }
                 
@@ -274,6 +295,36 @@ Page
                     object.saveClicked.connect(onSaveClicked);
                 }
             }
-        }        
+        },
+        
+        Delegate
+        {
+            id: createDelegate
+            source: "EditIndividualSheet.qml"
+            
+            function onSaveClicked(indexPath, id, prefix, name, kunya, uri, bio, hidden, birth, death)
+            {
+                helper.createIndividual(listView, prefix, name, kunya, uri, bio, birth, death);
+                createDelegate.object.close();
+                
+                var obj = {'id': id, 'prefix': prefix, 'name': name, 'kunya': kunya, 'uri': uri, 'bio': bio, 'hidden': hidden};
+                
+                if (birth > 0) {
+                    obj["birth"] = birth;
+                }
+                
+                if (death > 0) {
+                    obj["death"] = death;
+                }
+                
+                adm.insert(0, obj);
+            }
+            
+            onObjectChanged: {
+                if (object) {
+                    object.saveClicked.connect(onSaveClicked);
+                }
+            }
+        }
     ]
 }

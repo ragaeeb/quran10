@@ -412,6 +412,11 @@ void QueryHelper::searchTafsir(QObject* caller, QString const& fieldName, QStrin
 }
 
 
+void QueryHelper::createIndividual(QObject* caller, QString const& prefix, QString const& name, QString const& kunya, QString const& url, QString const& bio, int birth, int death) {
+    m_tafsirHelper.createIndividual(caller, prefix, name, kunya, url, bio, birth, death);
+}
+
+
 void QueryHelper::editIndividual(QObject* caller, qint64 id, QString const& prefix, QString const& name, QString const& kunya, QString const& url, QString const& bio, bool hidden, int birth, int death) {
     m_tafsirHelper.editIndividual(caller, id, prefix, name, kunya, url, bio, hidden, birth, death);
 }
