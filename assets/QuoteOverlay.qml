@@ -14,7 +14,7 @@ ControlDelegate
         if (id == QueryId.FetchRandomQuote && data.length > 0)
         {
             var quote = data[0];
-            benefitText = qsTr("<html><i>\"%1\"</i>\n\n- <b>%2</b>\n\n[%3]\n\n\n</html>").arg(quote.body).arg(quote.author).arg(quote.reference);
+            benefitText = qsTr("<html><i>\"%1\"</i>\n\n- <b>%2%4</b>\n\n[%3]\n\n\n</html>").arg(quote.body).arg(quote.author).arg(quote.reference).arg( global.getSuffix(quote.birth, quote.death) );
             delegateActive = true;
         }
     }
