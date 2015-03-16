@@ -398,6 +398,13 @@ bool QueryHelper::searchQuery(QObject* caller, QString const& trimmedText, int c
 }
 
 
+void QueryHelper::searchQuote(QObject* caller, QString const& fieldName, QString const& searchTerm)
+{
+    LOGGER(fieldName << searchTerm);
+    m_tafsirHelper.searchQuote(caller, fieldName, searchTerm);
+}
+
+
 void QueryHelper::searchTafsir(QObject* caller, QString const& fieldName, QString const& searchTerm)
 {
     LOGGER(fieldName << searchTerm);
