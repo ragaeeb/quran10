@@ -58,8 +58,77 @@ NavigationPane
             }
         ]
         
-        titleBar: TitleBar {
-            title: qsTr("Quotes") + Retranslate.onLanguageChanged
+        titleBar: TitleBar
+        {
+            id: tb
+            kind: TitleBarKind.FreeForm
+            kindProperties: FreeFormTitleBarKindProperties
+            {
+                Container
+                {
+                    horizontalAlignment: HorizontalAlignment.Fill
+                    verticalAlignment: VerticalAlignment.Fill
+                    topPadding: 10; bottomPadding: 20; leftPadding: 10
+                    
+                    TextField
+                    {
+                        id: searchField
+                        hintText: qsTr("Enter text to search...") + Retranslate.onLanguageChanged
+                        horizontalAlignment: HorizontalAlignment.Fill
+                        bottomMargin: 0
+                        
+                        input {
+                            submitKey: SubmitKey.Search
+                            flags: TextInputFlag.AutoCapitalizationOff | TextInputFlag.SpellCheck | TextInputFlag.WordSubstitution | TextInputFlag.AutoPeriodOff | TextInputFlag.AutoCorrection
+                            submitKeyFocusBehavior: SubmitKeyFocusBehavior.Lose
+                            
+                            onSubmitted: {
+                                var query = searchField.text.trim();
+                                
+                                if (query.length == 0) {
+                                    adm.clear();
+                                    reload();
+                                } else {
+                                    busy.delegateActive = true;
+                                    helper.searchQuote(listView, searchColumn.selectedValue, query);
+                                }
+                            }
+                        }
+                        
+                        onCreationCompleted: {
+                            input["keyLayout"] = 7;
+                        }
+                    }
+                }
+                
+                expandableArea.onExpandedChanged: {
+                    searchField.requestFocus();
+                }
+                
+                expandableArea.content: Container
+                {
+                    DropDown
+                    {
+                        id: searchColumn
+                        title: qsTr("Field") + Retranslate.onLanguageChanged
+                        
+                        Option {
+                            description: qsTr("Search author field") + Retranslate.onLanguageChanged
+                            imageSource: "images/dropdown/search_author.png"
+                            text: qsTr("Author") + Retranslate.onLanguageChanged
+                            value: "author"
+                        }
+                        
+                        Option {
+                            description: qsTr("Search quote text") + Retranslate.onLanguageChanged
+                            imageSource: "images/dropdown/search_body.png"
+                            text: qsTr("Body") + Retranslate.onLanguageChanged
+                            value: "body"
+                            selected: true
+                        }
+                    }
+                }
+            }
         }
         
         Container
@@ -97,9 +166,14 @@ NavigationPane
                     } else if (id == QueryId.AddQuote) {
                         persist.showToast( qsTr("Quote added!"), "", "asset:///images/menu/ic_add_quote.png" );
                         reload();
+                    } else if (id == QueryId.SearchQuote) {
+                        adm.clear();
+                        adm.append(data);
                     }
                     
                     busy.delegateActive = false;
+                    listView.visible = !adm.isEmpty();
+                    noElements.delegateActive = !listView.visible;
                 }
                 
                 function onEdit(id, author, body, reference)
@@ -206,6 +280,18 @@ NavigationPane
                     console.log("UserEvent: AdminQuoteTriggered");
                     var d = dataModel.data(indexPath);
                     persist.showBlockingDialog(d.author, d.body, qsTr("OK"), "");
+                }
+            }
+            
+            EmptyDelegate
+            {
+                id: noElements
+                graphic: "images/placeholders/empty_suites.png"
+                labelText: qsTr("No quotes matched your search criteria. Please try a different search term.") + Retranslate.onLanguageChanged
+                
+                onImageTapped: {
+                    console.log("UserEvent: NoQuotesTapped");
+                    searchField.requestFocus();
                 }
             }
             

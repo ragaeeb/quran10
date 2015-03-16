@@ -60,6 +60,7 @@ public:
         SaveLegacyBookmarks,
         SearchAyats,
         SearchIndividuals,
+        SearchQuote,
         SearchTafsir,
         SettingUpBookmarks,
         SetupBookmarks,
