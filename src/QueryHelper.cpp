@@ -544,6 +544,16 @@ QVariantList QueryHelper::removeOutOfRange(QVariantList input, int fromChapter, 
 }
 
 
+void QueryHelper::copyIndividualsFromSource(QObject* caller, QString const& source)
+{
+    LOGGER(source);
+    QString src = QString("quran_tafsir_%1").arg(source);
+    m_sql.attachIfNecessary(src, true);
+    m_sql.executeQuery(caller, QString("INSERT INTO %1.individuals SELECT * FROM %2.individuals WHERE id IN (SELECT id FROM %2.individuals WHERE id NOT IN (SELECT id FROM %1.individuals))").arg( tafsirName() ).arg(src), QueryId::CopyIndividualsFromSource);
+    m_sql.detach(src);
+}
+
+
 QueryBookmarkHelper* QueryHelper::getBookmarkHelper() {
     return &m_bookmarkHelper;
 }

@@ -44,6 +44,19 @@ Page
                 console.log("UserEvent: CreateNewIndividual");
                 createDelegate.active = true;
             }
+        },
+        
+        ActionItem
+        {
+            id: copyAction
+            imageSource: "images/menu/ic_copy.png"
+            title: qsTr("Copy From English") + Retranslate.onLanguageChanged
+            enabled: helper.translation != "english"
+            
+            onTriggered: {
+                console.log("UserEvent: CopyIndividualsFromEnglish");
+                helper.copyIndividualsFromSource(listView, "english");
+            }
         }
     ]
     
@@ -245,6 +258,8 @@ Page
                         persist.showToast( qsTr("Successfully edited individual"), "", "asset:///images/dropdown/ic_save_individual.png" );
                     } else if (id == QueryId.AddIndividual) {
                         persist.showToast( qsTr("Successfully added individual"), "", "asset:///images/dropdown/ic_save_individual.png" );
+                    } else if (id == QueryId.CopyIndividualsFromSource) {
+                        persist.showToast( qsTr("Successfully ported individuals!"), "", "asset:///images/dropdown/ic_save_individual.png" );
                     }
                 }
                 
