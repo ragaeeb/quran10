@@ -226,7 +226,7 @@ void QueryHelper::fetchAllTafsirForAyat(QObject* caller, int chapterNumber, int 
     LOGGER(chapterNumber << verseNumber);
 
     ATTACH_TAFSIR;
-    m_sql.executeQuery(caller, QString("SELECT suite_page_id AS id,%3 AS author,title,body FROM explanations INNER JOIN suite_pages ON suite_pages.id=explanations.suite_page_id INNER JOIN suites ON suites.id=suite_pages.suite_id INNER JOIN individuals i ON i.id=suites.author WHERE explanations.surah_id=%1 AND from_verse_number=%2").arg(chapterNumber).arg(verseNumber).arg( NAME_FIELD("i") ), QueryId::FetchTafsirForAyat);
+    m_sql.executeQuery(caller, QString("SELECT suite_page_id AS id,%3 AS author,title,body FROM explanations INNER JOIN suite_pages ON suite_pages.id=explanations.suite_page_id INNER JOIN suites ON suites.id=suite_pages.suite_id INNER JOIN individuals i ON i.id=suites.author WHERE explanations.surah_id=%1 AND (%2 BETWEEN from_verse_number AND to_verse_number)").arg(chapterNumber).arg(verseNumber).arg( NAME_FIELD("i") ), QueryId::FetchTafsirForAyat);
 }
 
 
@@ -244,7 +244,7 @@ void QueryHelper::fetchTafsirCountForAyat(QObject* caller, int chapterNumber, in
     LOGGER(chapterNumber << verseNumber);
 
     ATTACH_TAFSIR;
-    m_sql.executeQuery(caller, QString("SELECT COUNT() AS tafsir_count FROM explanations WHERE surah_id=%1 AND from_verse_number=%2").arg(chapterNumber).arg(verseNumber), QueryId::FetchTafsirCountForAyat);
+    m_sql.executeQuery(caller, QString("SELECT COUNT() AS tafsir_count FROM explanations WHERE surah_id=%1 AND (%2 BETWEEN from_verse_number AND to_verse_number)").arg(chapterNumber).arg(verseNumber), QueryId::FetchTafsirCountForAyat);
 }
 
 
