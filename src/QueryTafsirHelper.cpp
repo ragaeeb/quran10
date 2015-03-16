@@ -143,6 +143,26 @@ qint64 QueryTafsirHelper::generateIndividualField(QObject* caller, QString const
 }
 
 
+void QueryTafsirHelper::createIndividual(QObject* caller, QString const& prefix, QString const& name, QString const& kunya, QString const& url, QString const& bio, int birth, int death)
+{
+    LOGGER( prefix << name << kunya << url << bio.length() << birth << death );
+
+    qint64 id = QDateTime::currentMSecsSinceEpoch();
+    QString query = QString("INSERT INTO individuals (id,prefix,name,kunya,uri,biography,birth,death) VALUES (%1,?,?,?,?,?,?,?)").arg(id);
+
+    QVariantList args;
+    args << protect(prefix);
+    args << name;
+    args << protect(kunya);
+    args << protect(url);
+    args << protect(bio);
+    args << ( birth > 0 ? birth : QVariant() );
+    args << ( death > 0 ? death : QVariant() );
+
+    m_sql->executeQuery(caller, query, QueryId::AddIndividual, args);
+}
+
+
 void QueryTafsirHelper::linkAyatToTafsir(QObject* caller, qint64 suitePageId, int chapter, int fromVerse, int toVerse)
 {
     LOGGER(suitePageId << chapter << fromVerse << toVerse);

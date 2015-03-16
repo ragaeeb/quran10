@@ -102,8 +102,7 @@ ControlDelegate
                     
                     ActionItem
                     {
-                        id: multiCopy
-                        enabled: multiPlayAction.enabled
+                        id: copyAction
                         title: qsTr("Copy") + Retranslate.onLanguageChanged
                         imageSource: "images/menu/ic_copy.png"
                         

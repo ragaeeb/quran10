@@ -12,34 +12,37 @@ Sheet
     }
     
     onOpened: {
-        hidden.checked = data.hidden == 1;
-        
-        if (data.prefix) {
-            prefix.text = data.prefix;
-        }
-        
-        if (data.name) {
-            name.text = data.name;
-        }
-        
-        if (data.kunya) {
-            kunya.text = data.kunya;
-        }
-        
-        if (data.uri) {
-            uri.text = data.uri;
-        }
-        
-        if (data.biography) {
-            bio.text = data.biography;
-        }
-        
-        if (data.birth && data.birth > 0) {
-            birth.text = data.birth;
-        }
-        
-        if (data.death && data.death > 0) {
-            death.text = data.death;
+        if (data)
+        {
+            hidden.checked = data.hidden == 1;
+            
+            if (data.prefix) {
+                prefix.text = data.prefix;
+            }
+            
+            if (data.name) {
+                name.text = data.name;
+            }
+            
+            if (data.kunya) {
+                kunya.text = data.kunya;
+            }
+            
+            if (data.uri) {
+                uri.text = data.uri;
+            }
+            
+            if (data.biography) {
+                bio.text = data.biography;
+            }
+            
+            if (data.birth && data.birth > 0) {
+                birth.text = data.birth;
+            }
+            
+            if (data.death && data.death > 0) {
+                death.text = data.death;
+            }
         }
         
         name.requestFocus();
@@ -82,7 +85,7 @@ Sheet
                     uri.validator.validate();
                     
                     if (name.validator.valid && uri.validator.valid) {
-                        saveClicked(indexPath, data.id, prefix.text.trim(), name.text.trim(), kunya.text.trim(), uri.text.trim(), bio.text.trim(), hidden.checked, parseInt( birth.text.trim() ), parseInt( death.text.trim() ) );
+                        saveClicked(indexPath, data ? data.id : 0, prefix.text.trim(), name.text.trim(), kunya.text.trim(), uri.text.trim(), bio.text.trim(), hidden.checked, parseInt( birth.text.trim() ), parseInt( death.text.trim() ) );
                     } else {
                         persist.showToast( qsTr("One of the fields is incomplete!"), "", "asset:///images/menu/ic_bookmark_delete.png" );
                     }
@@ -132,6 +135,15 @@ Sheet
                         valid = name.text.trim().length > 3;
                     }
                 }
+                
+                gestureHandlers: [
+                    DoubleTapHandler {
+                        onDoubleTapped: {
+                            console.log("UserEvent: IndividualNameDoubleTapped");
+                            name.text = app.toTitleCase( persist.getClipboardText() );
+                        }
+                    }
+                ]
             }
             
             TextField
@@ -193,6 +205,15 @@ Sheet
                 inputMode: TextAreaInputMode.Text
                 content.flags: TextContentFlag.EmoticonsOff | TextContentFlag.ActiveTextOff
                 input.flags: TextInputFlag.AutoCapitalization | TextInputFlag.AutoCorrectionOff | TextInputFlag.SpellCheckOff | TextInputFlag.WordSubstitutionOff | TextInputFlag.AutoPeriodOff
+                
+                gestureHandlers: [
+                    DoubleTapHandler {
+                        onDoubleTapped: {
+                            console.log("UserEvent: IndividualBioDoubleTapped");
+                            bio.text = persist.getClipboardText();
+                        }
+                    }
+                ]
             }
         }
     }
