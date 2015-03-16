@@ -249,6 +249,8 @@ Page
             onTriggered: {
                 console.log("UserEvent: PrevAyat");
                 helper.fetchAdjacentAyat(root, surahId, verseId, -1);
+                titleControl.removeOption(similarOption);
+                titleControl.removeOption(tafsirOption);
             }
             
             shortcuts: [
@@ -266,6 +268,8 @@ Page
             onTriggered: {
                 console.log("UserEvent: NextAyat");
                 helper.fetchAdjacentAyat(root, surahId, verseId, 1);
+                titleControl.removeOption(similarOption);
+                titleControl.removeOption(tafsirOption);
             }
             
             shortcuts: [
