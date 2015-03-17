@@ -40,7 +40,7 @@ Page
                             easingCurve: StockCurve.CubicIn
                             fromOpacity: 0
                             toOpacity: 1
-                            duration: 1000
+                            duration: reporter.isAdmin ? 1 : 1000
                             
                             onEnded: {
                                 if (showJuz)
@@ -91,14 +91,14 @@ Page
                                     fromX: -250
                                     toX: 0
                                     easingCurve: StockCurve.QuinticOut
-                                    duration: 750
+                                    duration: reporter.isAdmin ? 1 : 750
                                 }
                                 
                                 RotateTransition {
                                     fromAngleZ: 360
                                     toAngleZ: 0
                                     easingCurve: StockCurve.ExponentialOut
-                                    duration: 750
+                                    duration: reporter.isAdmin ? 1 : 750
                                 }
                                 
                                 ScaleTransition
@@ -107,7 +107,7 @@ Page
                                     fromY: 1.1
                                     toX: 1
                                     toY: 1
-                                    duration: 500
+                                    duration: reporter.isAdmin ? 1 : 500
                                     easingCurve: StockCurve.DoubleElasticOut
                                 }
                             }
@@ -270,7 +270,7 @@ Page
                     TranslateTransition {
                         id: translate
                         fromX: 1000
-                        duration: 500
+                        duration: reporter.isAdmin ? 1 : 500
                         
                         onEnded: {
                             if (deviceUtils.isPhysicalKeyboardDevice || focusOnSearchBar) {

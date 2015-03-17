@@ -10,6 +10,7 @@
 #define ATTACH_TAFSIR m_sql.attachIfNecessary( tafsirName(), true );
 #define TRANSLATION QString("quran_%1").arg(m_translation)
 #define NAME_FIELD(var) QString("(coalesce(%1.prefix,'') || ' ' || %1.name || ' ' || coalesce(%1.kunya,''))").arg(var)
+#define TAFSIR_NAME(language) QString("quran_tafsir_%1").arg(language)
 
 namespace quran {
 
@@ -527,7 +528,7 @@ int QueryHelper::translationSize() const
 
 
 QString QueryHelper::tafsirName() const {
-    return QString("quran_tafsir_%1").arg(m_translation);
+    return TAFSIR_NAME(m_translation);
 }
 
 
@@ -544,9 +545,19 @@ QVariantList QueryHelper::removeOutOfRange(QVariantList input, int fromChapter, 
 void QueryHelper::copyIndividualsFromSource(QObject* caller, QString const& source)
 {
     LOGGER(source);
-    QString src = QString("quran_tafsir_%1").arg(source);
+    QString src = TAFSIR_NAME(source);
     m_sql.attachIfNecessary(src, true);
     m_sql.executeQuery(caller, QString("INSERT INTO %1.individuals SELECT * FROM %2.individuals WHERE id IN (SELECT id FROM %2.individuals WHERE id NOT IN (SELECT id FROM %1.individuals))").arg( tafsirName() ).arg(src), QueryId::CopyIndividualsFromSource);
+    m_sql.detach(src);
+}
+
+
+void QueryHelper::replaceIndividualsFromSource(QObject* caller, QString const& source)
+{
+    LOGGER(source);
+    QString src = TAFSIR_NAME(source);
+    m_sql.attachIfNecessary(src, true);
+    m_sql.executeQuery(caller, QString("INSERT OR REPLACE INTO %1.individuals SELECT * FROM %2.individuals").arg( tafsirName() ).arg(src), QueryId::CopyIndividualsFromSource);
     m_sql.detach(src);
 }
 
