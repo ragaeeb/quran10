@@ -56,6 +56,7 @@ private slots:
 	void onPicked(int chapter, int verse);
 	void onResultsDecorated();
     void onTafsirDownloaded(QVariant const& cookie, QByteArray const& data);
+    void onTafsirCheckNeeded(QString const& tafsirName);
     void onTafsirMissing(QString const& tafsirName);
     void onTranslationMissing(QString const& language);
 
