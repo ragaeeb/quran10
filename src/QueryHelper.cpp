@@ -24,13 +24,6 @@ QueryHelper::QueryHelper(Persistance* persist) :
 }
 
 
-void QueryHelper::onDataLoaded(QVariant id, QVariant data)
-{
-    Q_UNUSED(data);
-    Q_UNUSED(id);
-}
-
-
 void QueryHelper::lazyInit()
 {
     settingChanged("translation");
@@ -51,14 +44,18 @@ void QueryHelper::settingChanged(QString const& key)
         m_sql.detach( tafsirName() );
 
         m_translation = m_persist->getValueFor("translation").toString();
-        bool inHome = m_translation != "english" && m_translation != "arabic";
-        QString translationDir = inHome ? QDir::homePath() : QString("%1/assets/dbase").arg( QCoreApplication::applicationDirPath() );
-        QFile translationFile( QString("%1/%2.db").arg(translationDir).arg(TRANSLATION) );
 
-        if ( !translationFile.exists() || translationFile.size() == 0 ) { // translation doesn't exist, download it
-            emit translationMissing(TRANSLATION);
-        } else {
-            m_sql.attachIfNecessary(TRANSLATION, inHome); // since english translation is loaded by default
+        if ( showTranslation() ) // if the user didn't set to Arabic only, since arabic is already attached
+        {
+            bool inHome = m_translation != "english";
+            QString translationDir = inHome ? QDir::homePath() : QString("%1/assets/dbase").arg( QCoreApplication::applicationDirPath() );
+            QFile translationFile( QString("%1/%2.db").arg(translationDir).arg(TRANSLATION) );
+
+            if ( !translationFile.exists() || translationFile.size() == 0 ) { // translation doesn't exist, download it
+                emit translationMissing(TRANSLATION);
+            } else {
+                m_sql.attachIfNecessary(TRANSLATION, inHome); // since english translation is loaded by default
+            }
         }
 
         QFile tafsirFile( QString("%1/%2.db").arg( QDir::homePath() ).arg( tafsirName() ) );
@@ -556,6 +553,11 @@ void QueryHelper::copyIndividualsFromSource(QObject* caller, QString const& sour
 
 QueryBookmarkHelper* QueryHelper::getBookmarkHelper() {
     return &m_bookmarkHelper;
+}
+
+
+QObject* QueryHelper::getExecutor() {
+    return &m_sql;
 }
 
 

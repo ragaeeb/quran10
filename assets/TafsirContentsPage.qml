@@ -122,7 +122,7 @@ Page
                                     DoubleTapHandler {
                                         onDoubleTapped: {
                                             console.log("UserEvent: TafsirBodyDoubleTapped");
-                                            bodyField.text = persist.getClipboardText();
+                                            bodyField.text = textUtils.optimize( persist.getClipboardText() );
                                         }
                                     }
                                 ]

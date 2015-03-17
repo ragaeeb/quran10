@@ -110,7 +110,7 @@ Page
                     DoubleTapHandler {
                         onDoubleTapped: {
                             console.log("UserEvent: TafsirTitleDoubleTapped");
-                            titleField.text = app.toTitleCase( persist.getClipboardText() );
+                            titleField.text = textUtils.toTitleCase( persist.getClipboardText() );
                         }
                     }
                 ]

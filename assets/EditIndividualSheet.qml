@@ -140,7 +140,7 @@ Sheet
                     DoubleTapHandler {
                         onDoubleTapped: {
                             console.log("UserEvent: IndividualNameDoubleTapped");
-                            name.text = app.toTitleCase( persist.getClipboardText() );
+                            name.text = textUtils.toTitleCase( persist.getClipboardText() );
                         }
                     }
                 ]
@@ -210,7 +210,7 @@ Sheet
                     DoubleTapHandler {
                         onDoubleTapped: {
                             console.log("UserEvent: IndividualBioDoubleTapped");
-                            bio.text = persist.getClipboardText();
+                            bio.text = textUtils.optimize( persist.getClipboardText() );
                         }
                     }
                 ]
