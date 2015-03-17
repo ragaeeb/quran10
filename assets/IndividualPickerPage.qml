@@ -55,7 +55,18 @@ Page
             
             onTriggered: {
                 console.log("UserEvent: CopyIndividualsFromEnglish");
-                helper.copyIndividualsFromSource(listView, "english");
+                
+                var result = persist.showBlockingDialogWithRemember( qsTr("Confirmation"), qsTr("Are you sure you want to port over the data from the source database?"), qsTr("Replace Existing") );
+                console.log("UserEvent: CopyIndividualsFromEnglishResult", result[0], result[1]);
+                
+                if (result[0])
+                {
+                    if (result[1]) {
+                        helper.replaceIndividualsFromSource(listView, "english");
+                    } else {
+                        helper.copyIndividualsFromSource(listView, "english");
+                    }
+                }
             }
         }
     ]
@@ -290,7 +301,7 @@ Page
                 helper.editIndividual(listView, id, prefix, name, kunya, uri, bio, hidden, birth, death);
                 editDelegate.object.close();
 
-                var obj = {'id': id, 'prefix': prefix, 'name': name, 'kunya': kunya, 'uri': uri, 'bio': bio, 'hidden': hidden};
+                var obj = {'id': id, 'prefix': prefix, 'name': name, 'kunya': kunya, 'uri': uri, 'biography': bio, 'hidden': hidden};
                 
                 if (birth > 0) {
                     obj["birth"] = birth;
@@ -322,7 +333,7 @@ Page
                 helper.createIndividual(listView, prefix, name, kunya, uri, bio, birth, death);
                 createDelegate.object.close();
                 
-                var obj = {'id': id, 'prefix': prefix, 'name': name, 'kunya': kunya, 'uri': uri, 'bio': bio, 'hidden': hidden};
+                var obj = {'id': id, 'prefix': prefix, 'name': name, 'kunya': kunya, 'uri': uri, 'biography': bio, 'hidden': hidden};
                 
                 if (birth > 0) {
                     obj["birth"] = birth;

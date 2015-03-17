@@ -90,6 +90,7 @@ public:
     Q_INVOKABLE void removeQuote(QObject* caller, qint64 id);
     Q_INVOKABLE void removeTafsir(QObject* caller, qint64 suiteId);
     Q_INVOKABLE void removeTafsirPage(QObject* caller, qint64 suitePageId);
+    Q_INVOKABLE void replaceIndividualsFromSource(QObject* caller, QString const& source);
     Q_INVOKABLE void searchIndividuals(QObject* caller, QString const& trimmedText);
     Q_INVOKABLE bool searchQuery(QObject* caller, QString const& trimmedText, int chapterNumber=0, QVariantList const& additional=QVariantList(), bool andMode=true);
     Q_INVOKABLE void searchQuote(QObject* caller, QString const& fieldName, QString const& searchTerm);
