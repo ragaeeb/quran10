@@ -41,6 +41,7 @@ private slots:
 signals:
     void fontSizeChanged();
     void tafsirMissing(QString const& tafsirName);
+    void tafsirUpdateCheckNeeded(QString const& tafsirName);
     void textualChange();
     void translationMissing(QString const& translation);
 

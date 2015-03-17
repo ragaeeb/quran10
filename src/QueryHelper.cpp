@@ -63,6 +63,8 @@ void QueryHelper::settingChanged(QString const& key)
 
         if ( !tafsirFile.exists() || tafsirFile.size() == 0 ) { // translation doesn't exist, download it
             emit tafsirMissing( tafsirName() );
+        } else if ( m_persist->isUpdateNeeded("lastUpdateCheck") ) {
+            emit tafsirUpdateCheckNeeded( tafsirName() );
         }
 
         emit textualChange();
