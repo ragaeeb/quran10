@@ -140,6 +140,7 @@ TabbedPane
             description: qsTr("Sayings of the Salaf") + Retranslate.onLanguageChanged
             imageSource: "images/tabs/ic_quotes.png"
             delegateActivationPolicy: TabDelegateActivationPolicy.ActivateWhenSelected
+            newContentAvailable: admin.pendingUpdates
             
             onTriggered: {
                 console.log("UserEvent: Quotes");
@@ -157,6 +158,7 @@ TabbedPane
             description: qsTr("Explanations") + Retranslate.onLanguageChanged
             imageSource: "images/tabs/ic_tafsir.png"
             delegateActivationPolicy: TabDelegateActivationPolicy.ActivateWhenSelected
+            newContentAvailable: admin.pendingUpdates
             
             onTriggered: {
                 console.log("UserEvent: TafsirTab");
