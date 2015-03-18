@@ -428,7 +428,21 @@ void QueryHelper::fetchAllIndividuals(QObject* caller) {
 
 
 void QueryHelper::fetchFrequentIndividuals(QObject* caller, int n) {
-    m_sql.executeQuery(caller, QString("SELECT author AS id,prefix,name,kunya,uri,hidden,biography,birth,death FROM (SELECT author,COUNT(author) AS n FROM suites GROUP BY author UNION SELECT translator AS author,COUNT(translator) AS n FROM suites GROUP BY author UNION SELECT explainer AS author,COUNT(explainer) AS n FROM suites GROUP BY author ORDER BY n DESC LIMIT %1) INNER JOIN individuals ON individuals.id=author ORDER BY name,kunya,prefix").arg(n), QueryId::FetchAllIndividuals);
+    m_sql.executeQuery(caller, QString("SELECT author AS id,prefix,name,kunya,uri,hidden,biography,birth,death FROM (SELECT author,COUNT(author) AS n FROM suites GROUP BY author UNION SELECT translator AS author,COUNT(translator) AS n FROM suites GROUP BY author UNION SELECT explainer AS author,COUNT(explainer) AS n FROM suites GROUP BY author ORDER BY n DESC LIMIT %1) INNER JOIN individuals ON individuals.id=author GROUP BY id ORDER BY name,kunya,prefix").arg(n), QueryId::FetchAllIndividuals);
+}
+
+
+void QueryHelper::replaceIndividual(QObject* caller, qint64 toReplaceId, qint64 actualId)
+{
+    LOGGER(toReplaceId << actualId);
+
+    m_sql.startTransaction(caller, QueryId::ReplacingIndividual);
+    m_sql.executeQuery(caller, QString("UPDATE quotes SET author=%1 WHERE author=%2").arg(actualId).arg(toReplaceId), QueryId::ReplacingIndividual);
+    m_sql.executeQuery(caller, QString("UPDATE suites SET author=%1 WHERE author=%2").arg(actualId).arg(toReplaceId), QueryId::ReplacingIndividual);
+    m_sql.executeQuery(caller, QString("UPDATE suites SET translator=%1 WHERE translator=%2").arg(actualId).arg(toReplaceId), QueryId::ReplacingIndividual);
+    m_sql.executeQuery(caller, QString("UPDATE suites SET explainer=%1 WHERE explainer=%2").arg(actualId).arg(toReplaceId), QueryId::ReplacingIndividual);
+    m_sql.executeQuery(caller, QString("DELETE FROM individuals WHERE id=%1").arg(toReplaceId), QueryId::ReplacingIndividual);
+    m_sql.endTransaction(caller, QueryId::ReplaceIndividual);
 }
 
 

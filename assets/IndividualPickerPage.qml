@@ -163,7 +163,8 @@ Page
             ListView
             {
                 id: listView
-                property bool showContextMenu
+                property bool showContextMenu: false
+                property variant toReplaceId
                 scrollRole: ScrollRole.Main
                 
                 dataModel: ArrayDataModel {
@@ -179,6 +180,29 @@ Page
                 function removeItem(ListItemData) {
                     busy.delegateActive = true;
                     helper.removeIndividual(listView, ListItemData.id);
+                }
+                
+                function onActualPicked(actualId)
+                {
+                    if (actualId != toReplaceId)
+                    {
+                        busy.delegateActive = true;
+                        helper.replaceIndividual(listView, toReplaceId, actualId);
+                    } else {
+                        persist.showToast( qsTr("The source and replacement individuals cannot be the same!"), "", "asset:///images/toast/invalid_entry.png" );
+                    }
+                    
+                    navigationPane.pop();
+                }
+                
+                function replace(ListItemData)
+                {
+                    toReplaceId = ListItemData.id;
+                    definition.source = "IndividualPickerPage.qml";
+                    var ipp = definition.createObject();
+                    ipp.picked.connect(onActualPicked);
+                    
+                    navigationPane.push(ipp);
                 }
                 
                 listItemComponents: [
@@ -223,7 +247,7 @@ Page
                                 {
                                     title: sli.title
                                     subtitle: sli.description
-                                    
+
                                     ActionItem
                                     {
                                         imageSource: "images/menu/ic_copy.png"
@@ -246,7 +270,7 @@ Page
                                             persist.copyToClipboard(result);
                                         }
                                     }
-                                    
+
                                     ActionItem
                                     {
                                         imageSource: "images/menu/ic_edit_individual.png"
@@ -257,7 +281,18 @@ Page
                                             sli.ListItem.view.edit(sli.ListItem.indexPath);
                                         }
                                     }
-									
+
+                                    ActionItem
+                                    {
+                                        imageSource: "images/menu/ic_edit_individual.png"
+                                        title: qsTr("Replace") + Retranslate.onLanguageChanged
+                                        
+                                        onTriggered: {
+                                            console.log("UserEvent: ReplaceIndividual");
+                                            sli.ListItem.view.replace(ListItemData);
+                                        }
+                                    }
+
                                     DeleteActionItem
                                     {
                                         imageSource: "images/menu/ic_delete_quote.png"
@@ -280,7 +315,6 @@ Page
                     {
                         adm.clear();
                         adm.append(data);
-                        busy.delegateActive = false;
                     } else if (id == QueryId.EditIndividual) {
                         persist.showToast( qsTr("Successfully edited individual"), "", "asset:///images/dropdown/ic_save_individual.png" );
                     } else if (id == QueryId.AddIndividual) {
@@ -289,8 +323,11 @@ Page
                         persist.showToast( qsTr("Successfully ported individuals!"), "", "asset:///images/dropdown/ic_save_individual.png" );
                     } else if (id == QueryId.RemoveIndividual) {
                         persist.showToast( qsTr("Successfully deleted individual!"), "", "asset:///images/menu/ic_delete_quote.png" );
-						busy.delegateActive = false;
+                    } else if (id == QueryId.ReplaceIndividual) {
+                        persist.showToast( qsTr("Successfully replaced individual!"), "", "asset:///images/menu/ic_delete_quote.png" );
                     }
+                    
+                    busy.delegateActive = false;
                 }
                 
                 onTriggered: {

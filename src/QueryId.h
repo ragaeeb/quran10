@@ -57,6 +57,8 @@ public:
         RemoveQuote,
         RemoveTafsir,
         RemoveTafsirPage,
+        ReplacingIndividual,
+        ReplaceIndividual,
         SaveBookmark,
         SaveLastProgress,
         SaveLegacyBookmarks,
