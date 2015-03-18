@@ -175,6 +175,11 @@ Page
                     editDelegate.indexPath = indexPath;
                     editDelegate.active = true;
                 }
+				
+                function removeItem(ListItemData) {
+                    busy.delegateActive = true;
+                    helper.removeIndividual(listView, ListItemData.id);
+                }
                 
                 listItemComponents: [
                     ListItemComponent
@@ -252,6 +257,17 @@ Page
                                             sli.ListItem.view.edit(sli.ListItem.indexPath);
                                         }
                                     }
+									
+                                    DeleteActionItem
+                                    {
+                                        imageSource: "images/menu/ic_delete_quote.png"
+                                        
+                                        onTriggered: {
+                                            console.log("UserEvent: DeleteIndividual");
+                                            sli.ListItem.view.removeItem(ListItemData);
+                                            sli.ListItem.view.dataModel.removeAt(sli.ListItem.indexPath[0]);
+                                        }
+                                    }
                                 }
                             ]
                         }
@@ -271,6 +287,9 @@ Page
                         persist.showToast( qsTr("Successfully added individual"), "", "asset:///images/dropdown/ic_save_individual.png" );
                     } else if (id == QueryId.CopyIndividualsFromSource) {
                         persist.showToast( qsTr("Successfully ported individuals!"), "", "asset:///images/dropdown/ic_save_individual.png" );
+                    } else if (id == QueryId.RemoveIndividual) {
+                        persist.showToast( qsTr("Successfully deleted individual!"), "", "asset:///images/menu/ic_delete_quote.png" );
+						busy.delegateActive = false;
                     }
                 }
                 

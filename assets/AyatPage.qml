@@ -28,8 +28,8 @@ Page
                 var n = data[0].total_similar;
                 
                 if (n > 0) {
-                    similarOption.text = qsTr("%n similar", "", n);
                     titleControl.addOption(similarOption);
+                    similarOption.text = qsTr("%n similar", "", n);
                     
                     if ( persist.tutorial( "tutorialSimilarAyat", qsTr("There appears to be other verses with similar wording, choose the '%1 Similar' option at the top to view them in a split screen.").arg(data.length), "asset:///images/dropdown/similar.png" ) ) {}
                 }
@@ -44,8 +44,8 @@ Page
                 console.log("AyatNotFound!");
             }
         } else if (id == QueryId.FetchTafsirCountForAyat && data.length > 0 && data[0].tafsir_count > 0) {
-            tafsirOption.tafsirCount = data[0].tafsir_count;
             titleControl.addOption(tafsirOption);
+            tafsirOption.tafsirCount = data[0].tafsir_count;
             if ( persist.tutorial( "tutorialTafsir", qsTr("There are explanations of this verse by the people of knowledge! Tap on the '%1 Tafsir' option at the top to view them.").arg(data.length), "asset:///images/dropdown/tafsir.png" ) ) {}
         } else if (id == QueryId.FetchSimilarAyatContent && data.length > 0 && similarOption.selected) {
             pluginsDelegate.control.applyData(data, helper.showTranslation ? translation : body);
@@ -82,6 +82,14 @@ Page
     {
         busy.delegateActive = true;
         helper.fetchAyat(root, surahId, verseId);
+    }
+    
+    function shift(i)
+    {
+        helper.fetchAdjacentAyat(root, surahId, verseId, i);
+        titleControl.removeOption(similarOption);
+        titleControl.removeOption(tafsirOption);
+        ayatOption.selected = true;
     }
     
     onCreationCompleted: {
@@ -245,12 +253,11 @@ Page
         {
             title: qsTr("Previous Verse") + Retranslate.onLanguageChanged
             imageSource: "images/menu/ic_prev_ayat.png"
+            enabled: !(surahId == 1 && verseId == 1)
             
             onTriggered: {
                 console.log("UserEvent: PrevAyat");
-                helper.fetchAdjacentAyat(root, surahId, verseId, -1);
-                titleControl.removeOption(similarOption);
-                titleControl.removeOption(tafsirOption);
+                shift(-1);
             }
             
             shortcuts: [
@@ -264,12 +271,11 @@ Page
         {
             title: qsTr("Next Verse") + Retranslate.onLanguageChanged
             imageSource: "images/menu/ic_next_ayat.png"
+            enabled: !(surahId == 114 && verseId == 6)
             
             onTriggered: {
                 console.log("UserEvent: NextAyat");
-                helper.fetchAdjacentAyat(root, surahId, verseId, 1);
-                titleControl.removeOption(similarOption);
-                titleControl.removeOption(tafsirOption);
+                shift(1);
             }
             
             shortcuts: [

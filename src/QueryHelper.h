@@ -88,6 +88,7 @@ public:
     Q_INVOKABLE void fetchTafsirMetadata(QObject* caller, qint64 suiteId);
     Q_INVOKABLE void fetchTransliteration(QObject* caller, int chapter, int verse);
     Q_INVOKABLE void linkAyatToTafsir(QObject* caller, qint64 suitePageId, int chapter, int fromVerse=0, int toVerse=0);
+	Q_INVOKABLE void removeIndividual(QObject* caller, qint64 id);
     Q_INVOKABLE void removeQuote(QObject* caller, qint64 id);
     Q_INVOKABLE void removeTafsir(QObject* caller, qint64 suiteId);
     Q_INVOKABLE void removeTafsirPage(QObject* caller, qint64 suitePageId);
