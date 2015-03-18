@@ -49,6 +49,7 @@ private slots:
 	void invoked(bb::system::InvokeRequest const& request);
 	void lazyInit();
     void onArchiveWritten();
+    void onArchiveDeflated(bool success, QString const& error);
     void onBookmarksRestored();
 	void onBookmarksSaved();
 	void onDataLoaded(QVariant id, QVariant data);
