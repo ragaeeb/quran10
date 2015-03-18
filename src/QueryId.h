@@ -53,6 +53,7 @@ public:
         FetchTransliteration,
         LinkAyatsToTafsir,
         RemoveBookmark,
+		RemoveIndividual,
         RemoveQuote,
         RemoveTafsir,
         RemoveTafsirPage,

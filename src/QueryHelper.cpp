@@ -514,6 +514,14 @@ void QueryHelper::removeQuote(QObject* caller, qint64 id)
 }
 
 
+void QueryHelper::removeIndividual(QObject* caller, qint64 id)
+{
+    LOGGER(id);
+    QString query = QString("DELETE FROM individuals WHERE id=%1").arg(id);
+    m_sql.executeQuery(caller, query, QueryId::RemoveIndividual);
+}
+
+
 bool QueryHelper::showTranslation() const {
     return m_translation != "arabic";
 }
