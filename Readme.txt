@@ -1,9 +1,9 @@
 sqlite3 quran_tafsir_english.db;
 CREATE TABLE individuals_temp (id INTEGER PRIMARY KEY, prefix TEXT, name TEXT, kunya TEXT, uri TEXT, hidden INTEGER, biography TEXT, birth INTEGER, death INTEGER);
-CREATE TABLE suites_temp (id INTEGER PRIMARY KEY, author INTEGER REFERENCES individuals(id) ON DELETE CASCADE, translator INTEGER REFERENCES individuals(id) ON DELETE CASCADE, explainer INTEGER REFERENCES individuals(id) ON DELETE CASCADE, title TEXT, description TEXT, reference TEXT);
+CREATE TABLE suites_temp (id INTEGER PRIMARY KEY, author INTEGER REFERENCES individuals(id) ON DELETE CASCADE ON UPDATE CASCADE, translator INTEGER REFERENCES individuals(id) ON DELETE CASCADE ON UPDATE CASCADE, explainer INTEGER REFERENCES individuals(id) ON DELETE CASCADE ON UPDATE CASCADE, title TEXT, description TEXT, reference TEXT);
 CREATE TABLE suite_pages_temp (id INTEGER PRIMARY KEY, suite_id INTEGER REFERENCES suites(id) ON DELETE CASCADE, body TEXT);
-CREATE TABLE quotes (id INTEGER PRIMARY KEY, author INTEGER REFERENCES individuals(id) ON DELETE CASCADE, body TEXT, reference TEXT);
 CREATE TABLE explanations_temp (id INTEGER PRIMARY KEY, surah_id INTEGER NOT NULL, from_verse_number INTEGER, to_verse_number INTEGER, suite_page_id INTEGER NOT NULL REFERENCES suite_pages(id) ON DELETE CASCADE, UNIQUE(surah_id, from_verse_number, to_verse_number, suite_page_id) ON CONFLICT IGNORE);
+CREATE TABLE quotes_temp (id INTEGER PRIMARY KEY, author INTEGER REFERENCES individuals(id) ON DELETE CASCADE ON UPDATE CASCADE, body TEXT, reference TEXT);
 CREATE TABLE teachers (individual INTEGER REFERENCES individuals(id) ON DELETE CASCADE, teacher INTEGER REFERENCES individuals(id) ON DELETE CASCADE);
 CREATE INDEX IF NOT EXISTS suites_index ON suites(author,translator,explainer);
 CREATE INDEX IF NOT EXISTS suite_pages_index ON suite_pages(suite_id);
