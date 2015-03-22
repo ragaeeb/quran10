@@ -5,6 +5,7 @@ CREATE TABLE suite_pages_temp (id INTEGER PRIMARY KEY, suite_id INTEGER REFERENC
 CREATE TABLE explanations_temp (id INTEGER PRIMARY KEY, surah_id INTEGER NOT NULL, from_verse_number INTEGER, to_verse_number INTEGER, suite_page_id INTEGER NOT NULL REFERENCES suite_pages(id) ON DELETE CASCADE, UNIQUE(surah_id, from_verse_number, to_verse_number, suite_page_id) ON CONFLICT IGNORE);
 CREATE TABLE quotes_temp (id INTEGER PRIMARY KEY, author INTEGER REFERENCES individuals(id) ON DELETE CASCADE ON UPDATE CASCADE, body TEXT, reference TEXT);
 CREATE TABLE teachers (individual INTEGER REFERENCES individuals(id) ON DELETE CASCADE, teacher INTEGER REFERENCES individuals(id) ON DELETE CASCADE);
+CREATE TABLE companions (id INTEGER PRIMARY KEY REFERENCES individuals(id) ON DELETE CASCADE ON UPDATE CASCADE);
 CREATE INDEX IF NOT EXISTS suites_index ON suites(author,translator,explainer);
 CREATE INDEX IF NOT EXISTS suite_pages_index ON suite_pages(suite_id);
 CREATE INDEX IF NOT EXISTS quotes_index ON quotes(author);

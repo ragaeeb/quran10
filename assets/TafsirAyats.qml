@@ -185,7 +185,7 @@ Page
                     {
                         id: rootItem
                         description: ListItemData.from_verse_number+"-"+ListItemData.to_verse_number
-                        imageSource: "images/list/ic_tafsir.png"
+                        imageSource: "images/list/ic_tafsir_ayat.png"
                         title: ListItemData.surah_id
                         status: ListItemData.id
                         
@@ -226,7 +226,7 @@ Page
         ProgressControl
         {
             id: busy
-            asset: "images/progress/loading_suite_pages.png"
+            asset: "images/progress/loading_suite_ayats.png"
         }
     }
     

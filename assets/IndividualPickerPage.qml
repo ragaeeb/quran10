@@ -49,7 +49,7 @@ Page
         ActionItem
         {
             id: copyAction
-            imageSource: "images/menu/ic_copy.png"
+            imageSource: "images/menu/ic_copy_from_english.png"
             title: qsTr("Copy From English") + Retranslate.onLanguageChanged
             enabled: helper.translation != "english"
             
@@ -189,7 +189,7 @@ Page
                         busy.delegateActive = true;
                         helper.replaceIndividual(listView, toReplaceId, actualId);
                     } else {
-                        persist.showToast( qsTr("The source and replacement individuals cannot be the same!"), "", "asset:///images/toast/invalid_entry.png" );
+                        persist.showToast( qsTr("The source and replacement individuals cannot be the same!"), "", "asset:///images/toast/ic_duplicate_replace.png" );
                     }
                     
                     navigationPane.pop();
@@ -284,7 +284,7 @@ Page
 
                                     ActionItem
                                     {
-                                        imageSource: "images/menu/ic_edit_individual.png"
+                                        imageSource: "images/menu/ic_replace_individual.png"
                                         title: qsTr("Replace") + Retranslate.onLanguageChanged
                                         
                                         onTriggered: {

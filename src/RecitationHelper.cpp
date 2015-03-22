@@ -240,7 +240,7 @@ void RecitationHelper::onPlaylistReady()
     LOGGER(result);
 
     if ( result.contains("error") ) {
-        m_persistance->showToast( result.value("error").toString(), "", "asset:///images/menu/ic_bookmark_delete.png" );
+        m_persistance->showToast( result.value("error").toString(), "", "asset:///images/toast/yellow_delete.png" );
     } else if ( result.contains("queue") ) {
         QVariantList queue = result.value("queue").toList();
         m_anchor = result.value("anchor").toString();

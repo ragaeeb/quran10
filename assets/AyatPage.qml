@@ -490,7 +490,9 @@ Page
                         ]
                     }
                     
-                    Divider {
+                    ImageView {
+                        imageSource: "images/dividers/ayat_divider.png"
+                        horizontalAlignment: HorizontalAlignment.Center
                         topMargin: 0; bottomMargin: 0
                     }
                     

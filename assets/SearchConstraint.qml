@@ -36,7 +36,7 @@ Container
         ]
         
         layoutProperties: StackLayoutProperties {
-            spaceQuota: 0.2
+            spaceQuota: 0.25
         }
     }
     

@@ -174,7 +174,7 @@ ListView
     function onDataLoaded(id, data)
     {
         if (id == QueryId.SaveLastProgress) {
-            persist.showToast( qsTr("Successfully saved bookmark!"), "", "asset:///images/menu/ic_bookmark_add.png" );
+            persist.showToast( qsTr("Successfully set bookmark!"), "", "asset:///images/menu/ic_bookmark_add.png" );
             global.lastPositionUpdated();
         }
     }

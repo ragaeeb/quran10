@@ -69,7 +69,7 @@ Page
     actions: [
         ActionItem {
             id: searchAction
-            imageSource: "images/menu/ic_search.png"
+            imageSource: "images/menu/ic_search_action.png"
             title: qsTr("Search") + Retranslate.onLanguageChanged
             ActionBar.placement: 'Signature' in ActionBarPlacement ? ActionBarPlacement["Signature"] : ActionBarPlacement.OnBar
             
