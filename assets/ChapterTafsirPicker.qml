@@ -40,7 +40,7 @@ Page
             horizontalAlignment: HorizontalAlignment.Fill
             verticalAlignment: VerticalAlignment.Fill
             background: Color.Black
-            opacity: 0.7
+            opacity: 0.4
         }
         
         EmptyDelegate
@@ -91,7 +91,7 @@ Page
         ImagePaintDefinition
         {
             id: tafseerBackground
-            imageSource: "images/backgrounds/tafseer_picker_bg.png"
+            imageSource: "images/backgrounds/bg_chapter_tafsir_picker.amd"
         }
     ]
 }

@@ -170,7 +170,7 @@ Delegate
                                         type: "tafsir"
                                         
                                         TransferListItem {
-                                            successImageSource: "images/list/ic_tafsir.png"
+                                            successImageSource: "images/ic_tafsir.png"
                                         }
                                     },
                                     

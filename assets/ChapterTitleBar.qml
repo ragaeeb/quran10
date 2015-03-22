@@ -5,6 +5,7 @@ TitleBar
 {
     id: titleControl
     property int chapterNumber
+    property alias bgAsset: back.imageSource
     property alias text: surahNameArabic.text
     signal titleTapped();
     
