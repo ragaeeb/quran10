@@ -121,7 +121,7 @@ NavigationPane
                         
                         Option {
                             description: qsTr("Search quote text") + Retranslate.onLanguageChanged
-                            imageSource: "images/dropdown/search_body.png"
+                            imageSource: "images/dropdown/search_quote_body.png"
                             text: qsTr("Body") + Retranslate.onLanguageChanged
                             value: "body"
                             selected: true

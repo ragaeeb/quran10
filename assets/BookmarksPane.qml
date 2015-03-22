@@ -113,7 +113,7 @@ NavigationPane
             EmptyDelegate
             {
                 id: noElements
-                graphic: "images/placeholders/ic_empty_bookmarks.png"
+                graphic: "images/placeholders/empty_bookmarks.png"
                 labelText: qsTr("You have no favourites. To mark a favourite, go to a hadith, and choose 'Mark Favourite' from the bottom action bar.") + Retranslate.onLanguageChanged
             }
 

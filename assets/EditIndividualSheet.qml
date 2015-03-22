@@ -87,7 +87,7 @@ Sheet
                     if (name.validator.valid && uri.validator.valid) {
                         saveClicked(indexPath, data ? data.id : 0, prefix.text.trim(), name.text.trim(), kunya.text.trim(), uri.text.trim(), bio.text.trim(), hidden.checked, parseInt( birth.text.trim() ), parseInt( death.text.trim() ) );
                     } else {
-                        persist.showToast( qsTr("One of the fields is incomplete!"), "", "asset:///images/menu/ic_bookmark_delete.png" );
+                        persist.showToast( qsTr("One of the fields is incomplete!"), "", "asset:///images/toast/incomplete_field.png" );
                     }
                 }
             }
