@@ -51,6 +51,7 @@ public:
     Q_INVOKABLE void doDiff(QVariantList const& input, bb::cascades::ArrayDataModel* adm, QString const& key="id");
     Q_INVOKABLE void analyzeKingFahadFrench(QString text);
     bool pendingUpdates();
+    Q_INVOKABLE QVariantList captureAyats(QString const& body);
 
     Q_SLOT void lazyInit();
 };
