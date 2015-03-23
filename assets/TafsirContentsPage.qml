@@ -52,6 +52,7 @@ Page
                         id: sheet
                         property variant suitePageId
                         property string currentText
+                        property string headingText
                         property variant indexPath
                         
                         onOpened: {
@@ -86,14 +87,17 @@ Page
                                     
                                     onTriggered: {
                                         console.log("UserEvent: NewTafsirPageSaveTriggered");
+
+                                        var newText = bodyField.text.trim();
+                                        var headingValue = heading.text.trim();
                                         
                                         if (!sheet.suitePageId) {
-                                            helper.addTafsirPage( listView, suiteId, bodyField.text.trim() );
+                                            helper.addTafsirPage(listView, suiteId, newText, headingValue);
                                         } else {
-                                            var newText = bodyField.text.trim();
-                                            helper.editTafsirPage(listView, sheet.suitePageId, newText);
+                                            helper.editTafsirPage(listView, sheet.suitePageId, newText, headingValue);
                                             var item = adm.data(sheet.indexPath);
                                             item["body"] = newText;
+                                            item["heading"] = headingValue;
                                             adm.replace(sheet.indexPath[0], item);
                                         }
 
@@ -102,30 +106,50 @@ Page
                                 }
                             }
                             
-                            TextArea
+                            Container
                             {
-                                id: bodyField
                                 horizontalAlignment: HorizontalAlignment.Fill
                                 verticalAlignment: VerticalAlignment.Fill
-                                backgroundVisible: false
-                                content.flags: TextContentFlag.ActiveText | TextContentFlag.EmoticonsOff
-                                text: sheet.currentText
-                                hintText: qsTr("Enter tafsir body here...") + Retranslate.onLanguageChanged
-                                input.flags: TextInputFlag.AutoCapitalizationOff | TextInputFlag.AutoCorrectionOff | TextInputFlag.SpellCheckOff | TextInputFlag.WordSubstitutionOff | TextInputFlag.AutoPeriodOff
-                                topPadding: 0; topMargin: 0
                                 
-                                onTextChanging: {
-                                    saveAction.enabled = text.trim().length > 10;
+                                TextField {
+                                    id: heading
+                                    horizontalAlignment: HorizontalAlignment.Fill
+                                    hintText: qsTr("Heading...") + Retranslate.onLanguageChanged
+                                    text: sheet.headingText
+                                    backgroundVisible: false
+                                    input.flags: TextInputFlag.AutoCapitalizationOff | TextInputFlag.AutoCorrectionOff | TextInputFlag.SpellCheckOff | TextInputFlag.WordSubstitutionOff | TextInputFlag.AutoPeriodOff
+                                    content.flags: TextContentFlag.ActiveTextOff | TextContentFlag.EmoticonsOff
                                 }
                                 
-                                gestureHandlers: [
-                                    DoubleTapHandler {
-                                        onDoubleTapped: {
-                                            console.log("UserEvent: TafsirBodyDoubleTapped");
-                                            bodyField.text = textUtils.optimize( persist.getClipboardText() );
-                                        }
+                                TextArea
+                                {
+                                    id: bodyField
+                                    horizontalAlignment: HorizontalAlignment.Fill
+                                    verticalAlignment: VerticalAlignment.Fill
+                                    backgroundVisible: false
+                                    content.flags: TextContentFlag.ActiveText | TextContentFlag.EmoticonsOff
+                                    text: sheet.currentText
+                                    hintText: qsTr("Enter tafsir body here...") + Retranslate.onLanguageChanged
+                                    input.flags: TextInputFlag.AutoCapitalizationOff | TextInputFlag.AutoCorrectionOff | TextInputFlag.SpellCheckOff | TextInputFlag.WordSubstitutionOff | TextInputFlag.AutoPeriodOff
+                                    topPadding: 0; topMargin: 0
+                                    
+                                    onTextChanging: {
+                                        saveAction.enabled = text.trim().length > 10;
                                     }
-                                ]
+                                    
+                                    gestureHandlers: [
+                                        DoubleTapHandler {
+                                            onDoubleTapped: {
+                                                console.log("UserEvent: TafsirBodyDoubleTapped");
+                                                bodyField.text = textUtils.optimize( persist.getClipboardText() );
+                                            }
+                                        }
+                                    ]
+                                    
+                                    layoutProperties: StackLayoutProperties {
+                                        spaceQuota: 1
+                                    }
+                                }
                             }
                         }
                     }
@@ -187,6 +211,7 @@ Page
                 var sheetControl = contentDef.createObject();
                 sheetControl.suitePageId = ListItemData.id;
                 sheetControl.currentText = ListItemData.body;
+                sheetControl.headingText = ListItemData.heading;
                 sheetControl.indexPath = indexPath;
                 sheetControl.open();
             }
@@ -211,7 +236,7 @@ Page
                         
                         Header {
                             id: header
-                            title: ListItemData.id
+                            title: ListItemData.heading && ListItemData.heading.length > 0 ? ListItemData.heading : ListItemData.id
                         }
                         
                         Label

@@ -18,7 +18,14 @@ QtObject
     
     function process()
     {
-        titleLabel.text = tafsir.title;
+        var title = tafsir.title;
+        
+        if (tafsir.heading && tafsir.heading.length > 0) {
+            title += ": "+tafsir.heading;
+        }
+        
+        titleLabel.text = title;
+        
         var bodyText = "";
         
         if ( (tafsir.author_hidden == 1 || tafsir.translator_hidden == 1 || tafsir.explainer_hidden == 1) && !reporter.isAdmin ) {
@@ -82,6 +89,7 @@ QtObject
             Label {
                 id: titleLabel
                 horizontalAlignment: HorizontalAlignment.Fill
+                multiline: true
             }
             
             attachedObjects: [

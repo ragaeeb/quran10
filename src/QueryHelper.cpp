@@ -226,7 +226,7 @@ void QueryHelper::fetchAllTafsirForAyat(QObject* caller, int chapterNumber, int 
     LOGGER(chapterNumber << verseNumber);
 
     ATTACH_TAFSIR;
-    m_sql.executeQuery(caller, QString("SELECT suite_page_id AS id,%3 AS author,title,body FROM explanations INNER JOIN suite_pages ON suite_pages.id=explanations.suite_page_id INNER JOIN suites ON suites.id=suite_pages.suite_id INNER JOIN individuals i ON i.id=suites.author WHERE explanations.surah_id=%1 AND (%2 BETWEEN from_verse_number AND to_verse_number)").arg(chapterNumber).arg(verseNumber).arg( NAME_FIELD("i") ), QueryId::FetchTafsirForAyat);
+    m_sql.executeQuery(caller, QString("SELECT suite_page_id AS id,%3 AS author,title,body,heading FROM explanations INNER JOIN suite_pages ON suite_pages.id=explanations.suite_page_id INNER JOIN suites ON suites.id=suite_pages.suite_id INNER JOIN individuals i ON i.id=suites.author WHERE explanations.surah_id=%1 AND (%2 BETWEEN from_verse_number AND to_verse_number)").arg(chapterNumber).arg(verseNumber).arg( NAME_FIELD("i") ), QueryId::FetchTafsirForAyat);
 }
 
 
@@ -235,7 +235,7 @@ void QueryHelper::fetchAllTafsirForChapter(QObject* caller, int chapterNumber)
     LOGGER(chapterNumber);
 
     ATTACH_TAFSIR;
-    m_sql.executeQuery(caller, QString("SELECT suite_page_id AS id,name AS author,title FROM explanations INNER JOIN suite_pages ON suite_pages.id=explanations.suite_page_id INNER JOIN suites ON suites.id=suite_pages.suite_id INNER JOIN individuals ON individuals.id=suites.author WHERE explanations.surah_id=%1 AND from_verse_number ISNULL").arg(chapterNumber), QueryId::FetchTafsirForSurah);
+    m_sql.executeQuery(caller, QString("SELECT suite_page_id AS id,name AS author,title,heading FROM explanations INNER JOIN suite_pages ON suite_pages.id=explanations.suite_page_id INNER JOIN suites ON suites.id=suite_pages.suite_id INNER JOIN individuals ON individuals.id=suites.author WHERE explanations.surah_id=%1 AND from_verse_number ISNULL").arg(chapterNumber), QueryId::FetchTafsirForSurah);
 }
 
 
@@ -253,7 +253,7 @@ void QueryHelper::fetchAllTafsirForSuite(QObject* caller, qint64 suiteId)
     LOGGER(suiteId);
 
     ATTACH_TAFSIR;
-    QString query = QString("SELECT id,body FROM suite_pages WHERE suite_id=%1 ORDER BY id DESC").arg(suiteId);
+    QString query = QString("SELECT id,body,heading FROM suite_pages WHERE suite_id=%1 ORDER BY id DESC").arg(suiteId);
     m_sql.executeQuery(caller, query, QueryId::FetchAllTafsirForSuite);
 }
 
@@ -313,12 +313,12 @@ void QueryHelper::editTafsir(QObject* caller, qint64 suiteId, QString const& aut
 }
 
 
-void QueryHelper::editTafsirPage(QObject* caller, qint64 suitePageId, QString const& body)
+void QueryHelper::editTafsirPage(QObject* caller, qint64 suitePageId, QString const& body, QString const& heading)
 {
-    LOGGER( suitePageId << body.length() );
+    LOGGER( suitePageId << body.length() << heading );
 
-    QString query = QString("UPDATE suite_pages SET body=? WHERE id=%1").arg(suitePageId);
-    m_sql.executeQuery(caller, query, QueryId::EditTafsirPage, QVariantList() << body);
+    QString query = QString("UPDATE suite_pages SET body=?, heading=? WHERE id=%1").arg(suitePageId);
+    m_sql.executeQuery( caller, query, QueryId::EditTafsirPage, QVariantList() << body << ( heading.isEmpty() ? QVariant() : heading ) );
 }
 
 
@@ -327,12 +327,12 @@ void QueryHelper::linkAyatToTafsir(QObject* caller, qint64 suitePageId, int chap
 }
 
 
-void QueryHelper::addTafsirPage(QObject* caller, qint64 suiteId, QString const& body)
+void QueryHelper::addTafsirPage(QObject* caller, qint64 suiteId, QString const& body, QString const& heading)
 {
     LOGGER( suiteId << body.length() );
 
-    QString query = QString("INSERT OR IGNORE INTO suite_pages (id,suite_id,body) VALUES(%1,%2,?)").arg( QDateTime::currentMSecsSinceEpoch() ).arg(suiteId);
-    m_sql.executeQuery(caller, query, QueryId::AddTafsirPage, QVariantList() << body);
+    QString query = QString("INSERT OR IGNORE INTO suite_pages (id,suite_id,body,heading) VALUES(%1,%2,?,?)").arg( QDateTime::currentMSecsSinceEpoch() ).arg(suiteId);
+    m_sql.executeQuery(caller, query, QueryId::AddTafsirPage, QVariantList() << body << ( heading.isEmpty() ? QVariant() : heading ) );
 }
 
 
@@ -340,7 +340,7 @@ void QueryHelper::fetchTafsirContent(QObject* caller, qint64 suitePageId)
 {
     LOGGER(suitePageId);
     ATTACH_TAFSIR;
-    QString query = QString("SELECT %2 AS author,x.id AS author_id,x.hidden AS author_hidden,x.birth AS author_birth,x.death AS author_death,%3 AS translator,y.id AS translator_id,y.hidden AS translator_hidden,y.birth AS translator_birth,y.death AS translator_death,%4 AS explainer,z.id AS explainer_id,z.hidden AS explainer_hidden,z.birth AS explainer_birth,z.death AS explainer_death,title,description,reference,body FROM suites INNER JOIN suite_pages ON suites.id=suite_pages.suite_id INNER JOIN individuals x ON suites.author=x.id LEFT JOIN individuals y ON suites.translator=y.id LEFT JOIN individuals z ON suites.explainer=z.id WHERE suite_pages.id=%1").arg(suitePageId).arg( NAME_FIELD("x") ).arg( NAME_FIELD("y") ).arg( NAME_FIELD("z") );
+    QString query = QString("SELECT %2 AS author,x.id AS author_id,x.hidden AS author_hidden,x.birth AS author_birth,x.death AS author_death,%3 AS translator,y.id AS translator_id,y.hidden AS translator_hidden,y.birth AS translator_birth,y.death AS translator_death,%4 AS explainer,z.id AS explainer_id,z.hidden AS explainer_hidden,z.birth AS explainer_birth,z.death AS explainer_death,title,description,reference,body,heading FROM suites INNER JOIN suite_pages ON suites.id=suite_pages.suite_id INNER JOIN individuals x ON suites.author=x.id LEFT JOIN individuals y ON suites.translator=y.id LEFT JOIN individuals z ON suites.explainer=z.id WHERE suite_pages.id=%1").arg(suitePageId).arg( NAME_FIELD("x") ).arg( NAME_FIELD("y") ).arg( NAME_FIELD("z") );
 
     m_sql.executeQuery(caller, query, QueryId::FetchTafsirContent);
 }

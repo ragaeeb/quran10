@@ -54,7 +54,7 @@ ResizableContainer
                 {
                     id: rootItem
                     title: ListItemData.author
-                    description: ListItemData.title
+                    description: ListItemData.heading && ListItemData.heading.length > 0 ? ListItemData.heading : ListItemData.title
                     imageSource: ListItemData.imageSource
                     translationY: -150
                     
