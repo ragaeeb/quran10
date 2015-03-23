@@ -69,8 +69,8 @@ Page
                     StandardListItem
                     {
                         id: rootItem
-                        title: ListItem.data.author
-                        description: ListItem.data.title
+                        title: ListItemData.author
+                        description: ListItemData.heading && ListItemData.heading.length > 0 ? ListItemData.heading : ListItemData.title
                         imageSource: "images/list/ic_chapter_tafsir.png"
                     }
                 }
