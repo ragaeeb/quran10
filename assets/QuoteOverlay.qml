@@ -20,7 +20,7 @@ ControlDelegate
             author = quote.author;
             body = quote.body;
             reference = quote.reference;
-            benefitText = qsTr("<html><i>“%1”</i>\n\n- <b>%2%4</b>\n\n[%3]\n\n\n</html>").arg(body).arg(author).arg(reference).arg( global.getSuffix(quote.birth, quote.death) );
+            benefitText = qsTr("<html><i>“%1”</i>\n\n- <b>%2%4</b>\n\n[%3]\n\n\n</html>").arg(body).arg(author).arg(reference).arg( global.getSuffix(quote.birth, quote.death, quote.companion_id, quote.female == 1) );
             delegateActive = true;
         }
     }

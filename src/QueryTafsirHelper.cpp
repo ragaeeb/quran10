@@ -91,11 +91,11 @@ void QueryTafsirHelper::editTafsir(QObject* caller, qint64 suiteId, QString cons
 }
 
 
-void QueryTafsirHelper::editIndividual(QObject* caller, qint64 id, QString const& prefix, QString const& name, QString const& kunya, QString const& url, QString const& bio, bool hidden, int birth, int death)
+void QueryTafsirHelper::editIndividual(QObject* caller, qint64 id, QString const& prefix, QString const& name, QString const& kunya, QString const& url, QString const& bio, bool hidden, int birth, int death, bool female)
 {
-    LOGGER( id << prefix << name << kunya << url << bio.length() << hidden << birth << death );
+    LOGGER( id << prefix << name << kunya << url << bio.length() << hidden << birth << death << female );
 
-    QString query = QString("UPDATE individuals SET prefix=?, name=?, kunya=?, uri=?, biography=?, hidden=%1, birth=?, death=? WHERE id=%2").arg(hidden ? 1 : 0).arg(id);
+    QString query = QString("UPDATE individuals SET prefix=?, name=?, kunya=?, uri=?, biography=?, hidden=%1, birth=?, death=?, female=%3 WHERE id=%2").arg(hidden ? 1 : 0).arg(id).arg(female ? 1 : 0);
 
     QVariantList args;
     args << protect(prefix);
@@ -120,12 +120,19 @@ void QueryTafsirHelper::editQuote(QObject* caller, qint64 quoteId, QString const
 }
 
 
-void QueryTafsirHelper::fetchAllTafsir(QObject* caller)
+void QueryTafsirHelper::fetchAllTafsir(QObject* caller, qint64 individualId)
 {
     LOGGER("fetchAllTafsir");
 
-    QString query = "SELECT suites.id AS id,individuals.name AS author,title FROM suites INNER JOIN individuals ON individuals.id=suites.author ORDER BY id DESC";
-    m_sql->executeQuery(caller, query, QueryId::FetchAllTafsir);
+    QStringList queryParams = QStringList() << "SELECT suites.id AS id,individuals.name AS author,title FROM suites INNER JOIN individuals ON individuals.id=suites.author";
+
+    if (individualId) {
+        queryParams << QString("WHERE (author=%1 OR translator=%1 OR explainer=%1)").arg(individualId);
+    }
+
+    queryParams << "ORDER BY id DESC";
+
+    m_sql->executeQuery(caller, queryParams.join(" "), QueryId::FetchAllTafsir);
 }
 
 

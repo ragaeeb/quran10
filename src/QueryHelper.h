@@ -55,7 +55,7 @@ public:
     Q_INVOKABLE void addTafsirPage(QObject* caller, qint64 suiteId, QString const& body);
     Q_INVOKABLE void createIndividual(QObject* caller, QString const& prefix, QString const& name, QString const& kunya, QString const& url, QString const& bio, int birth, int death);
     Q_INVOKABLE void copyIndividualsFromSource(QObject* caller, QString const& source);
-    Q_INVOKABLE void editIndividual(QObject* caller, qint64 id, QString const& prefix, QString const& name, QString const& kunya, QString const& url, QString const& bio, bool hidden, int birth, int death);
+    Q_INVOKABLE void editIndividual(QObject* caller, qint64 id, QString const& prefix, QString const& name, QString const& kunya, QString const& url, QString const& bio, bool hidden, int birth, int death, bool female);
     Q_INVOKABLE void editQuote(QObject* caller, qint64 quoteId, QString const& author, QString const& body, QString const& reference);
     Q_INVOKABLE void editTafsir(QObject* caller, qint64 suiteId, QString const& author, QString const& translator, QString const& explainer, QString const& title, QString const& description, QString const& reference);
     Q_INVOKABLE void editTafsirPage(QObject* caller, qint64 suitePageId, QString const& body);
@@ -67,8 +67,8 @@ public:
     Q_INVOKABLE void fetchAllIndividuals(QObject* caller);
     Q_INVOKABLE void fetchFrequentIndividuals(QObject* caller, int n=7);
     Q_INVOKABLE void fetchAllQarees(QObject* caller, int minLevel=1);
-    Q_INVOKABLE void fetchAllQuotes(QObject* caller);
-    Q_INVOKABLE void fetchAllTafsir(QObject* caller);
+    Q_INVOKABLE void fetchAllQuotes(QObject* caller, qint64 individualId=0);
+    Q_INVOKABLE void fetchAllTafsir(QObject* caller, qint64 individualId=0);
     Q_INVOKABLE void fetchAllTafsirForAyat(QObject* caller, int chapterNumber, int verseNumber);
     Q_INVOKABLE void fetchAllTafsirForChapter(QObject* caller, int chapterNumber);
     Q_INVOKABLE void fetchAllTafsirForSuite(QObject* caller, qint64 suiteId);
@@ -88,6 +88,8 @@ public:
     Q_INVOKABLE void fetchTafsirMetadata(QObject* caller, qint64 suiteId);
     Q_INVOKABLE void fetchTransliteration(QObject* caller, int chapter, int verse);
     Q_INVOKABLE void linkAyatToTafsir(QObject* caller, qint64 suitePageId, int chapter, int fromVerse=0, int toVerse=0);
+    Q_INVOKABLE void addCompanions(QObject* caller, QVariantList const& ids);
+    Q_INVOKABLE void removeCompanions(QObject* caller, QVariantList const& ids);
 	Q_INVOKABLE void removeIndividual(QObject* caller, qint64 id);
     Q_INVOKABLE void removeQuote(QObject* caller, qint64 id);
     Q_INVOKABLE void removeTafsir(QObject* caller, qint64 suiteId);
