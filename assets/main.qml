@@ -122,7 +122,7 @@ TabbedPane
             add(quotesTab);
             add(tafsirTab);
             
-            activeTab = tafsirTab;
+            //activeTab = tafsirTab;
         } else {
             reporter.adminEnabledChanged.connect(checkAdminStatus);
         }
