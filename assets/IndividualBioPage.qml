@@ -9,6 +9,8 @@ Page
     
     onIndividualIdChanged: {
         helper.fetchBio(bioPage, individualId);
+        helper.fetchAllQuotes(bioPage, individualId);
+        helper.fetchAllTafsir(bioPage, individualId);
     }
     
     function onDataLoaded(id, data)
@@ -18,7 +20,8 @@ Page
             if (data.length > 0)
             {
                 titleBar.title = data[0].name;
-                body.text = data[0].biography+"\n\n"+data[0].uri+"\n\n";
+                var uri = data[0].uri ? data[0].uri+"\n" : "";
+                body.text = data[0].biography+"\n\n"+uri;
                 
                 if ( body.text.trim().length == 0 ) {
                     body.text = "No biography found for individual...";
@@ -27,6 +30,11 @@ Page
                 titleBar.title = qsTr("Quran10");
                 body.text = "Individual was not found...";
             }
+        } else if (id == QueryId.FetchAllTafsir || id == QueryId.FetchAllQuotes) {
+            adm.append(data);
+            workHeader.count += data.length;
+        } else if (id == QueryId.FetchAllTafsirForSuite && data.length > 0) {
+            persist.invoke("com.canadainc.Quran10.tafsir.previewer", "", "", "quran://tafsir/"+data[0].id);
         }
     }
     
@@ -49,6 +57,95 @@ Page
             textStyle.fontSize: FontSize.Medium
             bottomPadding: 0; bottomMargin: 0
             verticalAlignment: VerticalAlignment.Fill
+            
+            layoutProperties: StackLayoutProperties {
+                spaceQuota: 1
+            }
+        }
+        
+        Divider {
+            topMargin: 0; bottomMargin: 0
+        }
+        
+        Header {
+            id: workHeader
+            property int count: 0
+            subtitle: count
+            visible: count > 0
+            title: qsTr("Works") + Retranslate.onLanguageChanged
+            bottomMargin: 0; topMargin: 0
+        }
+        
+        ListView
+        {
+            id: listView
+            
+            dataModel: ArrayDataModel {
+                id: adm
+            }
+            
+            function itemType(data, indexPath)
+            {
+                if (data.body) {
+                    return "quote";
+                } else {
+                    return "tafsir";
+                }
+            }
+            
+            listItemComponents: [
+                ListItemComponent
+                {
+                    type: "quote"
+                    
+                    Container
+                    {
+                        id: itemRoot
+                        leftPadding: 10; rightPadding: 10; bottomPadding: 10
+                        horizontalAlignment: HorizontalAlignment.Fill
+                        verticalAlignment: VerticalAlignment.Fill
+                        
+                        Label {
+                            multiline: true
+                            text: qsTr("“%1” - %2").arg(ListItemData.body).arg(ListItemData.author) + Retranslate.onLanguageChanged
+                            horizontalAlignment: HorizontalAlignment.Fill
+                            textStyle.textAlign: TextAlign.Center
+                        }
+                        
+                        Divider {
+                            topMargin: 0; bottomMargin: 0
+                            visible: itemRoot.ListItem.indexPath[0] != itemRoot.ListItem.view.dataModel.size()-1
+                        }
+                    }
+                },
+                
+                ListItemComponent
+                {
+                    type: "tafsir"
+                    
+                    StandardListItem
+                    {
+                        description: ListItemData.author
+                        imageSource: "images/list/ic_tafsir.png"
+                        title: ListItemData.title
+                    }
+                }
+            ]
+            
+            onTriggered: {
+                var d = dataModel.data(indexPath);
+                
+                if (d.body) {
+                    
+                } else {
+                    console.log("UserEvent: InvokeTafsir");
+                    helper.fetchAllTafsirForSuite(bioPage, d.id);
+                }
+            }
+            
+            layoutProperties: StackLayoutProperties {
+                spaceQuota: 1
+            }
         }
     }
 }

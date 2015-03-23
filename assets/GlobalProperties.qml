@@ -23,9 +23,16 @@ QtObject
         imageSource: "images/backgrounds/header_bg.png"
     }
     
-    function getSuffix(birth, death)
+    function getSuffix(birth, death, companionId, female)
     {
-        if (death) {
+        if (companionId)
+        {
+            if (female) {
+                return qsTr("رضي الله عنها");
+            } else {
+                return qsTr("رضي الله عنه");
+            }
+        } else if (death) {
             return qsTr(" (رحمه الله)");
         } else if (birth) {
             return qsTr(" (حفظه الله)");

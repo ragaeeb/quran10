@@ -12,6 +12,7 @@ class QueryId
 
 public:
     enum Type {
+        AddCompanions,
         AddIndividual,
         AddQuote,
         AddTafsir,
@@ -53,6 +54,7 @@ public:
         FetchTransliteration,
         LinkAyatsToTafsir,
         RemoveBookmark,
+        RemoveCompanions,
 		RemoveIndividual,
         RemoveQuote,
         RemoveTafsir,

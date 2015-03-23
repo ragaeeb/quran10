@@ -157,7 +157,7 @@ void QueryHelper::fetchRandomQuote(QObject* caller)
     LOGGER("fetchRandomQuote");
 
     ATTACH_TAFSIR;
-    m_sql.executeQuery(caller, QString("SELECT %1 AS author,body,reference,birth,death FROM quotes INNER JOIN individuals i ON i.id=quotes.author WHERE quotes.id=( ABS( RANDOM() % (SELECT COUNT() AS total_quotes FROM quotes) )+1 )").arg( NAME_FIELD("i") ), QueryId::FetchRandomQuote);
+    m_sql.executeQuery(caller, QString("SELECT %1 AS author,body,reference,birth,death,female,companions.id AS companion_id FROM quotes INNER JOIN individuals i ON i.id=quotes.author LEFT JOIN companions ON companions.id=quotes.author WHERE quotes.id=( ABS( RANDOM() % (SELECT COUNT() AS total_quotes FROM quotes) )+1 )").arg( NAME_FIELD("i") ), QueryId::FetchRandomQuote);
 }
 
 
@@ -214,10 +214,10 @@ void QueryHelper::fetchJuzInfo(QObject* caller, int juzId)
 }
 
 
-void QueryHelper::fetchAllTafsir(QObject* caller)
+void QueryHelper::fetchAllTafsir(QObject* caller, qint64 individualId)
 {
     ATTACH_TAFSIR;
-    m_tafsirHelper.fetchAllTafsir(caller);
+    m_tafsirHelper.fetchAllTafsir(caller, individualId);
 }
 
 
@@ -417,18 +417,39 @@ void QueryHelper::createIndividual(QObject* caller, QString const& prefix, QStri
 }
 
 
-void QueryHelper::editIndividual(QObject* caller, qint64 id, QString const& prefix, QString const& name, QString const& kunya, QString const& url, QString const& bio, bool hidden, int birth, int death) {
-    m_tafsirHelper.editIndividual(caller, id, prefix, name, kunya, url, bio, hidden, birth, death);
+void QueryHelper::editIndividual(QObject* caller, qint64 id, QString const& prefix, QString const& name, QString const& kunya, QString const& url, QString const& bio, bool hidden, int birth, int death, bool female) {
+    m_tafsirHelper.editIndividual(caller, id, prefix, name, kunya, url, bio, hidden, birth, death, female);
 }
 
 
 void QueryHelper::fetchAllIndividuals(QObject* caller) {
-    m_sql.executeQuery(caller, "SELECT id,prefix,name,kunya,uri,hidden,biography,birth,death FROM individuals ORDER BY name,kunya,prefix", QueryId::FetchAllIndividuals);
+    m_sql.executeQuery(caller, "SELECT individuals.id,prefix,name,kunya,uri,hidden,biography,birth,death,companions.id AS companion_id FROM individuals LEFT JOIN companions ON individuals.id=companions.id ORDER BY name,kunya,prefix", QueryId::FetchAllIndividuals);
 }
 
 
 void QueryHelper::fetchFrequentIndividuals(QObject* caller, int n) {
-    m_sql.executeQuery(caller, QString("SELECT author AS id,prefix,name,kunya,uri,hidden,biography,birth,death FROM (SELECT author,COUNT(author) AS n FROM suites GROUP BY author UNION SELECT translator AS author,COUNT(translator) AS n FROM suites GROUP BY author UNION SELECT explainer AS author,COUNT(explainer) AS n FROM suites GROUP BY author ORDER BY n DESC LIMIT %1) INNER JOIN individuals ON individuals.id=author GROUP BY id ORDER BY name,kunya,prefix").arg(n), QueryId::FetchAllIndividuals);
+    m_sql.executeQuery(caller, QString("SELECT author AS id,prefix,name,kunya,uri,hidden,biography,birth,death,companions.id AS companion_id FROM (SELECT author,COUNT(author) AS n FROM suites GROUP BY author UNION SELECT translator AS author,COUNT(translator) AS n FROM suites GROUP BY author UNION SELECT explainer AS author,COUNT(explainer) AS n FROM suites GROUP BY author ORDER BY n DESC LIMIT %1) INNER JOIN individuals ON individuals.id=author LEFT JOIN companions ON companions.id=individuals.id GROUP BY individuals.id ORDER BY name,kunya,prefix").arg(n), QueryId::FetchAllIndividuals);
+}
+
+
+void QueryHelper::removeCompanions(QObject* caller, QVariantList const& ids)
+{
+    LOGGER(ids);
+
+    QStringList allIds;
+    foreach (QVariant const& id, ids) {
+        allIds << QString::number( id.toLongLong() );
+    }
+
+    m_sql.executeQuery(caller, QString("DELETE FROM companions WHERE id IN (%1)").arg( allIds.join(",") ), QueryId::RemoveCompanions);
+}
+
+
+void QueryHelper::addCompanions(QObject* caller, QVariantList const& ids)
+{
+    LOGGER(ids);
+
+    m_sql.executeQuery(caller, QString("INSERT OR IGNORE INTO companions VALUES(%1)").arg( TextUtils::getPlaceHolders( ids.size() ) ), QueryId::AddCompanions, ids);
 }
 
 
@@ -459,7 +480,7 @@ void QueryHelper::fetchTransliteration(QObject* caller, int chapter, int verse)
 void QueryHelper::searchIndividuals(QObject* caller, QString const& trimmedText)
 {
     LOGGER(trimmedText);
-    m_sql.executeQuery(caller, "SELECT id,prefix,name,kunya,uri,hidden,biography,birth,death FROM individuals WHERE name LIKE '%' || ? || '%' OR kunya LIKE '%' || ? || '%'  ORDER BY name,kunya,prefix", QueryId::SearchIndividuals, QVariantList() << trimmedText << trimmedText);
+    m_sql.executeQuery(caller, "SELECT individuals.id,prefix,name,kunya,uri,hidden,biography,birth,death,companions.id AS companion_id FROM individuals LEFT JOIN companions ON individuals.id=companions.id WHERE name LIKE '%' || ? || '%' OR kunya LIKE '%' || ? || '%'  ORDER BY name,kunya,prefix", QueryId::SearchIndividuals, QVariantList() << trimmedText << trimmedText);
 }
 
 
@@ -483,12 +504,21 @@ void QueryHelper::fetchAllQarees(QObject* caller, int minLevel)
 }
 
 
-void QueryHelper::fetchAllQuotes(QObject* caller)
+void QueryHelper::fetchAllQuotes(QObject* caller, qint64 individualId)
 {
     LOGGER("fetchAllQuotes");
 
     ATTACH_TAFSIR;
-    m_sql.executeQuery(caller, QString("SELECT quotes.id AS id,individuals.name AS author,body FROM quotes INNER JOIN individuals ON individuals.id=quotes.author ORDER BY id DESC"), QueryId::FetchAllQuotes);
+
+    QStringList queryParams = QStringList() << "SELECT quotes.id AS id,individuals.name AS author,body FROM quotes INNER JOIN individuals ON individuals.id=quotes.author";
+
+    if (individualId) {
+        queryParams << QString("WHERE author=%1").arg(individualId);
+    }
+
+    queryParams << "ORDER BY id DESC";
+
+    m_sql.executeQuery(caller, queryParams.join(" "), QueryId::FetchAllQuotes);
 }
 
 

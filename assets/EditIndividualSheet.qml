@@ -5,7 +5,7 @@ Sheet
     id: sheet
     property variant indexPath
     property variant data
-    signal saveClicked(variant indexPath, variant id, string prefix, string name, string kunya, string uri, string bio, bool hidden, int birth, int death)
+    signal saveClicked(variant indexPath, variant id, string prefix, string name, string kunya, string uri, string bio, bool hidden, int birth, int death, bool female)
     
     onCreationCompleted: {
         open();
@@ -15,6 +15,7 @@ Sheet
         if (data)
         {
             hidden.checked = data.hidden == 1;
+            female.checked = data.female == 1;
             
             if (data.prefix) {
                 prefix.text = data.prefix;
@@ -85,7 +86,7 @@ Sheet
                     uri.validator.validate();
                     
                     if (name.validator.valid && uri.validator.valid) {
-                        saveClicked(indexPath, data ? data.id : 0, prefix.text.trim(), name.text.trim(), kunya.text.trim(), uri.text.trim(), bio.text.trim(), hidden.checked, parseInt( birth.text.trim() ), parseInt( death.text.trim() ) );
+                        saveClicked(indexPath, data ? data.id : 0, prefix.text.trim(), name.text.trim(), kunya.text.trim(), uri.text.trim(), bio.text.trim(), hidden.checked, parseInt( birth.text.trim() ), parseInt( death.text.trim() ), female.checked );
                     } else {
                         persist.showToast( qsTr("One of the fields is incomplete!"), "", "asset:///images/toast/incomplete_field.png" );
                     }
@@ -106,6 +107,11 @@ Sheet
                 CheckBox {
                     id: hidden
                     text: qsTr("Hidden") + Retranslate.onLanguageChanged
+                }
+                
+                CheckBox {
+                    id: female
+                    text: qsTr("Female") + Retranslate.onLanguageChanged
                 }
             }
             
