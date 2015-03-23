@@ -27,7 +27,7 @@ class AdminHelper : public QObject
     qint64 m_lastUpdate;
     QSet<int> m_interested;
 
-    void prepare(QString const& remoteFunc);
+    void prepare();
 
 private slots:
     void onAboutToQuit();
