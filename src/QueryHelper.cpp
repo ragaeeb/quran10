@@ -104,17 +104,11 @@ void QueryHelper::fetchAllChapterAyatCount(QObject* caller)
 }
 
 
-bool QueryHelper::fetchChapters(QObject* caller, QString const& text)
+void QueryHelper::fetchChapters(QObject* caller, QString const& text)
 {
     QVariantList args;
     QString query = ThreadUtils::buildChaptersQuery( args, text, showTranslation() );
-
-    if ( !query.isNull() ) {
-        m_sql.executeQuery(caller, query, QueryId::FetchChapters, args);
-        return true;
-    }
-
-    return false;
+    m_sql.executeQuery(caller, query, QueryId::FetchChapters, args);
 }
 
 

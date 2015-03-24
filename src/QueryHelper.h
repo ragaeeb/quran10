@@ -53,7 +53,7 @@ public:
 	virtual ~QueryHelper();
 
     Q_INVOKABLE void addQuote(QObject* caller, QString const& author, QString const& body, QString const& reference);
-    Q_INVOKABLE bool fetchChapters(QObject* caller, QString const& text=QString());
+    Q_INVOKABLE void fetchChapters(QObject* caller, QString const& text=QString());
     Q_INVOKABLE void addTafsir(QObject* caller, QString const& author, QString const& translator, QString const& explainer, QString const& title, QString const& description, QString const& reference);
     Q_INVOKABLE void addTafsirPage(QObject* caller, qint64 suiteId, QString const& body, QString const& heading);
     Q_INVOKABLE void createIndividual(QObject* caller, QString const& prefix, QString const& name, QString const& kunya, QString const& url, QString const& bio, int birth, int death);

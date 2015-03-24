@@ -220,30 +220,22 @@ QString ThreadUtils::buildSearchQuery(QVariantList& params, bool isArabic, int c
 
 QString ThreadUtils::buildChaptersQuery(QVariantList& args, QString const& text, bool showTranslation)
 {
-    QString query;
+    QString query = "SELECT id AS surah_id,name,verse_count,revelation_order FROM surahs";
     int n = text.length();
 
-    if (n > MIN_CHARS_FOR_SURAH_SEARCH || n == 0)
+    if (showTranslation)
     {
-        if (showTranslation)
+        query = "SELECT a.id AS surah_id,name,verse_count,revelation_order,transliteration FROM surahs a INNER JOIN chapters t ON a.id=t.id";
+
+        if (n > 0)
         {
-            query = "SELECT a.id AS surah_id,name,verse_count,revelation_order,transliteration FROM surahs a INNER JOIN chapters t ON a.id=t.id";
-
-            if (n > MIN_CHARS_FOR_SURAH_SEARCH)
-            {
-                query += " WHERE name LIKE '%' || ? || '%' OR transliteration LIKE '%' || ? || '%'";
-                args << text;
-                args << text;
-            }
-        } else {
-            query = "SELECT id AS surah_id,name,verse_count,revelation_order FROM surahs";
-
-            if (n > MIN_CHARS_FOR_SURAH_SEARCH)
-            {
-                query += " WHERE name LIKE '%' || ? || '%'";
-                args << text;
-            }
+            query += " WHERE name LIKE '%' || ? || '%' OR transliteration LIKE '%' || ? || '%'";
+            args << text;
+            args << text;
         }
+    } else if (n > 0) {
+        query += " WHERE name LIKE '%' || ? || '%'";
+        args << text;
     }
 
     return query;
