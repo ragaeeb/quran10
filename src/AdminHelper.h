@@ -26,12 +26,14 @@ class AdminHelper : public QObject
     QueryHelper* m_helper;
     qint64 m_lastUpdate;
     QSet<int> m_interested;
+    QStringList m_chapters;
 
     void prepare();
 
 private slots:
     void onAboutToQuit();
     void onCompressed();
+    void onDataLoaded(QVariant id, QVariant data);
     void onExecuted(int id);
     void onRequestComplete(QVariant const& cookie, QByteArray const& data, bool error);
     void uploadUpdates();
