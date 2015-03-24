@@ -155,35 +155,6 @@ Page
                     }
                 }
             ]
-        },
-        
-        ActionItem {
-            id: extractAyats
-            title: qsTr("Extract Ayats") + Retranslate.onLanguageChanged
-            ActionBar.placement: ActionBarPlacement.OnBar
-            
-            function onDataLoaded(id, data)
-            {
-                if (id == QueryId.FetchAllTafsirForSuite)
-                {
-                    for (var i = data.length-1; i >= 0; i--)
-                    {
-                        var e = data[i];
-                        var all = admin.captureAyats(e.body);
-                        
-                        for (var j = all.length-1; j >= 0; j--)
-                        {
-                            var current = all[j];
-                            helper.linkAyatToTafsir(extractAyats, e.id, current.chapter, current.fromVerse, current.toVerse)
-                        }
-                    }
-                }
-            }
-            
-            onTriggered: {
-                console.log("UserEvent: ExtractHeadings");
-                helper.fetchAllTafsirForSuite(extractAyats, suiteId);
-            }
         }
     ]
     

@@ -170,7 +170,7 @@ void QueryTafsirHelper::createIndividual(QObject* caller, QString const& prefix,
 }
 
 
-void QueryTafsirHelper::linkAyatToTafsir(QObject* caller, qint64 suitePageId, int chapter, int fromVerse, int toVerse)
+void QueryTafsirHelper::linkAyatToTafsir(QObject* caller, qint64 suitePageId, int chapter, int fromVerse, int toVerse, QueryId::Type linkId)
 {
     LOGGER(suitePageId << chapter << fromVerse << toVerse);
     QString query;
@@ -183,7 +183,7 @@ void QueryTafsirHelper::linkAyatToTafsir(QObject* caller, qint64 suitePageId, in
             query = QString("INSERT OR IGNORE INTO explanations (surah_id,from_verse_number,to_verse_number,suite_page_id) VALUES(%1,%2,%3,%4)").arg(chapter).arg(fromVerse).arg(toVerse).arg(suitePageId);
         }
 
-        m_sql->executeQuery(caller, query, QueryId::LinkAyatsToTafsir);
+        m_sql->executeQuery(caller, query, linkId);
     }
 }
 
