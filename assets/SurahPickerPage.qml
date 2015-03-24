@@ -227,22 +227,26 @@ Page
                 bottomMargin: 0
                 horizontalAlignment: HorizontalAlignment.Fill
                 topMargin: 0;
+                property string lastSearch
                 
                 onTextChanging: {
-                    var ok = true;
                     var textValue = text.trim();
                     
-                    if (textValue.length == 0 && sortOrder.selectedOption == juzOption) {
-                        helper.fetchAllChapters(listView);
-                    } else if ( textValue.match(/^\d{1,3}:\d{1,3}$/) || textValue.match(/^\d{1,3}$/) ) {
-                        var tokens = textValue.split(":");
-                        var surah = parseInt(tokens[0]);
-                        helper.fetchChapter(listView, surah);
-                    } else {
-                        ok = helper.fetchChapters(listView, textValue);
+                    if ( textValue != lastSearch || gdm.isEmpty() )
+                    {
+                        if (textValue.length == 0 && sortOrder.selectedOption == juzOption) {
+                            helper.fetchAllChapters(listView);
+                        } else if ( textValue.match(/^\d{1,3}:\d{1,3}$/) || textValue.match(/^\d{1,3}$/) ) {
+                            var tokens = textValue.split(":");
+                            var surah = parseInt(tokens[0]);
+                            helper.fetchChapter(listView, surah);
+                        } else {
+                            helper.fetchChapters(listView, textValue);
+                        }
+                        
+                        lastSearch = textValue;
+                        busy.delegateActive = true;
                     }
-                    
-                    busy.delegateActive = ok;
                 }
                 
                 input {
@@ -386,8 +390,18 @@ Page
                         data = helper.normalizeJuzs(data);
                     }
                     
-                    gdm.clear();
-                    gdm.insertList(data);
+                    if ( gdm.size() == 1 && data.length == 1 )
+                    {
+                        var firstIndex = gdm.first();
+                        
+                        if ( gdm.data(firstIndex).surah_id != data[0].surah_id ) { // optimization
+                            gdm.updateItem( gdm.first(), data[0] );
+                        }
+                    } else {
+                        gdm.clear();
+                        gdm.insertList(data);
+                    }
+                    
                     noElements.delegateActive = gdm.isEmpty();
                     listView.visible = !noElements.delegateActive;
                     busy.delegateActive = false;
