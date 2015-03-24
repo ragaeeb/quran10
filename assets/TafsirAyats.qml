@@ -79,18 +79,8 @@ Page
             {
                 if (id == QueryId.FetchTafsirContent)
                 {
-                    if (data.length > 0)
-                    {
-                        var e = data[0];
-                        var all = admin.captureAyats(e.body);
-
-                        if (all && all.length > 0) {
-                            helper.linkAyatsToTafsir(listView, suitePageId, all);
-                            busy.delegateActive = true;
-                        } else {
-                            persist.showToast( qsTr("No ayat signatures found..."), "", "asset:///images/menu/ic_capture_ayats.png" );
-                            busy.delegateActive = false;
-                        }
+                    if (data.length > 0) {
+                        admin.captureAyats(data[0].body);
                     } else {
                         busy.delegateActive = false;
                     }
@@ -101,6 +91,21 @@ Page
                 console.log("UserEvent: ExtractHeadings");
                 busy.delegateActive = true;
                 helper.fetchTafsirContent(extractAyats, suitePageId);
+            }
+            
+            function onCaptured(all)
+            {
+                if (all && all.length > 0) {
+                    helper.linkAyatsToTafsir(listView, suitePageId, all);
+                    busy.delegateActive = true;
+                } else {
+                    persist.showToast( qsTr("No ayat signatures found..."), "", "asset:///images/menu/ic_capture_ayats.png" );
+                    busy.delegateActive = false;
+                }
+            }
+            
+            onCreationCompleted: {
+                admin.ayatsCaptured.connect(onCaptured);
             }
         }
     ]

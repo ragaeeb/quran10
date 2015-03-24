@@ -32,6 +32,7 @@ class AdminHelper : public QObject
 
 private slots:
     void onAboutToQuit();
+    void onCaptureCompleted();
     void onCompressed();
     void onDataLoaded(QVariant id, QVariant data);
     void onExecuted(int id);
@@ -41,6 +42,7 @@ private slots:
 signals:
     void compressed();
     void compressing();
+    void ayatsCaptured(QVariantList const& result);
     void pendingUpdatesChanged();
     void uploadProgress(QVariant const& cookie, qint64 bytesSent, qint64 bytesTotal);
 
@@ -53,7 +55,7 @@ public:
     Q_INVOKABLE void doDiff(QVariantList const& input, bb::cascades::ArrayDataModel* adm, QString const& key="id");
     Q_INVOKABLE void analyzeKingFahadFrench(QString text);
     bool pendingUpdates();
-    Q_INVOKABLE QVariantList captureAyats(QString const& body);
+    Q_INVOKABLE void captureAyats(QString const& body);
     Q_SLOT void lazyInit();
 };
 
