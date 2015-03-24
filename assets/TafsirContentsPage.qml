@@ -119,6 +119,15 @@ Page
                                     backgroundVisible: false
                                     input.flags: TextInputFlag.AutoCapitalizationOff | TextInputFlag.AutoCorrectionOff | TextInputFlag.SpellCheckOff | TextInputFlag.WordSubstitutionOff | TextInputFlag.AutoPeriodOff
                                     content.flags: TextContentFlag.ActiveTextOff | TextContentFlag.EmoticonsOff
+                                    
+                                    gestureHandlers: [
+                                        DoubleTapHandler {
+                                            onDoubleTapped: {
+                                                console.log("UserEvent: TafsirHeadingDoubleTapped");
+                                                heading.text = textUtils.toTitleCase( persist.getClipboardText() );
+                                            }
+                                        }
+                                    ]
                                 }
                                 
                                 TextArea
