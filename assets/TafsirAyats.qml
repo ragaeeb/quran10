@@ -83,7 +83,7 @@ Page
                     {
                         var e = data[0];
                         var all = admin.captureAyats(e.body);
-                        
+
                         if (all && all.length > 0) {
                             helper.linkAyatsToTafsir(listView, suitePageId, all);
                             busy.delegateActive = true;
