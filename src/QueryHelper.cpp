@@ -322,6 +322,20 @@ void QueryHelper::editTafsirPage(QObject* caller, qint64 suitePageId, QString co
 }
 
 
+void QueryHelper::linkAyatsToTafsir(QObject* caller, qint64 suitePageId, QVariantList const& chapterVerseData)
+{
+    m_sql.startTransaction(caller, QueryId::LinkingAyatsToTafsir);
+
+    foreach (QVariant const& q, chapterVerseData)
+    {
+        QVariantMap qvm = q.toMap();
+        linkAyatToTafsir( caller, suitePageId, qvm.value(CHAPTER_KEY).toInt(), qvm.value(FROM_VERSE_KEY).toInt(), qvm.value(TO_VERSE_KEY).toInt() );
+    }
+
+    m_sql.endTransaction(caller, QueryId::LinkAyatsToTafsir);
+}
+
+
 void QueryHelper::linkAyatToTafsir(QObject* caller, qint64 suitePageId, int chapter, int fromVerse, int toVerse) {
     m_tafsirHelper.linkAyatToTafsir(caller, suitePageId, chapter, fromVerse, toVerse);
 }

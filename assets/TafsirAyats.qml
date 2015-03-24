@@ -14,7 +14,7 @@ Page
     }
     
     onCreationCompleted: {
-        deviceUtils.attachTopBottomKeys(narrationsPage, listView, true);
+        deviceUtils.attachTopBottomKeys(narrationsPage, listView);
     }
     
     actions: [
@@ -65,6 +65,42 @@ Page
                 p.picked.connect(onPicked);
                 
                 navigationPane.push(p);
+            }
+        },
+        
+        ActionItem
+        {
+            id: extractAyats
+            imageSource: "images/menu/ic_capture_ayats.png"
+            title: qsTr("Capture Ayats") + Retranslate.onLanguageChanged
+            ActionBar.placement: ActionBarPlacement.OnBar
+            
+            function onDataLoaded(id, data)
+            {
+                if (id == QueryId.FetchTafsirContent)
+                {
+                    if (data.length > 0)
+                    {
+                        var e = data[0];
+                        var all = admin.captureAyats(e.body);
+                        
+                        if (all && all.length > 0) {
+                            helper.linkAyatsToTafsir(listView, suitePageId, all);
+                            busy.delegateActive = true;
+                        } else {
+                            persist.showToast( qsTr("No ayat signatures found..."), "", "asset:///images/menu/ic_capture_ayats.png" );
+                            busy.delegateActive = false;
+                        }
+                    } else {
+                        busy.delegateActive = false;
+                    }
+                }
+            }
+            
+            onTriggered: {
+                console.log("UserEvent: ExtractHeadings");
+                busy.delegateActive = true;
+                helper.fetchTafsirContent(extractAyats, suitePageId);
             }
         }
     ]
@@ -128,11 +164,10 @@ Page
                     {
                         if (data.length > 0) {
                             adm.append(data);
-                        } else {
-                            addAction.triggered();
                         }
                     } else { // do diff
                         admin.doDiff(data, adm);
+                        listView.scrollToPosition(ScrollPosition.Beginning, ScrollAnimation.Smooth);
                     }
                 } else if (id == QueryId.UnlinkAyatsFromTafsir) {
                     persist.showToast( qsTr("Ayat unlinked from tafsir"), "", "asset:///images/menu/ic_unlink_tafsir_ayat.png" );

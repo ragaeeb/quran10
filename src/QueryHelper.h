@@ -11,6 +11,9 @@
 #define AYAT_NUMERIC_PATTERN "^\\d{1,3}:\\d{1,3}$"
 #define SIMILAR_DB "similar"
 #define TAFSIR_ARABIC_DB "tafsir_arabic"
+#define CHAPTER_KEY "chapter"
+#define FROM_VERSE_KEY "fromVerse"
+#define TO_VERSE_KEY "toVerse"
 
 namespace canadainc {
 	class Persistance;
@@ -87,6 +90,7 @@ public:
     Q_INVOKABLE void fetchTafsirCountForAyat(QObject* caller, int chapterNumber, int verseNumber);
     Q_INVOKABLE void fetchTafsirMetadata(QObject* caller, qint64 suiteId);
     Q_INVOKABLE void fetchTransliteration(QObject* caller, int chapter, int verse);
+    Q_INVOKABLE void linkAyatsToTafsir(QObject* caller, qint64 suitePageId, QVariantList const& chapterVerseData);
     Q_INVOKABLE void linkAyatToTafsir(QObject* caller, qint64 suitePageId, int chapter, int fromVerse=0, int toVerse=0);
     Q_INVOKABLE void addCompanions(QObject* caller, QVariantList const& ids);
     Q_INVOKABLE void removeCompanions(QObject* caller, QVariantList const& ids);
