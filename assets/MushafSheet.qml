@@ -1,5 +1,6 @@
 import QtQuick 1.0
 import bb.cascades 1.0
+import bb.system 1.0
 import com.canadainc.data 1.0
 
 Sheet
@@ -95,7 +96,8 @@ Sheet
                 ActionBar.placement: ActionBarPlacement.OnBar
                 
                 onTriggered: {
-                    persist.saveValueFor("stretchMushaf", mushaf.stretchMushaf ? 1 : 0);
+                    console.log("UserEvent: StretchTriggered");
+                    mushaf.stretchMushaf = !mushaf.stretchMushaf;
                 }
             }
         ]
@@ -162,7 +164,15 @@ Sheet
                         title: qsTr("Surah") + Retranslate.onLanguageChanged
                         
                         onSelectedValueChanged: {
-                            currentPage = selectedValue;
+                            if (selectedValue == -1) {
+                                var pageNumber = parseInt( persist.showBlockingPrompt( qsTr("Enter page number"), qsTr("Please enter the page in the mushaf you want to jump to:"), "", qsTr("Enter value between 1 and 604 inclusive"), 3, false, qsTr("Jump"), qsTr("Cancel"), SystemUiInputMode.NumericKeypad ) );
+                                
+                                if (pageNumber >= 1 && pageNumber <= 604) {
+                                    currentPage = pageNumber;
+                                }
+                            } else {
+                                currentPage = selectedValue;
+                            }
                         }
                         
                         function onDataLoaded(id, data)
@@ -171,13 +181,19 @@ Sheet
                             
                             if (id == QueryId.FetchPageNumbers && n > 0)
                             {
+                                var option = optionDefinition.createObject();
+                                option.text = qsTr("Jump to Page");
+                                option.description = qsTr("Jump to a specific page number");
+                                option.value = -1;
+                                dropDownDelegate.control.add(option);
+                                
                                 for (var i = 0; i < n; i++)
                                 {
                                     var current = data[i];
                                     
-                                    var option = optionDefinition.createObject();
+                                    option = optionDefinition.createObject();
                                     option.text = current.name;
-                                    option.description = current.translation ? current.translation : qsTr("%n verses", "", current.verse_count);
+                                    option.description = current.transliteration ? current.transliteration : qsTr("%n verses", "", current.verse_count);
                                     option.value = current.page_number;
                                     dropDownDelegate.control.add(option);
                                 }
@@ -220,7 +236,11 @@ Sheet
                 }
                 
                 onSelectedValueChanged: {
-                    persist.saveValueFor("mushafStyle", selectedValue, false);
+                    var changed = persist.saveValueFor("mushafStyle", selectedValue, false);
+                    
+                    if (changed) {
+                        currentPageChanged();
+                    }
                 }
                 
                 onCreationCompleted: {
