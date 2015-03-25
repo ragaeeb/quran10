@@ -26,7 +26,7 @@ class AdminHelper : public QObject
     QueryHelper* m_helper;
     qint64 m_lastUpdate;
     QSet<int> m_interested;
-    QStringList m_chapters;
+    QMap<QString, int> m_chapters;
 
     void prepare();
 
@@ -50,7 +50,6 @@ public:
     AdminHelper(Persistance* persist, QueryHelper* helper);
     virtual ~AdminHelper();
 
-    Q_SLOT void downloadPlugins(bool force=true, QString const& cookie="plugins");
     Q_INVOKABLE void initPage(QObject* page);
     Q_INVOKABLE void doDiff(QVariantList const& input, bb::cascades::ArrayDataModel* adm, QString const& key="id");
     Q_INVOKABLE void analyzeKingFahadFrench(QString text);
