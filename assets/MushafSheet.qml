@@ -90,26 +90,12 @@ Sheet
             ActionItem
             {
                 id: stretchAction
-                property bool stretchMushaf: false
-                imageSource: stretchMushaf ? "images/menu/ic_aspect_fill.png" : "images/menu/ic_stretch.png"
-                title: stretchMushaf ? qsTr("Aspect Fill") + Retranslate.onLanguageChanged : qsTr("Stretch") + Retranslate.onLanguageChanged
+                imageSource: mushaf.stretchMushaf ? "images/menu/ic_aspect_fill.png" : "images/menu/ic_stretch.png"
+                title: mushaf.stretchMushaf ? qsTr("Aspect Fill") + Retranslate.onLanguageChanged : qsTr("Stretch") + Retranslate.onLanguageChanged
                 ActionBar.placement: ActionBarPlacement.OnBar
                 
-                function onSettingChanged(key)
-                {
-                    if (key == "stretchMushaf") {
-                        stretchMushaf = persist.getValueFor("stretchMushaf") == 1;
-                    }
-                }
-                
-                onCreationCompleted: {
-                    persist.settingChanged.connect(onSettingChanged);
-                    onSettingChanged("stretchMushaf");
-                }
-                
                 onTriggered: {
-                    persist.saveValueFor("stretchMushaf", stretchMushaf ? 1 : 0, false);
-                    stretchMushaf = !stretchMushaf;
+                    persist.saveValueFor("stretchMushaf", mushaf.stretchMushaf ? 1 : 0);
                 }
             }
         ]
@@ -118,7 +104,7 @@ Sheet
         {
             id: hiddenTitle
             visibility: ChromeVisibility.Hidden
-            title: qsTr("Page %1").arg(currentPage)
+            title: qsTr("Page %1").arg(currentPage) + Retranslate.onLanguageChanged
             
             dismissAction: ActionItem
             {
@@ -165,6 +151,7 @@ Sheet
                 id: dropDownDelegate
                 horizontalAlignment: HorizontalAlignment.Fill
                 delegateActive: false
+                visible: false
                 
                 sourceComponent: ComponentDefinition
                 {
@@ -217,6 +204,39 @@ Sheet
                 ]
             }
             
+            SegmentedControl
+            {
+                horizontalAlignment: HorizontalAlignment.Fill
+                visible: dropDownDelegate.visible
+                
+                Option {
+                    text: qsTr("With Tijweed") + Retranslate.onLanguageChanged
+                    value: "style1"
+                }
+                
+                Option {
+                    text: qsTr("Without Tijweed") + Retranslate.onLanguageChanged
+                    value: "style2"
+                }
+                
+                onSelectedValueChanged: {
+                    persist.saveValueFor("mushafStyle", selectedValue, false);
+                }
+                
+                onCreationCompleted: {
+                    var n = count();
+                    var style = persist.getValueFor("mushafStyle");
+                    
+                    for (var i = 0; i < n; i++)
+                    {
+                        if ( style == at(i).value ) {
+                            at(i).selected = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            
             Container
             {
                 id: rootContainer
@@ -226,7 +246,7 @@ Sheet
                 
                 ControlDelegate
                 {
-                    delegateActive: stretchAction.stretchMushaf
+                    delegateActive: mushaf.stretchMushaf
                     horizontalAlignment: HorizontalAlignment.Fill
                     verticalAlignment: VerticalAlignment.Fill
                     
@@ -264,7 +284,7 @@ Sheet
                 
                 ControlDelegate
                 {
-                    delegateActive: !stretchAction.stretchMushaf
+                    delegateActive: !mushaf.stretchMushaf
                     horizontalAlignment: HorizontalAlignment.Center
                     verticalAlignment: VerticalAlignment.Center
                     
