@@ -13,6 +13,10 @@
 #define remote "http://www.everyayah.com/data"
 #define ITERATION 20
 #define CHUNK_SIZE 4
+#define RECITATION_MP3_KEY "recitation"
+#define ANCHOR_KEY "anchor"
+#define PLAYLIST_KEY "playlist"
+#define LOCAL_PATH "local"
 
 using namespace canadainc;
 
@@ -22,7 +26,7 @@ QVariantMap writeVerse(QVariant const& cookie, QByteArray const& data)
 {
     QVariantMap q = cookie.toMap();
 
-    canadainc::IOUtils::writeFile( q.value("local").toString(), data );
+    canadainc::IOUtils::writeFile( q.value(LOCAL_PATH).toString(), data );
     return q;
 }
 
@@ -59,10 +63,10 @@ QVariantMap processPlaylist(QString const& reciter, QString const& outputDirecto
         if ( !QFile(absolutePath).exists() && !alreadyQueued.contains(absolutePath) )
         {
             QVariantMap q;
-            q["uri"] = QString("%1/%2/%3").arg(remote).arg(reciter).arg(fileName);
-            q["local"] = absolutePath;
+            q[URI_KEY] = QString("%1/%2/%3").arg(remote).arg(reciter).arg(fileName);
+            q[LOCAL_PATH] = absolutePath;
             q["name"] = QObject::tr("%1:%2 recitation").arg(track.first).arg(track.second);
-            q["recitation"] = true;
+            q[RECITATION_MP3_KEY] = true;
             q["chapter"] = track.first;
             q["verse"] = track.second;
 
@@ -76,7 +80,7 @@ QVariantMap processPlaylist(QString const& reciter, QString const& outputDirecto
     if ( !queue.isEmpty() )
     {
         result["queue"] = queue;
-        result["anchor"] = queue.last().toMap().value("uri").toString();
+        result[ANCHOR_KEY] = queue.last().toMap().value(URI_KEY).toString();
     }
 
     if ( toPlay.size() > 1 )
@@ -85,12 +89,12 @@ QVariantMap processPlaylist(QString const& reciter, QString const& outputDirecto
         LOGGER(written);
 
         if (written) {
-            result["playlist"] = QUrl::fromLocalFile(PLAYLIST_TARGET);
+            result[PLAYLIST_KEY] = QUrl::fromLocalFile(PLAYLIST_TARGET);
         } else {
             result["error"] = QObject::tr("Quran10 could not write the playlist. Please try restarting your device.");
         }
     } else if ( toPlay.size() == 1 ) {
-        result["playlist"] = QUrl::fromLocalFile( toPlay.first() );
+        result[PLAYLIST_KEY] = QUrl::fromLocalFile( toPlay.first() );
     }
 
     return result;
@@ -114,7 +118,7 @@ int RecitationHelper::extractIndex(QVariantMap const& m)
         return -1;
     }
 
-    QString uri = m.value("uri").toString();
+    QString uri = m.value(URI_KEY).toString();
     uri = uri.mid( uri.lastIndexOf("/")+1 );
     uri = uri.left( uri.lastIndexOf(".") );
     int verse = uri.mid(3).toInt();
@@ -210,7 +214,7 @@ void RecitationHelper::downloadAndPlay(int chapter, int verse)
 
 void RecitationHelper::onRequestComplete(QVariant const& cookie, QByteArray const& data)
 {
-    if ( cookie.toMap().contains("recitation") )
+    if ( cookie.toMap().contains(RECITATION_MP3_KEY) )
     {
         QFutureWatcher<QVariantMap>* qfw = new QFutureWatcher<QVariantMap>(this);
         connect( qfw, SIGNAL( finished() ), this, SLOT( onWritten() ) );
@@ -226,7 +230,7 @@ void RecitationHelper::onWritten()
     QFutureWatcher<QVariantMap>* qfw = static_cast< QFutureWatcher<QVariantMap>* >( sender() );
     QVariantMap result = qfw->result();
 
-    if ( !m_anchor.isEmpty() && m_anchor == result.value("uri").toString() ) {
+    if ( !m_anchor.isEmpty() && m_anchor == result.value(URI_KEY).toString() ) {
         startPlayback();
     }
 
@@ -244,14 +248,14 @@ void RecitationHelper::onPlaylistReady()
         m_persistance->showToast( result.value("error").toString(), "", "asset:///images/toast/yellow_delete.png" );
     } else if ( result.contains("queue") ) {
         QVariantList queue = result.value("queue").toList();
-        m_anchor = result.value("anchor").toString();
+        m_anchor = result.value(ANCHOR_KEY).toString();
         m_queue->process(queue);
 
-        if ( result.contains("playlist") ) {
-            m_playlistUrl = result.value("playlist").toUrl();
+        if ( result.contains(PLAYLIST_KEY) ) {
+            m_playlistUrl = result.value(PLAYLIST_KEY).toUrl();
         }
-    } else if ( result.contains("playlist") ) {
-        m_playlistUrl = result.value("playlist").toUrl();
+    } else if ( result.contains(PLAYLIST_KEY) ) {
+        m_playlistUrl = result.value(PLAYLIST_KEY).toUrl();
         startPlayback();
     }
 }
