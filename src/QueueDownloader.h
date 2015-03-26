@@ -5,6 +5,8 @@
 
 #include "NetworkProcessor.h"
 
+#define URI_KEY "uri"
+
 namespace canadainc {
 
 using namespace bb::cascades;

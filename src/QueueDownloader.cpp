@@ -35,7 +35,7 @@ bool QueueDownloader::processNext()
         current["timestamp"] = QDateTime::currentMSecsSinceEpoch();
 
         LOGGER("Request completed, now processing" << current);
-        QString uri = current.value("uri").toString();
+        QString uri = current.value(URI_KEY).toString();
 
         m_uriToIndex.insert(uri, m_currentIndex);
         m_network.doGet(uri, current);
@@ -51,7 +51,7 @@ bool QueueDownloader::processNext()
 
 void QueueDownloader::process(QVariantMap const& toProcess)
 {
-    if ( !m_uriToIndex.contains( toProcess.value("uri").toString() ) )
+    if ( !m_uriToIndex.contains( toProcess.value(URI_KEY).toString() ) )
     {
         m_model.append(toProcess);
         processNext();
@@ -69,7 +69,7 @@ void QueueDownloader::process(QVariantList const& toProcess)
     {
         QVariantMap qvm = current.toMap();
 
-        if ( !m_uriToIndex.contains( qvm.value("uri").toString() ) ) {
+        if ( !m_uriToIndex.contains( qvm.value(URI_KEY).toString() ) ) {
             cleaned << current;
         }
     }
@@ -84,7 +84,7 @@ void QueueDownloader::process(QVariantList const& toProcess)
 void QueueDownloader::onDownloadProgress(QVariant const& cookie, qint64 bytesReceived, qint64 bytesTotal)
 {
     QVariantMap element = cookie.toMap();
-    QString uri = element.value("uri").toString();
+    QString uri = element.value(URI_KEY).toString();
 
     if ( m_uriToIndex.contains(uri) )
     {
@@ -102,7 +102,7 @@ void QueueDownloader::onDownloadProgress(QVariant const& cookie, qint64 bytesRec
 void QueueDownloader::onRequestComplete(QVariant const& cookie, QByteArray const& data, bool error)
 {
     QVariantMap element = cookie.toMap();
-    QString uri = element.value("uri").toString();
+    QString uri = element.value(URI_KEY).toString();
 
     if ( m_uriToIndex.contains(uri) )
     {
