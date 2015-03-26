@@ -32,8 +32,9 @@ Page
     {
         if (id == QueryId.FetchAllAyats)
         {
-            if ( listView.theDataModel.isEmpty() )
+            if ( listView.theDataModel.isEmpty() || listView.theDataModel.size() != data.length )
             {
+                listView.theDataModel.clear();
                 listView.theDataModel.append(data);
                 
                 if (requestedVerse > 0) {
@@ -170,6 +171,8 @@ Page
                     } else {
                         --fromSurahId;
                     }
+                    
+                    requestedVerse = 0;
                     
                     if (toSurahId > 0) {
                         toSurahId = 0;

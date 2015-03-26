@@ -236,16 +236,16 @@ Sheet
                 }
                 
                 onSelectedValueChanged: {
-                    var changed = persist.saveValueFor("mushafStyle", selectedValue, false);
-                    
-                    if (changed) {
+                    if (mushaf.mushafStyle != selectedValue)
+                    {
+                        mushaf.mushafStyle = selectedValue;
                         currentPageChanged();
                     }
                 }
                 
                 onCreationCompleted: {
                     var n = count();
-                    var style = persist.getValueFor("mushafStyle");
+                    var style = mushaf.mushafStyle;
                     
                     for (var i = 0; i < n; i++)
                     {

@@ -20,13 +20,11 @@ Page
         helper.fetchAllAyats(juzPage, ranges.from_surah_id, ranges.to_surah_id);
     }
     
-    function reloadNeeded(key)
+    function reloadNeeded()
     {
         if (key == "translation") {
             requestedVerse = scroller.firstVisibleItem[0];
             juzIdChanged();
-        } else if (key == "primarySize" || key == "translationFontSize") {
-            listView.refresh();
         }
     }
     

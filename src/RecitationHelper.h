@@ -5,6 +5,8 @@
 
 #include <QFutureWatcher>
 
+#define KEY_RECITER "reciter"
+
 namespace canadainc {
     class Persistance;
 }

@@ -1,6 +1,7 @@
 #include "precompiled.h"
 
 #include "RecitationHelper.h"
+#include "CommonConstants.h"
 #include "InvocationUtils.h"
 #include "IOUtils.h"
 #include "Logger.h"
@@ -186,7 +187,7 @@ void RecitationHelper::memorize(bb::cascades::ArrayDataModel* adm, int from, int
             }
         }
 
-        QFuture<QVariantMap> future = QtConcurrent::run(processPlaylist, m_persistance->getValueFor("reciter").toString(), m_persistance->getValueFor("output").toString(), all);
+        QFuture<QVariantMap> future = QtConcurrent::run(processPlaylist, m_persistance->getValueFor(KEY_RECITER).toString(), m_persistance->getValueFor(KEY_OUTPUT_FOLDER).toString(), all);
         m_futureResult.setFuture(future);
     }
 }
@@ -201,7 +202,7 @@ void RecitationHelper::downloadAndPlay(int chapter, int verse)
         QList< QPair<int,int> > all;
         all << qMakePair<int,int>(chapter, verse);
 
-        QFuture<QVariantMap> future = QtConcurrent::run(processPlaylist, m_persistance->getValueFor("reciter").toString(), m_persistance->getValueFor("output").toString(), all);
+        QFuture<QVariantMap> future = QtConcurrent::run(processPlaylist, m_persistance->getValueFor(KEY_RECITER).toString(), m_persistance->getValueFor(KEY_OUTPUT_FOLDER).toString(), all);
         m_futureResult.setFuture(future);
     }
 }
@@ -274,7 +275,7 @@ void RecitationHelper::downloadAndPlayAll(bb::cascades::ArrayDataModel* adm, int
             m_ayatToIndex.insert(ayat, i);
         }
 
-        QFuture<QVariantMap> future = QtConcurrent::run(processPlaylist, m_persistance->getValueFor("reciter").toString(), m_persistance->getValueFor("output").toString(), all);
+        QFuture<QVariantMap> future = QtConcurrent::run(processPlaylist, m_persistance->getValueFor(KEY_RECITER).toString(), m_persistance->getValueFor(KEY_OUTPUT_FOLDER).toString(), all);
         m_futureResult.setFuture(future);
     }
 }
@@ -283,7 +284,7 @@ void RecitationHelper::downloadAndPlayAll(bb::cascades::ArrayDataModel* adm, int
 bool RecitationHelper::isDownloaded(int chapter, int verse)
 {
     QString fileName = QString("%1%2.mp3").arg( normalize(chapter) ).arg( normalize(verse) );
-    QDir q( QString("%1/%2").arg( m_persistance->getValueFor("output").toString() ).arg( m_persistance->getValueFor("reciter").toString() ) );
+    QDir q( QString("%1/%2").arg( m_persistance->getValueFor(KEY_OUTPUT_FOLDER).toString() ).arg( m_persistance->getValueFor(KEY_RECITER).toString() ) );
     QString absolutePath = QString("%1/%2").arg( q.path() ).arg(fileName);
 
     return QFile::exists(absolutePath);
