@@ -55,10 +55,8 @@ private slots:
 	void onDataLoaded(QVariant id, QVariant data);
 	void onMissingAyatImagesFinished();
 	void onPicked(int chapter, int verse);
-    void onTafsirDownloaded(QVariant const& cookie, QByteArray const& data);
-    void onTafsirCheckNeeded(QString const& tafsirName);
-    void onTafsirMissing(QString const& tafsirName);
-    void onTranslationMissing(QString const& language);
+    void onRequestComplete(QVariant const& cookie, QByteArray const& data);
+    void onUpdateCheckNeeded(QVariantMap const& params);
 
 signals:
     void deflationDone(bool success, QString const& error);

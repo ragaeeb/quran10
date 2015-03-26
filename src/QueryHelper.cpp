@@ -48,6 +48,8 @@ void QueryHelper::settingChanged(QString const& key)
 
         m_translation = m_persist->getValueFor(KEY_TRANSLATION).toString();
 
+        QVariantMap params;
+
         if ( showTranslation() ) // if the user didn't set to Arabic only, since arabic is already attached
         {
             bool inHome = m_translation != ENGLISH_TRANSLATION;
@@ -55,7 +57,8 @@ void QueryHelper::settingChanged(QString const& key)
             QFile translationFile( QString("%1/%2.db").arg(translationDir).arg(TRANSLATION) );
 
             if ( !translationFile.exists() || translationFile.size() == 0 ) { // translation doesn't exist, download it
-                emit translationMissing(TRANSLATION);
+                params[KEY_TRANSLATION] = TRANSLATION;
+                params[KEY_FORCED_UPDATE] = true;
             } else {
                 m_sql.attachIfNecessary(TRANSLATION, inHome); // since english translation is loaded by default
             }
@@ -64,9 +67,22 @@ void QueryHelper::settingChanged(QString const& key)
         QFile tafsirFile( QString("%1/%2.db").arg( QDir::homePath() ).arg( tafsirName() ) );
 
         if ( !tafsirFile.exists() || tafsirFile.size() == 0 ) { // translation doesn't exist, download it
-            emit tafsirMissing( tafsirName() );
-        } else if ( m_persist->isUpdateNeeded("lastUpdateCheck") ) {
-            emit tafsirUpdateCheckNeeded( tafsirName() );
+            params[KEY_TAFSIR] = tafsirName();
+            params[KEY_FORCED_UPDATE] = true;
+        } else if ( m_persist->isUpdateNeeded(KEY_LAST_UPDATE, 60) ) {
+            params[KEY_TAFSIR] = tafsirName();
+            params[KEY_TRANSLATION] = TRANSLATION;
+        }
+
+        if ( !params.isEmpty() ) // update check needed
+        {
+            bool suppress = m_persist->getValueFor(KEY_UPDATE_CHECK_FLAG).toInt() == SUPPRESS_UPDATE_FLAG;
+
+            if ( params.contains(KEY_FORCED_UPDATE) || !suppress ) // if it's a forced update
+            {
+                params[KEY_LANGUAGE] = m_translation;
+                emit updateCheckNeeded(params);
+            }
         }
 
         emit textualChange();
