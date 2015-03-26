@@ -203,6 +203,16 @@ void Offloader::addToHomeScreen(qint64 suitePageId, QString const& label)
 }
 
 
+QVariantList Offloader::removeOutOfRange(QVariantList input, int fromChapter, int fromVerse, int toChapter, int toVerse) {
+    return ThreadUtils::removeOutOfRange(input, fromChapter, fromVerse, toChapter, toVerse);
+}
+
+
+QVariantList Offloader::normalizeJuzs(QVariantList const& source) {
+    return ThreadUtils::normalizeJuzs(source);
+}
+
+
 Offloader::~Offloader()
 {
 }

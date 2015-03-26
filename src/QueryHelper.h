@@ -82,8 +82,6 @@ public:
     Q_INVOKABLE void fetchTransliteration(QObject* caller, int chapter, int verse);
     Q_INVOKABLE void replaceIndividualsFromSource(QObject* caller, QString const& source);
     Q_INVOKABLE bool searchQuery(QObject* caller, QString const& trimmedText, int chapterNumber=0, QVariantList const& additional=QVariantList(), bool andMode=true);
-    Q_INVOKABLE QVariantList normalizeJuzs(QVariantList const& source);
-    Q_INVOKABLE QVariantList removeOutOfRange(QVariantList input, int fromChapter, int fromVerse, int toChapter, int toVerse);
 
     bool showTranslation() const;
     int primarySize() const;

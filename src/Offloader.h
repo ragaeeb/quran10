@@ -44,8 +44,10 @@ public:
     Q_INVOKABLE void decorateSimilarResults(QVariantList const& input, QString const& mainText, bb::cascades::ArrayDataModel* adm, bb::cascades::AbstractTextControl* atc);
     Q_INVOKABLE void decorateTafsir(bb::cascades::ArrayDataModel* adm);
     Q_INVOKABLE qint64 getFreeSpace();
+    Q_INVOKABLE QVariantList normalizeJuzs(QVariantList const& source);
     Q_INVOKABLE void restore(QString const& source);
     Q_INVOKABLE QString textualizeAyats(bb::cascades::DataModel* adm, QVariantList const& selectedIndices, QString const& chapterTitle, bool showTranslation);
+    Q_INVOKABLE QVariantList removeOutOfRange(QVariantList input, int fromChapter, int fromVerse, int toChapter, int toVerse);
 };
 
 } /* namespace quran */

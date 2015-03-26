@@ -387,7 +387,7 @@ Page
                     } else if (id == QueryId.FetchAllChapters) {
                         gdm.grouping = ItemGrouping.ByFullValue;
                         gdm.sortingKeys = ["juz_id", "surah_id", "verse_number"];
-                        data = helper.normalizeJuzs(data);
+                        data = offloader.normalizeJuzs(data);
                     }
                     
                     if ( gdm.size() == 1 && data.length == 1 )

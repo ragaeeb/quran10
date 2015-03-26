@@ -383,11 +383,6 @@ void QueryHelper::fetchAllQuotes(QObject* caller, qint64 individualId)
 }
 
 
-QVariantList QueryHelper::normalizeJuzs(QVariantList const& source) {
-    return ThreadUtils::normalizeJuzs(source);
-}
-
-
 void QueryHelper::initForeignKeys() {
     m_sql.enableForeignKeys();
 }
@@ -415,11 +410,6 @@ QString QueryHelper::tafsirName() const {
 
 QString QueryHelper::translation() const {
     return m_translation;
-}
-
-
-QVariantList QueryHelper::removeOutOfRange(QVariantList input, int fromChapter, int fromVerse, int toChapter, int toVerse) {
-    return ThreadUtils::removeOutOfRange(input, fromChapter, fromVerse, toChapter, toVerse);
 }
 
 
