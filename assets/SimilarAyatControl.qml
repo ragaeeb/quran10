@@ -15,7 +15,7 @@ ResizableContainer
         
         headerSubtitle = data.length;
         
-        app.decorateSimilarResults(data, bodyControl.value, adm, bodyControl);
+        offloader.decorateSimilarResults(data, bodyControl.value, adm, bodyControl);
     }
     
     ListView

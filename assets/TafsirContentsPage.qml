@@ -92,9 +92,9 @@ Page
                                         var headingValue = heading.text.trim();
                                         
                                         if (!sheet.suitePageId) {
-                                            helper.addTafsirPage(listView, suiteId, newText, headingValue);
+                                            tafsirHelper.addTafsirPage(listView, suiteId, newText, headingValue);
                                         } else {
-                                            helper.editTafsirPage(listView, sheet.suitePageId, newText, headingValue);
+                                            tafsirHelper.editTafsirPage(listView, sheet.suitePageId, newText, headingValue);
                                             var item = adm.data(sheet.indexPath);
                                             item["body"] = newText;
                                             item["heading"] = headingValue;
@@ -211,7 +211,7 @@ Page
             }
             
             function removeItem(ListItemData) {
-                helper.removeTafsirPage(listView, ListItemData.id);
+                tafsirHelper.removeTafsirPage(listView, ListItemData.id);
                 busy.delegateActive = true;
             }
             

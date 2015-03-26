@@ -32,6 +32,14 @@ QueryTafsirHelper::QueryTafsirHelper(DatabaseHelper* sql) : m_sql(sql)
 }
 
 
+void QueryTafsirHelper::addCompanions(QObject* caller, QVariantList const& ids)
+{
+    LOGGER(ids);
+
+    m_sql->executeQuery(caller, QString("INSERT OR IGNORE INTO companions VALUES(%1)").arg( TextUtils::getPlaceHolders( ids.size() ) ), QueryId::AddCompanions, ids);
+}
+
+
 void QueryTafsirHelper::addQuote(QObject* caller, QString const& author, QString const& body, QString const& reference)
 {
     LOGGER(author << body << reference);
@@ -64,6 +72,15 @@ void QueryTafsirHelper::addTafsir(QObject* caller, QString const& author, QStrin
 }
 
 
+void QueryTafsirHelper::addTafsirPage(QObject* caller, qint64 suiteId, QString const& body, QString const& heading)
+{
+    LOGGER( suiteId << body.length() );
+
+    QString query = QString("INSERT OR IGNORE INTO suite_pages (id,suite_id,body,heading) VALUES(%1,%2,?,?)").arg( QDateTime::currentMSecsSinceEpoch() ).arg(suiteId);
+    m_sql->executeQuery(caller, query, QueryId::AddTafsirPage, QVariantList() << body << ( heading.isEmpty() ? QVariant() : heading ) );
+}
+
+
 void QueryTafsirHelper::editTafsir(QObject* caller, qint64 suiteId, QString const& author, QString const& translator, QString const& explainer, QString const& title, QString const& description, QString const& reference)
 {
     LOGGER(suiteId << author << translator << explainer << title << description << reference);
@@ -88,6 +105,15 @@ void QueryTafsirHelper::editTafsir(QObject* caller, qint64 suiteId, QString cons
 
     QString query = QString("UPDATE suites SET %2 WHERE id=%1").arg(suiteId).arg( fields.join(",") );
     m_sql->executeQuery(caller, query, QueryId::EditTafsir, args);
+}
+
+
+void QueryTafsirHelper::editTafsirPage(QObject* caller, qint64 suitePageId, QString const& body, QString const& heading)
+{
+    LOGGER( suitePageId << body.length() << heading );
+
+    QString query = QString("UPDATE suite_pages SET body=?, heading=? WHERE id=%1").arg(suitePageId);
+    m_sql->executeQuery( caller, query, QueryId::EditTafsirPage, QVariantList() << body << ( heading.isEmpty() ? QVariant() : heading ) );
 }
 
 
@@ -120,6 +146,16 @@ void QueryTafsirHelper::editQuote(QObject* caller, qint64 quoteId, QString const
 }
 
 
+void QueryTafsirHelper::fetchAllIndividuals(QObject* caller) {
+    m_sql->executeQuery(caller, "SELECT individuals.id,prefix,name,kunya,uri,hidden,biography,birth,death,companions.id AS companion_id FROM individuals LEFT JOIN companions ON individuals.id=companions.id ORDER BY name,kunya,prefix", QueryId::FetchAllIndividuals);
+}
+
+
+void QueryTafsirHelper::fetchFrequentIndividuals(QObject* caller, int n) {
+    m_sql->executeQuery(caller, QString("SELECT author AS id,prefix,name,kunya,uri,hidden,biography,birth,death,companions.id AS companion_id FROM (SELECT author,COUNT(author) AS n FROM suites GROUP BY author UNION SELECT translator AS author,COUNT(translator) AS n FROM suites GROUP BY author UNION SELECT explainer AS author,COUNT(explainer) AS n FROM suites GROUP BY author ORDER BY n DESC LIMIT %1) INNER JOIN individuals ON individuals.id=author LEFT JOIN companions ON companions.id=individuals.id GROUP BY individuals.id ORDER BY name,kunya,prefix").arg(n), QueryId::FetchAllIndividuals);
+}
+
+
 void QueryTafsirHelper::fetchAllTafsir(QObject* caller, qint64 individualId)
 {
     LOGGER("fetchAllTafsir");
@@ -133,6 +169,15 @@ void QueryTafsirHelper::fetchAllTafsir(QObject* caller, qint64 individualId)
     queryParams << "ORDER BY id DESC";
 
     m_sql->executeQuery(caller, queryParams.join(" "), QueryId::FetchAllTafsir);
+}
+
+
+void QueryTafsirHelper::fetchTafsirMetadata(QObject* caller, qint64 suiteId)
+{
+    LOGGER(suiteId);
+
+    QString query = QString("SELECT author,translator,explainer,title,description,reference FROM suites WHERE id=%1").arg(suiteId);
+    m_sql->executeQuery(caller, query, QueryId::FetchTafsirHeader);
 }
 
 
@@ -188,12 +233,95 @@ void QueryTafsirHelper::linkAyatToTafsir(QObject* caller, qint64 suitePageId, in
 }
 
 
+void QueryTafsirHelper::linkAyatsToTafsir(QObject* caller, qint64 suitePageId, QVariantList const& chapterVerseData)
+{
+    m_sql->startTransaction(caller, QueryId::LinkingAyatsToTafsir);
+
+    foreach (QVariant const& q, chapterVerseData)
+    {
+        QVariantMap qvm = q.toMap();
+        linkAyatToTafsir( caller, suitePageId, qvm.value(CHAPTER_KEY).toInt(), qvm.value(FROM_VERSE_KEY).toInt(), qvm.value(TO_VERSE_KEY).toInt() );
+    }
+
+    m_sql->endTransaction(caller, QueryId::LinkAyatsToTafsir);
+}
+
+
+void QueryTafsirHelper::removeCompanions(QObject* caller, QVariantList const& ids)
+{
+    LOGGER(ids);
+
+    QStringList allIds;
+    foreach (QVariant const& id, ids) {
+        allIds << QString::number( id.toLongLong() );
+    }
+
+    m_sql->executeQuery(caller, QString("DELETE FROM companions WHERE id IN (%1)").arg( allIds.join(",") ), QueryId::RemoveCompanions);
+}
+
+
+void QueryTafsirHelper::removeQuote(QObject* caller, qint64 id)
+{
+    LOGGER(id);
+    QString query = QString("DELETE FROM quotes WHERE id=%1").arg(id);
+    m_sql->executeQuery(caller, query, QueryId::RemoveQuote);
+}
+
+
+void QueryTafsirHelper::removeIndividual(QObject* caller, qint64 id)
+{
+    LOGGER(id);
+    QString query = QString("DELETE FROM individuals WHERE id=%1").arg(id);
+    m_sql->executeQuery(caller, query, QueryId::RemoveIndividual);
+}
+
+
+void QueryTafsirHelper::removeTafsir(QObject* caller, qint64 suiteId)
+{
+    LOGGER(suiteId);
+
+    QString query = QString("DELETE FROM suites WHERE id=%1").arg(suiteId);
+    m_sql->executeQuery(caller, query, QueryId::RemoveTafsir);
+}
+
+
+void QueryTafsirHelper::removeTafsirPage(QObject* caller, qint64 suitePageId)
+{
+    LOGGER(suitePageId);
+
+    QString query = QString("DELETE FROM suite_pages WHERE id=%1").arg(suitePageId);
+    m_sql->executeQuery(caller, query, QueryId::RemoveTafsirPage);
+}
+
+
+void QueryTafsirHelper::replaceIndividual(QObject* caller, qint64 toReplaceId, qint64 actualId)
+{
+    LOGGER(toReplaceId << actualId);
+
+    m_sql->startTransaction(caller, QueryId::ReplacingIndividual);
+    m_sql->executeQuery(caller, QString("UPDATE quotes SET author=%1 WHERE author=%2").arg(actualId).arg(toReplaceId), QueryId::ReplacingIndividual);
+    m_sql->executeQuery(caller, QString("UPDATE suites SET author=%1 WHERE author=%2").arg(actualId).arg(toReplaceId), QueryId::ReplacingIndividual);
+    m_sql->executeQuery(caller, QString("UPDATE suites SET translator=%1 WHERE translator=%2").arg(actualId).arg(toReplaceId), QueryId::ReplacingIndividual);
+    m_sql->executeQuery(caller, QString("UPDATE suites SET explainer=%1 WHERE explainer=%2").arg(actualId).arg(toReplaceId), QueryId::ReplacingIndividual);
+    m_sql->executeQuery(caller, QString("DELETE FROM individuals WHERE id=%1").arg(toReplaceId), QueryId::ReplacingIndividual);
+    m_sql->endTransaction(caller, QueryId::ReplaceIndividual);
+}
+
+
+void QueryTafsirHelper::searchIndividuals(QObject* caller, QString const& trimmedText)
+{
+    LOGGER(trimmedText);
+    m_sql->executeQuery(caller, "SELECT individuals.id,prefix,name,kunya,uri,hidden,biography,birth,death,companions.id AS companion_id FROM individuals LEFT JOIN companions ON individuals.id=companions.id WHERE name LIKE '%' || ? || '%' OR kunya LIKE '%' || ? || '%'  ORDER BY name,kunya,prefix", QueryId::SearchIndividuals, QVariantList() << trimmedText << trimmedText);
+}
+
+
 void QueryTafsirHelper::searchQuote(QObject* caller, QString const& fieldName, QString const& searchTerm)
 {
+    LOGGER(fieldName << searchTerm);
+
     QString query;
 
-    if (fieldName == "author")
-    {
+    if (fieldName == "author") {
         query = "SELECT quotes.id AS id,individuals.name AS author,body FROM quotes INNER JOIN individuals ON individuals.id=quotes.author WHERE individuals.name LIKE '%' || ? || '%' ORDER BY id DESC";
     } else if (fieldName == "body") {
         query = "SELECT quotes.id AS id,individuals.name AS author,body FROM quotes INNER JOIN individuals ON individuals.id=quotes.author WHERE body LIKE '%' || ? || '%' ORDER BY id DESC";
@@ -207,6 +335,8 @@ void QueryTafsirHelper::searchQuote(QObject* caller, QString const& fieldName, Q
 
 void QueryTafsirHelper::searchTafsir(QObject* caller, QString const& fieldName, QString const& searchTerm)
 {
+    LOGGER(fieldName << searchTerm);
+
     QString query;
 
     if (fieldName == "author" || fieldName == "explainer" || fieldName == "translator")

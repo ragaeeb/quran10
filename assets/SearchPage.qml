@@ -414,7 +414,7 @@ Page
                         
                         updateState();
                         
-                        app.decorateSearchResults(data, searchField.text, adm, getAdditionalQueries());
+                        offloader.decorateSearchResults(data, searchField.text, adm, getAdditionalQueries());
                     }
                 }
                 

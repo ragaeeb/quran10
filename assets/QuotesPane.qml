@@ -41,7 +41,7 @@ NavigationPane
                 
                 function onCreate(id, author, body, reference)
                 {
-                    helper.addQuote(listView, author, body, reference);
+                    tafsirHelper.addQuote(listView, author, body, reference);
                     
                     while (navigationPane.top != quotePickerPage) {
                         navigationPane.pop();
@@ -90,7 +90,7 @@ NavigationPane
                                     reload();
                                 } else {
                                     busy.delegateActive = true;
-                                    helper.searchQuote(listView, searchColumn.selectedValue, query);
+                                    tafsirHelper.searchQuote(listView, searchColumn.selectedValue, query);
                                 }
                             }
                         }
@@ -179,7 +179,7 @@ NavigationPane
                 function onEdit(id, author, body, reference)
                 {
                     busy.delegateActive = true;
-                    helper.editQuote(listView, id, author, body, reference);
+                    tafsirHelper.editQuote(listView, id, author, body, reference);
                     
                     var current = dataModel.data(editIndexPath);
                     current["body"] = body;

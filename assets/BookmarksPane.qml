@@ -47,7 +47,7 @@ NavigationPane
                 }
                 
                 onCreationCompleted: {
-                    app.backupComplete.connect(onSaved);
+                    offloader.backupComplete.connect(onSaved);
                 }
             },
             
@@ -76,7 +76,7 @@ NavigationPane
                 }
                 
                 onCreationCompleted: {
-                    app.restoreComplete.connect(onRestored);
+                    offloader.restoreComplete.connect(onRestored);
                 }
             },
             
@@ -267,9 +267,9 @@ NavigationPane
                 console.log("UserEvent: FileSelected", selectedFiles[0]);
                 
                 if (mode == FilePickerMode.Picker) {
-                    app.restore(selectedFiles[0]);
+                    offloader.restore(selectedFiles[0]);
                 } else {
-                    app.backup(selectedFiles[0]);
+                    offloader.backup(selectedFiles[0]);
                 }
             }
         }

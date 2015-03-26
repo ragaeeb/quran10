@@ -4,6 +4,7 @@
 #include "AdminHelper.h"
 #include "LazySceneCover.h"
 #include "MushafHelper.h"
+#include "Offloader.h"
 #include "Persistance.h"
 #include "QueryHelper.h"
 #include "QueueDownloader.h"
@@ -36,6 +37,7 @@ class ApplicationUI : public QObject
     MushafHelper m_mushaf;
     RecitationHelper m_recitation;
     AdminHelper m_admin;
+    Offloader m_offloader;
 
     ApplicationUI(bb::cascades::Application *app);
     void init(QString const& qml);
@@ -50,39 +52,25 @@ private slots:
 	void lazyInit();
     void onArchiveWritten();
     void onArchiveDeflated(bool success, QString const& error);
-    void onBookmarksRestored();
-	void onBookmarksSaved();
 	void onDataLoaded(QVariant id, QVariant data);
 	void onMissingAyatImagesFinished();
 	void onPicked(int chapter, int verse);
-	void onResultsDecorated();
     void onTafsirDownloaded(QVariant const& cookie, QByteArray const& data);
     void onTafsirCheckNeeded(QString const& tafsirName);
     void onTafsirMissing(QString const& tafsirName);
     void onTranslationMissing(QString const& language);
 
 signals:
-    void backupComplete(QString const& file);
     void deflationDone(bool success, QString const& error);
     void archiveDeflationProgress(qint64 current, qint64 total);
     void initialize();
     void lazyInitComplete();
-    void restoreComplete(bool success);
 
 public:
 	static void create(bb::cascades::Application* app);
     virtual ~ApplicationUI();
 
-    Q_INVOKABLE void addToHomeScreen(int chapter, int verse, QString const& label);
-    Q_INVOKABLE void addToHomeScreen(qint64 suitePageId, QString const& label);
-    Q_INVOKABLE void backup(QString const& destination);
     Q_SLOT void checkMissingAyatImages();
-    Q_INVOKABLE void restore(QString const& source);
-    Q_INVOKABLE void decorateSearchResults(QVariantList const& input, QString const& searchText, bb::cascades::ArrayDataModel* adm, QVariantList const& additional=QVariantList());
-    Q_INVOKABLE void decorateSimilarResults(QVariantList const& input, QString const& mainText, bb::cascades::ArrayDataModel* adm, bb::cascades::AbstractTextControl* atc);
-    Q_INVOKABLE void decorateTafsir(bb::cascades::ArrayDataModel* adm);
-    Q_INVOKABLE qint64 getFreeSpace();
-    Q_INVOKABLE QString textualizeAyats(bb::cascades::DataModel* adm, QVariantList const& selectedIndices, QString const& chapterTitle);
 };
 
 } // quran
