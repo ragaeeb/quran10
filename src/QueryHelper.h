@@ -14,6 +14,10 @@
 #define CHAPTER_KEY "chapter"
 #define FROM_VERSE_KEY "fromVerse"
 #define TO_VERSE_KEY "toVerse"
+#define ENGLISH_TRANSLATION "english"
+#define KEY_PRIMARY_SIZE "primarySize"
+#define KEY_TRANSLATION "translation"
+#define KEY_TRANSLATION_SIZE "translationFontSize"
 
 namespace canadainc {
 	class Persistance;

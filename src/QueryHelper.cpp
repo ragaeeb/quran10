@@ -1,6 +1,7 @@
 #include "precompiled.h"
 
 #include "QueryHelper.h"
+#include "CommonConstants.h"
 #include "customsqldatasource.h"
 #include "Logger.h"
 #include "Persistance.h"
@@ -8,8 +9,9 @@
 #include "ThreadUtils.h"
 
 #define ATTACH_TAFSIR m_sql.attachIfNecessary( tafsirName(), true );
-#define TRANSLATION QString("quran_%1").arg(m_translation)
+#define KEY_JOIN_LETTERS "overlayAyatImages"
 #define NAME_FIELD(var) QString("(coalesce(%1.prefix,'') || ' ' || %1.name || ' ' || coalesce(%1.kunya,''))").arg(var)
+#define TRANSLATION QString("quran_%1").arg(m_translation)
 #define TAFSIR_NAME(language) QString("quran_tafsir_%1").arg(language)
 
 namespace quran {
@@ -27,7 +29,7 @@ QueryHelper::QueryHelper(Persistance* persist) :
 
 void QueryHelper::lazyInit()
 {
-    settingChanged("translation");
+    settingChanged(KEY_TRANSLATION);
 
     QTime time = QTime::currentTime();
     qsrand( (uint)time.msec() );
@@ -36,7 +38,7 @@ void QueryHelper::lazyInit()
 
 void QueryHelper::settingChanged(QString const& key)
 {
-    if (key == "translation")
+    if (key == KEY_TRANSLATION)
     {
         if ( showTranslation() ) {
             m_sql.detach(TRANSLATION);
@@ -44,11 +46,11 @@ void QueryHelper::settingChanged(QString const& key)
 
         m_sql.detach( tafsirName() );
 
-        m_translation = m_persist->getValueFor("translation").toString();
+        m_translation = m_persist->getValueFor(KEY_TRANSLATION).toString();
 
         if ( showTranslation() ) // if the user didn't set to Arabic only, since arabic is already attached
         {
-            bool inHome = m_translation != "english";
+            bool inHome = m_translation != ENGLISH_TRANSLATION;
             QString translationDir = inHome ? QDir::homePath() : QString("%1/assets/dbase").arg( QCoreApplication::applicationDirPath() );
             QFile translationFile( QString("%1/%2.db").arg(translationDir).arg(TRANSLATION) );
 
@@ -68,9 +70,9 @@ void QueryHelper::settingChanged(QString const& key)
         }
 
         emit textualChange();
-    } else if (key == "translationFontSize" || key == "primarySize") {
+    } else if (key == KEY_TRANSLATION_SIZE || key == KEY_PRIMARY_SIZE) {
         emit fontSizeChanged();
-    } else if (key == "overlayAyatImages") {
+    } else if (key == KEY_JOIN_LETTERS) {
         emit textualChange();
     }
 }
@@ -179,9 +181,9 @@ void QueryHelper::fetchAllAyats(QObject* caller, int fromChapter, int toChapter)
     QString ayatImagePath = "";
     QVariantList params;
 
-    if ( m_persist->getValueFor("overlayAyatImages").toInt() == 1 )
+    if ( m_persist->getValueFor(KEY_JOIN_LETTERS).toInt() == 1 )
     {
-        QDir q( QString("%1/ayats").arg( m_persist->getValueFor("output").toString() ) );
+        QDir q( QString("%1/ayats").arg( m_persist->getValueFor(KEY_OUTPUT_FOLDER).toString() ) );
 
         if ( q.exists() )
         {
@@ -579,12 +581,12 @@ bool QueryHelper::showTranslation() const {
 }
 
 int QueryHelper::primarySize() const {
-    return m_persist->getValueFor("primarySize").toInt();
+    return m_persist->getValueFor(KEY_PRIMARY_SIZE).toInt();
 }
 
 int QueryHelper::translationSize() const
 {
-    int result = m_persist->getValueFor("translationFontSize").toInt();
+    int result = m_persist->getValueFor(KEY_TRANSLATION_SIZE).toInt();
     return result > 0 ? result : 12;
 }
 

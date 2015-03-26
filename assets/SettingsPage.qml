@@ -196,7 +196,7 @@ Page
                             onFileSelected : {
                                 var result = selectedFiles[0]
                                 outputLabel.outputDirectory = result
-                                persist.saveValueFor("output", result, false)
+                                persist.saveValueFor("output", result, false);
                             }
                         }
                     ]
