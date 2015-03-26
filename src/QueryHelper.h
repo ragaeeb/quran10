@@ -15,6 +15,9 @@
 #define KEY_PRIMARY_SIZE "primarySize"
 #define KEY_TRANSLATION "translation"
 #define KEY_TRANSLATION_SIZE "translationFontSize"
+#define KEY_TAFSIR "tafsir"
+#define KEY_FORCED_UPDATE "forcedUpdate" // are we forced to do an update for the translation
+#define KEY_LANGUAGE "language"
 
 namespace canadainc {
 	class Persistance;
@@ -44,10 +47,8 @@ private slots:
 
 signals:
     void fontSizeChanged();
-    void tafsirMissing(QString const& tafsirName);
-    void tafsirUpdateCheckNeeded(QString const& tafsirName);
+    void updateCheckNeeded(QVariantMap const& params);
     void textualChange();
-    void translationMissing(QString const& translation);
 
 public:
 	QueryHelper(Persistance* persist);
