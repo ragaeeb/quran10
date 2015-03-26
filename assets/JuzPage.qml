@@ -36,7 +36,7 @@ Page
     {
         if (id == QueryId.FetchAllAyats)
         {
-            data = helper.removeOutOfRange(data, ranges.from_surah_id, ranges.from_verse_id, ranges.to_surah_id, ranges.to_verse_id);
+            data = offloader.removeOutOfRange(data, ranges.from_surah_id, ranges.from_verse_id, ranges.to_surah_id, ranges.to_verse_id);
             
             listView.theDataModel.clear();
             listView.theDataModel.append(data);
