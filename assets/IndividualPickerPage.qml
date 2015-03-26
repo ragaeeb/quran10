@@ -166,14 +166,14 @@ Page
             busy.delegateActive = true;
             noElements.delegateActive = false;
             
-            helper.searchIndividuals(listView, trimmed);
+            tafsirHelper.searchIndividuals(listView, trimmed);
         } else {
-            helper.fetchAllIndividuals(listView);
+            tafsirHelper.fetchAllIndividuals(listView);
         }
     }
     
     onCreationCompleted: {
-        helper.fetchFrequentIndividuals(listView);
+        tafsirHelper.fetchFrequentIndividuals(listView);
     }
     
     Container
@@ -216,7 +216,7 @@ Page
             
             function removeItem(ListItemData) {
                 busy.delegateActive = true;
-                helper.removeIndividual(listView, ListItemData.id);
+                tafsirHelper.removeIndividual(listView, ListItemData.id);
             }
             
             function onActualPicked(actualId)
@@ -224,7 +224,7 @@ Page
                 if (actualId != toReplaceId)
                 {
                     busy.delegateActive = true;
-                    helper.replaceIndividual(listView, toReplaceId, actualId);
+                    tafsirHelper.replaceIndividual(listView, toReplaceId, actualId);
                 } else {
                     persist.showToast( qsTr("The source and replacement individuals cannot be the same!"), "", "asset:///images/toast/ic_duplicate_replace.png" );
                 }
@@ -273,7 +273,7 @@ Page
                     
                     onTriggered: {
                         console.log("UserEvent: SetCompanions");
-                        helper.addCompanions( listView, listView.getSelectedIds() );
+                        tafsirHelper.addCompanions( listView, listView.getSelectedIds() );
                         
                         var all = listView.selectionList();
                         
@@ -295,7 +295,7 @@ Page
                     
                     onTriggered: {
                         console.log("UserEvent: RemoveCompanions");
-                        helper.removeCompanions( listView, listView.getSelectedIds() );
+                        tafsirHelper.removeCompanions( listView, listView.getSelectedIds() );
                         
                         var all = listView.selectionList();
                         
@@ -461,7 +461,7 @@ Page
             
             function onSaveClicked(indexPath, id, prefix, name, kunya, uri, bio, hidden, birth, death, female)
             {
-                helper.editIndividual(listView, id, prefix, name, kunya, uri, bio, hidden, birth, death, female);
+                tafsirHelper.editIndividual(listView, id, prefix, name, kunya, uri, bio, hidden, birth, death, female);
                 editDelegate.object.close();
 
                 var obj = {'id': id, 'prefix': prefix, 'name': name, 'kunya': kunya, 'uri': uri, 'biography': bio, 'hidden': hidden, 'female': female};
@@ -493,7 +493,7 @@ Page
             
             function onSaveClicked(indexPath, id, prefix, name, kunya, uri, bio, hidden, birth, death, female)
             {
-                helper.createIndividual(listView, prefix, name, kunya, uri, bio, birth, death);
+                tafsirHelper.createIndividual(listView, prefix, name, kunya, uri, bio, birth, death);
                 createDelegate.object.close();
                 
                 var obj = {'id': id, 'prefix': prefix, 'name': name, 'kunya': kunya, 'uri': uri, 'biography': bio, 'hidden': hidden, 'female': female};

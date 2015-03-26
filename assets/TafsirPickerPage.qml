@@ -49,7 +49,7 @@ Page
                                 reload();
                             } else {
                                 busy.delegateActive = true;
-                                helper.searchTafsir(listView, searchColumn.selectedValue, query);
+                                tafsirHelper.searchTafsir(listView, searchColumn.selectedValue, query);
                             }
                         }
                     }
@@ -131,7 +131,7 @@ Page
             function onEdit(id, author, translator, explainer, title, description, reference)
             {
                 busy.delegateActive = true;
-                helper.editTafsir(listView, id, author, translator, explainer, title, description, reference);
+                tafsirHelper.editTafsir(listView, id, author, translator, explainer, title, description, reference);
                 
                 var current = dataModel.data(editIndexPath);
                 current["title"] = title;
@@ -159,7 +159,7 @@ Page
             
             function removeItem(ListItemData) {
                 busy.delegateActive = true;
-                helper.removeTafsir(listView, ListItemData.id);
+                tafsirHelper.removeTafsir(listView, ListItemData.id);
             }
             
             listItemComponents: [

@@ -19,7 +19,7 @@ ResizableContainer
             if (id == QueryId.FetchTafsirForAyat)
             {
                 adm.append(data);
-                app.decorateTafsir(adm);
+                offloader.decorateTafsir(adm);
                 
                 if (data.length == 1) {
                     showExplanation(data[0].id);
@@ -34,7 +34,7 @@ ResizableContainer
             var name = persist.showBlockingPrompt( qsTr("Enter name"), qsTr("You can use this to quickly recognize this tafsir on your home screen."), ListItemData.title, qsTr("Shortcut name..."), 15, true, qsTr("Save") );
             
             if (name.length > 0) {
-                app.addToHomeScreen(ListItemData.id, name);
+                offloader.addToHomeScreen(ListItemData.id, name);
             }
         }
         

@@ -83,7 +83,7 @@ ListView
                 
                 onTriggered: {
                     console.log("UserEvent: MultiCopy");
-                    persist.copyToClipboard( app.textualizeAyats(verseModel, selectionList(), ctb.text) );
+                    persist.copyToClipboard( offloader.textualizeAyats(verseModel, selectionList(), ctb.text, helper.showTranslation) );
                 }
             },
             
@@ -101,7 +101,7 @@ ListView
                 
                 onTriggered: {
                     console.log("UserEvent: MultiShare");
-                    data = persist.convertToUtf8( app.textualizeAyats(verseModel, selectionList(), ctb.text) );
+                    data = persist.convertToUtf8( offloader.textualizeAyats(verseModel, selectionList(), ctb.text, helper.showTranslation) );
                 }
             }
         ]

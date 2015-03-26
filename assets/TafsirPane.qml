@@ -11,7 +11,7 @@ NavigationPane
     
     function onCreate(id, author, translator, explainer, title, description, reference)
     {
-        helper.addTafsir(navigationPane, author, translator, explainer, title, description, reference);
+        tafsirHelper.addTafsir(navigationPane, author, translator, explainer, title, description, reference);
         
         while (navigationPane.top != tafsirPicker) {
             navigationPane.pop();

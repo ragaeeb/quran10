@@ -96,7 +96,7 @@ Page
             function onCaptured(all)
             {
                 if (all && all.length > 0) {
-                    helper.linkAyatsToTafsir(listView, suitePageId, all);
+                    tafsirHelper.linkAyatsToTafsir(listView, suitePageId, all);
                     busy.delegateActive = true;
                 } else {
                     persist.showToast( qsTr("No ayat signatures found..."), "", "asset:///images/menu/ic_capture_ayats.png" );
@@ -215,7 +215,7 @@ Page
             }
             
             function unlink(ListItemData) {
-                helper.unlinkAyatsForTafsir(listView, [ListItemData.id], suitePageId);
+                tafsirHelper.unlinkAyatsForTafsir(listView, [ListItemData.id], suitePageId);
             }
             
             listItemComponents: [
@@ -305,7 +305,7 @@ Page
                             }
                         }
                         
-                        helper.linkAyatToTafsir(listView, suitePageId, chapter, fromVerse, toVerse);
+                        tafsirHelper.linkAyatToTafsir(listView, suitePageId, chapter, fromVerse, toVerse);
                     } else {
                         persist.showToast( qsTr("Invalid entry specified. Please enter something with the Chapter:Verse scheme (ie: 2:55 for Surah Baqara vese #55)"), "", "asset:///images/toast/invalid_entry.png" );
                     }

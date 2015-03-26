@@ -216,7 +216,7 @@ Page
                 var name = persist.showBlockingPrompt( qsTr("Enter name"), qsTr("You can use this to quickly recognize this ayah on your home screen."), translation.value, qsTr("Shortcut name..."), 15, true, qsTr("Save") );
                 
                 if (name.length > 0) {
-                    app.addToHomeScreen(surahId, verseId, name);
+                    offloader.addToHomeScreen(surahId, verseId, name);
                 }
             }
         },
