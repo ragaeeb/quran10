@@ -2,6 +2,7 @@
 
 #include "ThreadUtils.h"
 #include "AppLogFetcher.h"
+#include "CommonConstants.h"
 #include "IOUtils.h"
 #include "JlCompress.h"
 #include "Logger.h"
@@ -281,9 +282,9 @@ void ThreadUtils::prepareDecompression(QObject* sender, QObject* obj, const char
 }
 
 
-QString ThreadUtils::writeTafsirArchive(QVariant const& q, QByteArray const& data)
+QString ThreadUtils::writeTafsirArchive(QVariantMap const& q, QByteArray const& data)
 {
-    QString tafsirPath = q.toMap().value("tafsirPath").toString();
+    QString tafsirPath = q.value(TAFSIR_PATH).toString();
     QString target = QString("%1/%2.zip").arg( QDir::tempPath() ).arg(tafsirPath);
 
     bool written = IOUtils::writeFile(target, data);
@@ -291,9 +292,9 @@ QString ThreadUtils::writeTafsirArchive(QVariant const& q, QByteArray const& dat
 }
 
 
-QString ThreadUtils::writeTranslationArchive(QVariant const& q, QByteArray const& data)
+QString ThreadUtils::writeTranslationArchive(QVariantMap const& q, QByteArray const& data)
 {
-    QString translationPath = q.toMap().value("translation").toString();
+    QString translationPath = q.value(KEY_TRANSLATION).toString();
     QString target = QString("%1/%2.zip").arg( QDir::tempPath() ).arg(translationPath);
 
     bool written = IOUtils::writeFile(target, data);

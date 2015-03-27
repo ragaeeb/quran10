@@ -4,6 +4,7 @@
 #include "CommonConstants.h"
 #include "Logger.h"
 #include "Persistance.h"
+#include "QueueDownloader.h"
 #include "TextUtils.h"
 #include "ThreadUtils.h"
 
@@ -210,6 +211,134 @@ QVariantList Offloader::removeOutOfRange(QVariantList input, int fromChapter, in
 
 QVariantList Offloader::normalizeJuzs(QVariantList const& source) {
     return ThreadUtils::normalizeJuzs(source);
+}
+
+
+QVariantList Offloader::computeNecessaryUpdates(QVariantMap const& q, QByteArray const& data)
+{
+    QVariantList downloadQueue;
+
+    QStringList result = QString(data).split(",");
+    QVariantMap requestData = q.value(KEY_UPDATE_CHECK).toMap();
+    bool forcedUpdate = requestData.value(KEY_FORCED_UPDATE).toBool();
+
+    if ( result.size() >= 6 )
+    {
+        qint64 serverTafsirVersion = result.first().toLongLong();
+        qint64 myTafsirVersion = m_persist->getValueFor("tafsirVersion").toLongLong();
+        qint64 serverTafsirSize = result[1].toLongLong();
+
+        qint64 serverTranslationVersion = result[3].toLongLong();
+        qint64 myTranslationVersion = m_persist->getValueFor("tafsirVersion").toLongLong();
+        qint64 serverTranslationSize = result[4].toLongLong();
+        bool tafsirUpdateNeeded = serverTafsirVersion > myTafsirVersion;
+        bool translationUpdateNeeded = serverTranslationVersion > myTranslationVersion;
+
+        QString message;
+
+        if (tafsirUpdateNeeded && translationUpdateNeeded)
+        {
+            if (forcedUpdate) {
+                message = tr("Quran10 needs to download and install translation and tafsir files. The total size is ~%1. Do you want to download them now? If you say No you can download them at a later time but the app will not function as expected in the meantime!").arg( TextUtils::bytesToSize(serverTafsirSize+serverTranslationSize) );
+            } else {
+                message = tr("There are newer translation and tafsir files available. The total download size is ~%1. Do you want to download them now? If you say No you can download them at a later time.").arg( TextUtils::bytesToSize(serverTafsirSize+serverTranslationSize) );
+            }
+        } else if (tafsirUpdateNeeded) {
+            if (forcedUpdate) {
+                message = tr("Quran10 needs to download and install tafsir files. The total size is ~%1. Do you want to download it now? If you say No you can download it at a later time but the app will not function as expected in the meantime!").arg( TextUtils::bytesToSize(serverTafsirSize) );
+            } else {
+                message = tr("There are newer tafsir files available. The total download size is ~%1. Do you want to download it now? If you say No you can download it at a later time.").arg( TextUtils::bytesToSize(serverTafsirSize) );
+            }
+        } else if ( translationUpdateNeeded && requestData.contains(KEY_TRANSLATION) ) {
+            if (forcedUpdate) {
+                message = tr("Quran10 needs to download and install translation files. The total size is ~%1. Do you want to download it now? If you say No you can download it at a later time but the app will not function as expected in the meantime!").arg( TextUtils::bytesToSize(serverTranslationSize) );
+            } else {
+                message = tr("There are newer translation files available. The total download size is ~%1. Do you want to download it now? If you say No you can download it at a later time.").arg( TextUtils::bytesToSize(serverTranslationSize) );
+            }
+        } else {
+            m_persist->saveValueFor( KEY_LAST_UPDATE, QDateTime::currentMSecsSinceEpoch(), false );
+        }
+
+        if ( !message.isNull() )
+        {
+            bool rememberMeValue = false;
+            bool agreed = m_persist->getValueFor(KEY_UPDATE_CHECK_FLAG).toInt() == ALWAYS_UPDATE_FLAG;
+
+            if (!agreed) {
+                agreed = Persistance::showBlockingDialog( tr("Updates"), message, !forcedUpdate ? tr("Don't ask again") : "", rememberMeValue, tr("Yes"), tr("No") );
+            }
+
+            if (!agreed && rememberMeValue) { // don't update, and don't ask again
+                m_persist->saveValueFor(KEY_UPDATE_CHECK_FLAG, -1, false);
+            } else if (agreed && rememberMeValue) {
+                m_persist->saveValueFor(KEY_UPDATE_CHECK_FLAG, -1, false);
+            }
+
+            if (agreed)
+            {
+                if (tafsirUpdateNeeded)
+                {
+                    QString serverTafsirMd5 = result[2];
+                    QString tafsirName = requestData.value(KEY_TAFSIR).toString();
+
+                    QVariantMap q;
+                    q["name"] = tr("Tafsir");
+                    q[URI_KEY] = QString("%1/tafsir/%2.zip").arg(REMOTE_FOLDER).arg(tafsirName);
+                    q[TAFSIR_PATH] = tafsirName;
+                    q[KEY_MD5] = serverTafsirMd5;
+
+                    downloadQueue << q;
+                }
+
+                if (translationUpdateNeeded)
+                {
+                    QString serverTranslationMd5 = result[5];
+                    QString language = requestData.value(KEY_TRANSLATION).toString();
+
+                    QVariantMap q;
+                    q["name"] = tr("Translation");
+                    q[URI_KEY] = QString("%1/translations/%2.zip").arg(REMOTE_FOLDER).arg(language);
+                    q["translation"] = language;
+                    q[KEY_MD5] = serverTranslationMd5;
+
+                    downloadQueue << q;
+                }
+            }
+        }
+    } else if (forcedUpdate) { // if this is a mandatory update, then show error message
+        m_persist->showToast( tr("There is a problem communicating with the server so the app cannot download the necessary files just yet. Please try opening the app again later and it should automatically try the update again..."), "", "asset:///images/toast/ic_offline.png" );
+    }
+
+    return downloadQueue;
+}
+
+
+void Offloader::processDownloadedPlugin(QVariantMap const& q, QByteArray const& data)
+{
+    if ( q.contains(TAFSIR_PATH) ) {
+        QFutureWatcher<QString>* qfw = new QFutureWatcher<QString>(this);
+        connect( qfw, SIGNAL( finished() ), this, SLOT( onArchiveWritten() ) );
+
+        QFuture<QString> future = QtConcurrent::run(&ThreadUtils::writeTafsirArchive, q, data);
+        qfw->setFuture(future);
+    } else if ( q.contains(KEY_TRANSLATION) ) {
+        QFutureWatcher<QString>* qfw = new QFutureWatcher<QString>(this);
+        connect( qfw, SIGNAL( finished() ), this, SLOT( onArchiveWritten() ) );
+
+        QFuture<QString> future = QtConcurrent::run(&ThreadUtils::writeTranslationArchive, q, data);
+        qfw->setFuture(future);
+    }
+}
+
+
+void Offloader::onArchiveWritten() {
+    ThreadUtils::prepareDecompression( sender(), this, SIGNAL( archiveDeflationProgress(qint64, qint64) ) );
+}
+
+
+void Offloader::onArchiveDeflated(bool success, QString const& error)
+{
+    emit deflationDone(success, error);
 }
 
 

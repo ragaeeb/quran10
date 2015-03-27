@@ -6,6 +6,9 @@
 #include "NetworkProcessor.h"
 
 #define URI_KEY "uri"
+#define KEY_ERROR "error"
+#define KEY_CURRENT_PROGRESS "current"
+#define KEY_TOTAL_SIZE "total"
 
 namespace canadainc {
 

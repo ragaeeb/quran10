@@ -50,8 +50,6 @@ private slots:
     void childCardDone(bb::system::CardDoneMessage const& message=bb::system::CardDoneMessage());
 	void invoked(bb::system::InvokeRequest const& request);
 	void lazyInit();
-    void onArchiveWritten();
-    void onArchiveDeflated(bool success, QString const& error);
 	void onDataLoaded(QVariant id, QVariant data);
 	void onMissingAyatImagesFinished();
 	void onPicked(int chapter, int verse);
@@ -60,7 +58,6 @@ private slots:
 
 signals:
     void childCardFinished(QString const& message);
-    void deflationDone(bool success, QString const& error);
     void archiveDeflationProgress(qint64 current, qint64 total);
     void initialize();
     void lazyInitComplete();

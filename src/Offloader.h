@@ -25,12 +25,15 @@ class Offloader : public QObject
     Persistance* m_persist;
 
 private slots:
+    void onArchiveDeflated(bool success, QString const& error);
+    void onArchiveWritten();
     void onBookmarksRestored();
     void onBookmarksSaved();
     void onResultsDecorated();
 
 signals:
     void backupComplete(QString const& file);
+    void deflationDone(bool success, QString const& error);
     void restoreComplete(bool success);
 
 public:
@@ -48,6 +51,8 @@ public:
     Q_INVOKABLE void restore(QString const& source);
     Q_INVOKABLE QString textualizeAyats(bb::cascades::DataModel* adm, QVariantList const& selectedIndices, QString const& chapterTitle, bool showTranslation);
     Q_INVOKABLE QVariantList removeOutOfRange(QVariantList input, int fromChapter, int fromVerse, int toChapter, int toVerse);
+    QVariantList computeNecessaryUpdates(QVariantMap const& q, QByteArray const& data);
+    void processDownloadedPlugin(QVariantMap const& q, QByteArray const& data);
 };
 
 } /* namespace quran */

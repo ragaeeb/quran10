@@ -12,12 +12,6 @@
 #define SIMILAR_DB "similar"
 #define TAFSIR_ARABIC_DB "tafsir_arabic"
 #define ENGLISH_TRANSLATION "english"
-#define KEY_PRIMARY_SIZE "primarySize"
-#define KEY_TRANSLATION "translation"
-#define KEY_TRANSLATION_SIZE "translationFontSize"
-#define KEY_TAFSIR "tafsir"
-#define KEY_FORCED_UPDATE "forcedUpdate" // are we forced to do an update for the translation
-#define KEY_LANGUAGE "language"
 
 namespace canadainc {
 	class Persistance;
