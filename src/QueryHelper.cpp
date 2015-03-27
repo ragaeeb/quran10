@@ -81,7 +81,7 @@ void QueryHelper::settingChanged(QString const& key)
             if ( params.contains(KEY_FORCED_UPDATE) || !suppress ) // if it's a forced update
             {
                 params[KEY_LANGUAGE] = m_translation;
-                emit updateCheckNeeded(params);
+                //emit updateCheckNeeded(params);
             }
         }
 
@@ -365,11 +365,7 @@ void QueryHelper::fetchPageNumbers(QObject* caller)
 {
     LOGGER("fetchPageNumbers");
 
-    if ( showTranslation() ) {
-        m_sql.executeQuery(caller, "SELECT MIN(page_number) as page_number,name,transliteration from mushaf_pages INNER JOIN surahs ON surahs.id=mushaf_pages.surah_id INNER JOIN chapters ON mushaf_pages.surah_id=chapters.id GROUP BY surah_id", QueryId::FetchPageNumbers);
-    } else {
-        m_sql.executeQuery(caller, "SELECT MIN(page_number) as page_number,name,verse_count from mushaf_pages INNER JOIN surahs ON surahs.id=mushaf_pages.surah_id GROUP BY surah_id", QueryId::FetchPageNumbers);
-    }
+    m_sql.executeQuery(caller, "SELECT surah_id,MIN(page_number) as page_number from mushaf_pages GROUP BY surah_id ORDER BY surah_id", QueryId::FetchPageNumbers);
 }
 
 
