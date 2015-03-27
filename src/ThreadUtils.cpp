@@ -8,7 +8,6 @@
 #include "Logger.h"
 #include "QueryHelper.h"
 #include "TextUtils.h"
-#include "ZipThread.h"
 
 #define BACKUP_ZIP_PASSWORD "X4*13f3*3qYk3_*"
 #define LIKE_CLAUSE QString("(%1 LIKE '%' || ? || '%')").arg(textField)
@@ -262,43 +261,15 @@ void ThreadUtils::onResultsDecorated(SimilarReference const& result)
 }
 
 
-void ThreadUtils::prepareDecompression(QObject* sender, QObject* obj, const char* progressSlot)
+QVariantMap ThreadUtils::writePluginArchive(QVariantMap const& cookie, QByteArray const& data, QString const& pathKey)
 {
-    QFutureWatcher<QString>* qfw = static_cast< QFutureWatcher<QString>* >(sender);
-    QString result = qfw->result();
+    QVariantMap q = cookie;
+    QString filePath = q.value(pathKey).toString();
+    QString target = QString("%1/%2.zip").arg( QDir::tempPath() ).arg(filePath);
+    QString expectedMd5 = q.value(KEY_MD5).toString();
+    q[KEY_ARCHIVE_PATH] = target;
 
-    LOGGER(result);
-
-    if ( !result.isEmpty() )
-    {
-        ZipThread* zt = new ZipThread(result);
-        QObject::connect( zt, SIGNAL( done(bool, QString const&) ), obj, SLOT( onArchiveDeflated(bool, QString const&) ) );
-        QObject::connect( zt, SIGNAL( deflationProgress(qint64, qint64) ), obj, progressSlot );
-
-        IOUtils::startThread(zt);
-    }
-
-    sender->deleteLater();
-}
-
-
-QString ThreadUtils::writeTafsirArchive(QVariantMap const& q, QByteArray const& data)
-{
-    QString tafsirPath = q.value(TAFSIR_PATH).toString();
-    QString target = QString("%1/%2.zip").arg( QDir::tempPath() ).arg(tafsirPath);
-
-    bool written = IOUtils::writeFile(target, data);
-    return written ? target : QString();
-}
-
-
-QString ThreadUtils::writeTranslationArchive(QVariantMap const& q, QByteArray const& data)
-{
-    QString translationPath = q.value(KEY_TRANSLATION).toString();
-    QString target = QString("%1/%2.zip").arg( QDir::tempPath() ).arg(translationPath);
-
-    bool written = IOUtils::writeFile(target, data);
-    return written ? target : QString();
+    return IOUtils::writeIfValidMd5(target, expectedMd5, data) ? q : QVariantMap();
 }
 
 

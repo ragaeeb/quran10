@@ -35,12 +35,10 @@ struct ThreadUtils
     static bool performRestore(QString const& source);
     static SimilarReference decorateResults(QVariantList input, ArrayDataModel* adm, QString const& mainSearch, QVariantList const& additional);
     static SimilarReference decorateSimilar(QVariantList input, ArrayDataModel* adm, AbstractTextControl* atc, QString body);
-    static QString writeTafsirArchive(QVariantMap const& cookie, QByteArray const& data);
-    static QString writeTranslationArchive(QVariantMap const& cookie, QByteArray const& data);
+    static QVariantMap writePluginArchive(QVariantMap const& cookie, QByteArray const& data, QString const& pathKey);
     static QVariantList removeOutOfRange(QVariantList input, int fromChapter, int fromVerse, int toChapter, int toVerse);
     static QVariantList normalizeJuzs(QVariantList const& source);
     static void onResultsDecorated(SimilarReference const& result);
-    static void prepareDecompression(QObject* sender, QObject* obj, const char* progressSlot);
     static bool allAyatImagesExist(QVariantList const& surahData, QString const& outputDirectory);
 };
 
