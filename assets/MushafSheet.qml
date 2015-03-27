@@ -150,10 +150,11 @@ Sheet
                 property variant totalSize: 0
                 
                 function onDeflated(success, error) {
+                    console.log("Mushaf deflated", success, error);
                     enabled = true;
                 }
                 
-                function onMushafSizeFetched(cookie, total)
+                function onMushafSizeFetched(data)
                 {
                     if (cookie == "mushafSize")
                     {
@@ -174,7 +175,7 @@ Sheet
                 }
                 
                 onCreationCompleted: {
-                    queue.sizeFetched.connect(onMushafSizeFetched);
+                    mushaf.archiveDataFetched.connect(onMushafSizeFetched);
                 }
                 
                 onTriggered: {
