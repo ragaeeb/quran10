@@ -88,8 +88,8 @@ void QueueDownloader::onDownloadProgress(QVariant const& cookie, qint64 bytesRec
 
     if ( m_uriToIndex.contains(uri) )
     {
-        element["current"] = QString::number( (bytesReceived*100.0)/bytesTotal, 'f', 2 );
-        element["total"] = 100;
+        element[KEY_CURRENT_PROGRESS] = QString::number( (bytesReceived*100.0)/bytesTotal, 'f', 2 );
+        element[KEY_TOTAL_SIZE] = 100;
 
         int i = m_uriToIndex.value(uri);
         m_model.replace(i, element);
@@ -106,11 +106,11 @@ void QueueDownloader::onRequestComplete(QVariant const& cookie, QByteArray const
 
     if ( m_uriToIndex.contains(uri) )
     {
-        element["current"] = element["total"] = 100;
+        element[KEY_CURRENT_PROGRESS] = element[KEY_TOTAL_SIZE] = 100;
 
         if (error) {
             LOGGER("Error" << cookie);
-            element["error"] = true;
+            element[KEY_ERROR] = true;
         }
 
         int i = m_uriToIndex.value(uri);
