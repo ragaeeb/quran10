@@ -58,7 +58,6 @@ private slots:
 
 signals:
     void childCardFinished(QString const& message);
-    void archiveDeflationProgress(qint64 current, qint64 total);
     void initialize();
     void lazyInitComplete();
 

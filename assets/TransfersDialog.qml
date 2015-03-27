@@ -220,8 +220,8 @@ Delegate
                         }
                         
                         onCreationCompleted: {
-                            app.deflationDone.connect(cpc.finish);
-                            app.archiveDeflationProgress.connect(onDeflationProgressChanged);
+                            offloader.deflationDone.connect(cpc.finish);
+                            offloader.archiveDeflationProgress.connect(onDeflationProgressChanged);
                             mushaf.deflationProgress.connect(onDeflationProgressChanged);
                             mushaf.deflationDone.connect(cpc.finish);
                         }

@@ -81,7 +81,7 @@ void QueryHelper::settingChanged(QString const& key)
             if ( params.contains(KEY_FORCED_UPDATE) || !suppress ) // if it's a forced update
             {
                 params[KEY_LANGUAGE] = m_translation;
-                //emit updateCheckNeeded(params);
+                emit updateCheckNeeded(params);
             }
         }
 
