@@ -59,6 +59,7 @@ private slots:
     void onUpdateCheckNeeded(QVariantMap const& params);
 
 signals:
+    void childCardFinished(QString const& message);
     void deflationDone(bool success, QString const& error);
     void archiveDeflationProgress(qint64 current, qint64 total);
     void initialize();
