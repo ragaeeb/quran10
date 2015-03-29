@@ -3,7 +3,7 @@ import bb.cascades 1.3
 Container
 {
     id: itemRoot
-    property bool peek: ListItem.view.secretPeek
+    property bool peek: ListItem.view.secretPeek != undefined ? ListItem.view.secretPeek : false
     property bool playing: ListItemData.playing ? ListItemData.playing : false
     property alias actionSetSubtitle: actionSet.subtitle
     horizontalAlignment: HorizontalAlignment.Fill

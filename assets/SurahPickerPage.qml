@@ -215,6 +215,7 @@ Page
                     }
                     
                     onSelectedOptionChanged: {
+                        textField.lastSearch = textField.lastSearch+"X";
                         textField.textChanging(textField.text);
                     }
                 }
@@ -297,7 +298,8 @@ Page
                 property bool secretPeek: false
                 scrollRole: ScrollRole.Main
                 
-                dataModel: GroupDataModel {
+                dataModel: GroupDataModel
+                {
                     id: gdm
                     sortingKeys: ["surah_id"]
                     grouping: ItemGrouping.ByFullValue
@@ -390,7 +392,10 @@ Page
                         data = offloader.normalizeJuzs(data);
                     }
                     
-                    if ( gdm.size() == 1 && data.length == 1 )
+                    var total = gdm.size();
+                    var n = data.length;
+                    
+                    if (total == 1 && n == 1)
                     {
                         var firstIndex = gdm.first();
                         
@@ -401,7 +406,7 @@ Page
                         gdm.clear();
                         gdm.insertList(data);
                     }
-                    
+
                     noElements.delegateActive = gdm.isEmpty();
                     listView.visible = !noElements.delegateActive;
                     busy.delegateActive = false;
