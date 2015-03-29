@@ -401,7 +401,7 @@ void QueryHelper::initForeignKeys() {
 
 
 bool QueryHelper::showTranslation() const {
-    return m_translation != "arabic";
+    return m_translation != ARABIC_KEY;
 }
 
 int QueryHelper::primarySize() const {
