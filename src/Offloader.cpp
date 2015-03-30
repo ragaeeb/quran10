@@ -224,15 +224,15 @@ QVariantList Offloader::computeNecessaryUpdates(QVariantMap const& q, QByteArray
     QVariantMap requestData = q.value(KEY_UPDATE_CHECK).toMap();
     bool forcedUpdate = requestData.value(KEY_FORCED_UPDATE).toBool();
 
-    if ( result.size() >= 6 )
+    if ( result.size() >= 8 )
     {
         qint64 serverTafsirVersion = result.first().toLongLong();
         qint64 myTafsirVersion = m_persist->getValueFor(KEY_TAFSIR_VERSION).toLongLong();
         qint64 serverTafsirSize = result[1].toLongLong();
 
-        qint64 serverTranslationVersion = result[3].toLongLong();
+        qint64 serverTranslationVersion = result[4].toLongLong();
         qint64 myTranslationVersion = m_persist->getValueFor(KEY_TRANSLATION_VERSION).toLongLong();
-        qint64 serverTranslationSize = result[4].toLongLong();
+        qint64 serverTranslationSize = result[5].toLongLong();
         bool tafsirUpdateNeeded = serverTafsirVersion > myTafsirVersion;
         bool translationUpdateNeeded = serverTranslationVersion > myTranslationVersion;
 
@@ -284,8 +284,9 @@ QVariantList Offloader::computeNecessaryUpdates(QVariantMap const& q, QByteArray
                     QString tafsirName = requestData.value(KEY_TAFSIR).toString();
 
                     QVariantMap q;
-                    q["name"] = tr("Tafsir");
-                    q[URI_KEY] = QString("%1/tafsir/%2.zip").arg(REMOTE_FOLDER).arg(tafsirName);
+                    q[KEY_TRANSFER_NAME] = tr("Tafsir");
+
+                    q[URI_KEY] = CommonConstants::generateHostUrl( result[3] );
                     q[TAFSIR_PATH] = tafsirName;
                     q[KEY_MD5] = serverTafsirMd5;
                     q[KEY_PLUGIN_VERSION_KEY] = KEY_TAFSIR_VERSION;
@@ -296,12 +297,12 @@ QVariantList Offloader::computeNecessaryUpdates(QVariantMap const& q, QByteArray
 
                 if (translationUpdateNeeded)
                 {
-                    QString serverTranslationMd5 = result[5];
+                    QString serverTranslationMd5 = result[6];
                     QString language = requestData.value(KEY_TRANSLATION).toString();
 
                     QVariantMap q;
-                    q["name"] = tr("Translation");
-                    q[URI_KEY] = QString("%1/translations/%2.zip").arg(REMOTE_FOLDER).arg(language);
+                    q[KEY_TRANSFER_NAME] = tr("Translation");
+                    q[URI_KEY] = CommonConstants::generateHostUrl( result[7] );
                     q[KEY_TRANSLATION] = language;
                     q[KEY_MD5] = serverTranslationMd5;
                     q[KEY_PLUGIN_VERSION_KEY] = KEY_TRANSLATION_VERSION;
