@@ -48,6 +48,12 @@ void QueryHelper::settingChanged(QString const& key)
 
         m_translation = m_persist->getValueFor(KEY_TRANSLATION).toString();
 
+        if ( m_translation.isEmpty() ) // legacy behaviour
+        {
+            m_translation = ARABIC_KEY;
+            m_persist->saveValueFor(KEY_TRANSLATION, m_translation, false);
+        }
+
         QVariantMap params;
 
         if ( showTranslation() ) // if the user didn't set to Arabic only, since arabic is already attached

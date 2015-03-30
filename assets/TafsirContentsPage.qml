@@ -12,6 +12,14 @@ Page
     onSuiteIdChanged: {
         busy.delegateActive = true;
         helper.fetchAllTafsirForSuite(listView, suiteId);
+        
+        var marker = persist.getValueFor("suitePageMarker");
+        
+        if ( marker && (marker.suiteId == suiteId) ) {
+            tafsirContentsPage.addAction(jumpToMarker);
+        } else {
+            tafsirContentsPage.removeAction(jumpToMarker);
+        }
     }
     
     titleBar: TitleBar {
@@ -225,6 +233,12 @@ Page
                 sheetControl.open();
             }
             
+            function setSuitePageMarker(ListItem)
+            {
+                persist.saveValueFor("suitePageMarker", {'suiteId': suiteId, 'indexPath': ListItem.indexPath[0]});
+                persist.showToast( qsTr("Market set"), "", "asset:///images/menu/ic_set_marker.png" );
+            }
+            
             onTriggered: {
                 console.log("UserEvent: TafsirContentTriggered");
                 definition.source = "TafsirAyats.qml";
@@ -285,6 +299,17 @@ Page
                                     }
                                 }
                                 
+                                ActionItem
+                                {
+                                    imageSource: "images/menu/ic_set_marker.png"
+                                    title: qsTr("Set Marker") + Retranslate.onLanguageChanged
+                                    
+                                    onTriggered: {
+                                        console.log("UserEvent: SetSuitePageMarker");
+                                        rootItem.ListItem.view.setSuitePageMarker(rootItem.ListItem);
+                                    }
+                                }
+                                
                                 DeleteActionItem
                                 {
                                     imageSource: "images/menu/ic_delete_suite_page.png"
@@ -319,4 +344,19 @@ Page
             asset: "images/progress/loading_suite_pages.png"
         }
     }
+    
+    attachedObjects: [
+        ActionItem
+        {
+            id: jumpToMarker
+            imageSource: "images/menu/ic_set_marker.png"
+            title: qsTr("Jump to Marker") + Retranslate.onLanguageChanged
+            
+            onTriggered: {
+                console.log("UserEvent: JumpToMarker");
+                var marker = persist.getValueFor("suitePageMarker");
+                listView.scrollToItem([marker.indexPath], ScrollAnimation.None)
+            }
+        }
+    ]
 }
