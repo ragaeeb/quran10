@@ -188,19 +188,6 @@ NavigationPane
     attachedObjects: [
         ComponentDefinition {
             id: definition
-        },
-        
-        ActionItem
-        {
-            id: editAyatsAction
-            title: qsTr("Edit Ayats") + Retranslate.onLanguageChanged
-            
-            onTriggered: {
-                console.log("UserEvent: EditAyats");
-                definition.source = "EditAyatsSheet.qml";
-                var p = definition.createObject();
-                p.open();
-            }
         }
     ]
 }
