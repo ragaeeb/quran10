@@ -182,7 +182,7 @@ void Offloader::addToHomeScreen(int chapter, int verse, QString const& label)
 
     if (!added) {
         toastMessage = tr("Could not add %1 to home screen").arg(label);
-        icon = "asset:///images/toast/yellow_delete.png";
+        icon = ASSET_YELLOW_DELETE;
     }
 
     m_persist->showToast(toastMessage, "", icon);
@@ -199,7 +199,7 @@ void Offloader::addToHomeScreen(qint64 suitePageId, QString const& label)
 
     if (!added) {
         toastMessage = tr("Could not add %1 to home screen").arg(label);
-        icon = "asset:///images/toast/yellow_delete.png";
+        icon = ASSET_YELLOW_DELETE;
     }
 
     m_persist->showToast(toastMessage, "", icon);

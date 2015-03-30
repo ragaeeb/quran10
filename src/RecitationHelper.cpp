@@ -17,6 +17,8 @@
 #define ANCHOR_KEY "anchor"
 #define PLAYLIST_KEY "playlist"
 #define LOCAL_PATH "local"
+#define KEY_QUEUE "queue"
+#define PLAYLIST_ERROR "error"
 
 using namespace canadainc;
 
@@ -35,7 +37,7 @@ QVariantMap processPlaylist(QString const& reciter, QString const& outputDirecto
     QVariantMap result;
 
     if ( !Persistance::hasSharedFolderAccess() ) {
-        result["error"] = QObject::tr("Quran10 does not have access to your Shared Folder. The app cannot download any recitations without this permission.");
+        result[PLAYLIST_ERROR] = QObject::tr("Quran10 does not have access to your Shared Folder. The app cannot download any recitations without this permission.");
         return result;
     }
 
@@ -45,7 +47,7 @@ QVariantMap processPlaylist(QString const& reciter, QString const& outputDirecto
     }
 
     if ( !q.exists() ) {
-        result["error"] = QObject::tr("Quran10 does not seem to be able to write to the output folder. Please try selecting a different output folder or restart your device.");
+        result[PLAYLIST_ERROR] = QObject::tr("Quran10 does not seem to be able to write to the output folder. Please try selecting a different output folder or restart your device.");
         return result;
     }
 
@@ -79,7 +81,7 @@ QVariantMap processPlaylist(QString const& reciter, QString const& outputDirecto
 
     if ( !queue.isEmpty() )
     {
-        result["queue"] = queue;
+        result[KEY_QUEUE] = queue;
         result[ANCHOR_KEY] = queue.last().toMap().value(URI_KEY).toString();
     }
 
@@ -91,7 +93,7 @@ QVariantMap processPlaylist(QString const& reciter, QString const& outputDirecto
         if (written) {
             result[PLAYLIST_KEY] = QUrl::fromLocalFile(PLAYLIST_TARGET);
         } else {
-            result["error"] = QObject::tr("Quran10 could not write the playlist. Please try restarting your device.");
+            result[PLAYLIST_ERROR] = QObject::tr("Quran10 could not write the playlist. Please try restarting your device.");
         }
     } else if ( toPlay.size() == 1 ) {
         result[PLAYLIST_KEY] = QUrl::fromLocalFile( toPlay.first() );
@@ -244,10 +246,10 @@ void RecitationHelper::onPlaylistReady()
 
     LOGGER(result);
 
-    if ( result.contains("error") ) {
-        m_persistance->showToast( result.value("error").toString(), "", "asset:///images/toast/yellow_delete.png" );
-    } else if ( result.contains("queue") ) {
-        QVariantList queue = result.value("queue").toList();
+    if ( result.contains(PLAYLIST_ERROR) ) {
+        m_persistance->showToast( result.value(PLAYLIST_ERROR).toString(), "", ASSET_YELLOW_DELETE );
+    } else if ( result.contains(KEY_QUEUE) ) {
+        QVariantList queue = result.value(KEY_QUEUE).toList();
         m_anchor = result.value(ANCHOR_KEY).toString();
         m_queue->process(queue);
 
