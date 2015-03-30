@@ -18,11 +18,6 @@ QueueDownloader::~QueueDownloader() {
 }
 
 
-void QueueDownloader::checkSize(QVariant const& cookie, QString const& uri) {
-    m_network.getFileSize(uri, cookie);
-}
-
-
 bool QueueDownloader::processNext()
 {
     // 0 elements, -1
@@ -35,9 +30,9 @@ bool QueueDownloader::processNext()
         current["timestamp"] = QDateTime::currentMSecsSinceEpoch();
 
         LOGGER("Request completed, now processing" << current);
-        QString uri = current.value(URI_KEY).toString();
+        QUrl uri = current.value(URI_KEY).toUrl();
 
-        m_uriToIndex.insert(uri, m_currentIndex);
+        m_uriToIndex.insert( uri.toString(), m_currentIndex );
         m_network.doGet(uri, current);
 
         ++m_currentIndex;
@@ -51,7 +46,7 @@ bool QueueDownloader::processNext()
 
 void QueueDownloader::process(QVariantMap const& toProcess)
 {
-    if ( !m_uriToIndex.contains( toProcess.value(URI_KEY).toString() ) )
+    if ( !m_uriToIndex.contains( toProcess.value(URI_KEY).toUrl().toString() ) )
     {
         m_model.append(toProcess);
         processNext();
@@ -69,7 +64,7 @@ void QueueDownloader::process(QVariantList const& toProcess)
     {
         QVariantMap qvm = current.toMap();
 
-        if ( !m_uriToIndex.contains( qvm.value(URI_KEY).toString() ) ) {
+        if ( !m_uriToIndex.contains( qvm.value(URI_KEY).toUrl().toString() ) ) {
             cleaned << current;
         }
     }
@@ -84,7 +79,7 @@ void QueueDownloader::process(QVariantList const& toProcess)
 void QueueDownloader::onDownloadProgress(QVariant const& cookie, qint64 bytesReceived, qint64 bytesTotal)
 {
     QVariantMap element = cookie.toMap();
-    QString uri = element.value(URI_KEY).toString();
+    QString uri = element.value(URI_KEY).toUrl().toString();
 
     if ( m_uriToIndex.contains(uri) )
     {
@@ -102,7 +97,8 @@ void QueueDownloader::onDownloadProgress(QVariant const& cookie, qint64 bytesRec
 void QueueDownloader::onRequestComplete(QVariant const& cookie, QByteArray const& data, bool error)
 {
     QVariantMap element = cookie.toMap();
-    QString uri = element.value(URI_KEY).toString();
+    QUrl url = element.value(URI_KEY).toUrl();
+    QString uri = url.toString();
 
     if ( m_uriToIndex.contains(uri) )
     {
