@@ -72,6 +72,7 @@ public:
         SettingUpBookmarks,
         SetupBookmarks,
         UnlinkAyatsFromTafsir,
+        UpdateTafsirLink
     };
 };
 

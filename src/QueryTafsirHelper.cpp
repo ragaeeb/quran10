@@ -223,9 +223,9 @@ void QueryTafsirHelper::linkAyatToTafsir(QObject* caller, qint64 suitePageId, in
     if (chapter > 0)
     {
         if (fromVerse == 0) {
-            query = QString("INSERT OR IGNORE INTO explanations (surah_id,suite_page_id) VALUES(%1,%2)").arg(chapter).arg(suitePageId);
+            query = QString("INSERT OR REPLACE INTO explanations (surah_id,suite_page_id) VALUES(%1,%2)").arg(chapter).arg(suitePageId);
         } else {
-            query = QString("INSERT OR IGNORE INTO explanations (surah_id,from_verse_number,to_verse_number,suite_page_id) VALUES(%1,%2,%3,%4)").arg(chapter).arg(fromVerse).arg(toVerse).arg(suitePageId);
+            query = QString("INSERT OR REPLACE INTO explanations (surah_id,from_verse_number,to_verse_number,suite_page_id) VALUES(%1,%2,%3,%4)").arg(chapter).arg(fromVerse).arg(toVerse).arg(suitePageId);
         }
 
         m_sql->executeQuery(caller, query, linkId);
@@ -362,6 +362,15 @@ void QueryTafsirHelper::unlinkAyatsForTafsir(QObject* caller, QVariantList const
 
     QString query = QString("DELETE FROM explanations WHERE id IN (%1) AND suite_page_id=%2").arg( combine(ids) ).arg(suitePageId);
     m_sql->executeQuery(caller, query, QueryId::UnlinkAyatsFromTafsir);
+}
+
+
+void QueryTafsirHelper::updateTafsirLink(QObject* caller, qint64 explanationId, int surahId, int fromVerse, int toVerse)
+{
+    LOGGER(explanationId << surahId << fromVerse << toVerse);
+
+    QString query = QString("UPDATE explanations SET surah_id=%2,from_verse_number=%3,to_verse_number=%4 WHERE id=%1").arg(explanationId).arg(surahId).arg(fromVerse).arg(toVerse);
+    m_sql->executeQuery(caller, query, QueryId::UpdateTafsirLink);
 }
 
 

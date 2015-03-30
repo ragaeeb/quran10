@@ -122,6 +122,15 @@ Sheet
                 horizontalAlignment: HorizontalAlignment.Fill
                 content.flags: TextContentFlag.ActiveTextOff | TextContentFlag.EmoticonsOff
                 input.flags: TextInputFlag.SpellCheckOff | TextInputFlag.AutoPeriodOff | TextInputFlag.AutoCorrectionOff
+                
+                gestureHandlers: [
+                    DoubleTapHandler {
+                        onDoubleTapped: {
+                            console.log("UserEvent: IndividualPrefixDoubleTapped");
+                            prefix.text = textUtils.toTitleCase( persist.getClipboardText() );
+                        }
+                    }
+                ]
             }
             
             TextField
@@ -159,6 +168,15 @@ Sheet
                 horizontalAlignment: HorizontalAlignment.Fill
                 content.flags: TextContentFlag.ActiveTextOff | TextContentFlag.EmoticonsOff
                 input.flags: TextInputFlag.SpellCheckOff | TextInputFlag.AutoPeriodOff | TextInputFlag.AutoCorrectionOff
+                
+                gestureHandlers: [
+                    DoubleTapHandler {
+                        onDoubleTapped: {
+                            console.log("UserEvent: IndividualKunyaDoubleTapped");
+                            kunya.text = textUtils.toTitleCase( persist.getClipboardText() );
+                        }
+                    }
+                ]
             }
             
             TextField

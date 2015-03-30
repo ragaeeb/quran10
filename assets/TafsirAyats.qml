@@ -34,6 +34,7 @@ Page
             onTriggered: {
                 console.log("UserEvent: TafsirAyatAddTriggered");
                 prompt.inputField.resetDefaultText();
+                prompt.resetIndexPath();
                 prompt.show();
             }
         },
@@ -64,6 +65,7 @@ Page
                 var p = definition.createObject();
                 p.picked.connect(onPicked);
                 
+                prompt.resetIndexPath();
                 navigationPane.push(p);
             }
         },
@@ -136,6 +138,8 @@ Page
             onTriggered: {
                 console.log("UserEvent: LookupChapter");
                 definition.source = "SurahPickerPage.qml";
+                
+                prompt.resetIndexPath();
                 var p = definition.createObject();
                 p.picked.connect(onPicked);
                 p.focusOnSearchBar = true;
@@ -161,6 +165,31 @@ Page
                 id: adm
             }
             
+            multiSelectHandler.actions: [
+                DeleteActionItem
+                {
+                    imageSource: "images/menu/ic_unlink_tafsir_ayat.png"
+                    title: qsTr("Unlink") + Retranslate.onLanguageChanged
+                    
+                    onTriggered: {
+                        console.log("UserEvent: UnlinkAyatsFromTafsirTriggered");
+                        
+                        var all = listView.selectionList();
+                        var ids = [];
+                        
+                        for (var i = all.length-1; i >= 0; i--) {
+                            ids.push( adm.data(all[i]).id );
+                        }
+                        
+                        helper.unlinkNarrationsForTafsir(listView, ids, suitePageId);
+                        
+                        for (var i = all.length-1; i >= 0; i--) {
+                            adm.removeAt( all[i][0] );
+                        }
+                    }
+                }
+            ]
+            
             function onDataLoaded(id, data)
             {
                 if (id == QueryId.FetchAyatsForTafsir)
@@ -183,6 +212,8 @@ Page
                     while (navigationPane.top != narrationsPage) {
                         navigationPane.pop();
                     }
+                } else if (id == QueryId.UpdateTafsirLink) {
+                    persist.showToast( qsTr("Ayat link updated"), "", "asset:///images/menu/ic_update_link.png" );
                 }
                 
                 busy.delegateActive = false;
@@ -208,14 +239,39 @@ Page
 				} else {
 					page.fromSurahId = d.surah_id;
 					page.toSurahId = d.surah_id;
+					prompt.indexPath = indexPath;
 					page.picked.connect(lookupAction.onPicked);
 				}
 				
                 navigationPane.push(page);
             }
             
-            function unlink(ListItemData) {
-                tafsirHelper.unlinkAyatsForTafsir(listView, [ListItemData.id], suitePageId);
+            function updateLink(ListItem)
+            {
+                var chapter = ListItem.data.surah_id;
+                var fromVerse = ListItem.data.from_verse_number;
+                var toVerse = ListItem.data.to_verse_number;
+
+                var defaultText = chapter+":";
+                
+                if (fromVerse > 0)
+                {
+                    defaultText += fromVerse;
+                    
+                    if (toVerse >= fromVerse) {
+                        defaultText += "-"+toVerse;
+                    }
+                }
+                
+                prompt.indexPath = ListItem.indexPath;
+                prompt.inputField.defaultText = defaultText;
+                prompt.show();
+            }
+            
+            function unlink(ListItem)
+            {
+                tafsirHelper.unlinkAyatsForTafsir(listView, [ListItem.data.id], suitePageId);
+                adm.removeAt(ListItem.indexPath[0]);
             }
             
             listItemComponents: [
@@ -230,9 +286,21 @@ Page
                         status: ListItemData.id
                         
                         contextActions: [
-                            ActionSet {
+                            ActionSet
+                            {
                                 title: rootItem.id
                                 subtitle: rootItem.status
+                                
+                                ActionItem
+                                {
+                                    imageSource: "images/menu/ic_update_link.png"
+                                    title: qsTr("Edit") + Retranslate.onLanguageChanged
+                                    
+                                    onTriggered: {
+                                        console.log("UserEvent: UpdateAyatTafsirLink");
+                                        rootItem.ListItem.view.updateLink(rootItem.ListItem);
+                                    }
+                                }
                                 
                                 DeleteActionItem
                                 {
@@ -240,9 +308,8 @@ Page
                                     title: qsTr("Unlink") + Retranslate.onLanguageChanged
                                     
                                     onTriggered: {
-                                        console.log("UserEvent: UnlinkNarrationFromTafsir");
-                                        rootItem.ListItem.view.unlink(ListItemData);
-                                        rootItem.ListItem.view.dataModel.removeAt(rootItem.ListItem.indexPath[0]);
+                                        console.log("UserEvent: UnlinkAyatFromTafsir");
+                                        rootItem.ListItem.view.unlink(rootItem.ListItem);
                                     }
                                 }
                             }
@@ -274,11 +341,16 @@ Page
         SystemPrompt
         {
             id: prompt
+            property variant indexPath
             body: qsTr("Enter the chapter and verse associated with this tafsir:") + Retranslate.onLanguageChanged
             inputField.inputMode: SystemUiInputMode.NumbersAndPunctuation
             inputField.emptyText: qsTr("(ie: 2:4 for Surah Baqara verse #4)") + Retranslate.onLanguageChanged
             inputField.maximumLength: 12
             title: qsTr("Enter verse") + Retranslate.onLanguageChanged
+            
+            function resetIndexPath() {
+                indexPath = undefined;
+            }
             
             onFinished: {
                 if (value == SystemUiResult.ConfirmButtonSelection)
@@ -305,7 +377,18 @@ Page
                             }
                         }
                         
-                        tafsirHelper.linkAyatToTafsir(listView, suitePageId, chapter, fromVerse, toVerse);
+                        if (indexPath)
+                        {
+                            var current = adm.data(indexPath);
+                            current.surah_id = chapter;
+                            current.from_verse_number = fromVerse;
+                            current.to_verse_number = toVerse;
+                            
+                            tafsirHelper.updateTafsirLink(listView, current.id, chapter, fromVerse, toVerse);
+                            adm.replace(indexPath[0], current);
+                        } else {
+                            tafsirHelper.linkAyatToTafsir(listView, suitePageId, chapter, fromVerse, toVerse);
+                        }
                     } else {
                         persist.showToast( qsTr("Invalid entry specified. Please enter something with the Chapter:Verse scheme (ie: 2:55 for Surah Baqara vese #55)"), "", "asset:///images/toast/invalid_entry.png" );
                     }
