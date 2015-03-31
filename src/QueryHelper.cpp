@@ -339,7 +339,7 @@ void QueryHelper::fetchBio(QObject* caller, qint64 individualId)
     LOGGER(individualId);
 
     ATTACH_TAFSIR;
-    m_sql.executeQuery(caller, QString("SELECT %1 AS name,uri,biography FROM individuals i WHERE i.id=%2").arg( NAME_FIELD("i") ).arg(individualId), QueryId::FetchBio);
+    m_sql.executeQuery(caller, QString("SELECT %1 AS bio,reference FROM biographies b WHERE b.individual=%2").arg( NAME_FIELD("i") ).arg(individualId), QueryId::FetchBio);
 }
 
 

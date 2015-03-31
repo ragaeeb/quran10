@@ -48,6 +48,7 @@ NavigationPane
                 ActionBar.placement: 'Signature' in ActionBarPlacement ? ActionBarPlacement["Signature"] : ActionBarPlacement.OnBar
                 
                 onTriggered: {
+                    console.log("UserEvent: NewSuite");
                     definition.source = "CreateTafsirPage.qml";
                     var page = definition.createObject();
                     page.createTafsir.connect(onCreate);

@@ -10,7 +10,8 @@ TextField
     gestureHandlers: [
         DoubleTapHandler
         {
-            function onPicked(id) {
+            function onPicked(id)
+            {
                 tf.text = id;
                 navigationPane.pop();
             }
@@ -20,8 +21,9 @@ TextField
                 definition.source = "IndividualPickerPage.qml";
 
                 var p = definition.createObject();
-                p.allowEditing = true;
                 p.picked.connect(onPicked);
+                tafsirHelper.fetchFrequentIndividuals(p.pickerList);
+                
                 navigationPane.push(p);
             }
         }
