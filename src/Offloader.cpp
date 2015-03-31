@@ -373,6 +373,12 @@ void Offloader::onArchiveDeflated(bool success, QString const& error, QVariantMa
 }
 
 
+QVariantList Offloader::decorateWebsites(QVariantList const& input)
+{
+    return input;
+}
+
+
 Offloader::~Offloader()
 {
 }

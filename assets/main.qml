@@ -121,6 +121,7 @@ TabbedPane
         {
             add(quotesTab);
             add(tafsirTab);
+            add(rijaalTab);
             
             //activeTab = tafsirTab;
         } else {
@@ -166,6 +167,24 @@ TabbedPane
             
             delegate: Delegate {
                 source: "TafsirPane.qml"
+            }
+        },
+        
+        Tab
+        {
+            id: rijaalTab
+            title: qsTr("Rijaal") + Retranslate.onLanguageChanged
+            description: qsTr("Individuals") + Retranslate.onLanguageChanged
+            imageSource: "images/list/ic_companion.png"
+            delegateActivationPolicy: TabDelegateActivationPolicy.ActivateWhenSelected
+            newContentAvailable: admin.pendingUpdates
+            
+            onTriggered: {
+                console.log("UserEvent: RijaalTab");
+            }
+            
+            delegate: Delegate {
+                source: "IndividualsPane.qml"
             }
         }
     ]
