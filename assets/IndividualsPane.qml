@@ -93,7 +93,7 @@ NavigationPane
             ActionItem
             {
                 id: addAction
-                imageSource: "images/menu/ic_link_ayat_to_tafsir.png"
+                imageSource: "images/menu/ic_add_rijaal.png"
                 title: qsTr("Add") + Retranslate.onLanguageChanged
                 ActionBar.placement: ActionBarPlacement.OnBar
                 
