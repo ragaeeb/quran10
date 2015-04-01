@@ -172,6 +172,20 @@ void QueryTafsirHelper::fetchMentions(QObject* caller, qint64 individualId)
 }
 
 
+void QueryTafsirHelper::fetchTeachers(QObject* caller, qint64 individualId)
+{
+    LOGGER(individualId);
+    m_sql->executeQuery(caller, QString("SELECT i.id,%1 AS teacher FROM teachers INNER JOIN individuals i ON teachers.teacher=i.id WHERE teachers.individual=%2").arg( NAME_FIELD("i") ).arg(individualId), QueryId::FetchTeachers);
+}
+
+
+void QueryTafsirHelper::fetchStudents(QObject* caller, qint64 individualId)
+{
+    LOGGER(individualId);
+    m_sql->executeQuery(caller, QString("SELECT i.id,%1 AS student FROM teachers INNER JOIN individuals i ON teachers.individual=i.id WHERE teachers.teacher=%2").arg( NAME_FIELD("i") ).arg(individualId), QueryId::FetchStudents);
+}
+
+
 void QueryTafsirHelper::fetchFrequentIndividuals(QObject* caller, int n) {
     m_sql->executeQuery(caller, QString("SELECT author AS id,prefix,name,kunya,uri,hidden,biography,birth,death,companions.id AS companion_id FROM (SELECT author,COUNT(author) AS n FROM suites GROUP BY author UNION SELECT translator AS author,COUNT(translator) AS n FROM suites GROUP BY author UNION SELECT explainer AS author,COUNT(explainer) AS n FROM suites GROUP BY author ORDER BY n DESC LIMIT %1) INNER JOIN individuals ON individuals.id=author LEFT JOIN companions ON companions.id=individuals.id GROUP BY individuals.id ORDER BY name,kunya,prefix").arg(n), QueryId::FetchAllIndividuals);
 }

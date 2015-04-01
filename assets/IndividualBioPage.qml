@@ -11,222 +11,279 @@ Page
         helper.fetchBio(bioPage, individualId);
         helper.fetchAllQuotes(bioPage, individualId);
         helper.fetchAllTafsir(bioPage, individualId);
+        tafsirHelper.fetchIndividualData(bioPage, individualId);
+        tafsirHelper.fetchMentions(bioPage, individualId);
+        tafsirHelper.fetchTeachers(bioPage, individualId);
+        tafsirHelper.fetchStudents(bioPage, individualId);
     }
     
     function onDataLoaded(id, data)
     {
-        if (id == QueryId.FetchBio)
-        {
-            if (data.length > 0)
-            {
-                titleBar.title = data[0].name;
-                var uri = data[0].uri ? data[0].uri+"\n" : "";
-                body.text = data[0].biography+"\n\n"+uri;
-                
-                if ( body.text.trim().length == 0 ) {
-                    body.text = "No biography found for individual...";
-                }
-            } else {
-                titleBar.title = qsTr("Quran10");
-                body.text = "Individual was not found...";
+        if (id == QueryId.FetchAllTafsirForSuite && data.length > 0) {
+            persist.invoke( "com.canadainc.Quran10.tafsir.previewer", "", "", "quran://tafsir/"+data[0].id.toString() );
+        } else if (id == QueryId.FetchIndividualData && data.length > 0) {
+            var metadata = data[0];
+            
+            var result = "";
+            
+            if (metadata.prefix) {
+                result += metadata.prefix+" ";
             }
-        } else if (id == QueryId.FetchAllTafsir || id == QueryId.FetchAllQuotes) {
-            adm.append(data);
-            workHeader.count += data.length;
-        } else if (id == QueryId.FetchAllTafsirForSuite && data.length > 0) {
-            persist.invoke("com.canadainc.Quran10.tafsir.previewer", "", "", "quran://tafsir/"+data[0].id);
+            
+            result += metadata.name;
+            
+            if (metadata.displayName) {
+                titleBar.title = metadata.displayName;
+            } else {
+                titleBar.title = metadata.name;
+            }
+            
+            if (metadata.kunya) {
+                result += " (%1)".arg(metadata.kunya);
+            }
+            
+            result += " ";
+            
+            if (metadata.birth && metadata.death) {
+                result += qsTr("(%1-%2 AH)").arg(metadata.birth).arg(metadata.death);
+            } else if (metadata.birth) {
+                result += qsTr("(born %1 AH)").arg(metadata.birth);
+            } else if (metadata.death) {
+                result += qsTr("(died %1 AH)").arg(metadata.death);
+            }
+            
+            result += "\n";
+
+            body.text = "\n"+result;
+            ft.play();
         }
+        
+        offloader.fillType(data, id, bioModel);
     }
     
     titleBar: TitleBar {}
     
     Container
     {
+        layout: DockLayout {}
         horizontalAlignment: HorizontalAlignment.Fill
         verticalAlignment: VerticalAlignment.Fill
-        leftPadding: 10; rightPadding: 10
+        background: bg.imagePaint
         
-        TextArea
+        Container
         {
-            id: body
-            editable: false
-            backgroundVisible: false
-            content.flags: TextContentFlag.ActiveText | TextContentFlag.EmoticonsOff
-            input.flags: TextInputFlag.AutoCapitalizationOff | TextInputFlag.AutoCorrectionOff | TextInputFlag.SpellCheckOff | TextInputFlag.WordSubstitutionOff | TextInputFlag.AutoPeriodOff
-            topPadding: 0;
-            textStyle.fontSize: FontSize.Medium
-            bottomPadding: 0; bottomMargin: 0
+            background: Color.Black
+            opacity: 0
+            horizontalAlignment: HorizontalAlignment.Fill
             verticalAlignment: VerticalAlignment.Fill
             
-            layoutProperties: StackLayoutProperties {
-                spaceQuota: 1
-            }
+            animations: [
+                FadeTransition {
+                    id: ft
+                    fromOpacity: 0
+                    toOpacity: 0.5
+                    easingCurve: StockCurve.SineOut
+                    duration: 2000
+                }
+            ]
         }
         
-        Header {
-            id: bioHeader
-            property int count: 0
-            subtitle: count
-            visible: count > 0
-            title: qsTr("Biographies & Mentions") + Retranslate.onLanguageChanged
-            bottomMargin: 0; topMargin: 0
-        }
-        
-        ListView
+        Container
         {
-            id: bios
+            horizontalAlignment: HorizontalAlignment.Fill
+            verticalAlignment: VerticalAlignment.Fill
             
-            dataModel: ArrayDataModel {
-                id: bioModel
-            }
-            
-            function itemType(data, indexPath)
+            TextArea
             {
-                if (data.points) {
-                    return "jarwahTahdeel";
-                } else {
-                    return "bio";
+                id: body
+                editable: false
+                backgroundVisible: false
+                content.flags: TextContentFlag.ActiveText | TextContentFlag.EmoticonsOff
+                input.flags: TextInputFlag.SpellCheckOff
+                topPadding: 0;
+                textStyle.fontSize: FontSize.Large
+                bottomPadding: 0; bottomMargin: 0
+                horizontalAlignment: HorizontalAlignment.Fill
+                textStyle.textAlign: TextAlign.Center
+                textStyle.fontWeight: FontWeight.Bold
+                textStyle.fontStyle: FontStyle.Italic
+                visible: text.length > 0
+                
+                layoutProperties: StackLayoutProperties {
+                    spaceQuota: -1
                 }
             }
             
-            listItemComponents: [
-                ListItemComponent
+            Divider {
+                topMargin: 0; bottomMargin: 0
+            }
+            
+            ListView
+            {
+                id: bios
+                
+                layout: StackListLayout {
+                    headerMode: ListHeaderMode.Sticky
+                }
+                
+                dataModel: GroupDataModel
                 {
-                    type: "bio"
-                    
-                    Container
+                    id: bioModel
+                    sortingKeys: ["type"]
+                    grouping: ItemGrouping.ByFullValue
+                }
+                
+                function getHeaderName(ListItemData)
+                {
+                    if (ListItemData == "mentions") {
+                        return qsTr("Mentions");
+                    } else if (ListItemData == "bios") {
+                        return qsTr("Biographies");
+                    } else if (ListItemData == "tafsir") {
+                        return qsTr("Explanations");
+                    } else if (ListItemData == "teachers") {
+                        return qsTr("Teachers");
+                    } else if (ListItemData == "students") {
+                        return qsTr("Students");
+                    } else  {
+                        return qsTr("Quotes");
+                    }
+                }
+                
+                function itemType(data, indexPath)
+                {
+                    if (indexPath.length == 1) {
+                        return "header";
+                    } else {
+                        return data.type;
+                    }
+                }
+                
+                listItemComponents: [
+                    ListItemComponent
                     {
-                        id: bioContainer
-                        leftPadding: 10; rightPadding: 10; bottomPadding: 10
-                        horizontalAlignment: HorizontalAlignment.Fill
-                        verticalAlignment: VerticalAlignment.Fill
+                        type: "header"
                         
-                        Label {
-                            multiline: true
-                            text: qsTr("%1\n\n%2").arg(ListItemData.bio).arg(ListItemData.reference) + Retranslate.onLanguageChanged
+                        Header
+                        {
+                            id: header
+                            title: header.ListItem.view.getHeaderName(ListItemData)
+                            subtitle: header.ListItem.view.dataModel.childCount(header.ListItem.indexPath)
+                        }
+                    },
+                    
+                    ListItemComponent
+                    {
+                        type: "bios"
+                        
+                        Container
+                        {
+                            id: bioContainer
+                            horizontalAlignment: HorizontalAlignment.Fill
+                            verticalAlignment: VerticalAlignment.Fill
+                            
+                            TextArea
+                            {
+                                editable: false
+                                backgroundVisible: false
+                                content.flags: TextContentFlag.ActiveText | TextContentFlag.EmoticonsOff
+                                input.flags: TextInputFlag.SpellCheckOff
+                                text: qsTr("%1\n%2").arg(ListItemData.bio).arg(ListItemData.reference) + Retranslate.onLanguageChanged
+                                horizontalAlignment: HorizontalAlignment.Fill
+                                textStyle.textAlign: TextAlign.Center
+                            }
+                            
+                            Divider {
+                                topMargin: 0; bottomMargin: 0
+                                visible: bioContainer.ListItem.indexPath != bioContainer.ListItem.view.dataModel.last()
+                            }
+                        }
+                    },
+                    
+                    ListItemComponent
+                    {
+                        type: "mentions"
+                        
+                        StandardListItem
+                        {
+                            description: ListItemData.body.replace(/\n/g, " ").substr(0, 60) + "..."
+                            imageSource: ListItemData.points > 0 ? "images/list/ic_like.png" : "images/list/ic_dislike.png"
+                            title: ListItemData.author
+                        }
+                    },
+                    
+                    ListItemComponent
+                    {
+                        type: "quotes"
+                        
+                        TextArea {
+                            backgroundVisible: false
+                            editable: false
+                            input.flags: TextInputFlag.SpellCheckOff
+                            content.flags: TextContentFlag.ActiveTextOff | TextContentFlag.EmoticonsOff
+                            text: qsTr("“%1” (%2)").arg(ListItemData.body).arg(ListItemData.reference) + Retranslate.onLanguageChanged
                             horizontalAlignment: HorizontalAlignment.Fill
                             textStyle.textAlign: TextAlign.Center
                         }
+                    },
+                    
+                    ListItemComponent
+                    {
+                        type: "tafsir"
                         
-                        Divider {
-                            topMargin: 0; bottomMargin: 0
-                            visible: itemRoot.ListItem.indexPath[0] != itemRoot.ListItem.view.dataModel.size()-1
+                        StandardListItem
+                        {
+                            description: ListItemData.author
+                            imageSource: "images/list/ic_tafsir.png"
+                            title: ListItemData.title
+                        }
+                    },
+                    
+                    ListItemComponent
+                    {
+                        type: "teachers"
+                        
+                        StandardListItem
+                        {
+                            imageSource: "images/list/ic_companion.png"
+                            title: ListItemData.teacher
+                        }
+                    },
+                    
+                    ListItemComponent
+                    {
+                        type: "students"
+                        
+                        StandardListItem
+                        {
+                            imageSource: "images/list/ic_individual.png"
+                            title: ListItemData.student
                         }
                     }
-                },
+                ]
                 
-                ListItemComponent
-                {
-                    type: "jarwahTahdeel"
+                onTriggered: {
+                    var d = dataModel.data(indexPath);
                     
-                    StandardListItem
-                    {
-                        description: ListItemData.body.replace(/\n/g, " ").substr(0, 60) + "..."
-                        imageSource: ListItemData.points > 0 ? "images/list/ic_like.png" : "images/list/ic_dislike.png"
-                        title: ListItemData.author
+                    if (d.type == "students" || d.type == "teachers") {
+                        persist.invoke( "com.canadainc.Quran10.bio.previewer", "", "", "", d.id.toString() );
+                    } else if (d.type == "tafsir") {
+                        console.log("UserEvent: InvokeTafsir");
+                        helper.fetchAllTafsirForSuite(bioPage, d.id);
                     }
                 }
-            ]
-            
-            onTriggered: {
-                var d = dataModel.data(indexPath);
                 
-                if (d.body) {
-                
-                } else {
-                    console.log("UserEvent: InvokeTafsir");
-                    helper.fetchAllTafsirForSuite(bioPage, d.id);
+                layoutProperties: StackLayoutProperties {
+                    spaceQuota: 1
                 }
-            }
-            
-            layoutProperties: StackLayoutProperties {
-                spaceQuota: 1
-            }
-        }
-        
-        Divider {
-            topMargin: 0; bottomMargin: 0
-        }
-        
-        Header {
-            id: workHeader
-            property int count: 0
-            subtitle: count
-            visible: count > 0
-            title: qsTr("Works") + Retranslate.onLanguageChanged
-            bottomMargin: 0; topMargin: 0
-        }
-        
-        ListView
-        {
-            id: listView
-            
-            dataModel: ArrayDataModel {
-                id: adm
-            }
-            
-            function itemType(data, indexPath)
-            {
-                if (data.body) {
-                    return "quote";
-                } else {
-                    return "tafsir";
-                }
-            }
-            
-            listItemComponents: [
-                ListItemComponent
-                {
-                    type: "quote"
-                    
-                    Container
-                    {
-                        id: itemRoot
-                        leftPadding: 10; rightPadding: 10; bottomPadding: 10
-                        horizontalAlignment: HorizontalAlignment.Fill
-                        verticalAlignment: VerticalAlignment.Fill
-                        
-                        Label {
-                            multiline: true
-                            text: qsTr("“%1” - %2").arg(ListItemData.body).arg(ListItemData.author) + Retranslate.onLanguageChanged
-                            horizontalAlignment: HorizontalAlignment.Fill
-                            textStyle.textAlign: TextAlign.Center
-                        }
-                        
-                        Divider {
-                            topMargin: 0; bottomMargin: 0
-                            visible: itemRoot.ListItem.indexPath[0] != itemRoot.ListItem.view.dataModel.size()-1
-                        }
-                    }
-                },
-                
-                ListItemComponent
-                {
-                    type: "tafsir"
-                    
-                    StandardListItem
-                    {
-                        description: ListItemData.author
-                        imageSource: "images/list/ic_tafsir.png"
-                        title: ListItemData.title
-                    }
-                }
-            ]
-            
-            onTriggered: {
-                var d = dataModel.data(indexPath);
-                
-                if (d.body) {
-                    
-                } else {
-                    console.log("UserEvent: InvokeTafsir");
-                    helper.fetchAllTafsirForSuite(bioPage, d.id);
-                }
-            }
-            
-            layoutProperties: StackLayoutProperties {
-                spaceQuota: 1
             }
         }
     }
+    
+    attachedObjects: [
+        ImagePaintDefinition {
+            id: bg
+            imageSource: "images/backgrounds/background_ayat_page.jpg"
+        }
+    ]
 }

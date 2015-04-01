@@ -44,6 +44,8 @@ public:
     Q_INVOKABLE void fetchAllIndividuals(QObject* caller);
     Q_INVOKABLE void fetchAllWebsites(QObject* caller, qint64 individualId);
     Q_INVOKABLE void fetchMentions(QObject* caller, qint64 individualId);
+    Q_INVOKABLE void fetchTeachers(QObject* caller, qint64 individualId);
+    Q_INVOKABLE void fetchStudents(QObject* caller, qint64 individualId);
     Q_INVOKABLE void fetchFrequentIndividuals(QObject* caller, int n=7);
     void fetchAllTafsir(QObject* caller, qint64 individualId);
     Q_INVOKABLE void fetchTafsirMetadata(QObject* caller, qint64 suiteId);

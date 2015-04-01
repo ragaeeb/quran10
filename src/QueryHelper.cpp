@@ -338,7 +338,7 @@ void QueryHelper::fetchBio(QObject* caller, qint64 individualId)
     LOGGER(individualId);
 
     ATTACH_TAFSIR;
-    m_sql.executeQuery(caller, QString("SELECT %1 AS bio,reference FROM biographies b WHERE b.individual=%2").arg( NAME_FIELD("i") ).arg(individualId), QueryId::FetchBio);
+    m_sql.executeQuery(caller, QString("SELECT bio,reference FROM biographies WHERE individual=%1").arg(individualId), QueryId::FetchBio);
 }
 
 
@@ -388,7 +388,7 @@ void QueryHelper::fetchAllQuotes(QObject* caller, qint64 individualId)
 
     ATTACH_TAFSIR;
 
-    QStringList queryParams = QStringList() << "SELECT quotes.id AS id,individuals.name AS author,body FROM quotes INNER JOIN individuals ON individuals.id=quotes.author";
+    QStringList queryParams = QStringList() << "SELECT quotes.id AS id,individuals.name AS author,body,reference FROM quotes INNER JOIN individuals ON individuals.id=quotes.author";
 
     if (individualId) {
         queryParams << QString("WHERE author=%1").arg(individualId);

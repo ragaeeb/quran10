@@ -6,6 +6,7 @@
 #include "Logger.h"
 #include "Persistance.h"
 #include "QueueDownloader.h"
+#include "QueryId.h"
 #include "TextUtils.h"
 #include "ThreadUtils.h"
 #include "ZipThread.h"
@@ -376,6 +377,35 @@ void Offloader::onArchiveDeflated(bool success, QString const& error, QVariantMa
 QVariantList Offloader::decorateWebsites(QVariantList const& input)
 {
     return input;
+}
+
+
+bool Offloader::fillType(QVariantList input, int queryId, bb::cascades::GroupDataModel* gdm)
+{
+    QMap<int,QString> map;
+    map[QueryId::FetchMentions] = "mentions";
+    map[QueryId::FetchBio] = "bios";
+    map[QueryId::FetchAllTafsir] = "tafsir";
+    map[QueryId::FetchAllQuotes] = tr("quotes");
+    map[QueryId::FetchTeachers] = tr("teachers");
+    map[QueryId::FetchStudents] = tr("students");
+
+    if ( map.contains(queryId) )
+    {
+        QString type = map.value(queryId);
+
+        for (int i = input.size()-1; i >= 0; i--)
+        {
+            QVariantMap q = input[i].toMap();
+            q["type"] = type;
+            input[i] = q;
+        }
+
+        gdm->insertList(input);
+        return true;
+    }
+
+    return false;
 }
 
 
