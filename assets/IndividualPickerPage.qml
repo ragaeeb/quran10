@@ -87,34 +87,6 @@ Page
                     ]
                 }
             }
-            
-            expandableArea.onExpandedChanged: {
-                searchField.requestFocus();
-            }
-            
-            expandableArea.content: Container
-            {
-                DropDown
-                {
-                    id: filter
-                    title: qsTr("Filter") + Retranslate.onLanguageChanged
-                    
-                    Option {
-                        description: qsTr("Display everyone") + Retranslate.onLanguageChanged
-                        imageSource: "images/dropdown/search_author.png"
-                        text: qsTr("None") + Retranslate.onLanguageChanged
-                        value: ""
-                        selected: true
-                    }
-                    
-                    Option {
-                        description: qsTr("Sahabahs") + Retranslate.onLanguageChanged
-                        imageSource: "images/dropdown/search_quote_body.png"
-                        text: qsTr("Companions") + Retranslate.onLanguageChanged
-                        value: "companions"
-                    }
-                }
-            }
         }
     }
     
@@ -183,6 +155,8 @@ Page
                     
                     contentLoaded(data.length);
                     busy.delegateActive = false;
+                    noElements.delegateActive = adm.isEmpty();
+                    listView.visible = !adm.isEmpty();
                 }
             }
             

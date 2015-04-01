@@ -35,7 +35,7 @@ Page
         ActionItem
         {
             id: addSite
-            imageSource: "images/menu/ic_link_ayat_to_tafsir.png"
+            imageSource: "images/menu/ic_add_site.png"
             title: qsTr("Add Website") + Retranslate.onLanguageChanged
             ActionBar.placement: ActionBarPlacement.OnBar
             
@@ -308,6 +308,7 @@ Page
                                 
                                 DeleteActionItem
                                 {
+                                    imageSource: "images/menu/ic_remove_site.png"
                                     title: qsTr("Delete") + Retranslate.onLanguageChanged
                                     
                                     onTriggered: {
