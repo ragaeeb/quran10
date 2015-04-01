@@ -63,6 +63,87 @@ Page
             }
         }
         
+        Header {
+            id: bioHeader
+            property int count: 0
+            subtitle: count
+            visible: count > 0
+            title: qsTr("Biographies & Mentions") + Retranslate.onLanguageChanged
+            bottomMargin: 0; topMargin: 0
+        }
+        
+        ListView
+        {
+            id: bios
+            
+            dataModel: ArrayDataModel {
+                id: bioModel
+            }
+            
+            function itemType(data, indexPath)
+            {
+                if (data.points) {
+                    return "jarwahTahdeel";
+                } else {
+                    return "bio";
+                }
+            }
+            
+            listItemComponents: [
+                ListItemComponent
+                {
+                    type: "bio"
+                    
+                    Container
+                    {
+                        id: bioContainer
+                        leftPadding: 10; rightPadding: 10; bottomPadding: 10
+                        horizontalAlignment: HorizontalAlignment.Fill
+                        verticalAlignment: VerticalAlignment.Fill
+                        
+                        Label {
+                            multiline: true
+                            text: qsTr("%1\n\n%2").arg(ListItemData.bio).arg(ListItemData.reference) + Retranslate.onLanguageChanged
+                            horizontalAlignment: HorizontalAlignment.Fill
+                            textStyle.textAlign: TextAlign.Center
+                        }
+                        
+                        Divider {
+                            topMargin: 0; bottomMargin: 0
+                            visible: itemRoot.ListItem.indexPath[0] != itemRoot.ListItem.view.dataModel.size()-1
+                        }
+                    }
+                },
+                
+                ListItemComponent
+                {
+                    type: "jarwahTahdeel"
+                    
+                    StandardListItem
+                    {
+                        description: ListItemData.body.replace(/\n/g, " ").substr(0, 60) + "..."
+                        imageSource: ListItemData.points > 0 ? "images/list/ic_like.png" : "images/list/ic_dislike.png"
+                        title: ListItemData.author
+                    }
+                }
+            ]
+            
+            onTriggered: {
+                var d = dataModel.data(indexPath);
+                
+                if (d.body) {
+                
+                } else {
+                    console.log("UserEvent: InvokeTafsir");
+                    helper.fetchAllTafsirForSuite(bioPage, d.id);
+                }
+            }
+            
+            layoutProperties: StackLayoutProperties {
+                spaceQuota: 1
+            }
+        }
+        
         Divider {
             topMargin: 0; bottomMargin: 0
         }

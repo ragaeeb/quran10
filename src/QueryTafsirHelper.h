@@ -9,6 +9,7 @@
 #define CHAPTER_KEY "chapter"
 #define FROM_VERSE_KEY "fromVerse"
 #define TO_VERSE_KEY "toVerse"
+#define NAME_FIELD(var) QString("(coalesce(%1.prefix,'') || ' ' || %1.name || ' ' || coalesce(%1.kunya,''))").arg(var)
 
 namespace canadainc {
     class DatabaseHelper;
@@ -42,6 +43,7 @@ public:
     Q_INVOKABLE void editTafsirPage(QObject* caller, qint64 suitePageId, QString const& body, QString const& heading);
     Q_INVOKABLE void fetchAllIndividuals(QObject* caller);
     Q_INVOKABLE void fetchAllWebsites(QObject* caller, qint64 individualId);
+    Q_INVOKABLE void fetchMentions(QObject* caller, qint64 individualId);
     Q_INVOKABLE void fetchFrequentIndividuals(QObject* caller, int n=7);
     void fetchAllTafsir(QObject* caller, qint64 individualId);
     Q_INVOKABLE void fetchTafsirMetadata(QObject* caller, qint64 suiteId);

@@ -43,6 +43,7 @@ public:
         FetchJuz,
         FetchLastProgress,
         FetchIndividualData,
+        FetchMentions,
         FetchPageNumbers,
         FetchQuote,
         FetchRandomAyat,
