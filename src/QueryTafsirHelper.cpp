@@ -87,12 +87,12 @@ void QueryTafsirHelper::addTafsir(QObject* caller, QString const& author, QStrin
 }
 
 
-void QueryTafsirHelper::addTafsirPage(QObject* caller, qint64 suiteId, QString const& body, QString const& heading)
+void QueryTafsirHelper::addTafsirPage(QObject* caller, qint64 suiteId, QString const& body, QString const& heading, QString const& reference)
 {
-    LOGGER( suiteId << body.length() );
+    LOGGER( suiteId << body.length() << reference.length() );
 
-    QString query = QString("INSERT OR IGNORE INTO suite_pages (id,suite_id,body,heading) VALUES(%1,%2,?,?)").arg( QDateTime::currentMSecsSinceEpoch() ).arg(suiteId);
-    m_sql->executeQuery(caller, query, QueryId::AddTafsirPage, QVariantList() << body << ( heading.isEmpty() ? QVariant() : heading ) );
+    QString query = QString("INSERT OR IGNORE INTO suite_pages (id,suite_id,body,heading,reference) VALUES(%1,%2,?,?,?)").arg( QDateTime::currentMSecsSinceEpoch() ).arg(suiteId);
+    m_sql->executeQuery(caller, query, QueryId::AddTafsirPage, QVariantList() << body << protect(heading) << protect(reference) );
 }
 
 
