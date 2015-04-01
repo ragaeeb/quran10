@@ -47,8 +47,14 @@ QtObject
             
             bodyText += tafsir.body;
             
-            if (tafsir.reference.length > 0) {
-                bodyText += "\n\n(%1)".arg(tafsir.reference);
+            var reference = tafsir.reference;
+            
+            if (tafsir.suite_pages_reference) {
+                reference = tafsir.suite_pages_reference;
+            }
+            
+            if (reference.length > 0) {
+                bodyText += "\n\n(%1)".arg(reference);
             }
             
             authors.text = "<html>"+authorText+"</html>";
