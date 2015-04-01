@@ -123,12 +123,12 @@ void QueryTafsirHelper::editTafsir(QObject* caller, qint64 suiteId, QString cons
 }
 
 
-void QueryTafsirHelper::editTafsirPage(QObject* caller, qint64 suitePageId, QString const& body, QString const& heading)
+void QueryTafsirHelper::editTafsirPage(QObject* caller, qint64 suitePageId, QString const& body, QString const& heading, QString const& reference)
 {
-    LOGGER( suitePageId << body.length() << heading );
+    LOGGER( suitePageId << body.length() << heading.length() << reference.length() );
 
-    QString query = QString("UPDATE suite_pages SET body=?, heading=? WHERE id=%1").arg(suitePageId);
-    m_sql->executeQuery( caller, query, QueryId::EditTafsirPage, QVariantList() << body << ( heading.isEmpty() ? QVariant() : heading ) );
+    QString query = QString("UPDATE suite_pages SET body=?, heading=?, reference=? WHERE id=%1").arg(suitePageId);
+    m_sql->executeQuery( caller, query, QueryId::EditTafsirPage, QVariantList() << body << protect(heading) << protect(reference) );
 }
 
 
