@@ -269,7 +269,7 @@ void QueryHelper::fetchAllTafsirForSuite(QObject* caller, qint64 suiteId)
     LOGGER(suiteId);
 
     ATTACH_TAFSIR;
-    QString query = QString("SELECT id,body,heading FROM suite_pages WHERE suite_id=%1 ORDER BY id DESC").arg(suiteId);
+    QString query = QString("SELECT id,body,heading,reference FROM suite_pages WHERE suite_id=%1 ORDER BY id DESC").arg(suiteId);
     m_sql.executeQuery(caller, query, QueryId::FetchAllTafsirForSuite);
 }
 

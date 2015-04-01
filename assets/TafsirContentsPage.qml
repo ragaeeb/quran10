@@ -99,14 +99,16 @@ Page
 
                                         var newText = bodyField.text.trim();
                                         var headingValue = heading.text.trim();
+                                        var refValue = referenceField.text.trim();
                                         
                                         if (!sheet.suitePageId) {
-                                            tafsirHelper.addTafsirPage(listView, suiteId, newText, headingValue);
+                                            tafsirHelper.addTafsirPage(listView, suiteId, newText, headingValue, refValue);
                                         } else {
-                                            tafsirHelper.editTafsirPage(listView, sheet.suitePageId, newText, headingValue);
+                                            tafsirHelper.editTafsirPage(listView, sheet.suitePageId, newText, headingValue, refValue);
                                             var item = adm.data(sheet.indexPath);
                                             item["body"] = newText;
                                             item["heading"] = headingValue;
+                                            item["reference"] = refValue;
                                             adm.replace(sheet.indexPath[0], item);
                                         }
 
