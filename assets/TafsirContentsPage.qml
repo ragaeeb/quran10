@@ -61,6 +61,7 @@ Page
                         property variant suitePageId
                         property string currentText
                         property string headingText
+                        property string reference
                         property variant indexPath
                         
                         onOpened: {
@@ -167,6 +168,28 @@ Page
                                         spaceQuota: 1
                                     }
                                 }
+                                
+                                TextArea
+                                {
+                                    id: referenceField
+                                    horizontalAlignment: HorizontalAlignment.Fill
+                                    verticalAlignment: VerticalAlignment.Fill
+                                    backgroundVisible: false
+                                    content.flags: TextContentFlag.ActiveText | TextContentFlag.EmoticonsOff
+                                    text: sheet.reference
+                                    hintText: qsTr("Enter reference here...") + Retranslate.onLanguageChanged
+                                    input.flags: TextInputFlag.AutoCapitalizationOff | TextInputFlag.AutoCorrectionOff | TextInputFlag.SpellCheckOff | TextInputFlag.WordSubstitutionOff | TextInputFlag.AutoPeriodOff
+                                    topPadding: 0; topMargin: 0
+                                    
+                                    gestureHandlers: [
+                                        DoubleTapHandler {
+                                            onDoubleTapped: {
+                                                console.log("UserEvent: TafsirReferenceDoubleTapped");
+                                                referenceField.text = persist.getClipboardText();
+                                            }
+                                        }
+                                    ]
+                                }
                             }
                         }
                     }
@@ -229,6 +252,7 @@ Page
                 sheetControl.suitePageId = ListItemData.id;
                 sheetControl.currentText = ListItemData.body;
                 sheetControl.headingText = ListItemData.heading;
+                sheetControl.reference = ListItemData.reference;
                 sheetControl.indexPath = indexPath;
                 sheetControl.open();
             }
@@ -268,7 +292,7 @@ Page
                             horizontalAlignment: HorizontalAlignment.Fill
                             verticalAlignment: VerticalAlignment.Fill
                             multiline: true
-                            text: ListItemData.body
+                            text: ListItemData.body + (ListItemData.reference ? "\n"+ListItemData.reference : "")
                         }
                         
                         contextActions: [
