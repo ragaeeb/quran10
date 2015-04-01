@@ -7,6 +7,7 @@
 namespace bb {
     namespace cascades {
         class DataModel;
+        class GroupDataModel;
     }
 }
 
@@ -55,6 +56,7 @@ public:
     Q_INVOKABLE QVariantList removeOutOfRange(QVariantList input, int fromChapter, int fromVerse, int toChapter, int toVerse);
     QVariantList computeNecessaryUpdates(QVariantMap const& q, QByteArray const& data);
     void processDownloadedPlugin(QVariantMap const& q, QByteArray const& data);
+    Q_INVOKABLE bool fillType(QVariantList input, int queryId, bb::cascades::GroupDataModel* gdm);
 };
 
 } /* namespace quran */

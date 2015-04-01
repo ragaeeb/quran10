@@ -10,6 +10,7 @@
 #include <bb/cascades/ActionItem>
 #include <bb/cascades/Application>
 #include <bb/cascades/ArrayDataModel>
+#include <bb/cascades/GroupDataModel>
 #include <bb/cascades/Image>
 #include <bb/cascades/NavigationPane>
 #include <bb/cascades/QmlDocument>
