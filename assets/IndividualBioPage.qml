@@ -217,7 +217,7 @@ Page
                 
                 function removeStudent(ListItem)
                 {
-                    tafsirHelper.removeTeacher(bioPage, ListItem.data.id, individualId);
+                    tafsirHelper.removeStudent(bioPage, individualId, ListItem.data.id);
                     bioModel.removeAt(ListItem.indexPath);
                 }
                 
@@ -495,7 +495,7 @@ Page
             
             function onPicked(student, name)
             {
-                tafsirHelper.addTeacher(bioPage, student, individualId);
+                tafsirHelper.addStudent(bioPage, student, individualId);
                 checkForDuplicate( {'id': student, 'student': name, 'type': "student"} );
             }
             
@@ -518,7 +518,7 @@ Page
             
             function onPicked(teacher, name)
             {
-                tafsirHelper.addTeacher(bioPage, individualId, teacher);
+                tafsirHelper.addTeacher(bioPage, teacher, individualId);
                 checkForDuplicate( {'id': teacher, 'teacher': name, 'type': "teacher"} );
             }
             

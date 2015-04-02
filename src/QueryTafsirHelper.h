@@ -34,6 +34,7 @@ public:
     Q_INVOKABLE void addBio(QObject* caller, qint64 individualId, QString const& body, QString const& reference, QString const& author, QVariant points=QVariant());
     Q_INVOKABLE void addCompanions(QObject* caller, QVariantList const& ids);
     Q_INVOKABLE void addQuote(QObject* caller, QString const& author, QString const& body, QString const& reference);
+    Q_INVOKABLE void addStudent(QObject* caller, qint64 individual, qint64 teacherId);
     Q_INVOKABLE bool addWebsite(QObject* caller, qint64 individualId, QString const& address);
     Q_INVOKABLE void addTafsir(QObject* caller, QString const& author, QString const& translator, QString const& explainer, QString const& title, QString const& description, QString const& reference);
     Q_INVOKABLE void addTafsirPage(QObject* caller, qint64 suiteId, QString const& body, QString const& heading, QString const& reference);
@@ -62,6 +63,7 @@ public:
     Q_INVOKABLE void removeTafsir(QObject* caller, qint64 suiteId);
     Q_INVOKABLE void removeTafsirPage(QObject* caller, qint64 suitePageId);
     Q_INVOKABLE void removeTeacher(QObject* caller, qint64 individual, qint64 teacherId);
+    Q_INVOKABLE void removeStudent(QObject* caller, qint64 individual, qint64 teacherId);
     Q_INVOKABLE void replaceIndividual(QObject* caller, qint64 toReplaceId, qint64 actualId);
     Q_INVOKABLE void searchIndividuals(QObject* caller, QString const& trimmedText);
     Q_INVOKABLE void searchQuote(QObject* caller, QString const& fieldName, QString const& searchTerm);
