@@ -270,8 +270,8 @@ NavigationPane
                             
                             ActionItem
                             {
-                                imageSource: "images/menu/ic_edit_individual.png"
-                                title: qsTr("Open") + Retranslate.onLanguageChanged
+                                imageSource: "images/menu/ic_preview.png"
+                                title: qsTr("Preview") + Retranslate.onLanguageChanged
                                 
                                 onTriggered: {
                                     console.log("UserEvent: OpenIndividual");

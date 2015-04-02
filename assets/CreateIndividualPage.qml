@@ -17,27 +17,10 @@ Page
     actions: [
         ActionItem
         {
-            id: bioAction
-            imageSource: "images/menu/ic_link_ayat_to_tafsir.png"
-            title: qsTr("Biographies") + Retranslate.onLanguageChanged
-            ActionBar.placement: 'Signature' in ActionBarPlacement ? ActionBarPlacement["Signature"] : ActionBarPlacement.OnBar
-            
-            onTriggered: {
-                console.log("UserEvent: Biographies");
-                definition.source = "CreateIndividualPage.qml";
-                var page = definition.createObject();
-                page.createIndividual.connect(onCreate);
-                
-                navigationPane.push(page);
-            }
-        },
-        
-        ActionItem
-        {
             id: addSite
             imageSource: "images/menu/ic_add_site.png"
             title: qsTr("Add Website") + Retranslate.onLanguageChanged
-            ActionBar.placement: ActionBarPlacement.OnBar
+            ActionBar.placement: 'Signature' in ActionBarPlacement ? ActionBarPlacement["Signature"] : ActionBarPlacement.OnBar
             
             shortcuts: [
                 SystemShortcut {
@@ -47,7 +30,7 @@ Page
             
             onTriggered: {
                 console.log("UserEvent: NewSite");
-                var uri = persist.showBlockingPrompt( qsTr("Enter url"), qsTr("Please enter the website address for this individual:"), "", qsTr("Enter url (ie: http://www.twitter.com)"), 100, false, qsTr("Save"), qsTr("Cancel"), SystemUiInputMode.Url );
+                var uri = persist.showBlockingPrompt( qsTr("Enter url"), qsTr("Please enter the website address for this individual:"), "", qsTr("Enter url (ie: http://mtws.com)"), 100, false, qsTr("Save"), qsTr("Cancel"), SystemUiInputMode.Url );
                 tafsirHelper.addWebsite(createRijaal, individualId, uri);
             }
         }
@@ -295,15 +278,17 @@ Page
             }
             
             listItemComponents: [
-                ListItemComponent {
+                ListItemComponent
+                {
                     StandardListItem
                     {
                         id: sli
-                        imageSource: "images/menu/ic_update_link.png"
+                        imageSource: ListItemData.imageSource
                         description: ListItemData.uri
                         
                         contextActions: [
-                            ActionSet {
+                            ActionSet
+                            {
                                 subtitle: sli.description
                                 
                                 DeleteActionItem

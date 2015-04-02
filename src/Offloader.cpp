@@ -374,8 +374,35 @@ void Offloader::onArchiveDeflated(bool success, QString const& error, QVariantMa
 }
 
 
-QVariantList Offloader::decorateWebsites(QVariantList const& input)
+QVariantList Offloader::decorateWebsites(QVariantList input)
 {
+    for (int i = input.size()-1; i >= 0; i--)
+    {
+        QVariantMap q = input[i].toMap();
+        QString uri = q.value("uri").toString();
+
+        if ( uri.contains("wordpress.com") ) {
+            uri = "images/list/site_wordpress.png";
+        } else if ( uri.contains("twitter.com") ) {
+            uri = "images/list/site_twitter.png";
+        } else if ( uri.contains("tumblr.com") ) {
+            uri = "images/list/site_tumblr.png";
+        } else if ( uri.contains("facebook.com") ) {
+            uri = "images/list/site_facebook.png";
+        } else if ( uri.contains("soundcloud.com") ) {
+            uri = "images/list/site_soundcloud.png";
+        } else if ( uri.contains("youtube.com") ) {
+            uri = "images/list/site_youtube.png";
+        } else if ( uri.contains("linkedin.com") ) {
+            uri = "images/list/site_linkedin.png";
+        } else {
+            uri = "images/list/site_link.png";
+        }
+
+        q["imageSource"] = uri;
+        input[i] = q;
+    }
+
     return input;
 }
 
@@ -383,12 +410,17 @@ QVariantList Offloader::decorateWebsites(QVariantList const& input)
 bool Offloader::fillType(QVariantList input, int queryId, bb::cascades::GroupDataModel* gdm)
 {
     QMap<int,QString> map;
-    map[QueryId::FetchMentions] = "mentions";
-    map[QueryId::FetchBio] = "bios";
+    map[QueryId::FetchMentions] = "mention";
+    map[QueryId::FetchBio] = "bio";
     map[QueryId::FetchAllTafsir] = "tafsir";
-    map[QueryId::FetchAllQuotes] = tr("quotes");
-    map[QueryId::FetchTeachers] = tr("teachers");
-    map[QueryId::FetchStudents] = tr("students");
+    map[QueryId::FetchAllQuotes] = tr("quote");
+    map[QueryId::FetchTeachers] = tr("teacher");
+    map[QueryId::FetchStudents] = tr("student");
+    map[QueryId::FetchAllWebsites] = tr("website");
+
+    if (queryId == QueryId::FetchAllWebsites) {
+        input = decorateWebsites(input);
+    }
 
     if ( map.contains(queryId) )
     {
