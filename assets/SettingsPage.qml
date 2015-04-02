@@ -304,13 +304,21 @@ Page
                     function onCompressed()
                     {
                         infoText.text = qsTr("Uploading...");
-                        infoText.content.flags = TextContentFlag.ActiveTextOff | TextContentFlag.EmoticonsOff;
                         busy.delegateActive = false;
+                    }
+                    
+                    function onCompressProgress(current, total)
+                    {
+                        value = current;
+                        toValue = total;
+
+                        infoText.text = qsTr("Compressing %1/%2...").arg( current.toString() ).arg( total.toString() );
                     }
                     
                     function onCompressing()
                     {
                         infoText.text = qsTr("Compressing...");
+                        infoText.content.flags = TextContentFlag.ActiveTextOff | TextContentFlag.EmoticonsOff;
                         busy.delegateActive = true;
                     }
                     
@@ -318,6 +326,7 @@ Page
                         admin.uploadProgress.connect(onNetworkProgressChanged);
                         admin.compressing.connect(onCompressing);
                         admin.compressed.connect(onCompressed);
+                        admin.compressProgress.connect(onCompressProgress);
                     }
                 }
                 

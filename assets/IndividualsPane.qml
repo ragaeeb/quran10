@@ -157,11 +157,13 @@ NavigationPane
             navigationPane.push(page);
         }
         
-        function open(ListItemData)
+        function edit(ListItem)
         {
-            definition.source = "IndividualBioPage.qml";
+            editIndexPath = ListItem.indexPath;
+            definition.source = "CreateIndividualPage.qml";
             var page = definition.createObject();
-            page.individualId = ListItemData.id;
+            page.individualId = ListItem.data.id;
+            page.createIndividual.connect(onEdit);
             
             navigationPane.push(page);
         }
@@ -301,12 +303,12 @@ NavigationPane
                             
                             ActionItem
                             {
-                                imageSource: "images/menu/ic_preview.png"
-                                title: qsTr("Preview") + Retranslate.onLanguageChanged
+                                imageSource: "images/menu/ic_edit_bio.png"
+                                title: qsTr("Edit") + Retranslate.onLanguageChanged
                                 
                                 onTriggered: {
-                                    console.log("UserEvent: OpenIndividual");
-                                    sli.ListItem.view.pickerPage.open(ListItemData);
+                                    console.log("UserEvent: EditIndividual");
+                                    sli.ListItem.view.pickerPage.edit(sli.ListItem);
                                 }
                             }
                             
@@ -337,11 +339,9 @@ NavigationPane
         ]
         
         onPicked: {
-            individualPicker.editIndexPath = ListItem.indexPath;
-            definition.source = "CreateIndividualPage.qml";
+            definition.source = "IndividualBioPage.qml";
             var page = definition.createObject();
             page.individualId = individualId;
-            page.createIndividual.connect(onEdit);
             
             navigationPane.push(page);
         }

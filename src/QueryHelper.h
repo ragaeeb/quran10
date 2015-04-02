@@ -1,8 +1,6 @@
 #ifndef QUERYHELPER_H_
 #define QUERYHELPER_H_
 
-#include <QDateTime>
-
 #include "DatabaseHelper.h"
 #include "QueryId.h"
 #include "QueryBookmarkHelper.h"
@@ -32,7 +30,6 @@ class QueryHelper : public QObject
     DatabaseHelper m_sql;
     Persistance* m_persist;
     QString m_translation;
-    QFileSystemWatcher m_watcher;
     QueryTafsirHelper m_tafsirHelper;
     QueryBookmarkHelper m_bookmarkHelper;
 

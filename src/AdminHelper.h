@@ -8,8 +8,6 @@ namespace canadainc {
     class Persistance;
 }
 
-#define PLUGINS_ZIPPED_PATH QString("%1/plugins.zip").arg( QDir::tempPath() )
-
 namespace quran {
 
 using namespace canadainc;
@@ -27,6 +25,9 @@ class AdminHelper : public QObject
     qint64 m_lastUpdate;
     QSet<int> m_interested;
     QMap<QString, int> m_chapters;
+    QFileSystemWatcher m_watcher;
+    QFile m_source;
+    QFile m_target;
 
     void prepare();
 
@@ -35,12 +36,15 @@ private slots:
     void onCaptureCompleted();
     void onCompressed();
     void onDataLoaded(QVariant id, QVariant data);
+    void onDirectoryChanged(QString const& path);
     void onExecuted(int id);
+    void onFileChanged(QString const& path);
     void onRequestComplete(QVariant const& cookie, QByteArray const& data, bool error);
     void uploadUpdates();
 
 signals:
     void compressed();
+    void compressProgress(qint64 current, qint64 total);
     void compressing();
     void ayatsCaptured(QVariantList const& result);
     void pendingUpdatesChanged();
