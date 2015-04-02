@@ -15,6 +15,7 @@ Page
         tafsirHelper.fetchMentions(bioPage, individualId);
         tafsirHelper.fetchTeachers(bioPage, individualId);
         tafsirHelper.fetchStudents(bioPage, individualId);
+        tafsirHelper.fetchAllWebsites(bioPage, individualId);
     }
     
     function onDataLoaded(id, data)
@@ -135,16 +136,18 @@ Page
                 
                 function getHeaderName(ListItemData)
                 {
-                    if (ListItemData == "mentions") {
+                    if (ListItemData == "mention") {
                         return qsTr("Mentions");
-                    } else if (ListItemData == "bios") {
+                    } else if (ListItemData == "bio") {
                         return qsTr("Biographies");
                     } else if (ListItemData == "tafsir") {
                         return qsTr("Explanations");
-                    } else if (ListItemData == "teachers") {
+                    } else if (ListItemData == "teacher") {
                         return qsTr("Teachers");
-                    } else if (ListItemData == "students") {
+                    } else if (ListItemData == "student") {
                         return qsTr("Students");
+                    } else if (ListItemData == "website") {
+                        return qsTr("Websites");
                     } else  {
                         return qsTr("Quotes");
                     }
@@ -174,7 +177,7 @@ Page
                     
                     ListItemComponent
                     {
-                        type: "bios"
+                        type: "bio"
                         
                         Container
                         {
@@ -202,7 +205,7 @@ Page
                     
                     ListItemComponent
                     {
-                        type: "mentions"
+                        type: "mention"
                         
                         StandardListItem
                         {
@@ -214,7 +217,7 @@ Page
                     
                     ListItemComponent
                     {
-                        type: "quotes"
+                        type: "quote"
                         
                         TextArea {
                             backgroundVisible: false
@@ -241,35 +244,50 @@ Page
                     
                     ListItemComponent
                     {
-                        type: "teachers"
+                        type: "teacher"
                         
                         StandardListItem
                         {
-                            imageSource: "images/list/ic_companion.png"
+                            imageSource: "images/list/ic_teacher.png"
                             title: ListItemData.teacher
                         }
                     },
                     
                     ListItemComponent
                     {
-                        type: "students"
+                        type: "student"
                         
                         StandardListItem
                         {
-                            imageSource: "images/list/ic_individual.png"
+                            imageSource: "images/list/ic_student.png"
                             title: ListItemData.student
+                        }
+                    },
+                    
+                    ListItemComponent
+                    {
+                        type: "website"
+                        
+                        StandardListItem
+                        {
+                            id: sli
+                            imageSource: ListItemData.imageSource
+                            description: ListItemData.uri
                         }
                     }
                 ]
                 
                 onTriggered: {
                     var d = dataModel.data(indexPath);
+                    console.log("UserEvent: AttributeTriggered", d.type);
                     
-                    if (d.type == "students" || d.type == "teachers") {
+                    if (d.type == "student" || d.type == "teacher") {
                         persist.invoke( "com.canadainc.Quran10.bio.previewer", "", "", "", d.id.toString() );
                     } else if (d.type == "tafsir") {
                         console.log("UserEvent: InvokeTafsir");
                         helper.fetchAllTafsirForSuite(bioPage, d.id);
+                    } else if (d.type == "website") {
+                        persist.donate(d.uri);
                     }
                 }
                 
