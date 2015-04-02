@@ -130,6 +130,15 @@ void QueryTafsirHelper::addTafsirPage(QObject* caller, qint64 suiteId, QString c
 }
 
 
+void QueryTafsirHelper::addStudent(QObject* caller, qint64 individual, qint64 studentId)
+{
+    LOGGER(individual << studentId);
+
+    QString query = QString("INSERT OR IGNORE INTO teachers(teacher,individual) VALUES(%1,%2)").arg(individual).arg(studentId);
+    m_sql->executeQuery(caller, query, QueryId::AddStudent);
+}
+
+
 void QueryTafsirHelper::addTeacher(QObject* caller, qint64 individual, qint64 teacherId)
 {
     LOGGER(individual << teacherId);
@@ -393,6 +402,15 @@ void QueryTafsirHelper::removeTeacher(QObject* caller, qint64 individual, qint64
 
     QString query = QString("DELETE FROM teachers WHERE individual=%1 AND teacher=%2").arg(individual).arg(teacherId);
     m_sql->executeQuery(caller, query, QueryId::RemoveTeacher);
+}
+
+
+void QueryTafsirHelper::removeStudent(QObject* caller, qint64 individual, qint64 studentId)
+{
+    LOGGER(individual << studentId);
+
+    QString query = QString("DELETE FROM teachers WHERE teacher=%1 AND individual=%2").arg(individual).arg(studentId);
+    m_sql->executeQuery(caller, query, QueryId::RemoveStudent);
 }
 
 
