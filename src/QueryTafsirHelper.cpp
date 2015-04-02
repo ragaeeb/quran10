@@ -32,6 +32,40 @@ QueryTafsirHelper::QueryTafsirHelper(DatabaseHelper* sql) : m_sql(sql)
 }
 
 
+void QueryTafsirHelper::addBio(QObject* caller, qint64 individualId, QString const& body, QString const& reference, QString const& author, QVariant points)
+{
+    LOGGER( individualId << body.length() << reference.length() << author << points );
+
+    QVariantList args = QVariantList() << body << protect(reference) << points;
+
+    if ( !author.isEmpty() ) {
+        args << generateIndividualField(caller, author);
+    } else {
+        args << QVariant();
+    }
+
+    QString query = QString("INSERT INTO mentions (target,body,reference,points,from_id) VALUES(%1,?,?,?,?)").arg(individualId);
+    m_sql->executeQuery(caller, query, QueryId::AddBio, args);
+}
+
+
+void QueryTafsirHelper::editBio(QObject* caller, qint64 bioId, QString const& body, QString const& reference, QString const& author, QVariant points)
+{
+    LOGGER( bioId << body.length() << reference.length() << author << points );
+
+    QVariantList args = QVariantList() << body << protect(reference) << points;
+
+    if ( !author.isEmpty() ) {
+        args << generateIndividualField(caller, author);
+    } else {
+        args << QVariant();
+    }
+
+    QString query = QString("UPDATE mentions SET body=?, reference=?, points=?, from_id=? WHERE id=%1").arg(bioId);
+    m_sql->executeQuery(caller, query, QueryId::EditBio, args);
+}
+
+
 void QueryTafsirHelper::addCompanions(QObject* caller, QVariantList const& ids)
 {
     LOGGER(ids);
@@ -93,6 +127,15 @@ void QueryTafsirHelper::addTafsirPage(QObject* caller, qint64 suiteId, QString c
 
     QString query = QString("INSERT OR IGNORE INTO suite_pages (id,suite_id,body,heading,reference) VALUES(%1,%2,?,?,?)").arg( QDateTime::currentMSecsSinceEpoch() ).arg(suiteId);
     m_sql->executeQuery(caller, query, QueryId::AddTafsirPage, QVariantList() << body << protect(heading) << protect(reference) );
+}
+
+
+void QueryTafsirHelper::addTeacher(QObject* caller, qint64 individual, qint64 teacherId)
+{
+    LOGGER(individual << teacherId);
+
+    QString query = QString("INSERT OR IGNORE INTO teachers(individual,teacher) VALUES(%1,%2)").arg(individual).arg(teacherId);
+    m_sql->executeQuery(caller, query, QueryId::AddTeacher);
 }
 
 
@@ -165,13 +208,6 @@ void QueryTafsirHelper::fetchAllIndividuals(QObject* caller) {
 }
 
 
-void QueryTafsirHelper::fetchMentions(QObject* caller, qint64 individualId)
-{
-    LOGGER(individualId);
-    m_sql->executeQuery(caller, QString("SELECT %1 AS author,body,reference,points FROM mentions INNER JOIN individuals i ON mentions.from_id=i.id WHERE mentions.target=%2").arg( NAME_FIELD("i") ).arg(individualId), QueryId::FetchMentions);
-}
-
-
 void QueryTafsirHelper::fetchTeachers(QObject* caller, qint64 individualId)
 {
     LOGGER(individualId);
@@ -187,7 +223,7 @@ void QueryTafsirHelper::fetchStudents(QObject* caller, qint64 individualId)
 
 
 void QueryTafsirHelper::fetchFrequentIndividuals(QObject* caller, int n) {
-    m_sql->executeQuery(caller, QString("SELECT author AS id,prefix,name,kunya,uri,hidden,biography,birth,death,companions.id AS companion_id FROM (SELECT author,COUNT(author) AS n FROM suites GROUP BY author UNION SELECT translator AS author,COUNT(translator) AS n FROM suites GROUP BY author UNION SELECT explainer AS author,COUNT(explainer) AS n FROM suites GROUP BY author ORDER BY n DESC LIMIT %1) INNER JOIN individuals ON individuals.id=author LEFT JOIN companions ON companions.id=individuals.id GROUP BY individuals.id ORDER BY name,kunya,prefix").arg(n), QueryId::FetchAllIndividuals);
+    m_sql->executeQuery(caller, QString("SELECT author AS id,prefix,name,kunya,hidden,displayName,birth,death,companions.id AS companion_id FROM (SELECT author,COUNT(author) AS n FROM suites GROUP BY author UNION SELECT translator AS author,COUNT(translator) AS n FROM suites GROUP BY author UNION SELECT explainer AS author,COUNT(explainer) AS n FROM suites GROUP BY author ORDER BY n DESC LIMIT %1) INNER JOIN individuals ON individuals.id=author LEFT JOIN companions ON companions.id=individuals.id GROUP BY individuals.id ORDER BY name,kunya,prefix").arg(n), QueryId::FetchAllIndividuals);
 }
 
 
@@ -310,6 +346,14 @@ void QueryTafsirHelper::removeCompanions(QObject* caller, QVariantList const& id
 }
 
 
+void QueryTafsirHelper::removeBio(QObject* caller, qint64 id)
+{
+    LOGGER(id);
+    QString query = QString("DELETE FROM mentions WHERE id=%1").arg(id);
+    m_sql->executeQuery(caller, query, QueryId::RemoveBio);
+}
+
+
 void QueryTafsirHelper::removeQuote(QObject* caller, qint64 id)
 {
     LOGGER(id);
@@ -340,6 +384,15 @@ void QueryTafsirHelper::removeTafsir(QObject* caller, qint64 suiteId)
 
     QString query = QString("DELETE FROM suites WHERE id=%1").arg(suiteId);
     m_sql->executeQuery(caller, query, QueryId::RemoveTafsir);
+}
+
+
+void QueryTafsirHelper::removeTeacher(QObject* caller, qint64 individual, qint64 teacherId)
+{
+    LOGGER(individual << teacherId);
+
+    QString query = QString("DELETE FROM teachers WHERE individual=%1 AND teacher=%2").arg(individual).arg(teacherId);
+    m_sql->executeQuery(caller, query, QueryId::RemoveTeacher);
 }
 
 
