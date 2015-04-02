@@ -9,13 +9,17 @@ NavigationPane
         page.destroy();
     }
     
-    function onCreate(id, prefix, name, kunya, displayName, hidden, birth, death, female)
+    function popToRoot()
     {
-        tafsirHelper.createIndividual(navigationPane, prefix, name, kunya, displayName, birth, death);
-        
         while (navigationPane.top != individualPicker) {
             navigationPane.pop();
         }
+    }
+    
+    function onCreate(id, prefix, name, kunya, displayName, hidden, birth, death, female)
+    {
+        tafsirHelper.createIndividual(navigationPane, prefix, name, kunya, displayName, birth, death);
+        popToRoot();
     }
     
     function onEdit(id, prefix, name, kunya, displayName, hidden, birth, death, female)
@@ -33,10 +37,7 @@ NavigationPane
         }
         
         individualPicker.model.replace(individualPicker.editIndexPath[0], obj);
-        
-        while (navigationPane.top != individualPicker) {
-            navigationPane.pop();
-        }
+        popToRoot();
     }
     
     function onDataLoaded(id, data)
@@ -60,6 +61,8 @@ NavigationPane
             persist.showToast( qsTr("Successfully added companions!"), "", "asset:///images/menu/ic_set_companions.png" );
         } else if (id == QueryId.RemoveCompanions) {
             persist.showToast( qsTr("Successfully removed from companions!"), "", "asset:///images/menu/ic_remove_companions.png" );
+        } else if (id == QueryId.AddBio) {
+            persist.showToast( qsTr("Successfully added biography!"), "", "asset:///images/menu/ic_add_bio.png" );
         }
     }
     
@@ -138,6 +141,22 @@ NavigationPane
             }
         ]
         
+        function onBioSaved(data)
+        {
+            tafsirHelper.addBio(navigationPane, data.target, data.body, data.reference, data.author_id, data.points);
+            popToRoot();
+        }
+        
+        function addBio(ListItemData)
+        {
+            definition.source = "CreateBioPage.qml";
+            var page = definition.createObject();
+            page.createBio.connect(onBioSaved);
+            page.data = {'target': ListItemData.id};
+            
+            navigationPane.push(page);
+        }
+        
         function open(ListItemData)
         {
             definition.source = "IndividualBioPage.qml";
@@ -164,7 +183,7 @@ NavigationPane
                 persist.showToast( qsTr("The source and replacement individuals cannot be the same!"), "", "asset:///images/toast/ic_duplicate_replace.png" );
             }
             
-            navigationPane.pop();
+            popToRoot();
         }
         
         function replace(ListItemData)
@@ -244,6 +263,18 @@ NavigationPane
                         {
                             title: sli.title
                             subtitle: sli.description
+
+                            ActionItem
+                            {
+                                id: addBio
+                                imageSource: "images/menu/ic_add_bio.png"
+                                title: qsTr("Add Biography") + Retranslate.onLanguageChanged
+                                
+                                onTriggered: {
+                                    console.log("UserEvent: AddBio");
+                                    sli.ListItem.view.pickerPage.addBio(ListItemData);
+                                }
+                            }
 
                             ActionItem
                             {

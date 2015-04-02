@@ -9,7 +9,7 @@ Page
     property alias busyControl: busy
     property alias model: adm
     property alias allowEditing: listView.showContextMenu
-    signal picked(variant individualId)
+    signal picked(variant individualId, string name)
     signal contentLoaded(int size)
     
     actions: [
@@ -163,7 +163,7 @@ Page
             onTriggered: {
                 var d = dataModel.data(indexPath);
                 console.log("UserEvent: IndividualPicked", d.name);
-                picked(d.id);
+                picked(d.id, d.name);
             }
         }
         

@@ -12,10 +12,27 @@ Page
         helper.fetchAllQuotes(bioPage, individualId);
         helper.fetchAllTafsir(bioPage, individualId);
         tafsirHelper.fetchIndividualData(bioPage, individualId);
-        tafsirHelper.fetchMentions(bioPage, individualId);
         tafsirHelper.fetchTeachers(bioPage, individualId);
         tafsirHelper.fetchStudents(bioPage, individualId);
         tafsirHelper.fetchAllWebsites(bioPage, individualId);
+    }
+    
+    function popToRoot()
+    {
+        while (navigationPane.top != bioPage) {
+            navigationPane.pop();
+        }
+    }
+    
+    function checkForDuplicate(result)
+    {
+        var indexPath = bioModel.findExact(result);
+        
+        if (indexPath.length == 0) {
+            bioModel.insert(result);
+        }
+        
+        popToRoot();
     }
     
     function onDataLoaded(id, data)
@@ -57,6 +74,18 @@ Page
 
             body.text = "\n"+result;
             ft.play();
+        } else if (id == QueryId.RemoveBio) {
+            persist.showToast( qsTr("Biography successfully removed!"), "", "asset:///images/menu/ic_remove_bio.png" );
+        } else if (id == QueryId.EditBio) {
+            persist.showToast( qsTr("Biography successfully updated!"), "", "asset:///images/menu/ic_edit_bio.png" );
+        } else if (id == QueryId.RemoveTeacher) {
+            persist.showToast( qsTr("Teacher removed!"), "", "asset:///images/menu/ic_edit_bio.png" );
+        } else if (id == QueryId.RemoveStudent) {
+            persist.showToast( qsTr("Student removed!"), "", "asset:///images/menu/ic_edit_bio.png" );
+        } else if (id == QueryId.AddTeacher) {
+            persist.showToast( qsTr("Teacher added!"), "", "asset:///images/menu/ic_edit_bio.png" );
+        } else if (id == QueryId.AddStudent) {
+            persist.showToast( qsTr("Student added!"), "", "asset:///images/menu/ic_edit_bio.png" );
         }
         
         offloader.fillType(data, id, bioModel);
@@ -122,6 +151,7 @@ Page
             ListView
             {
                 id: bios
+                property variant editIndexPath
                 
                 layout: StackListLayout {
                     headerMode: ListHeaderMode.Sticky
@@ -136,9 +166,7 @@ Page
                 
                 function getHeaderName(ListItemData)
                 {
-                    if (ListItemData == "mention") {
-                        return qsTr("Mentions");
-                    } else if (ListItemData == "bio") {
+                    if (ListItemData == "bio" || ListItemData == "expanded_bio") {
                         return qsTr("Biographies");
                     } else if (ListItemData == "tafsir") {
                         return qsTr("Explanations");
@@ -162,6 +190,43 @@ Page
                     }
                 }
                 
+                function onBioSaved(data)
+                {
+                    tafsirHelper.editBio(bioPage, data.id, data.body, data.reference, data.author_id, data.points);
+                    bioModel.updateItem(editIndexPath, data);
+                    
+                    popToRoot();
+                }
+                
+                function editBio(ListItem)
+                {
+                    editIndexPath = ListItem.indexPath;
+                    definition.source = "CreateBioPage.qml";
+                    var page = definition.createObject();
+                    page.createBio.connect(onBioSaved);
+                    page.data = ListItem.data;
+                    
+                    navigationPane.push(page);
+                }
+                
+                function removeBio(ListItem)
+                {
+                    tafsirHelper.removeBio(bioPage, ListItem.data.id);
+                    bioModel.removeAt(ListItem.indexPath);
+                }
+                
+                function removeStudent(ListItem)
+                {
+                    tafsirHelper.removeTeacher(bioPage, ListItem.data.id, individualId);
+                    bioModel.removeAt(ListItem.indexPath);
+                }
+                
+                function removeTeacher(ListItem)
+                {
+                    tafsirHelper.removeTeacher(bioPage, individualId, ListItem.data.id);
+                    bioModel.removeAt(ListItem.indexPath);
+                }
+                
                 listItemComponents: [
                     ListItemComponent
                     {
@@ -179,11 +244,70 @@ Page
                     {
                         type: "bio"
                         
+                        StandardListItem
+                        {
+                            id: sli
+                            description: ListItemData.body.replace(/\n/g, " ").substr(0, 60) + "..."
+                            imageSource: ListItemData.points > 0 ? "images/list/ic_like.png" : ListItemData.points == 0 ? "images/list/mime_doc.png" : "images/list/ic_dislike.png"
+                            title: ListItemData.author ? ListItemData.author : ListItemData.reference ? ListItemData.reference : ""
+                            
+                            contextMenuHandler: [
+                                ContextMenuHandler {
+                                    onPopulating: {
+                                        if (!reporter.isAdmin) {
+                                            event.abort();
+                                        }
+                                    }
+                                }
+                            ]
+                            
+                            contextActions: [
+                                ActionSet
+                                {
+                                    title: sli.title
+                                    subtitle: sli.description
+                                    
+                                    ActionItem
+                                    {
+                                        imageSource: "images/menu/ic_edit_bio.png"
+                                        title: qsTr("Edit") + Retranslate.onLanguageChanged
+                                        
+                                        onTriggered: {
+                                            console.log("UserEvent: EditBio");
+                                            sli.ListItem.view.editBio(sli.ListItem);
+                                        }
+                                    }
+                                    
+                                    DeleteActionItem
+                                    {
+                                        imageSource: "images/menu/ic_remove_bio.png"
+                                        
+                                        onTriggered: {
+                                            console.log("UserEvent: RemoveBio");
+                                            sli.ListItem.view.removeBio(sli.ListItem);
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    
+                    ListItemComponent
+                    {
+                        type: "expanded_bio"
+                        
                         Container
                         {
                             id: bioContainer
                             horizontalAlignment: HorizontalAlignment.Fill
                             verticalAlignment: VerticalAlignment.Fill
+                            
+                            StandardListItem
+                            {
+                                description: ListItemData.body.replace(/\n/g, " ").substr(0, 60) + "..."
+                                imageSource: ListItemData.points > 0 ? "images/list/ic_like.png" : ListItemData.points == 0 ? "images/list/mime_doc.png" : "images/list/ic_dislike.png"
+                                title: ListItemData.author ? ListItemData.author : ListItemData.reference ? ListItemData.reference : ""
+                            }
                             
                             TextArea
                             {
@@ -191,7 +315,7 @@ Page
                                 backgroundVisible: false
                                 content.flags: TextContentFlag.ActiveText | TextContentFlag.EmoticonsOff
                                 input.flags: TextInputFlag.SpellCheckOff
-                                text: qsTr("%1\n%2").arg(ListItemData.bio).arg(ListItemData.reference) + Retranslate.onLanguageChanged
+                                text: qsTr("%1\n%2").arg(ListItemData.body).arg(ListItemData.reference ? ListItemData.reference : "") + Retranslate.onLanguageChanged
                                 horizontalAlignment: HorizontalAlignment.Fill
                                 textStyle.textAlign: TextAlign.Center
                             }
@@ -200,18 +324,6 @@ Page
                                 topMargin: 0; bottomMargin: 0
                                 visible: bioContainer.ListItem.indexPath != bioContainer.ListItem.view.dataModel.last()
                             }
-                        }
-                    },
-                    
-                    ListItemComponent
-                    {
-                        type: "mention"
-                        
-                        StandardListItem
-                        {
-                            description: ListItemData.body.replace(/\n/g, " ").substr(0, 60) + "..."
-                            imageSource: ListItemData.points > 0 ? "images/list/ic_like.png" : "images/list/ic_dislike.png"
-                            title: ListItemData.author
                         }
                     },
                     
@@ -248,8 +360,36 @@ Page
                         
                         StandardListItem
                         {
+                            id: teacherSli
                             imageSource: "images/list/ic_teacher.png"
                             title: ListItemData.teacher
+                            
+                            contextMenuHandler: [
+                                ContextMenuHandler {
+                                    onPopulating: {
+                                        if (!reporter.isAdmin) {
+                                            event.abort();
+                                        }
+                                    }
+                                }
+                            ]
+                            
+                            contextActions: [
+                                ActionSet
+                                {
+                                    title: teacherSli.title
+                                    
+                                    DeleteActionItem
+                                    {
+                                        imageSource: "images/menu/ic_remove_bio.png"
+                                        
+                                        onTriggered: {
+                                            console.log("UserEvent: RemoveTeacher");
+                                            teacherSli.ListItem.view.removeTeacher(teacherSli.ListItem);
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     },
                     
@@ -259,8 +399,36 @@ Page
                         
                         StandardListItem
                         {
+                            id: studentSli
                             imageSource: "images/list/ic_student.png"
                             title: ListItemData.student
+                            
+                            contextMenuHandler: [
+                                ContextMenuHandler {
+                                    onPopulating: {
+                                        if (!reporter.isAdmin) {
+                                            event.abort();
+                                        }
+                                    }
+                                }
+                            ]
+                            
+                            contextActions: [
+                                ActionSet
+                                {
+                                    title: studentSli.title
+                                    
+                                    DeleteActionItem
+                                    {
+                                        imageSource: "images/menu/ic_remove_bio.png"
+                                        
+                                        onTriggered: {
+                                            console.log("UserEvent: RemoveStudent");
+                                            studentSli.ListItem.view.removeStudent(studentSli.ListItem);
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     },
                     
@@ -270,7 +438,6 @@ Page
                         
                         StandardListItem
                         {
-                            id: sli
                             imageSource: ListItemData.imageSource
                             description: ListItemData.uri
                         }
@@ -278,11 +445,22 @@ Page
                 ]
                 
                 onTriggered: {
+                    if (indexPath.length == 1) {
+                        console.log("UserEvent: HeaderTapped");
+                        return;
+                    }
+                    
                     var d = dataModel.data(indexPath);
-                    console.log("UserEvent: AttributeTriggered", d.type);
+                    console.log("UserEvent: AttributeTapped", d.type);
                     
                     if (d.type == "student" || d.type == "teacher") {
                         persist.invoke( "com.canadainc.Quran10.bio.previewer", "", "", "", d.id.toString() );
+                    } else if (d.type == "bio") {
+                        d.type = "expanded_bio";
+                        bioModel.updateItem(indexPath, d);
+                    } else if (d.type == "expanded_bio") {
+                        d.type = "bio";
+                        bioModel.updateItem(indexPath, d);
                     } else if (d.type == "tafsir") {
                         console.log("UserEvent: InvokeTafsir");
                         helper.fetchAllTafsirForSuite(bioPage, d.id);
@@ -299,9 +477,67 @@ Page
     }
     
     attachedObjects: [
-        ImagePaintDefinition {
+        ImagePaintDefinition
+        {
             id: bg
             imageSource: "images/backgrounds/background_ayat_page.jpg"
+        },
+        
+        ComponentDefinition {
+            id: definition
+        },
+        
+        ActionItem
+        {
+            id: addStudent
+            ActionBar.placement: 'Signature' in ActionBarPlacement ? ActionBarPlacement["Signature"] : ActionBarPlacement.OnBar
+            title: qsTr("Add Student") + Retranslate.onLanguageChanged
+            
+            function onPicked(student, name)
+            {
+                tafsirHelper.addTeacher(bioPage, student, individualId);
+                checkForDuplicate( {'id': student, 'student': name, 'type': "student"} );
+            }
+            
+            onTriggered: {
+                console.log("UserEvent: AddStudent");
+                definition.source = "IndividualPickerPage.qml";
+                
+                var p = definition.createObject();
+                p.picked.connect(onPicked);
+                
+                navigationPane.push(p);
+            }
+        },
+        
+        ActionItem
+        {
+            id: addTeacher
+            ActionBar.placement: ActionBarPlacement.OnBar
+            title: qsTr("Add Teacher") + Retranslate.onLanguageChanged
+            
+            function onPicked(teacher, name)
+            {
+                tafsirHelper.addTeacher(bioPage, individualId, teacher);
+                checkForDuplicate( {'id': teacher, 'teacher': name, 'type': "teacher"} );
+            }
+            
+            onTriggered: {
+                console.log("UserEvent: AddTeacher");
+                definition.source = "IndividualPickerPage.qml";
+                
+                var p = definition.createObject();
+                p.picked.connect(onPicked);
+                
+                navigationPane.push(p);
+            }
         }
     ]
+    
+    onCreationCompleted: {
+        if (reporter.isAdmin) {
+            addAction(addTeacher);
+            addAction(addStudent);
+        }
+    }
 }

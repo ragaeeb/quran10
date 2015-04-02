@@ -410,10 +410,9 @@ QVariantList Offloader::decorateWebsites(QVariantList input)
 bool Offloader::fillType(QVariantList input, int queryId, bb::cascades::GroupDataModel* gdm)
 {
     QMap<int,QString> map;
-    map[QueryId::FetchMentions] = "mention";
-    map[QueryId::FetchBio] = "bio";
     map[QueryId::FetchAllTafsir] = "tafsir";
     map[QueryId::FetchAllQuotes] = tr("quote");
+    map[QueryId::FetchBio] = "bio";
     map[QueryId::FetchTeachers] = tr("teacher");
     map[QueryId::FetchStudents] = tr("student");
     map[QueryId::FetchAllWebsites] = tr("website");
