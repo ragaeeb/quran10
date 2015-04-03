@@ -206,7 +206,6 @@ NavigationPane
                 function duplicateQuote(ListItemData)
                 {
                     var page = openQuote(ListItemData);
-                    page.showAuthorId = true;
                     page.createQuote.connect(addAction.onCreate);
                 }
                 

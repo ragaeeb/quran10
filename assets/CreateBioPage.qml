@@ -15,8 +15,8 @@ Page
             }
         }
         
-        if (data.author_id) {
-            from.text = data.author_id;
+        if (data.from_id) {
+            from.text = data.from_id;
         }
         
         if (data.reference) {
