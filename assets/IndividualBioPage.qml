@@ -144,8 +144,11 @@ Page
                 }
             }
             
-            Divider {
+            ImageView {
                 topMargin: 0; bottomMargin: 0
+                imageSource: "images/dividers/divider_bio_page.png"
+                horizontalAlignment: HorizontalAlignment.Center
+                visible: itemRoot.ListItem.indexInSection < itemRoot.ListItem.sectionSize-1
             }
             
             ListView
@@ -320,9 +323,11 @@ Page
                                 textStyle.textAlign: TextAlign.Center
                             }
                             
-                            Divider {
+                            ImageView {
                                 topMargin: 0; bottomMargin: 0
-                                visible: bioContainer.ListItem.indexPath != bioContainer.ListItem.view.dataModel.last()
+                                imageSource: "images/dividers/divider_bio.png"
+                                horizontalAlignment: HorizontalAlignment.Center
+                                visible: itemRoot.ListItem.indexInSection < itemRoot.ListItem.sectionSize-1
                             }
                         }
                     },
