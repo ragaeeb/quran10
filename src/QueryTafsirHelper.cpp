@@ -130,20 +130,20 @@ void QueryTafsirHelper::addTafsirPage(QObject* caller, qint64 suiteId, QString c
 }
 
 
-void QueryTafsirHelper::addStudent(QObject* caller, qint64 individual, qint64 studentId)
+void QueryTafsirHelper::addStudent(QObject* caller, qint64 teacherId, qint64 studentId)
 {
-    LOGGER(individual << studentId);
+    LOGGER(teacherId << studentId);
 
-    QString query = QString("INSERT OR IGNORE INTO teachers(teacher,individual) VALUES(%1,%2)").arg(individual).arg(studentId);
+    QString query = QString("INSERT OR IGNORE INTO teachers(teacher,individual) VALUES(%1,%2)").arg(teacherId).arg(studentId);
     m_sql->executeQuery(caller, query, QueryId::AddStudent);
 }
 
 
-void QueryTafsirHelper::addTeacher(QObject* caller, qint64 individual, qint64 teacherId)
+void QueryTafsirHelper::addTeacher(QObject* caller, qint64 studentId, qint64 teacherId)
 {
-    LOGGER(individual << teacherId);
+    LOGGER(studentId << teacherId);
 
-    QString query = QString("INSERT OR IGNORE INTO teachers(individual,teacher) VALUES(%1,%2)").arg(individual).arg(teacherId);
+    QString query = QString("INSERT OR IGNORE INTO teachers(individual,teacher) VALUES(%1,%2)").arg(studentId).arg(teacherId);
     m_sql->executeQuery(caller, query, QueryId::AddTeacher);
 }
 

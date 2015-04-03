@@ -501,7 +501,7 @@ Page
             
             function onPicked(student, name)
             {
-                tafsirHelper.addStudent(bioPage, student, individualId);
+                tafsirHelper.addStudent(bioPage, individualId, student);
                 checkForDuplicate( {'id': student, 'student': name, 'type': "student"} );
             }
             
@@ -525,7 +525,7 @@ Page
             
             function onPicked(teacher, name)
             {
-                tafsirHelper.addTeacher(bioPage, teacher, individualId);
+                tafsirHelper.addTeacher(bioPage, individualId, teacher);
                 checkForDuplicate( {'id': teacher, 'teacher': name, 'type': "teacher"} );
             }
             
