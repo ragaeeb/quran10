@@ -248,7 +248,7 @@ Page
                         {
                             id: sli
                             description: ListItemData.body.replace(/\n/g, " ").substr(0, 60) + "..."
-                            imageSource: ListItemData.points > 0 ? "images/list/ic_like.png" : ListItemData.points == 0 ? "images/list/mime_doc.png" : "images/list/ic_dislike.png"
+                            imageSource: ListItemData.points > 0 ? "images/list/ic_like.png" : ListItemData.points == 0 ? "images/list/ic_bio.png" : "images/list/ic_dislike.png"
                             title: ListItemData.author ? ListItemData.author : ListItemData.reference ? ListItemData.reference : ""
                             
                             contextMenuHandler: [
@@ -305,7 +305,7 @@ Page
                             StandardListItem
                             {
                                 description: ListItemData.body.replace(/\n/g, " ").substr(0, 60) + "..."
-                                imageSource: ListItemData.points > 0 ? "images/list/ic_like.png" : ListItemData.points == 0 ? "images/list/mime_doc.png" : "images/list/ic_dislike.png"
+                                imageSource: ListItemData.points > 0 ? "images/list/ic_like.png" : ListItemData.points == 0 ? "images/list/ic_bio.png" : "images/list/ic_dislike.png"
                                 title: ListItemData.author ? ListItemData.author : ListItemData.reference ? ListItemData.reference : ""
                             }
                             
@@ -381,7 +381,7 @@ Page
                                     
                                     DeleteActionItem
                                     {
-                                        imageSource: "images/menu/ic_remove_bio.png"
+                                        imageSource: "images/menu/ic_remove_teacher.png"
                                         
                                         onTriggered: {
                                             console.log("UserEvent: RemoveTeacher");
@@ -420,7 +420,7 @@ Page
                                     
                                     DeleteActionItem
                                     {
-                                        imageSource: "images/menu/ic_remove_bio.png"
+                                        imageSource: "images/menu/ic_remove_student.png"
                                         
                                         onTriggered: {
                                             console.log("UserEvent: RemoveStudent");
@@ -439,7 +439,7 @@ Page
                         StandardListItem
                         {
                             imageSource: ListItemData.imageSource
-                            description: ListItemData.uri
+                            title: ListItemData.uri
                         }
                     }
                 ]
@@ -491,6 +491,7 @@ Page
         {
             id: addStudent
             ActionBar.placement: 'Signature' in ActionBarPlacement ? ActionBarPlacement["Signature"] : ActionBarPlacement.OnBar
+            imageSource: "images/menu/ic_add_student.png"
             title: qsTr("Add Student") + Retranslate.onLanguageChanged
             
             function onPicked(student, name)
@@ -514,6 +515,7 @@ Page
         {
             id: addTeacher
             ActionBar.placement: ActionBarPlacement.OnBar
+            imageSource: "images/menu/ic_add_teacher.png"
             title: qsTr("Add Teacher") + Retranslate.onLanguageChanged
             
             function onPicked(teacher, name)
