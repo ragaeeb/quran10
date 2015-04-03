@@ -284,7 +284,7 @@ Page
                     {
                         id: sli
                         imageSource: ListItemData.imageSource
-                        description: ListItemData.uri
+                        title: ListItemData.uri
                         
                         contextActions: [
                             ActionSet

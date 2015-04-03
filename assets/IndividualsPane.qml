@@ -303,7 +303,7 @@ NavigationPane
                             
                             ActionItem
                             {
-                                imageSource: "images/menu/ic_edit_bio.png"
+                                imageSource: "images/menu/ic_edit_rijaal.png"
                                 title: qsTr("Edit") + Retranslate.onLanguageChanged
                                 
                                 onTriggered: {

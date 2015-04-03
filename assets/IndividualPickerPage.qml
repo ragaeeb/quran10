@@ -32,62 +32,8 @@ Page
         }
     ]
     
-    titleBar: TitleBar
-    {
-        id: tb
-        kind: TitleBarKind.FreeForm
-        kindProperties: FreeFormTitleBarKindProperties
-        {
-            Container
-            {
-                horizontalAlignment: HorizontalAlignment.Fill
-                verticalAlignment: VerticalAlignment.Fill
-                topPadding: 10; bottomPadding: 20; leftPadding: 10
-                
-                TextField
-                {
-                    id: searchField
-                    hintText: qsTr("Enter text to search...") + Retranslate.onLanguageChanged
-                    horizontalAlignment: HorizontalAlignment.Fill
-                    bottomMargin: 0
-                    
-                    input {
-                        submitKey: SubmitKey.Search
-                        flags: TextInputFlag.AutoCapitalizationOff | TextInputFlag.SpellCheck | TextInputFlag.WordSubstitutionOff | TextInputFlag.AutoPeriodOff | TextInputFlag.AutoCorrectionOff
-                        submitKeyFocusBehavior: SubmitKeyFocusBehavior.Lose
-                        
-                        onSubmitted: {
-                            performSearch();
-                        }
-                    }
-                    
-                    onCreationCompleted: {
-                        input["keyLayout"] = 7;
-                    }
-                    
-                    animations: [
-                        TranslateTransition {
-                            fromY: -150
-                            toY: 0
-                            easingCurve: StockCurve.QuarticInOut
-                            duration: 200
-                            
-                            onCreationCompleted: {
-                                play();
-                            }
-                            
-                            onStarted: {
-                                searchField.requestFocus();
-                            }
-                            
-                            onEnded: {
-                                deviceUtils.attachTopBottomKeys(individualPage, listView);
-                            }
-                        }
-                    ]
-                }
-            }
-        }
+    titleBar: TitleBar {
+        title: qsTr("Select Individual") + Retranslate.onLanguageChanged
     }
     
     function performSearch()
@@ -126,44 +72,93 @@ Page
             }
         }
         
-        ListView
+        Container
         {
-            id: listView
-            property alias pickerPage: individualPage
-            property bool showContextMenu: false
-            scrollRole: ScrollRole.Main
+            horizontalAlignment: HorizontalAlignment.Fill
+            verticalAlignment: VerticalAlignment.Fill
             
-            dataModel: ArrayDataModel {
-                id: adm
-            }
-            
-            listItemComponents: [
-                ListItemComponent
-                {
-                    IndividualListItem {
-                        id: sli
+            TextField
+            {
+                id: searchField
+                hintText: qsTr("Enter text to search...") + Retranslate.onLanguageChanged
+                horizontalAlignment: HorizontalAlignment.Fill
+                bottomMargin: 0
+                
+                input {
+                    submitKey: SubmitKey.Search
+                    flags: TextInputFlag.AutoCapitalizationOff | TextInputFlag.SpellCheck | TextInputFlag.WordSubstitutionOff | TextInputFlag.AutoPeriodOff | TextInputFlag.AutoCorrectionOff
+                    submitKeyFocusBehavior: SubmitKeyFocusBehavior.Lose
+                    
+                    onSubmitted: {
+                        performSearch();
                     }
                 }
-            ]
-            
-            function onDataLoaded(id, data)
-            {
-                if (id == QueryId.SearchIndividuals || id == QueryId.FetchAllIndividuals)
-                {
-                    adm.clear();
-                    adm.append(data);
-                    
-                    contentLoaded(data.length);
-                    busy.delegateActive = false;
-                    noElements.delegateActive = adm.isEmpty();
-                    listView.visible = !adm.isEmpty();
+                
+                onCreationCompleted: {
+                    input["keyLayout"] = 7;
                 }
+                
+                animations: [
+                    TranslateTransition {
+                        fromY: -150
+                        toY: 0
+                        easingCurve: StockCurve.QuarticInOut
+                        duration: 200
+                        
+                        onCreationCompleted: {
+                            play();
+                        }
+                        
+                        onStarted: {
+                            searchField.requestFocus();
+                        }
+                        
+                        onEnded: {
+                            deviceUtils.attachTopBottomKeys(individualPage, listView);
+                        }
+                    }
+                ]
             }
             
-            onTriggered: {
-                var d = dataModel.data(indexPath);
-                console.log("UserEvent: IndividualPicked", d.name);
-                picked(d.id, d.name);
+            ListView
+            {
+                id: listView
+                property alias pickerPage: individualPage
+                property bool showContextMenu: false
+                scrollRole: ScrollRole.Main
+                
+                dataModel: ArrayDataModel {
+                    id: adm
+                }
+                
+                listItemComponents: [
+                    ListItemComponent
+                    {
+                        IndividualListItem {
+                            id: sli
+                        }
+                    }
+                ]
+                
+                function onDataLoaded(id, data)
+                {
+                    if (id == QueryId.SearchIndividuals || id == QueryId.FetchAllIndividuals)
+                    {
+                        adm.clear();
+                        adm.append(data);
+                        
+                        contentLoaded(data.length);
+                        busy.delegateActive = false;
+                        noElements.delegateActive = adm.isEmpty();
+                        listView.visible = !adm.isEmpty();
+                    }
+                }
+                
+                onTriggered: {
+                    var d = dataModel.data(indexPath);
+                    console.log("UserEvent: IndividualPicked", d.name);
+                    picked(d.id, d.name);
+                }
             }
         }
         
