@@ -172,7 +172,7 @@ Page
                     if (ListItemData == "bio" || ListItemData == "expanded_bio") {
                         return qsTr("Biographies");
                     } else if (ListItemData == "tafsir") {
-                        return qsTr("Explanations");
+                        return qsTr("Works");
                     } else if (ListItemData == "teacher") {
                         return qsTr("Teachers");
                     } else if (ListItemData == "student") {

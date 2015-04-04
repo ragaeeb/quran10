@@ -84,7 +84,9 @@ Page
                     DoubleTapHandler {
                         onDoubleTapped: {
                             console.log("UserEvent: QuoteBodyDoubleTapped");
-                            bodyField.text = persist.getClipboardText();
+                            var x = persist.getClipboardText();
+                            x = x.charAt(0).toUpperCase() + x.slice(1); 
+                            bodyField.text = x;
                         }
                     }
                 ]

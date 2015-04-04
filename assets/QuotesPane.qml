@@ -207,6 +207,7 @@ NavigationPane
                 {
                     var page = openQuote(ListItemData);
                     page.createQuote.connect(addAction.onCreate);
+                    page.titleBar.title = qsTr("New Quote");
                 }
                 
                 function editItem(indexPath, ListItemData)
