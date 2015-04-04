@@ -214,14 +214,13 @@ Delegate
                         
                         function onDeflationProgressChanged(current, total)
                         {
-                            visible = true;
+                            cpc.visible = true;
                             labelText = qsTr("Uncompressing...\n") + ( (100.0*current)/total ).toFixed(1) + "%";
                             progressValue = (current*100.0)/total;
                         }
                         
                         onCreationCompleted: {
                             offloader.deflationDone.connect(cpc.finish);
-                            offloader.archiveDeflationProgress.connect(onDeflationProgressChanged);
                             mushaf.deflationProgress.connect(onDeflationProgressChanged);
                             mushaf.deflationDone.connect(cpc.finish);
                         }

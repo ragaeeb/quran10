@@ -267,9 +267,23 @@ QVariantMap ThreadUtils::writePluginArchive(QVariantMap const& cookie, QByteArra
     QString filePath = q.value(pathKey).toString();
     QString target = QString("%1/%2.zip").arg( QDir::tempPath() ).arg(filePath);
     QString expectedMd5 = q.value(KEY_MD5).toString();
-    q[KEY_ARCHIVE_PATH] = target;
 
-    return IOUtils::writeIfValidMd5(target, expectedMd5, data) ? q : QVariantMap();
+    bool valid = IOUtils::writeIfValidMd5(target, expectedMd5, data);
+
+    if (valid)
+    {
+        QuaZip zip(target);
+        zip.open(QuaZip::mdUnzip);
+        LOGGER("**** LKJ" << zip.getFileInfoList().first().uncompressedSize);
+        zip.close();
+        QStringList files = JlCompress::extractDir( target, QDir::homePath(), q.value(KEY_ARCHIVE_PASSWORD).toString().toStdString().c_str() );
+
+        if ( !files.isEmpty() ) {
+            return q;
+        }
+    }
+
+    return QVariantMap();
 }
 
 

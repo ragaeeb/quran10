@@ -6,7 +6,7 @@ CREATE TABLE explanations (id INTEGER PRIMARY KEY, surah_id INTEGER NOT NULL, fr
 CREATE TABLE quotes (id INTEGER PRIMARY KEY, author INTEGER REFERENCES individuals(id) ON DELETE CASCADE ON UPDATE CASCADE, body TEXT, reference TEXT);
 CREATE TABLE companions (id INTEGER PRIMARY KEY REFERENCES individuals(id) ON DELETE CASCADE ON UPDATE CASCADE);
 CREATE TABLE mentions (id INTEGER PRIMARY KEY, from_id INTEGER REFERENCES individuals(id) ON DELETE CASCADE ON UPDATE CASCADE, target INTEGER REFERENCES individuals(id) ON DELETE CASCADE ON UPDATE CASCADE, body TEXT, reference TEXT, points INTEGER);
-CREATE TABLE websites(id INTEGER PRIMARY KEY, individual INTEGER REFERENCES individuals(id) ON DELETE CASCADE ON UPDATE CASCADE, uri TEXT, UNIQUE(individual, uri) ON CONFLICT IGNORE );
+CREATE TABLE websites (id INTEGER PRIMARY KEY, individual INTEGER REFERENCES individuals(id) ON DELETE CASCADE ON UPDATE CASCADE, uri TEXT, UNIQUE(individual, uri) ON CONFLICT IGNORE );
 CREATE TABLE teachers (individual INTEGER REFERENCES individuals(id) ON DELETE CASCADE, teacher INTEGER REFERENCES individuals(id) ON DELETE CASCADE, UNIQUE(individual,teacher) ON CONFLICT IGNORE );
 CREATE TABLE locations (id INTEGER PRIMARY KEY, city TEXT NOT NULL UNIQUE ON CONFLICT IGNORE, latitude REAL NOT NULL, longitude REAL NOT NULL);
 
@@ -18,3 +18,4 @@ CREATE INDEX IF NOT EXISTS individuals_index ON individuals(birth,death,female,l
 CREATE INDEX IF NOT EXISTS mentions_index ON mentions(from_id,target,points);
 CREATE INDEX IF NOT EXISTS websites_index ON websites(individual);
 CREATE INDEX IF NOT EXISTS teachers_index ON teachers(individual, teacher);
+
