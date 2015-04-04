@@ -53,7 +53,7 @@ Page
     
     titleBar: TitleBar
     {
-        title: data && data.target ? qsTr("Edit Biography") + Retranslate.onLanguageChanged : qsTr("Create Biography") + Retranslate.onLanguageChanged
+        title: data && data.body ? qsTr("Edit Biography") + Retranslate.onLanguageChanged : qsTr("Create Biography") + Retranslate.onLanguageChanged
     }
     
     ScrollView
@@ -73,12 +73,14 @@ Page
                 bottomMargin: 0
                 
                 Option {
+                    id: jarh
                     imageSource: "images/list/ic_dislike.png"
                     text: qsTr("Jarh") + Retranslate.onLanguageChanged
                     value: -1
                 }
                 
                 Option {
+                    id: bioOption
                     imageSource: "images/list/mime_doc.png"
                     text: qsTr("Biography") + Retranslate.onLanguageChanged
                     value: undefined
@@ -86,6 +88,7 @@ Page
                 }
                 
                 Option {
+                    id: tahdeel
                     imageSource: "images/list/ic_like.png"
                     text: qsTr("Tahdeel") + Retranslate.onLanguageChanged
                     value: 1
@@ -104,7 +107,7 @@ Page
                 content.flags: TextContentFlag.ActiveTextOff | TextContentFlag.EmoticonsOff
                 input.flags: TextInputFlag.SpellCheck | TextInputFlag.AutoCapitalization | TextInputFlag.Prediction
                 horizontalAlignment: HorizontalAlignment.Fill
-                hintText: qsTr("Enter biography here...") + Retranslate.onLanguageChanged
+                hintText: jarh.selected ? qsTr("Enter criticism here...") + Retranslate.onLanguageChanged : tahdeel.selected ? qsTr("Enter praise here...") + Retranslate.onLanguageChanged : qsTr("Enter biography here...") + Retranslate.onLanguageChanged
                 minHeight: ui.sdu(25)
                 
                 onTextChanging: {
@@ -114,7 +117,7 @@ Page
                 gestureHandlers: [
                     DoubleTapHandler {
                         onDoubleTapped: {
-                            console.log("UserEvent: TafsirHeadingDoubleTapped");
+                            console.log("UserEvent: BioBodyTapped");
                             body.text = textUtils.optimize( persist.getClipboardText() );
                         }
                     }
@@ -133,7 +136,7 @@ Page
                 gestureHandlers: [
                     DoubleTapHandler {
                         onDoubleTapped: {
-                            console.log("UserEvent: TafsirHeadingDoubleTapped");
+                            console.log("UserEvent: BioRefDoubleTapped");
                             reference.text = persist.getClipboardText();
                         }
                     }

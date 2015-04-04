@@ -229,12 +229,14 @@ QVariantList Offloader::computeNecessaryUpdates(QVariantMap const& q, QByteArray
 
     if ( result.size() >= 8 )
     {
+        QString language = requestData.value(KEY_LANGUAGE).toString();
+
         qint64 serverTafsirVersion = result.first().toLongLong();
-        qint64 myTafsirVersion = m_persist->getValueFor(KEY_TAFSIR_VERSION).toLongLong();
+        qint64 myTafsirVersion = m_persist->getValueFor( KEY_TAFSIR_VERSION(language) ).toLongLong();
         qint64 serverTafsirSize = result[1].toLongLong();
 
         qint64 serverTranslationVersion = result[4].toLongLong();
-        qint64 myTranslationVersion = m_persist->getValueFor(KEY_TRANSLATION_VERSION).toLongLong();
+        qint64 myTranslationVersion = m_persist->getValueFor( KEY_TRANSLATION_VERSION(language) ).toLongLong();
         qint64 serverTranslationSize = result[5].toLongLong();
         bool tafsirUpdateNeeded = serverTafsirVersion > myTafsirVersion;
         bool translationUpdateNeeded = serverTranslationVersion > myTranslationVersion;
@@ -292,7 +294,7 @@ QVariantList Offloader::computeNecessaryUpdates(QVariantMap const& q, QByteArray
                     q[URI_KEY] = CommonConstants::generateHostUrl( result[3] );
                     q[TAFSIR_PATH] = tafsirName;
                     q[KEY_MD5] = serverTafsirMd5;
-                    q[KEY_PLUGIN_VERSION_KEY] = KEY_TAFSIR_VERSION;
+                    q[KEY_PLUGIN_VERSION_KEY] = KEY_TAFSIR_VERSION(language);
                     q[KEY_PLUGIN_VERSION_VALUE] = serverTafsirVersion;
                     q[KEY_ARCHIVE_PASSWORD] = TAFSIR_ARCHIVE_PASSWORD;
 
@@ -309,7 +311,7 @@ QVariantList Offloader::computeNecessaryUpdates(QVariantMap const& q, QByteArray
                     q[URI_KEY] = CommonConstants::generateHostUrl( result[7] );
                     q[KEY_TRANSLATION] = language;
                     q[KEY_MD5] = serverTranslationMd5;
-                    q[KEY_PLUGIN_VERSION_KEY] = KEY_TRANSLATION_VERSION;
+                    q[KEY_PLUGIN_VERSION_KEY] = KEY_TRANSLATION_VERSION(language);
                     q[KEY_PLUGIN_VERSION_VALUE] = serverTranslationVersion;
                     q[KEY_ARCHIVE_PASSWORD] = TRANSLATION_ARCHIVE_PASSWORD;
 
