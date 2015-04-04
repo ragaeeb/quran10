@@ -26,14 +26,12 @@ class Offloader : public QObject
     Persistance* m_persist;
 
 private slots:
-    void onArchiveDeflated(bool success, QString const& error, QVariantMap const& metadata);
     void onArchiveWritten();
     void onBookmarksRestored();
     void onBookmarksSaved();
     void onResultsDecorated();
 
 signals:
-    void archiveDeflationProgress(qint64 current, qint64 total);
     void backupComplete(QString const& file);
     void deflationDone(bool success, QString const& error);
     void restoreComplete(bool success);

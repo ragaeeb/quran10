@@ -11,6 +11,8 @@
 #include "ThreadUtils.h"
 #include "ZipThread.h"
 
+#define TAFSIR_ARCHIVE_PASSWORD "55XXo@Z_11QHh@"
+#define TRANSLATION_ARCHIVE_PASSWORD "7DE_1ddFGXy81_"
 #define TAFSIR_MIME_IMAGE "imageSource"
 
 namespace quran {
@@ -292,6 +294,7 @@ QVariantList Offloader::computeNecessaryUpdates(QVariantMap const& q, QByteArray
                     q[KEY_MD5] = serverTafsirMd5;
                     q[KEY_PLUGIN_VERSION_KEY] = KEY_TAFSIR_VERSION;
                     q[KEY_PLUGIN_VERSION_VALUE] = serverTafsirVersion;
+                    q[KEY_ARCHIVE_PASSWORD] = TAFSIR_ARCHIVE_PASSWORD;
 
                     downloadQueue << q;
                 }
@@ -308,6 +311,7 @@ QVariantList Offloader::computeNecessaryUpdates(QVariantMap const& q, QByteArray
                     q[KEY_MD5] = serverTranslationMd5;
                     q[KEY_PLUGIN_VERSION_KEY] = KEY_TRANSLATION_VERSION;
                     q[KEY_PLUGIN_VERSION_VALUE] = serverTranslationVersion;
+                    q[KEY_ARCHIVE_PASSWORD] = TRANSLATION_ARCHIVE_PASSWORD;
 
                     downloadQueue << q;
                 }
@@ -323,7 +327,8 @@ QVariantList Offloader::computeNecessaryUpdates(QVariantMap const& q, QByteArray
 
 void Offloader::processDownloadedPlugin(QVariantMap const& q, QByteArray const& data)
 {
-    if ( q.contains(TAFSIR_PATH) ) {
+    if ( q.contains(TAFSIR_PATH) )
+    {
         QFutureWatcher<QVariantMap>* qfw = new QFutureWatcher<QVariantMap>(this);
         connect( qfw, SIGNAL( finished() ), this, SLOT( onArchiveWritten() ) );
 
@@ -346,31 +351,19 @@ void Offloader::onArchiveWritten()
 
     if ( !result.isEmpty() )
     {
-        ZipThread* zt = new ZipThread( result.value(KEY_ARCHIVE_PATH).toString() );
-        zt->metadata = result;
-        connect( zt, SIGNAL( done(bool, QString const&, QVariantMap const&) ), this, SLOT( onArchiveDeflated(bool, QString const&, QVariantMap const&) ) );
-        connect( zt, SIGNAL( deflationProgress(qint64, qint64) ), this, SIGNAL( archiveDeflationProgress(qint64, qint64) ) );
+        QString pluginVersionKey = result.value(KEY_PLUGIN_VERSION_KEY).toString();
+        QString pluginVersionValue = result.value(KEY_PLUGIN_VERSION_VALUE).toString();
 
-        IOUtils::startThread(zt);
+        m_persist->saveValueFor(pluginVersionKey, pluginVersionValue, false);
+        m_persist->showToast( tr("Successfully saved plugin"), "", "asset:///images/menu/ic_select_more_chapters.png" );
+
+        emit deflationDone(true, "NoError");
     } else {
         m_persist->showToast( tr("Could not prepare the plugin for extraction. Please swipe-down from the top-bezel and file a bug report!"), "", "asset:///images/toast/ic_duplicate_replace.png" );
         LOGGER("CouldNotWriteArchiveToTemp!");
     }
 
     sender()->deleteLater();
-}
-
-
-void Offloader::onArchiveDeflated(bool success, QString const& error, QVariantMap const& result)
-{
-    LOGGER(success << error);
-    QString pluginVersionKey = result.value(KEY_PLUGIN_VERSION_KEY).toString();
-    QString pluginVersionValue = result.value(KEY_PLUGIN_VERSION_VALUE).toString();
-
-    m_persist->saveValueFor(pluginVersionKey, pluginVersionValue, false);
-    m_persist->showToast( tr("Successfully saved plugin"), "", "asset:///images/menu/ic_select_more_chapters.png" );
-
-    emit deflationDone(success, error);
 }
 
 
