@@ -18,9 +18,16 @@ Page
         {
             var data = results[0];
             
-            authorField.text = data.author;
-            translatorField.text = data.translator;
-            explainerField.text = data.explainer;
+            authorField.text = data.author.toString();
+            
+            if (data.translator) {
+                translatorField.text = data.translator.toString();
+            }
+            
+            if (data.explainer) {
+                explainerField.text = data.explainer.toString();
+            }
+
             titleField.text = data.title;
             descriptionField.text = data.description;
             referenceField.text = data.reference;

@@ -16,7 +16,7 @@ Page
         }
         
         if (data.from_id) {
-            from.text = data.from_id;
+            from.text = data.from_id.toString();
         }
         
         if (data.reference) {
@@ -28,14 +28,16 @@ Page
         }
     }
     
-    actions: [
-        ActionItem
+    titleBar: TitleBar
+    {
+        title: data && data.body ? qsTr("Edit Biography") + Retranslate.onLanguageChanged : qsTr("Create Biography") + Retranslate.onLanguageChanged
+        
+        acceptAction: ActionItem
         {
             id: saveAction
             title: qsTr("Save") + Retranslate.onLanguageChanged
             imageSource: "images/dropdown/save_quote.png"
             enabled: false
-            ActionBar.placement: 'Signature' in ActionBarPlacement ? ActionBarPlacement["Signature"] : ActionBarPlacement.OnBar
             
             onTriggered: {
                 console.log("UserEvent: SaveBio");
@@ -49,11 +51,6 @@ Page
                 createBio(result);
             }
         }
-    ]
-    
-    titleBar: TitleBar
-    {
-        title: data && data.body ? qsTr("Edit Biography") + Retranslate.onLanguageChanged : qsTr("Create Biography") + Retranslate.onLanguageChanged
     }
     
     ScrollView

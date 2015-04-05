@@ -16,15 +16,15 @@ NavigationPane
         }
     }
     
-    function onCreate(id, prefix, name, kunya, displayName, hidden, birth, death, female)
+    function onCreate(id, prefix, name, kunya, displayName, hidden, birth, death, female, location)
     {
-        tafsirHelper.createIndividual(navigationPane, prefix, name, kunya, displayName, birth, death);
+        tafsirHelper.createIndividual(navigationPane, prefix, name, kunya, displayName, birth, death, location);
         popToRoot();
     }
     
-    function onEdit(id, prefix, name, kunya, displayName, hidden, birth, death, female)
+    function onEdit(id, prefix, name, kunya, displayName, hidden, birth, death, female, location)
     {
-        tafsirHelper.editIndividual(navigationPane, id, prefix, name, kunya, displayName, hidden, birth, death, female);
+        tafsirHelper.editIndividual(navigationPane, id, prefix, name, kunya, displayName, hidden, birth, death, female, location);
         
         var obj = {'id': id, 'prefix': prefix, 'name': name, 'kunya': kunya, 'displayName': displayName, 'hidden': hidden ? 1 : 0, 'female': female ? 1 : 0};
         
@@ -34,6 +34,10 @@ NavigationPane
         
         if (death > 0) {
             obj["death"] = death;
+        }
+        
+        if (location > 0) {
+            obj["location"] = location;
         }
         
         individualPicker.model.replace(individualPicker.editIndexPath[0], obj);

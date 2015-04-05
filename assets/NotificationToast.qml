@@ -111,25 +111,22 @@ Delegate
                 preferredWidth: Infinity
                 preferredHeight: Infinity
                 background: Color.create(0,0,0,0.5)
+                rightPadding: 10; leftPadding: 10
                 layout: DockLayout {}
                 opacity: 0
                 
                 Container
                 {
                     id: toastBg
-                    topPadding: 10; leftPadding: 10; rightPadding: 15; bottomPadding: 30
+                    topPadding: 20; leftPadding: 20; rightPadding: 25; bottomPadding: 50
                     horizontalAlignment: HorizontalAlignment.Center
                     verticalAlignment: VerticalAlignment.Center
                     background: bg.imagePaint
-                    minHeight: 300
-                    minWidth: 300
-                    maxWidth: 550
-                    maxHeight: 550
                     layout: DockLayout {}
                     
                     Container
                     {
-                        leftPadding: 75; bottomPadding: 15
+                        leftPadding: 60;
                         verticalAlignment: VerticalAlignment.Center
                         
                         ImageView
@@ -154,9 +151,9 @@ Delegate
                     
                     Container
                     {
-                        leftPadding: 160;
+                        leftPadding: 160; topPadding: 20
                         horizontalAlignment: HorizontalAlignment.Fill
-                        verticalAlignment: VerticalAlignment.Center
+                        verticalAlignment: VerticalAlignment.Fill
                         
                         Label {
                             id: bodyLabel
@@ -168,7 +165,7 @@ Delegate
                             scaleY: 1.25
                             opacity: 0
                             horizontalAlignment: HorizontalAlignment.Fill
-                            verticalAlignment: VerticalAlignment.Fill
+                            verticalAlignment: VerticalAlignment.Center
                         }
                     }
                     
@@ -265,12 +262,12 @@ Delegate
                         ScaleTransition
                         {
                             id: bodyLabelSt
-                            fromX: 1.5
-                            fromY: 1.5
+                            fromX: 1.2
+                            fromY: 1.2
                             toX: 1
                             toY: 1
                             duration: 500
-                            easingCurve: StockCurve.DoubleBounceIn
+                            easingCurve: StockCurve.ElasticOut
                         }
                     }
                 },
@@ -293,7 +290,7 @@ Delegate
                         fromY: 0
                         toY: 1000
                         duration: 500
-                        easingCurve: StockCurve.BackIn
+                        easingCurve: StockCurve.ExponentialIn
                     }
                     
                     onEnded: {
