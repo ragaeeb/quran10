@@ -11,7 +11,6 @@
 #include "ThreadUtils.h"
 #include "ZipThread.h"
 
-#define TAFSIR_ARCHIVE_PASSWORD "55XXo@Z_11QHh@"
 #define TRANSLATION_ARCHIVE_PASSWORD "7DE_1ddFGXy81_"
 #define TAFSIR_MIME_IMAGE "imageSource"
 
@@ -225,7 +224,8 @@ QVariantList Offloader::computeNecessaryUpdates(QVariantMap const& q, QByteArray
 
     QStringList result = QString(data).split(",");
     QVariantMap requestData = q.value(KEY_UPDATE_CHECK).toMap();
-    bool forcedUpdate = requestData.value(KEY_FORCED_UPDATE).toBool();
+    QStringList forcedUpdates = requestData.value(KEY_FORCED_UPDATE).toStringList();
+    bool forcedUpdate = !forcedUpdates.isEmpty();
 
     if ( result.size() >= 8 )
     {
@@ -238,8 +238,8 @@ QVariantList Offloader::computeNecessaryUpdates(QVariantMap const& q, QByteArray
         qint64 serverTranslationVersion = result[4].toLongLong();
         qint64 myTranslationVersion = m_persist->getValueFor( KEY_TRANSLATION_VERSION(language) ).toLongLong();
         qint64 serverTranslationSize = result[5].toLongLong();
-        bool tafsirUpdateNeeded = serverTafsirVersion > myTafsirVersion;
-        bool translationUpdateNeeded = serverTranslationVersion > myTranslationVersion;
+        bool tafsirUpdateNeeded = serverTafsirVersion > myTafsirVersion || forcedUpdates.contains(KEY_TAFSIR);
+        bool translationUpdateNeeded = serverTranslationVersion > myTranslationVersion || forcedUpdates.contains(KEY_TRANSLATION);
 
         QString message;
 
@@ -359,7 +359,7 @@ void Offloader::onArchiveWritten()
         m_persist->saveValueFor(pluginVersionKey, pluginVersionValue, false);
         m_persist->showToast( tr("Successfully saved plugin"), "", "asset:///images/menu/ic_select_more_chapters.png" );
 
-        emit deflationDone(true, "NoError");
+        emit deflationDone(result);
     } else {
         m_persist->showToast( tr("Could not prepare the plugin for extraction. Please swipe-down from the top-bezel and file a bug report!"), "", "asset:///images/toast/ic_duplicate_replace.png" );
         LOGGER("CouldNotWriteArchiveToTemp!");

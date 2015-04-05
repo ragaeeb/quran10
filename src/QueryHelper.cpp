@@ -54,6 +54,7 @@ void QueryHelper::settingChanged(QString const& key)
         }
 
         QVariantMap params;
+        QStringList forcedUpdates;
 
         if ( showTranslation() ) // if the user didn't set to Arabic only, since arabic is already attached
         {
@@ -63,7 +64,7 @@ void QueryHelper::settingChanged(QString const& key)
 
             if ( !translationFile.exists() || translationFile.size() == 0 ) { // translation doesn't exist, download it
                 params[KEY_TRANSLATION] = TRANSLATION;
-                params[KEY_FORCED_UPDATE] = true;
+                forcedUpdates << KEY_TRANSLATION;
             } else {
                 m_sql.attachIfNecessary(TRANSLATION, inHome); // since english translation is loaded by default
             }
@@ -71,12 +72,16 @@ void QueryHelper::settingChanged(QString const& key)
 
         QFile tafsirFile( QString("%1/%2.db").arg( QDir::homePath() ).arg( tafsirName() ) );
 
-        if ( !tafsirFile.exists() || tafsirFile.size() == 0 ) { // translation doesn't exist, download it
+        if ( !tafsirFile.exists() || tafsirFile.size() == 0 ) { // tafsir doesn't exist, download it
             params[KEY_TAFSIR] = tafsirName();
-            params[KEY_FORCED_UPDATE] = true;
+            forcedUpdates << KEY_TAFSIR;
         } else if ( m_persist->isUpdateNeeded(KEY_LAST_UPDATE, 60) ) {
             params[KEY_TAFSIR] = tafsirName();
             params[KEY_TRANSLATION] = TRANSLATION;
+        }
+
+        if ( !forcedUpdates.isEmpty() ) {
+            params[KEY_FORCED_UPDATE] = forcedUpdates;
         }
 
         if ( !params.isEmpty() ) // update check needed

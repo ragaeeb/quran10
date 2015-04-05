@@ -19,10 +19,12 @@ Delegate
             onCreationCompleted: {
                 open();
                 queue.queueCompleted.connect(root.finish);
+                queue.isBlockedChanged.connect(root.finish);
             }
             
-            function finish() {
-                if ( !out.isPlaying() ) {
+            function finish()
+            {
+                if ( !queue.isBlocked && !out.isPlaying() ) {
                     out.play();
                 }
             }
@@ -159,6 +161,8 @@ Delegate
                                         return "mushaf";
                                     } else if (data.recitation) {
                                         return "recitation";
+                                    } else if (data.updateCheck) {
+                                        return "updateCheck";
                                     } else {
                                         return "transfer";
                                     }
@@ -199,6 +203,15 @@ Delegate
                                         TransferListItem {
                                             successImageSource: "images/list/ic_tafsir.png"
                                         }
+                                    },
+                                    
+                                    ListItemComponent
+                                    {
+                                        type: "updateCheck"
+                                        
+                                        TransferListItem {
+                                            successImageSource: "images/list/ic_update_check.png"
+                                        }
                                     }
                                 ]
                             }
@@ -219,8 +232,17 @@ Delegate
                             progressValue = (current*100.0)/total;
                         }
                         
+                        function onDeflationDone(result)
+                        {
+                            if (result.blockedKey) {
+                                queue.decreaseBlockingCount();
+                            }
+                            
+                            cpc.finish();
+                        }
+                        
                         onCreationCompleted: {
-                            offloader.deflationDone.connect(cpc.finish);
+                            offloader.deflationDone.connect(onDeflationDone);
                             mushaf.deflationProgress.connect(onDeflationProgressChanged);
                             mushaf.deflationDone.connect(cpc.finish);
                         }
