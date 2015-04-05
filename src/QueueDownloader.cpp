@@ -4,7 +4,8 @@
 
 namespace canadainc {
 
-QueueDownloader::QueueDownloader(QObject* parent) : QObject(parent), m_currentIndex(0)
+QueueDownloader::QueueDownloader(QObject* parent) :
+        QObject(parent), m_currentIndex(0), m_blockingCount(0)
 {
     connect( &m_network, SIGNAL( requestComplete(QVariant const&, QByteArray const&, bool) ), this, SLOT( onRequestComplete(QVariant const&, QByteArray const&, bool) ) );
     connect( &m_network, SIGNAL( downloadProgress(QVariant const&, qint64, qint64) ), this, SLOT( onDownloadProgress(QVariant const&, qint64, qint64) ) );
@@ -49,9 +50,19 @@ void QueueDownloader::process(QVariantMap const& toProcess)
     if ( !m_uriToIndex.contains( toProcess.value(URI_KEY).toUrl().toString() ) )
     {
         m_model.append(toProcess);
-        processNext();
-
         emit queueChanged();
+
+        if ( toProcess.contains(KEY_BLOCKED) )
+        {
+            bool blocked = isBlocked();
+            ++m_blockingCount;
+
+            if ( isBlocked() != blocked ) {
+                emit isBlockedChanged();
+            }
+        }
+
+        processNext();
     }
 }
 
@@ -59,20 +70,30 @@ void QueueDownloader::process(QVariantMap const& toProcess)
 void QueueDownloader::process(QVariantList const& toProcess)
 {
     QVariantList cleaned;
+    bool blocked = isBlocked();
 
     foreach (QVariant const& current, toProcess)
     {
         QVariantMap qvm = current.toMap();
 
-        if ( !m_uriToIndex.contains( qvm.value(URI_KEY).toUrl().toString() ) ) {
+        if ( !m_uriToIndex.contains( qvm.value(URI_KEY).toUrl().toString() ) )
+        {
+            if ( qvm.contains(KEY_BLOCKED) ) {
+                ++m_blockingCount;
+            }
+
             cleaned << current;
         }
     }
 
     m_model.append(cleaned);
-    processNext();
-
     emit queueChanged();
+
+    if ( isBlocked() != blocked ) {
+        emit isBlockedChanged();
+    }
+
+    processNext();
 }
 
 
@@ -139,6 +160,26 @@ void QueueDownloader::abort() {
 
 int QueueDownloader::queued() const {
 	return m_model.size();
+}
+
+bool QueueDownloader::isBlocked() const {
+    return m_blockingCount > 0;
+}
+
+
+void QueueDownloader::decreaseBlockingCount()
+{
+    int blocked = isBlocked();
+
+    --m_blockingCount;
+
+    if (m_blockingCount < 0) {
+        m_blockingCount = 0;
+    }
+
+    if ( isBlocked() != blocked ) {
+        emit isBlockedChanged();
+    }
 }
 
 

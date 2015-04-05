@@ -33,7 +33,7 @@ private slots:
 
 signals:
     void backupComplete(QString const& file);
-    void deflationDone(bool success, QString const& error);
+    void deflationDone(QVariantMap const& cookie);
     void restoreComplete(bool success);
 
 public:

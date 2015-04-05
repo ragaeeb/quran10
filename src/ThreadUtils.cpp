@@ -272,10 +272,6 @@ QVariantMap ThreadUtils::writePluginArchive(QVariantMap const& cookie, QByteArra
 
     if (valid)
     {
-        QuaZip zip(target);
-        zip.open(QuaZip::mdUnzip);
-        LOGGER("**** LKJ" << zip.getFileInfoList().first().uncompressedSize);
-        zip.close();
         QStringList files = JlCompress::extractDir( target, QDir::homePath(), q.value(KEY_ARCHIVE_PASSWORD).toString().toStdString().c_str() );
 
         if ( !files.isEmpty() ) {
