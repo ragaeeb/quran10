@@ -140,10 +140,14 @@ Page
                     var element = ListItem.data;
                     var currentCity = ListItem.data.city;
                     currentCity = persist.showBlockingPrompt( qsTr("Enter city name"), qsTr("Please enter the new name of the city:"), currentCity, qsTr("Enter city name (ie: Damascus)"), 40, true, qsTr("Save"), qsTr("Cancel") );
-                    element["city"] = currentCity;
                     
-                    tafsirHelper.editLocation(listView, element.id, currentCity);
-                    adm.replace(ListItem.indexPath[0], element);
+                    if (currentCity.length > 0)
+                    {
+                        element["city"] = currentCity;
+                        
+                        tafsirHelper.editLocation(listView, element.id, currentCity);
+                        adm.replace(ListItem.indexPath[0], element);
+                    }
                 }
                 
                 function deleteCity(ListItem)
