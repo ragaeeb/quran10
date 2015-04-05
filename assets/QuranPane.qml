@@ -1,4 +1,5 @@
 import bb.cascades 1.0
+import com.canadainc.data 1.0
 
 NavigationPane
 {
@@ -6,7 +7,7 @@ NavigationPane
     
     onPopTransitionEnded: {
         page.destroy();
-        
+/*        
         if ( persist.tutorialVideo("http://youtu.be/7nA27gIxZ08") ) {}
         else if ( tutorialToast.tutorial( "tutorialAlphanumeric", qsTr("Did you know you can quickly jump to a specific verse by typing its chapter number followed by a ':' and followed by the verse number.\n\nFor example, to jump to Surah Al-Baqara Verse #2, type '2:2' into the search field!"), "images/ic_quran.png" ) ) {}
         else if ( !persist.contains("alFurqanAdvertised") ) {
@@ -14,7 +15,7 @@ NavigationPane
             var advertisement = definition.createObject();
             advertisement.open();
             persist.saveValueFor("alFurqanAdvertised", 1, false);
-        }
+        } */
     }
     
     function onAyatPicked(surahId, verseId)
@@ -171,13 +172,24 @@ NavigationPane
             surahPage.requestedVerse = verse;
         }
         
+        function onDataLoaded(id, data)
+        {
+            if (id == QueryId.FetchRandomQuote && data.length > 0)
+            {
+                console.log("*** SDLKFJ");
+                var quote = data[0];
+                console.log("*** SDLKFJ33");
+                var body = qsTr("<html><i>“%1”</i>\n\n- <b>%2%4</b>\n\n[%3]\n\n\n</html>").arg(quote.body).arg(quote.displayName ? quote.displayName : quote.author).arg(quote.reference).arg( global.getSuffix(quote.birth, quote.death, quote.companion_id, quote.female == 1) );
+                console.log("*** SDLKFJ222");
+                tutorialToast.init(body, "images/ic_quran.png");
+                console.log("*** SDLKFJxxx");
+            }
+        }
+        
         function onLazyInitComplete()
         {
             ready();
-            
-            if (reporter.isAdmin) {
-                addAction(editAyatsAction);
-            }
+            helper.fetchRandomQuote(pickerPage);
         }
         
         onCreationCompleted: {

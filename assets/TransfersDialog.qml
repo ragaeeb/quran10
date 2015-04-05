@@ -163,6 +163,8 @@ Delegate
                                         return "recitation";
                                     } else if (data.updateCheck) {
                                         return "updateCheck";
+                                    } else if (data.geoLookup) {
+                                        return "geoLookup";
                                     } else {
                                         return "transfer";
                                     }
@@ -184,6 +186,15 @@ Delegate
                                         
                                         TransferListItem {
                                             successImageSource: "images/list/ic_mushaf_page.png"
+                                        }
+                                    },
+                                    
+                                    ListItemComponent
+                                    {
+                                        type: "geoLookup"
+                                        
+                                        TransferListItem {
+                                            successImageSource: "images/list/ic_geo_search.png"
                                         }
                                     },
                                     

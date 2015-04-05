@@ -33,19 +33,22 @@ public:
 
     Q_INVOKABLE void addBio(QObject* caller, qint64 individualId, QString const& body, QString const& reference, QString const& author, QVariant points=QVariant());
     Q_INVOKABLE void addCompanions(QObject* caller, QVariantList const& ids);
+    Q_INVOKABLE void addLocation(QObject* caller, QString const& city, qreal latitude, qreal longitude);
     Q_INVOKABLE void addQuote(QObject* caller, QString const& author, QString const& body, QString const& reference);
     Q_INVOKABLE void addStudent(QObject* caller, qint64 teacherId, qint64 studentId);
     Q_INVOKABLE bool addWebsite(QObject* caller, qint64 individualId, QString const& address);
     Q_INVOKABLE void addTafsir(QObject* caller, QString const& author, QString const& translator, QString const& explainer, QString const& title, QString const& description, QString const& reference);
     Q_INVOKABLE void addTafsirPage(QObject* caller, qint64 suiteId, QString const& body, QString const& heading, QString const& reference);
     Q_INVOKABLE void addTeacher(QObject* caller, qint64 studentId, qint64 teacherId);
-    Q_INVOKABLE void createIndividual(QObject* caller, QString const& prefix, QString const& name, QString const& kunya, QString const& displayName, int birth, int death);
+    Q_INVOKABLE void createIndividual(QObject* caller, QString const& prefix, QString const& name, QString const& kunya, QString const& displayName, int birth, int death, int location);
     Q_INVOKABLE void editBio(QObject* caller, qint64 bioId, QString const& body, QString const& reference, QString const& author, QVariant points=QVariant());
-    Q_INVOKABLE void editIndividual(QObject* caller, qint64 id, QString const& prefix, QString const& name, QString const& kunya, QString const& displayName, bool hidden, int birth, int death, bool female);
+    Q_INVOKABLE void editIndividual(QObject* caller, qint64 id, QString const& prefix, QString const& name, QString const& kunya, QString const& displayName, bool hidden, int birth, int death, bool female, int location);
+    Q_INVOKABLE void editLocation(QObject* caller, qint64 id, QString const& city);
     Q_INVOKABLE void editQuote(QObject* caller, qint64 quoteId, QString const& author, QString const& body, QString const& reference);
     Q_INVOKABLE void editTafsir(QObject* caller, qint64 suiteId, QString const& author, QString const& translator, QString const& explainer, QString const& title, QString const& description, QString const& reference);
     Q_INVOKABLE void editTafsirPage(QObject* caller, qint64 suitePageId, QString const& body, QString const& heading, QString const& reference);
     Q_INVOKABLE void fetchAllIndividuals(QObject* caller);
+    Q_INVOKABLE void fetchAllLocations(QObject* caller, QString const& city=QString());
     Q_INVOKABLE void fetchAllWebsites(QObject* caller, qint64 individualId);
     Q_INVOKABLE void fetchTeachers(QObject* caller, qint64 individualId);
     Q_INVOKABLE void fetchStudents(QObject* caller, qint64 individualId);
@@ -58,6 +61,7 @@ public:
     Q_INVOKABLE void removeBio(QObject* caller, qint64 id);
     Q_INVOKABLE void removeCompanions(QObject* caller, QVariantList const& ids);
     Q_INVOKABLE void removeIndividual(QObject* caller, qint64 id);
+    Q_INVOKABLE void removeLocation(QObject* caller, qint64 id);
     Q_INVOKABLE void removeQuote(QObject* caller, qint64 id);
     Q_INVOKABLE void removeWebsite(QObject* caller, qint64 id);
     Q_INVOKABLE void removeTafsir(QObject* caller, qint64 suiteId);

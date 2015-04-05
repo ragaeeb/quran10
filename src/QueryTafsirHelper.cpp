@@ -89,6 +89,14 @@ bool QueryTafsirHelper::addWebsite(QObject* caller, qint64 individualId, QString
 }
 
 
+void QueryTafsirHelper::addLocation(QObject* caller, QString const& city, qreal latitude, qreal longitude)
+{
+    LOGGER(city << latitude << longitude);
+    QString query = "INSERT INTO locations (city,latitude,longitude) VALUES(?,?,?)";
+    m_sql->executeQuery(caller, query, QueryId::AddLocation, QVariantList() << city << latitude << longitude);
+}
+
+
 void QueryTafsirHelper::addQuote(QObject* caller, QString const& author, QString const& body, QString const& reference)
 {
     LOGGER(author << body << reference);
@@ -184,19 +192,22 @@ void QueryTafsirHelper::editTafsirPage(QObject* caller, qint64 suitePageId, QStr
 }
 
 
-void QueryTafsirHelper::editIndividual(QObject* caller, qint64 id, QString const& prefix, QString const& name, QString const& kunya, QString const& displayName, bool hidden, int birth, int death, bool female)
+void QueryTafsirHelper::editIndividual(QObject* caller, qint64 id, QString const& prefix, QString const& name, QString const& kunya, QString const& displayName, bool hidden, int birth, int death, bool female, int location)
 {
-    LOGGER( id << prefix << name << kunya << displayName << hidden << birth << death << female );
+    LOGGER( id << prefix << name << kunya << displayName << hidden << birth << death << female << location );
 
-    QString query = QString("UPDATE individuals SET prefix=?, name=?, kunya=?, displayName=?, hidden=%1, birth=?, death=?, female=%3 WHERE id=%2").arg(hidden ? 1 : 0).arg(id).arg(female ? 1 : 0);
+    QString query = QString("UPDATE individuals SET prefix=?, name=?, kunya=?, displayName=?, hidden=?, birth=?, death=?, female=?, location=? WHERE id=%1").arg(id);
 
     QVariantList args;
     args << protect(prefix);
     args << name;
     args << protect(kunya);
     args << protect(displayName);
+    args << ( hidden ? 1 : QVariant() );
     args << ( birth > 0 ? birth : QVariant() );
     args << ( death > 0 ? death : QVariant() );
+    args << ( female ? 1 : QVariant() );
+    args << ( location > 0 ? location : QVariant() );
 
     m_sql->executeQuery(caller, query, QueryId::EditIndividual, args);
 }
@@ -212,8 +223,34 @@ void QueryTafsirHelper::editQuote(QObject* caller, qint64 quoteId, QString const
 }
 
 
+void QueryTafsirHelper::editLocation(QObject* caller, qint64 id, QString const& city)
+{
+    LOGGER(id << city);
+
+    QString query = QString("UPDATE locations SET city=? WHERE id=%1").arg(id);
+    m_sql->executeQuery(caller, query, QueryId::EditLocation, QVariantList() << city);
+}
+
+
 void QueryTafsirHelper::fetchAllIndividuals(QObject* caller) {
     m_sql->executeQuery(caller, "SELECT individuals.id,prefix,name,kunya,hidden,birth,death,companions.id AS companion_id FROM individuals LEFT JOIN companions ON individuals.id=companions.id ORDER BY name,kunya,prefix", QueryId::FetchAllIndividuals);
+}
+
+
+void QueryTafsirHelper::fetchAllLocations(QObject* caller, QString const& city)
+{
+    LOGGER(city);
+    QString q = "SELECT * FROM locations";
+    QVariantList args;
+
+    if ( !city.isEmpty() ) {
+        q += " WHERE city LIKE '%' || ? || '%'";
+        args << city;
+    }
+
+    q += " ORDER BY city";
+
+    m_sql->executeQuery(caller, q, QueryId::FetchAllLocations, args);
 }
 
 
@@ -291,12 +328,12 @@ qint64 QueryTafsirHelper::generateIndividualField(QObject* caller, QString const
 }
 
 
-void QueryTafsirHelper::createIndividual(QObject* caller, QString const& prefix, QString const& name, QString const& kunya, QString const& displayName, int birth, int death)
+void QueryTafsirHelper::createIndividual(QObject* caller, QString const& prefix, QString const& name, QString const& kunya, QString const& displayName, int birth, int death, int location)
 {
-    LOGGER( prefix << name << kunya << displayName << birth << death );
+    LOGGER( prefix << name << kunya << displayName << birth << death << location );
 
     qint64 id = QDateTime::currentMSecsSinceEpoch();
-    QString query = QString("INSERT INTO individuals (id,prefix,name,kunya,displayName,birth,death) VALUES (%1,?,?,?,?,?,?)").arg(id);
+    QString query = QString("INSERT INTO individuals (id,prefix,name,kunya,displayName,birth,death,location) VALUES (%1,?,?,?,?,?,?,?)").arg(id);
 
     QVariantList args;
     args << protect(prefix);
@@ -305,6 +342,7 @@ void QueryTafsirHelper::createIndividual(QObject* caller, QString const& prefix,
     args << protect(displayName);
     args << ( birth > 0 ? birth : QVariant() );
     args << ( death > 0 ? death : QVariant() );
+    args << ( location > 0 ? location : QVariant() );
 
     m_sql->executeQuery(caller, query, QueryId::AddIndividual, args);
 }
@@ -384,6 +422,14 @@ void QueryTafsirHelper::removeIndividual(QObject* caller, qint64 id)
     LOGGER(id);
     QString query = QString("DELETE FROM individuals WHERE id=%1").arg(id);
     m_sql->executeQuery(caller, query, QueryId::RemoveIndividual);
+}
+
+
+void QueryTafsirHelper::removeLocation(QObject* caller, qint64 id)
+{
+    LOGGER(id);
+    QString query = QString("DELETE FROM locations WHERE id=%1").arg(id);
+    m_sql->executeQuery(caller, query, QueryId::RemoveLocation);
 }
 
 

@@ -12,7 +12,7 @@ TextField
         {
             function onPicked(id)
             {
-                tf.text = id;
+                tf.text = id.toString();
                 navigationPane.pop();
             }
             

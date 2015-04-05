@@ -213,7 +213,6 @@ NavigationPane
                                     DeleteActionItem
                                     {
                                         imageSource: "images/menu/ic_favourite_remove.png"
-                                        title: qsTr("Remove") + Retranslate.onLanguageChanged
                                         
                                         onTriggered: {
                                             console.log("UserEvent: RemoveFavourite");

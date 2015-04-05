@@ -60,12 +60,14 @@ signals:
     void childCardFinished(QString const& message);
     void initialize();
     void lazyInitComplete();
+    void locationsFound(QVariant const& locations);
 
 public:
 	static void create(bb::cascades::Application* app);
     virtual ~ApplicationUI();
 
     Q_SLOT void checkMissingAyatImages();
+    Q_INVOKABLE void geoLookup(QString const& location);
 };
 
 } // quran

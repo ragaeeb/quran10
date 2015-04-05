@@ -6,7 +6,7 @@ Page
 {
     id: createRijaal
     property variant individualId
-    signal createIndividual(variant id, string prefix, string name, string kunya, string displayName, bool hidden, int birth, int death, bool female)
+    signal createIndividual(variant id, string prefix, string name, string kunya, string displayName, bool hidden, int birth, int death, bool female, int location)
     actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
     
     onIndividualIdChanged: {
@@ -32,6 +32,25 @@ Page
                 console.log("UserEvent: NewSite");
                 var uri = persist.showBlockingPrompt( qsTr("Enter url"), qsTr("Please enter the website address for this individual:"), "", qsTr("Enter url (ie: http://mtws.com)"), 100, false, qsTr("Save"), qsTr("Cancel"), SystemUiInputMode.Url );
                 tafsirHelper.addWebsite(createRijaal, individualId, uri);
+            }
+        },
+        
+        ActionItem
+        {
+            id: validateLocation
+            imageSource: "images/list/ic_geo_search.png"
+            title: qsTr("Validate Location") + Retranslate.onLanguageChanged
+            ActionBar.placement: ActionBarPlacement.OnBar
+            
+            shortcuts: [
+                SystemShortcut {
+                    type: SystemShortcuts.Edit
+                }
+            ]
+            
+            onTriggered: {
+                console.log("UserEvent: ValidateLocation");
+                location.validator.validate();
             }
         }
     ]
@@ -65,6 +84,10 @@ Page
             if (data.displayName) {
                 displayName.text = data.displayName;
             }
+            
+            if (data.location) {
+                location.text = data.location.toString();
+            }
         } else if (id == QueryId.FetchAllWebsites) {
             sites.count = results.length;
             results = offloader.decorateWebsites(results);
@@ -89,9 +112,12 @@ Page
                 console.log("UserEvent: SaveIndividual");
                 
                 name.validator.validate();
+                location.validator.validate();
                 
-                if (name.validator.valid) {
-                    createIndividual(individualId, prefix.text.trim(), name.text.trim(), kunya.text.trim(), displayName.text.trim(), hidden.checked, parseInt( birth.text.trim() ), parseInt( death.text.trim() ), female.checked );
+                if (name.validator.valid && location.validator.valid) {
+                    createIndividual(individualId, prefix.text.trim(), name.text.trim(), kunya.text.trim(), displayName.text.trim(), hidden.checked, parseInt( birth.text.trim() ), parseInt( death.text.trim() ), female.checked, parseInt( location.text.trim() ) );
+                } else if (!location.validator.valid) {
+                    persist.showToast( qsTr("Invalid location specified!"), "", "asset:///images/toast/incomplete_field.png" );
                 } else {
                     persist.showToast( qsTr("Invalid name!"), "", "asset:///images/toast/incomplete_field.png" );
                 }
@@ -251,6 +277,55 @@ Page
                         }
                     ]
                 }
+                
+                TextField
+                {
+                    id: location
+                    hintText: qsTr("City of birth...") + Retranslate.onLanguageChanged
+                    horizontalAlignment: HorizontalAlignment.Fill
+                    content.flags: TextContentFlag.ActiveTextOff | TextContentFlag.EmoticonsOff
+                    input.flags: TextInputFlag.SpellCheckOff | TextInputFlag.AutoPeriodOff | TextInputFlag.AutoCorrectionOff
+                    
+                    validator: Validator
+                    {
+                        errorMessage: qsTr("No locations found...") + Retranslate.onLanguageChanged;
+                        mode: ValidationMode.Custom
+
+                        onValidate: {
+                            var trimmed = location.text.trim();
+                            
+                            if (trimmed.length == 0) {
+                                valid = true;
+                            } else {
+                                if ( trimmed.match("\\d+") ) {
+                                    valid = true;
+                                } else {
+                                    createLocationPicker();
+                                    app.geoLookup(trimmed);
+                                }
+                            }
+                        }
+                    }
+                    
+                    gestureHandlers: [
+                        DoubleTapHandler
+                        {
+                            id: dth
+                            
+                            function onPicked(id, name)
+                            {
+                                location.text = id.toString();
+                                navigationPane.pop();
+                            }
+                            
+                            onDoubleTapped: {
+                                console.log("UserEvent: LocationFieldDoubleTapped");
+                                var p = createLocationPicker();
+                                p.performSearch();
+                            }
+                        }
+                    ]
+                }
             }
         }
         
@@ -312,5 +387,18 @@ Page
                 persist.donate(d.uri);
             }
         }
+    }
+    
+    
+    
+    function createLocationPicker()
+    {
+        definition.source = "LocationPickerPage.qml";
+        var p = definition.createObject();
+        p.picked.connect(dth.onPicked);
+        
+        navigationPane.push(p);
+        
+        return p;
     }
 }

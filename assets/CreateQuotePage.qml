@@ -18,7 +18,7 @@ Page
         {
             var data = results[0];
             
-            authorField.text = data.author_id;
+            authorField.text = data.author_id.toString();
             bodyField.text = data.body;
             referenceField.text = data.reference;
         }

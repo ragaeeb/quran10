@@ -15,6 +15,8 @@
 #include <bb/cascades/NavigationPane>
 #include <bb/cascades/QmlDocument>
 
+#include <bb/data/JsonDataAccess>
+
 #include <QFutureWatcher>
 
 #include <QtConcurrentRun>

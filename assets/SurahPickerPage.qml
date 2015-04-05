@@ -45,7 +45,6 @@ Page
                             onEnded: {
                                 if (showJuz)
                                 {
-                                    quote.process();
                                     tm.process();
                                     bookmarkHelper.fetchLastProgress(button);
                                     global.lastPositionUpdated.connect(button.onLastPositionUpdated);
@@ -430,10 +429,6 @@ Page
         {
             id: busy
             asset: "images/progress/loading_chapters.png"
-        }
-        
-        QuoteOverlay {
-            id: quote
         }
         
         PermissionToast
