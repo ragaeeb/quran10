@@ -38,7 +38,7 @@ Page
         ActionItem
         {
             id: validateLocation
-            imageSource: "images/list/ic_geo_search.png"
+            imageSource: "images/menu/ic_validate_location.png"
             title: qsTr("Validate Location") + Retranslate.onLanguageChanged
             ActionBar.placement: ActionBarPlacement.OnBar
             
