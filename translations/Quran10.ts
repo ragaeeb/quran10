@@ -55,7 +55,7 @@ Pin - 2B77C09E</source>
 <context>
     <name>AyatPage</name>
     <message numerus="yes">
-        <location filename="../assets/AyatPage.qml" line="31"/>
+        <location filename="../assets/AyatPage.qml" line="32"/>
         <source>%n similar</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -72,35 +72,35 @@ Pin - 2B77C09E</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="99"/>
+        <location filename="../assets/AyatPage.qml" line="107"/>
         <source>Verse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="114"/>
+        <location filename="../assets/AyatPage.qml" line="122"/>
         <source>Audio</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../assets/AyatPage.qml" line="155"/>
+        <location filename="../assets/AyatPage.qml" line="163"/>
         <source>%n tafsir</source>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="173"/>
+        <location filename="../assets/AyatPage.qml" line="181"/>
         <source>Mark Favourite</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="184"/>
-        <location filename="../assets/AyatPage.qml" line="208"/>
+        <location filename="../assets/AyatPage.qml" line="192"/>
+        <location filename="../assets/AyatPage.qml" line="216"/>
         <source>Enter name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="184"/>
+        <location filename="../assets/AyatPage.qml" line="192"/>
         <source>You can use this to quickly recognize this ayah in the favourites tab.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -115,83 +115,83 @@ Pin - 2B77C09E</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="184"/>
-        <location filename="../assets/AyatPage.qml" line="188"/>
-        <location filename="../assets/AyatPage.qml" line="208"/>
+        <location filename="../assets/AyatPage.qml" line="192"/>
+        <location filename="../assets/AyatPage.qml" line="196"/>
+        <location filename="../assets/AyatPage.qml" line="216"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="184"/>
+        <location filename="../assets/AyatPage.qml" line="192"/>
         <source>Name...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="188"/>
+        <location filename="../assets/AyatPage.qml" line="196"/>
         <source>Enter tag</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="188"/>
+        <location filename="../assets/AyatPage.qml" line="196"/>
         <source>You can use this to categorize related verses together.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="188"/>
+        <location filename="../assets/AyatPage.qml" line="196"/>
         <source>Enter a tag for this bookmark (ie: ramadan). You can leave this blank if you don&apos;t want to use a tag.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="196"/>
+        <location filename="../assets/AyatPage.qml" line="204"/>
         <source>Add Shortcut</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="208"/>
+        <location filename="../assets/AyatPage.qml" line="216"/>
         <source>You can use this to quickly recognize this ayah on your home screen.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="208"/>
+        <location filename="../assets/AyatPage.qml" line="216"/>
         <source>Shortcut name...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="218"/>
-        <location filename="../assets/AyatPage.qml" line="459"/>
-        <location filename="../assets/AyatPage.qml" line="513"/>
+        <location filename="../assets/AyatPage.qml" line="226"/>
+        <location filename="../assets/AyatPage.qml" line="464"/>
+        <location filename="../assets/AyatPage.qml" line="520"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="230"/>
-        <location filename="../assets/AyatPage.qml" line="471"/>
-        <location filename="../assets/AyatPage.qml" line="525"/>
+        <location filename="../assets/AyatPage.qml" line="238"/>
+        <location filename="../assets/AyatPage.qml" line="476"/>
+        <location filename="../assets/AyatPage.qml" line="532"/>
         <source>Share</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="246"/>
+        <location filename="../assets/AyatPage.qml" line="254"/>
         <source>Previous Verse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="265"/>
+        <location filename="../assets/AyatPage.qml" line="272"/>
         <source>Next Verse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="335"/>
+        <location filename="../assets/AyatPage.qml" line="340"/>
         <source>The ayat was not found in the database.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="353"/>
+        <location filename="../assets/AyatPage.qml" line="358"/>
         <source>Chapter Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="354"/>
+        <location filename="../assets/AyatPage.qml" line="359"/>
         <source>Displays the chapter information</source>
         <translation type="unfinished"></translation>
     </message>
@@ -199,34 +199,34 @@ Pin - 2B77C09E</source>
 <context>
     <name>AyatTafsirParser</name>
     <message>
-        <location filename="../assets/AyatTafsirParser.qml" line="25"/>
+        <location filename="../assets/AyatTafsirParser.qml" line="32"/>
         <source>[This tafsir is being intentionally suppressed. It may be released in a future update.]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatTafsirParser.qml" line="27"/>
+        <location filename="../assets/AyatTafsirParser.qml" line="34"/>
         <source>Author: &lt;a href=&quot;%2&quot;&gt;%1&lt;/a&gt;%3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatTafsirParser.qml" line="30"/>
+        <location filename="../assets/AyatTafsirParser.qml" line="37"/>
         <source>
 Translator: &lt;a href=&quot;%2&quot;&gt;%1&lt;/a&gt;%3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatTafsirParser.qml" line="34"/>
+        <location filename="../assets/AyatTafsirParser.qml" line="41"/>
         <source>
 Explained by: &lt;a href=&quot;%2&quot;&gt;%1&lt;/a&gt;%3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatTafsirParser.qml" line="49"/>
+        <location filename="../assets/AyatTafsirParser.qml" line="62"/>
         <source>To exit this dialog simply tap any area outside of the dialog!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatTafsirParser.qml" line="50"/>
+        <location filename="../assets/AyatTafsirParser.qml" line="63"/>
         <source>If the font size is too small, you can simply pinch in to increase the font size!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -239,27 +239,27 @@ Explained by: &lt;a href=&quot;%2&quot;&gt;%1&lt;/a&gt;%3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatTafsirPicker.qml" line="34"/>
+        <location filename="../assets/AyatTafsirPicker.qml" line="59"/>
         <source>Enter name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatTafsirPicker.qml" line="34"/>
+        <location filename="../assets/AyatTafsirPicker.qml" line="59"/>
         <source>You can use this to quickly recognize this tafsir on your home screen.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatTafsirPicker.qml" line="34"/>
+        <location filename="../assets/AyatTafsirPicker.qml" line="59"/>
         <source>Shortcut name...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatTafsirPicker.qml" line="34"/>
+        <location filename="../assets/AyatTafsirPicker.qml" line="59"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/AyatTafsirPicker.qml" line="87"/>
+        <location filename="../assets/AyatTafsirPicker.qml" line="112"/>
         <source>Add Shortcut</source>
         <translation type="unfinished"></translation>
     </message>
@@ -279,11 +279,6 @@ Explained by: &lt;a href=&quot;%2&quot;&gt;%1&lt;/a&gt;%3</source>
     <message>
         <location filename="../assets/BookmarksPane.qml" line="190"/>
         <source>Uncategorized</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/BookmarksPane.qml" line="216"/>
-        <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -373,7 +368,7 @@ Explained by: &lt;a href=&quot;%2&quot;&gt;%1&lt;/a&gt;%3</source>
 <context>
     <name>ChapterTitleBar</name>
     <message>
-        <location filename="../assets/ChapterTitleBar.qml" line="72"/>
+        <location filename="../assets/ChapterTitleBar.qml" line="73"/>
         <source>%1 (%2)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -401,39 +396,216 @@ Explained by: &lt;a href=&quot;%2&quot;&gt;%1&lt;/a&gt;%3</source>
     </message>
 </context>
 <context>
-    <name>CreateQuotePage</name>
+    <name>CreateBioPage</name>
     <message>
-        <location filename="../assets/CreateQuotePage.qml" line="30"/>
-        <source>Edit Quote</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/CreateQuotePage.qml" line="30"/>
-        <source>New Quote</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/CreateQuotePage.qml" line="34"/>
+        <location filename="../assets/CreateBioPage.qml" line="38"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/CreateQuotePage.qml" line="63"/>
+        <location filename="../assets/CreateBioPage.qml" line="33"/>
+        <source>Edit Biography</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/CreateBioPage.qml" line="33"/>
+        <source>Create Biography</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/CreateBioPage.qml" line="75"/>
+        <source>Jarh</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/CreateBioPage.qml" line="82"/>
+        <source>Biography</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/CreateBioPage.qml" line="90"/>
+        <source>Tahdeel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/CreateBioPage.qml" line="98"/>
         <source>Author name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/CreateQuotePage.qml" line="67"/>
+        <location filename="../assets/CreateBioPage.qml" line="107"/>
+        <source>Enter biography here...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/CreateBioPage.qml" line="107"/>
+        <source>Enter criticism here...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/CreateBioPage.qml" line="107"/>
+        <source>Enter praise here...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/CreateBioPage.qml" line="130"/>
+        <source>Enter reference here...</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>CreateIndividualPage</name>
+    <message>
+        <location filename="../assets/CreateIndividualPage.qml" line="22"/>
+        <source>Add Website</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/CreateIndividualPage.qml" line="33"/>
+        <source>Enter url</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/CreateIndividualPage.qml" line="33"/>
+        <source>Please enter the website address for this individual:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/CreateIndividualPage.qml" line="33"/>
+        <location filename="../assets/CreateIndividualPage.qml" line="109"/>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/CreateIndividualPage.qml" line="33"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/CreateIndividualPage.qml" line="33"/>
+        <source>Enter url (ie: http://mtws.com)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/CreateIndividualPage.qml" line="42"/>
+        <source>Validate Location</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/CreateIndividualPage.qml" line="103"/>
+        <source>New Individual</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/CreateIndividualPage.qml" line="120"/>
+        <source>Invalid location specified!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/CreateIndividualPage.qml" line="122"/>
+        <source>Invalid name!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/CreateIndividualPage.qml" line="150"/>
+        <source>Hidden</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/CreateIndividualPage.qml" line="155"/>
+        <source>Female</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/CreateIndividualPage.qml" line="162"/>
+        <source>Prefix (ie: al-Hafidh, Shaykh)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/CreateIndividualPage.qml" line="180"/>
+        <source>Name...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/CreateIndividualPage.qml" line="187"/>
+        <source>Invalid name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/CreateIndividualPage.qml" line="208"/>
+        <source>Kunya...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/CreateIndividualPage.qml" line="226"/>
+        <source>Birth (AH)...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/CreateIndividualPage.qml" line="246"/>
+        <source>Death (AH)...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/CreateIndividualPage.qml" line="266"/>
+        <source>Display Name...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/CreateIndividualPage.qml" line="284"/>
+        <source>City of birth...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/CreateIndividualPage.qml" line="291"/>
+        <source>No locations found...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/CreateIndividualPage.qml" line="335"/>
+        <source>Websites</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/CreateIndividualPage.qml" line="372"/>
+        <source>Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>CreateQuotePage</name>
+    <message>
+        <location filename="../assets/CreateQuotePage.qml" line="29"/>
+        <source>Edit Quote</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/CreateQuotePage.qml" line="29"/>
+        <source>New Quote</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/CreateQuotePage.qml" line="33"/>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/CreateQuotePage.qml" line="62"/>
+        <source>Author name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/CreateQuotePage.qml" line="66"/>
         <source>Author name cannot be empty...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/CreateQuotePage.qml" line="78"/>
+        <location filename="../assets/CreateQuotePage.qml" line="77"/>
         <source>Body...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/CreateQuotePage.qml" line="96"/>
+        <location filename="../assets/CreateQuotePage.qml" line="97"/>
         <source>Reference...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -441,57 +613,57 @@ Explained by: &lt;a href=&quot;%2&quot;&gt;%1&lt;/a&gt;%3</source>
 <context>
     <name>CreateTafsirPage</name>
     <message>
-        <location filename="../assets/CreateTafsirPage.qml" line="32"/>
+        <location filename="../assets/CreateTafsirPage.qml" line="39"/>
         <source>New Tafsir</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/CreateTafsirPage.qml" line="32"/>
+        <location filename="../assets/CreateTafsirPage.qml" line="39"/>
         <source>Edit Tafsir</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/CreateTafsirPage.qml" line="36"/>
+        <location filename="../assets/CreateTafsirPage.qml" line="43"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/CreateTafsirPage.qml" line="66"/>
+        <location filename="../assets/CreateTafsirPage.qml" line="73"/>
         <source>Author name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/CreateTafsirPage.qml" line="70"/>
+        <location filename="../assets/CreateTafsirPage.qml" line="77"/>
         <source>Author name cannot be empty...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/CreateTafsirPage.qml" line="82"/>
+        <location filename="../assets/CreateTafsirPage.qml" line="89"/>
         <source>Translator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/CreateTafsirPage.qml" line="88"/>
+        <location filename="../assets/CreateTafsirPage.qml" line="95"/>
         <source>Explainer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/CreateTafsirPage.qml" line="94"/>
+        <location filename="../assets/CreateTafsirPage.qml" line="101"/>
         <source>Title</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/CreateTafsirPage.qml" line="101"/>
+        <location filename="../assets/CreateTafsirPage.qml" line="108"/>
         <source>Title cannot be empty...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/CreateTafsirPage.qml" line="121"/>
+        <location filename="../assets/CreateTafsirPage.qml" line="128"/>
         <source>Description...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/CreateTafsirPage.qml" line="139"/>
+        <location filename="../assets/CreateTafsirPage.qml" line="146"/>
         <source>Reference...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -520,87 +692,24 @@ Explained by: &lt;a href=&quot;%2&quot;&gt;%1&lt;/a&gt;%3</source>
     </message>
 </context>
 <context>
-    <name>EditIndividualSheet</name>
-    <message>
-        <location filename="../assets/EditIndividualSheet.qml" line="61"/>
-        <source>Edit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/EditIndividualSheet.qml" line="67"/>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/EditIndividualSheet.qml" line="79"/>
-        <source>Save</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/EditIndividualSheet.qml" line="90"/>
-        <source>One of the fields is incomplete!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/EditIndividualSheet.qml" line="108"/>
-        <source>Hidden</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/EditIndividualSheet.qml" line="115"/>
-        <source>Prefix (ie: al-Hafidh, Shaykh)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/EditIndividualSheet.qml" line="124"/>
-        <source>Name...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/EditIndividualSheet.qml" line="131"/>
-        <source>Invalid name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/EditIndividualSheet.qml" line="152"/>
-        <source>Kunya...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/EditIndividualSheet.qml" line="161"/>
-        <source>Birth (AH)...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/EditIndividualSheet.qml" line="172"/>
-        <source>Death (AH)...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/EditIndividualSheet.qml" line="183"/>
-        <source>URL (ie: http://www.canadainc.org)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/EditIndividualSheet.qml" line="191"/>
-        <source>Invalid URL</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/EditIndividualSheet.qml" line="203"/>
-        <source>Biography...</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>GlobalProperties</name>
     <message>
-        <location filename="../assets/GlobalProperties.qml" line="29"/>
+        <location filename="../assets/GlobalProperties.qml" line="31"/>
+        <source>رضي الله عنها</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/GlobalProperties.qml" line="33"/>
+        <source>رضي الله عنه</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/GlobalProperties.qml" line="36"/>
         <source> (رحمه الله)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/GlobalProperties.qml" line="31"/>
+        <location filename="../assets/GlobalProperties.qml" line="38"/>
         <source> (حفظه الله)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -631,213 +740,488 @@ Finally, there is built-in support to do efficient and fast lookups for any sura
 <context>
     <name>IndividualBioPage</name>
     <message>
-        <location filename="../assets/IndividualBioPage.qml" line="27"/>
-        <source>Quran10</source>
+        <location filename="../assets/IndividualBioPage.qml" line="66"/>
+        <source>(%1-%2 AH)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/IndividualBioPage.qml" line="68"/>
+        <source>(born %1 AH)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/IndividualBioPage.qml" line="70"/>
+        <source>(died %1 AH)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/IndividualBioPage.qml" line="78"/>
+        <source>Biography successfully removed!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/IndividualBioPage.qml" line="80"/>
+        <source>Biography successfully updated!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/IndividualBioPage.qml" line="82"/>
+        <source>Teacher removed!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/IndividualBioPage.qml" line="84"/>
+        <source>Student removed!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/IndividualBioPage.qml" line="86"/>
+        <source>Teacher added!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/IndividualBioPage.qml" line="88"/>
+        <source>Student added!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/IndividualBioPage.qml" line="173"/>
+        <source>Biographies</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/IndividualBioPage.qml" line="175"/>
+        <source>Works</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/IndividualBioPage.qml" line="177"/>
+        <source>Teachers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/IndividualBioPage.qml" line="179"/>
+        <source>Students</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/IndividualBioPage.qml" line="181"/>
+        <source>Websites</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/IndividualBioPage.qml" line="183"/>
+        <source>Quotes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/IndividualBioPage.qml" line="276"/>
+        <source>Edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/IndividualBioPage.qml" line="321"/>
+        <source>%1
+%2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/IndividualBioPage.qml" line="344"/>
+        <source>“%1” (%2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/IndividualBioPage.qml" line="500"/>
+        <source>Add Student</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/IndividualBioPage.qml" line="524"/>
+        <source>Add Teacher</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>IndividualPickerPage</name>
     <message>
-        <location filename="../assets/IndividualPickerPage.qml" line="15"/>
+        <location filename="../assets/IndividualPickerPage.qml" line="19"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/IndividualPickerPage.qml" line="34"/>
-        <source>Add</source>
+        <location filename="../assets/IndividualPickerPage.qml" line="36"/>
+        <source>Select Individual</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/IndividualPickerPage.qml" line="53"/>
-        <source>Copy From English</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/IndividualPickerPage.qml" line="59"/>
-        <source>Confirmation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/IndividualPickerPage.qml" line="59"/>
-        <source>Are you sure you want to port over the data from the source database?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/IndividualPickerPage.qml" line="59"/>
-        <source>Replace Existing</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/IndividualPickerPage.qml" line="75"/>
-        <source>Search Individual</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/IndividualPickerPage.qml" line="106"/>
+        <location filename="../assets/IndividualPickerPage.qml" line="83"/>
         <source>Enter text to search...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/IndividualPickerPage.qml" line="156"/>
+        <location filename="../assets/IndividualPickerPage.qml" line="68"/>
         <source>No results found for your query. Try another query.</source>
         <translation type="unfinished"></translation>
     </message>
+</context>
+<context>
+    <name>IndividualsPane</name>
     <message>
-        <location filename="../assets/IndividualPickerPage.qml" line="225"/>
-        <source>Copy</source>
+        <location filename="../assets/IndividualsPane.qml" line="51"/>
+        <source>Individual added!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/IndividualPickerPage.qml" line="248"/>
-        <source>Edit</source>
+        <location filename="../assets/IndividualsPane.qml" line="54"/>
+        <source>Successfully ported individuals!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/IndividualPickerPage.qml" line="269"/>
+        <location filename="../assets/IndividualsPane.qml" line="56"/>
         <source>Successfully edited individual</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/IndividualPickerPage.qml" line="271"/>
+        <location filename="../assets/IndividualsPane.qml" line="58"/>
         <source>Successfully added individual</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/IndividualPickerPage.qml" line="273"/>
-        <source>Successfully ported individuals!</source>
+        <location filename="../assets/IndividualsPane.qml" line="60"/>
+        <source>Successfully deleted individual!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/IndividualsPane.qml" line="62"/>
+        <source>Successfully replaced individual!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/IndividualsPane.qml" line="65"/>
+        <source>Successfully added companions!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/IndividualsPane.qml" line="67"/>
+        <source>Successfully removed from companions!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/IndividualsPane.qml" line="69"/>
+        <source>Successfully added biography!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/IndividualsPane.qml" line="104"/>
+        <source>Add</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/IndividualsPane.qml" line="127"/>
+        <source>Copy From English</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/IndividualsPane.qml" line="133"/>
+        <source>Confirmation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/IndividualsPane.qml" line="133"/>
+        <source>Are you sure you want to port over the data from the source database?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/IndividualsPane.qml" line="133"/>
+        <source>Replace Existing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/IndividualsPane.qml" line="189"/>
+        <source>The source and replacement individuals cannot be the same!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../assets/IndividualsPane.qml" line="211"/>
+        <source>%n individuals selected</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <location filename="../assets/IndividualsPane.qml" line="220"/>
+        <source>Set As Companions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/IndividualsPane.qml" line="242"/>
+        <source>Remove Companions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/IndividualsPane.qml" line="277"/>
+        <source>Add Biography</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/IndividualsPane.qml" line="288"/>
+        <source>Copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/IndividualsPane.qml" line="311"/>
+        <source>Edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/IndividualsPane.qml" line="322"/>
+        <source>Replace</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>JuzPage</name>
     <message>
-        <location filename="../assets/JuzPage.qml" line="77"/>
+        <location filename="../assets/JuzPage.qml" line="75"/>
         <source>Pause</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/JuzPage.qml" line="77"/>
+        <location filename="../assets/JuzPage.qml" line="75"/>
         <source>Play All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/JuzPage.qml" line="83"/>
+        <location filename="../assets/JuzPage.qml" line="81"/>
         <source>A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/JuzPage.qml" line="101"/>
+        <location filename="../assets/JuzPage.qml" line="99"/>
         <source>Confirmation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/JuzPage.qml" line="101"/>
+        <location filename="../assets/JuzPage.qml" line="99"/>
         <source>We are about to download a whole bunch of MP3 recitations, you should only attempt to do this if you have either an unlimited data plan, or are connected via Wi-Fi. Otherwise you might incur a lot of data charges. Are you sure you want to continue? If you select No you can always attempt to download again later.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/JuzPage.qml" line="101"/>
+        <location filename="../assets/JuzPage.qml" line="99"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/JuzPage.qml" line="101"/>
+        <location filename="../assets/JuzPage.qml" line="99"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/JuzPage.qml" line="121"/>
+        <location filename="../assets/JuzPage.qml" line="119"/>
         <source>Disable Repeat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/JuzPage.qml" line="121"/>
+        <location filename="../assets/JuzPage.qml" line="119"/>
         <source>Enable Repeat</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LocationPane</name>
+    <message>
+        <location filename="../assets/LocationPane.qml" line="18"/>
+        <source>The Ummah</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LocationPickerPage</name>
+    <message>
+        <location filename="../assets/LocationPickerPage.qml" line="14"/>
+        <source>Search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/LocationPickerPage.qml" line="31"/>
+        <source>Select Location</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/LocationPickerPage.qml" line="63"/>
+        <source>No results found for your query. Try another query.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/LocationPickerPage.qml" line="78"/>
+        <source>Enter text to search...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/LocationPickerPage.qml" line="142"/>
+        <source>Enter city name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/LocationPickerPage.qml" line="142"/>
+        <source>Please enter the new name of the city:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/LocationPickerPage.qml" line="142"/>
+        <source>Enter city name (ie: Damascus)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/LocationPickerPage.qml" line="142"/>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/LocationPickerPage.qml" line="142"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/LocationPickerPage.qml" line="180"/>
+        <source>Edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/LocationPickerPage.qml" line="227"/>
+        <source>Location added!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/LocationPickerPage.qml" line="230"/>
+        <source>Location removed!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/LocationPickerPage.qml" line="232"/>
+        <source>Location updated!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/LocationPickerPage.qml" line="260"/>
+        <source>Could not find city metadata.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/LocationPickerPage.qml" line="283"/>
+        <source>Could not fetch geolocation results.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>MushafSheet</name>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="25"/>
+        <location filename="../assets/MushafSheet.qml" line="138"/>
         <source>Jump</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="38"/>
+        <location filename="../assets/MushafSheet.qml" line="69"/>
         <source>J</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="45"/>
+        <location filename="../assets/MushafSheet.qml" line="148"/>
         <source>Download All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="61"/>
+        <location filename="../assets/MushafSheet.qml" line="166"/>
         <source>Confirmation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="61"/>
+        <location filename="../assets/MushafSheet.qml" line="166"/>
         <source>The total size of the mushaf is ~%1 and it will need to be downloaded. Your device currently has ~%2 free space remaining. Make sure you are on a good Wi-Fi connection or have a good data plan. Do you wish to continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="61"/>
+        <location filename="../assets/MushafSheet.qml" line="166"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="61"/>
+        <location filename="../assets/MushafSheet.qml" line="166"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="95"/>
+        <location filename="../assets/MushafSheet.qml" line="121"/>
         <source>Aspect Fill</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="95"/>
+        <location filename="../assets/MushafSheet.qml" line="121"/>
         <source>Stretch</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="121"/>
+        <location filename="../assets/MushafSheet.qml" line="226"/>
+        <source>Tijweed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/MushafSheet.qml" line="232"/>
         <source>Page %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="126"/>
+        <location filename="../assets/MushafSheet.qml" line="34"/>
         <source>Back</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="175"/>
+        <location filename="../assets/MushafSheet.qml" line="138"/>
+        <source>Enter page number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/MushafSheet.qml" line="138"/>
+        <source>Please enter the page in the mushaf you want to jump to:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/MushafSheet.qml" line="138"/>
+        <source>Enter value between 1 and 604 inclusive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/MushafSheet.qml" line="138"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/MushafSheet.qml" line="56"/>
         <source>Surah</source>
         <translation type="unfinished"></translation>
     </message>
-    <message numerus="yes">
-        <location filename="../assets/MushafSheet.qml" line="193"/>
-        <source>%n verses</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-        </translation>
+    <message>
+        <location filename="../assets/MushafSheet.qml" line="133"/>
+        <source>Page</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="350"/>
+        <location filename="../assets/MushafSheet.qml" line="238"/>
+        <source>No Tijweed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/MushafSheet.qml" line="390"/>
         <source>You can pinch on the page to zoom in and out and scroll up and down.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="352"/>
+        <location filename="../assets/MushafSheet.qml" line="392"/>
         <source>Use the left and right arrows to switch pages.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/MushafSheet.qml" line="353"/>
+        <location filename="../assets/MushafSheet.qml" line="393"/>
         <source>Tap on the screen, then on the bottom action bar you will see the Jump icon. Use this to trigger the dropdown menu to jump to a specific surah in the mushaf.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -858,23 +1242,28 @@ Finally, there is built-in support to do efficient and fast lookups for any sura
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/RecitationHelper.cpp" line="33"/>
+        <location filename="../src/RecitationHelper.cpp" line="40"/>
         <source>Quran10 does not have access to your Shared Folder. The app cannot download any recitations without this permission.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/RecitationHelper.cpp" line="43"/>
+        <location filename="../src/RecitationHelper.cpp" line="50"/>
         <source>Quran10 does not seem to be able to write to the output folder. Please try selecting a different output folder or restart your device.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/RecitationHelper.cpp" line="63"/>
+        <location filename="../src/RecitationHelper.cpp" line="70"/>
         <source>%1:%2 recitation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/RecitationHelper.cpp" line="89"/>
+        <location filename="../src/RecitationHelper.cpp" line="96"/>
         <source>Quran10 could not write the playlist. Please try restarting your device.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MushafHelper.cpp" line="47"/>
+        <source>Downloaded file is corrupt. Please retry the download.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -951,6 +1340,11 @@ Finally, there is built-in support to do efficient and fast lookups for any sura
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../assets/QuotesPane.qml" line="210"/>
+        <source>New Quote</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../assets/QuotesPane.qml" line="290"/>
         <source>No quotes matched your search criteria. Please try a different search term.</source>
         <translation type="unfinished"></translation>
@@ -978,52 +1372,52 @@ Finally, there is built-in support to do efficient and fast lookups for any sura
 </context>
 <context>
     <name>QuranPane</name>
-    <message>
-        <location filename="../assets/QuranPane.qml" line="11"/>
-        <source>Did you know you can quickly jump to a specific verse by typing its chapter number followed by a &apos;:&apos; and followed by the verse number.
-
-For example, to jump to Surah Al-Baqara Verse #2, type &apos;2:2&apos; into the search field!</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message numerus="yes">
-        <location filename="../assets/QuranPane.qml" line="52"/>
+        <location filename="../assets/QuranPane.qml" line="53"/>
         <source>%n chapters selected</source>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="72"/>
+        <location filename="../assets/QuranPane.qml" line="73"/>
         <source>Compare</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="96"/>
+        <location filename="../assets/QuranPane.qml" line="97"/>
         <source>Open Range</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="135"/>
+        <location filename="../assets/QuranPane.qml" line="136"/>
         <source>Select All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="147"/>
+        <location filename="../assets/QuranPane.qml" line="148"/>
         <source>A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="196"/>
-        <source>Edit Ayats</source>
+        <location filename="../assets/QuranPane.qml" line="182"/>
+        <source>&lt;html&gt;&lt;i&gt;“%1”&lt;/i&gt;
+
+- &lt;b&gt;%2%4&lt;/b&gt;
+
+[%3]
+
+
+&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="115"/>
+        <location filename="../assets/QuranPane.qml" line="116"/>
         <source>Mushaf</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="129"/>
+        <location filename="../assets/QuranPane.qml" line="130"/>
         <source>M</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1305,7 +1699,12 @@ https://www.youtube.com/watch?v=BDY8i9VQeZM</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="313"/>
+        <location filename="../assets/SettingsPage.qml" line="315"/>
+        <source>Compressing %1/%2...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/SettingsPage.qml" line="320"/>
         <source>Compressing...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1409,57 +1808,47 @@ https://www.youtube.com/watch?v=BDY8i9VQeZM</source>
 <context>
     <name>SurahPage</name>
     <message>
-        <location filename="../assets/SurahPage.qml" line="54"/>
+        <location filename="../assets/SurahPage.qml" line="55"/>
         <source>You can do a pinch gesture anytime to increase and decrease the font size of the Arabic/Transliteration text!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="55"/>
+        <location filename="../assets/SurahPage.qml" line="56"/>
         <source>Tap on a verse with a grey highlight to find explanations on it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="56"/>
+        <location filename="../assets/SurahPage.qml" line="57"/>
         <source>Tap the left/right arrow keys to navigate to the previous and next chapters respectively.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="57"/>
+        <location filename="../assets/SurahPage.qml" line="58"/>
         <source>Use the follow button at the center of the left/right buttons if you want to follow the verses automatically as they are being recited.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="58"/>
+        <location filename="../assets/SurahPage.qml" line="59"/>
         <source>Tap on the repeat action at the bottom to enable or disable repeating the recitation in a loop once it finishes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="59"/>
+        <location filename="../assets/SurahPage.qml" line="60"/>
         <source>Press-and-hold any ayat and choose the Copy or Share action to easily share the verse.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="60"/>
+        <location filename="../assets/SurahPage.qml" line="61"/>
         <source>Press-and-hold any ayat and choose the Memorize action to play the next 8 verses in iteration to help you memorize them!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="61"/>
+        <location filename="../assets/SurahPage.qml" line="62"/>
         <source>Did you know you can press-and-hold on any verse and tap on the &apos;Select Range&apos; action to only play recitations for those, or copy/share them to your contacts?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="62"/>
-        <source>Want to dock a certain ayat right to your home screen? Press-and-hold on it and choose &apos;Add To Home Screen&apos; and name it!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../assets/SurahPage.qml" line="63"/>
-        <source>Do you know how to set bookmarks? You can easily mark certain ayats as favourites by pressing-and-holding on them and choosing &apos;Add Bookmark&apos; on them! This is a very easy way to track our progress as you read the Qu&apos;ran to quickly find where you left off.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/SurahPage.qml" line="64"/>
         <source>As&apos;salaamu alaykum wa rahmatullahi wabarakathu,
 
 JazakAllahu khair for using Quran10. While our Islamic apps will always remain free of charge for your benefit, we encourage you to please donate whatever you can in order to support development. This will motivate the developers to continue to update the app, add new features and bug fixes. To donate, simply swipe-down from the top-bezel and tap the &apos;Donate&apos; button to send money via PayPal.
@@ -1468,47 +1857,47 @@ May Allah reward you, and bless you and your family.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="87"/>
+        <location filename="../assets/SurahPage.qml" line="86"/>
         <source>Pause</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="87"/>
+        <location filename="../assets/SurahPage.qml" line="86"/>
         <source>Play All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="93"/>
+        <location filename="../assets/SurahPage.qml" line="92"/>
         <source>A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="111"/>
+        <location filename="../assets/SurahPage.qml" line="110"/>
         <source>Confirmation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="111"/>
+        <location filename="../assets/SurahPage.qml" line="110"/>
         <source>We are about to download a whole bunch of MP3 recitations, you should only attempt to do this if you have either an unlimited data plan, or are connected via Wi-Fi. Otherwise you might incur a lot of data charges. Are you sure you want to continue? If you select No you can always attempt to download again later.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="111"/>
+        <location filename="../assets/SurahPage.qml" line="110"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="111"/>
+        <location filename="../assets/SurahPage.qml" line="110"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="131"/>
+        <location filename="../assets/SurahPage.qml" line="130"/>
         <source>Disable Repeat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPage.qml" line="131"/>
+        <location filename="../assets/SurahPage.qml" line="130"/>
         <source>Enable Repeat</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1516,52 +1905,52 @@ May Allah reward you, and bless you and your family.</source>
 <context>
     <name>SurahPickerPage</name>
     <message>
-        <location filename="../assets/SurahPickerPage.qml" line="129"/>
+        <location filename="../assets/SurahPickerPage.qml" line="128"/>
         <source>Ported legacy bookmarks!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPickerPage.qml" line="181"/>
+        <location filename="../assets/SurahPickerPage.qml" line="180"/>
         <source>Display Options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPickerPage.qml" line="187"/>
+        <location filename="../assets/SurahPickerPage.qml" line="186"/>
         <source>Alphabetical Order</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPickerPage.qml" line="188"/>
+        <location filename="../assets/SurahPickerPage.qml" line="187"/>
         <source>Sorted by surah name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPickerPage.qml" line="195"/>
+        <location filename="../assets/SurahPickerPage.qml" line="194"/>
         <source>Juz</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPickerPage.qml" line="196"/>
+        <location filename="../assets/SurahPickerPage.qml" line="195"/>
         <source>The surahs will be displayed separated in juz</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPickerPage.qml" line="203"/>
+        <location filename="../assets/SurahPickerPage.qml" line="202"/>
         <source>Normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPickerPage.qml" line="204"/>
+        <location filename="../assets/SurahPickerPage.qml" line="203"/>
         <source>The surahs will be displayed in the standard order</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPickerPage.qml" line="211"/>
+        <location filename="../assets/SurahPickerPage.qml" line="210"/>
         <source>Revelation Order</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPickerPage.qml" line="212"/>
+        <location filename="../assets/SurahPickerPage.qml" line="211"/>
         <source>Display chapters int he order they were revealed</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1571,19 +1960,19 @@ May Allah reward you, and bless you and your family.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SurahPickerPage.qml" line="307"/>
+        <location filename="../assets/SurahPickerPage.qml" line="312"/>
         <source>Juz %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../assets/SurahPickerPage.qml" line="321"/>
+        <location filename="../assets/SurahPickerPage.qml" line="326"/>
         <source>%n ayahs</source>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../assets/SurahPickerPage.qml" line="402"/>
+        <location filename="../assets/SurahPickerPage.qml" line="420"/>
         <source>No chapters matched your search criteria. Please try a different search term.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1596,57 +1985,78 @@ May Allah reward you, and bless you and your family.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/TafsirAyats.qml" line="45"/>
+        <location filename="../assets/TafsirAyats.qml" line="46"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/TafsirAyats.qml" line="80"/>
+        <location filename="../assets/TafsirAyats.qml" line="123"/>
         <source>Picker</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/TafsirAyats.qml" line="200"/>
+        <location filename="../assets/TafsirAyats.qml" line="172"/>
+        <location filename="../assets/TafsirAyats.qml" line="308"/>
         <source>Unlink</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/TafsirAyats.qml" line="138"/>
+        <location filename="../assets/TafsirAyats.qml" line="207"/>
         <source>Ayat unlinked from tafsir</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/TafsirAyats.qml" line="74"/>
+        <location filename="../assets/TafsirAyats.qml" line="77"/>
+        <source>Capture Ayats</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/TafsirAyats.qml" line="104"/>
+        <source>No ayat signatures found...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/TafsirAyats.qml" line="117"/>
         <source>Ayats</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/TafsirAyats.qml" line="140"/>
+        <location filename="../assets/TafsirAyats.qml" line="209"/>
         <source>Ayat linked to tafsir!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/TafsirAyats.qml" line="219"/>
+        <location filename="../assets/TafsirAyats.qml" line="216"/>
+        <source>Ayat link updated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/TafsirAyats.qml" line="297"/>
+        <source>Edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/TafsirAyats.qml" line="326"/>
         <source>No ayats linked. Tap on the Add button to add a new one.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/TafsirAyats.qml" line="237"/>
+        <location filename="../assets/TafsirAyats.qml" line="345"/>
         <source>Enter the chapter and verse associated with this tafsir:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/TafsirAyats.qml" line="239"/>
+        <location filename="../assets/TafsirAyats.qml" line="347"/>
         <source>(ie: 2:4 for Surah Baqara verse #4)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/TafsirAyats.qml" line="241"/>
+        <location filename="../assets/TafsirAyats.qml" line="349"/>
         <source>Enter verse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/TafsirAyats.qml" line="270"/>
+        <location filename="../assets/TafsirAyats.qml" line="393"/>
         <source>Invalid entry specified. Please enter something with the Chapter:Verse scheme (ie: 2:55 for Surah Baqara vese #55)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1654,63 +2064,88 @@ May Allah reward you, and bless you and your family.</source>
 <context>
     <name>TafsirContentsPage</name>
     <message>
-        <location filename="../assets/TafsirContentsPage.qml" line="30"/>
+        <location filename="../assets/TafsirContentsPage.qml" line="38"/>
         <source>Add</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/TafsirContentsPage.qml" line="69"/>
+        <location filename="../assets/TafsirContentsPage.qml" line="79"/>
         <source>New Page</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/TafsirContentsPage.qml" line="69"/>
+        <location filename="../assets/TafsirContentsPage.qml" line="79"/>
         <source>Edit Page</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/TafsirContentsPage.qml" line="73"/>
+        <location filename="../assets/TafsirContentsPage.qml" line="83"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/TafsirContentsPage.qml" line="85"/>
+        <location filename="../assets/TafsirContentsPage.qml" line="95"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/TafsirContentsPage.qml" line="113"/>
+        <location filename="../assets/TafsirContentsPage.qml" line="128"/>
+        <source>Heading...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/TafsirContentsPage.qml" line="152"/>
         <source>Enter tafsir body here...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/TafsirContentsPage.qml" line="167"/>
+        <location filename="../assets/TafsirContentsPage.qml" line="182"/>
+        <source>Enter reference here...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/TafsirContentsPage.qml" line="233"/>
         <source>Tafsir page added!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/TafsirContentsPage.qml" line="170"/>
+        <location filename="../assets/TafsirContentsPage.qml" line="236"/>
         <source>Tafsir page removed!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/TafsirContentsPage.qml" line="172"/>
+        <location filename="../assets/TafsirContentsPage.qml" line="238"/>
         <source>Tafsir page updated!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/TafsirContentsPage.qml" line="235"/>
+        <location filename="../assets/TafsirContentsPage.qml" line="265"/>
+        <source>Market set</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/TafsirContentsPage.qml" line="309"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/TafsirContentsPage.qml" line="246"/>
+        <location filename="../assets/TafsirContentsPage.qml" line="320"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/TafsirContentsPage.qml" line="275"/>
+        <location filename="../assets/TafsirContentsPage.qml" line="331"/>
+        <source>Set Marker</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/TafsirContentsPage.qml" line="360"/>
         <source>No elements found. Tap on the Add button to add a new one.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/TafsirContentsPage.qml" line="379"/>
+        <source>Jump to Marker</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1813,18 +2248,18 @@ May Allah reward you, and bless you and your family.</source>
 <context>
     <name>TransfersDialog</name>
     <message>
-        <location filename="../assets/TransfersDialog.qml" line="218"/>
+        <location filename="../assets/TransfersDialog.qml" line="242"/>
         <source>Uncompressing...
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/TransfersDialog.qml" line="122"/>
+        <location filename="../assets/TransfersDialog.qml" line="124"/>
         <source>No downloads queued or active yet.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/TransfersDialog.qml" line="140"/>
+        <location filename="../assets/TransfersDialog.qml" line="142"/>
         <source>Download Queue</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1853,7 +2288,7 @@ May Allah reward you, and bless you and your family.</source>
     </message>
     <message>
         <location filename="../assets/VersesListView.qml" line="177"/>
-        <source>Successfully saved bookmark!</source>
+        <source>Successfully set bookmark!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1865,115 +2300,145 @@ May Allah reward you, and bless you and your family.</source>
 <context>
     <name>main</name>
     <message>
-        <location filename="../assets/main.qml" line="23"/>
+        <location filename="../assets/main.qml" line="27"/>
         <source>Qu&apos;ran</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="24"/>
+        <location filename="../assets/main.qml" line="28"/>
         <source>القرآن</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="43"/>
+        <location filename="../assets/main.qml" line="47"/>
         <source>Favourites</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="14"/>
+        <location filename="../assets/main.qml" line="18"/>
         <source>Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="17"/>
+        <location filename="../assets/main.qml" line="21"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="41"/>
+        <location filename="../assets/main.qml" line="45"/>
         <source>Saved Verses</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="56"/>
+        <location filename="../assets/main.qml" line="60"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="57"/>
+        <location filename="../assets/main.qml" line="61"/>
         <source>Find</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="72"/>
+        <location filename="../assets/main.qml" line="76"/>
         <source>Radio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="73"/>
+        <location filename="../assets/main.qml" line="77"/>
         <source>Live</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="88"/>
+        <location filename="../assets/main.qml" line="92"/>
         <source>Supplications</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="89"/>
+        <location filename="../assets/main.qml" line="93"/>
         <source>Du&apos;a from the Qu&apos;ran</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="103"/>
+        <location filename="../assets/main.qml" line="107"/>
         <source>Transfers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="104"/>
+        <location filename="../assets/main.qml" line="108"/>
         <source>Download Manager</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="139"/>
+        <location filename="../assets/main.qml" line="121"/>
+        <source>The Ummah</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/main.qml" line="122"/>
+        <source>The Muslim Ummah</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/main.qml" line="160"/>
         <source>Quotes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="140"/>
+        <location filename="../assets/main.qml" line="161"/>
         <source>Sayings of the Salaf</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="157"/>
+        <location filename="../assets/main.qml" line="178"/>
         <source>Tafsir</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="158"/>
+        <location filename="../assets/main.qml" line="179"/>
         <source>Explanations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/main.qml" line="196"/>
+        <source>Rijaal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/main.qml" line="197"/>
+        <source>Individuals</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>quran::AdminHelper</name>
     <message>
-        <location filename="../src/AdminHelper.cpp" line="98"/>
+        <location filename="../src/AdminHelper.cpp" line="218"/>
         <source>Upload Local</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/AdminHelper.cpp" line="117"/>
+        <location filename="../src/AdminHelper.cpp" line="239"/>
         <source>Upload</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/AdminHelper.cpp" line="117"/>
+        <location filename="../src/AdminHelper.cpp" line="239"/>
         <source>This will completely replace the remote database with your local one. Are you sure you want to do this?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/AdminHelper.cpp" line="163"/>
+        <location filename="../src/AdminHelper.cpp" line="272"/>
+        <source>Authentication information missing...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/AdminHelper.cpp" line="306"/>
+        <source>Update submission failed!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/AdminHelper.cpp" line="308"/>
         <source>Successfully submitted updates!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1981,83 +2446,186 @@ May Allah reward you, and bless you and your family.</source>
 <context>
     <name>quran::ApplicationUI</name>
     <message>
-        <location filename="../src/applicationui.cpp" line="191"/>
+        <location filename="../src/applicationui.cpp" line="197"/>
         <source>Invalid invocation scheme entered! Please file a bug report by swiping down from the top-bezel and choosing &apos;Bug Reports&apos; and then clicking &apos;Submit Logs&apos;. Please ensure the problem is reproduced before you file the report. JazakAllahu khayr!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="207"/>
+        <location filename="../src/applicationui.cpp" line="213"/>
         <source>Invalid surah specified!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="228"/>
+        <location filename="../src/applicationui.cpp" line="234"/>
         <source>Invalid pattern specified!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="252"/>
+        <location filename="../src/applicationui.cpp" line="258"/>
         <source>Invalid surah specified</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="274"/>
-        <source>Tafsir</source>
+        <location filename="../src/applicationui.cpp" line="280"/>
+        <source>Update Check</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="287"/>
-        <source>Translation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/applicationui.cpp" line="329"/>
+        <location filename="../src/applicationui.cpp" line="324"/>
         <source>Surah not found!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="380"/>
-        <location filename="../src/applicationui.cpp" line="397"/>
-        <source>Added %1 to home screen</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/applicationui.cpp" line="384"/>
-        <location filename="../src/applicationui.cpp" line="401"/>
-        <source>Could not add %1 to home screen</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/applicationui.cpp" line="569"/>
-        <source>%1 %2:%3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/applicationui.cpp" line="571"/>
-        <source>%1 %2:%3-%4</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/applicationui.cpp" line="574"/>
-        <source>%1:%2-%3:%4</source>
+        <location filename="../src/applicationui.cpp" line="405"/>
+        <source>&apos;%1&apos; Lookup</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>quran::MushafHelper</name>
     <message>
-        <location filename="../src/MushafHelper.cpp" line="60"/>
+        <location filename="../src/MushafHelper.cpp" line="80"/>
         <source>Page #%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MushafHelper.cpp" line="87"/>
+        <location filename="../src/MushafHelper.cpp" line="96"/>
+        <source>Mushaf Metadata</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MushafHelper.cpp" line="111"/>
         <source>Mushaf</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MushafHelper.cpp" line="105"/>
+        <location filename="../src/MushafHelper.cpp" line="127"/>
         <source>Connected Letters</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>quran::Offloader</name>
+    <message>
+        <location filename="../src/Offloader.cpp" line="145"/>
+        <source>%1 %2:%3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Offloader.cpp" line="147"/>
+        <source>%1 %2:%3-%4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Offloader.cpp" line="150"/>
+        <source>%1:%2-%3:%4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Offloader.cpp" line="183"/>
+        <location filename="../src/Offloader.cpp" line="200"/>
+        <source>Added %1 to home screen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Offloader.cpp" line="187"/>
+        <location filename="../src/Offloader.cpp" line="204"/>
+        <source>Could not add %1 to home screen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Offloader.cpp" line="250"/>
+        <source>Quran10 needs to download and install translation and tafsir files. The total size is ~%1. Do you want to download them now? If you say No you can download them at a later time but the app will not function as expected in the meantime!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Offloader.cpp" line="252"/>
+        <source>There are newer translation and tafsir files available. The total download size is ~%1. Do you want to download them now? If you say No you can download them at a later time.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Offloader.cpp" line="256"/>
+        <source>Quran10 needs to download and install tafsir files. The total size is ~%1. Do you want to download it now? If you say No you can download it at a later time but the app will not function as expected in the meantime!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Offloader.cpp" line="258"/>
+        <source>There are newer tafsir files available. The total download size is ~%1. Do you want to download it now? If you say No you can download it at a later time.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Offloader.cpp" line="262"/>
+        <source>Quran10 needs to download and install translation files. The total size is ~%1. Do you want to download it now? If you say No you can download it at a later time but the app will not function as expected in the meantime!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Offloader.cpp" line="264"/>
+        <source>There are newer translation files available. The total download size is ~%1. Do you want to download it now? If you say No you can download it at a later time.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Offloader.cpp" line="276"/>
+        <source>Updates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Offloader.cpp" line="276"/>
+        <source>Don&apos;t ask again</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Offloader.cpp" line="276"/>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Offloader.cpp" line="276"/>
+        <source>No</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Offloader.cpp" line="293"/>
+        <source>Tafsir</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Offloader.cpp" line="311"/>
+        <source>Translation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Offloader.cpp" line="324"/>
+        <source>There is a problem communicating with the server so the app cannot download the necessary files just yet. Please try opening the app again later and it should automatically try the update again...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Offloader.cpp" line="365"/>
+        <source>Could not prepare the plugin for extraction. Please swipe-down from the top-bezel and file a bug report!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Offloader.cpp" line="361"/>
+        <source>Successfully saved plugin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Offloader.cpp" line="410"/>
+        <source>quote</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Offloader.cpp" line="412"/>
+        <source>teacher</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Offloader.cpp" line="413"/>
+        <source>student</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Offloader.cpp" line="414"/>
+        <source>website</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

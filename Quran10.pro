@@ -3,7 +3,7 @@ APP_NAME = Quran10
 CONFIG += qt warn_on cascades10
 INCLUDEPATH += ../../canadainc/src/
 INCLUDEPATH += ../../quazip/src/
-LIBS += -lbbdata -lbbsystem -lbbcascadespickers -lbbmultimedia -lbb -lbbplatform -lz -lbbdevice -lslog2
+LIBS += -lbbdata -lbbsystem -lbbcascadespickers -lbbmultimedia -lbb -lbbplatform -lz -lbbdevice -lslog2 -lbbcascadesmaps
 QT += network
 
 CONFIG(release, debug|release) {

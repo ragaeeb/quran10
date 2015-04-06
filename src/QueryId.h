@@ -38,6 +38,7 @@ public:
         FetchAllDuaa,
         FetchAllIndividuals,
         FetchAllLocations,
+        FetchAllOrigins,
         FetchAllQuotes,
         FetchAllRecitations,
         FetchAllTafsir,

@@ -254,6 +254,12 @@ void QueryTafsirHelper::fetchAllLocations(QObject* caller, QString const& city)
 }
 
 
+void QueryTafsirHelper::fetchAllOrigins(QObject* caller)
+{
+    m_sql->executeQuery(caller, QString("SELECT %1 AS name,i.displayName,i.id,city,latitude,longitude FROM individuals i INNER JOIN locations ON i.location=locations.id").arg( NAME_FIELD("i") ), QueryId::FetchAllOrigins);
+}
+
+
 void QueryTafsirHelper::fetchTeachers(QObject* caller, qint64 individualId)
 {
     LOGGER(individualId);

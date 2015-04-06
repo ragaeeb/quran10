@@ -55,6 +55,7 @@ public:
     QVariantList computeNecessaryUpdates(QVariantMap const& q, QByteArray const& data);
     void processDownloadedPlugin(QVariantMap const& q, QByteArray const& data);
     Q_INVOKABLE bool fillType(QVariantList input, int queryId, bb::cascades::GroupDataModel* gdm);
+    Q_INVOKABLE void renderMap(bb::cascades::maps::MapView* mapView, qreal latitude, qreal longitude, QString const& name, QString const& city, qint64 id);
 };
 
 } /* namespace quran */
