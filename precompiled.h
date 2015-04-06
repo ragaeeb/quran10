@@ -15,6 +15,11 @@
 #include <bb/cascades/NavigationPane>
 #include <bb/cascades/QmlDocument>
 
+#include <bb/cascades/maps/MapView>
+#include <bb/cascades/maps/MapData>
+
+#include <bb/platform/geo/GeoLocation>
+
 #include <bb/data/JsonDataAccess>
 
 #include <QFutureWatcher>

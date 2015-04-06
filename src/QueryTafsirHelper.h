@@ -49,6 +49,7 @@ public:
     Q_INVOKABLE void editTafsirPage(QObject* caller, qint64 suitePageId, QString const& body, QString const& heading, QString const& reference);
     Q_INVOKABLE void fetchAllIndividuals(QObject* caller);
     Q_INVOKABLE void fetchAllLocations(QObject* caller, QString const& city=QString());
+    Q_INVOKABLE void fetchAllOrigins(QObject* caller);
     Q_INVOKABLE void fetchAllWebsites(QObject* caller, qint64 individualId);
     Q_INVOKABLE void fetchTeachers(QObject* caller, qint64 individualId);
     Q_INVOKABLE void fetchStudents(QObject* caller, qint64 individualId);

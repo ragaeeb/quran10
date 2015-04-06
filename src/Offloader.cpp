@@ -17,6 +17,7 @@
 namespace quran {
 
 using namespace canadainc;
+using namespace bb::platform::geo;
 
 Offloader::Offloader(Persistance* persist, QObject* parent) : QObject(parent), m_persist(persist)
 {
@@ -432,6 +433,19 @@ bool Offloader::fillType(QVariantList input, int queryId, bb::cascades::GroupDat
     }
 
     return false;
+}
+
+
+void Offloader::renderMap(bb::cascades::maps::MapView* mapControl, qreal latitude, qreal longitude, QString const& name, QString const& city, qint64 id)
+{
+    GeoLocation* home = new GeoLocation(latitude, longitude);
+    home->setName(name);
+    home->setDescription(city);
+    home->setGeoId( QString::number(id) );
+    Marker m = home->marker();
+    m.setIconUri("asset:///images/ic_map_rijaal.png");
+    home->setMarker(m);
+    mapControl->mapData()->add(home);
 }
 
 

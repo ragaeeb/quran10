@@ -5,6 +5,10 @@ TabbedPane
     id: root
     activeTab: quranTab
     
+    onActiveTabChanged: {
+        peekEnabled = activeTab != ummahTab;
+    }
+    
     Menu.definition: CanadaIncMenu
     {
         id: menuDef
@@ -109,6 +113,22 @@ TabbedPane
         onTriggered: {
             console.log("UserEvent: TransfersTab");
             transfers.active = true;
+        }
+    }
+    
+    Tab {
+        id: ummahTab
+        title: qsTr("The Ummah") + Retranslate.onLanguageChanged
+        description: qsTr("The Muslim Ummah") + Retranslate.onLanguageChanged
+        imageSource: "images/tabs/ic_ummah.png"
+        delegateActivationPolicy: TabDelegateActivationPolicy.ActivatedWhileSelected
+        
+        onTriggered: {
+            console.log("UserEvent: UmmahTab");
+        }
+        
+        delegate: Delegate {
+            source: "LocationPane.qml"
         }
     }
 
