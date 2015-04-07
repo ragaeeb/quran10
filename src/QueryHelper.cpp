@@ -475,6 +475,16 @@ QObject* QueryHelper::getTafsirHelper() {
 }
 
 
+QString QueryHelper::tafsirVersion() const {
+    return m_persist->getValueFor( KEY_TAFSIR_VERSION(m_translation) ).toString();
+}
+
+
+QString QueryHelper::translationVersion() const {
+    return m_persist->getValueFor( KEY_TRANSLATION_VERSION(m_translation) ).toString();
+}
+
+
 QueryHelper::~QueryHelper()
 {
 }
