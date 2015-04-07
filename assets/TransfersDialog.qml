@@ -243,17 +243,7 @@ Delegate
                             progressValue = (current*100.0)/total;
                         }
                         
-                        function onDeflationDone(result)
-                        {
-                            if (result.blockedKey)
-                            {
-                                queue.decreaseBlockingCount();
-                                
-                                if (!queue.isBlocked) { // it's a significant database change happened
-                                    helper.refreshDatabase();
-                                }
-                            }
-                            
+                        function onDeflationDone(result) {                            
                             cpc.finish();
                         }
                         

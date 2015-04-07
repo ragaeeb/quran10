@@ -55,6 +55,7 @@ private slots:
 	void onPicked(int chapter, int verse);
     void onRequestComplete(QVariant const& cookie, QByteArray const& data);
     void onUpdateCheckNeeded(QVariantMap const& params);
+    void onDeflationDone(QVariantMap const& m);
 
 signals:
     void childCardFinished(QString const& message);
