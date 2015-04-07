@@ -189,11 +189,11 @@ Page
             
             onTriggered: {
                 console.log("UserEvent: MarkFavourite");
-                var name = persist.showBlockingPrompt( qsTr("Enter name"), qsTr("You can use this to quickly recognize this ayah in the favourites tab."), translation.value, qsTr("Name..."), 50, true, qsTr("Save") );
+                var name = persist.showBlockingPrompt( qsTr("Enter name"), qsTr("You can use this to quickly recognize this ayah in the favourites tab."), translation.value, qsTr("Name..."), 50, true, qsTr("Save") ).trim();
                 
                 if (name.length > 0)
                 {
-                    var tag = persist.showBlockingPrompt( qsTr("Enter tag"), qsTr("You can use this to categorize related verses together."), "", qsTr("Enter a tag for this bookmark (ie: ramadan). You can leave this blank if you don't want to use a tag."), 50, false, qsTr("Save") );
+                    var tag = persist.showBlockingPrompt( qsTr("Enter tag"), qsTr("You can use this to categorize related verses together."), "", qsTr("Enter a tag for this bookmark (ie: ramadan). You can leave this blank if you don't want to use a tag."), 50, false, qsTr("Save") ).trim();
                     bookmarkHelper.saveBookmark(root, surahId, verseId, name, tag);
                 }
             }
@@ -213,7 +213,7 @@ Page
             
             onTriggered: {
                 console.log("UserEvent: AddShortcutTriggered");
-                var name = persist.showBlockingPrompt( qsTr("Enter name"), qsTr("You can use this to quickly recognize this ayah on your home screen."), translation.value, qsTr("Shortcut name..."), 15, true, qsTr("Save") );
+                var name = persist.showBlockingPrompt( qsTr("Enter name"), qsTr("You can use this to quickly recognize this ayah on your home screen."), translation.value, qsTr("Shortcut name..."), 15, true, qsTr("Save") ).trim();
                 
                 if (name.length > 0) {
                     offloader.addToHomeScreen(surahId, verseId, name);

@@ -180,6 +180,7 @@ NavigationPane
                     busy.delegateActive = true;
                     onBookmarksUpdated();
                     global.bookmarksUpdated.connect(onBookmarksUpdated);
+                    helper.textualChange.connect(onBookmarksUpdated);
                 }
                 
                 listItemComponents: [
@@ -203,6 +204,10 @@ NavigationPane
                             status: ListItemData.verse_id
                             description: ListItemData.surah_name
                             imageSource: "images/list/ic_bookmark.png"
+                            
+                            ListItem.onDataChanged: {
+                                console.log("*** ON DATA", ListItemData.name, ListItemData.surah_name, ListItemData.surah_id);
+                            }
                             
                             contextActions: [
                                 ActionSet

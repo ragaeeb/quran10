@@ -85,6 +85,8 @@ public:
     QueryBookmarkHelper* getBookmarkHelper();
     QObject* getExecutor();
     QObject* getTafsirHelper();
+
+    Q_SLOT void refreshDatabase();
 };
 
 } /* namespace quran */

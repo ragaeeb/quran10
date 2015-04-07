@@ -468,6 +468,14 @@ Page
         translate.play();
     }
     
+    function onChanged() {
+        sortOrder.selectedOptionChanged(undefined);
+    }
+    
+    onCreationCompleted: {
+        helper.textualChange.connect(onChanged);
+    }
+    
     attachedObjects: [
         ImagePaintDefinition {
             id: back
