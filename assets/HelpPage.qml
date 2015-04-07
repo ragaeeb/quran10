@@ -1,38 +1,36 @@
-import bb.cascades 1.2
+import bb.cascades 1.0
 
 Page
 {
     actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
-    
-    titleBar: AboutTitleBar {
+
+    titleBar: AboutTitleBar
+    {
         id: atb
+        videoTutorialUri: "http://youtu.be/7nA27gIxZ08"
+
+        expandedContent: [
+            Label
+            {
+                id: versionInfo
+                horizontalAlignment: HorizontalAlignment.Fill
+                
+                onCreationCompleted: {
+                    var body = qsTr("Version information not detected...");
+                    var tafsirVersion = parseInt(helper.tafsirVersion);
+                    var translationVersion = parseInt(helper.translationVersion);
+                    
+                    if (tafsirVersion > 0 && translationVersion > 0) {
+                        text = qsTr("Tafsir Last Updated: %1\nTranslation Last Updated: %2").arg( Qt.formatDate(tafsirVersion, "MMM d, yyyy") ).arg( Qt.formatDate(translationVersion, "MMM d, yyyy") );
+                    } else if (tafsirVersion > 0) {
+                        text = qsTr("Tafsir Last Updated: %1").arg( new Date(tafsirVersion).toDateString() );
+                    } else if (translationVersion > 0) {
+                        text = qsTr("Translation Last Updated: %1").arg( new Date(translationVersion).toDateString() );
+                    }
+                }
+            }
+        ]
     }
-    
-    actions: [
-        ActionItem
-        {
-            imageSource: "images/menu/ic_channel.png"
-            title: atb.channelTitle
-            ActionBar.placement: 'Signature' in ActionBarPlacement ? ActionBarPlacement["Signature"] : ActionBarPlacement.OnBar
-            
-            onTriggered: {
-                console.log("UserEvent: OpenChannelTriggered");
-                persist.openChannel();
-            }
-        },
-        
-        ActionItem
-        {
-            imageSource: "images/menu/ic_video_tutorial.png"
-            title: qsTr("Video Tutorial") + Retranslate.onLanguageChanged
-            ActionBar.placement: 'Signature' in ActionBarPlacement ? ActionBarPlacement["Signature"] : ActionBarPlacement.OnBar
-            
-            onTriggered: {
-                console.log("UserEvent: VideoTutorialTriggered");
-                persist.tutorialVideo("http://youtu.be/7nA27gIxZ08", false);
-            }
-        }
-    ]
 
     Container
     {
@@ -40,7 +38,8 @@ Page
         horizontalAlignment: HorizontalAlignment.Center
         verticalAlignment: VerticalAlignment.Fill
 
-        ScrollView {
+        ScrollView
+        {
             horizontalAlignment: HorizontalAlignment.Center
             verticalAlignment: VerticalAlignment.Fill
 

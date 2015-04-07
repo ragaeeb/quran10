@@ -7,33 +7,8 @@ Page
     id: settingsPage
     actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
     
-    titleBar: TitleBar
-    {
+    titleBar: TitleBar {
         title: qsTr("Settings") + Retranslate.onLanguageChanged
-        
-        acceptAction: ActionItem
-        {
-            title: qsTr("Version") + Retranslate.onLanguageChanged
-            
-            onTriggered: {
-                console.log("UserEvent: VersionInfo");
-                
-                var body = qsTr("Version information not detected...");
-                var tafsirVersion = parseInt(helper.tafsirVersion);
-                var translationVersion = parseInt(helper.translationVersion);
-
-                if (tafsirVersion > 0 && translationVersion > 0) {
-                    body = qsTr("Tafsir Last Updated: %1\nTranslation Last Updated: %2").arg( Qt.formatDate(tafsirVersion, "MMM d, yyyy") ).arg( Qt.formatDate(translationVersion, "MMM d, yyyy") );
-                } else if (tafsirVersion > 0) {
-                    console.log("***", tafsirVersion);
-                    body = qsTr("Tafsir Last Updated: %1").arg( Qt.formatDate( new Date(tafsirVersion), "MMM d, yyyy") );
-                } else if (translationVersion > 0) {
-                    body = qsTr("Translation Last Updated: %1").arg( Qt.formatDate(translationVersion, "MMM d, yyyy") );
-                }
-                
-                persist.showBlockingDialog( qsTr("Version"), body, qsTr("OK"), "" );
-            }
-        }
     }
     
     Container
