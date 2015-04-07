@@ -245,8 +245,13 @@ Delegate
                         
                         function onDeflationDone(result)
                         {
-                            if (result.blockedKey) {
+                            if (result.blockedKey)
+                            {
                                 queue.decreaseBlockingCount();
+                                
+                                if (!queue.isBlocked) { // it's a significant database change happened
+                                    helper.refreshDatabase();
+                                }
                             }
                             
                             cpc.finish();
