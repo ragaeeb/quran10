@@ -26,6 +26,8 @@ class QueryHelper : public QObject
 	Q_PROPERTY(int primarySize READ primarySize NOTIFY fontSizeChanged)
 	Q_PROPERTY(int translationSize READ translationSize NOTIFY fontSizeChanged)
 	Q_PROPERTY(QString translation READ translation NOTIFY textualChange)
+	Q_PROPERTY(QString tafsirVersion READ tafsirVersion NOTIFY textualChange)
+	Q_PROPERTY(QString translationVersion READ translationVersion NOTIFY textualChange)
 
     DatabaseHelper m_sql;
     Persistance* m_persist;
@@ -85,6 +87,8 @@ public:
     QueryBookmarkHelper* getBookmarkHelper();
     QObject* getExecutor();
     QObject* getTafsirHelper();
+    QString tafsirVersion() const;
+    QString translationVersion() const;
 
     Q_SLOT void refreshDatabase();
 };
