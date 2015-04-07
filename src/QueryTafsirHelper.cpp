@@ -256,21 +256,21 @@ void QueryTafsirHelper::fetchAllLocations(QObject* caller, QString const& city)
 
 void QueryTafsirHelper::fetchAllOrigins(QObject* caller)
 {
-    m_sql->executeQuery(caller, QString("SELECT %1 AS name,i.displayName,i.id,city,latitude,longitude FROM individuals i INNER JOIN locations ON i.location=locations.id").arg( NAME_FIELD("i") ), QueryId::FetchAllOrigins);
+    m_sql->executeQuery(caller, QString("SELECT %1 AS name,i.displayName,i.id,city,latitude,longitude FROM individuals i INNER JOIN locations ON i.location=locations.id WHERE i.hidden != 1").arg( NAME_FIELD("i") ), QueryId::FetchAllOrigins);
 }
 
 
 void QueryTafsirHelper::fetchTeachers(QObject* caller, qint64 individualId)
 {
     LOGGER(individualId);
-    m_sql->executeQuery(caller, QString("SELECT i.id,%1 AS teacher FROM teachers INNER JOIN individuals i ON teachers.teacher=i.id WHERE teachers.individual=%2").arg( NAME_FIELD("i") ).arg(individualId), QueryId::FetchTeachers);
+    m_sql->executeQuery(caller, QString("SELECT i.id,%1 AS teacher FROM teachers INNER JOIN individuals i ON teachers.teacher=i.id WHERE teachers.individual=%2 AND i.hidden != 1").arg( NAME_FIELD("i") ).arg(individualId), QueryId::FetchTeachers);
 }
 
 
 void QueryTafsirHelper::fetchStudents(QObject* caller, qint64 individualId)
 {
     LOGGER(individualId);
-    m_sql->executeQuery(caller, QString("SELECT i.id,%1 AS student FROM teachers INNER JOIN individuals i ON teachers.individual=i.id WHERE teachers.teacher=%2").arg( NAME_FIELD("i") ).arg(individualId), QueryId::FetchStudents);
+    m_sql->executeQuery(caller, QString("SELECT i.id,%1 AS student FROM teachers INNER JOIN individuals i ON teachers.individual=i.id WHERE teachers.teacher=%2 AND i.hidden != 1").arg( NAME_FIELD("i") ).arg(individualId), QueryId::FetchStudents);
 }
 
 
