@@ -176,13 +176,13 @@ NavigationPane
         {
             if (id == QueryId.FetchRandomQuote && data.length > 0)
             {
-                console.log("*** SDLKFJ");
                 var quote = data[0];
-                console.log("*** SDLKFJ33");
-                var body = qsTr("<html><i>“%1”</i>\n\n- <b>%2%4</b>\n\n[%3]\n\n\n</html>").arg(quote.body).arg(quote.displayName ? quote.displayName : quote.author).arg(quote.reference).arg( global.getSuffix(quote.birth, quote.death, quote.companion_id, quote.female == 1) );
-                console.log("*** SDLKFJ222");
-                tutorialToast.init(body, "images/ic_quran.png");
-                console.log("*** SDLKFJxxx");
+                
+                if (quote.hidden != 1)
+                {
+                    var body = qsTr("<html><i>“%1”</i>\n\n- <b>%2%4</b>\n\n[%3]\n\n\n</html>").arg(quote.body).arg(quote.displayName ? quote.displayName : quote.author).arg(quote.reference).arg( global.getSuffix(quote.birth, quote.death, quote.companion_id, quote.female == 1) );
+                    tutorialToast.init(body, "images/ic_quran.png");
+                }
             }
         }
         
