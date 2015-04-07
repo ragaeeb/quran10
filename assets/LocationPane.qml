@@ -4,6 +4,8 @@ import com.canadainc.data 1.0
 
 NavigationPane
 {
+    id: navigationPane
+    
     onPopTransitionEnded: {
         page.destroy();
     }
@@ -27,8 +29,6 @@ NavigationPane
             MapView
             {
                 id: mapView
-                altitude: 100000000
-                tilt: 2
                 verticalAlignment: VerticalAlignment.Center
                 horizontalAlignment: HorizontalAlignment.Center
                 
@@ -47,9 +47,10 @@ NavigationPane
                             
                             offloader.renderMap(mapView, current.latitude, current.longitude, name, current.city, current.id);
                         }
+                        
+                        mapView.setLocationOnVisible();
+                        navigationPane.parent.unreadContentCount = data.length;
                     }
-                    
-                    mapView.requestRender();
                 }
                 
                 onCreationCompleted: {
