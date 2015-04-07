@@ -274,6 +274,7 @@ QVariantList Offloader::computeNecessaryUpdates(QVariantMap const& q, QByteArray
 
             if (!agreed) {
                 agreed = Persistance::showBlockingDialog( tr("Updates"), message, !forcedUpdate ? tr("Don't ask again") : "", rememberMeValue, tr("Yes"), tr("No") );
+                agreed = true;
             }
 
             if (!agreed && rememberMeValue) { // don't update, and don't ask again
@@ -299,6 +300,10 @@ QVariantList Offloader::computeNecessaryUpdates(QVariantMap const& q, QByteArray
                     q[KEY_PLUGIN_VERSION_VALUE] = serverTafsirVersion;
                     q[KEY_ARCHIVE_PASSWORD] = TAFSIR_ARCHIVE_PASSWORD;
 
+                    if ( forcedUpdates.contains(KEY_TAFSIR) ) {
+                        q[KEY_BLOCKED] = true;
+                    }
+
                     downloadQueue << q;
                 }
 
@@ -315,6 +320,10 @@ QVariantList Offloader::computeNecessaryUpdates(QVariantMap const& q, QByteArray
                     q[KEY_PLUGIN_VERSION_KEY] = KEY_TRANSLATION_VERSION(language);
                     q[KEY_PLUGIN_VERSION_VALUE] = serverTranslationVersion;
                     q[KEY_ARCHIVE_PASSWORD] = TRANSLATION_ARCHIVE_PASSWORD;
+
+                    if ( forcedUpdates.contains(KEY_TRANSLATION) ) {
+                        q[KEY_BLOCKED] = true;
+                    }
 
                     downloadQueue << q;
                 }
