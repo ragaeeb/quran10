@@ -94,4 +94,10 @@ Page
             imageSource: "images/backgrounds/bg_chapter_tafsir_picker.amd"
         }
     ]
+    
+    onCreationCompleted: {
+        helper.textualChange.connect( function() {
+            chapterNumberChanged();
+        });
+    }
 }

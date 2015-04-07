@@ -20,14 +20,6 @@ Page
         helper.fetchAllAyats(juzPage, ranges.from_surah_id, ranges.to_surah_id);
     }
     
-    function reloadNeeded()
-    {
-        if (key == "translation") {
-            requestedVerse = scroller.firstVisibleItem[0];
-            juzIdChanged();
-        }
-    }
-    
     onPeekedAtChanged: {
         listView.secretPeek = peekedAt;
     }
@@ -53,19 +45,13 @@ Page
             ranges = {'from_surah_id': data[0].surah_id, 'from_verse_id': data[0].verse_id, 'to_surah_id': toChapter, 'to_verse_id': toVerse};
         }
     }
-    
-    function onPopEnded(page)
-    {
-        if (navigationPane.top == juzPage) {
-            ctb.navigationExpanded = true;
-        }
-    }
 
     onCreationCompleted: {
-        persist.settingChanged.connect(reloadNeeded);
-        navigationPane.popTransitionEnded.connect(onPopEnded);
-        
         deviceUtils.attachTopBottomKeys(juzPage, listView);
+        
+        helper.textualChange.connect( function() {
+            rangesChanged();
+        });
     }
 
     actions: [

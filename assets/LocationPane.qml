@@ -48,6 +48,8 @@ NavigationPane
                             offloader.renderMap(mapView, current.latitude, current.longitude, name, current.city, current.id);
                         }
                     }
+                    
+                    mapView.requestRender();
                 }
                 
                 onCreationCompleted: {

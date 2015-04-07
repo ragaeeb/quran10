@@ -18,6 +18,7 @@ NavigationPane
     onCreationCompleted: {
         deviceUtils.attachTopBottomKeys(quotePickerPage, listView, true);
         reload();
+        helper.textualChange.connect(reload);
     }
     
     Page
