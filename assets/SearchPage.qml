@@ -24,6 +24,10 @@ Page
     
     onCreationCompleted: {
         deviceUtils.attachTopBottomKeys(searchRoot, listView);
+
+        helper.textualChange.connect( function() {
+            searchTextChanged();
+        });
     }
     
     function getAdditionalQueries()

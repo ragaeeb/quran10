@@ -546,5 +546,10 @@ Page
             addAction(addTeacher);
             addAction(addStudent);
         }
+        
+        helper.textualChange.connect( function() {
+            bioModel.clear();
+            individualIdChanged();
+        });
     }
 }

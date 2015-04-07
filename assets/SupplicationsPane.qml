@@ -102,6 +102,10 @@ NavigationPane
                 
                 onCreationCompleted: {
                     helper.fetchAllDuaa(listView);
+                    
+                    helper.textualChange.connect( function() {
+                        helper.fetchAllDuaa(listView);
+                    });
                 }
                 
                 attachedObjects: [

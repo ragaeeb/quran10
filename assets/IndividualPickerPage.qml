@@ -51,6 +51,10 @@ Page
         }
     }
     
+    onCreationCompleted: {
+        helper.textualChange.connect(performSearch);
+    }
+    
     Container
     {
         layout: DockLayout {}

@@ -5,12 +5,17 @@ TitleBar
 {
     id: titleControl
     property int chapterNumber
-    property alias bgAsset: back.imageSource
     property alias text: surahNameArabic.text
     signal titleTapped();
     
     onChapterNumberChanged: {
         helper.fetchSurahHeader(titleControl, chapterNumber);
+    }
+    
+    onCreationCompleted: {
+        helper.textualChange.connect( function() {
+            chapterNumberChanged();
+        });
     }
     
     kind: TitleBarKind.FreeForm
