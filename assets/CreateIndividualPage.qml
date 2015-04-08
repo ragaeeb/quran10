@@ -117,9 +117,9 @@ Page
                 if (name.validator.valid && location.validator.valid) {
                     createIndividual(individualId, prefix.text.trim(), name.text.trim(), kunya.text.trim(), displayName.text.trim(), hidden.checked, parseInt( birth.text.trim() ), parseInt( death.text.trim() ), female.checked, parseInt( location.text.trim() ) );
                 } else if (!location.validator.valid) {
-                    persist.showToast( qsTr("Invalid location specified!"), "", "asset:///images/toast/incomplete_field.png" );
+                    persist.showToast( qsTr("Invalid location specified!"), "asset:///images/toast/incomplete_field.png" );
                 } else {
-                    persist.showToast( qsTr("Invalid name!"), "", "asset:///images/toast/incomplete_field.png" );
+                    persist.showToast( qsTr("Invalid name!"), "asset:///images/toast/incomplete_field.png" );
                 }
             }
         }

@@ -247,7 +247,7 @@ void RecitationHelper::onPlaylistReady()
     LOGGER(result);
 
     if ( result.contains(PLAYLIST_ERROR) ) {
-        m_persistance->showToast( result.value(PLAYLIST_ERROR).toString(), "", ASSET_YELLOW_DELETE );
+        m_persistance->showToast( result.value(PLAYLIST_ERROR).toString(), ASSET_YELLOW_DELETE );
     } else if ( result.contains(KEY_QUEUE) ) {
         QVariantList queue = result.value(KEY_QUEUE).toList();
         m_anchor = result.value(ANCHOR_KEY).toString();

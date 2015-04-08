@@ -101,7 +101,7 @@ Page
                     tafsirHelper.linkAyatsToTafsir(listView, suitePageId, all);
                     busy.delegateActive = true;
                 } else {
-                    persist.showToast( qsTr("No ayat signatures found..."), "", "asset:///images/menu/ic_capture_ayats.png" );
+                    persist.showToast( qsTr("No ayat signatures found..."), "asset:///images/menu/ic_capture_ayats.png" );
                     busy.delegateActive = false;
                 }
             }
@@ -204,16 +204,16 @@ Page
                         listView.scrollToPosition(ScrollPosition.Beginning, ScrollAnimation.Smooth);
                     }
                 } else if (id == QueryId.UnlinkAyatsFromTafsir) {
-                    persist.showToast( qsTr("Ayat unlinked from tafsir"), "", "asset:///images/menu/ic_unlink_tafsir_ayat.png" );
+                    persist.showToast( qsTr("Ayat unlinked from tafsir"), "asset:///images/menu/ic_unlink_tafsir_ayat.png" );
                 } else if (id == QueryId.LinkAyatsToTafsir) {
-                    persist.showToast( qsTr("Ayat linked to tafsir!"), "", "asset:///images/menu/ic_link_ayat_to_tafsir.png" );
+                    persist.showToast( qsTr("Ayat linked to tafsir!"), "asset:///images/menu/ic_link_ayat_to_tafsir.png" );
                     suitePageIdChanged();
                     
                     while (navigationPane.top != narrationsPage) {
                         navigationPane.pop();
                     }
                 } else if (id == QueryId.UpdateTafsirLink) {
-                    persist.showToast( qsTr("Ayat link updated"), "", "asset:///images/menu/ic_update_link.png" );
+                    persist.showToast( qsTr("Ayat link updated"), "asset:///images/menu/ic_update_link.png" );
                 }
                 
                 busy.delegateActive = false;
@@ -390,7 +390,7 @@ Page
                             tafsirHelper.linkAyatToTafsir(listView, suitePageId, chapter, fromVerse, toVerse);
                         }
                     } else {
-                        persist.showToast( qsTr("Invalid entry specified. Please enter something with the Chapter:Verse scheme (ie: 2:55 for Surah Baqara vese #55)"), "", "asset:///images/toast/invalid_entry.png" );
+                        persist.showToast( qsTr("Invalid entry specified. Please enter something with the Chapter:Verse scheme (ie: 2:55 for Surah Baqara vese #55)"), "asset:///images/toast/invalid_entry.png" );
                     }
                 }
             }

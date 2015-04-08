@@ -145,6 +145,7 @@ Sheet
             
             ActionItem
             {
+                id: downloadAll
                 title: qsTr("Download All") + Retranslate.onLanguageChanged
                 imageSource: "images/menu/ic_download_mushaf.png"
                 
@@ -154,6 +155,17 @@ Sheet
                     enabled = true;
                 }
                 
+                function onFinished(confirmed, data)
+                {
+                    if (confirmed) {
+                        console.log("UserEvent: DownoloadMushafPromptYes");
+                        mushaf.requestEntireMushaf(data);
+                    } else {
+                        console.log("UserEvent: DownoloadMushafPromptNo");
+                        enabled = true;
+                    }
+                }
+                
                 function onMushafSizeFetched(data)
                 {
                     var archiveSize = data.size;
@@ -161,15 +173,7 @@ Sheet
                     if (archiveSize && data.uri && data.md5 && data.mushafSizeFetch)
                     {
                         var freeSpace = offloader.getFreeSpace();
-                        var confirmed = persist.showBlockingDialog( qsTr("Confirmation"), qsTr("The total size of the mushaf is ~%1 and it will need to be downloaded. Your device currently has ~%2 free space remaining. Make sure you are on a good Wi-Fi connection or have a good data plan. Do you wish to continue?").arg( textUtils.bytesToSize(archiveSize) ).arg( textUtils.bytesToSize(freeSpace) ), qsTr("Yes"), qsTr("No"), freeSpace > archiveSize );
-
-                        if (confirmed) {
-                            console.log("UserEvent: DownoloadMushafPromptYes");
-                            mushaf.requestEntireMushaf(data);
-                        } else {
-                            console.log("UserEvent: DownoloadMushafPromptNo");
-                            enabled = true;
-                        }
+                        persist.showDialog( downloadAll, data, qsTr("Confirmation"), qsTr("The total size of the mushaf is ~%1 and it will need to be downloaded. Your device currently has ~%2 free space remaining. Make sure you are on a good Wi-Fi connection or have a good data plan. Do you wish to continue?").arg( textUtils.bytesToSize(archiveSize) ).arg( textUtils.bytesToSize(freeSpace) ), qsTr("Yes"), qsTr("No"), freeSpace > archiveSize );
                     }
                 }
                 

@@ -93,6 +93,23 @@ Page
                 }
             ]
             
+            function performPlayback()
+            {
+                listView.previousPlayedIndex = -1;
+                recitation.downloadAndPlayAll(listView.dataModel);
+            }
+            
+            function onFinished(yesClicked)
+            {
+                console.log("UserEvent: DownloadRecitationConfirm", yesClicked);
+                
+                if (yesClicked)
+                {
+                    persist.saveValueFor("hideDataWarning", 1, false);
+                    performPlayback();
+                }
+            }
+            
             function onReady(uri) {
                 player.play(uri);
             }
@@ -105,23 +122,13 @@ Page
             {
                 console.log("UserEvent: PlayAll");
                 
-                if ( !persist.contains("hideDataWarning") && !player.active )
-                {
-                    var yesClicked = persist.showBlockingDialog( qsTr("Confirmation"), qsTr("We are about to download a whole bunch of MP3 recitations, you should only attempt to do this if you have either an unlimited data plan, or are connected via Wi-Fi. Otherwise you might incur a lot of data charges. Are you sure you want to continue? If you select No you can always attempt to download again later."), qsTr("Yes"), qsTr("No") );
-                    
-                    if (!yesClicked) {
-                        return;
-                    }
-
-                    persist.saveValueFor("hideDataWarning", 1, false);
+                if (player.active) {
+                    player.togglePlayback();
+                } else if ( !persist.contains("hideDataWarning") && !player.active ) {
+                    persist.showDialog( playAllAction, qsTr("Confirmation"), qsTr("We are about to download a whole bunch of MP3 recitations, you should only attempt to do this if you have either an unlimited data plan, or are connected via Wi-Fi. Otherwise you might incur a lot of data charges. Are you sure you want to continue? If you select No you can always attempt to download again later.") );
+                } else {
+                    performPlayback();
                 }
-                
-				if (player.active) {
-				    player.togglePlayback();
-				} else {
-				    listView.previousPlayedIndex = -1;
-                    recitation.downloadAndPlayAll(listView.dataModel);
-				}
             }
         },
         

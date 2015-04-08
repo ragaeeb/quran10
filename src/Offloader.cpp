@@ -188,7 +188,7 @@ void Offloader::addToHomeScreen(int chapter, int verse, QString const& label)
         icon = ASSET_YELLOW_DELETE;
     }
 
-    m_persist->showToast(toastMessage, "", icon);
+    m_persist->showToast(toastMessage, icon);
 }
 
 
@@ -205,7 +205,7 @@ void Offloader::addToHomeScreen(qint64 suitePageId, QString const& label)
         icon = ASSET_YELLOW_DELETE;
     }
 
-    m_persist->showToast(toastMessage, "", icon);
+    m_persist->showToast(toastMessage, icon);
 }
 
 
@@ -219,10 +219,8 @@ QVariantList Offloader::normalizeJuzs(QVariantList const& source) {
 }
 
 
-QVariantList Offloader::computeNecessaryUpdates(QVariantMap const& q, QByteArray const& data)
+bool Offloader::computeNecessaryUpdates(QVariantMap q, QByteArray const& data)
 {
-    QVariantList downloadQueue;
-
     QStringList result = QString(data).split(FIELD_SEPARATOR);
     QVariantMap requestData = q.value(KEY_UPDATE_CHECK).toMap();
     QStringList forcedUpdates = requestData.value(KEY_FORCED_UPDATE).toStringList();
@@ -269,71 +267,97 @@ QVariantList Offloader::computeNecessaryUpdates(QVariantMap const& q, QByteArray
 
         if ( !message.isNull() )
         {
-            bool rememberMeValue = false;
             bool agreed = m_persist->getValueFor(KEY_UPDATE_CHECK_FLAG).toInt() == ALWAYS_UPDATE_FLAG;
+            q["result"] = result;
 
             if (!agreed) {
-                agreed = Persistance::showBlockingDialog( tr("Updates"), message, !forcedUpdate ? tr("Don't ask again") : "", rememberMeValue, tr("Yes"), tr("No") );
-                agreed = true;
-            }
-
-            if (!agreed && rememberMeValue) { // don't update, and don't ask again
-                m_persist->saveValueFor(KEY_UPDATE_CHECK_FLAG, -1, false);
-            } else if (agreed && rememberMeValue) {
-                m_persist->saveValueFor(KEY_UPDATE_CHECK_FLAG, -1, false);
-            }
-
-            if (agreed)
-            {
-                if (tafsirUpdateNeeded)
-                {
-                    QString serverTafsirMd5 = result[2];
-                    QString tafsirName = requestData.value(KEY_TAFSIR).toString();
-
-                    QVariantMap q;
-                    q[KEY_TRANSFER_NAME] = tr("Tafsir");
-
-                    q[URI_KEY] = CommonConstants::generateHostUrl( result[3] );
-                    q[TAFSIR_PATH] = tafsirName;
-                    q[KEY_MD5] = serverTafsirMd5;
-                    q[KEY_PLUGIN_VERSION_KEY] = KEY_TAFSIR_VERSION(language);
-                    q[KEY_PLUGIN_VERSION_VALUE] = serverTafsirVersion;
-                    q[KEY_ARCHIVE_PASSWORD] = TAFSIR_ARCHIVE_PASSWORD;
-
-                    if ( forcedUpdates.contains(KEY_TAFSIR) ) {
-                        q[KEY_BLOCKED] = true;
-                    }
-
-                    downloadQueue << q;
-                }
-
-                if (translationUpdateNeeded)
-                {
-                    QString serverTranslationMd5 = result[6];
-                    QString language = requestData.value(KEY_TRANSLATION).toString();
-
-                    QVariantMap q;
-                    q[KEY_TRANSFER_NAME] = tr("Translation");
-                    q[URI_KEY] = CommonConstants::generateHostUrl( result[7] );
-                    q[KEY_TRANSLATION] = language;
-                    q[KEY_MD5] = serverTranslationMd5;
-                    q[KEY_PLUGIN_VERSION_KEY] = KEY_TRANSLATION_VERSION(language);
-                    q[KEY_PLUGIN_VERSION_VALUE] = serverTranslationVersion;
-                    q[KEY_ARCHIVE_PASSWORD] = TRANSLATION_ARCHIVE_PASSWORD;
-
-                    if ( forcedUpdates.contains(KEY_TRANSLATION) ) {
-                        q[KEY_BLOCKED] = true;
-                    }
-
-                    downloadQueue << q;
-                }
+                m_persist->showDialog( this, q, tr("Updates"), message, tr("Yes"), tr("No"), true, tr("Don't ask again") );
+            } else {
+                onFinished(true, false, q);
             }
         }
     } else if (forcedUpdate) { // if this is a mandatory update, then show error message
-        m_persist->showToast( tr("There is a problem communicating with the server so the app cannot download the necessary files just yet. Please try opening the app again later and it should automatically try the update again..."), "", "asset:///images/toast/ic_offline.png" );
+        m_persist->showToast( tr("There is a problem communicating with the server so the app cannot download the necessary files just yet. Please try opening the app again later and it should automatically try the update again..."), "asset:///images/toast/ic_offline.png" );
+        return false;
     }
 
-    return downloadQueue;
+    return true;
+}
+
+
+void Offloader::onFinished(QVariant confirm, QVariant remember, QVariant data)
+{
+    bool agreed = confirm.toBool();
+    bool rememberMeValue = remember.toBool();
+
+    if (!agreed && rememberMeValue) { // don't update, and don't ask again
+        m_persist->saveValueFor(KEY_UPDATE_CHECK_FLAG, -1, false);
+    } else if (agreed && rememberMeValue) {
+        m_persist->saveValueFor(KEY_UPDATE_CHECK_FLAG, -1, false);
+    }
+
+    QVariantMap q = data.toMap();
+    QStringList result = q.value("result").toStringList();
+    QVariantMap requestData = q.value(KEY_UPDATE_CHECK).toMap();
+    QStringList forcedUpdates = requestData.value(KEY_FORCED_UPDATE).toStringList();
+    QString language = requestData.value(KEY_LANGUAGE).toString();
+    qint64 serverTafsirVersion = result.first().toLongLong();
+    qint64 myTafsirVersion = m_persist->getValueFor( KEY_TAFSIR_VERSION(language) ).toLongLong();
+    qint64 serverTranslationVersion = result[4].toLongLong();
+    qint64 myTranslationVersion = m_persist->getValueFor( KEY_TRANSLATION_VERSION(language) ).toLongLong();
+    bool tafsirUpdateNeeded = serverTafsirVersion > myTafsirVersion || forcedUpdates.contains(KEY_TAFSIR);
+    bool translationUpdateNeeded = serverTranslationVersion > myTranslationVersion || forcedUpdates.contains(KEY_TRANSLATION);
+    QVariantList downloadQueue;
+
+    if (agreed)
+    {
+        if (tafsirUpdateNeeded)
+        {
+            QString serverTafsirMd5 = result[2];
+            QString tafsirName = requestData.value(KEY_TAFSIR).toString();
+
+            QVariantMap q;
+            q[KEY_TRANSFER_NAME] = tr("Tafsir");
+
+            q[URI_KEY] = CommonConstants::generateHostUrl( result[3] );
+            q[TAFSIR_PATH] = tafsirName;
+            q[KEY_MD5] = serverTafsirMd5;
+            q[KEY_PLUGIN_VERSION_KEY] = KEY_TAFSIR_VERSION(language);
+            q[KEY_PLUGIN_VERSION_VALUE] = serverTafsirVersion;
+            q[KEY_ARCHIVE_PASSWORD] = TAFSIR_ARCHIVE_PASSWORD;
+
+            if ( forcedUpdates.contains(KEY_TAFSIR) ) {
+                q[KEY_BLOCKED] = true;
+            }
+
+            downloadQueue << q;
+        }
+
+        if (translationUpdateNeeded)
+        {
+            QString serverTranslationMd5 = result[6];
+            QString language = requestData.value(KEY_TRANSLATION).toString();
+
+            QVariantMap q;
+            q[KEY_TRANSFER_NAME] = tr("Translation");
+            q[URI_KEY] = CommonConstants::generateHostUrl( result[7] );
+            q[KEY_TRANSLATION] = language;
+            q[KEY_MD5] = serverTranslationMd5;
+            q[KEY_PLUGIN_VERSION_KEY] = KEY_TRANSLATION_VERSION(language);
+            q[KEY_PLUGIN_VERSION_VALUE] = serverTranslationVersion;
+            q[KEY_ARCHIVE_PASSWORD] = TRANSLATION_ARCHIVE_PASSWORD;
+
+            if ( forcedUpdates.contains(KEY_TRANSLATION) ) {
+                q[KEY_BLOCKED] = true;
+            }
+
+            downloadQueue << q;
+        }
+    }
+
+    if ( !downloadQueue.isEmpty() ) {
+        emit downloadPlugins(downloadQueue);
+    }
 }
 
 

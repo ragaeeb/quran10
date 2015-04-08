@@ -75,17 +75,17 @@ Page
             body.text = "\n"+result;
             ft.play();
         } else if (id == QueryId.RemoveBio) {
-            persist.showToast( qsTr("Biography successfully removed!"), "", "asset:///images/menu/ic_remove_bio.png" );
+            persist.showToast( qsTr("Biography successfully removed!"), "asset:///images/menu/ic_remove_bio.png" );
         } else if (id == QueryId.EditBio) {
-            persist.showToast( qsTr("Biography successfully updated!"), "", "asset:///images/menu/ic_edit_bio.png" );
+            persist.showToast( qsTr("Biography successfully updated!"), "asset:///images/menu/ic_edit_bio.png" );
         } else if (id == QueryId.RemoveTeacher) {
-            persist.showToast( qsTr("Teacher removed!"), "", "asset:///images/menu/ic_edit_bio.png" );
+            persist.showToast( qsTr("Teacher removed!"), "asset:///images/menu/ic_edit_bio.png" );
         } else if (id == QueryId.RemoveStudent) {
-            persist.showToast( qsTr("Student removed!"), "", "asset:///images/menu/ic_edit_bio.png" );
+            persist.showToast( qsTr("Student removed!"), "asset:///images/menu/ic_edit_bio.png" );
         } else if (id == QueryId.AddTeacher) {
-            persist.showToast( qsTr("Teacher added!"), "", "asset:///images/menu/ic_edit_bio.png" );
+            persist.showToast( qsTr("Teacher added!"), "asset:///images/menu/ic_edit_bio.png" );
         } else if (id == QueryId.AddStudent) {
-            persist.showToast( qsTr("Student added!"), "", "asset:///images/menu/ic_edit_bio.png" );
+            persist.showToast( qsTr("Student added!"), "asset:///images/menu/ic_edit_bio.png" );
         }
         
         offloader.fillType(data, id, bioModel);
@@ -354,7 +354,7 @@ Page
                         StandardListItem
                         {
                             description: ListItemData.author
-                            imageSource: "images/list/ic_tafsir.png"
+                            imageSource: "images/list/ic_rijaal_quote.png"
                             title: ListItemData.title
                         }
                     },
