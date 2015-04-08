@@ -7,6 +7,7 @@
 #include "JlCompress.h"
 #include "Logger.h"
 #include "QueryHelper.h"
+#include "QueueDownloader.h"
 #include "TextUtils.h"
 
 #define BACKUP_ZIP_PASSWORD "X4*13f3*3qYk3_*"
@@ -279,7 +280,9 @@ QVariantMap ThreadUtils::writePluginArchive(QVariantMap const& cookie, QByteArra
         }
     }
 
-    return QVariantMap();
+    q[KEY_ERROR] = true;
+
+    return q;
 }
 
 

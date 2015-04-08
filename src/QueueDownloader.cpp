@@ -118,25 +118,9 @@ void QueueDownloader::onDownloadProgress(QVariant const& cookie, qint64 bytesRec
 void QueueDownloader::onRequestComplete(QVariant const& cookie, QByteArray const& data, bool error)
 {
     QVariantMap element = cookie.toMap();
-    QUrl url = element.value(URI_KEY).toUrl();
-    QString uri = url.toString();
+    element[KEY_CURRENT_PROGRESS] = element[KEY_TOTAL_SIZE] = 100;
 
-    if ( m_uriToIndex.contains(uri) )
-    {
-        element[KEY_CURRENT_PROGRESS] = element[KEY_TOTAL_SIZE] = 100;
-
-        if (error) {
-            LOGGER("Error" << cookie);
-            element[KEY_ERROR] = true;
-        }
-
-        int i = m_uriToIndex.value(uri);
-        m_model.replace(i, element);
-
-        if (error) {
-            m_uriToIndex.remove(uri); // remove it so that user can attempt to redownload it
-        }
-    }
+    updateData(element, error);
 
     if ( !processNext() ) {
         emit queueCompleted();
@@ -144,6 +128,28 @@ void QueueDownloader::onRequestComplete(QVariant const& cookie, QByteArray const
 
     if (!error) {
         emit requestComplete(cookie, data);
+    }
+}
+
+
+void QueueDownloader::updateData(QVariantMap cookie, bool error)
+{
+    QUrl url = cookie.value(URI_KEY).toUrl();
+    QString uri = url.toString();
+
+    if ( m_uriToIndex.contains(uri) )
+    {
+        if (error) {
+            LOGGER("Error" << cookie);
+            cookie[KEY_ERROR] = true;
+        }
+
+        int i = m_uriToIndex.value(uri);
+        m_model.replace(i, cookie);
+
+        if (error) {
+            m_uriToIndex.remove(uri); // remove it so that user can attempt to redownload it
+        }
     }
 }
 

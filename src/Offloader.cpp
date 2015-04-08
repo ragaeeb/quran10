@@ -223,7 +223,7 @@ QVariantList Offloader::computeNecessaryUpdates(QVariantMap const& q, QByteArray
 {
     QVariantList downloadQueue;
 
-    QStringList result = QString(data).split(",");
+    QStringList result = QString(data).split(FIELD_SEPARATOR);
     QVariantMap requestData = q.value(KEY_UPDATE_CHECK).toMap();
     QStringList forcedUpdates = requestData.value(KEY_FORCED_UPDATE).toStringList();
     bool forcedUpdate = !forcedUpdates.isEmpty();
@@ -361,19 +361,15 @@ void Offloader::onArchiveWritten()
     QFutureWatcher<QVariantMap>* qfw = static_cast< QFutureWatcher<QVariantMap>* >( sender() );
     QVariantMap result = qfw->result();
 
-    if ( !result.isEmpty() )
+    if ( !result.contains(KEY_ERROR) )
     {
         QString pluginVersionKey = result.value(KEY_PLUGIN_VERSION_KEY).toString();
         QString pluginVersionValue = result.value(KEY_PLUGIN_VERSION_VALUE).toString();
 
         m_persist->saveValueFor(pluginVersionKey, pluginVersionValue, false);
-        m_persist->showToast( tr("Successfully saved plugin"), "", "asset:///images/menu/ic_select_more_chapters.png" );
-
-        emit deflationDone(result);
-    } else {
-        m_persist->showToast( tr("Could not prepare the plugin for extraction. Please swipe-down from the top-bezel and file a bug report!"), "", "asset:///images/toast/ic_duplicate_replace.png" );
-        LOGGER("CouldNotWriteArchiveToTemp!");
     }
+
+    emit deflationDone(result);
 
     sender()->deleteLater();
 }
