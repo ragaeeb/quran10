@@ -19,7 +19,8 @@ namespace quran {
 using namespace canadainc;
 using namespace bb::platform::geo;
 
-Offloader::Offloader(Persistance* persist, QObject* parent) : QObject(parent), m_persist(persist)
+Offloader::Offloader(Persistance* persist, QueueDownloader* queue, QObject* parent) :
+        QObject(parent), m_persist(persist), m_queue(queue)
 {
 }
 
@@ -297,20 +298,21 @@ void Offloader::onFinished(QVariant confirm, QVariant remember, QVariant data)
     }
 
     QVariantMap q = data.toMap();
-    QStringList result = q.value("result").toStringList();
-    QVariantMap requestData = q.value(KEY_UPDATE_CHECK).toMap();
-    QStringList forcedUpdates = requestData.value(KEY_FORCED_UPDATE).toStringList();
-    QString language = requestData.value(KEY_LANGUAGE).toString();
-    qint64 serverTafsirVersion = result.first().toLongLong();
-    qint64 myTafsirVersion = m_persist->getValueFor( KEY_TAFSIR_VERSION(language) ).toLongLong();
-    qint64 serverTranslationVersion = result[4].toLongLong();
-    qint64 myTranslationVersion = m_persist->getValueFor( KEY_TRANSLATION_VERSION(language) ).toLongLong();
-    bool tafsirUpdateNeeded = serverTafsirVersion > myTafsirVersion || forcedUpdates.contains(KEY_TAFSIR);
-    bool translationUpdateNeeded = serverTranslationVersion > myTranslationVersion || forcedUpdates.contains(KEY_TRANSLATION);
-    QVariantList downloadQueue;
 
     if (agreed)
     {
+        QStringList result = q.value("result").toStringList();
+        QVariantMap requestData = q.value(KEY_UPDATE_CHECK).toMap();
+        QStringList forcedUpdates = requestData.value(KEY_FORCED_UPDATE).toStringList();
+        QString language = requestData.value(KEY_LANGUAGE).toString();
+        qint64 serverTafsirVersion = result.first().toLongLong();
+        qint64 myTafsirVersion = m_persist->getValueFor( KEY_TAFSIR_VERSION(language) ).toLongLong();
+        qint64 serverTranslationVersion = result[4].toLongLong();
+        qint64 myTranslationVersion = m_persist->getValueFor( KEY_TRANSLATION_VERSION(language) ).toLongLong();
+        bool tafsirUpdateNeeded = serverTafsirVersion > myTafsirVersion || forcedUpdates.contains(KEY_TAFSIR);
+        bool translationUpdateNeeded = serverTranslationVersion > myTranslationVersion || forcedUpdates.contains(KEY_TRANSLATION);
+        QVariantList downloadQueue;
+
         if (tafsirUpdateNeeded)
         {
             QString serverTafsirMd5 = result[2];
@@ -353,10 +355,10 @@ void Offloader::onFinished(QVariant confirm, QVariant remember, QVariant data)
 
             downloadQueue << q;
         }
-    }
 
-    if ( !downloadQueue.isEmpty() ) {
-        emit downloadPlugins(downloadQueue);
+        if ( !downloadQueue.isEmpty() ) {
+            emit downloadPlugins(downloadQueue);
+        }
     }
 }
 
