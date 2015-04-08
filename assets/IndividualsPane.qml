@@ -243,7 +243,7 @@ NavigationPane
                 
                 onTriggered: {
                     console.log("UserEvent: RemoveCompanions");
-                    tafsirHelper.removeCompanions( individualPicker.pickerList, individualPicker.pickerList.getSelectedIds() );
+                    tafsirHelper.removeCompanions( navigationPane, getSelectedIds() );
                     
                     var all = individualPicker.pickerList.selectionList();
                     

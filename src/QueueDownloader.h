@@ -44,7 +44,7 @@ public:
      * @param toProcess The first key is the URL to download, and the second is the cookie.
      */
     Q_INVOKABLE void process(QVariantList const& toProcess);
-    Q_INVOKABLE void process(QVariantMap const& toProcess);
+    Q_INVOKABLE void process(QVariantMap const& toProcess, bool force=false);
     Q_SLOT void abort();
     bool isBlocked() const;
     int queued() const;

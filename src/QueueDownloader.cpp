@@ -45,9 +45,9 @@ bool QueueDownloader::processNext()
 }
 
 
-void QueueDownloader::process(QVariantMap const& toProcess)
+void QueueDownloader::process(QVariantMap const& toProcess, bool force)
 {
-    if ( !m_uriToIndex.contains( toProcess.value(URI_KEY).toUrl().toString() ) )
+    if ( !m_uriToIndex.contains( toProcess.value(URI_KEY).toUrl().toString() ) || force )
     {
         m_model.append(toProcess);
         emit queueChanged();

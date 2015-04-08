@@ -184,7 +184,7 @@ Sheet
                     console.log("UserEvent: MushafDownloadAll");
                     enabled = false;
                     
-                    if (totalSize > 0) {
+                    if (cachedData && cachedData.size > 0) {
                         onMushafSizeFetched(totalSize);
                     } else {
                         mushaf.fetchMushafSize();
