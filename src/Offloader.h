@@ -13,6 +13,7 @@ namespace bb {
 
 namespace canadainc {
     class Persistance;
+    class QueueDownloader;
 }
 
 namespace quran {
@@ -24,6 +25,7 @@ class Offloader : public QObject
     Q_OBJECT
 
     Persistance* m_persist;
+    QueueDownloader* m_queue;
 
 private slots:
     void onArchiveWritten();
@@ -39,7 +41,7 @@ signals:
     void restoreComplete(bool success);
 
 public:
-    Offloader(Persistance* persist, QObject* parent=NULL);
+    Offloader(Persistance* persist, QueueDownloader* queue, QObject* parent=NULL);
     virtual ~Offloader();
 
     Q_INVOKABLE void addToHomeScreen(int chapter, int verse, QString const& label);

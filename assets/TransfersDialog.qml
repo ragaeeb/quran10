@@ -2,12 +2,42 @@ import bb.cascades 1.3
 
 Delegate
 {
+    id: delegateRoot
+    
     function onQueueChanged() {
+        console.log("*** ON QUEUE CHANGED");
         active = true;
     }
     
     onCreationCompleted: {
+        console.log("*** SLDFKJ333");
         queue.queueChanged.connect(onQueueChanged);
+        mushaf.archiveDataFetched.connect(onAyatImagesSizeFetched);
+        console.log("*** SLDFKJ44");
+    }
+    
+    function onFinished(confirmed, data)
+    {
+        console.log("*** SLDFKJzzzzzzzz");
+        if (confirmed) {
+            console.log("UserEvent: DownloadAyatsPromptYes");
+            mushaf.downloadAllAyatImages(data);
+        } else {
+            console.log("UserEvent: DownloadAyatsPromptNo");
+            persist.saveValueFor("overlayAyatImages", 0);
+        }
+    }
+    
+    function onAyatImagesSizeFetched(data)
+    {
+        console.log("*** SLDFKJ");
+        var archiveSize = data.size;
+        
+        if (archiveSize && data.uri && data.md5 && data.ayatImages)
+        {
+            var freeSpace = offloader.getFreeSpace();
+            persist.showDialog( delegateRoot, data, qsTr("Confirmation"), qsTr("The total size of the images is ~%1 and it will need to be downloaded. Your device currently has ~%2 free space remaining. Make sure you are on a good Wi-Fi connection or have a good data plan. Do you wish to continue?").arg( textUtils.bytesToSize(archiveSize) ).arg( textUtils.bytesToSize(freeSpace) ), qsTr("Yes"), qsTr("No"), freeSpace > archiveSize, "", false );
+        }
     }
     
     sourceComponent: ComponentDefinition
@@ -247,33 +277,10 @@ Delegate
                             cpc.finish();
                         }
                         
-                        function onFinished(confirmed, data)
-                        {
-                            if (confirmed) {
-                                console.log("UserEvent: DownloadAyatsPromptYes");
-                                mushaf.downloadAllAyatImages(data);
-                            } else {
-                                console.log("UserEvent: DownloadAyatsPromptNo");
-                                persist.saveValueFor("overlayAyatImages", 0);
-                            }
-                        }
-                        
-                        function onAyatImagesSizeFetched(data)
-                        {
-                            var archiveSize = data.size;
-                            
-                            if (archiveSize && data.uri && data.md5 && data.ayatImages)
-                            {
-                                var freeSpace = offloader.getFreeSpace();
-                                persist.showDialog( cpc, data, qsTr("Confirmation"), qsTr("The total size of the images is ~%1 and it will need to be downloaded. Your device currently has ~%2 free space remaining. Make sure you are on a good Wi-Fi connection or have a good data plan. Do you wish to continue?").arg( textUtils.bytesToSize(archiveSize) ).arg( textUtils.bytesToSize(freeSpace) ), qsTr("Yes"), qsTr("No"), freeSpace > archiveSize, "", false );
-                            }
-                        }
-                        
                         onCreationCompleted: {
                             offloader.deflationDone.connect(onDeflationDone);
                             mushaf.deflationProgress.connect(onDeflationProgressChanged);
                             mushaf.deflationDone.connect(cpc.finish);
-                            mushaf.archiveDataFetched.connect(onAyatImagesSizeFetched);
                         }
                     }
                 }
