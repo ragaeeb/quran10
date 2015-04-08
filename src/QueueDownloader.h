@@ -50,6 +50,7 @@ public:
     int queued() const;
     QObject* model();
     Q_SLOT void decreaseBlockingCount();
+    void updateData(QVariantMap cookie, bool error);
 
 signals:
     void isBlockedChanged();

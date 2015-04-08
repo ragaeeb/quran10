@@ -9,6 +9,7 @@
 #include "QueryHelper.h"
 #include "QueueDownloader.h"
 #include "RecitationHelper.h"
+#include "TextUtils.h"
 
 #include <bb/system/CardDoneMessage>
 #include <bb/system/InvokeManager>
@@ -38,6 +39,7 @@ class ApplicationUI : public QObject
     RecitationHelper m_recitation;
     AdminHelper m_admin;
     Offloader m_offloader;
+    TextUtils m_textUtils;
 
     ApplicationUI(bb::cascades::Application *app);
     void init(QString const& qml);

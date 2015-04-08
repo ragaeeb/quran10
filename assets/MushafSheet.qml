@@ -147,9 +147,9 @@ Sheet
             {
                 title: qsTr("Download All") + Retranslate.onLanguageChanged
                 imageSource: "images/menu/ic_download_mushaf.png"
-                property variant cachedData: 0
                 
-                function onDeflated(success, error) {
+                function onDeflated(success, error)
+                {
                     console.log("Mushaf deflated", success, error);
                     enabled = true;
                 }
@@ -158,17 +158,14 @@ Sheet
                 {
                     var archiveSize = data.size;
                     
-                    if (archiveSize && data.uri && data.md5)
+                    if (archiveSize && data.uri && data.md5 && data.mushafSizeFetch)
                     {
-                        cachedData = data;
-                        
                         var freeSpace = offloader.getFreeSpace();
                         var confirmed = persist.showBlockingDialog( qsTr("Confirmation"), qsTr("The total size of the mushaf is ~%1 and it will need to be downloaded. Your device currently has ~%2 free space remaining. Make sure you are on a good Wi-Fi connection or have a good data plan. Do you wish to continue?").arg( textUtils.bytesToSize(archiveSize) ).arg( textUtils.bytesToSize(freeSpace) ), qsTr("Yes"), qsTr("No"), freeSpace > archiveSize );
-                        
+
                         if (confirmed) {
                             console.log("UserEvent: DownoloadMushafPromptYes");
-                            mushaf.requestEntireMushaf(data.uri, data.md5);
-                            mushaf.deflationDone.connect(onDeflated);
+                            mushaf.requestEntireMushaf(data);
                         } else {
                             console.log("UserEvent: DownoloadMushafPromptNo");
                             enabled = true;
@@ -177,18 +174,14 @@ Sheet
                 }
                 
                 onCreationCompleted: {
+                    mushaf.deflationDone.connect(onDeflated);
                     mushaf.archiveDataFetched.connect(onMushafSizeFetched);
                 }
                 
                 onTriggered: {
                     console.log("UserEvent: MushafDownloadAll");
                     enabled = false;
-                    
-                    if (cachedData && cachedData.size > 0) {
-                        onMushafSizeFetched(totalSize);
-                    } else {
-                        mushaf.fetchMushafSize();
-                    }
+                    mushaf.fetchMushafSize();
                 }
             }
         ]
