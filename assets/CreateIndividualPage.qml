@@ -163,6 +163,8 @@ Page
                     horizontalAlignment: HorizontalAlignment.Fill
                     content.flags: TextContentFlag.ActiveTextOff | TextContentFlag.EmoticonsOff
                     input.flags: TextInputFlag.SpellCheckOff | TextInputFlag.AutoPeriodOff | TextInputFlag.AutoCorrectionOff
+                    input.submitKey: SubmitKey.Next
+                    input.submitKeyFocusBehavior: SubmitKeyFocusBehavior.Next
                     
                     gestureHandlers: [
                         DoubleTapHandler {
@@ -181,6 +183,8 @@ Page
                     horizontalAlignment: HorizontalAlignment.Fill
                     content.flags: TextContentFlag.ActiveTextOff | TextContentFlag.EmoticonsOff
                     input.flags: TextInputFlag.SpellCheckOff | TextInputFlag.AutoPeriodOff | TextInputFlag.AutoCorrectionOff
+                    input.submitKey: SubmitKey.Next
+                    input.submitKeyFocusBehavior: SubmitKeyFocusBehavior.Next
                     
                     validator: Validator
                     {
@@ -209,6 +213,8 @@ Page
                     horizontalAlignment: HorizontalAlignment.Fill
                     content.flags: TextContentFlag.ActiveTextOff | TextContentFlag.EmoticonsOff
                     input.flags: TextInputFlag.SpellCheckOff | TextInputFlag.AutoPeriodOff | TextInputFlag.AutoCorrectionOff
+                    input.submitKey: SubmitKey.Next
+                    input.submitKeyFocusBehavior: SubmitKeyFocusBehavior.Next
                     
                     gestureHandlers: [
                         DoubleTapHandler {
@@ -229,6 +235,8 @@ Page
                     input.flags: TextInputFlag.SpellCheckOff | TextInputFlag.AutoPeriodOff | TextInputFlag.AutoCorrectionOff
                     inputMode: TextFieldInputMode.NumbersAndPunctuation
                     maximumLength: 4
+                    input.submitKey: SubmitKey.Next
+                    input.submitKeyFocusBehavior: SubmitKeyFocusBehavior.Next
                     
                     gestureHandlers: [
                         DoubleTapHandler {
@@ -249,6 +257,8 @@ Page
                     input.flags: TextInputFlag.SpellCheckOff | TextInputFlag.AutoPeriodOff | TextInputFlag.AutoCorrectionOff
                     inputMode: TextFieldInputMode.NumbersAndPunctuation
                     maximumLength: 4
+                    input.submitKey: SubmitKey.Next
+                    input.submitKeyFocusBehavior: SubmitKeyFocusBehavior.Next
                     
                     gestureHandlers: [
                         DoubleTapHandler {
@@ -267,12 +277,14 @@ Page
                     horizontalAlignment: HorizontalAlignment.Fill
                     content.flags: TextContentFlag.ActiveTextOff | TextContentFlag.EmoticonsOff
                     input.flags: TextInputFlag.SpellCheckOff | TextInputFlag.AutoPeriodOff | TextInputFlag.AutoCorrectionOff
+                    input.submitKey: SubmitKey.Next
+                    input.submitKeyFocusBehavior: SubmitKeyFocusBehavior.Next
                     
                     gestureHandlers: [
                         DoubleTapHandler {
                             onDoubleTapped: {
                                 console.log("UserEvent: DisplayNameDoubleTapped");
-                                name.text = textUtils.toTitleCase( persist.getClipboardText() );
+                                displayName.text = textUtils.toTitleCase( persist.getClipboardText() );
                             }
                         }
                     ]
@@ -285,11 +297,29 @@ Page
                     horizontalAlignment: HorizontalAlignment.Fill
                     content.flags: TextContentFlag.ActiveTextOff | TextContentFlag.EmoticonsOff
                     input.flags: TextInputFlag.SpellCheckOff | TextInputFlag.AutoPeriodOff | TextInputFlag.AutoCorrectionOff
+                    input.submitKey: SubmitKey.Search
+
+                    input.onSubmitted: {
+                        console.log("UserEvent: CityOfBirthSubmit");
+                        location.validator.validate();
+                    }
                     
                     validator: Validator
                     {
                         errorMessage: qsTr("No locations found...") + Retranslate.onLanguageChanged;
                         mode: ValidationMode.Custom
+
+                        function parseCoordinate(input)
+                        {
+                            var tokens = input.trim().split(" ");
+                            var value = parseFloat( tokens[0].trim() );
+
+                            if ( tokens[1].trim() == "S" || tokens[1].trim() == "W") {
+                                value *= -1;
+                            }
+                            
+                            return value;
+                        }
 
                         onValidate: {
                             var trimmed = location.text.trim();
@@ -297,7 +327,16 @@ Page
                             if (trimmed.length == 0) {
                                 valid = true;
                             } else {
-                                if ( trimmed.match("\\d+") ) {
+                                if ( trimmed.match("\\d.+\\s[NS]{1},\\s+\\d.+\\s[EW]{1}") )
+                                {
+                                    createLocationPicker();
+                                    var tokens = trimmed.split(",");
+                                    app.geoLookup( parseCoordinate(tokens[0]), parseCoordinate(tokens[1]) );
+                                } else if ( trimmed.match("-{0,1}\\d.+,\\s+-{0,1}\\d.+") ) {
+                                    createLocationPicker();
+                                    var tokens = trimmed.split(",");
+                                    app.geoLookup( parseFloat( tokens[0].trim() ), parseFloat( tokens[1].trim() ) );
+                                } else if ( trimmed.match("\\d+") ) {
                                     valid = true;
                                 } else {
                                     createLocationPicker();
