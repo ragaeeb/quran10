@@ -125,7 +125,7 @@ Page
                             }
                         } else if (id == QueryId.SaveLegacyBookmarks) {
                             persist.remove("bookmarks");
-                            persist.showToast( qsTr("Ported legacy bookmarks!"), "" , "asset:///images/menu/ic_bookmark_add.png");
+                            persist.showToast( qsTr("Ported legacy bookmarks!"), "asset:///images/menu/ic_bookmark_add.png");
                         }
                     }
                     

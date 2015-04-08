@@ -30,10 +30,12 @@ private slots:
     void onBookmarksRestored();
     void onBookmarksSaved();
     void onResultsDecorated();
+    void onFinished(QVariant result, QVariant remember, QVariant data);
 
 signals:
     void backupComplete(QString const& file);
     void deflationDone(QVariantMap const& cookie);
+    void downloadPlugins(QVariantList const& queue);
     void restoreComplete(bool success);
 
 public:
@@ -52,7 +54,7 @@ public:
     Q_INVOKABLE void restore(QString const& source);
     Q_INVOKABLE QString textualizeAyats(bb::cascades::DataModel* adm, QVariantList const& selectedIndices, QString const& chapterTitle, bool showTranslation);
     Q_INVOKABLE QVariantList removeOutOfRange(QVariantList input, int fromChapter, int fromVerse, int toChapter, int toVerse);
-    QVariantList computeNecessaryUpdates(QVariantMap const& q, QByteArray const& data);
+    bool computeNecessaryUpdates(QVariantMap q, QByteArray const& data);
     void processDownloadedPlugin(QVariantMap const& q, QByteArray const& data);
     Q_INVOKABLE bool fillType(QVariantList input, int queryId, bb::cascades::GroupDataModel* gdm);
     Q_INVOKABLE void renderMap(bb::cascades::maps::MapView* mapView, qreal latitude, qreal longitude, QString const& name, QString const& city, qint64 id);

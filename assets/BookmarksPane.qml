@@ -68,7 +68,7 @@ NavigationPane
                 function onRestored(result)
                 {
                     if (result) {
-                        persist.showBlockingToast( qsTr("Successfully restored! The app will now close itself so when you re-open it the restored bookmarks can take effect!"), "", "asset:///images/menu/ic_restore.png" );
+                        persist.showBlockingToast( qsTr("Successfully restored! The app will now close itself so when you re-open it the restored bookmarks can take effect!"), "asset:///images/menu/ic_restore.png" );
                         Application.requestExit();
                     } else {
                         tutorialToast.init( qsTr("The database could not be restored. Please re-check the backup file to ensure it is valid, and if the problem persists please file a bug report. Make sure to attach the backup file with your report!"), "images/menu/ic_restore_error.png" );
@@ -82,20 +82,24 @@ NavigationPane
             
             DeleteActionItem
             {
+                id: clearBookmarks
                 enabled: listView.visible
                 imageSource: "images/menu/ic_clear_bookmarks.png"
                 title: qsTr("Clear Bookmarks") + Retranslate.onLanguageChanged
                 
-                onTriggered: {
-                    console.log("UserEvent: ClearFavourites");
-                    var confirmed = persist.showBlockingDialog( qsTr("Confirmation"), qsTr("Are you sure you want to clear all bookmarks?") );
-                    
+                function onFinished(confirmed)
+                {
                     if (confirmed) {
                         console.log("UserEvent: ClearFavouritesPromptYes");
                         bookmarkHelper.clearAllBookmarks(listView);
                     } else {
                         console.log("UserEvent: ClearFavouritesPromptNo");
                     }
+                }
+                
+                onTriggered: {
+                    console.log("UserEvent: ClearFavourites");
+                    persist.showDialog( clearBookmarks, qsTr("Confirmation"), qsTr("Are you sure you want to clear all bookmarks?") );
                 }
             }
         ]
@@ -152,11 +156,11 @@ NavigationPane
                             persist.tutorial( "tutorialBookmarkDel", qsTr("To delete an existing bookmark, simply press-and-hold on it and choose 'Remove' from the menu."), "asset:///images/menu/ic_favourite_remove.png" );
                         }
                     } else if (id == QueryId.ClearAllBookmarks) {
-                        persist.showToast( qsTr("Cleared all bookmarks!"), "", "asset:///images/menu/ic_favourite_remove.png" );
+                        persist.showToast( qsTr("Cleared all bookmarks!"), "asset:///images/menu/ic_favourite_remove.png" );
                         gdm.clear();
                         refresh();
                     } else if (id == QueryId.RemoveBookmark) {
-                        persist.showToast( qsTr("Removed bookmark!"), "", "asset:///images/menu/ic_favourite_remove.png" );
+                        persist.showToast( qsTr("Removed bookmark!"), "asset:///images/menu/ic_favourite_remove.png" );
                     }
                 }
                 

@@ -249,8 +249,6 @@ Delegate
                         
                         function onFinished(confirmed, data)
                         {
-                            console.log("****** ON FINISHED!!!!!");
-                            console.log("****** ON FINISHED2!!!!!", confirmed, data);
                             if (confirmed) {
                                 console.log("UserEvent: DownloadAyatsPromptYes");
                                 mushaf.downloadAllAyatImages(data);
