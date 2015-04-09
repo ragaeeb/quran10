@@ -61,13 +61,14 @@ SimilarReference ThreadUtils::decorateResults(QVariantList input, ArrayDataModel
     for (int i = 0; i < n; i++)
     {
         QVariantMap current = input[i].toMap();
-        QString text = current.value("ayatText").toString();
+        QString textKey = current.contains("searchable") ? "searchable" : "translation";
+        QString text = current.value(textKey).toString();
 
         foreach (QString const& searchText, searches) {
             text.replace(searchText, "<span style='font-style:italic;font-weight:bold;color:lightgreen'>"+searchText+"</span>", Qt::CaseInsensitive);
         }
 
-        current["ayatText"] = "<html>"+text+"</html>";
+        current[textKey] = "<html>"+text+"</html>";
         input[i] = current;
     }
 
@@ -199,9 +200,9 @@ QString ThreadUtils::buildSearchQuery(QVariantList& params, bool isArabic, int c
     }
 
     if (isArabic) {
-        query = QString("SELECT surah_id,verse_number AS verse_id,searchable AS ayatText,name FROM ayahs INNER JOIN surahs ON ayahs.surah_id=surahs.id WHERE (%1").arg(LIKE_CLAUSE);
+        query = QString("SELECT surah_id,verse_number AS verse_id,searchable,name FROM ayahs INNER JOIN surahs ON ayahs.surah_id=surahs.id WHERE (%1").arg(LIKE_CLAUSE);
     } else {
-        query = QString("SELECT ayahs.surah_id AS surah_id,ayahs.verse_number AS verse_id,verses.translation AS ayatText,transliteration AS name,%1 FROM verses INNER JOIN ayahs ON (verses.chapter_id=ayahs.surah_id AND verses.verse_id=ayahs.verse_number) INNER JOIN chapters ON ayahs.surah_id=chapters.id WHERE (%2").arg(textField).arg(LIKE_CLAUSE);
+        query = QString("SELECT ayahs.surah_id AS surah_id,ayahs.verse_number AS verse_id,verses.translation,transliteration AS name,%1 FROM verses INNER JOIN ayahs ON (verses.chapter_id=ayahs.surah_id AND verses.verse_id=ayahs.verse_number) INNER JOIN chapters ON ayahs.surah_id=chapters.id WHERE (%2").arg(textField).arg(LIKE_CLAUSE);
     }
 
     if ( !constraints.isEmpty() ) {

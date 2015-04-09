@@ -54,7 +54,7 @@ Page
             
             var additional = getAdditionalQueries();
             
-            listView.isArabicText = helper.searchQuery(listView, trimmed, included.surahId, additional, andMode);
+            helper.searchQuery(listView, trimmed, included.surahId, additional, andMode);
         }
     }
     
@@ -331,12 +331,21 @@ Page
             {
                 id: listView
                 opacity: 0
-                property bool isArabicText: false
-                property int fontSize: isArabicText ? helper.primarySize : helper.translationSize
+                property int translationSize: helper.translationSize
+                property int primarySize: helper.primarySize
                 scrollRole: ScrollRole.Main
 
                 layout: StackListLayout {
                     headerMode: ListHeaderMode.Sticky
+                }
+                
+                function itemType(data, indexPath)
+                {
+                    if (data.searchable) {
+                        return "arabic";
+                    } else {
+                        return "translated";
+                    }
                 }
                 
                 animations: [
@@ -357,53 +366,28 @@ Page
                 listItemComponents: [
                     ListItemComponent
                     {
-                        Container
+                        type: "arabic"
+                        
+                        SearchListItem
                         {
-                            id: rootItem
-                            horizontalAlignment: HorizontalAlignment.Fill
-                            verticalAlignment: VerticalAlignment.Fill
-                            background: ListItem.active || ListItem.selected ? global.headerBackground.imagePaint : undefined
-                            
-                            Header {
-                                id: header
-                                title: ListItemData.name
-                                subtitle: "%1:%2".arg(ListItemData.surah_id).arg(ListItemData.verse_id)
-                            }
-                            
-                            Container
-                            {
-                                horizontalAlignment: HorizontalAlignment.Fill
-                                leftPadding: 10; rightPadding: 10; bottomPadding: 10
-                                
-                                Label {
-                                    id: bodyLabel
-                                    content.flags: TextContentFlag.ActiveText | TextContentFlag.EmoticonsOff
-                                    multiline: true
-                                    text: ListItemData.ayatText
-                                    textStyle.color: rootItem.ListItem.active || rootItem.ListItem.selected ? Color.Black : undefined
-                                    textStyle.base: rootItem.ListItem.view.isArabicText ? global.textFont : SystemDefaults.TextStyles.BodyText
-                                    textStyle.fontSize: FontSize.PointValue
-                                    textStyle.fontSizeValue: rootItem.ListItem.view.fontSize
-                                }
-                            }
-                            
-                            opacity: 0
-                            animations: [
-                                FadeTransition
-                                {
-                                    id: showAnim
-                                    fromOpacity: 0
-                                    toOpacity: 1
-                                    easingCurve: StockCurve.QuinticOut
-                                    duration: Math.max( 200, Math.min( rootItem.ListItem.indexPath[0]*300, 750 ) );
-                                }
-                            ]
+                            bodyText.text: ListItemData.searchable
+                            bodyText.textStyle.fontSizeValue: ListItem.view.primarySize
                             
                             ListItem.onInitializedChanged: {
                                 if (initialized) {
-                                    showAnim.play();
+                                    bodyText.textStyle.base = global.textFont;
                                 }
                             }
+                        }
+                    },
+                    
+                    ListItemComponent
+                    {
+                        type: "translated"
+
+                        SearchListItem {
+                            bodyText.text: ListItemData.translation
+                            bodyText.textStyle.fontSizeValue: ListItem.view.translationSize
                         }
                     }
                 ]
