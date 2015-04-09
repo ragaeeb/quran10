@@ -9,7 +9,6 @@
 #include "ThreadUtils.h"
 
 #define ATTACH_TAFSIR m_sql.attachIfNecessary( tafsirName(), true );
-#define KEY_JOIN_LETTERS "overlayAyatImages"
 #define TRANSLATION QString("quran_%1").arg(m_translation)
 #define TAFSIR_NAME(language) QString("quran_tafsir_%1").arg(language)
 

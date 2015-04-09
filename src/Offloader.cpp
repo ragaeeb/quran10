@@ -167,15 +167,6 @@ QString Offloader::textualizeAyats(bb::cascades::DataModel* adm, QVariantList co
 }
 
 
-qint64 Offloader::getFreeSpace()
-{
-    bb::FileSystemInfo fs;
-    qint64 free = fs.availableFileSystemSpace( m_persist->getValueFor(KEY_OUTPUT_FOLDER).toString() );
-    LOGGER("FreeSpace" << free << fs.errorString() << fs.error() );
-    return free;
-}
-
-
 void Offloader::addToHomeScreen(int chapter, int verse, QString const& label)
 {
     LOGGER(chapter << verse << label);
