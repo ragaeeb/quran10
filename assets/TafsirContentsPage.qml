@@ -310,7 +310,19 @@ Page
                                     
                                     onTriggered: {
                                         console.log("UserEvent: CopyTafsirContentTriggered");
-                                        persist.copyToClipboard(ListItemData.body);
+                                        var result = "";
+                                        
+                                        if (ListItemData.heading && ListItemData.heading.length > 0) {
+                                            result += ListItemData.heading+"\n\n";
+                                        }
+                                        
+                                        result += ListItemData.body;
+                                        
+                                        if (ListItemData.reference && ListItemData.reference.length > 0) {
+                                            result += "\n\n"+ListItemData.reference;
+                                        }
+                                        
+                                        persist.copyToClipboard( result.trim() );
                                     }
                                 }
                                 
