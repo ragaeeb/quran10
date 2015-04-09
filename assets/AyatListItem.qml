@@ -4,6 +4,12 @@ AyatListItemBase
 {
     id: itemRoot
     
+    ListItem.onInitializedChanged: {
+        if (initialized) {
+            firstLabel.textStyle.base = global.textFont;
+        }
+    }
+    
     Container
     {
         horizontalAlignment: HorizontalAlignment.Fill
@@ -19,7 +25,6 @@ AyatListItemBase
             
             textStyle {
                 color: itemRoot.ListItem.selected || ListItemData.playing ? Color.White : Color.Black
-                base: global.textFont
                 textAlign: TextAlign.Right;
                 fontSizeValue: itemRoot.ListItem.view.primarySize
                 fontSize: FontSize.PointValue
