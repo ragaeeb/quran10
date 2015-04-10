@@ -37,6 +37,34 @@ Page
         
         ActionItem
         {
+            id: addEmail
+            imageSource: "images/menu/ic_add_site.png"
+            title: qsTr("Add Email") + Retranslate.onLanguageChanged
+            ActionBar.placement: ActionBarPlacement.OnBar
+            
+            onTriggered: {
+                console.log("UserEvent: NewEmail");
+                var uri = persist.showBlockingPrompt( qsTr("Enter email"), qsTr("Please enter the email address for this individual:"), "", qsTr("Enter email (ie: abc@hotmail.com)"), 100, false, qsTr("Save"), qsTr("Cancel"), SystemUiInputMode.Email ).trim();
+                tafsirHelper.addWebsite(createRijaal, individualId, uri);
+            }
+        },
+        
+        ActionItem
+        {
+            id: addPhone
+            imageSource: "images/menu/ic_add_site.png"
+            title: qsTr("Add Phone") + Retranslate.onLanguageChanged
+            ActionBar.placement: ActionBarPlacement.OnBar
+            
+            onTriggered: {
+                console.log("UserEvent: NewPhone");
+                var uri = persist.showBlockingPrompt( qsTr("Enter phone number"), qsTr("Please enter the phone number for this individual:"), "", qsTr("Enter phone (ie: +44133441623)"), 100, false, qsTr("Save"), qsTr("Cancel"), SystemUiInputMode.Phone ).trim();
+                tafsirHelper.addWebsite(createRijaal, individualId, uri);
+            }
+        },
+        
+        ActionItem
+        {
             id: validateLocation
             imageSource: "images/menu/ic_validate_location.png"
             title: qsTr("Validate Location") + Retranslate.onLanguageChanged
