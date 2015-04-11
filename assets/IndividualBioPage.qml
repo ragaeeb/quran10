@@ -148,7 +148,6 @@ Page
                 topMargin: 0; bottomMargin: 0
                 imageSource: "images/dividers/divider_bio_page.png"
                 horizontalAlignment: HorizontalAlignment.Center
-                visible: itemRoot.ListItem.indexInSection < itemRoot.ListItem.sectionSize-1
             }
             
             ListView
@@ -177,8 +176,12 @@ Page
                         return qsTr("Teachers");
                     } else if (ListItemData == "student") {
                         return qsTr("Students");
-                    } else if (ListItemData == "website") {
+                    } else if (ListItemData == "uri") {
                         return qsTr("Websites");
+                    } else if (ListItemData == "email") {
+                        return qsTr("Email Addresses");
+                    } else if (ListItemData == "phone") {
+                        return qsTr("Phone Numbers");
                     } else  {
                         return qsTr("Quotes");
                     }
@@ -446,6 +449,28 @@ Page
                             imageSource: ListItemData.imageSource
                             title: ListItemData.uri
                         }
+                    },
+                    
+                    ListItemComponent
+                    {
+                        type: "phone"
+                        
+                        StandardListItem
+                        {
+                            imageSource: "images/list/ic_phone.png"
+                            title: ListItemData.uri
+                        }
+                    },
+                    
+                    ListItemComponent
+                    {
+                        type: "email"
+                        
+                        StandardListItem
+                        {
+                            imageSource: "images/list/ic_email.png"
+                            title: ListItemData.uri
+                        }
                     }
                 ]
                 
@@ -469,8 +494,12 @@ Page
                     } else if (d.type == "tafsir") {
                         console.log("UserEvent: InvokeTafsir");
                         helper.fetchAllTafsirForSuite(bioPage, d.id);
-                    } else if (d.type == "website") {
+                    } else if (d.type == "uri") {
                         persist.donate(d.uri);
+                    } else if (d.type == "phone") {
+                        //persist.invoke("", "", "", "mailto:"+d.uri);
+                    } else if (d.type == "email") {
+                        persist.invoke("", "", "", "mailto:"+d.uri);
                     }
                 }
                 

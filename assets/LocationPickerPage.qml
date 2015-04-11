@@ -257,7 +257,7 @@ Page
                             tafsirHelper.addLocation(listView, city, latitude, longitude);
                             searchField.text = city;
                         } else {
-                            persist.showToast( qsTr("Could not find city metadata."), "asset:///images/toast/no_geo_found.png" );
+                            persist.showToast( qsTr("Could not find city metadata."), "asset:///images/menu/ic_validate_location.png" );
                         }
                     } else {
                         picked(d.id, d.city);

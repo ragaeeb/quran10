@@ -157,9 +157,13 @@ Delegate
                                 
                                 function itemType(data, indexPath)
                                 {
-                                    if (data.tafsirPath) {
+                                    if (data.busy) {
+                                        return "busy";
+                                    } else if (data.tafsirPath) {
                                         return "tafsir";
-                                    } else if (data.mushaf) {
+                                    } else if (data.tafsirPath) {
+                                        return "translation";
+                                    } else if (data.mushaf || data.mushafSizeFetch) {
                                         return "mushaf";
                                     } else if (data.recitation) {
                                         return "recitation";
@@ -167,12 +171,44 @@ Delegate
                                         return "updateCheck";
                                     } else if (data.geoLookup) {
                                         return "geoLookup";
+                                    } else if (data.localUri) {
+                                        return "mushafPage";
+                                    } else if (data.joinDownload || data.ayatImages) {
+                                        return "mushafPage";
                                     } else {
                                         return "transfer";
                                     }
                                 }
                                 
                                 listItemComponents: [
+                                    ListItemComponent
+                                    {
+                                        type: "busy"
+                                        
+                                        TransferListItem
+                                        {
+                                            imageSource: "images/list/ic_clock.png"
+                                            status: ListItemData.busy
+                                            
+                                            ListItem.onInitializedChanged: {
+                                                if (initialized) {
+                                                    ft.play();
+                                                }
+                                            }
+                                            
+                                            animations: [
+                                                FadeTransition {
+                                                    id: ft
+                                                    fromOpacity: 1
+                                                    toOpacity: 0.5
+                                                    easingCurve: StockCurve.DoubleElasticInOut
+                                                    duration: 500
+                                                    repeatCount: AnimationRepeatCount.Forever
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    
                                     ListItemComponent
                                     {
                                         type: "tafsir"
@@ -184,7 +220,34 @@ Delegate
                                     
                                     ListItemComponent
                                     {
+                                        type: "translation"
+                                        
+                                        TransferListItem {
+                                            successImageSource: "images/list/ic_translation.png"
+                                        }
+                                    },
+                                    
+                                    ListItemComponent
+                                    {
+                                        type: "overlay"
+                                        
+                                        TransferListItem {
+                                            successImageSource: "images/list/ic_overlay.png"
+                                        }
+                                    },
+                                    
+                                    ListItemComponent
+                                    {
                                         type: "mushaf"
+                                        
+                                        TransferListItem {
+                                            successImageSource: "images/list/ic_mushaf.png"
+                                        }
+                                    },
+                                    
+                                    ListItemComponent
+                                    {
+                                        type: "mushafPage"
                                         
                                         TransferListItem {
                                             successImageSource: "images/list/ic_mushaf_page.png"
@@ -228,31 +291,6 @@ Delegate
                                     }
                                 ]
                             }
-                        }
-                    }
-                    
-                    CircularProgressControl
-                    {
-                        id: cpc
-                        horizontalAlignment: HorizontalAlignment.Center
-                        verticalAlignment: VerticalAlignment.Center
-                        visible: false
-                        
-                        function onDeflationProgressChanged(current, total)
-                        {
-                            cpc.visible = true;
-                            labelText = qsTr("Uncompressing...\n") + ( (100.0*current)/total ).toFixed(1) + "%";
-                            progressValue = (current*100.0)/total;
-                        }
-                        
-                        function onDeflationDone(result) {                            
-                            cpc.finish();
-                        }
-                        
-                        onCreationCompleted: {
-                            offloader.deflationDone.connect(onDeflationDone);
-                            mushaf.deflationProgress.connect(onDeflationProgressChanged);
-                            mushaf.deflationDone.connect(cpc.finish);
                         }
                     }
                 }

@@ -6,6 +6,7 @@
 #include "NetworkProcessor.h"
 
 #define URI_KEY "uri"
+#define KEY_BUSY "busy"
 #define KEY_ERROR "error"
 #define KEY_CURRENT_PROGRESS "current"
 #define KEY_TRANSFER_NAME "name"
@@ -50,7 +51,7 @@ public:
     int queued() const;
     QObject* model();
     Q_SLOT void decreaseBlockingCount();
-    void updateData(QVariantMap cookie, bool error);
+    void updateData(QVariantMap cookie, bool error, QString const& pendingStatus=QString());
 
 signals:
     void isBlockedChanged();

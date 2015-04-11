@@ -74,18 +74,10 @@ void QueryTafsirHelper::addCompanions(QObject* caller, QVariantList const& ids)
 }
 
 
-bool QueryTafsirHelper::addWebsite(QObject* caller, qint64 individualId, QString const& address)
+void QueryTafsirHelper::addWebsite(QObject* caller, qint64 individualId, QString const& address)
 {
-    QUrl uri(address);
-
-    if ( uri.isValid() )
-    {
-        QString query = QString("INSERT INTO websites (individual,uri) VALUES(%1,?)").arg(individualId);
-        m_sql->executeQuery(caller, query, QueryId::AddWebsite, QVariantList() << address);
-        return true;
-    } else {
-        return false;
-    }
+    QString query = QString("INSERT INTO websites (individual,uri) VALUES(%1,?)").arg(individualId);
+    m_sql->executeQuery(caller, query, QueryId::AddWebsite, QVariantList() << address);
 }
 
 

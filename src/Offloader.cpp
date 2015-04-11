@@ -358,12 +358,16 @@ void Offloader::processDownloadedPlugin(QVariantMap const& q, QByteArray const& 
 {
     if ( q.contains(TAFSIR_PATH) )
     {
+        m_queue->updateData(q, false, tr("Uncompressing..."));
+
         QFutureWatcher<QVariantMap>* qfw = new QFutureWatcher<QVariantMap>(this);
         connect( qfw, SIGNAL( finished() ), this, SLOT( onArchiveWritten() ) );
 
         QFuture<QVariantMap> future = QtConcurrent::run(&ThreadUtils::writePluginArchive, q, data, QString(TAFSIR_PATH));
         qfw->setFuture(future);
     } else if ( q.contains(KEY_TRANSLATION) ) {
+        m_queue->updateData(q, false, tr("Uncompressing..."));
+
         QFutureWatcher<QVariantMap>* qfw = new QFutureWatcher<QVariantMap>(this);
         connect( qfw, SIGNAL( finished() ), this, SLOT( onArchiveWritten() ) );
 
@@ -399,25 +403,37 @@ QVariantList Offloader::decorateWebsites(QVariantList input)
         QVariantMap q = input[i].toMap();
         QString uri = q.value("uri").toString();
 
-        if ( uri.contains("wordpress.com") ) {
-            uri = "images/list/site_wordpress.png";
-        } else if ( uri.contains("twitter.com") ) {
-            uri = "images/list/site_twitter.png";
-        } else if ( uri.contains("tumblr.com") ) {
-            uri = "images/list/site_tumblr.png";
-        } else if ( uri.contains("facebook.com") ) {
-            uri = "images/list/site_facebook.png";
-        } else if ( uri.contains("soundcloud.com") ) {
-            uri = "images/list/site_soundcloud.png";
-        } else if ( uri.contains("youtube.com") ) {
-            uri = "images/list/site_youtube.png";
-        } else if ( uri.contains("linkedin.com") ) {
-            uri = "images/list/site_linkedin.png";
+        if ( TextUtils::isUrl(uri) )
+        {
+            q["type"] = "uri";
+
+            if ( uri.contains("wordpress.com") ) {
+                uri = "images/list/site_wordpress.png";
+            } else if ( uri.contains("twitter.com") ) {
+                uri = "images/list/site_twitter.png";
+            } else if ( uri.contains("tumblr.com") ) {
+                uri = "images/list/site_tumblr.png";
+            } else if ( uri.contains("facebook.com") ) {
+                uri = "images/list/site_facebook.png";
+            } else if ( uri.contains("soundcloud.com") ) {
+                uri = "images/list/site_soundcloud.png";
+            } else if ( uri.contains("youtube.com") ) {
+                uri = "images/list/site_youtube.png";
+            } else if ( uri.contains("linkedin.com") ) {
+                uri = "images/list/site_linkedin.png";
+            } else {
+                uri = "images/list/site_link.png";
+            }
+
+            q["imageSource"] = uri;
+        } else if ( TextUtils::isEmail(uri) ) {
+            q["type"] = "email";
+        } else if ( TextUtils::isPhoneNumber(uri) ) {
+            q["type"] = "phone";
         } else {
-            uri = "images/list/site_link.png";
+            LOGGER("InvalidUriEncountered" << uri);
         }
 
-        q["imageSource"] = uri;
         input[i] = q;
     }
 
@@ -429,11 +445,11 @@ bool Offloader::fillType(QVariantList input, int queryId, bb::cascades::GroupDat
 {
     QMap<int,QString> map;
     map[QueryId::FetchAllTafsir] = "tafsir";
-    map[QueryId::FetchAllQuotes] = tr("quote");
+    map[QueryId::FetchAllQuotes] = "quote";
     map[QueryId::FetchBio] = "bio";
-    map[QueryId::FetchTeachers] = tr("teacher");
-    map[QueryId::FetchStudents] = tr("student");
-    map[QueryId::FetchAllWebsites] = tr("website");
+    map[QueryId::FetchTeachers] = "teacher";
+    map[QueryId::FetchStudents] = "student";
+    map[QueryId::FetchAllWebsites] = "website";
 
     if (queryId == QueryId::FetchAllWebsites) {
         input = decorateWebsites(input);
