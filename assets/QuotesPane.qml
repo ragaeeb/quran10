@@ -252,12 +252,24 @@ NavigationPane
                                     
                                     ActionItem
                                     {
+                                        imageSource: "images/menu/ic_copy.png"
+                                        title: qsTr("Copy") + Retranslate.onLanguageChanged
+                                        
+                                        onTriggered: {
+                                            console.log("UserEvent: CopyQuote");
+                                            var body = qsTr("“%1” - %2 [%3]").arg(ListItemData.body).arg(ListItemData.author).arg(ListItemData.reference);
+                                            persist.copyToClipboard(body);
+                                        }
+                                    }
+                                    
+                                    ActionItem
+                                    {
                                         imageSource: "images/menu/ic_preview.png"
                                         title: qsTr("Preview") + Retranslate.onLanguageChanged
                                         
                                         onTriggered: {
                                             console.log("UserEvent: PreviewQuote");
-                                            var body = qsTr("<html><i>“%1”</i>\n\n- <b>%2%4</b>\n\n[%3]</html>").arg(ListItemData.body).arg(ListItemData.author).arg(ListItemData.reference);
+                                            var body = qsTr("<html><i>“%1”</i>\n\n- <b>%2</b>\n\n[%3]</html>").arg(ListItemData.body).arg(ListItemData.author).arg(ListItemData.reference);
                                             tutorialToast.init(body, "images/menu/ic_preview.png");
                                         }
                                     }
