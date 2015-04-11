@@ -132,7 +132,7 @@ void QueueDownloader::onRequestComplete(QVariant const& cookie, QByteArray const
 }
 
 
-void QueueDownloader::updateData(QVariantMap cookie, bool error)
+void QueueDownloader::updateData(QVariantMap cookie, bool error, QString const& pendingStatus)
 {
     QUrl url = cookie.value(URI_KEY).toUrl();
     QString uri = url.toString();
@@ -142,6 +142,11 @@ void QueueDownloader::updateData(QVariantMap cookie, bool error)
         if (error) {
             LOGGER("Error" << cookie);
             cookie[KEY_ERROR] = true;
+        } else if ( !pendingStatus.isEmpty() ) {
+            cookie[KEY_BUSY] = pendingStatus;
+        } else {
+            cookie.remove(KEY_ERROR);
+            cookie.remove(KEY_BUSY);
         }
 
         int i = m_uriToIndex.value(uri);

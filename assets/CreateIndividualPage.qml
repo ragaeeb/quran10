@@ -30,55 +30,54 @@ Page
             
             onTriggered: {
                 console.log("UserEvent: NewSite");
-                var uri = persist.showBlockingPrompt( qsTr("Enter url"), qsTr("Please enter the website address for this individual:"), "", qsTr("Enter url (ie: http://mtws.com)"), 100, false, qsTr("Save"), qsTr("Cancel"), SystemUiInputMode.Url ).trim();
-                tafsirHelper.addWebsite(createRijaal, individualId, uri);
+                var uri = persist.showBlockingPrompt( qsTr("Enter url"), qsTr("Please enter the website address for this individual:"), "http://", qsTr("Enter url (ie: http://mtws.com)"), 100, false, qsTr("Save"), qsTr("Cancel"), SystemUiInputMode.Url ).trim();
+
+                if ( textUtils.isUri(uri) ) {
+                    tafsirHelper.addWebsite(createRijaal, individualId, uri);
+                } else {
+                    persist.showToast( qsTr("Invalid URL entered!"), "asset:///images/menu/ic_remove_site.png" );
+                    console.log("FailedRegex", uri);
+                }
             }
         },
         
         ActionItem
         {
             id: addEmail
-            imageSource: "images/menu/ic_add_site.png"
+            imageSource: "images/menu/ic_add_email.png"
             title: qsTr("Add Email") + Retranslate.onLanguageChanged
             ActionBar.placement: ActionBarPlacement.OnBar
             
             onTriggered: {
                 console.log("UserEvent: NewEmail");
-                var uri = persist.showBlockingPrompt( qsTr("Enter email"), qsTr("Please enter the email address for this individual:"), "", qsTr("Enter email (ie: abc@hotmail.com)"), 100, false, qsTr("Save"), qsTr("Cancel"), SystemUiInputMode.Email ).trim();
-                tafsirHelper.addWebsite(createRijaal, individualId, uri);
+                var email = persist.showBlockingPrompt( qsTr("Enter email"), qsTr("Please enter the email address for this individual:"), "", qsTr("Enter email (ie: abc@hotmail.com)"), 100, false, qsTr("Save"), qsTr("Cancel"), SystemUiInputMode.Email ).trim();
+
+                if ( textUtils.isEmail(email) ) {
+                    tafsirHelper.addWebsite(createRijaal, individualId, email);
+                } else {
+                    persist.showToast( qsTr("Invalid email entered!"), "asset:///images/menu/ic_remove_email.png" );
+                    console.log("FailedRegex", email);
+                }
             }
         },
         
         ActionItem
         {
             id: addPhone
-            imageSource: "images/menu/ic_add_site.png"
+            imageSource: "images/menu/ic_add_phone.png"
             title: qsTr("Add Phone") + Retranslate.onLanguageChanged
             ActionBar.placement: ActionBarPlacement.OnBar
             
             onTriggered: {
                 console.log("UserEvent: NewPhone");
-                var uri = persist.showBlockingPrompt( qsTr("Enter phone number"), qsTr("Please enter the phone number for this individual:"), "", qsTr("Enter phone (ie: +44133441623)"), 100, false, qsTr("Save"), qsTr("Cancel"), SystemUiInputMode.Phone ).trim();
-                tafsirHelper.addWebsite(createRijaal, individualId, uri);
-            }
-        },
-        
-        ActionItem
-        {
-            id: validateLocation
-            imageSource: "images/menu/ic_validate_location.png"
-            title: qsTr("Validate Location") + Retranslate.onLanguageChanged
-            ActionBar.placement: ActionBarPlacement.OnBar
-            
-            shortcuts: [
-                SystemShortcut {
-                    type: SystemShortcuts.Edit
+                var phone = persist.showBlockingPrompt( qsTr("Enter phone number"), qsTr("Please enter the phone number for this individual:"), "", qsTr("Enter phone (ie: +44133441623)"), 100, false, qsTr("Save"), qsTr("Cancel"), SystemUiInputMode.Phone ).trim();
+                
+                if ( textUtils.isPhoneNumber(phone) ) {
+                    tafsirHelper.addWebsite(createRijaal, individualId, phone);
+                } else {
+                    persist.showToast( qsTr("Invalid email entered!"), "asset:///images/menu/ic_remove_phone.png" );
+                    console.log("FailedRegex", phone);
                 }
-            ]
-            
-            onTriggered: {
-                console.log("UserEvent: ValidateLocation");
-                location.validator.validate();
             }
         }
     ]
@@ -413,15 +412,28 @@ Page
                 id: adm
             }
             
+            function itemType(data, indexPath) {
+                return data.type;
+            }
+            
             function deleteSite(ListItemData)
             {
                 tafsirHelper.removeWebsite(createRijaal, ListItemData.id);
-                tafsirHelper.fetchAllWebsites(createRijaal, individualId);
+                
+                if (ListItemData.type == "email") {
+                    persist.showToast( qsTr("Email address removed!"), "asset:///images/menu/ic_remove_email.png" );
+                } else if (ListItemData.type == "phone") {
+                    persist.showToast( qsTr("Phone number removed!"), "asset:///images/menu/ic_remove_phone.png" );
+                } else if (ListItemData.type == "uri") {
+                    persist.showToast( qsTr("Website address removed!"), "asset:///images/menu/ic_remove_site.png" );
+                }
             }
             
             listItemComponents: [
                 ListItemComponent
                 {
+                    type: "uri"
+                    
                     StandardListItem
                     {
                         id: sli
@@ -431,12 +443,69 @@ Page
                         contextActions: [
                             ActionSet
                             {
-                                subtitle: sli.description
+                                title: sli.title
                                 
                                 DeleteActionItem
                                 {
                                     imageSource: "images/menu/ic_remove_site.png"
-                                    title: qsTr("Delete") + Retranslate.onLanguageChanged
+                                    
+                                    onTriggered: {
+                                        console.log("UserEvent: DeleteSite");
+                                        sli.ListItem.view.deleteSite(ListItemData);
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
+                
+                ListItemComponent
+                {
+                    type: "email"
+                    
+                    StandardListItem
+                    {
+                        id: sliEmail
+                        imageSource: "images/list/ic_email.png"
+                        title: ListItemData.uri
+                        
+                        contextActions: [
+                            ActionSet
+                            {
+                                title: sliEmail.title
+                                
+                                DeleteActionItem
+                                {
+                                    imageSource: "images/menu/ic_remove_email.png"
+                                    
+                                    onTriggered: {
+                                        console.log("UserEvent: DeleteSite");
+                                        sli.ListItem.view.deleteSite(ListItemData);
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
+                
+                ListItemComponent
+                {
+                    type: "phone"
+                    
+                    StandardListItem
+                    {
+                        id: sliPhone
+                        imageSource: "images/list/ic_phone.png"
+                        title: ListItemData.uri
+                        
+                        contextActions: [
+                            ActionSet
+                            {
+                                title: sliPhone.title
+                                
+                                DeleteActionItem
+                                {
+                                    imageSource: "images/menu/ic_remove_phone.png"
                                     
                                     onTriggered: {
                                         console.log("UserEvent: DeleteSite");
@@ -448,14 +517,8 @@ Page
                     }
                 }
             ]
-            
-            onTriggered: {
-                var d = adm.data(indexPath);
-                persist.donate(d.uri);
-            }
         }
     }
-    
     
     
     function createLocationPicker()

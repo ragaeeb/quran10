@@ -250,6 +250,7 @@ Page
                     topMargin: 20
                     key: "overlayAyatImages"
                     text: qsTr("Join Disconnected Letters") + Retranslate.onLanguageChanged
+                    enabled: mushaf.enableDownloadJoined
                     
                     onValueChanged: {
                         if (checked) {
