@@ -227,9 +227,9 @@ Page
                     
                     navigationPane.parent.unreadContentCount = data.length;
                 } else if (id == QueryId.RemoveTafsir) {
-                    persist.showToast( qsTr("Tafsir removed!"), "asset:///images/menu/ic_remove_suite.png" );
+                    tutorialToast.init( qsTr("Tafsir removed!"), "images/menu/ic_remove_suite.png" );
                 } else if (id == QueryId.EditTafsir) {
-                    persist.showToast( qsTr("Tafsir updated!"), "asset:///images/menu/ic_edit_suite.png" );
+                    tutorialToast.init( qsTr("Tafsir updated!"), "images/menu/ic_edit_suite.png" );
                 } else if (id == QueryId.SearchTafsir) {
                     adm.clear();
                     adm.append(data);

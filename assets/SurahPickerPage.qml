@@ -120,12 +120,14 @@ Page
                             if (data.length > 0) {
                                 buttonControl.progressData = data[0];
                                 button.visible = true;
+                                
+                                tutorialToast.tutorial( "tutorialBookmark", qsTr("Notice the button on the top left. This is used to track your Qu'ran reading progress. You can use it to quickly jump to the verse you last left off."), "images/dropdown/saved_bookmark.png" );
                             } else if ( persist.contains("bookmarks") ) {
                                 bookmarkHelper.saveLegacyBookmarks( button, persist.getValueFor("bookmarks") );
                             }
                         } else if (id == QueryId.SaveLegacyBookmarks) {
                             persist.remove("bookmarks");
-                            persist.showToast( qsTr("Ported legacy bookmarks!"), "asset:///images/menu/ic_bookmark_add.png");
+                            tutorialToast.init( qsTr("Ported legacy bookmarks!"), "images/menu/ic_bookmark_add.png");
                         }
                     }
                     

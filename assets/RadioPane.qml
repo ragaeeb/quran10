@@ -155,6 +155,6 @@ NavigationPane
     ]
     
     onCreationCompleted: {
-        if ( persist.tutorial( "tutorialRadio", qsTr("These are some of the stations where they continuously stream Qu'ran. Be careful though, this uses data. Be sure to be on a proper wireless network."), "asset:///images/tabs/ic_radio.png" ) ) {}
+        if ( tutorialToast.tutorial( "tutorialRadio", qsTr("These are some of the stations where they continuously stream Qu'ran. Be careful though, this uses data. Be sure to be on a proper wireless network."), "images/tabs/ic_radio.png" ) ) {}
     }
 }

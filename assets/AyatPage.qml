@@ -31,7 +31,7 @@ Page
                     titleControl.addOption(similarOption);
                     similarOption.text = qsTr("%n similar", "", n);
                     
-                    if ( persist.tutorial( "tutorialSimilarAyat", qsTr("There appears to be other verses with similar wording, choose the '%1 Similar' option at the top to view them in a split screen.").arg(data.length), "asset:///images/dropdown/similar.png" ) ) {}
+                    if ( tutorialToast.tutorial( "tutorialSimilarAyat", qsTr("There appears to be other verses with similar wording, choose the '%1 Similar' option at the top to view them in a split screen.").arg(data.length), "images/dropdown/similar.png" ) ) {}
                 }
                 
                 transliteration.resetText();
@@ -46,7 +46,7 @@ Page
         } else if (id == QueryId.FetchTafsirCountForAyat && data.length > 0 && data[0].tafsir_count > 0) {
             titleControl.addOption(tafsirOption);
             tafsirOption.tafsirCount = data[0].tafsir_count;
-            if ( persist.tutorial( "tutorialTafsir", qsTr("There are explanations of this verse by the people of knowledge! Tap on the '%1 Tafsir' option at the top to view them.").arg(data.length), "asset:///images/dropdown/tafsir.png" ) ) {}
+            if ( tutorialToast.tutorial( "tutorialTafsir", qsTr("There are explanations of this verse by the people of knowledge! Tap on the '%1 Tafsir' option at the top to view them.").arg(data.length), "images/dropdown/tafsir.png" ) ) {}
         } else if (id == QueryId.FetchSimilarAyatContent && data.length > 0 && similarOption.selected) {
             pluginsDelegate.control.applyData(data, helper.showTranslation ? translation : body);
         } else if (id == QueryId.FetchSurahHeader && data.length > 0) {
@@ -56,7 +56,7 @@ Page
             
             translation.value = translation.value + "\n\n(" + babName.title + " " + babName.subtitle + ")";
         } else if (id == QueryId.SaveBookmark) {
-            persist.showToast( qsTr("Favourite added for Chapter %1, Verse %2").arg(surahId).arg(verseId), "asset:///images/menu/ic_bookmark_add.png" );
+            tutorialToast.init( qsTr("Favourite added for Chapter %1, Verse %2").arg(surahId).arg(verseId), "images/menu/ic_bookmark_add.png" );
             global.bookmarksUpdated();
         } else if (id == QueryId.FetchTransliteration) {
             transliteration.text = data[0].html;
@@ -65,7 +65,7 @@ Page
                 surahId = data[0].surah_id;
                 verseId = data[0].verse_id;
             } else {
-                persist.showToast( qsTr("Ayat not found"), "asset:///images/toast/ic_no_ayat_found.png" );
+                tutorialToast.init( qsTr("Ayat not found"), "images/toast/ic_no_ayat_found.png" );
             }
         }
     }
@@ -321,13 +321,12 @@ Page
                     }
                     
                     onEnded: {
-                        /*
-                        if ( persist.tutorial( "tutorialPinchHadith", qsTr("To increase and decrease the font size of the text simply do a pinch gesture here!"), "asset:///images/menu/ic_top.png" ) ) {}
-                        else if ( persist.tutorial( "tutorialMarkFav", qsTr("To quickly access this hadith again, tap on the 'Mark Favourite' action at the bottom to put it in the Bookmarks tab that shows up in the start of the app."), "asset:///images/menu/ic_bookmark_add.png" ) ) {}
-                        else if ( persist.tutorial( "tutorialAddShortcutHome", qsTr("To quickly access this hadith again, tap on the 'Add Shortcut' action at the bottom to pin it to your homescreen."), "asset:///images/menu/ic_home_add.png" ) ) {}
-                        else if ( persist.tutorial( "tutorialShare", qsTr("To share this hadith with your friends tap on the 'Share' action at the bottom."), "asset:///images/menu/ic_share.png" ) ) {}
+                        if ( tutorialToast.tutorial( "tutorialPinchAyat", qsTr("To increase and decrease the font size of the text simply do a pinch gesture on it!"), "images/menu/ic_top.png" ) ) {}
+                        else if ( tutorialToast.tutorial( "tutorialMarkFav", qsTr("To quickly access this verse again, tap on the 'Mark Favourite' action at the bottom to put it in the Favourites tab that shows up in the start of the app."), "images/menu/ic_mark_favourite.png" ) ) {}
+                        else if ( tutorialToast.tutorial( "tutorialAddShortcutHome", qsTr("To quickly access this verse again, tap on the 'Add Shortcut' action at the bottom to pin it to your homescreen."), "images/menu/ic_home_add.png" ) ) {}
+                        else if ( tutorialToast.tutorial( "tutorialShare", qsTr("To share this verse with your friends tap on the 'Share' action at the bottom."), "images/menu/ic_share.png" ) ) {}
                         else if ( persist.reviewed() ) {}
-                        else if ( reporter.performCII() ) {} */
+                        else if ( reporter.performCII() ) {}
                     }
                 }
             ]

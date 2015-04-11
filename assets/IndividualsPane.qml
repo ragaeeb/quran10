@@ -48,25 +48,25 @@ NavigationPane
     {
         if (id == QueryId.AddIndividual)
         {
-            persist.showToast( qsTr("Individual added!"), "asset:///images/menu/ic_add_suite.png" );
+            tutorialToast.init( qsTr("Individual added!"), "images/menu/ic_add_suite.png" );
             individualPicker.fetchAllIndividuals(individualPicker.pickerList);
         } else if (id == QueryId.CopyIndividualsFromSource) {
-            persist.showToast( qsTr("Successfully ported individuals!"), "asset:///images/dropdown/ic_save_individual.png" );
+            tutorialToast.init( qsTr("Successfully ported individuals!"), "images/dropdown/ic_save_individual.png" );
         }  else if (id == QueryId.EditIndividual) {
-            persist.showToast( qsTr("Successfully edited individual"), "asset:///images/dropdown/ic_save_individual.png" );
+            tutorialToast.init( qsTr("Successfully edited individual"), "images/dropdown/ic_save_individual.png" );
         } else if (id == QueryId.AddIndividual) {
-            persist.showToast( qsTr("Successfully added individual"), "asset:///images/dropdown/ic_save_individual.png" );
+            tutorialToast.init( qsTr("Successfully added individual"), "images/dropdown/ic_save_individual.png" );
         } else if (id == QueryId.RemoveIndividual) {
-            persist.showToast( qsTr("Successfully deleted individual!"), "asset:///images/menu/ic_delete_quote.png" );
+            tutorialToast.init( qsTr("Successfully deleted individual!"), "images/menu/ic_delete_quote.png" );
         } else if (id == QueryId.ReplaceIndividual) {
-            persist.showToast( qsTr("Successfully replaced individual!"), "asset:///images/menu/ic_delete_quote.png" );
+            tutorialToast.init( qsTr("Successfully replaced individual!"), "images/menu/ic_delete_quote.png" );
             individualPicker.fetchAllIndividuals(individualPicker.pickerList);
         } else if (id == QueryId.AddCompanions) {
-            persist.showToast( qsTr("Successfully added companions!"), "asset:///images/menu/ic_set_companions.png" );
+            tutorialToast.init( qsTr("Successfully added companions!"), "images/menu/ic_set_companions.png" );
         } else if (id == QueryId.RemoveCompanions) {
-            persist.showToast( qsTr("Successfully removed from companions!"), "asset:///images/menu/ic_remove_companions.png" );
+            tutorialToast.init( qsTr("Successfully removed from companions!"), "images/menu/ic_remove_companions.png" );
         } else if (id == QueryId.AddBio) {
-            persist.showToast( qsTr("Successfully added biography!"), "asset:///images/menu/ic_add_bio.png" );
+            tutorialToast.init( qsTr("Successfully added biography!"), "images/menu/ic_add_bio.png" );
         }
     }
     
@@ -189,7 +189,7 @@ NavigationPane
                 individualPicker.busyControl.delegateActive = true;
                 tafsirHelper.replaceIndividual(navigationPane, toReplaceId, actualId);
             } else {
-                persist.showToast( qsTr("The source and replacement individuals cannot be the same!"), "asset:///images/toast/ic_duplicate_replace.png" );
+                tutorialToast.init( qsTr("The source and replacement individuals cannot be the same!"), "images/toast/ic_duplicate_replace.png" );
             }
             
             popToRoot();

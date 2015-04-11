@@ -10,7 +10,7 @@ QtObject
         
         onTriggered: {
             console.log("UserEvent: SelectRangeTriggered");
-            if ( persist.tutorial( "tutorialSelectRange", qsTr("Now select the last ayat that you want to perform the actions of the menu on.\n\nYou can also select an ayat above the current one to start there and end at the current one."), "asset:///images/menu/ic_range.png" ) ) {}
+            if ( tutorialToast.tutorial( "tutorialSelectRange", qsTr("Now select the last ayat that you want to perform the actions of the menu on.\n\nYou can also select an ayat above the current one to start there and end at the current one."), "images/menu/ic_range.png" ) ) {}
         }
     }
 
