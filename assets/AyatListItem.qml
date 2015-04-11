@@ -29,6 +29,16 @@ AyatListItemBase
                 fontSizeValue: itemRoot.ListItem.view.primarySize
                 fontSize: FontSize.PointValue
             }
+            
+            gestureHandlers: [
+                FontSizePincher
+                {
+                    key: "primarySize"
+                    minValue: 6
+                    maxValue: 30
+                    userEventId: "PinchedArabic"
+                }
+            ]
         }
     }
 }
