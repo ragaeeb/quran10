@@ -33,7 +33,7 @@ Delegate
             
             onOpened: {
                 tt.play();
-                listView.scrollToPosition(ScrollPosition.End, ScrollAnimation.None);
+                listView.scrollToItem([queue.currentIndex]);
                 dialogContainer.opacity = 1;
             }
             
@@ -174,7 +174,7 @@ Delegate
                                     } else if (data.localUri) {
                                         return "mushafPage";
                                     } else if (data.joinDownload || data.ayatImages) {
-                                        return "mushafPage";
+                                        return "overlay";
                                     } else {
                                         return "transfer";
                                     }
@@ -197,13 +197,26 @@ Delegate
                                             }
                                             
                                             animations: [
-                                                FadeTransition {
+                                                SequentialAnimation
+                                                {
                                                     id: ft
-                                                    fromOpacity: 1
-                                                    toOpacity: 0.5
-                                                    easingCurve: StockCurve.DoubleElasticInOut
-                                                    duration: 500
                                                     repeatCount: AnimationRepeatCount.Forever
+                                                    
+                                                    FadeTransition
+                                                    {
+                                                        fromOpacity: 1
+                                                        toOpacity: 0.5
+                                                        easingCurve: StockCurve.SineIn
+                                                        duration: 500
+                                                    }
+                                                    
+                                                    FadeTransition
+                                                    {
+                                                        fromOpacity: 0.5
+                                                        toOpacity: 1
+                                                        easingCurve: StockCurve.SineOut
+                                                        duration: 500
+                                                    }
                                                 }
                                             ]
                                         }

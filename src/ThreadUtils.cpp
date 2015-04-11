@@ -299,7 +299,7 @@ bool ThreadUtils::allAyatImagesExist(QVariantList const& surahData, QString cons
 
         for (int i = 1; i <= n; i++)
         {
-            QString absolutePath = QString("%1/ayats/%2_%3.png").arg( q.path() ).arg(id).arg(n);
+            QString absolutePath = QString("%1/ayats/%2_%3.png").arg( q.path() ).arg(id).arg(i);
 
             if ( !QFile::exists(absolutePath) ) {
                 LOGGER("NotFound" << absolutePath);

@@ -180,8 +180,8 @@ NavigationPane
                 
                 if (quote.hidden != 1)
                 {
-                    var body = qsTr("<html><i>“%1”</i>\n\n- <b>%2%4</b>\n\n[%3]\n\n\n</html>").arg(quote.body).arg(quote.displayName ? quote.displayName : quote.author).arg(quote.reference).arg( global.getSuffix(quote.birth, quote.death, quote.companion_id, quote.female == 1) );
-                    tutorialToast.init(body, "images/ic_quran.png");
+                    var body = qsTr("<html><i>“%1”</i>\n\n- <b>%2%4</b>\n\n[%3]</html>").arg(quote.body).arg(quote.displayName ? quote.displayName : quote.author).arg(quote.reference).arg( global.getSuffix(quote.birth, quote.death, quote.companion_id, quote.female == 1) );
+                    tutorialToast.init(body, "images/list/ic_quote.png");
                 } else {
                     console.log("QuoteSuppressed");
                 }

@@ -37,6 +37,7 @@ bool QueueDownloader::processNext()
         m_network.doGet(uri, current);
 
         ++m_currentIndex;
+        emit currentIndexChanged();
 
         return true;
     }
@@ -172,6 +173,12 @@ void QueueDownloader::abort() {
 int QueueDownloader::queued() const {
 	return m_model.size();
 }
+
+
+int QueueDownloader::currentIndex() const {
+    return m_currentIndex;
+}
+
 
 bool QueueDownloader::isBlocked() const {
     return m_blockingCount > 0;

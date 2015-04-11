@@ -23,6 +23,7 @@ class QueueDownloader : public QObject
     Q_PROPERTY(int queued READ queued NOTIFY queueChanged)
     Q_PROPERTY(int isBlocked READ isBlocked NOTIFY isBlockedChanged)
     Q_PROPERTY(QObject* model READ model FINAL)
+    Q_PROPERTY(int currentIndex READ currentIndex NOTIFY currentIndexChanged)
 
     ArrayDataModel m_model;
     NetworkProcessor m_network;
@@ -49,13 +50,15 @@ public:
     Q_SLOT void abort();
     bool isBlocked() const;
     int queued() const;
+    int currentIndex() const;
     QObject* model();
     Q_SLOT void decreaseBlockingCount();
     void updateData(QVariantMap cookie, bool error, QString const& pendingStatus=QString());
 
 signals:
-    void isBlockedChanged();
+    void currentIndexChanged();
     void downloadProgress(QVariant const& cookie, qint64 bytesReceived, qint64 bytesTotal);
+    void isBlockedChanged();
     void queueChanged();
     void queueCompleted();
     void requestComplete(QVariant const& cookie, QByteArray const& data);
