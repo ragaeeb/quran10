@@ -187,7 +187,7 @@ Sheet
             options: [
                 Option {
                     imageSource: "images/dropdown/style_tijweed.png"
-                    text: qsTr("Tijweed") + Retranslate.onLanguageChanged
+                    text: qsTr("Tajweed") + Retranslate.onLanguageChanged
                     value: "style1"
                 },
                 
@@ -199,7 +199,7 @@ Sheet
                 
                 Option {
                     imageSource: "images/dropdown/style_normal.png"
-                    text: qsTr("No Tijweed") + Retranslate.onLanguageChanged
+                    text: qsTr("No Tajweed") + Retranslate.onLanguageChanged
                     value: "style2"
                 }
             ]

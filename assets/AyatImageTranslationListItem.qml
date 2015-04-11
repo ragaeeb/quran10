@@ -22,6 +22,16 @@ AyatImageListItem
             textStyle.textAlign: TextAlign.Center
             textStyle.fontSize: FontSize.PointValue
             textStyle.fontSizeValue: itemRoot.ListItem.view.translationSize
+            
+            gestureHandlers: [
+                FontSizePincher
+                {
+                    key: "translationFontSize"
+                    minValue: 4 ? 4 : 6
+                    maxValue: 20 ? 20 : 30
+                    userEventId: "PinchedTranslation"
+                }
+            ]
         }
     }
 }

@@ -457,7 +457,7 @@ Page
                         contextActions: [
                             ActionSet
                             {
-                                title: translation.value
+                                title: body.value
                                 
                                 ActionItem
                                 {
