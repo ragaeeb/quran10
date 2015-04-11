@@ -131,7 +131,7 @@ Page
                     {
                         if (id == QueryId.FetchAllRecitations)
                         {
-                            var qareeValue = persist.getValueFor("reciter");
+                            var qareeValue = persist.getValueFor("qaree");
                             var n = data.length;
                             var selectedQaree;
                             
