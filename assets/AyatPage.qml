@@ -323,7 +323,7 @@ Page
                     onEnded: {
                         if ( tutorialToast.tutorial( "tutorialPinchAyat", qsTr("To increase and decrease the font size of the text simply do a pinch gesture on it!"), "images/menu/ic_top.png" ) ) {}
                         else if ( tutorialToast.tutorial( "tutorialMarkFav", qsTr("To quickly access this verse again, tap on the 'Mark Favourite' action at the bottom to put it in the Favourites tab that shows up in the start of the app."), "images/menu/ic_mark_favourite.png" ) ) {}
-                        else if ( tutorialToast.tutorial( "tutorialAddShortcutHome", qsTr("To quickly access this verse again, tap on the 'Add Shortcut' action at the bottom to pin it to your homescreen."), "images/menu/ic_home_add.png" ) ) {}
+                        else if ( tutorialToast.tutorial( "tutorialAddShortcutHome", qsTr("To quickly access this verse again, tap on the 'Add Shortcut' action at the bottom to pin it to your homescreen."), "images/menu/ic_home.png" ) ) {}
                         else if ( tutorialToast.tutorial( "tutorialShare", qsTr("To share this verse with your friends tap on the 'Share' action at the bottom."), "images/menu/ic_share.png" ) ) {}
                         else if ( persist.reviewed() ) {}
                         else if ( reporter.performCII() ) {}
