@@ -5,7 +5,7 @@ ResizableContainer
     headerTitle: qsTr("Related") + Retranslate.onLanguageChanged
     
     onCreationCompleted: {
-        persist.tutorial( "tutorialRelatedExpand", qsTr("You can expand this top section by tapping on the 'Related' header. To minimize it, tap on the hadith header at the bottom pane."), "asset:///images/dropdown/similar.png" );
+        tutorialToast.tutorial( "tutorialRelatedExpand", qsTr("You can expand this top section by tapping on the 'Related' header. To minimize it, tap on the hadith header at the bottom pane."), "images/dropdown/similar.png" );
     }
     
     function applyData(data, bodyControl)

@@ -59,8 +59,8 @@ QtObject
             
             authors.text = "<html>"+authorText+"</html>";
             
-            if ( persist.tutorial( "tutorialTafsirExit", qsTr("To exit this dialog simply tap any area outside of the dialog!"), "asset:///images/menu/tafsir.png" ) ) {}
-            else if ( persist.tutorial( "tutorialTafsirPinch", qsTr("If the font size is too small, you can simply pinch in to increase the font size!"), "asset:///images/dropdown/ic_info.png" ) ) {}
+            if ( tutorialToast.tutorial( "tutorialTafsirExit", qsTr("To exit this dialog simply tap any area outside of the dialog!"), "images/menu/tafsir.png" ) ) {}
+            else if ( tutorialToast.tutorial( "tutorialTafsirPinch", qsTr("If the font size is too small, you can simply do a pinch gesture to increase the font size!"), "images/menu/ic_help.png" ) ) {}
         }
         
         body.text = bodyText+"\n";

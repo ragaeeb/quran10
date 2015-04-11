@@ -297,10 +297,9 @@ Page
                     }
                     
                     onEnded: {
-                        if ( persist.tutorial( "tutorialSearchField", qsTr("Type your search query in the text field and press the Enter key on the keyboard."), "asset:///images/tabs/ic_search.png" ) ) {}
-                        else if ( persist.tutorial( "tutorialConstraint", qsTr("Tap on the icon at the bottom of the action bar if you want to add additional constraints to the search."), "asset:///images/menu/ic_add.png" ) ) {}
-                        else if ( persist.tutorial( "tutorialTipSearchHome", qsTr("Tip: You can start a search query directly from your home screen without even opening the app! Simply tap on the 'Search' icon on your home screen (or begin typing at the home screen on Q10/Q5 devices) and choose 'Sunnah10' from the search results. That will launch the app and initiate the search."), "asset:///images/menu/ic_bio.png" ) ) {}
-                        else if ( persist.tutorial( "tutorialTipSearchHome", qsTr("Tip: If you want to start at the Search tab instead of the Bookmarks/Favourites tab, swipe-down from the top-bezel, go to Settings, and enable 'Start At Search Tab'."), "asset:///images/menu/ic_settings.png" ) ) {}
+                        if ( tutorialToast.tutorial( "tutorialSearchField", qsTr("Type your search query in the text field and press the Enter key on the keyboard."), "images/tabs/ic_search.png" ) ) {}
+                        else if ( tutorialToast.tutorial( "tutorialConstraint", qsTr("Tap on the icon at the bottom of the action bar if you want to add additional constraints to the search."), "images/menu/ic_add.png" ) ) {}
+                        else if ( tutorialToast.tutorial( "tutorialTipSearchHome", qsTr("Tip: You can start a search query directly from your home screen without even opening the app! Simply tap on the 'Search' icon on your home screen (or begin typing at the home screen on Q10/Q5/Passport devices) and choose 'Quran10' from the search results. That will launch the app and initiate the search."), "images/menu/ic_bio.png" ) ) {}
                     }
                 }
             ]

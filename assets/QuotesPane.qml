@@ -161,11 +161,11 @@ NavigationPane
                         
                         navigationPane.parent.unreadContentCount = data.length;
                     } else if (id == QueryId.RemoveQuote) {
-                        persist.showToast( qsTr("Quote removed!"), "asset:///images/menu/ic_remove_suite.png" );
+                        tutorialToast.init( qsTr("Quote removed!"), "images/menu/ic_remove_suite.png" );
                     } else if (id == QueryId.EditQuote) {
-                        persist.showToast( qsTr("Quote updated!"), "asset:///images/menu/ic_edit_suite.png" );
+                        tutorialToast.init( qsTr("Quote updated!"), "images/menu/ic_edit_suite.png" );
                     } else if (id == QueryId.AddQuote) {
-                        persist.showToast( qsTr("Quote added!"), "asset:///images/menu/ic_add_quote.png" );
+                        tutorialToast.init( qsTr("Quote added!"), "images/menu/ic_add_quote.png" );
                         reload();
                     } else if (id == QueryId.SearchQuote) {
                         adm.clear();

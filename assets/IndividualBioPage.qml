@@ -75,17 +75,17 @@ Page
             body.text = "\n"+result;
             ft.play();
         } else if (id == QueryId.RemoveBio) {
-            persist.showToast( qsTr("Biography successfully removed!"), "asset:///images/menu/ic_remove_bio.png" );
+            tutorialToast.init( qsTr("Biography successfully removed!"), "images/menu/ic_remove_bio.png" );
         } else if (id == QueryId.EditBio) {
-            persist.showToast( qsTr("Biography successfully updated!"), "asset:///images/menu/ic_edit_bio.png" );
+            tutorialToast.init( qsTr("Biography successfully updated!"), "images/menu/ic_edit_bio.png" );
         } else if (id == QueryId.RemoveTeacher) {
-            persist.showToast( qsTr("Teacher removed!"), "asset:///images/menu/ic_edit_bio.png" );
+            tutorialToast.init( qsTr("Teacher removed!"), "images/menu/ic_edit_bio.png" );
         } else if (id == QueryId.RemoveStudent) {
-            persist.showToast( qsTr("Student removed!"), "asset:///images/menu/ic_edit_bio.png" );
+            tutorialToast.init( qsTr("Student removed!"), "images/menu/ic_edit_bio.png" );
         } else if (id == QueryId.AddTeacher) {
-            persist.showToast( qsTr("Teacher added!"), "asset:///images/menu/ic_edit_bio.png" );
+            tutorialToast.init( qsTr("Teacher added!"), "images/menu/ic_edit_bio.png" );
         } else if (id == QueryId.AddStudent) {
-            persist.showToast( qsTr("Student added!"), "asset:///images/menu/ic_edit_bio.png" );
+            tutorialToast.init( qsTr("Student added!"), "images/menu/ic_edit_bio.png" );
         }
         
         offloader.fillType(data, id, bioModel);

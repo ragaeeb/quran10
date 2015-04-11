@@ -94,7 +94,7 @@ NavigationPane
                         theDataModel.insertList(data);
                         navigationPane.parent.unreadContentCount = data.length;
                         
-                        if ( persist.tutorial( "tutorialSupplications", qsTr("These are the various duaa that are found throughout the Qu'ran."), "asset:///images/tabs/ic_supplications.png" ) ) {}
+                        if ( tutorialToast.tutorial( "tutorialSupplications", qsTr("These are the various duaa that are found throughout the Qu'ran."), "images/tabs/ic_supplications.png" ) ) {}
                         
                         deviceUtils.attachTopBottomKeys(mainPage, listView, true);
                     }

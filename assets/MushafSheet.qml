@@ -351,9 +351,9 @@ Sheet
     onOpened: {
         mushaf.requestPage(currentPage);
         
-        persist.tutorial( "tutorialMushaf", qsTr("You can pinch on the page to zoom in and out and scroll up and down."), "asset:///images/menu/ic_mushaf.png" );
-        
-        if ( persist.tutorial( "tutorialNavigation", qsTr("Use the left and right arrows to switch pages."), "asset:///images/title/ic_prev.png" ) ) {}
-        else if ( persist.tutorial( "tutorialJump", qsTr("Tap on the screen, then on the bottom action bar you will see the Jump icon. Use this to trigger the dropdown menu to jump to a specific surah in the mushaf."), "asset:///images/menu/ic_jump.png" ) ) {}
+        if ( tutorialToast.tutorial( "tutorialMushaf", qsTr("You can pinch on the page to zoom in and out and scroll up and down."), "images/menu/ic_mushaf.png" ) ) {}
+        else if ( tutorialToast.tutorial( "tutorialNavigation", qsTr("Use the left and right arrows to switch pages."), "images/title/ic_prev.png" ) ) {}
+        else if ( tutorialToast.tutorial( "tutorialJump", qsTr("Tap on the screen, then on the bottom action bar you will see the Surah icon. Use this to select a specific surah in the mushaf you want to jump to."), "images/menu/ic_jump.png" ) ) {}
+        else if ( tutorialToast.tutorial( "tutorialJumpPage", qsTr("Tap on the screen, then on the ... overflow menu you will see the Page icon. Use this to a specific page in the mushaf you wish to jump to."), "images/dropdown/jump_to_page.png" ) ) {}
     }
 }

@@ -68,7 +68,7 @@ NavigationPane
                 function onRestored(result)
                 {
                     if (result) {
-                        persist.showBlockingToast( qsTr("Successfully restored! The app will now close itself so when you re-open it the restored bookmarks can take effect!"), "asset:///images/menu/ic_restore.png" );
+                        persist.showBlockingDialog( qsTr("Successfully Restored"), qsTr("The app will now close itself so when you re-open it the restored bookmarks can take effect!"), qsTr("OK"), "" );
                         Application.requestExit();
                     } else {
                         tutorialToast.init( qsTr("The database could not be restored. Please re-check the backup file to ensure it is valid, and if the problem persists please file a bug report. Make sure to attach the backup file with your report!"), "images/menu/ic_restore_error.png" );
@@ -153,14 +153,14 @@ NavigationPane
                         refresh();
                         
                         if (listView.visible && navigationPane.parent.parent.activePane == navigationPane && navigationPane.top == mainPage) {
-                            persist.tutorial( "tutorialBookmarkDel", qsTr("To delete an existing bookmark, simply press-and-hold on it and choose 'Remove' from the menu."), "asset:///images/menu/ic_favourite_remove.png" );
+                            tutorialToast.tutorial( "tutorialBookmarkDel", qsTr("To delete an existing bookmark, simply press-and-hold on it and choose 'Remove' from the menu."), "images/menu/ic_favourite_remove.png" );
                         }
                     } else if (id == QueryId.ClearAllBookmarks) {
-                        persist.showToast( qsTr("Cleared all bookmarks!"), "asset:///images/menu/ic_favourite_remove.png" );
+                        tutorialToast.init( qsTr("Cleared all bookmarks!"), "images/menu/ic_favourite_remove.png" );
                         gdm.clear();
                         refresh();
                     } else if (id == QueryId.RemoveBookmark) {
-                        persist.showToast( qsTr("Removed bookmark!"), "asset:///images/menu/ic_favourite_remove.png" );
+                        tutorialToast.init( qsTr("Removed bookmark!"), "images/menu/ic_favourite_remove.png" );
                     }
                 }
                 

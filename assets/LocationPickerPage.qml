@@ -224,12 +224,12 @@ Page
                         noElements.delegateActive = adm.isEmpty();
                         listView.visible = !adm.isEmpty();
                     } else if (id == QueryId.AddLocation) {
-                        persist.showToast( qsTr("Location added!"), "asset:///images/toast/ic_location_added.png" );
+                        tutorialToast.init( qsTr("Location added!"), "images/toast/ic_location_added.png" );
                         performSearch();
                     } else if (id == QueryId.RemoveLocation) {
-                        persist.showToast( qsTr("Location removed!"), "asset:///images/toast/ic_remove_location.png" );
+                        tutorialToast.init( qsTr("Location removed!"), "images/toast/ic_remove_location.png" );
                     } else if (id == QueryId.EditLocation) {
-                        persist.showToast( qsTr("Location updated!"), "asset:///images/menu/ic_edit_location.png" );
+                        tutorialToast.init( qsTr("Location updated!"), "images/menu/ic_edit_location.png" );
                     }
                 }
                 
@@ -257,7 +257,7 @@ Page
                             tafsirHelper.addLocation(listView, city, latitude, longitude);
                             searchField.text = city;
                         } else {
-                            persist.showToast( qsTr("Could not find city metadata."), "asset:///images/menu/ic_validate_location.png" );
+                            tutorialToast.init( qsTr("Could not find city metadata."), "images/menu/ic_validate_location.png" );
                         }
                     } else {
                         picked(d.id, d.city);
@@ -280,7 +280,7 @@ Page
             adm.clear();
             adm.append(result.results);
         } else {
-            persist.showToast( qsTr("Could not fetch geolocation results."), "asset:///images/toast/no_geo_found.png" );
+            tutorialToast.init( qsTr("Could not fetch geolocation results."), "images/toast/no_geo_found.png" );
         }
     }
     
