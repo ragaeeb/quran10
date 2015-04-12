@@ -394,14 +394,14 @@ void QueryHelper::fetchAllQarees(QObject* caller, int minLevel)
 
 void QueryHelper::fetchAllQuotes(QObject* caller, qint64 individualId)
 {
-    LOGGER("fetchAllQuotes");
+    LOGGER("fetchAllQuotes" << individualId);
 
     ATTACH_TAFSIR;
 
     QStringList queryParams = QStringList() << "SELECT quotes.id AS id,individuals.name AS author,body,reference FROM quotes INNER JOIN individuals ON individuals.id=quotes.author";
 
     if (individualId) {
-        queryParams << QString("WHERE author=%1").arg(individualId);
+        queryParams << QString("WHERE quotes.author=%1").arg(individualId);
     }
 
     queryParams << "ORDER BY id DESC";

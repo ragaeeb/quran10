@@ -119,10 +119,6 @@ QtObject
                     minValue: 6
                     maxValue: 18
                     userEventId: "AyatTafsirDialogPinched"
-                    
-                    onPinchUpdated: {
-                        body.textStyle.fontSizeValue = body.textStyle.fontSizeValue*event.pinchRatio;
-                    }
                 }
             ]
             
