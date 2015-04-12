@@ -50,7 +50,7 @@ TitleBar
                 horizontalAlignment: HorizontalAlignment.Center
                 verticalAlignment: VerticalAlignment.Fill
                 textStyle.textAlign: TextAlign.Center
-                textStyle.fontSize: FontSize.XXLarge
+                textStyle.fontSize: SystemDefaults.TextStyles.TitleText
                 textStyle.fontWeight: FontWeight.Bold
             }
             
