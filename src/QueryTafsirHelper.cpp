@@ -488,21 +488,16 @@ void QueryTafsirHelper::searchIndividuals(QObject* caller, QString const& trimme
 }
 
 
-void QueryTafsirHelper::searchQuote(QObject* caller, QString const& fieldName, QString const& searchTerm)
+void QueryTafsirHelper::searchQuote(QObject* caller, QString fieldName, QString const& searchTerm)
 {
     LOGGER(fieldName << searchTerm);
 
-    QString query;
-
     if (fieldName == "author") {
-        query = "SELECT quotes.id AS id,individuals.name AS author,body,reference FROM quotes INNER JOIN individuals ON individuals.id=quotes.author WHERE individuals.name LIKE '%' || ? || '%' ORDER BY id DESC";
-    } else if (fieldName == "body") {
-        query = "SELECT quotes.id AS id,individuals.name AS author,body,reference FROM quotes INNER JOIN individuals ON individuals.id=quotes.author WHERE body LIKE '%' || ? || '%' ORDER BY id DESC";
+        fieldName = "individuals.name";
     }
 
-    if ( !query.isEmpty() ) {
-        m_sql->executeQuery(caller, query, QueryId::SearchQuote, QVariantList() << searchTerm);
-    }
+    QString query = QString("SELECT quotes.id,individuals.name AS author,body,reference FROM quotes INNER JOIN individuals ON individuals.id=quotes.author WHERE %1 LIKE '%' || ? || '%' ORDER BY quotes.id DESC").arg(fieldName);
+    m_sql->executeQuery(caller, query, QueryId::SearchQuote, QVariantList() << searchTerm);
 }
 
 
