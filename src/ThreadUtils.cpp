@@ -290,25 +290,33 @@ QVariantMap ThreadUtils::writePluginArchive(QVariantMap const& cookie, QByteArra
 bool ThreadUtils::allAyatImagesExist(QVariantList const& surahData, QString const& outputDirectory)
 {
     QDir q(outputDirectory);
+    q.cd("ayats");
+    QSet<QString> all = QSet<QString>::fromList( q.entryList(QDir::Files | QDir::NoDot | QDir::NoDotDot) );
 
-    foreach (QVariant const& surah, surahData)
+    if ( all.size() >= surahData.size() )
     {
-        QVariantMap s = surah.toMap();
-        int id = s.value("surah_id").toInt();
-        int n = s.value("verse_count").toInt();
-
-        for (int i = 1; i <= n; i++)
+        foreach (QVariant const& surah, surahData)
         {
-            QString absolutePath = QString("%1/ayats/%2_%3.png").arg( q.path() ).arg(id).arg(i);
+            QVariantMap s = surah.toMap();
+            int id = s.value("surah_id").toInt();
+            int n = s.value("verse_count").toInt();
 
-            if ( !QFile::exists(absolutePath) ) {
-                LOGGER("NotFound" << absolutePath);
-                return false;
+            for (int i = 1; i <= n; i++)
+            {
+                QString absolutePath = QString("%1_%2.png").arg(id).arg(i);
+
+                if ( !all.contains(absolutePath) ) {
+                    LOGGER("NotFound" << absolutePath);
+                    return false;
+                }
             }
         }
+
+        return true;
     }
 
-    return true;
+    LOGGER( "SomethingMissing!" << all.size() << surahData.size() );
+    return false;
 }
 
 
