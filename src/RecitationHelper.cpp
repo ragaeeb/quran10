@@ -13,7 +13,7 @@
 #define remote "http://www.everyayah.com/data"
 #define ITERATION 20
 #define CHUNK_SIZE 4
-#define RECITATION_MP3_KEY "recitation"
+#define COOKIE_RECITATION_MP3 "recitation"
 #define ANCHOR_KEY "anchor"
 #define PLAYLIST_KEY "playlist"
 #define LOCAL_PATH "local"
@@ -68,7 +68,7 @@ QVariantMap processPlaylist(QString const& reciter, QString const& outputDirecto
             q[URI_KEY] = QString("%1/%2/%3").arg(remote).arg(reciter).arg(fileName);
             q[LOCAL_PATH] = absolutePath;
             q["name"] = QObject::tr("%1:%2 recitation").arg(track.first).arg(track.second);
-            q[RECITATION_MP3_KEY] = true;
+            q[COOKIE_RECITATION_MP3] = true;
             q["chapter"] = track.first;
             q["verse"] = track.second;
 
@@ -216,7 +216,7 @@ void RecitationHelper::downloadAndPlay(int chapter, int verse)
 
 void RecitationHelper::onRequestComplete(QVariant const& cookie, QByteArray const& data)
 {
-    if ( cookie.toMap().contains(RECITATION_MP3_KEY) )
+    if ( cookie.toMap().contains(COOKIE_RECITATION_MP3) )
     {
         QFutureWatcher<QVariantMap>* qfw = new QFutureWatcher<QVariantMap>(this);
         connect( qfw, SIGNAL( finished() ), this, SLOT( onWritten() ) );
