@@ -171,6 +171,10 @@ Page
                         infoText.text = qsTr("The verse recitations will be that of %1.").arg(selectedOption.text) + Retranslate.onLanguageChanged
                     }
                     
+                    onSelectedValueChanged: {
+                        persist.saveValueFor("qaree", selectedValue);
+                    }
+                    
                     attachedObjects: [
                         ComponentDefinition
                         {
