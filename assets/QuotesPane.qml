@@ -127,6 +127,13 @@ NavigationPane
                             value: "body"
                             selected: true
                         }
+                        
+                        Option {
+                            description: qsTr("Search reference field") + Retranslate.onLanguageChanged
+                            imageSource: "images/dropdown/search_reference.png"
+                            text: qsTr("Reference") + Retranslate.onLanguageChanged
+                            value: "reference"
+                        }
                     }
                 }
             }
@@ -269,7 +276,7 @@ NavigationPane
                                         
                                         onTriggered: {
                                             console.log("UserEvent: PreviewQuote");
-                                            var body = qsTr("<html><i>“%1”</i>\n\n- <b>%2</b>\n\n[%3]</html>").arg(ListItemData.body).arg(ListItemData.author).arg(ListItemData.reference);
+                                            var body = qsTr("<html><i>“%1”</i>\n\n- <b>%2</b>\n\n[%3]</html>").arg( ListItemData.body.replace(/&/g,"&amp;") ).arg(ListItemData.author).arg( ListItemData.reference.replace(/&/g,"&amp;") );
                                             tutorialToast.init(body, "images/menu/ic_preview.png");
                                         }
                                     }
