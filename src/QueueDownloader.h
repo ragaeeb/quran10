@@ -53,7 +53,8 @@ public:
     int currentIndex() const;
     QObject* model();
     Q_SLOT void decreaseBlockingCount();
-    void updateData(QVariantMap cookie, bool error, QString const& pendingStatus=QString());
+    QVariantMap updateData(QVariantMap cookie, bool error, QString const& pendingStatus=QString());
+    bool updateData(QVariantMap const& cookie);
 
 signals:
     void currentIndexChanged();
