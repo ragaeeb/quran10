@@ -4,7 +4,12 @@ Delegate
 {
     id: delegateRoot
     
-    function onQueueChanged() {
+    function onQueueChanged()
+    {
+        if (object) {
+            object.preventExit();
+        }
+        
         active = true;
     }
     
@@ -17,6 +22,15 @@ Delegate
         Dialog
         {
             id: root
+            
+            function preventExit()
+            {
+                if ( out.isPlaying() )
+                {
+                    out.stop();
+                    tt.play();
+                }
+            }
             
             onCreationCompleted: {
                 open();
@@ -188,7 +202,7 @@ Delegate
                                         TransferListItem
                                         {
                                             imageSource: "images/list/ic_clock.png"
-                                            status: ListItemData.busy
+                                            description: ListItemData.busy
                                             
                                             ListItem.onInitializedChanged: {
                                                 if (initialized) {

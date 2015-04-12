@@ -101,16 +101,10 @@ void QueueDownloader::process(QVariantList const& toProcess)
 void QueueDownloader::onDownloadProgress(QVariant const& cookie, qint64 bytesReceived, qint64 bytesTotal)
 {
     QVariantMap element = cookie.toMap();
-    QString uri = element.value(URI_KEY).toUrl().toString();
+    element[KEY_CURRENT_PROGRESS] = QString::number( (bytesReceived*100.0)/bytesTotal, 'f', 2 );
+    element[KEY_TOTAL_SIZE] = 100;
 
-    if ( m_uriToIndex.contains(uri) )
-    {
-        element[KEY_CURRENT_PROGRESS] = QString::number( (bytesReceived*100.0)/bytesTotal, 'f', 2 );
-        element[KEY_TOTAL_SIZE] = 100;
-
-        int i = m_uriToIndex.value(uri);
-        m_model.replace(i, element);
-    }
+    updateData(element);
 
     emit downloadProgress(cookie, bytesReceived, bytesTotal);
 }
@@ -133,30 +127,50 @@ void QueueDownloader::onRequestComplete(QVariant const& cookie, QByteArray const
 }
 
 
-void QueueDownloader::updateData(QVariantMap cookie, bool error, QString const& pendingStatus)
+QVariantMap QueueDownloader::updateData(QVariantMap cookie, bool error, QString const& pendingStatus)
+{
+    if (error) {
+        LOGGER("Error" << cookie);
+        cookie[KEY_ERROR] = true;
+    } else if ( !pendingStatus.isEmpty() ) {
+        cookie[KEY_BUSY] = pendingStatus;
+    } else {
+        cookie.remove(KEY_ERROR);
+        cookie.remove(KEY_BUSY);
+    }
+
+    if ( updateData(cookie) )
+    {
+        QString uri = cookie.value(URI_KEY).toUrl().toString();
+
+        if (error)
+        {
+            m_uriToIndex.remove(uri); // remove it so that user can attempt to redownload it
+
+            if ( cookie.contains(KEY_BLOCKED) ) {
+                decreaseBlockingCount();
+            }
+        }
+    }
+
+    return cookie;
+}
+
+
+bool QueueDownloader::updateData(QVariantMap const& cookie)
 {
     QUrl url = cookie.value(URI_KEY).toUrl();
     QString uri = url.toString();
 
     if ( m_uriToIndex.contains(uri) )
     {
-        if (error) {
-            LOGGER("Error" << cookie);
-            cookie[KEY_ERROR] = true;
-        } else if ( !pendingStatus.isEmpty() ) {
-            cookie[KEY_BUSY] = pendingStatus;
-        } else {
-            cookie.remove(KEY_ERROR);
-            cookie.remove(KEY_BUSY);
-        }
-
         int i = m_uriToIndex.value(uri);
         m_model.replace(i, cookie);
 
-        if (error) {
-            m_uriToIndex.remove(uri); // remove it so that user can attempt to redownload it
-        }
+        return true;
     }
+
+    return false;
 }
 
 
