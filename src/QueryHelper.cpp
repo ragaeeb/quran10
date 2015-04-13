@@ -98,6 +98,8 @@ void QueryHelper::settingChanged(QString const& key)
                 params[KEY_LANGUAGE] = m_translation;
                 emit updateCheckNeeded(params);
             }
+        } else {
+            ATTACH_TAFSIR;
         }
 
         emit textualChange();
@@ -184,7 +186,7 @@ void QueryHelper::fetchRandomQuote(QObject* caller)
     LOGGER("fetchRandomQuote");
 
     ATTACH_TAFSIR;
-    m_sql.executeQuery(caller, QString("SELECT %1 AS author,i.displayName,i.hidden,body,reference,birth,death,female,companions.id AS companion_id FROM quotes INNER JOIN individuals i ON i.id=quotes.author LEFT JOIN companions ON companions.id=quotes.author WHERE quotes.id=( ABS( RANDOM() % (SELECT COUNT() AS total_quotes FROM quotes) )+1 )").arg( NAME_FIELD("i") ), QueryId::FetchRandomQuote);
+    m_sql.executeQuery(caller, QString("SELECT %1 AS author,i.hidden,body,reference,birth,death,female,companions.id AS companion_id FROM quotes INNER JOIN individuals i ON i.id=quotes.author LEFT JOIN companions ON companions.id=quotes.author WHERE quotes.id=( ABS( RANDOM() % (SELECT COUNT() AS total_quotes FROM quotes) )+1 )").arg( NAME_FIELD("i") ), QueryId::FetchRandomQuote);
 }
 
 
@@ -398,7 +400,7 @@ void QueryHelper::fetchAllQuotes(QObject* caller, qint64 individualId)
 
     ATTACH_TAFSIR;
 
-    QStringList queryParams = QStringList() << "SELECT quotes.id AS id,individuals.name AS author,body,reference FROM quotes INNER JOIN individuals ON individuals.id=quotes.author";
+    QStringList queryParams = QStringList() << QString("SELECT quotes.id AS id,%1 AS author,body,reference FROM quotes INNER JOIN individuals i ON i.id=quotes.author").arg( NAME_FIELD("i") );
 
     if (individualId) {
         queryParams << QString("WHERE quotes.author=%1").arg(individualId);

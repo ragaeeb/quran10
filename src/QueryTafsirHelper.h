@@ -9,7 +9,8 @@
 #define CHAPTER_KEY "chapter"
 #define FROM_VERSE_KEY "fromVerse"
 #define TO_VERSE_KEY "toVerse"
-#define NAME_FIELD(var) QString("TRIM((coalesce(%1.prefix,'') || ' ' || %1.name || ' ' || coalesce(%1.kunya,'')))").arg(var)
+#define NAME_FIELD(var) QString("coalesce(%1.displayName, TRIM((coalesce(%1.prefix,'') || ' ' || %1.name || ' ' || coalesce(%1.kunya,''))))").arg(var)
+#define NAME_SEARCH(var) QString("%1.name LIKE '%' || ? || '%' OR %1.displayName LIKE '%' || ? || '%' OR %1.kunya LIKE '%' || ? || '%'").arg(var)
 
 namespace canadainc {
     class DatabaseHelper;
