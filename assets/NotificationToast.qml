@@ -104,6 +104,14 @@ Delegate
                 layout: DockLayout {}
                 opacity: 0
                 
+                onCreationCompleted: {
+                    if ( "navigation" in dialogContainer ) {
+                        var nav = dialogContainer.navigation;
+                        nav.focusPolicy = 0x2;
+                        nav.defaultHighlightEnabled = false;
+                    }
+                }
+                
                 Container
                 {
                     id: toastBg

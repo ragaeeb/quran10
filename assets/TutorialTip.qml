@@ -251,6 +251,14 @@ Delegate
                                     id: iconLuh
                                 }
                             ]
+                            
+                            onCreationCompleted: {
+                                if ( "navigation" in icon ) {
+                                    var nav = icon.navigation;
+                                    nav.focusPolicy = 0x2;
+                                    nav.defaultHighlightEnabled = false;
+                                }
+                            }
                         }
                         
                         animations: [
