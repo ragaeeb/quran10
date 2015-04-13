@@ -1,4 +1,4 @@
-import bb.cascades 1.0
+import bb.cascades 1.3
 import com.canadainc.data 1.0
 
 NavigationPane
@@ -136,6 +136,7 @@ NavigationPane
                 title: qsTr("Select All") + Retranslate.onLanguageChanged
                 imageSource: "images/menu/ic_select_all.png"
                 enabled: pickerPage.sortValue != "juz"
+                ActionBar.placement: ActionBarPlacement.OnBar
                 
                 onTriggered: {
                     console.log("UserEvent: SelectAll");
@@ -191,7 +192,16 @@ NavigationPane
         function onLazyInitComplete()
         {
             ready();
-            helper.fetchRandomQuote(pickerPage);
+            
+            tutorial.exec("openMushaf", "Tap here to open the mushaf!", HorizontalAlignment.Center, VerticalAlignment.Bottom, 0, 0, 0, ui.du(2));
+            tutorial.exec("selectAllSurahs", "Tap here to view the entire Qu'ran (all the surahs)!", HorizontalAlignment.Center, VerticalAlignment.Bottom, ui.du(31), 0, 0);
+            tutorial.exec("displayStyle", "Tap here to change the order of the surahs or display Juz related information!", HorizontalAlignment.Center, VerticalAlignment.Top, ui.du(2), 0, 173);
+            tutorial.exec("qPaneSurahPicker", qsTr("Search for surah names here. For example you can enter 'Baqara' or 'Fatiha'.\n\nYou can also enter surah numbers like '2' to go directly to Surah Baqara.\n\nYou can also enter '2:3' to go to Surah Baqara verse #3"), HorizontalAlignment.Center, VerticalAlignment.Top, 0, 0, 173+ui.du(8));
+            var noMoreTutorialsLeft = tutorial.exec("lpSurahPicker", "Press and hold on a surah for a menu to select multiple chapters.", HorizontalAlignment.Center, VerticalAlignment.Center, ui.du(2), 0, 0, ui.du(2));
+            
+            if (!noMoreTutorialsLeft) {
+                helper.fetchRandomQuote(pickerPage);
+            }
         }
         
         onCreationCompleted: {
