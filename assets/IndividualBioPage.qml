@@ -8,13 +8,16 @@ Page
     actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
     
     onIndividualIdChanged: {
-        helper.fetchBio(bioPage, individualId);
-        helper.fetchAllQuotes(bioPage, individualId);
-        helper.fetchAllTafsir(bioPage, individualId);
-        tafsirHelper.fetchIndividualData(bioPage, individualId);
-        tafsirHelper.fetchTeachers(bioPage, individualId);
-        tafsirHelper.fetchStudents(bioPage, individualId);
-        tafsirHelper.fetchAllWebsites(bioPage, individualId);
+        if (individualId)
+        {
+            helper.fetchBio(bioPage, individualId);
+            helper.fetchAllQuotes(bioPage, individualId);
+            helper.fetchAllTafsir(bioPage, individualId);
+            tafsirHelper.fetchIndividualData(bioPage, individualId);
+            tafsirHelper.fetchTeachers(bioPage, individualId);
+            tafsirHelper.fetchStudents(bioPage, individualId);
+            tafsirHelper.fetchAllWebsites(bioPage, individualId);
+        }
     }
     
     function popToRoot()

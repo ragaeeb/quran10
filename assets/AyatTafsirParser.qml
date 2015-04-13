@@ -13,7 +13,9 @@ QtObject
     property alias scaleExitAnim: scaleExit
     
     onSuitePageIdChanged: {
-        helper.fetchTafsirContent(parser, suitePageId);
+        if (suitePageId) {
+            helper.fetchTafsirContent(parser, suitePageId);
+        }
     }
     
     function process()

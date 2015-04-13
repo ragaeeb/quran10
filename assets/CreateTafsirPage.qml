@@ -9,7 +9,9 @@ Page
     actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
     
     onSuiteIdChanged: {
-        tafsirHelper.fetchTafsirMetadata(createPage, suiteId);
+        if (suiteId) {
+            helper.fetchQuote(createPage, quoteId);
+        }
     }
     
     function onDataLoaded(id, results)

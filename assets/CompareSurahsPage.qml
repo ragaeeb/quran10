@@ -18,7 +18,9 @@ Page
     }
     
     onSurahIdsChanged: {
-        loadVerses();
+        if (surahIds) {
+            loadVerses();
+        }
     }
     
     function loadVerses()

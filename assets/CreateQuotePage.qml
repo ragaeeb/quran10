@@ -9,7 +9,9 @@ Page
     actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
     
     onQuoteIdChanged: {
-        helper.fetchQuote(createPage, quoteId);
+        if (quoteId) {
+            helper.fetchQuote(createPage, quoteId);
+        }
     }
     
     function onDataLoaded(id, results)
