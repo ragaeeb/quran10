@@ -147,13 +147,22 @@ TabbedPane
         } else {
             reporter.adminEnabledChanged.connect(checkAdminStatus);
         }
+        
+        tutorial.exec("openTabMenu", qsTr("Tap here to open the menu"), HorizontalAlignment.Left, VerticalAlignment.Bottom, ui.du(2), 0, 0, ui.du(1)/2);
+        tutorial.exec("openAppMenu", qsTr("Swipe down from the top-bezel to display the Settings and Help and file bugs!"), HorizontalAlignment.Center, VerticalAlignment.Top, 0, 0, 0, ui.du(2), "images/menu/ic_bottom.png", "d");
+        tutorial.exec("swipeOpenTabMenu", qsTr("Swipe right to open the menu!"), HorizontalAlignment.Left, VerticalAlignment.Center, 0, 0, 0, 0, undefined, "r");
+    }
+    
+    function onSidebarVisualStateChanged(newState)
+    {
+        sidebarStateChanged.disconnect(onSidebarVisualStateChanged);
+
+        tutorial.exec("tabsIntro", qsTr("Here you will find the different sections of the app available to you.\n\nThere the Favourites tab: Any verses you mark as favourite will end up here.\There is the Search tab. You can use this to quickly find a specific verse via keywords.\There is the Radio tab. You can use this to listen to online Qu'ran radio streams.\In the Supplications tab you will find a collection of some of the many du'aa that are found across the Qu'ran.\n\nIn the Transfers tab. This is a list of all the downloads that the app has done this session.\n\nIn the Ummah tab, you can browse the various callers, students of knowledge, and scholars of the past and present."), HorizontalAlignment.Left, VerticalAlignment.Top, ui.du(1), 0, ui.du(10), 0, undefined, "d" );
     }
     
     onCreationCompleted: {
-        tutorial.exec("openTabMenu", "Tap here to open the menu", HorizontalAlignment.Left, VerticalAlignment.Bottom, ui.du(2), 0, 0, ui.du(1)/2);
-        tutorial.exec("openAppMenu", "Swipe down from the top-bezel to display the Settings and Help and file bugs!", HorizontalAlignment.Center, VerticalAlignment.Top, 0, 0, 0, ui.du(2), "images/menu/ic_bottom.png", "d");
-        tutorial.exec("swipeOpenTabMenu", "Swipe right to open the menu!", HorizontalAlignment.Left, VerticalAlignment.Center, 0, 0, 0, 0, undefined, "r");
         app.lazyInitComplete.connect(checkAdminStatus);
+        sidebarStateChanged.connect(onSidebarVisualStateChanged);
     }
     
     attachedObjects: [

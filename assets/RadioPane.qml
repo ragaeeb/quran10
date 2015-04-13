@@ -1,4 +1,4 @@
-import bb.cascades 1.0
+import bb.cascades 1.3
 
 NavigationPane
 {
@@ -75,6 +75,25 @@ NavigationPane
                 onSelectedOptionChanged: {
                     contentDelegate.delegateActive = selectedOption != offOption;
                 }
+                
+                animations: [
+                    TranslateTransition {
+                        fromX: 1400
+                        toX: 0
+                        easingCurve: StockCurve.QuarticOut
+                        duration: 750
+                        
+                        onEnded: {
+                            dropDown.expanded = true;
+                            navigationPane.parent.unreadContentCount = dropDown.count();
+                            tutorial.exec(undefined, qsTr("These are some of the stations where they continuously stream Qu'ran. Be careful though, this uses data. Be sure to be on a proper wireless network."), HorizontalAlignment.Center, VerticalAlignment.Top, ui.du(2), 0, 175);
+                        }
+                        
+                        onCreationCompleted: {
+                            play();
+                        }
+                    }
+                ]
             }
             
             ControlDelegate
@@ -122,7 +141,7 @@ NavigationPane
                                         progressIndicator.visible = false;
                                         progressIndicator.state = ProgressIndicatorState.Complete;
                                     } else if (loadRequest.status == WebLoadStatus.Failed) {
-                                        html = "<html><head><title>Load Fail</title><style>* { margin: 0px; padding 0px; }body { font-size: 48px; font-family: monospace; border: 1px solid #444; padding: 4px; }</style> </head> <body>Loading failed! Please check your internet connection.</body></html>"
+                                        html = "<html><head><title>Load Fail</title><style>* { margin: 0px; padding 0px; }body { font-size: 48px; font-family: monospace; border: 1px solid #444; padding: 4px; }</style> </head> <body>Loading failed! Please check your internet connection. It could also be that the website is currently down.</body></html>"
                                         progressIndicator.visible = false;
                                         progressIndicator.state = ProgressIndicatorState.Error;
                                     }
@@ -144,9 +163,5 @@ NavigationPane
                 }
             }
         }
-    }
-    
-    onCreationCompleted: {
-        if ( tutorialToast.tutorial( "tutorialRadio", qsTr("These are some of the stations where they continuously stream Qu'ran. Be careful though, this uses data. Be sure to be on a proper wireless network."), "images/tabs/ic_radio.png" ) ) {}
     }
 }

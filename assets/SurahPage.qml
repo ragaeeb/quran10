@@ -46,16 +46,12 @@ Page
                     listView.scrollToPosition(0, ScrollAnimation.None);
                     listView.scroll(-100, ScrollAnimation.Smooth);
                 }
-                
-                tutorial.exec("zoom", qsTr("Do a pinch gesture on the arabic text to increase or decrease the size of the font!"), HorizontalAlignment.Center, VerticalAlignment.Center, 0, 0, 0, 0, "images/tutorial/pinch.png");
-                tutorial.exec("surahPageZoomTranslation", qsTr("Do a pinch gesture on the translation text to increase or decrease the size of the font!"), HorizontalAlignment.Center, VerticalAlignment.Center, 0, 0, 0, ui.du(12), "images/tutorial/pinch.png");
             } else {
                 for (var i = data.length-1; i >= 0; i--) {
                     listView.theDataModel.replace(i, data[i]);
                 }
             }
             /*
-            else if ( tutorialToast.tutorial( "tutorialRepeat", qsTr("Tap on the repeat action at the bottom to enable or disable repeating the recitation in a loop once it finishes."), "images/menu/ic_repeat_on.png" ) ) {}
             else if ( tutorialToast.tutorial( "tutorialCopyShare", qsTr("Press-and-hold any ayat and choose the Copy or Share action to easily share the verse."), "images/menu/ic_copy.png" ) ) {}
             else if ( tutorialToast.tutorial( "tutorialMemorize", qsTr("Press-and-hold any ayat and choose the Memorize action to play the next 8 verses in iteration to help you memorize them!"), "images/menu/ic_memorize.png" ) ) {}
             else if ( tutorialToast.tutorial( "tutorialRange", qsTr("Did you know you can press-and-hold on any verse and tap on the 'Select Range' action to only play recitations for those, or copy/share them to your contacts?"), "images/menu/ic_range.png" ) ) {}
