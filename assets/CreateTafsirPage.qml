@@ -10,7 +10,7 @@ Page
     
     onSuiteIdChanged: {
         if (suiteId) {
-            helper.fetchQuote(createPage, quoteId);
+            tafsirHelper.fetchTafsirMetadata(createPage, suiteId);
         }
     }
     

@@ -43,7 +43,7 @@ NavigationPane
                         for (var i = data.length-1; i >= 0; i--)
                         {
                             var current = data[i];
-                            var name = current.displayName ? current.displayName : current.name;
+                            var name = current.name;
                             
                             offloader.renderMap(mapView, current.latitude, current.longitude, name, current.city, current.id);
                         }

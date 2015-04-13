@@ -53,11 +53,7 @@ Page
             
             result += metadata.name;
             
-            if (metadata.displayName) {
-                titleBar.title = metadata.displayName;
-            } else {
-                titleBar.title = metadata.name;
-            }
+            titleBar.title = metadata.name;
             
             if (metadata.kunya) {
                 result += " (%1)".arg(metadata.kunya);
