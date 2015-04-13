@@ -193,13 +193,13 @@ NavigationPane
         {
             ready();
             
-            tutorial.exec("openMushaf", "Tap here to open the mushaf!", HorizontalAlignment.Center, VerticalAlignment.Bottom, 0, 0, 0, ui.du(2));
-            tutorial.exec("selectAllSurahs", "Tap here to view the entire Qu'ran (all the surahs)!", HorizontalAlignment.Center, VerticalAlignment.Bottom, ui.du(31), 0, 0);
-            tutorial.exec("displayStyle", "Tap here to change the order of the surahs or display Juz related information!", HorizontalAlignment.Center, VerticalAlignment.Top, ui.du(2), 0, 173);
+            tutorial.exec("openMushaf", qsTr("Tap here to open the mushaf!"), HorizontalAlignment.Center, VerticalAlignment.Bottom, 0, 0, 0, ui.du(2));
+            tutorial.exec("selectAllSurahs", qsTr("Tap here to view the entire Qu'ran (all the surahs)!"), HorizontalAlignment.Center, VerticalAlignment.Bottom, ui.du(31), 0, 0);
+            tutorial.exec("displayStyle", qsTr("Tap here to change the order of the surahs or display Juz related information!"), HorizontalAlignment.Center, VerticalAlignment.Top, ui.du(2), 0, 173);
             tutorial.exec("qPaneSurahPicker", qsTr("Search for surah names here. For example you can enter 'Baqara' or 'Fatiha'.\n\nYou can also enter surah numbers like '2' to go directly to Surah Baqara.\n\nYou can also enter '2:3' to go to Surah Baqara verse #3"), HorizontalAlignment.Center, VerticalAlignment.Top, 0, 0, 173+ui.du(8));
             var noMoreTutorialsLeft = tutorial.exec("lpSurahPicker", "Press and hold on a surah for a menu to select multiple chapters.", HorizontalAlignment.Center, VerticalAlignment.Center, ui.du(2), 0, 0, ui.du(2));
             
-            if (!noMoreTutorialsLeft) {
+            if ( !noMoreTutorialsLeft && persist.getValueFor("hideRandomQuote") != 1 ) {
                 helper.fetchRandomQuote(pickerPage);
             }
         }
