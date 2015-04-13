@@ -1,4 +1,4 @@
-import bb.cascades 1.0
+import bb.cascades 1.3
 import com.canadainc.data 1.0
 
 TitleBar
@@ -16,6 +16,8 @@ TitleBar
         helper.textualChange.connect( function() {
             chapterNumberChanged();
         });
+        
+        tutorial.exec("chapterTitleBar", qsTr("Tap here to open all the explanations for this chapter."), HorizontalAlignment.Center, VerticalAlignment.Top, 0, 0, ui.du(5));
     }
     
     kind: TitleBarKind.FreeForm

@@ -5,7 +5,6 @@ Delegate
     id: tutorialDelegate
     property variant data: []
     property variant keys: {}
-    property string asset: "images/progress/mushaf_circle.png"
     
     function count() {
         return data.length;
@@ -74,11 +73,13 @@ Delegate
             {
                 swipeAnim.stop();
                 
+                swipeBar.visible = false;
                 assetContainer.resetTranslation();
                 assetContainer.horizontalAlignment = data.h != undefined ? data.h : HorizontalAlignment.Center;
                 assetContainer.verticalAlignment = data.v != undefined ? data.v : VerticalAlignment.Center;
-                bodyLabel.text = data.body;
-                icon.imageSource = data.icon ? data.icon : "images/progress/mushaf_circle.png";
+                bodyControl.text = data.body;
+                bodyLabel.verticalAlignment = assetContainer.horizontalAlignment == HorizontalAlignment.Center && assetContainer.verticalAlignment == VerticalAlignment.Center ? VerticalAlignment.Top : VerticalAlignment.Center
+                icon.imageSource = data.icon ? data.icon : "images/tutorial/pointer.png";
                 current = data;
                 
                 swipeAnim.resetFromY();
@@ -88,6 +89,7 @@ Delegate
                 
                 if (data.type == "r")
                 {
+                    swipeBar.visible = true;
                     swipeAnim.fromX = -ui.du(2);
                     swipeAnim.toX = ui.du(45);
                     swipeAnim.play();
@@ -157,16 +159,11 @@ Delegate
                             
                             function onFinished(confirmed)
                             {
-                                console.log("*** ON FINISHED", confirmed);
                                 if (confirmed)
                                 {
-                                    console.log("*** ON FINISHED222", confirmed);
                                     persist.suppressTutorials = true;
-                                    console.log("*** ON FINISHED222x", confirmed);
                                     data = [];
-                                    console.log("*** ON FINISHED2224", confirmed);
                                     fsd.dismiss();
-                                    console.log("*** ON FINISHED222555", confirmed);
                                 }
                             }
                             
@@ -222,6 +219,16 @@ Delegate
                     layout: DockLayout {}
                     horizontalAlignment: HorizontalAlignment.Fill
                     verticalAlignment: VerticalAlignment.Fill
+                    
+                    ImageView
+                    {
+                        id: swipeBar
+                        imageSource: "images/tutorial/swipe_bar.png"
+                        loadEffect: ImageViewLoadEffect.FadeZoom
+                        horizontalAlignment: HorizontalAlignment.Fill
+                        verticalAlignment: assetContainer.verticalAlignment
+                        minHeight: 150
+                    }
                     
                     Container
                     {
@@ -285,17 +292,26 @@ Delegate
                         ]
                     }
                     
-                    Label {
+                    Container
+                    {
                         id: bodyLabel
                         scaleX: 1.25
                         scaleY: 1.25
                         opacity: 0
-                        textStyle.color: Color.White
-                        textStyle.fontStyle: FontStyle.Italic
-                        textStyle.textAlign: TextAlign.Center
                         horizontalAlignment: HorizontalAlignment.Fill
                         verticalAlignment: VerticalAlignment.Center
-                        multiline: true
+                        leftPadding: 10; rightPadding: 10; topPadding: 10; bottomPadding: 10
+                        
+                        Label
+                        {
+                            id: bodyControl
+                            textStyle.color: Color.White
+                            textStyle.fontStyle: FontStyle.Italic
+                            textStyle.textAlign: TextAlign.Center
+                            horizontalAlignment: HorizontalAlignment.Fill
+                            verticalAlignment: VerticalAlignment.Center
+                            multiline: true
+                        }
                     }
                 }
             }
@@ -320,7 +336,7 @@ Delegate
                         {
                             id: toastIconFt
                             fromOpacity: 0
-                            toOpacity: 0.8
+                            toOpacity: 0.7
                             target: assetContainer
                             duration: 400
                             easingCurve: StockCurve.ExponentialInOut

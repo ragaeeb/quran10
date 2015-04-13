@@ -1,4 +1,4 @@
-import bb.cascades 1.0
+import bb.cascades 1.3
 import com.canadainc.data 1.0
 
 Page
@@ -46,20 +46,20 @@ Page
                     listView.scrollToPosition(0, ScrollAnimation.None);
                     listView.scroll(-100, ScrollAnimation.Smooth);
                 }
+                
+                tutorial.exec("zoom", qsTr("Do a pinch gesture on the arabic text to increase or decrease the size of the font!"), HorizontalAlignment.Center, VerticalAlignment.Center, 0, 0, 0, 0, "images/tutorial/pinch.png");
+                tutorial.exec("surahPageZoomTranslation", qsTr("Do a pinch gesture on the translation text to increase or decrease the size of the font!"), HorizontalAlignment.Center, VerticalAlignment.Center, 0, 0, 0, ui.du(12), "images/tutorial/pinch.png");
             } else {
                 for (var i = data.length-1; i >= 0; i--) {
                     listView.theDataModel.replace(i, data[i]);
                 }
             }
-            
-            if ( tutorialToast.tutorial( "tutorialZoom", qsTr("You can do a pinch gesture anytime to increase and decrease the font size of the Arabic or translation text!"), "images/ic_quran.png" ) ) { }
-            else if ( tutorialToast.tutorial( "tutorialSurahNavigation", qsTr("Tap the left/right arrow keys to navigate to the previous and next chapters respectively."), "images/title/ic_next.png" ) ) {}
-            else if ( tutorialToast.tutorial( "tutorialFollow", qsTr("Use the follow button at the center of the left/right buttons if you want to follow the verses automatically as they are being recited."), "images/title/ic_follow_on.png" ) ) {}
+            /*
             else if ( tutorialToast.tutorial( "tutorialRepeat", qsTr("Tap on the repeat action at the bottom to enable or disable repeating the recitation in a loop once it finishes."), "images/menu/ic_repeat_on.png" ) ) {}
             else if ( tutorialToast.tutorial( "tutorialCopyShare", qsTr("Press-and-hold any ayat and choose the Copy or Share action to easily share the verse."), "images/menu/ic_copy.png" ) ) {}
             else if ( tutorialToast.tutorial( "tutorialMemorize", qsTr("Press-and-hold any ayat and choose the Memorize action to play the next 8 verses in iteration to help you memorize them!"), "images/menu/ic_memorize.png" ) ) {}
             else if ( tutorialToast.tutorial( "tutorialRange", qsTr("Did you know you can press-and-hold on any verse and tap on the 'Select Range' action to only play recitations for those, or copy/share them to your contacts?"), "images/menu/ic_range.png" ) ) {}
-            else if ( tutorialToast.tutorial( "donateNotice", qsTr("As'salaamu alaykum wa rahmatullahi wabarakathu,\n\nJazakAllahu khair for using Quran10. While our Islamic apps will always remain free of charge for your benefit, we encourage you to please donate whatever you can in order to support development. This will motivate the developers to continue to update the app, add new features and bug fixes. To donate, simply swipe-down from the top-bezel and tap the 'Donate' button to send money via PayPal.\n\nMay Allah reward you, and bless you and your family."), "images/ic_donate.png" ) ) {}
+            else if ( tutorialToast.tutorial( "donateNotice", qsTr("As'salaamu alaykum wa rahmatullahi wabarakathu,\n\nJazakAllahu khair for using Quran10. While our Islamic apps will always remain free of charge for your benefit, we encourage you to please donate whatever you can in order to support development. This will motivate the developers to continue to update the app, add new features and bug fixes. To donate, simply swipe-down from the top-bezel and tap the 'Donate' button to send money via PayPal.\n\nMay Allah reward you, and bless you and your family."), "images/ic_donate.png" ) ) {} */
             
             busy.delegateActive = false;
         }

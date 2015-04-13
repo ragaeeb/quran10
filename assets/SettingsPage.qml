@@ -286,6 +286,21 @@ Page
                     }
                 }
                 
+                PersistCheckBox
+                {
+                    topMargin: 20
+                    key: "hideRandomQuote"
+                    text: qsTr("Hide Random Benefits") + Retranslate.onLanguageChanged
+                    
+                    onCheckedChanged: {
+                        if (checked) {
+                            infoText.text = qsTr("A random quote from the Salaf-us-saalih will be displayed every time the app starts up.") + Retranslate.onLanguageChanged
+                        } else {
+                            infoText.text = qsTr("Random quotes from the Salaf-us-saalih will not be displayed.") + Retranslate.onLanguageChanged
+                        }
+                    }
+                }
+                
                 ProgressIndicator
                 {
                     id: progressIndicator

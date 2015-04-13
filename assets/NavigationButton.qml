@@ -6,6 +6,7 @@ ImageButton
     property int multiplier: 1
     rotationZ: 180*multiplier
     translationX: 1000*multiplier
+    signal animationFinished()
     
     animations: [
         SequentialAnimation
@@ -25,6 +26,10 @@ ImageButton
                 fromAngleZ: 180*multiplier
                 toAngleZ: 0
                 duration: 1000
+            }
+            
+            onEnded: {
+                animationFinished();
             }
         }
     ]
