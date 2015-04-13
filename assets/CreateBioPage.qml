@@ -7,24 +7,27 @@ Page
     actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
     
     onDataChanged: {
-        for (var i = sc.count()-1; i >= 0; i--)
+        if (data)
         {
-            if ( sc.at(i).value == data.points ) {
-                sc.selectedIndex = i;
-                break;
+            for (var i = sc.count()-1; i >= 0; i--)
+            {
+                if ( sc.at(i).value == data.points ) {
+                    sc.selectedIndex = i;
+                    break;
+                }
             }
-        }
-        
-        if (data.from_id) {
-            from.text = data.from_id.toString();
-        }
-        
-        if (data.reference) {
-            reference.text = data.reference;
-        }
-        
-        if (data.body) {
-            body.text = data.body;
+            
+            if (data.from_id) {
+                from.text = data.from_id.toString();
+            }
+            
+            if (data.reference) {
+                reference.text = data.reference;
+            }
+            
+            if (data.body) {
+                body.text = data.body;
+            }
         }
     }
     

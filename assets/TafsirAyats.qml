@@ -10,7 +10,9 @@ Page
     actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
     
     onSuitePageIdChanged: {
-        helper.fetchAyatsForTafsir(listView, suitePageId);
+        if (suitePageId) {
+            helper.fetchAyatsForTafsir(listView, suitePageId);
+        }
     }
     
     onCreationCompleted: {

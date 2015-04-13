@@ -10,8 +10,11 @@ Page
     actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
     
     onIndividualIdChanged: {
-        tafsirHelper.fetchIndividualData(createRijaal, individualId);
-        tafsirHelper.fetchAllWebsites(createRijaal, individualId);
+        if (individualId)
+        {
+            tafsirHelper.fetchIndividualData(createRijaal, individualId);
+            tafsirHelper.fetchAllWebsites(createRijaal, individualId);
+        }
     }
     
     actions: [

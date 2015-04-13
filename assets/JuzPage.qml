@@ -15,9 +15,12 @@ Page
     }
     
     onRangesChanged: {
-        listView.chapterNumber = ranges.from_surah_id;
-        ctb.chapterNumber = ranges.from_surah_id;
-        helper.fetchAllAyats(juzPage, ranges.from_surah_id, ranges.to_surah_id);
+        if (ranges)
+        {
+            listView.chapterNumber = ranges.from_surah_id;
+            ctb.chapterNumber = ranges.from_surah_id;
+            helper.fetchAllAyats(juzPage, ranges.from_surah_id, ranges.to_surah_id);
+        }
     }
     
     onPeekedAtChanged: {

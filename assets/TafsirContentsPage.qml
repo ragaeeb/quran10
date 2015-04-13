@@ -10,15 +10,18 @@ Page
     actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
     
     onSuiteIdChanged: {
-        busy.delegateActive = true;
-        helper.fetchAllTafsirForSuite(listView, suiteId);
-        
-        var marker = persist.getValueFor("suitePageMarker");
-        
-        if ( marker && (marker.suiteId == suiteId) ) {
-            tafsirContentsPage.addAction(jumpToMarker);
-        } else {
-            tafsirContentsPage.removeAction(jumpToMarker);
+        if (suiteId)
+        {
+            busy.delegateActive = true;
+            helper.fetchAllTafsirForSuite(listView, suiteId);
+            
+            var marker = persist.getValueFor("suitePageMarker");
+            
+            if ( marker && (marker.suiteId == suiteId) ) {
+                tafsirContentsPage.addAction(jumpToMarker);
+            } else {
+                tafsirContentsPage.removeAction(jumpToMarker);
+            }
         }
     }
     
