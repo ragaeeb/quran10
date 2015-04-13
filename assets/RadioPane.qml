@@ -29,7 +29,6 @@ NavigationPane
         
         Container
         {
-            background: back.imagePaint
             horizontalAlignment: HorizontalAlignment.Fill
             verticalAlignment: VerticalAlignment.Fill
             leftPadding: 10; rightPadding: 10; topPadding: 10;
@@ -146,13 +145,6 @@ NavigationPane
             }
         }
     }
-    
-    attachedObjects: [
-        ImagePaintDefinition {
-            id: back
-            imageSource: "images/backgrounds/background.png"
-        }
-    ]
     
     onCreationCompleted: {
         if ( tutorialToast.tutorial( "tutorialRadio", qsTr("These are some of the stations where they continuously stream Qu'ran. Be careful though, this uses data. Be sure to be on a proper wireless network."), "images/tabs/ic_radio.png" ) ) {}
