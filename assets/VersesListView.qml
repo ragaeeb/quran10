@@ -1,5 +1,5 @@
 import QtQuick 1.0
-import bb.cascades 1.2
+import bb.cascades 1.3
 import com.canadainc.data 1.0
 
 ListView
@@ -148,6 +148,20 @@ ListView
         
         onSettingChanged("follow");
         onSettingChanged("overlayAyatImages");
+
+        if (showImages) {
+            tutorial.exec("overlayScroll", qsTr("Some ayats may be larger than your screen width. You need to scroll to the left to see the full ayat!"), HorizontalAlignment.Center, VerticalAlignment.Center, 0, 0, 0, 0, undefined, "r");
+        } else {
+            tutorial.exec("zoom", qsTr("Do a pinch gesture on the arabic text to increase or decrease the size of the font!"), HorizontalAlignment.Center, VerticalAlignment.Center, 0, 0, 0, 0, "images/tutorial/pinch.png");
+        }
+
+        if (helper.showTranslation) {
+            tutorial.exec("surahPageZoomTranslation", qsTr("Do a pinch gesture on the translation text to increase or decrease the size of the font!"), HorizontalAlignment.Center, VerticalAlignment.Center, 0, 0, 0, ui.du(12), "images/tutorial/pinch.png");
+        }
+        
+        tutorial.exec( "repeat", qsTr("Tap on the repeat action at the bottom to enable or disable repeating the recitation in a loop once it finishes."), HorizontalAlignment.Center, VerticalAlignment.Bottom, ui.du(31) );
+        tutorial.exec( "playAll", qsTr("Tap on the Play All button to play a recitation of all the verses on the screen."), HorizontalAlignment.Center, VerticalAlignment.Bottom );
+        tutorial.exec( "pressHoldVerse", qsTr("Tap on any verse to see more details about it.\n\nPress-and-hold on a verse to be able to play specific verses, or share them with others."), HorizontalAlignment.Center, VerticalAlignment.Center );
     }
 
     function onSettingChanged(key)

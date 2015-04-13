@@ -227,7 +227,7 @@ Delegate
                         loadEffect: ImageViewLoadEffect.FadeZoom
                         horizontalAlignment: HorizontalAlignment.Fill
                         verticalAlignment: assetContainer.verticalAlignment
-                        minHeight: 150
+                        minHeight: 125
                     }
                     
                     Container
