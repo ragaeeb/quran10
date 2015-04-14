@@ -405,7 +405,7 @@ QVariantList Offloader::decorateWebsites(QVariantList input)
 
         if ( TextUtils::isUrl(uri) )
         {
-            q["type"] = "uri";
+            q["type"] = "website";
 
             if ( uri.contains("wordpress.com") ) {
                 uri = "images/list/site_wordpress.png";
@@ -462,8 +462,11 @@ bool Offloader::fillType(QVariantList input, int queryId, bb::cascades::GroupDat
         for (int i = input.size()-1; i >= 0; i--)
         {
             QVariantMap q = input[i].toMap();
-            q["type"] = type;
-            input[i] = q;
+
+            if ( !q.contains("type") ) {
+                q["type"] = type;
+                input[i] = q;
+            }
         }
 
         gdm->insertList(input);
