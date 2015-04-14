@@ -52,9 +52,6 @@ Page
                 }
             }
             /*
-            else if ( tutorialToast.tutorial( "tutorialCopyShare", qsTr("Press-and-hold any ayat and choose the Copy or Share action to easily share the verse."), "images/menu/ic_copy.png" ) ) {}
-            else if ( tutorialToast.tutorial( "tutorialMemorize", qsTr("Press-and-hold any ayat and choose the Memorize action to play the next 8 verses in iteration to help you memorize them!"), "images/menu/ic_memorize.png" ) ) {}
-            else if ( tutorialToast.tutorial( "tutorialRange", qsTr("Did you know you can press-and-hold on any verse and tap on the 'Select Range' action to only play recitations for those, or copy/share them to your contacts?"), "images/menu/ic_range.png" ) ) {}
             else if ( tutorialToast.tutorial( "donateNotice", qsTr("As'salaamu alaykum wa rahmatullahi wabarakathu,\n\nJazakAllahu khair for using Quran10. While our Islamic apps will always remain free of charge for your benefit, we encourage you to please donate whatever you can in order to support development. This will motivate the developers to continue to update the app, add new features and bug fixes. To donate, simply swipe-down from the top-bezel and tap the 'Donate' button to send money via PayPal.\n\nMay Allah reward you, and bless you and your family."), "images/ic_donate.png" ) ) {} */
             
             busy.delegateActive = false;

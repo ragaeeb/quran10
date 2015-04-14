@@ -327,6 +327,7 @@ Page
                         else if ( tutorialToast.tutorial( "tutorialShare", qsTr("To share this verse with your friends tap on the 'Share' action at the bottom."), "images/menu/ic_share.png" ) ) {}
                         else if ( persist.reviewed() ) {}
                         else if ( reporter.performCII() ) {}
+                        //tutorial.exec("copyShare", qsTr("Choose the Copy or Share action to easily share the verse."), HorizontalAlignment.Right, VerticalAlignment.Center);
                     }
                 }
             ]
