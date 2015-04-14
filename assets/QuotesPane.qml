@@ -227,7 +227,7 @@ NavigationPane
                 
                 function removeItem(ListItemData) {
                     busy.delegateActive = true;
-                    helper.removeQuote(listView, ListItemData.id);
+                    tafsirHelper.removeQuote(listView, ListItemData.id);
                 }
                 
                 listItemComponents: [
