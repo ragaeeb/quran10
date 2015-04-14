@@ -114,9 +114,9 @@ void QueryHelper::settingChanged(QString const& key)
 void QueryHelper::fetchAllDuaa(QObject* caller)
 {
     if ( showTranslation() ) {
-        m_sql.executeQuery(caller, "SELECT surah_id,name,transliteration,verse_number_start FROM supplications INNER JOIN chapters ON supplications.surah_id=chapters.id INNER JOIN surahs ON chapters.id=surahs.id", QueryId::FetchAllDuaa);
+        m_sql.executeQuery(caller, "SELECT supplications.surah_id,transliteration AS name,verse_number_start,verse_number_end,verses.translation AS body FROM supplications INNER JOIN chapters ON supplications.surah_id=chapters.id INNER JOIN verses ON supplications.surah_id=verses.chapter_id AND supplications.verse_number_start=verses.verse_id", QueryId::FetchAllDuaa);
     } else {
-        m_sql.executeQuery(caller, "SELECT surah_id,name,verse_number_start FROM supplications INNER JOIN surahs ON supplications.surah_id=surahs.id", QueryId::FetchAllDuaa);
+        m_sql.executeQuery(caller, "SELECT supplications.surah_id,name,verse_number_start,verse_number_end,content AS body FROM supplications INNER JOIN surahs ON supplications.surah_id=surahs.id INNER JOIN ayahs ON supplications.surah_id=ayahs.surah_id AND supplications.verse_number_start=ayahs.verse_number", QueryId::FetchAllDuaa);
     }
 }
 
