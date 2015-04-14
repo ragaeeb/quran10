@@ -493,10 +493,10 @@ Page
                     } else if (d.type == "tafsir") {
                         console.log("UserEvent: InvokeTafsir");
                         helper.fetchAllTafsirForSuite(bioPage, d.id);
-                    } else if (d.type == "uri") {
+                    } else if (d.type == "website") {
                         persist.donate(d.uri);
                     } else if (d.type == "phone") {
-                        //persist.invoke("", "", "", "mailto:"+d.uri);
+                        persist.call(d.uri);
                     } else if (d.type == "email") {
                         persist.invoke("", "", "", "mailto:"+d.uri);
                     }
