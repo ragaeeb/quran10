@@ -252,7 +252,7 @@ Page
                         StandardListItem
                         {
                             id: sli
-                            description: ListItemData.body.replace(/\n/g, " ").substr(0, 60) + "..."
+                            description: ListItemData.body.replace(/\n/g, " ")
                             imageSource: ListItemData.points > 0 ? "images/list/ic_like.png" : ListItemData.points == 0 ? "images/list/ic_bio.png" : "images/list/ic_dislike.png"
                             title: ListItemData.author ? ListItemData.author : ListItemData.reference ? ListItemData.reference : ""
                             
@@ -309,7 +309,7 @@ Page
                             
                             StandardListItem
                             {
-                                description: ListItemData.body.replace(/\n/g, " ").substr(0, 60) + "..."
+                                description: ListItemData.body.replace(/\n/g, " ")
                                 imageSource: ListItemData.points > 0 ? "images/list/ic_like.png" : ListItemData.points == 0 ? "images/list/ic_bio.png" : "images/list/ic_dislike.png"
                                 title: ListItemData.author ? ListItemData.author : ListItemData.reference ? ListItemData.reference : ""
                             }

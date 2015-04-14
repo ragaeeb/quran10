@@ -20,16 +20,17 @@ NavigationPane
         
         Container
         {
-            background: back.imagePaint
             horizontalAlignment: HorizontalAlignment.Fill
             verticalAlignment: VerticalAlignment.Fill
+            layout: DockLayout {}
             
             ListView
             {
                 id: listView
                 scrollRole: ScrollRole.Main
                 
-                dataModel: GroupDataModel {
+                dataModel: GroupDataModel
+                {
                     id: theDataModel
                     grouping: ItemGrouping.ByFullValue
                     sortingKeys: ["surah_id","verse_number_start"]
@@ -41,7 +42,7 @@ NavigationPane
                         type: "header"
                         
                         Header {
-                            title: ListItemData
+                            title: ListItem.view.dataModel.data( [ListItem.indexPath,[0]] ).name
                             subtitle: ListItem.view.dataModel.childCount(ListItem.indexPath)
                         }
                     },
@@ -51,9 +52,9 @@ NavigationPane
                         type: "item"
                         
                         StandardListItem {
-                            title: ListItemData.transliteration ? ListItemData.transliteration : qsTr("Chapter %1").arg(ListItemData.surah_id)
-                            description: ListItemData.name
-                            status: ListItemData.verse_number_start
+                            title: ListItemData.name
+                            description: ListItemData.body
+                            status: ListItemData.verse_number_start+"-"+ListItemData.verse_number_end
                             imageSource: "images/list/ic_supplication.png"
                         }
                     }
@@ -114,13 +115,6 @@ NavigationPane
                     }
                 ]
             }
-            
-            attachedObjects: [
-                ImagePaintDefinition {
-                    id: back
-                    imageSource: "images/backgrounds/background.png"
-                }
-            ]
         }
     }
 }
