@@ -81,10 +81,19 @@ Container
     }
     
     contextMenuHandler: [
-        ContextMenuHandler {
+        ContextMenuHandler
+        {
             onPopulating: {
                 if (!itemRoot.ListItem.view.showContextMenu) {
                     event.abort();
+                } else {
+                    var all = itemRoot.ListItem.view.selectionList();
+                    
+                    if (all && all.length > 0 && all[0] != itemRoot.ListItem.indexPath) {
+                        itemRoot.ListItem.view.select(all[0], false);
+                    }
+                    
+                    tutorial.exec("memorize", qsTr("Memorize: This mode begins the playback of the current verse followed by the next 7 verses 20 times each to help you memorize it.\n\nPlay From Here: This begins playback of the recitation starting from this verse.\n\nSet Bookmark: Place a bookmark on this verse so you can resume your reading the next time right to this verse quickly.\n\nSelect Range: Did you know you can press-and-hold on any verse and tap on the 'Select Range' action to only play recitations for those, or copy/share them to your contacts?"), HorizontalAlignment.Right, VerticalAlignment.Center, 0, ui.du(2), 0, 0, undefined, "d");
                 }
             }
         }

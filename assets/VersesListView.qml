@@ -56,6 +56,14 @@ ListView
 
     multiSelectHandler
     {
+        onActiveChanged: {
+            if (active) {
+                tutorial.exec("selectRangeCopy", qsTr("Use the Copy action if you want to copy the ayats to the clipboard so you can later paste it somewhere."), HorizontalAlignment.Center, VerticalAlignment.Bottom);
+                tutorial.exec("selectRangePlay", qsTr("Use the Play action if you want to play the recitation of the selected ayats."), HorizontalAlignment.Left, VerticalAlignment.Bottom, ui.du(22));
+                tutorial.exec("selectRangeShare", qsTr("Use the Share action if you want to share the ayats with one of your contacts or somewhere else."), HorizontalAlignment.Right, VerticalAlignment.Bottom, 0, ui.du(22));
+            }
+        }
+        
         actions: [
             ActionItem
             {

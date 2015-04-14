@@ -1,21 +1,27 @@
-import bb.cascades 1.0
+import bb.cascades 1.3
 
 QtObject
 {
     property string itemName
+    property bool activated: false
     property MultiSelectActionItem msai: MultiSelectActionItem
     {
         title: qsTr("Select Range") + Retranslate.onLanguageChanged
         imageSource: "images/menu/ic_range.png"
         
         onTriggered: {
+            activated = true;
             console.log("UserEvent: SelectRangeTriggered");
-            if ( tutorialToast.tutorial( "tutorialSelectRange", qsTr("Now select the last ayat that you want to perform the actions of the menu on.\n\nYou can also select an ayat above the current one to start there and end at the current one."), "images/menu/ic_range.png" ) ) {}
+            tutorial.exec("selectRange", qsTr("Now select the last ayat that you want to perform the actions of the menu on.\n\nYou can also select an ayat above the current one to start there and end at the current one."), HorizontalAlignment.Center, VerticalAlignment.Center, 0, 0, 0, 0, undefined, "d");
         }
     }
 
     function onSelectionChanged()
     {
+        if (!activated) {
+            return;
+        }
+        
         var all = parent.selectionList();
         
         if (!all) {
