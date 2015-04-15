@@ -5,6 +5,8 @@ Delegate
     id: tutorialDelegate
     property variant data: []
     property variant keys: {}
+    property int currentIndex: -1
+    signal tutorialFinished(string key)
     
     function count() {
         return data.length;
@@ -12,19 +14,24 @@ Delegate
     
     function showNext()
     {
-        if (data.length > 0)
+        if (currentIndex < data.length)
         {
-            var allData = data;
-            var current = allData[allData.length-1];
+            ++currentIndex;
+            var current = data[currentIndex];
             object.apply(current);
         }
     }
     
     onObjectChanged: {
-        if (object) {
+        if (object)
+        {
             showNext();
             object.open();
         }
+    }
+    
+    function isTopPane(navPane, p) {
+        return navPane.parent.parent.activePane == navPane && navPane.top == p;
     }
     
     function exec(key, text, h, v, left, right, top, bottom, imageUri, type)
@@ -37,25 +44,22 @@ Delegate
         {
             var allKeys = keys;
             
-            if ( key && (key in allKeys) ) {
-                return;
+            if ( key && !(key in allKeys) )
+            {
+                var allData = data;
+                allData.push( {'key': key, 'body': text, 'icon': imageUri, 'h': h, 'v': v, 'l': left, 'r': right, 't': top, 'b': bottom, 'type': type} );
+                data = allData;
+                
+                if (key) {
+                    allKeys[key] = allData.length-1;
+                    keys = allKeys;
+                }
+                
+                if (!active) {
+                    active = true;
+                }
             }
             
-            var allData = data;
-            allData.push( {'key': key, 'body': text, 'icon': imageUri, 'h': h, 'v': v, 'l': left, 'r': right, 't': top, 'b': bottom, 'type': type} );
-            data = allData;
-            
-            if (key) {
-                allKeys[key] = true;
-                keys = allKeys;
-            }
-            
-            if (!active) {
-                active = true;
-            } else {
-                showNext();
-            }
-
             return true;
         }
         
@@ -69,31 +73,31 @@ Delegate
             id: fsd
             property variant current: {}
             
-            function apply(data)
+            function apply(d)
             {
                 swipeAnim.stop();
                 
+                current = d;
                 swipeBar.visible = false;
                 assetContainer.resetTranslation();
-                assetContainer.horizontalAlignment = data.h != undefined ? data.h : HorizontalAlignment.Center;
-                assetContainer.verticalAlignment = data.v != undefined ? data.v : VerticalAlignment.Center;
-                bodyControl.text = data.body;
+                assetContainer.horizontalAlignment = current.h != undefined ? current.h : HorizontalAlignment.Center;
+                assetContainer.verticalAlignment = current.v != undefined ? current.v : VerticalAlignment.Center;
+                bodyControl.text = current.body;
                 bodyLabel.verticalAlignment = assetContainer.horizontalAlignment == HorizontalAlignment.Center && assetContainer.verticalAlignment == VerticalAlignment.Center ? VerticalAlignment.Top : VerticalAlignment.Center
-                icon.imageSource = data.icon ? data.icon : "images/tutorial/pointer.png";
-                current = data;
+                icon.imageSource = current.icon ? current.icon : "images/tutorial/pointer.png";
                 
                 swipeAnim.resetFromY();
                 swipeAnim.resetToY();
                 swipeAnim.resetFromX();
                 swipeAnim.resetToX();
                 
-                if (data.type == "r")
+                if (current.type == "r")
                 {
                     swipeBar.visible = true;
                     swipeAnim.fromX = -ui.du(2);
                     swipeAnim.toX = ui.du(45);
                     swipeAnim.play();
-                } else if (data.type == "d") {
+                } else if (current.type == "d") {
                     swipeAnim.fromY = -ui.du(2);
                     swipeAnim.toY = ui.du(45);
                     swipeAnim.play();
@@ -102,22 +106,18 @@ Delegate
             
             function dismiss()
             {
-                if (data.length > 0)
+                var key = current.key;
+                
+                if (key && key.length > 0)
                 {
-                    var allData = data;
-                    var key = allData.pop().key;
-                    var allKeys = keys;
-                    delete allKeys[key];
+                    persist.saveValueFor(key, 1, false);
                     
-                    data = allData;
-                    keys = allKeys;
-                    
-                    if (key && key.length > 0) {
-                        persist.saveValueFor(key, 1, false);
-                    }
+                    key = key.substring("tutorial".length);
+                    key = key.charAt(0).toLowerCase() + key.slice(1);
+                    tutorialFinished(key);
                 }
                 
-                if (data.length > 0) {
+                if (currentIndex < data.length-1) {
                     showNext();
                 } else if ( !fadeOut.isPlaying() ) {
                     fadeOut.play();
@@ -163,6 +163,7 @@ Delegate
                                 {
                                     persist.suppressTutorials = true;
                                     data = [];
+                                    keys = {};
                                     fsd.dismiss();
                                 }
                             }
