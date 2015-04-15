@@ -336,7 +336,7 @@ Page
                             tutorial.exec( "ayatAudio", qsTr("Tap on the '%1' option to listen to this verse over and over in isolation.").arg(recitationOption.text), HorizontalAlignment.Center, VerticalAlignment.Top, 0, ui.du(24), ui.du(4));
                         }
 
-                        tutorial.exec( "arabicZoom", qsTr("Do a pinch gesture on the arabic text to increase or decrease the size of the font!"), HorizontalAlignment.Center, VerticalAlignment.Center, 0, 0, 0, 0, "images/tutorial/pinch.png" );
+                        tutorial.execCentered( "arabicZoom", qsTr("Do a pinch gesture on the arabic text to increase or decrease the size of the font!"), "images/tutorial/pinch.png" );
                         tutorial.exec( "transliteration", qsTr("Tap on the arabic text to show the transliteration."), HorizontalAlignment.Right, VerticalAlignment.Top, 0, ui.du(2), ui.du(21));
                         tutorial.execActionBar( "markFav", qsTr("To quickly access this verse again, tap on the 'Mark Favourite' action at the bottom to put it in the Favourites tab."));
                         tutorial.execActionBar( "addShortcutHome", qsTr("To quickly access this verse again, tap on the 'Add Shortcut' action at the bottom to pin it to your homescreen."), "l" );

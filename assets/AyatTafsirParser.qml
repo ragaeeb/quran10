@@ -1,4 +1,4 @@
-import bb.cascades 1.0
+import bb.cascades 1.3
 import com.canadainc.data 1.0
 
 QtObject
@@ -60,9 +60,6 @@ QtObject
             }
             
             authors.text = "<html>"+authorText+"</html>";
-            
-            if ( tutorialToast.tutorial( "tutorialTafsirExit", qsTr("To exit this dialog simply tap any area outside of the dialog!"), "images/menu/tafsir.png" ) ) {}
-            else if ( tutorialToast.tutorial( "tutorialTafsirPinch", qsTr("If the font size is too small, you can simply do a pinch gesture to increase the font size!"), "images/menu/ic_help.png" ) ) {}
         }
         
         body.text = bodyText+"\n";
@@ -231,6 +228,8 @@ QtObject
                     if (tafsir) {
                         parser.process();
                         footer.visible = true;
+                        
+                        tutorial.exec( "tapBio", qsTr("Tap on the author's name to see his/her profile and biography."), HorizontalAlignment.Left, VerticalAlignment.Top, ui.du(14), 0, ui.du(14) );
                     }
                 }
             },

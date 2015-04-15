@@ -309,6 +309,8 @@ Page
                         gdm.grouping = ItemGrouping.ByFullValue;
                         gdm.sortingKeys = ["juz_id", "surah_id", "verse_number"];
                         data = offloader.normalizeJuzs(data);
+                        
+                        tutorial.execBelowTitleBar("juzHeader", qsTr("Tap on any of the Juz headers to open that Juz, or tap on any of the surahs to open them individually."), ui.du(16));
                     }
                     
                     var total = gdm.size();
