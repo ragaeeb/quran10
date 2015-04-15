@@ -1,4 +1,4 @@
-import bb.cascades 1.0
+import bb.cascades 1.3
 import com.canadainc.data 1.0
 
 ResizableContainer
@@ -30,6 +30,11 @@ ResizableContainer
                     toOpacity: 0.45
                     easingCurve: StockCurve.CubicOut
                     duration: 1200
+                    
+                    onEnded: {
+                        tutorial.execBelowTitleBar( "tafsirPicking", qsTr("These are the explanations for this verse from the various people of knowledge. As more tafsir is available the app will automatically try to fetch them and update its database in the future with your permission. Tap on any one of them to open it and read it."), ui.du(20) );
+                        tutorial.execBelowTitleBar( "tafsirShortcut", qsTr("Press-and-hold on any of the tafsir and choose 'Add Shortcut' to pin it to your homescreen."), ui.du(15) );
+                    }
                 }
             ]
         }

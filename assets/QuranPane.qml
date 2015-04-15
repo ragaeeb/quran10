@@ -64,6 +64,10 @@ NavigationPane
                 if ( visible && tutorial.isTopPane(navigationPane, pickerPage) ) {
                     tutorial.exec( "bookmarkAnchor", qsTr("Notice the button on the top left. This is used to track your Qu'ran reading progress. You can use it to quickly jump to the verse you last left off."), HorizontalAlignment.Left, VerticalAlignment.Top, ui.du(2), 0, ui.du(4) );
                 }
+                
+                if (visible && scaleX != 1) {
+                    rotator.play();
+                }
             }
             
             function onDataLoaded(id, data)
@@ -146,6 +150,9 @@ NavigationPane
         pickerList.multiSelectHandler.onActiveChanged: {
             if (!active) {
                 pickerList.clearSelection();
+            } else {
+                tutorial.exec("compare", qsTr("Use the Copy action if you want to copy the ayats to the clipboard so you can later paste it somewhere."), HorizontalAlignment.Center, VerticalAlignment.Bottom);
+                tutorial.exec("openRange", qsTr("Use the Play action if you want to play the recitation of the selected ayats."), HorizontalAlignment.Left, VerticalAlignment.Bottom, ui.du(22));
             }
         }
 
@@ -278,10 +285,8 @@ NavigationPane
         {
             ready();
             
-            tutorial.exec("openMushaf", qsTr("Tap here to open the mushaf!"), HorizontalAlignment.Center, VerticalAlignment.Bottom, 0, 0, 0, ui.du(2));
-            tutorial.exec("selectAllSurahs", qsTr("Tap here to view the entire Qu'ran (all the surahs)!"), HorizontalAlignment.Center, VerticalAlignment.Bottom, ui.du(31), 0, 0);
-            tutorial.exec("displayStyle", qsTr("Tap here to change the order of the surahs or display Juz related information!"), HorizontalAlignment.Center, VerticalAlignment.Top, ui.du(2), 0, 173);
-            tutorial.exec("qPaneSurahPicker", qsTr("Search for surah names here. For example you can enter 'Baqara' or 'Fatiha'.\n\nYou can also enter surah numbers like '2' to go directly to Surah Baqara.\n\nYou can also enter '2:3' to go to Surah Baqara verse #3"), HorizontalAlignment.Center, VerticalAlignment.Top, 0, 0, 173+ui.du(8));
+            tutorial.execActionBar( "openMushaf", qsTr("Tap here to open the mushaf!") );
+            tutorial.execActionBar("selectAllSurahs", qsTr("Tap here to view the entire Qu'ran (all the surahs)!"), "r");
             var noMoreTutorialsLeft = tutorial.exec("lpSurahPicker", "Press and hold on a surah for a menu to select multiple chapters.", HorizontalAlignment.Center, VerticalAlignment.Center, ui.du(2), 0, 0, ui.du(2));
             
             if ( !noMoreTutorialsLeft && persist.getValueFor("hideRandomQuote") != 1 ) {

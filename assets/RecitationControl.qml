@@ -1,4 +1,4 @@
-import bb.cascades 1.2
+import bb.cascades 1.3
 import com.canadainc.data 1.0
 
 Container
@@ -46,6 +46,11 @@ Container
                 delay: 500
                 duration: 1000
                 easingCurve: StockCurve.QuinticOut
+                
+                onEnded: {
+                    tutorial.execBelowTitleBar( "recitePlay", qsTr("Tap on the Play button to begin playback of this ayat or download it if it is not yet downloaded."), "l" );
+                    tutorial.execBelowTitleBar( "reciteSeek", qsTr("Once playback begins, you can use the seek bar to rewind or forward the recitation."), "l", "r" );
+                }
             }
         ]
     }

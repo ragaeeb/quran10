@@ -68,9 +68,9 @@ Container
             }
             
             onAnimationFinished: {
-                tutorial.exec("surahNavigation", qsTr("Tap the right arrow to navigate to the next chapter."), HorizontalAlignment.Right, VerticalAlignment.Top, 0, 0, ui.du(14));
-                tutorial.exec("navigateSurahLeft", qsTr("Tap the left arrow to navigate to the previous chapter."), HorizontalAlignment.Left, VerticalAlignment.Top, 0, 0, ui.du(14));
-                tutorial.exec("follow", qsTr("Use the follow button at the center of the left/right buttons if you want to follow the verses automatically as they are being recited."), HorizontalAlignment.Center, VerticalAlignment.Top, 0, 0, ui.du(14));
+                tutorial.execBelowTitleBar("surahNavigation", qsTr("Tap the right arrow to navigate to the next chapter."), "r" );
+                tutorial.execBelowTitleBar("navigateSurahLeft", qsTr("Tap the left arrow to navigate to the previous chapter."), "l" );
+                tutorial.execBelowTitleBar("follow", qsTr("Use the follow button at the center of the left/right buttons if you want to follow the verses automatically as they are being recited.") );
             }
         }
         

@@ -203,8 +203,8 @@ Page
                             
                             textField.input["keyLayout"] = 7;
                             deviceUtils.attachTopBottomKeys(mainPage, listView, true);
-                            
-                            rotator.play();
+                            tutorial.execBelowTitleBar("displayStyle", qsTr("Tap here to change the order of the surahs or display Juz related information!") );
+                            tutorial.execBelowTitleBar("qPaneSurahPicker", qsTr("Search for surah names here. For example you can enter 'Baqara' or 'Fatiha'.\n\nYou can also enter surah numbers like '2' to go directly to Surah Baqara.\n\nYou can also enter '2:3' to go to Surah Baqara verse #3"), ui.du(8));
                         }
                     }
                 ]

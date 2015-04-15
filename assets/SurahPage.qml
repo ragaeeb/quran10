@@ -51,8 +51,6 @@ Page
                     listView.theDataModel.replace(i, data[i]);
                 }
             }
-            /*
-            else if ( tutorialToast.tutorial( "donateNotice", qsTr("As'salaamu alaykum wa rahmatullahi wabarakathu,\n\nJazakAllahu khair for using Quran10. While our Islamic apps will always remain free of charge for your benefit, we encourage you to please donate whatever you can in order to support development. This will motivate the developers to continue to update the app, add new features and bug fixes. To donate, simply swipe-down from the top-bezel and tap the 'Donate' button to send money via PayPal.\n\nMay Allah reward you, and bless you and your family."), "images/ic_donate.png" ) ) {} */
             
             busy.delegateActive = false;
         }

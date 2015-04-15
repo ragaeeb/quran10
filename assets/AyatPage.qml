@@ -29,9 +29,7 @@ Page
                 
                 if (n > 0) {
                     titleControl.addOption(similarOption);
-                    similarOption.text = qsTr("%n similar", "", n);
-                    
-                    if ( tutorialToast.tutorial( "tutorialSimilarAyat", qsTr("There appears to be other verses with similar wording, choose the '%1 Similar' option at the top to view them in a split screen.").arg(data.length), "images/dropdown/similar.png" ) ) {}
+                    similarOption.similarCount = n;
                 }
                 
                 transliteration.resetText();
@@ -46,7 +44,6 @@ Page
         } else if (id == QueryId.FetchTafsirCountForAyat && data.length > 0 && data[0].tafsir_count > 0) {
             titleControl.addOption(tafsirOption);
             tafsirOption.tafsirCount = data[0].tafsir_count;
-            if ( tutorialToast.tutorial( "tutorialTafsir", qsTr("There are explanations of this verse by the people of knowledge! Tap on the '%1 Tafsir' option at the top to view them.").arg(data.length), "images/dropdown/tafsir.png" ) ) {}
         } else if (id == QueryId.FetchSimilarAyatContent && data.length > 0 && similarOption.selected) {
             pluginsDelegate.control.applyData(data, helper.showTranslation ? translation : body);
         } else if (id == QueryId.FetchSurahHeader && data.length > 0) {
@@ -90,6 +87,13 @@ Page
         titleControl.removeOption(similarOption);
         titleControl.removeOption(tafsirOption);
         ayatOption.selected = true;
+    }
+    
+    onActionMenuVisualStateChanged: {
+        if (actionMenuVisualState == ActionMenuVisualState.VisibleFull) {
+            tutorial.exec( "nextVerse", qsTr("Tap on the '%1' action to go to verse after this one in the Qu'ran.").arg(nextVerse.title), HorizontalAlignment.Right, VerticalAlignment.Center, 0, ui.du(2), 0, 0, nextVerse.imageSource.toString() );
+            tutorial.exec( "prevVerse", qsTr("Tap on the '%1' action to go to verse after this one in the Qu'ran.").arg(prevVerse.title), HorizontalAlignment.Right, VerticalAlignment.Center, 0, ui.du(2), 0, 0, prevVerse.imageSource.toString() );
+        }
     }
     
     onCreationCompleted: {
@@ -140,7 +144,9 @@ Page
         attachedObjects: [
             Option {
                 id: similarOption
+                property int similarCount
                 imageSource: "images/dropdown/similar.png"
+                text: qsTr("%n similar", "", similarCount) + Retranslate.onLanguageChanged
                 
                 onSelectedChanged: {
                     if (selected)
@@ -251,6 +257,7 @@ Page
         
         ActionItem
         {
+            id: prevVerse
             title: qsTr("Previous Verse") + Retranslate.onLanguageChanged
             imageSource: "images/menu/ic_prev_ayat.png"
             enabled: !(surahId == 1 && verseId == 1)
@@ -269,6 +276,7 @@ Page
         
         ActionItem
         {
+            id: nextVerse
             title: qsTr("Next Verse") + Retranslate.onLanguageChanged
             imageSource: "images/menu/ic_next_ayat.png"
             enabled: !(surahId == 114 && verseId == 6)
@@ -321,13 +329,27 @@ Page
                     }
                     
                     onEnded: {
-                        if ( tutorialToast.tutorial( "tutorialPinchAyat", qsTr("To increase and decrease the font size of the text simply do a pinch gesture on it!"), "images/menu/ic_top.png" ) ) {}
-                        else if ( tutorialToast.tutorial( "tutorialMarkFav", qsTr("To quickly access this verse again, tap on the 'Mark Favourite' action at the bottom to put it in the Favourites tab that shows up in the start of the app."), "images/menu/ic_mark_favourite.png" ) ) {}
-                        else if ( tutorialToast.tutorial( "tutorialAddShortcutHome", qsTr("To quickly access this verse again, tap on the 'Add Shortcut' action at the bottom to pin it to your homescreen."), "images/menu/ic_home.png" ) ) {}
-                        else if ( tutorialToast.tutorial( "tutorialShare", qsTr("To share this verse with your friends tap on the 'Share' action at the bottom."), "images/menu/ic_share.png" ) ) {}
+                        if (tafsirOption.tafsirCount > 0 && similarOption.similarCount > 0)
+                        {
+                            tutorial.exec( "tafsir", qsTr("There are explanations of this verse by the people of knowledge! Tap on the '%1' option at the top to view them.").arg(tafsirOption.text), HorizontalAlignment.Right, VerticalAlignment.Top, 0, ui.du(2), ui.du(4));
+                            tutorial.exec( "similarAyat", qsTr("There appears to be other verses with similar wording, choose the '%1' option at the top to view them in a split screen.").arg(similarOption.text), HorizontalAlignment.Center, VerticalAlignment.Top, ui.du(16), 0, ui.du(4));
+                            tutorial.exec( "ayatAudio", qsTr("Tap on the '%1' option to listen to this verse over and over in isolation.").arg(recitationOption.text), HorizontalAlignment.Center, VerticalAlignment.Top, 0, ui.du(24), ui.du(4));
+                        }
+
+                        tutorial.exec( "arabicZoom", qsTr("Do a pinch gesture on the arabic text to increase or decrease the size of the font!"), HorizontalAlignment.Center, VerticalAlignment.Center, 0, 0, 0, 0, "images/tutorial/pinch.png" );
+                        tutorial.exec( "transliteration", qsTr("Tap on the arabic text to show the transliteration."), HorizontalAlignment.Right, VerticalAlignment.Top, 0, ui.du(2), ui.du(21));
+                        tutorial.execActionBar( "markFav", qsTr("To quickly access this verse again, tap on the 'Mark Favourite' action at the bottom to put it in the Favourites tab."));
+                        tutorial.execActionBar( "addShortcutHome", qsTr("To quickly access this verse again, tap on the 'Add Shortcut' action at the bottom to pin it to your homescreen."), "l" );
+                        tutorial.execActionBar( "share", qsTr("To share this verse with your friends tap on the 'Share' action at the bottom."), "r" );
+                        tutorial.exec( "lpArabic", qsTr("Press-and-hold on the arabic text if you want to copy or share it."), HorizontalAlignment.Right, VerticalAlignment.Top, 0, ui.du(2), ui.du(21));
+
+                        if (helper.showTranslation) {
+                            tutorial.exec( "translationZoom", qsTr("Do a pinch gesture on the translation text to increase or decrease the size of the font!"), HorizontalAlignment.Center, VerticalAlignment.Center, 0, 0, 0, ui.du(10), "images/tutorial/pinch.png" );
+                            tutorial.exec( "lpTranslation", qsTr("Press-and-hold on the translation text if you want to copy or share it."), HorizontalAlignment.Left, VerticalAlignment.Center, 0, 0, ui.du(36));
+                        }
+                        /*
                         else if ( persist.reviewed() ) {}
-                        else if ( reporter.performCII() ) {}
-                        //tutorial.exec("copyShare", qsTr("Choose the Copy or Share action to easily share the verse."), HorizontalAlignment.Right, VerticalAlignment.Center);
+                        else if ( reporter.performCII() ) {} */
                     }
                 }
             ]
@@ -400,6 +422,10 @@ Page
                             toOpacity: 1
                             duration: 500
                             easingCurve: StockCurve.ExponentialIn
+                            
+                            onEnded: {
+                                tutorial.exec( "transliterationWarning", qsTr("Please note that the scholars have mentioned to avoid the transliteration option since when depended upon it may introduce many mistakes because it cannot capture the Arabic pronunciations and rules properly.\n\nPlease use the Audio option to play the verse, and only use the transliteration text as a tool to help you, and do not depend on it fully."), HorizontalAlignment.Center, VerticalAlignment.Top, 0, 0, ui.du(18));
+                            }
                         }
                     ]
                 }
