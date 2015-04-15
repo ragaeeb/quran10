@@ -160,7 +160,7 @@ ListView
         if (showImages) {
             tutorial.exec("overlayScroll", qsTr("Some ayats may be larger than your screen width. You need to scroll to the left to see the full ayat!"), HorizontalAlignment.Center, VerticalAlignment.Center, 0, 0, 0, 0, undefined, "r");
         } else {
-            tutorial.exec("zoom", qsTr("Do a pinch gesture on the arabic text to increase or decrease the size of the font!"), HorizontalAlignment.Center, VerticalAlignment.Center, 0, 0, 0, 0, "images/tutorial/pinch.png");
+            tutorial.execCentered("zoom", qsTr("Do a pinch gesture on the arabic text to increase or decrease the size of the font!"), "images/tutorial/pinch.png");
         }
 
         if (helper.showTranslation) {

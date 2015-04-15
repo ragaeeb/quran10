@@ -19,9 +19,16 @@ NavigationPane
             deviceUtils.attachTopBottomKeys(mainPage, listView, true);
         }
         
+        onActionMenuVisualStateChanged: {
+            if (actionMenuVisualState == ActionMenuVisualState.VisibleFull) {
+                tutorialToast.execActionBar( "clearBookmarks", qsTr("Tap on the '%1' action to clear all the bookmarks.").arg(clearBookmarks.title) );
+            }
+        }
+        
         actions: [
             ActionItem
             {
+                id: backup
                 title: qsTr("Backup") + Retranslate.onLanguageChanged
                 ActionBar.placement: 'Signature' in ActionBarPlacement ? ActionBarPlacement["Signature"] : ActionBarPlacement.OnBar
                 imageSource: "images/menu/ic_backup.png"
@@ -53,6 +60,7 @@ NavigationPane
             
             ActionItem
             {
+                id: restore
                 title: qsTr("Restore") + Retranslate.onLanguageChanged
                 ActionBar.placement: ActionBarPlacement.OnBar
                 imageSource: "images/menu/ic_restore.png"
@@ -152,8 +160,11 @@ NavigationPane
                         
                         refresh();
                         
-                        if (listView.visible && navigationPane.parent.parent.activePane == navigationPane && navigationPane.top == mainPage) {
-                            tutorialToast.tutorial( "tutorialBookmarkDel", qsTr("To delete an existing bookmark, simply press-and-hold on it and choose 'Remove' from the menu."), "images/menu/ic_favourite_remove.png" );
+                        if ( listView.visible && tutorial.isTopPane(navigationPane, mainPage) )
+                        {
+                            tutorialToast.execCentered( "bookmarkDel", qsTr("To delete an existing bookmark, simply press-and-hold on it and choose 'Remove' from the menu.") );
+                            tutorialToast.execActionBar( "backup", qsTr("Tap on the '%1' action to backup these bookmarks so you can restore them later if you ever switch devices.").arg(backup.title) );
+                            tutorialToast.execActionBar( "restore", qsTr("Tap on the '%1' action to restore bookmarks that you have backed up before.").arg(restore.title) );
                         }
                     } else if (id == QueryId.ClearAllBookmarks) {
                         tutorialToast.init( qsTr("Cleared all bookmarks!"), "images/menu/ic_favourite_remove.png" );

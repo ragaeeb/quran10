@@ -151,8 +151,8 @@ NavigationPane
             if (!active) {
                 pickerList.clearSelection();
             } else {
-                tutorial.exec("compare", qsTr("Use the Copy action if you want to copy the ayats to the clipboard so you can later paste it somewhere."), HorizontalAlignment.Center, VerticalAlignment.Bottom);
-                tutorial.exec("openRange", qsTr("Use the Play action if you want to play the recitation of the selected ayats."), HorizontalAlignment.Left, VerticalAlignment.Bottom, ui.du(22));
+                tutorial.execActionBar("compare", qsTr("Use the '%1' action to compare two or more surahs side by side. A maximum of 4 surahs may be compared at once.").arg(compareAction.title), "l" );
+                tutorial.execActionBar("openRange", qsTr("Use the '%1' action to open all the surah between the first selection and the last selection.").arg(openAction.title), "r");
             }
         }
 

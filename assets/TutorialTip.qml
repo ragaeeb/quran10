@@ -41,6 +41,11 @@ Delegate
         exec( key, text, pos == "l" ? HorizontalAlignment.Left : pos == "r" ? HorizontalAlignment.Right : HorizontalAlignment.Center, VerticalAlignment.Top, 0, 0, ui.du(14) + parseInt(pos > 0 ? pos : 0), 0, undefined, type );
     }
     
+    function execCentered(key, text, imageSource)
+    {
+        exec(key, text, HorizontalAlignment.Center, VerticalAlignment.Center, 0, 0, 0, 0, imageSource);
+    }
+    
     function execActionBar(key, text, pos)
     {
         var ui = Application.scene.ui;
