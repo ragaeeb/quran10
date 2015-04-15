@@ -167,8 +167,8 @@ ListView
             tutorial.exec("surahPageZoomTranslation", qsTr("Do a pinch gesture on the translation text to increase or decrease the size of the font!"), HorizontalAlignment.Center, VerticalAlignment.Center, 0, 0, 0, ui.du(12), "images/tutorial/pinch.png");
         }
         
-        tutorial.exec( "repeat", qsTr("Tap on the repeat action at the bottom to enable or disable repeating the recitation in a loop once it finishes."), HorizontalAlignment.Center, VerticalAlignment.Bottom, ui.du(31) );
-        tutorial.exec( "playAll", qsTr("Tap on the Play All button to play a recitation of all the verses on the screen."), HorizontalAlignment.Center, VerticalAlignment.Bottom );
+        tutorial.execActionBar( "repeat", qsTr("Tap on the repeat action at the bottom to enable or disable repeating the recitation in a loop once it finishes."), "r" );
+        tutorial.execActionBar( "playAll", qsTr("Tap on the Play All button to play a recitation of all the verses on the screen.") );
         tutorial.exec( "pressHoldVerse", qsTr("Tap on any verse to see more details about it.\n\nPress-and-hold on a verse to be able to play specific verses, or share them with others."), HorizontalAlignment.Center, VerticalAlignment.Center );
     }
 

@@ -34,6 +34,20 @@ Delegate
         return navPane.parent.parent.activePane == navPane && navPane.top == p;
     }
     
+    function execBelowTitleBar(key, text, pos, type)
+    {
+        var ui = Application.scene.ui;
+
+        exec( key, text, pos == "l" ? HorizontalAlignment.Left : pos == "r" ? HorizontalAlignment.Right : HorizontalAlignment.Center, VerticalAlignment.Top, 0, 0, ui.du(14) + parseInt(pos > 0 ? pos : 0), 0, undefined, type );
+    }
+    
+    function execActionBar(key, text, pos)
+    {
+        var ui = Application.scene.ui;
+        
+        exec( key, text, HorizontalAlignment.Center, VerticalAlignment.Bottom, pos == "r" ? ui.du(31) : 0, pos == "l" ? ui.du(31) : 0, 0, ui.du(2) );
+    }
+    
     function exec(key, text, h, v, left, right, top, bottom, imageUri, type)
     {
         if (key) {

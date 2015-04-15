@@ -1,12 +1,8 @@
-import bb.cascades 1.0
+import bb.cascades 1.3
 
 ResizableContainer
 {
     headerTitle: qsTr("Related") + Retranslate.onLanguageChanged
-    
-    onCreationCompleted: {
-        tutorialToast.tutorial( "tutorialRelatedExpand", qsTr("You can expand this top section by tapping on the 'Related' header. To minimize it, tap on the hadith header at the bottom pane."), "images/dropdown/similar.png" );
-    }
     
     function applyData(data, bodyControl)
     {
@@ -16,6 +12,9 @@ ResizableContainer
         headerSubtitle = data.length;
         
         offloader.decorateSimilarResults(data, bodyControl.value, adm, bodyControl);
+        
+        tutorial.execBelowTitleBar( "relatedExpand", qsTr("You can expand this top section by tapping on the 'Related' header.") );
+        tutorial.exec( "relatedExpand2", qsTr("To minimize it, tap on the ayat header on the bottom pane."), HorizontalAlignment.Center, VerticalAlignment.Center, 0, 0, ui.du(12) );
     }
     
     ListView
