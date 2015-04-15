@@ -40,7 +40,7 @@ TabbedPane
 	}
 
     Tab {
-        id: bookmarks
+        id: favs
         delegateActivationPolicy: TabDelegateActivationPolicy.ActivateWhenSelected
         description: qsTr("Saved Verses") + Retranslate.onLanguageChanged
         imageSource: "images/tabs/ic_bookmarks.png"
@@ -104,6 +104,7 @@ TabbedPane
     }
     
     Tab {
+        id: transfersTab
         title: qsTr("Transfers") + Retranslate.onLanguageChanged
         description: qsTr("Download Manager") + Retranslate.onLanguageChanged
         imageSource: "images/tabs/ic_transfers.png"
@@ -142,8 +143,6 @@ TabbedPane
             add(quotesTab);
             add(tafsirTab);
             add(rijaalTab);
-            
-            //activeTab = tafsirTab;
         } else {
             reporter.adminEnabledChanged.connect(checkAdminStatus);
         }
@@ -157,7 +156,12 @@ TabbedPane
     {
         sidebarStateChanged.disconnect(onSidebarVisualStateChanged);
 
-        tutorial.exec("tabsIntro", qsTr("Here you will find the different sections of the app available to you.\n\nThere the Favourites tab: Any verses you mark as favourite will end up here.\There is the Search tab. You can use this to quickly find a specific verse via keywords.\There is the Radio tab. You can use this to listen to online Qu'ran radio streams.\In the Supplications tab you will find a collection of some of the many du'aa that are found across the Qu'ran.\n\nIn the Transfers tab. This is a list of all the downloads that the app has done this session.\n\nIn the Ummah tab, you can browse the various callers, students of knowledge, and scholars of the past and present."), HorizontalAlignment.Left, VerticalAlignment.Top, ui.du(1), 0, ui.du(10), 0, undefined, "d" );
+        tutorial.exec("tabsFavs", qsTr("In the Favourites tab: Any verses you mark as favourite will end up here."), HorizontalAlignment.Left, VerticalAlignment.Top, ui.du(1), 0, ui.du(10), 0, favs.imageSource.toString(), "d" );
+        tutorial.exec("tabsSearch", qsTr("In the Search tab you can use this to quickly find a specific verse via keywords."), HorizontalAlignment.Left, VerticalAlignment.Top, ui.du(1), 0, ui.du(10), 0, search.imageSource.toString(), "d" );
+        tutorial.exec("tabsRadio", qsTr("In the Radio tab you can use this to listen to online Qu'ran radio streams."), HorizontalAlignment.Left, VerticalAlignment.Top, ui.du(1), 0, ui.du(10), 0, radio.imageSource.toString(), "d" );
+        tutorial.exec("tabsDuaa", qsTr("In the Supplications tab you will find a collection of some of the many du'aa that are found across the Qu'ran."), HorizontalAlignment.Left, VerticalAlignment.Top, ui.du(1), 0, ui.du(10), 0, supplications.imageSource.toString(), "d" );
+        tutorial.exec("tabsTransfers", qsTr("In the Transfers tab you will get a list of all the downloads that the app has done this session."), HorizontalAlignment.Left, VerticalAlignment.Top, ui.du(1), 0, ui.du(10), 0, transfersTab.imageSource.toString(), "d" );
+        tutorial.exec("tabsUmmah", qsTr("In the Ummah tab you can browse the various callers, students of knowledge, and scholars of the past and present."), HorizontalAlignment.Left, VerticalAlignment.Top, ui.du(1), 0, ui.du(10), 0, ummahTab.imageSource.toString(), "d" );
     }
     
     onCreationCompleted: {

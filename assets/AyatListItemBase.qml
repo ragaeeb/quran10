@@ -93,7 +93,10 @@ Container
                         itemRoot.ListItem.view.select(all[0], false);
                     }
                     
-                    tutorial.exec("memorize", qsTr("Memorize: This mode begins the playback of the current verse followed by the next 7 verses 20 times each to help you memorize it.\n\nPlay From Here: This begins playback of the recitation starting from this verse.\n\nSet Bookmark: Place a bookmark on this verse so you can resume your reading the next time right to this verse quickly.\n\nSelect Range: Did you know you can press-and-hold on any verse and tap on the 'Select Range' action to only play recitations for those, or copy/share them to your contacts?"), HorizontalAlignment.Right, VerticalAlignment.Center, 0, ui.du(2), 0, 0, undefined, "d");
+                    tutorial.exec("memorize", qsTr("Memorize: This mode begins the playback of the current verse followed by the next 7 verses 20 times each to help you memorize it."), HorizontalAlignment.Right, VerticalAlignment.Center, 0, ui.du(2), 0, 0, memorize.imageSource.toString(), "d");
+                    tutorial.exec("playFromHere", qsTr("Play From Here: This begins playback of the recitation starting from this verse"), HorizontalAlignment.Right, VerticalAlignment.Center, 0, ui.du(2), 0, 0, playFromHere.imageSource.toString(), "d");
+                    tutorial.exec("setBookmark", qsTr("You can use the Set Bookmark action to place a bookmark on this verse so you can resume your reading the next time right to this verse quickly."), HorizontalAlignment.Right, VerticalAlignment.Center, 0, ui.du(2), 0, 0, setBookmark.imageSource.toString(), "d");
+                    tutorial.exec("selectRangeOption", qsTr("You can use the 'Select Range' action to only play recitations for those, or copy/share them to your contacts."), HorizontalAlignment.Right, VerticalAlignment.Center, 0, ui.du(2), 0, 0, "images/menu/ic_range.png", "d");
                 }
             }
         }
@@ -108,6 +111,7 @@ Container
             
             ActionItem
             {
+                id: memorize
                 title: qsTr("Memorize") + Retranslate.onLanguageChanged
                 imageSource: "images/menu/ic_memorize.png"
                 
@@ -131,6 +135,7 @@ Container
             
             ActionItem
             {
+                id: setBookmark
                 title: qsTr("Set Bookmark") + Retranslate.onLanguageChanged
                 imageSource: "images/menu/ic_bookmark_add.png"
                 

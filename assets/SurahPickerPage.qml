@@ -11,6 +11,7 @@ Page
     property bool showJuz: false
     property alias sortValue: sortOrder.selectedValue
     property bool focusOnSearchBar: false
+    property alias titleBarSpace: button.controls
 
     titleBar: TitleBar
     {
@@ -43,11 +44,8 @@ Page
                             duration: reporter.isAdmin ? 1 : 1000
                             
                             onEnded: {
-                                if (showJuz)
-                                {
+                                if (showJuz) {
                                     tm.process();
-                                    bookmarkHelper.fetchLastProgress(button);
-                                    global.lastPositionUpdated.connect(button.onLastPositionUpdated);
                                 }
                             }
                         }
@@ -60,87 +58,7 @@ Page
                     leftPadding: 15;
                     horizontalAlignment: HorizontalAlignment.Fill
                     verticalAlignment: VerticalAlignment.Fill
-                    visible: false
                     layout: DockLayout {}
-                    
-                    Button
-                    {
-                        id: buttonControl
-                        property variant progressData
-                        text: progressData ? progressData.surah_id+":"+progressData.verse_id : ""
-                        imageSource: "images/dropdown/saved_bookmark.png"
-                        verticalAlignment: VerticalAlignment.Center
-                        maxWidth: ui.sdu(18.75)
-                        translationX: -250
-                        scaleX: 1.1
-                        scaleY: 1.1
-                        
-                        onClicked: {
-                            console.log("UserEvent: SavedBookmarkClicked");
-                            picked(progressData.surah_id, progressData.verse_id);
-                        }
-                        
-                        animations: [
-                            SequentialAnimation
-                            {
-                                id: rotator
-                                
-                                TranslateTransition
-                                {
-                                    fromX: -250
-                                    toX: 0
-                                    easingCurve: StockCurve.QuinticOut
-                                    duration: reporter.isAdmin ? 1 : 750
-                                }
-                                
-                                RotateTransition {
-                                    fromAngleZ: 360
-                                    toAngleZ: 0
-                                    easingCurve: StockCurve.ExponentialOut
-                                    duration: reporter.isAdmin ? 1 : 750
-                                }
-                                
-                                ScaleTransition
-                                {
-                                    fromX: 1.1
-                                    fromY: 1.1
-                                    toX: 1
-                                    toY: 1
-                                    duration: reporter.isAdmin ? 1 : 500
-                                    easingCurve: StockCurve.DoubleElasticOut
-                                }
-                            }
-                        ]
-                    }
-                    
-                    function onDataLoaded(id, data)
-                    {
-                        if (id == QueryId.FetchLastProgress)
-                        {
-                            if (data.length > 0) {
-                                buttonControl.progressData = data[0];
-                                button.visible = true;
-                                
-                                tutorialToast.tutorial( "tutorialBookmark", qsTr("Notice the button on the top left. This is used to track your Qu'ran reading progress. You can use it to quickly jump to the verse you last left off."), "images/dropdown/saved_bookmark.png" );
-                            } else if ( persist.contains("bookmarks") ) {
-                                bookmarkHelper.saveLegacyBookmarks( button, persist.getValueFor("bookmarks") );
-                            }
-                        } else if (id == QueryId.SaveLegacyBookmarks) {
-                            persist.remove("bookmarks");
-                            tutorialToast.init( qsTr("Ported legacy bookmarks!"), "images/menu/ic_bookmark_add.png");
-                        }
-                    }
-                    
-                    function onLastPositionUpdated() {
-                        bookmarkHelper.fetchLastProgress(button);
-                    }
-                    
-                    contextActions: [
-                        ActionSet {
-                            title: buttonControl.text
-                            subtitle: buttonControl.progressData ? Qt.formatDateTime(buttonControl.progressData.timestamp) : ""
-                        }
-                    ]
                 }
                 
                 attachedObjects: [
