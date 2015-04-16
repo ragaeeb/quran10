@@ -45,6 +45,7 @@ public:
         FetchAllTafsirForSuite,
         FetchAllWebsites,
         FetchAyat,
+        FetchAyats,
         FetchAyatsForTafsir,
         FetchBio,
         FetchChapters,

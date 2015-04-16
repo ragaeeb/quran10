@@ -46,7 +46,7 @@ signals:
     void compressed();
     void compressProgress(qint64 current, qint64 total);
     void compressing();
-    void ayatsCaptured(QVariantList const& result);
+    void ayatsCaptured(QVariantList const& result, QString const& cookie);
     void pendingUpdatesChanged();
     void uploadProgress(QVariant const& cookie, qint64 bytesSent, qint64 bytesTotal);
 
@@ -58,7 +58,7 @@ public:
     Q_INVOKABLE void doDiff(QVariantList const& input, bb::cascades::ArrayDataModel* adm, QString const& key="id");
     Q_INVOKABLE void analyzeKingFahadFrench(QString text);
     bool pendingUpdates();
-    Q_INVOKABLE void captureAyats(QString const& body);
+    Q_INVOKABLE void captureAyats(QString const& cookie, QString const& body);
     Q_SLOT void lazyInit();
 };
 

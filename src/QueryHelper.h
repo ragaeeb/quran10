@@ -61,6 +61,7 @@ public:
     Q_INVOKABLE void fetchAllTafsirForChapter(QObject* caller, int chapterNumber);
     Q_INVOKABLE void fetchAllTafsirForSuite(QObject* caller, qint64 suiteId);
     Q_INVOKABLE void fetchAyat(QObject* caller, int surahId, int ayatId);
+    Q_INVOKABLE void fetchAyats(QObject* caller, QVariantList const& input);
     Q_INVOKABLE void fetchAyatsForTafsir(QObject* caller, qint64 suitePageId);
     Q_INVOKABLE void fetchBio(QObject* caller, qint64 individualId);
     Q_INVOKABLE void fetchChapter(QObject* caller, int chapter);
