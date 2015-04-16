@@ -21,7 +21,7 @@ NavigationPane
         
         onActionMenuVisualStateChanged: {
             if (actionMenuVisualState == ActionMenuVisualState.VisibleFull) {
-                tutorialToast.execActionBar( "clearBookmarks", qsTr("Tap on the '%1' action to clear all the bookmarks.").arg(clearBookmarks.title) );
+                tutorialToast.execActionBar( "clearBookmarks", qsTr("Tap on the '%1' action to clear all the bookmarks.").arg(clearBookmarks.title), "x" );
             }
         }
         

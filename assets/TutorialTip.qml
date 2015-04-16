@@ -34,23 +34,23 @@ Delegate
         return navPane.parent.parent.activePane == navPane && navPane.top == p;
     }
     
-    function execBelowTitleBar(key, text, pos, type)
+    function execBelowTitleBar(key, text, pos, type, imageSource)
     {
         var ui = Application.scene.ui;
 
-        exec( key, text, pos == "l" ? HorizontalAlignment.Left : pos == "r" ? HorizontalAlignment.Right : HorizontalAlignment.Center, VerticalAlignment.Top, 0, 0, ui.du(14) + parseInt(pos > 0 ? pos : 0), 0, undefined, type );
+        return exec( key, text, pos == "l" ? HorizontalAlignment.Left : pos == "r" ? HorizontalAlignment.Right : HorizontalAlignment.Center, VerticalAlignment.Top, 0, 0, ui.du(14) + parseInt(pos > 0 ? pos : 0), 0, imageSource, type );
     }
     
     function execCentered(key, text, imageSource)
     {
-        exec(key, text, HorizontalAlignment.Center, VerticalAlignment.Center, 0, 0, 0, 0, imageSource);
+        return exec(key, text, HorizontalAlignment.Center, VerticalAlignment.Center, 0, 0, 0, 0, imageSource);
     }
     
     function execActionBar(key, text, pos)
     {
         var ui = Application.scene.ui;
         
-        exec( key, text, HorizontalAlignment.Center, VerticalAlignment.Bottom, pos == "r" ? ui.du(31) : 0, pos == "l" ? ui.du(31) : 0, 0, ui.du(2) );
+        return exec( key, text, pos == "x" ? HorizontalAlignment.Right : HorizontalAlignment.Center, VerticalAlignment.Bottom, pos == "r" ? ui.du(31) : 0, pos == "l" ? ui.du(31) : 0, 0, ui.du(2) );
     }
     
     function exec(key, text, h, v, left, right, top, bottom, imageUri, type)

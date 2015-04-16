@@ -22,8 +22,19 @@ Page
         searchField.input.submitted(searchField);
     }
     
+    function onTutorialFinished(key)
+    {
+        if (key == "tapSearchTitle") {
+            titleBar.kindProperties.expandableArea.expanded = true;
+            tutorial.execBelowTitleBar("searchOptions", qsTr("Tap on the '%1' button to restrict the search to only a specific surah.").arg(restrictButton.text) );
+        } else if (key == "searchOptions") {
+            titleBar.kindProperties.expandableArea.expanded = false;
+        }
+    }
+    
     onCreationCompleted: {
         deviceUtils.attachTopBottomKeys(searchRoot, listView);
+        tutorial.tutorialFinished.connect(onTutorialFinished);
 
         helper.textualChange.connect( function() {
             searchTextChanged();
@@ -70,6 +81,12 @@ Page
         totalResultsFound( adm.size() );
     }
     
+    onActionMenuVisualStateChanged: {
+        if (actionMenuVisualState == ActionMenuVisualState.VisibleFull) {
+            tutorialToast.execActionBar( "removeConstraints", qsTr("Tap on the '%1' action to clear all the constraint fields.").arg(removeSearchAction.title), "x" );
+        }
+    }
+    
     actions: [
         ActionItem {
             id: searchAction
@@ -114,10 +131,10 @@ Page
         {
             id: removeSearchAction
             imageSource: "images/menu/ic_search_remove.png"
-            title: qsTr("Remove Search Fields") + Retranslate.onLanguageChanged
+            title: qsTr("Remove Constraints") + Retranslate.onLanguageChanged
             
             onTriggered: {
-                console.log("UserEvent: RemoveSearchFields");
+                console.log("UserEvent: RemoveConstraints");
                 
                 for (var i = queryFields.length-1; i >= 0; i--) {
                     searchContainer.remove(queryFields[i]);
@@ -153,7 +170,7 @@ Page
             expandableArea
             {
                 onExpandedChanged: {
-                    console.log("UserEvent: ExcludeExpanded", expanded);
+                    console.log("UserEvent: IncludeExpanded", expanded);
                 }
                 
                 content: ScrollView
@@ -174,11 +191,12 @@ Page
                                 orientation: LayoutOrientation.LeftToRight
                             }
                             
-                            StandardPickerItem
+                            StandardListItem
                             {
                                 id: included
                                 property int surahId
                                 visible: surahId > 0
+                                horizontalAlignment: HorizontalAlignment.Fill
                                 
                                 function onDataLoaded(id, data)
                                 {
@@ -187,6 +205,12 @@ Page
                                     
                                     if (helper.showTranslation) {
                                         included.description = data[0].transliteration;
+                                    }
+                                }
+                                
+                                onVisibleChanged: {
+                                    if (visible) {
+                                        tutorial.execBelowTitleBar("removeSearchRestriction", qsTr("Press and hold on the '%1' button and choose 'Delete' from the menu to clear the restriction.").arg(included.title) );
                                     }
                                 }
                                 
@@ -208,6 +232,7 @@ Page
                                         
                                         DeleteActionItem
                                         {
+                                            id: cancelSurah
                                             imageSource: "images/dropdown/cancel_search_surah.png"
                                             
                                             onTriggered: {
@@ -219,13 +244,16 @@ Page
                                 ]
                             }
                             
-                            Button {
+                            Button
+                            {
+                                id: restrictButton
                                 imageSource: "images/dropdown/edit_search_surah.png"
                                 text: qsTr("Restrict to Chapter") + Retranslate.onLanguageChanged
                                 horizontalAlignment: HorizontalAlignment.Fill
                                 visible: !included.visible
                                 
-                                function onPicked(chapter, verse) {
+                                function onPicked(chapter, verse)
+                                {
                                     included.surahId = chapter;
                                     navigationPane.pop();
                                 }
@@ -297,9 +325,14 @@ Page
                     }
                     
                     onEnded: {
-                        if ( tutorialToast.tutorial( "tutorialSearchField", qsTr("Type your search query in the text field and press the Enter key on the keyboard."), "images/tabs/ic_search.png" ) ) {}
-                        else if ( tutorialToast.tutorial( "tutorialConstraint", qsTr("Tap on the icon at the bottom of the action bar if you want to add additional constraints to the search."), "images/menu/ic_add.png" ) ) {}
-                        else if ( tutorialToast.tutorial( "tutorialTipSearchHome", qsTr("Tip: You can start a search query directly from your home screen without even opening the app! Simply tap on the 'Search' icon on your home screen (or begin typing at the home screen on Q10/Q5/Passport devices) and choose 'Quran10' from the search results. That will launch the app and initiate the search."), "images/menu/ic_bio.png" ) ) {}
+                        tutorial.execBelowTitleBar("searchField", qsTr("Type your search query in the text field and press the Enter key on the keyboard.") );
+                        tutorial.execActionBar("searchAction", qsTr("Tap here to perform the search or simply press the Enter key on the keyboard.") );
+                        tutorial.exec("tapSearchTitle", qsTr("Tap on the title bar to expand it and see more search options."), HorizontalAlignment.Center, VerticalAlignment.Top );
+                        var isNew = tutorial.execActionBar("constraint", qsTr("Tap on the icon at the bottom of the action bar if you want to add additional constraints to the search."), "r" );
+                        
+                        if (!isNew) {
+                            tutorial.execCentered("tipSearchHome", qsTr("Tip: You can start a search query directly from your home screen without even opening the app! Simply tap on the 'Search' icon on your home screen (or begin typing at the home screen on Q10/Q5/Passport devices) and choose 'Quran10' from the search results. That will launch the app and initiate the search.") );
+                        }
                     }
                 }
             ]

@@ -321,7 +321,18 @@ qint64 QueryTafsirHelper::generateIndividualField(QObject* caller, QString const
         return value.toLongLong();
     } else {
         qint64 id = QDateTime::currentMSecsSinceEpoch();
-        m_sql->executeQuery(caller, QString("INSERT INTO individuals (id,name) VALUES (%1,?)").arg(id), QueryId::AddIndividual, QVariantList() << value);
+
+        if ( value.startsWith("Shaykh ") || value.startsWith("Sheikh ") || value.startsWith("Imam ") )
+        {
+            QStringList all = value.split(" ");
+            QString prefix = all.takeFirst();
+            QString actualName = all.join(" ");
+
+            m_sql->executeQuery(caller, QString("INSERT INTO individuals (id,prefix,name) VALUES (%1,?,?)").arg(id), QueryId::AddIndividual, QVariantList() << prefix << actualName);
+        } else {
+            m_sql->executeQuery(caller, QString("INSERT INTO individuals (id,name) VALUES (%1,?)").arg(id), QueryId::AddIndividual, QVariantList() << value);
+        }
+
         return id;
     }
 }
