@@ -224,12 +224,12 @@ Page
                         noElements.delegateActive = adm.isEmpty();
                         listView.visible = !adm.isEmpty();
                     } else if (id == QueryId.AddLocation) {
-                        tutorialToast.init( qsTr("Location added!"), "images/toast/ic_location_added.png" );
+                        persist.showToast( qsTr("Location added!"), "images/toast/ic_location_added.png" );
                         performSearch();
                     } else if (id == QueryId.RemoveLocation) {
-                        tutorialToast.init( qsTr("Location removed!"), "images/toast/ic_remove_location.png" );
+                        persist.showToast( qsTr("Location removed!"), "images/toast/ic_remove_location.png" );
                     } else if (id == QueryId.EditLocation) {
-                        tutorialToast.init( qsTr("Location updated!"), "images/menu/ic_edit_location.png" );
+                        persist.showToast( qsTr("Location updated!"), "images/menu/ic_edit_location.png" );
                     }
                 }
                 
@@ -257,7 +257,7 @@ Page
                             tafsirHelper.addLocation(listView, city, latitude, longitude);
                             searchField.text = city;
                         } else {
-                            tutorialToast.init( qsTr("Could not find city metadata."), "images/menu/ic_validate_location.png" );
+                            persist.showToast( qsTr("Could not find city metadata."), "images/menu/ic_validate_location.png" );
                         }
                     } else {
                         picked(d.id, d.city);
@@ -280,7 +280,7 @@ Page
             adm.clear();
             adm.append(result.results);
         } else {
-            tutorialToast.init( qsTr("Could not fetch geolocation results."), "images/toast/no_geo_found.png" );
+            persist.showToast( qsTr("Could not fetch geolocation results."), "images/toast/no_geo_found.png" );
         }
     }
     

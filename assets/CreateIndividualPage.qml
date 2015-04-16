@@ -38,7 +38,7 @@ Page
                 if ( textUtils.isUri(uri) ) {
                     tafsirHelper.addWebsite(createRijaal, individualId, uri);
                 } else {
-                    tutorialToast.init( qsTr("Invalid URL entered!"), "images/menu/ic_remove_site.png" );
+                    persist.showToast( qsTr("Invalid URL entered!"), "images/menu/ic_remove_site.png" );
                     console.log("FailedRegex", uri);
                 }
             }
@@ -58,7 +58,7 @@ Page
                 if ( textUtils.isEmail(email) ) {
                     tafsirHelper.addWebsite(createRijaal, individualId, email);
                 } else {
-                    tutorialToast.init( qsTr("Invalid email entered!"), "images/menu/ic_remove_email.png" );
+                    persist.showToast( qsTr("Invalid email entered!"), "images/menu/ic_remove_email.png" );
                     console.log("FailedRegex", email);
                 }
             }
@@ -78,7 +78,7 @@ Page
                 if ( textUtils.isPhoneNumber(phone) ) {
                     tafsirHelper.addWebsite(createRijaal, individualId, phone);
                 } else {
-                    tutorialToast.init( qsTr("Invalid email entered!"), "images/menu/ic_remove_phone.png" );
+                    persist.showToast( qsTr("Invalid email entered!"), "images/menu/ic_remove_phone.png" );
                     console.log("FailedRegex", phone);
                 }
             }
@@ -147,9 +147,9 @@ Page
                 if (name.validator.valid && location.validator.valid) {
                     createIndividual(individualId, prefix.text.trim(), name.text.trim(), kunya.text.trim(), displayName.text.trim(), hidden.checked, parseInt( birth.text.trim() ), parseInt( death.text.trim() ), female.checked, parseInt( location.text.trim() ) );
                 } else if (!location.validator.valid) {
-                    tutorialToast.init( qsTr("Invalid location specified!"), "images/toast/incomplete_field.png" );
+                    persist.showToast( qsTr("Invalid location specified!"), "images/toast/incomplete_field.png" );
                 } else {
-                    tutorialToast.init( qsTr("Invalid name!"), "images/toast/incomplete_field.png" );
+                    persist.showToast( qsTr("Invalid name!"), "images/toast/incomplete_field.png" );
                 }
             }
         }
@@ -424,11 +424,11 @@ Page
                 tafsirHelper.removeWebsite(createRijaal, ListItemData.id);
                 
                 if (ListItemData.type == "email") {
-                    tutorialToast.init( qsTr("Email address removed!"), "images/menu/ic_remove_email.png" );
+                    persist.showToast( qsTr("Email address removed!"), "images/menu/ic_remove_email.png" );
                 } else if (ListItemData.type == "phone") {
-                    tutorialToast.init( qsTr("Phone number removed!"), "images/menu/ic_remove_phone.png" );
+                    persist.showToast( qsTr("Phone number removed!"), "images/menu/ic_remove_phone.png" );
                 } else if (ListItemData.type == "uri") {
-                    tutorialToast.init( qsTr("Website address removed!"), "images/menu/ic_remove_site.png" );
+                    persist.showToast( qsTr("Website address removed!"), "images/menu/ic_remove_site.png" );
                 }
             }
             

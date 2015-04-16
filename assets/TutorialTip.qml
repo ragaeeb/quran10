@@ -34,11 +34,15 @@ Delegate
         return navPane.parent.parent.activePane == navPane && navPane.top == p;
     }
     
-    function execBelowTitleBar(key, text, pos, type, imageSource)
+    function execBelowTitleBar(key, text, topPadding, pos, type, imageSource)
     {
         var ui = Application.scene.ui;
+        
+        if (!topPadding) {
+            topPadding = 0;
+        }
 
-        return exec( key, text, pos == "l" ? HorizontalAlignment.Left : pos == "r" ? HorizontalAlignment.Right : HorizontalAlignment.Center, VerticalAlignment.Top, 0, 0, ui.du(14) + parseInt(pos > 0 ? pos : 0), 0, imageSource, type );
+        return exec( key, text, pos == "l" ? HorizontalAlignment.Left : pos == "r" ? HorizontalAlignment.Right : HorizontalAlignment.Center, VerticalAlignment.Top, 0, 0, ui.du(14) + topPadding, 0, imageSource, type );
     }
     
     function execCentered(key, text, imageSource)

@@ -42,7 +42,11 @@ NavigationPane
                         type: "header"
                         
                         Header {
-                            title: ListItem.view.dataModel.data( [ListItem.indexPath,[0]] ).name
+                            ListItem.onIndexPathChanged: {
+                                console.log("***", ListItem.indexPath, ListItem.view.dataModel.data([1,0]).name);
+                            }
+                            
+                            title: ListItem.view.dataModel.data( [ListItem.indexPath[0],0] ).name
                             subtitle: ListItem.view.dataModel.childCount(ListItem.indexPath)
                         }
                     },
@@ -98,6 +102,8 @@ NavigationPane
                         if ( tutorialToast.tutorial( "tutorialSupplications", qsTr("These are the various duaa that are found throughout the Qu'ran."), "images/tabs/ic_supplications.png" ) ) {}
                         
                         deviceUtils.attachTopBottomKeys(mainPage, listView, true);
+                        
+                        tutorial.exec( "tapSupplication", qsTr("These are some of the supplications found throughout the Qu'ran. Tap on any one of them to open it."), HorizontalAlignment.Center, VerticalAlignment.Center, 0, 0, 0, 0, undefined, "d" );
                     }
                 }
                 

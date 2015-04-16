@@ -21,7 +21,7 @@ NavigationPane
         
         onActionMenuVisualStateChanged: {
             if (actionMenuVisualState == ActionMenuVisualState.VisibleFull) {
-                tutorialToast.execActionBar( "clearBookmarks", qsTr("Tap on the '%1' action to clear all the bookmarks.").arg(clearBookmarks.title), "x" );
+                tutorial.execActionBar( "clearBookmarks", qsTr("Tap on the '%1' action to clear all the bookmarks.").arg(clearBookmarks.title), "x" );
             }
         }
         
@@ -50,7 +50,7 @@ NavigationPane
                 }
                 
                 function onSaved(result) {
-                    tutorialToast.init( qsTr("Successfully backed up to %1").arg(result), "images/menu/ic_backup.png" );
+                    persist.showToast( qsTr("Successfully backed up to %1").arg(result), "images/menu/ic_backup.png" );
                 }
                 
                 onCreationCompleted: {
@@ -79,7 +79,7 @@ NavigationPane
                         persist.showBlockingDialog( qsTr("Successfully Restored"), qsTr("The app will now close itself so when you re-open it the restored bookmarks can take effect!"), qsTr("OK"), "" );
                         Application.requestExit();
                     } else {
-                        tutorialToast.init( qsTr("The database could not be restored. Please re-check the backup file to ensure it is valid, and if the problem persists please file a bug report. Make sure to attach the backup file with your report!"), "images/menu/ic_restore_error.png" );
+                        persist.init( qsTr("The database could not be restored. Please re-check the backup file to ensure it is valid, and if the problem persists please file a bug report. Make sure to attach the backup file with your report!"), "images/menu/ic_restore_error.png" );
                     }
                 }
                 
@@ -162,16 +162,16 @@ NavigationPane
                         
                         if ( listView.visible && tutorial.isTopPane(navigationPane, mainPage) )
                         {
-                            tutorialToast.execCentered( "bookmarkDel", qsTr("To delete an existing bookmark, simply press-and-hold on it and choose 'Remove' from the menu.") );
-                            tutorialToast.execActionBar( "backup", qsTr("Tap on the '%1' action to backup these bookmarks so you can restore them later if you ever switch devices.").arg(backup.title) );
-                            tutorialToast.execActionBar( "restore", qsTr("Tap on the '%1' action to restore bookmarks that you have backed up before.").arg(restore.title) );
+                            tutorial.execCentered( "bookmarkDel", qsTr("To delete an existing bookmark, simply press-and-hold on it and choose 'Remove' from the menu.") );
+                            tutorial.execActionBar( "backup", qsTr("Tap on the '%1' action to backup these bookmarks so you can restore them later if you ever switch devices.").arg(backup.title) );
+                            tutorial.execActionBar( "restore", qsTr("Tap on the '%1' action to restore bookmarks that you have backed up before.").arg(restore.title) );
                         }
                     } else if (id == QueryId.ClearAllBookmarks) {
-                        tutorialToast.init( qsTr("Cleared all bookmarks!"), "images/menu/ic_favourite_remove.png" );
+                        persist.showToast( qsTr("Cleared all bookmarks!"), "images/menu/ic_favourite_remove.png" );
                         gdm.clear();
                         refresh();
                     } else if (id == QueryId.RemoveBookmark) {
-                        tutorialToast.init( qsTr("Removed bookmark!"), "images/menu/ic_favourite_remove.png" );
+                        persist.showToast( qsTr("Removed bookmark!"), "images/menu/ic_favourite_remove.png" );
                     }
                 }
                 

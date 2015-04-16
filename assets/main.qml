@@ -104,20 +104,6 @@ TabbedPane
     }
     
     Tab {
-        id: transfersTab
-        title: qsTr("Transfers") + Retranslate.onLanguageChanged
-        description: qsTr("Download Manager") + Retranslate.onLanguageChanged
-        imageSource: "images/tabs/ic_transfers.png"
-        delegateActivationPolicy: TabDelegateActivationPolicy.ActivatedWhileSelected
-        unreadContentCount: queue.queued
-        
-        onTriggered: {
-            console.log("UserEvent: TransfersTab");
-            transfers.active = true;
-        }
-    }
-    
-    Tab {
         id: ummahTab
         title: qsTr("The Ummah") + Retranslate.onLanguageChanged
         description: qsTr("The Muslim Ummah") + Retranslate.onLanguageChanged
@@ -160,7 +146,6 @@ TabbedPane
         tutorial.exec("tabsSearch", qsTr("In the Search tab you can use this to quickly find a specific verse via keywords."), HorizontalAlignment.Left, VerticalAlignment.Top, ui.du(1), 0, ui.du(10), 0, search.imageSource.toString(), "d" );
         tutorial.exec("tabsRadio", qsTr("In the Radio tab you can use this to listen to online Qu'ran radio streams."), HorizontalAlignment.Left, VerticalAlignment.Top, ui.du(1), 0, ui.du(10), 0, radio.imageSource.toString(), "d" );
         tutorial.exec("tabsDuaa", qsTr("In the Supplications tab you will find a collection of some of the many du'aa that are found across the Qu'ran."), HorizontalAlignment.Left, VerticalAlignment.Top, ui.du(1), 0, ui.du(10), 0, supplications.imageSource.toString(), "d" );
-        tutorial.exec("tabsTransfers", qsTr("In the Transfers tab you will get a list of all the downloads that the app has done this session."), HorizontalAlignment.Left, VerticalAlignment.Top, ui.du(1), 0, ui.du(10), 0, transfersTab.imageSource.toString(), "d" );
         tutorial.exec("tabsUmmah", qsTr("In the Ummah tab you can browse the various callers, students of knowledge, and scholars of the past and present."), HorizontalAlignment.Left, VerticalAlignment.Top, ui.du(1), 0, ui.du(10), 0, ummahTab.imageSource.toString(), "d" );
     }
     
