@@ -168,11 +168,11 @@ NavigationPane
                         
                         navigationPane.parent.unreadContentCount = data.length;
                     } else if (id == QueryId.RemoveQuote) {
-                        tutorialToast.init( qsTr("Quote removed!"), "images/menu/ic_remove_suite.png" );
+                        persist.showToast( qsTr("Quote removed!"), "images/menu/ic_remove_suite.png" );
                     } else if (id == QueryId.EditQuote) {
-                        tutorialToast.init( qsTr("Quote updated!"), "images/menu/ic_edit_suite.png" );
+                        persist.showToast( qsTr("Quote updated!"), "images/menu/ic_edit_suite.png" );
                     } else if (id == QueryId.AddQuote) {
-                        tutorialToast.init( qsTr("Quote added!"), "images/menu/ic_add_quote.png" );
+                        persist.showToast( qsTr("Quote added!"), "images/menu/ic_add_quote.png" );
                         reload();
                     } else if (id == QueryId.SearchQuote) {
                         adm.clear();
@@ -277,7 +277,7 @@ NavigationPane
                                         onTriggered: {
                                             console.log("UserEvent: PreviewQuote");
                                             var body = qsTr("<html><i>“%1”</i>\n\n- <b>%2</b>\n\n[%3]</html>").arg( ListItemData.body.replace(/&/g,"&amp;") ).arg(ListItemData.author).arg( ListItemData.reference.replace(/&/g,"&amp;") );
-                                            tutorialToast.init(body, "images/menu/ic_preview.png");
+                                            notification.init(body, "images/menu/ic_preview.png");
                                         }
                                     }
                                     

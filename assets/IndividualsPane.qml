@@ -189,7 +189,7 @@ NavigationPane
                 individualPicker.busyControl.delegateActive = true;
                 tafsirHelper.replaceIndividual(navigationPane, toReplaceId, actualId);
             } else {
-                tutorialToast.init( qsTr("The source and replacement individuals cannot be the same!"), "images/toast/ic_duplicate_replace.png" );
+                notification.init( qsTr("The source and replacement individuals cannot be the same!"), "images/toast/ic_duplicate_replace.png" );
             }
             
             popToRoot();

@@ -233,12 +233,12 @@ Page
                         addAction.triggered();
                     }
                 } else if (id == QueryId.AddTafsirPage) {
-                    tutorialToast.init( qsTr("Tafsir page added!"), "images/menu/ic_add_suite_page.png" );
+                    persist.showToast( qsTr("Tafsir page added!"), "images/menu/ic_add_suite_page.png" );
                     suiteIdChanged();
                 } else if (id == QueryId.RemoveTafsirPage) {
-                    tutorialToast.init( qsTr("Tafsir page removed!"), "images/menu/ic_delete_suite_page.png" );
+                    persist.showToast( qsTr("Tafsir page removed!"), "images/menu/ic_delete_suite_page.png" );
                 } else if (id == QueryId.EditTafsirPage) {
-                    tutorialToast.init( qsTr("Tafsir page updated!"), "images/menu/ic_edit_suite_page.png" );
+                    persist.showToast( qsTr("Tafsir page updated!"), "images/menu/ic_edit_suite_page.png" );
                 }
                 
                 busy.delegateActive = false;
@@ -265,7 +265,7 @@ Page
             function setSuitePageMarker(ListItem)
             {
                 persist.saveValueFor("suitePageMarker", {'suiteId': suiteId, 'indexPath': ListItem.indexPath[0]});
-                tutorialToast.init( qsTr("Market set"), "images/menu/ic_set_marker.png" );
+                persist.showToast( qsTr("Market set"), "images/menu/ic_set_marker.png" );
             }
             
             onTriggered: {
