@@ -84,7 +84,7 @@ Page
                 if (id == QueryId.FetchTafsirContent)
                 {
                     if (data.length > 0) {
-                        admin.captureAyats(data[0].body);
+                        admin.captureAyats("admin", data[0].body);
                     } else {
                         busy.delegateActive = false;
                     }
@@ -97,14 +97,17 @@ Page
                 helper.fetchTafsirContent(extractAyats, suitePageId);
             }
             
-            function onCaptured(all)
+            function onCaptured(all, cookie)
             {
-                if (all && all.length > 0) {
-                    tafsirHelper.linkAyatsToTafsir(listView, suitePageId, all);
-                    busy.delegateActive = true;
-                } else {
-                    tutorialToast.init( qsTr("No ayat signatures found..."), "images/menu/ic_capture_ayats.png" );
-                    busy.delegateActive = false;
+                if (cookie == "admin")
+                {
+                    if (all && all.length > 0) {
+                        tafsirHelper.linkAyatsToTafsir(listView, suitePageId, all);
+                        busy.delegateActive = true;
+                    } else {
+                        tutorialToast.init( qsTr("No ayat signatures found..."), "images/menu/ic_capture_ayats.png" );
+                        busy.delegateActive = false;
+                    }
                 }
             }
             

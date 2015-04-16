@@ -11,6 +11,7 @@ Page
     property alias busyControl: busy
     property alias def: definition
     property alias model: adm
+    property variant googleResults: []
     signal performSearch()
     signal picked(int surahId, int verseId);
     signal totalResultsFound(int total)
@@ -32,9 +33,17 @@ Page
         }
     }
     
+    function onCaptured(all, cookie)
+    {
+        if (cookie == "search" && all && all.length > 0) {
+            helper.fetchAyats(listView, all);
+        }
+    }
+    
     onCreationCompleted: {
         deviceUtils.attachTopBottomKeys(searchRoot, listView);
         tutorial.tutorialFinished.connect(onTutorialFinished);
+        admin.ayatsCaptured.connect(onCaptured);
 
         helper.textualChange.connect( function() {
             searchTextChanged();
@@ -65,7 +74,12 @@ Page
             
             var additional = getAdditionalQueries();
             
+            googleResults = [];
             helper.searchQuery(listView, trimmed, included.surahId, additional, andMode);
+            
+            if (additional.length == 0) {
+                offloader.searchGoogle(trimmed);
+            }
         }
     }
     
@@ -432,10 +446,12 @@ Page
                         adm.append(data);
                         busy.delegateActive = false;
                         
-                        updateState();
-                        
                         offloader.decorateSearchResults(data, searchField.text, adm, getAdditionalQueries());
+                    } else if (id == QueryId.FetchAyats) {
+                        adm.append(data);
                     }
+                    
+                    updateState();
                 }
                 
                 onTriggered: {

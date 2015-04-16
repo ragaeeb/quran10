@@ -189,6 +189,8 @@ Delegate
                                         return "mushafPage";
                                     } else if (data.joinDownload || data.ayatImages) {
                                         return "overlay";
+                                    } else if (data.google_search) {
+                                        return "google_search";
                                     } else {
                                         return "transfer";
                                     }
@@ -233,6 +235,15 @@ Delegate
                                                     }
                                                 }
                                             ]
+                                        }
+                                    },
+                                    
+                                    ListItemComponent
+                                    {
+                                        type: "google_search"
+                                        
+                                        TransferListItem {
+                                            successImageSource: "images/menu/ic_search.png"
                                         }
                                     },
                                     
