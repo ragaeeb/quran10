@@ -48,8 +48,8 @@ Container
                 easingCurve: StockCurve.QuinticOut
                 
                 onEnded: {
-                    tutorial.execBelowTitleBar( "recitePlay", qsTr("Tap on the Play button to begin playback of this ayat or download it if it is not yet downloaded."), "l" );
-                    tutorial.execBelowTitleBar( "reciteSeek", qsTr("Once playback begins, you can use the seek bar to rewind or forward the recitation."), "l", "r" );
+                    tutorial.execBelowTitleBar( "recitePlay", qsTr("Tap on the Play button to begin playback of this ayat or download it if it is not yet downloaded."), 0, "l" );
+                    tutorial.execBelowTitleBar( "reciteSeek", qsTr("Once playback begins, you can use the seek bar to rewind or forward the recitation."), 0, "l", "r" );
                 }
             }
         ]

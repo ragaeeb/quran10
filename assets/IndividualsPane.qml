@@ -48,25 +48,25 @@ NavigationPane
     {
         if (id == QueryId.AddIndividual)
         {
-            tutorialToast.init( qsTr("Individual added!"), "images/menu/ic_add_suite.png" );
+            persist.showToast( qsTr("Individual added!"), "images/menu/ic_add_suite.png" );
             individualPicker.fetchAllIndividuals(individualPicker.pickerList);
         } else if (id == QueryId.CopyIndividualsFromSource) {
-            tutorialToast.init( qsTr("Successfully ported individuals!"), "images/dropdown/ic_save_individual.png" );
+            persist.showToast( qsTr("Successfully ported individuals!"), "images/dropdown/ic_save_individual.png" );
         }  else if (id == QueryId.EditIndividual) {
-            tutorialToast.init( qsTr("Successfully edited individual"), "images/dropdown/ic_save_individual.png" );
+            persist.showToast( qsTr("Successfully edited individual"), "images/dropdown/ic_save_individual.png" );
         } else if (id == QueryId.AddIndividual) {
-            tutorialToast.init( qsTr("Successfully added individual"), "images/dropdown/ic_save_individual.png" );
+            persist.showToast( qsTr("Successfully added individual"), "images/dropdown/ic_save_individual.png" );
         } else if (id == QueryId.RemoveIndividual) {
-            tutorialToast.init( qsTr("Successfully deleted individual!"), "images/menu/ic_delete_quote.png" );
+            persist.showToast( qsTr("Successfully deleted individual!"), "images/menu/ic_delete_quote.png" );
         } else if (id == QueryId.ReplaceIndividual) {
-            tutorialToast.init( qsTr("Successfully replaced individual!"), "images/menu/ic_delete_quote.png" );
+            persist.showToast( qsTr("Successfully replaced individual!"), "images/menu/ic_delete_quote.png" );
             individualPicker.fetchAllIndividuals(individualPicker.pickerList);
         } else if (id == QueryId.AddCompanions) {
-            tutorialToast.init( qsTr("Successfully added companions!"), "images/menu/ic_set_companions.png" );
+            persist.showToast( qsTr("Successfully added companions!"), "images/menu/ic_set_companions.png" );
         } else if (id == QueryId.RemoveCompanions) {
-            tutorialToast.init( qsTr("Successfully removed from companions!"), "images/menu/ic_remove_companions.png" );
+            persist.showToast( qsTr("Successfully removed from companions!"), "images/menu/ic_remove_companions.png" );
         } else if (id == QueryId.AddBio) {
-            tutorialToast.init( qsTr("Successfully added biography!"), "images/menu/ic_add_bio.png" );
+            persist.showToast( qsTr("Successfully added biography!"), "images/menu/ic_add_bio.png" );
         }
     }
     

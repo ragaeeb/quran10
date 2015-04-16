@@ -77,7 +77,7 @@ Page
             googleResults = [];
             helper.searchQuery(listView, trimmed, included.surahId, additional, andMode);
             
-            if (additional.length == 0) {
+            if ( additional.length == 0 && persist.getValueFor("searchGoogle") == 1 ) {
                 offloader.searchGoogle(trimmed);
             }
         }
@@ -288,6 +288,13 @@ Page
                                     spaceQuota: 1
                                 }
                             }
+                        }
+                        
+                        PersistCheckBox
+                        {
+                            topMargin: 20
+                            key: "searchGoogle"
+                            text: qsTr("Use Google Assitance") + Retranslate.onLanguageChanged
                         }
                     }
                 }

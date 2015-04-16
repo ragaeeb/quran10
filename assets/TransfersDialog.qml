@@ -315,7 +315,7 @@ Delegate
                                         type: "transfer"
                                         
                                         TransferListItem {
-                                            successImageSource: "images/list/ic_tafsir.png"
+                                            successImageSource: "images/tabs/ic_transfers.png"
                                         }
                                     },
                                     

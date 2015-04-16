@@ -1,5 +1,5 @@
 import QtQuick 1.0
-import bb.cascades 1.0
+import bb.cascades 1.3
 import bb.system 1.0
 import com.canadainc.data 1.0
 
@@ -27,6 +27,17 @@ Sheet
         actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
         actionBarVisibility: ChromeVisibility.Hidden
         
+        onActionMenuVisualStateChanged: {
+            if (actionMenuVisualState == ActionMenuVisualState.VisibleFull)
+            {
+                tutorial.execCentered( "mushafJumpSurah", qsTr("Use the '%1' action to select a specific surah in the mushaf you want to jump to.").arg(jumpSurah.title), "images/menu/ic_jump.png" );
+                tutorial.execCentered( "mushafJumpPage", qsTr("Use the '%1' action to jump to a specific page number in the mushaf.").arg(jumpPage.title), "images/dropdown/jump_to_page.png" );
+                tutorial.execCentered( "mushafStretch", qsTr("Use the 'Stretch' action to stretch the mushaf page to fill your screen size. Note that this may not always be visually attractive."), "images/menu/ic_stretch.png" );
+                tutorial.execCentered( "mushafAspectFill", qsTr("Use the 'Aspect Fill' action to resize the mushaf according to its original dimensions. In this mode you will have to do pinch-and-zoom and pan gestures with your fingers in order to view the different parts of the page."), "images/menu/ic_aspect_fill.png" );
+                tutorial.execActionBar( "mushafDownloadAll", qsTr("Quran10 does its best to minimize your data usage by lazily downloading the pages as you need them. However, if you want to download them all at once tap on the '%1' action.").arg(downloadAll.title), "images/menu/ic_download_mushaf.png" );
+            }
+        }
+        
         actions: [
             ActionItem
             {
@@ -37,6 +48,9 @@ Sheet
                 onTriggered: {
                     console.log("UserEvent: MushafBack");
                     onAboutToQuit();
+                    
+                    tutorial.execCentered( "mushafSaveClose", qsTr("The app automatically saves the last page number you left off (Page %1) so you can easily pick up where you left off when you come back.").arg(currentPage), "images/menu/ic_select_more_chapters.png" );
+                    
                     sheet.close();
                 }
                 
@@ -129,8 +143,9 @@ Sheet
             
             ActionItem
             {
+                id: jumpPage
                 imageSource: "images/dropdown/jump_to_page.png"
-                title: qsTr("Page") +Retranslate.onLanguageChanged
+                title: qsTr("Page") + Retranslate.onLanguageChanged
                 ActionBar.placement: ActionBarPlacement.OnBar
                 
                 onTriggered: {
@@ -281,6 +296,7 @@ Sheet
                             verticalAlignment: VerticalAlignment.Center
                             scrollViewProperties.pinchToZoomEnabled: true
                             scrollViewProperties.overScrollEffectMode: OverScrollEffectMode.OnPinch
+                            scrollViewProperties.scrollMode: ScrollMode.Both
                             scrollRole: ScrollRole.Main
                             
                             ImageView
@@ -339,6 +355,36 @@ Sheet
                         console.log("UserEvent: PrevPage");
                         --currentPage;
                     }
+                    
+                    onAnimationFinished: {
+                        tutorial.execActionBar( "mushafBack", qsTr("To exit the mushaf mode, simply tap on the Back button at the bottom.") );
+                        tutorial.exec( "mushafPrevPage", qsTr("To go to the previous page, tap here."), HorizontalAlignment.Right, VerticalAlignment.Center );
+                        tutorial.exec( "mushafNextPage", qsTr("To go to the next page, tap here."), HorizontalAlignment.Left, VerticalAlignment.Center );
+                        tutorial.execActionBar( "mushafMenu", qsTr("Tap in the bottom-right to open the menu."), "x" );
+                        
+                        if (!mushaf.stretchMushaf) {
+                            tutorial.execCentered("mushafZoom", qsTr("Do a pinch gesture anywhere on the image to enlarge it or make it smaller! Or scroll right-to-left or vice-versa to pan the image."), "images/tutorial/pinch.png");
+                        }
+                        
+                        tutorial.execCentered( "mushafTapPage", qsTr("To display the current page number, simply tap anywhere on the page and the title bar will come up."), HorizontalAlignment.Left, VerticalAlignment.Center );
+                    }
+                    
+                    function onFinished(key)
+                    {
+                        if (key == "mushafTapPage")
+                        {
+                            hiddenTitle.visibility = ChromeVisibility.Overlay;
+                            mainPage.actionBarVisibility = ChromeVisibility.Overlay;
+                            
+                            tutorial.exec( "mushafTajweed", qsTr("Use this mode to display the version of the Mushaf that has the pronunciation rules on it."), HorizontalAlignment.Left, VerticalAlignment.Top, ui.du(2), 0, ui.du(4) );
+                            tutorial.exec( "mushafNoTajweed", qsTr("Use this mode to display the version of the Mushaf that does not have pronunciation rules written on it."), HorizontalAlignment.Right, VerticalAlignment.Top, 0, ui.du(2), ui.du(4) );
+                            tutorial.exec( "mushafPageNumber", qsTr("This displays the current page number you are on."), HorizontalAlignment.Center, VerticalAlignment.Top, 0, 0, ui.du(4) );
+                        }
+                    }
+                    
+                    onCreationCompleted: {
+                        tutorial.tutorialFinished.connect(onFinished);
+                    }
                 }
             }
         }
@@ -350,10 +396,5 @@ Sheet
     
     onOpened: {
         mushaf.requestPage(currentPage);
-        
-        if ( tutorialToast.tutorial( "tutorialMushaf", qsTr("You can pinch on the page to zoom in and out and scroll up and down."), "images/menu/ic_mushaf.png" ) ) {}
-        else if ( tutorialToast.tutorial( "tutorialNavigation", qsTr("Use the left and right arrows to switch pages."), "images/title/ic_prev.png" ) ) {}
-        else if ( tutorialToast.tutorial( "tutorialJump", qsTr("Tap on the screen, then on the bottom action bar you will see the Surah icon. Use this to select a specific surah in the mushaf you want to jump to."), "images/menu/ic_jump.png" ) ) {}
-        else if ( tutorialToast.tutorial( "tutorialJumpPage", qsTr("Tap on the screen, then on the ... overflow menu you will see the Page icon. Use this to a specific page in the mushaf you wish to jump to."), "images/dropdown/jump_to_page.png" ) ) {}
     }
 }
