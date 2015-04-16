@@ -7,15 +7,14 @@ NavigationPane
     
     onPopTransitionEnded: {
         page.destroy();
-/*        
+
         if ( persist.tutorialVideo("http://youtu.be/7nA27gIxZ08") ) {}
-        else if ( tutorialToast.tutorial( "tutorialAlphanumeric", qsTr("Did you know you can quickly jump to a specific verse by typing its chapter number followed by a ':' and followed by the verse number.\n\nFor example, to jump to Surah Al-Baqara Verse #2, type '2:2' into the search field!"), "images/ic_quran.png" ) ) {}
         else if ( !persist.contains("alFurqanAdvertised") ) {
             definition.source = "AlFurqanAdvertisement.qml";
             var advertisement = definition.createObject();
             advertisement.open();
             persist.saveValueFor("alFurqanAdvertised", 1, false);
-        } */
+        }
     }
     
     function onAyatPicked(surahId, verseId)
@@ -274,7 +273,7 @@ NavigationPane
                 if (quote.hidden != 1)
                 {
                     var body = qsTr("<html><i>“%1”</i>\n\n- <b>%2%4</b>\n\n[%3]</html>").arg( quote.body.replace(/&/g,"&amp;") ).arg(quote.author).arg( quote.reference.replace(/&/g,"&amp;") ).arg( global.getSuffix(quote.birth, quote.death, quote.companion_id, quote.female == 1) );
-                    tutorialToast.init(body, "images/list/ic_quote.png");
+                    notification.init(body, "images/list/ic_quote.png");
                 } else {
                     console.log("QuoteSuppressed");
                 }

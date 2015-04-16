@@ -196,7 +196,7 @@ ListView
     function onDataLoaded(id, data)
     {
         if (id == QueryId.SaveLastProgress) {
-            tutorialToast.init( qsTr("Successfully set bookmark!"), "images/menu/ic_bookmark_add.png" );
+            persist.showToast( qsTr("Successfully set bookmark!"), "images/menu/ic_bookmark_add.png" );
             global.lastPositionUpdated();
         }
     }

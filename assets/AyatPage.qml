@@ -53,7 +53,7 @@ Page
             
             translation.value = translation.value + "\n\n(" + babName.title + " " + babName.subtitle + ")";
         } else if (id == QueryId.SaveBookmark) {
-            tutorialToast.init( qsTr("Favourite added for Chapter %1, Verse %2").arg(surahId).arg(verseId), "images/menu/ic_bookmark_add.png" );
+            persist.showToast( qsTr("Favourite added for Chapter %1, Verse %2").arg(surahId).arg(verseId), "images/menu/ic_bookmark_add.png" );
             global.bookmarksUpdated();
         } else if (id == QueryId.FetchTransliteration) {
             transliteration.text = data[0].html;
@@ -62,7 +62,7 @@ Page
                 surahId = data[0].surah_id;
                 verseId = data[0].verse_id;
             } else {
-                tutorialToast.init( qsTr("Ayat not found"), "images/toast/ic_no_ayat_found.png" );
+                notification.init( qsTr("Ayat not found"), "images/toast/ic_no_ayat_found.png" );
             }
         }
     }

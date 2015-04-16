@@ -99,10 +99,7 @@ NavigationPane
                         theDataModel.insertList(data);
                         navigationPane.parent.unreadContentCount = data.length;
                         
-                        if ( tutorialToast.tutorial( "tutorialSupplications", qsTr("These are the various duaa that are found throughout the Qu'ran."), "images/tabs/ic_supplications.png" ) ) {}
-                        
                         deviceUtils.attachTopBottomKeys(mainPage, listView, true);
-                        
                         tutorial.exec( "tapSupplication", qsTr("These are some of the supplications found throughout the Qu'ran. Tap on any one of them to open it."), HorizontalAlignment.Center, VerticalAlignment.Center, 0, 0, 0, 0, undefined, "d" );
                     }
                 }

@@ -97,7 +97,7 @@ Page
     
     onActionMenuVisualStateChanged: {
         if (actionMenuVisualState == ActionMenuVisualState.VisibleFull) {
-            tutorialToast.execActionBar( "removeConstraints", qsTr("Tap on the '%1' action to clear all the constraint fields.").arg(removeSearchAction.title), "x" );
+            tutorial.execActionBar( "removeConstraints", qsTr("Tap on the '%1' action to clear all the constraint fields.").arg(removeSearchAction.title), "x" );
         }
     }
     
