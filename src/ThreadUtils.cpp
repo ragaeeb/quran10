@@ -54,8 +54,13 @@ SimilarReference ThreadUtils::decorateResults(QVariantList input, ArrayDataModel
     QSet<QString> searches;
     searches << mainSearch;
 
-    foreach (QVariant const& q, additional) {
-        searches << q.toString();
+    foreach (QVariant const& q, additional)
+    {
+        QString value = q.toString();
+
+        if ( !value.isEmpty() ) {
+            searches << value;
+        }
     }
 
     for (int i = 0; i < n; i++)
