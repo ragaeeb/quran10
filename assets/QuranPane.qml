@@ -8,7 +8,7 @@ NavigationPane
     onPopTransitionEnded: {
         page.destroy();
 
-        if ( persist.tutorialVideo("http://youtu.be/7nA27gIxZ08") ) {}
+        if ( tutorial.promptVideo("http://youtu.be/7nA27gIxZ08") ) {}
         else if ( !persist.contains("alFurqanAdvertised") ) {
             definition.source = "AlFurqanAdvertisement.qml";
             var advertisement = definition.createObject();
