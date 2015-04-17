@@ -164,7 +164,7 @@ NavigationPane
                         {
                             tutorial.execCentered( "bookmarkDel", qsTr("To delete an existing bookmark, simply press-and-hold on it and choose 'Remove' from the menu.") );
                             tutorial.execActionBar( "backup", qsTr("Tap on the '%1' action to backup these bookmarks so you can restore them later if you ever switch devices.").arg(backup.title) );
-                            tutorial.execActionBar( "restore", qsTr("Tap on the '%1' action to restore bookmarks that you have backed up before.").arg(restore.title) );
+                            tutorial.execActionBar( "restore", qsTr("Tap on the '%1' action to restore bookmarks that you have backed up before.").arg(restore.title), "r" );
                         }
                     } else if (id == QueryId.ClearAllBookmarks) {
                         persist.showToast( qsTr("Cleared all bookmarks!"), "images/menu/ic_favourite_remove.png" );
