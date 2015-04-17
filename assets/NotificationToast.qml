@@ -22,7 +22,7 @@ Delegate
         }
     }
     
-    function initInternal(text, iconUri)
+    function init(text, iconUri)
     {
         if (text.length > 0)
         {
