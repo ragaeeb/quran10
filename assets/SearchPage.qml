@@ -1,4 +1,4 @@
-import bb.cascades 1.0
+import bb.cascades 1.3
 import com.canadainc.data 1.0
 
 Page
@@ -28,7 +28,9 @@ Page
         if (key == "tapSearchTitle") {
             titleBar.kindProperties.expandableArea.expanded = true;
             tutorial.execBelowTitleBar("searchOptions", qsTr("Tap on the '%1' button to restrict the search to only a specific surah.").arg(restrictButton.text) );
-        } else if (key == "searchOptions") {
+        } if (key == "searchOptions") {
+            tutorial.execBelowTitleBar("searchGoogle", qsTr("Sometimes the translations are not the same depending on where you got your translated text from. Quran10 can also search Google to find a better match than the ones found in the app. Enable the '%1' check box to enable it.").arg(searchGoogleCheckBox.text), ui.du(8) );
+        } else if (key == "searchGoogle") {
             titleBar.kindProperties.expandableArea.expanded = false;
         }
     }
@@ -292,7 +294,9 @@ Page
                         
                         PersistCheckBox
                         {
+                            id: searchGoogleCheckBox
                             topMargin: 20
+                            enabled: helper.showTranslation
                             key: "searchGoogle"
                             text: qsTr("Use Google Assitance") + Retranslate.onLanguageChanged
                         }
