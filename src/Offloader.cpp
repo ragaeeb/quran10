@@ -223,11 +223,11 @@ bool Offloader::computeNecessaryUpdates(QVariantMap q, QByteArray const& data)
         QString language = requestData.value(KEY_LANGUAGE).toString();
 
         qint64 serverTafsirVersion = result.first().toLongLong();
-        qint64 myTafsirVersion = m_persist->getValueFor( KEY_TAFSIR_VERSION(language) ).toLongLong();
+        qint64 myTafsirVersion = m_persist->getFlag( KEY_TAFSIR_VERSION(language) ).toLongLong();
         qint64 serverTafsirSize = result[1].toLongLong();
 
         qint64 serverTranslationVersion = result[4].toLongLong();
-        qint64 myTranslationVersion = m_persist->getValueFor( KEY_TRANSLATION_VERSION(language) ).toLongLong();
+        qint64 myTranslationVersion = m_persist->getFlag( KEY_TRANSLATION_VERSION(language) ).toLongLong();
         qint64 serverTranslationSize = result[5].toLongLong();
         bool tafsirUpdateNeeded = serverTafsirVersion > myTafsirVersion || forcedUpdates.contains(KEY_TAFSIR);
         bool translationUpdateNeeded = serverTranslationVersion > myTranslationVersion || forcedUpdates.contains(KEY_TRANSLATION);
@@ -254,12 +254,12 @@ bool Offloader::computeNecessaryUpdates(QVariantMap q, QByteArray const& data)
                 message = tr("There are newer translation files available. The total download size is ~%1. Do you want to download it now? If you say No you can download it at a later time.").arg( TextUtils::bytesToSize(serverTranslationSize) );
             }
         } else {
-            m_persist->saveValueFor( KEY_LAST_UPDATE, QDateTime::currentMSecsSinceEpoch(), false );
+            m_persist->setFlag( KEY_LAST_UPDATE, QDateTime::currentMSecsSinceEpoch() );
         }
 
         if ( !message.isNull() )
         {
-            bool agreed = m_persist->getValueFor(KEY_UPDATE_CHECK_FLAG).toInt() == ALWAYS_UPDATE_FLAG;
+            bool agreed = m_persist->getFlag(KEY_UPDATE_CHECK_FLAG).toInt() == ALWAYS_UPDATE_FLAG;
             q["result"] = result;
 
             if (!agreed) {
@@ -283,9 +283,9 @@ void Offloader::onFinished(QVariant confirm, QVariant remember, QVariant data)
     bool rememberMeValue = remember.toBool();
 
     if (!agreed && rememberMeValue) { // don't update, and don't ask again
-        m_persist->saveValueFor(KEY_UPDATE_CHECK_FLAG, -1, false);
+        m_persist->setFlag(KEY_UPDATE_CHECK_FLAG, -1);
     } else if (agreed && rememberMeValue) {
-        m_persist->saveValueFor(KEY_UPDATE_CHECK_FLAG, -1, false);
+        m_persist->setFlag(KEY_UPDATE_CHECK_FLAG, -1);
     }
 
     QVariantMap q = data.toMap();
@@ -297,9 +297,9 @@ void Offloader::onFinished(QVariant confirm, QVariant remember, QVariant data)
         QStringList forcedUpdates = requestData.value(KEY_FORCED_UPDATE).toStringList();
         QString language = requestData.value(KEY_LANGUAGE).toString();
         qint64 serverTafsirVersion = result.first().toLongLong();
-        qint64 myTafsirVersion = m_persist->getValueFor( KEY_TAFSIR_VERSION(language) ).toLongLong();
+        qint64 myTafsirVersion = m_persist->getFlag( KEY_TAFSIR_VERSION(language) ).toLongLong();
         qint64 serverTranslationVersion = result[4].toLongLong();
-        qint64 myTranslationVersion = m_persist->getValueFor( KEY_TRANSLATION_VERSION(language) ).toLongLong();
+        qint64 myTranslationVersion = m_persist->getFlag( KEY_TRANSLATION_VERSION(language) ).toLongLong();
         bool tafsirUpdateNeeded = serverTafsirVersion > myTafsirVersion || forcedUpdates.contains(KEY_TAFSIR);
         bool translationUpdateNeeded = serverTranslationVersion > myTranslationVersion || forcedUpdates.contains(KEY_TRANSLATION);
         QVariantList downloadQueue;
@@ -387,7 +387,7 @@ void Offloader::onArchiveWritten()
         QString pluginVersionKey = result.value(KEY_PLUGIN_VERSION_KEY).toString();
         QString pluginVersionValue = result.value(KEY_PLUGIN_VERSION_VALUE).toString();
 
-        m_persist->saveValueFor(pluginVersionKey, pluginVersionValue, false);
+        m_persist->setFlag(pluginVersionKey, pluginVersionValue);
     }
 
     emit deflationDone(result);

@@ -85,7 +85,7 @@ Page
             {
                 if (yesClicked)
                 {
-                    persist.saveValueFor("hideDataWarning", 1, false);
+                    persist.setFlag("hideDataWarning", 1);
                     performPlayback();
                 }
             }
@@ -100,7 +100,7 @@ Page
                 
                 if (player.active) {
                     player.togglePlayback();
-                } else if ( !persist.contains("hideDataWarning") && !player.active ) {
+                } else if ( !persist.containsFlag("hideDataWarning") && !player.active ) {
                     persist.showDialog( playAllAction, qsTr("Confirmation"), qsTr("We are about to download a whole bunch of MP3 recitations, you should only attempt to do this if you have either an unlimited data plan, or are connected via Wi-Fi. Otherwise you might incur a lot of data charges. Are you sure you want to continue? If you select No you can always attempt to download again later.") );
                 } else {
                     performPlayback();

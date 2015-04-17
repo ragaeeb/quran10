@@ -388,6 +388,9 @@ Page
         
         fadeInLogo.play();
         translate.play();
+        
+        helper.textualChange.connect(onChanged);
+        tutorial.tutorialFinished.connect(onTutorialFinished);
     }
     
     function onChanged() {
@@ -399,11 +402,6 @@ Page
         if (key == "displayStyle") {
             sortOrder.expanded = true;
         }
-    }
-    
-    onCreationCompleted: {
-        helper.textualChange.connect(onChanged);
-        tutorial.tutorialFinished.connect(onTutorialFinished);
     }
     
     attachedObjects: [

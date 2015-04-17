@@ -91,7 +91,7 @@ void QueryHelper::settingChanged(QString const& key)
 
         if ( !params.isEmpty() ) // update check needed
         {
-            bool suppress = m_persist->getValueFor(KEY_UPDATE_CHECK_FLAG).toInt() == SUPPRESS_UPDATE_FLAG;
+            bool suppress = m_persist->getFlag(KEY_UPDATE_CHECK_FLAG).toInt() == SUPPRESS_UPDATE_FLAG;
 
             if ( params.contains(KEY_FORCED_UPDATE) || !suppress ) // if it's a forced update
             {
@@ -510,12 +510,12 @@ QObject* QueryHelper::getTafsirHelper() {
 
 
 QString QueryHelper::tafsirVersion() const {
-    return m_persist->getValueFor( KEY_TAFSIR_VERSION(m_translation) ).toString();
+    return m_persist->getFlag( KEY_TAFSIR_VERSION(m_translation) ).toString();
 }
 
 
 QString QueryHelper::translationVersion() const {
-    return m_persist->getValueFor( KEY_TRANSLATION_VERSION(m_translation) ).toString();
+    return m_persist->getFlag( KEY_TRANSLATION_VERSION(m_translation) ).toString();
 }
 
 

@@ -494,7 +494,7 @@ Page
                         console.log("UserEvent: InvokeTafsir");
                         helper.fetchAllTafsirForSuite(bioPage, d.id);
                     } else if (d.type == "website") {
-                        persist.donate(d.uri);
+                        persist.openUri(d.uri);
                     } else if (d.type == "phone") {
                         persist.call(d.uri);
                     } else if (d.type == "email") {

@@ -28,7 +28,6 @@ class ApplicationUI : public QObject
 {
 	Q_OBJECT
 
-	bb::system::InvokeManager m_invokeManager;
 	LazySceneCover m_sceneCover;
 	Persistance m_persistance;
 	QueryHelper m_helper;
