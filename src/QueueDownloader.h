@@ -41,20 +41,16 @@ public:
     QueueDownloader(QObject* parent=NULL);
     virtual ~QueueDownloader();
 
-    /**
-     * Queues up a batch of requests.
-     * @param toProcess The first key is the URL to download, and the second is the cookie.
-     */
+    bool isBlocked() const;
+    bool updateData(QVariantMap const& cookie);
+    int currentIndex() const;
+    int queued() const;
     Q_INVOKABLE void process(QVariantList const& toProcess);
     Q_INVOKABLE void process(QVariantMap const& toProcess, bool force=false);
     Q_SLOT void abort();
-    bool isBlocked() const;
-    int queued() const;
-    int currentIndex() const;
-    QObject* model();
     Q_SLOT void decreaseBlockingCount();
+    QObject* model();
     QVariantMap updateData(QVariantMap cookie, bool error, QString const& pendingStatus=QString());
-    bool updateData(QVariantMap const& cookie);
 
 signals:
     void currentIndexChanged();

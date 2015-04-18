@@ -28,18 +28,19 @@ struct SimilarReference
 
 struct ThreadUtils
 {
-    static QString buildSearchQuery(QVariantList& params, bool isArabic, int chapterNumber, QVariantList additional, bool andMode);
-    static QString buildChaptersQuery(QVariantList& args, QString const& text, bool showTranslation);
-    static QString compressBookmarks(QString const& destinationZip);
-    static void compressFiles(QSet<QString>& attachments);
+    static bool allAyatImagesExist(QVariantList const& surahData, QString const& outputDirectory);
     static bool performRestore(QString const& source);
+    static QString buildChaptersQuery(QVariantList& args, QString const& text, bool showTranslation);
+    static QString buildSearchQuery(QVariantList& params, bool isArabic, int chapterNumber, QVariantList additional, bool andMode);
+    static QString compressBookmarks(QString const& destinationZip);
+    static QVariantList normalizeJuzs(QVariantList const& source);
+    static QVariantList removeOutOfRange(QVariantList input, int fromChapter, int fromVerse, int toChapter, int toVerse);
+    static QVariantMap writePluginArchive(QVariantMap const& cookie, QByteArray const& data, QString const& pathKey);
     static SimilarReference decorateResults(QVariantList input, ArrayDataModel* adm, QString const& mainSearch, QVariantList const& additional);
     static SimilarReference decorateSimilar(QVariantList input, ArrayDataModel* adm, AbstractTextControl* atc, QString body);
-    static QVariantMap writePluginArchive(QVariantMap const& cookie, QByteArray const& data, QString const& pathKey);
-    static QVariantList removeOutOfRange(QVariantList input, int fromChapter, int fromVerse, int toChapter, int toVerse);
-    static QVariantList normalizeJuzs(QVariantList const& source);
+    static void cleanLegacyPics();
+    static void compressFiles(QSet<QString>& attachments);
     static void onResultsDecorated(SimilarReference const& result);
-    static bool allAyatImagesExist(QVariantList const& surahData, QString const& outputDirectory);
 };
 
 } /* namespace quran */
