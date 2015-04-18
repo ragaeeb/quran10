@@ -107,7 +107,7 @@ QVariantMap processPlaylist(QString const& reciter, QString const& outputDirecto
 namespace quran {
 
 RecitationHelper::RecitationHelper(QueueDownloader* queue, Persistance* p, QObject* parent) :
-        QObject(parent), m_queue(queue), m_persistance(p)
+        QObject(parent), m_persistance(p), m_queue(queue)
 {
     connect( queue, SIGNAL( requestComplete(QVariant const&, QByteArray const&) ), this, SLOT( onRequestComplete(QVariant const&, QByteArray const&) ) );
     connect( &m_futureResult, SIGNAL( finished() ), this, SLOT( onPlaylistReady() ) );
