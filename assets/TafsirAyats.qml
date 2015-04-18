@@ -119,6 +119,7 @@ Page
     
     titleBar: TitleBar
     {
+        scrollBehavior: TitleBarScrollBehavior.NonSticky
         title: qsTr("Ayats") + Retranslate.onLanguageChanged
         
         acceptAction: ActionItem

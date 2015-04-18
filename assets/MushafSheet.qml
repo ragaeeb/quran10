@@ -357,16 +357,17 @@ Sheet
                     }
                     
                     onAnimationFinished: {
-                        tutorial.execActionBar( "mushafBack", qsTr("To exit the mushaf mode, simply tap on the Back button at the bottom.") );
                         tutorial.exec( "mushafPrevPage", qsTr("To go to the previous page, tap here."), HorizontalAlignment.Right, VerticalAlignment.Center );
                         tutorial.exec( "mushafNextPage", qsTr("To go to the next page, tap here."), HorizontalAlignment.Left, VerticalAlignment.Center );
-                        tutorial.execActionBar( "mushafMenu", qsTr("Tap in the bottom-right to open the menu."), "x" );
                         
                         if (!mushaf.stretchMushaf) {
                             tutorial.execCentered("mushafZoom", qsTr("Do a pinch gesture anywhere on the image to enlarge it or make it smaller! Or scroll right-to-left or vice-versa to pan the image."), "images/tutorial/pinch.png");
                         }
                         
                         tutorial.execCentered( "mushafTapPage", qsTr("To display the current page number, simply tap anywhere on the page and the title bar will come up."), HorizontalAlignment.Left, VerticalAlignment.Center );
+                        tutorial.exec( "mushafTajweed", qsTr("Use this mode to display the version of the Mushaf that has the pronunciation rules on it."), HorizontalAlignment.Left, VerticalAlignment.Top, ui.du(2), 0, ui.du(4) );
+                        tutorial.exec( "mushafNoTajweed", qsTr("Use this mode to display the version of the Mushaf that does not have pronunciation rules written on it."), HorizontalAlignment.Right, VerticalAlignment.Top, 0, ui.du(2), ui.du(4) );
+                        tutorial.exec( "mushafPageNumber", qsTr("This displays the current page number you are on."), HorizontalAlignment.Center, VerticalAlignment.Top, 0, 0, ui.du(4) );
                     }
                     
                     function onFinished(key)
@@ -375,10 +376,6 @@ Sheet
                         {
                             hiddenTitle.visibility = ChromeVisibility.Overlay;
                             mainPage.actionBarVisibility = ChromeVisibility.Overlay;
-                            
-                            tutorial.exec( "mushafTajweed", qsTr("Use this mode to display the version of the Mushaf that has the pronunciation rules on it."), HorizontalAlignment.Left, VerticalAlignment.Top, ui.du(2), 0, ui.du(4) );
-                            tutorial.exec( "mushafNoTajweed", qsTr("Use this mode to display the version of the Mushaf that does not have pronunciation rules written on it."), HorizontalAlignment.Right, VerticalAlignment.Top, 0, ui.du(2), ui.du(4) );
-                            tutorial.exec( "mushafPageNumber", qsTr("This displays the current page number you are on."), HorizontalAlignment.Center, VerticalAlignment.Top, 0, 0, ui.du(4) );
                         }
                     }
                     
@@ -396,5 +393,7 @@ Sheet
     
     onOpened: {
         mushaf.requestPage(currentPage);
+        tutorial.execActionBar( "mushafBack", qsTr("To exit the mushaf mode, simply tap on the Back button at the bottom.") );
+        tutorial.execActionBar( "mushafMenu", qsTr("Tap in the bottom-right to open the menu."), "x" );
     }
 }

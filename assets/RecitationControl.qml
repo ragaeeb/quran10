@@ -47,8 +47,11 @@ Container
                 duration: 1000
                 easingCurve: StockCurve.QuinticOut
                 
-                onEnded: {
+                onCreationCompleted: {
                     tutorial.execBelowTitleBar( "recitePlay", qsTr("Tap on the Play button to begin playback of this ayat or download it if it is not yet downloaded."), 0, "l" );
+                }
+                
+                onEnded: {
                     tutorial.execBelowTitleBar( "reciteSeek", qsTr("Once playback begins, you can use the seek bar to rewind or forward the recitation."), 0, "l", "r" );
                 }
             }

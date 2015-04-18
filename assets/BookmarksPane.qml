@@ -114,6 +114,7 @@ NavigationPane
         
         titleBar: TitleBar {
             title: qsTr("Favourites") + Retranslate.onLanguageChanged
+            scrollBehavior: TitleBarScrollBehavior.NonSticky
         }
         
         Container
@@ -149,10 +150,7 @@ NavigationPane
                 
                 function onDataLoaded(id, data)
                 {
-                    if (id == QueryId.SetupBookmarks) {
-                        busy.delegateActive = true;
-                        bookmarkHelper.fetchAllBookmarks(listView);
-                    } else if (id == QueryId.FetchAllBookmarks) {
+                    if (id == QueryId.FetchAllBookmarks) {
                         busy.delegateActive = false;
                         
                         gdm.clear();

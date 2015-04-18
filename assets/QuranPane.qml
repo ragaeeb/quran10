@@ -9,11 +9,10 @@ NavigationPane
         page.destroy();
 
         if ( tutorial.promptVideo("http://youtu.be/7nA27gIxZ08") ) {}
-        else if ( !persist.containsFlag("alFurqanAdvertised") ) {
+        else if ( reporter.online && !persist.containsFlag("alFurqanAdvertised") ) {
             definition.source = "AlFurqanAdvertisement.qml";
             var advertisement = definition.createObject();
             advertisement.open();
-            persist.setFlag("alFurqanAdvertised", 1);
         }
     }
     

@@ -16,6 +16,7 @@ Page
     titleBar: TitleBar
     {
         kind: TitleBarKind.FreeForm
+        scrollBehavior: TitleBarScrollBehavior.NonSticky
         kindProperties: FreeFormTitleBarKindProperties
         {
             Container

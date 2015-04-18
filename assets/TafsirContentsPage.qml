@@ -27,6 +27,7 @@ Page
     
     titleBar: TitleBar {
         id: tb
+        scrollBehavior: TitleBarScrollBehavior.NonSticky
     }
     
     onCreationCompleted: {
