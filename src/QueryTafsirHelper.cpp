@@ -322,7 +322,7 @@ qint64 QueryTafsirHelper::generateIndividualField(QObject* caller, QString const
     } else {
         qint64 id = QDateTime::currentMSecsSinceEpoch();
 
-        if ( value.startsWith("Shaykh ") || value.startsWith("Sheikh ") || value.startsWith("Imam ") )
+        if ( value.startsWith("Shaykh ") || value.startsWith("Sheikh ") || value.startsWith("Imam ") || value.startsWith("Imaam ") )
         {
             QStringList all = value.split(" ");
             QString prefix = all.takeFirst();
