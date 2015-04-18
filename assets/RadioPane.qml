@@ -86,11 +86,11 @@ NavigationPane
                         onEnded: {
                             dropDown.expanded = true;
                             navigationPane.parent.unreadContentCount = dropDown.count();
-                            tutorial.exec(undefined, qsTr("These are some of the stations where they continuously stream Qu'ran. Be careful though, this uses data. Be sure to be on a proper wireless network."), HorizontalAlignment.Center, VerticalAlignment.Top, ui.du(2), 0, 175);
                         }
                         
                         onCreationCompleted: {
                             play();
+                            tutorial.exec(undefined, qsTr("These are some of the stations where they continuously stream Qu'ran. Be careful though, this uses data. Be sure to be on a proper wireless network."), HorizontalAlignment.Center, VerticalAlignment.Top, ui.du(2), 0, 175);
                         }
                     }
                 ]

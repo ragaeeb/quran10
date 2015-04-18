@@ -29,6 +29,7 @@ Page
     
     titleBar: TitleBar {
         title: qsTr("Select Location") + Retranslate.onLanguageChanged
+        scrollBehavior: TitleBarScrollBehavior.NonSticky
     }
     
     function performSearch()

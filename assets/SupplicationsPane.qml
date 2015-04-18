@@ -16,6 +16,7 @@ NavigationPane
         
         titleBar: TitleBar {
             title: qsTr("Supplications") + Retranslate.onLanguageChanged
+            scrollBehavior: TitleBarScrollBehavior.NonSticky
         }
         
         Container

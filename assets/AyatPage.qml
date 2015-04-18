@@ -320,12 +320,17 @@ Page
                 {
                     fromOpacity: 0
                     toOpacity: 0.5
-                    duration: 1000
-                    delay: 500
+                    duration: 750
+                    delay: 250
                     easingCurve: StockCurve.QuadraticOut
                     
                     onCreationCompleted: {
                         play();
+                        
+                        tutorial.execActionBar( "markFav", qsTr("To quickly access this verse again, tap on the 'Mark Favourite' action at the bottom to put it in the Favourites tab."));
+                        tutorial.execActionBar( "addShortcutHome", qsTr("To quickly access this verse again, tap on the 'Add Shortcut' action at the bottom to pin it to your homescreen."), "l" );
+                        tutorial.execActionBar( "share", qsTr("To share this verse with your friends tap on the 'Share' action at the bottom."), "r" );
+                        tutorial.exec( "lpArabic", qsTr("Press-and-hold on the arabic text if you want to copy or share it."), HorizontalAlignment.Right, VerticalAlignment.Top, 0, ui.du(2), ui.du(21));
                     }
                     
                     onEnded: {
@@ -338,10 +343,6 @@ Page
 
                         tutorial.execCentered( "arabicZoom", qsTr("Do a pinch gesture on the arabic text to increase or decrease the size of the font!"), "images/tutorial/pinch.png" );
                         tutorial.exec( "transliteration", qsTr("Tap on the arabic text to show the transliteration."), HorizontalAlignment.Right, VerticalAlignment.Top, 0, ui.du(2), ui.du(21));
-                        tutorial.execActionBar( "markFav", qsTr("To quickly access this verse again, tap on the 'Mark Favourite' action at the bottom to put it in the Favourites tab."));
-                        tutorial.execActionBar( "addShortcutHome", qsTr("To quickly access this verse again, tap on the 'Add Shortcut' action at the bottom to pin it to your homescreen."), "l" );
-                        tutorial.execActionBar( "share", qsTr("To share this verse with your friends tap on the 'Share' action at the bottom."), "r" );
-                        tutorial.exec( "lpArabic", qsTr("Press-and-hold on the arabic text if you want to copy or share it."), HorizontalAlignment.Right, VerticalAlignment.Top, 0, ui.du(2), ui.du(21));
 
                         if (helper.showTranslation) {
                             tutorial.exec( "translationZoom", qsTr("Do a pinch gesture on the translation text to increase or decrease the size of the font!"), HorizontalAlignment.Center, VerticalAlignment.Center, 0, 0, 0, ui.du(10), "images/tutorial/pinch.png" );

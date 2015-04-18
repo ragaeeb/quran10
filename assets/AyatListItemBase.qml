@@ -83,6 +83,8 @@ Container
     contextMenuHandler: [
         ContextMenuHandler
         {
+            id: cmh
+            
             onPopulating: {
                 if (!itemRoot.ListItem.view.showContextMenu) {
                     event.abort();
@@ -92,7 +94,12 @@ Container
                     if (all && all.length > 0 && all[0] != itemRoot.ListItem.indexPath) {
                         itemRoot.ListItem.view.select(all[0], false);
                     }
-                    
+                }
+            }
+
+            onVisualStateChanged: {
+                if (cmh.visualState == ContextMenuVisualState.VisibleCompact)
+                {
                     tutorial.exec("memorize", qsTr("Memorize: This mode begins the playback of the current verse followed by the next 7 verses 20 times each to help you memorize it."), HorizontalAlignment.Right, VerticalAlignment.Center, 0, ui.du(2), 0, 0, memorize.imageSource.toString(), "d");
                     tutorial.exec("playFromHere", qsTr("Play From Here: This begins playback of the recitation starting from this verse"), HorizontalAlignment.Right, VerticalAlignment.Center, 0, ui.du(2), 0, 0, playFromHere.imageSource.toString(), "d");
                     tutorial.exec("setBookmark", qsTr("You can use the Set Bookmark action to place a bookmark on this verse so you can resume your reading the next time right to this verse quickly."), HorizontalAlignment.Right, VerticalAlignment.Center, 0, ui.du(2), 0, 0, setBookmark.imageSource.toString(), "d");

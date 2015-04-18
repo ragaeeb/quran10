@@ -343,6 +343,7 @@ Page
                     
                     onCreationCompleted: {
                         play();
+                        tutorial.execBelowTitleBar("searchField", qsTr("Type your search query in the text field and press the Enter key on the keyboard.") );
                     }
                     
                     onStarted: {
@@ -350,7 +351,6 @@ Page
                     }
                     
                     onEnded: {
-                        tutorial.execBelowTitleBar("searchField", qsTr("Type your search query in the text field and press the Enter key on the keyboard.") );
                         tutorial.execActionBar("searchAction", qsTr("Tap here to perform the search or simply press the Enter key on the keyboard.") );
                         tutorial.exec("tapSearchTitle", qsTr("Tap on the title bar to expand it and see more search options."), HorizontalAlignment.Center, VerticalAlignment.Top );
                         var isNew = tutorial.execActionBar("constraint", qsTr("Tap on the icon at the bottom of the action bar if you want to add additional constraints to the search."), "r" );

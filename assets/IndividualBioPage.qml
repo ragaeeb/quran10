@@ -90,7 +90,9 @@ Page
         offloader.fillType(data, id, bioModel);
     }
     
-    titleBar: TitleBar {}
+    titleBar: TitleBar {
+        scrollBehavior: TitleBarScrollBehavior.NonSticky
+    }
     
     Container
     {
