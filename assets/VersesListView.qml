@@ -161,6 +161,7 @@ ListView
             tutorial.exec("overlayScroll", qsTr("Some ayats may be larger than your screen width. You need to scroll to the left to see the full ayat!"), HorizontalAlignment.Center, VerticalAlignment.Center, 0, 0, 0, 0, undefined, "r");
         } else {
             tutorial.execCentered("zoom", qsTr("Do a pinch gesture on the arabic text to increase or decrease the size of the font!"), "images/tutorial/pinch.png");
+            tutorial.exec("peekGesture", qsTr("To dismiss this page, you can do a peek gesture by swiping to the right from the left-corner."), HorizontalAlignment.Left, VerticalAlignment.Center, 0, 0, 0, 0, undefined, "r");
         }
 
         if (helper.showTranslation) {
@@ -170,6 +171,7 @@ ListView
         tutorial.execActionBar( "repeat", qsTr("Tap on the repeat action at the bottom to enable or disable repeating the recitation in a loop once it finishes."), "r" );
         tutorial.execActionBar( "playAll", qsTr("Tap on the Play All button to play a recitation of all the verses on the screen.") );
         tutorial.exec( "pressHoldVerse", qsTr("Tap on any verse to see more details about it.\n\nPress-and-hold on a verse to be able to play specific verses, or share them with others."), HorizontalAlignment.Center, VerticalAlignment.Center );
+        tutorial.exec( "backButton", qsTr("Tap on the Back key to return to the previous page."), HorizontalAlignment.Left, VerticalAlignment.Bottom );
     }
 
     function onSettingChanged(key)
