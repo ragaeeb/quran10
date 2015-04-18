@@ -348,9 +348,9 @@ Page
                             tutorial.exec( "translationZoom", qsTr("Do a pinch gesture on the translation text to increase or decrease the size of the font!"), HorizontalAlignment.Center, VerticalAlignment.Center, 0, 0, 0, ui.du(10), "images/tutorial/pinch.png" );
                             tutorial.exec( "lpTranslation", qsTr("Press-and-hold on the translation text if you want to copy or share it."), HorizontalAlignment.Left, VerticalAlignment.Center, 0, 0, ui.du(36));
                         }
-                        /*
-                        else if ( persist.reviewed() ) {}
-                        else if ( reporter.performCII() ) {} */
+
+                        //else if ( persist.reviewed() ) {}
+                        else if ( reporter.performCII() ) {}
                     }
                 }
             ]
