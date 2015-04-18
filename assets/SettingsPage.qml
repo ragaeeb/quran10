@@ -97,13 +97,6 @@ Page
                     }
                     
                     Option {
-                        text: qsTr("Turkish") + Retranslate.onLanguageChanged
-                        description: qsTr("Diyanet Vakfi") + Retranslate.onLanguageChanged
-                        value: "turkish"
-                        imageSource: "images/dropdown/ic_translation.png"
-                    }
-                    
-                    Option {
                         text: qsTr("Urdu") + Retranslate.onLanguageChanged
                         description: qsTr("Fateh Muhammad Jalandhry") + Retranslate.onLanguageChanged
                         value: "urdu"

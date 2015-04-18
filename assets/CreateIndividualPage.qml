@@ -120,7 +120,7 @@ Page
             }
         } else if (id == QueryId.FetchAllWebsites) {
             sites.count = results.length;
-            results = offloader.decorateWebsites(results);
+            results = offloader.fillType(results, id);
             adm.clear();
             adm.append(results);
         } else if (id == QueryId.RemoveWebsite || id == QueryId.AddWebsite) {
@@ -401,7 +401,7 @@ Page
         Header {
             id: sites
             property int count: 0
-            title: qsTr("Websites") + Retranslate.onLanguageChanged
+            title: qsTr("Websites, & Contact Information") + Retranslate.onLanguageChanged
             visible: count > 0
             subtitle: count
         }
@@ -435,7 +435,7 @@ Page
             listItemComponents: [
                 ListItemComponent
                 {
-                    type: "uri"
+                    type: "website"
                     
                     StandardListItem
                     {
