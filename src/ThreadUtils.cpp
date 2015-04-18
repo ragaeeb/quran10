@@ -325,4 +325,23 @@ bool ThreadUtils::allAyatImagesExist(QVariantList const& surahData, QString cons
 }
 
 
+void ThreadUtils::cleanLegacyPics()
+{
+    QDir selectedDir( QDir::home() );
+
+    selectedDir.setFilter(QDir::Files | QDir::NoDot | QDir::NoDotDot);
+    selectedDir.setNameFilters( QStringList() << "*.jpg" );
+
+    QDirIterator it(selectedDir);
+    int count = 0;
+
+    while ( it.hasNext() ) {
+        QFile::remove( it.next() );
+        ++count;
+    }
+
+    LOGGER("Removed" << count);
+}
+
+
 } /* namespace quran */

@@ -22,37 +22,41 @@ using namespace canadainc;
 class QueryHelper : public QObject
 {
 	Q_OBJECT
-	Q_PROPERTY(bool showTranslation READ showTranslation NOTIFY textualChange)
-	Q_PROPERTY(int primarySize READ primarySize NOTIFY fontSizeChanged)
-	Q_PROPERTY(int translationSize READ translationSize NOTIFY fontSizeChanged)
-	Q_PROPERTY(QString translation READ translation NOTIFY textualChange)
-	Q_PROPERTY(QString tafsirVersion READ tafsirVersion NOTIFY textualChange)
-	Q_PROPERTY(QString translationVersion READ translationVersion NOTIFY textualChange)
+    Q_PROPERTY(bool showTranslation READ showTranslation NOTIFY textualChange)
+    Q_PROPERTY(int primarySize READ primarySize NOTIFY fontSizeChanged)
+    Q_PROPERTY(int translationSize READ translationSize NOTIFY fontSizeChanged)
+    Q_PROPERTY(QString tafsirVersion READ tafsirVersion NOTIFY textualChange)
+    Q_PROPERTY(QString translation READ translation NOTIFY textualChange)
+    Q_PROPERTY(QString translationVersion READ translationVersion NOTIFY textualChange)
 
     DatabaseHelper m_sql;
     Persistance* m_persist;
     QString m_translation;
-    QueryTafsirHelper m_tafsirHelper;
     QueryBookmarkHelper m_bookmarkHelper;
+    QueryTafsirHelper m_tafsirHelper;
 
 private slots:
     void settingChanged(QString const& key);
 
 signals:
     void fontSizeChanged();
-    void updateCheckNeeded(QVariantMap const& params);
     void textualChange();
+    void updateCheckNeeded(QVariantMap const& params);
 
 public:
 	QueryHelper(Persistance* persist);
 	virtual ~QueryHelper();
 
-    Q_INVOKABLE void fetchChapters(QObject* caller, QString const& text=QString());
+    bool showTranslation() const;
+    int primarySize() const;
+    int translationSize() const;
+
+    Q_INVOKABLE bool searchQuery(QObject* caller, QString const& trimmedText, int chapterNumber=0, QVariantList const& additional=QVariantList(), bool andMode=true);
     Q_INVOKABLE void copyIndividualsFromSource(QObject* caller, QString const& source);
     Q_INVOKABLE void fetchAdjacentAyat(QObject* caller, int surahId, int verseId, int delta);
     Q_INVOKABLE void fetchAllAyats(QObject* caller, int fromChapter, int toChapter=0);
-    Q_INVOKABLE void fetchAllChapters(QObject* caller);
     Q_INVOKABLE void fetchAllChapterAyatCount(QObject* caller);
+    Q_INVOKABLE void fetchAllChapters(QObject* caller);
     Q_INVOKABLE void fetchAllDuaa(QObject* caller);
     Q_INVOKABLE void fetchAllQarees(QObject* caller, int minLevel=1);
     Q_INVOKABLE void fetchAllQuotes(QObject* caller, qint64 individualId=0);
@@ -65,6 +69,7 @@ public:
     Q_INVOKABLE void fetchAyatsForTafsir(QObject* caller, qint64 suitePageId);
     Q_INVOKABLE void fetchBio(QObject* caller, qint64 individualId);
     Q_INVOKABLE void fetchChapter(QObject* caller, int chapter);
+    Q_INVOKABLE void fetchChapters(QObject* caller, QString const& text=QString());
     Q_INVOKABLE void fetchJuzInfo(QObject* caller, int juzId);
     Q_INVOKABLE void fetchPageNumbers(QObject* caller);
     Q_INVOKABLE void fetchQuote(QObject* caller, qint64 id);
@@ -76,22 +81,17 @@ public:
     Q_INVOKABLE void fetchTafsirCountForAyat(QObject* caller, int chapterNumber, int verseNumber);
     Q_INVOKABLE void fetchTransliteration(QObject* caller, int chapter, int verse);
     Q_INVOKABLE void replaceIndividualsFromSource(QObject* caller, QString const& source);
-    Q_INVOKABLE bool searchQuery(QObject* caller, QString const& trimmedText, int chapterNumber=0, QVariantList const& additional=QVariantList(), bool andMode=true);
-
-    bool showTranslation() const;
-    int primarySize() const;
-    int translationSize() const;
-    Q_SLOT void lazyInit();
     Q_SLOT void initForeignKeys();
-    QString tafsirName() const;
-    QString translation() const;
-    QueryBookmarkHelper* getBookmarkHelper();
+    Q_SLOT void lazyInit();
+    Q_SLOT void refreshDatabase();
+
     QObject* getExecutor();
     QObject* getTafsirHelper();
+    QString tafsirName() const;
     QString tafsirVersion() const;
+    QString translation() const;
     QString translationVersion() const;
-
-    Q_SLOT void refreshDatabase();
+    QueryBookmarkHelper* getBookmarkHelper();
 };
 
 } /* namespace quran */
