@@ -87,7 +87,8 @@ Page
             persist.showToast( qsTr("Student added!"), "images/menu/ic_edit_bio.png" );
         }
         
-        offloader.fillType(data, id, bioModel);
+        data = offloader.fillType(data, id);
+        bioModel.insertList(data);
     }
     
     titleBar: TitleBar {

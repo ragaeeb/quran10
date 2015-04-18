@@ -45,7 +45,7 @@ public:
     virtual ~Offloader();
 
     bool computeNecessaryUpdates(QVariantMap q, QByteArray const& data);
-    Q_INVOKABLE bool fillType(QVariantList input, int queryId, bb::cascades::GroupDataModel* gdm);
+    Q_INVOKABLE QVariantList fillType(QVariantList input, int queryId);
     Q_INVOKABLE QString textualizeAyats(bb::cascades::DataModel* adm, QVariantList const& selectedIndices, QString const& chapterTitle, bool showTranslation);
     Q_INVOKABLE QVariantList decorateWebsites(QVariantList input);
     Q_INVOKABLE QVariantList normalizeJuzs(QVariantList const& source);

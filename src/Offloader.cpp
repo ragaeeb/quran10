@@ -441,7 +441,7 @@ QVariantList Offloader::decorateWebsites(QVariantList input)
 }
 
 
-bool Offloader::fillType(QVariantList input, int queryId, bb::cascades::GroupDataModel* gdm)
+QVariantList Offloader::fillType(QVariantList input, int queryId)
 {
     QMap<int,QString> map;
     map[QueryId::FetchAllTafsir] = "tafsir";
@@ -469,11 +469,10 @@ bool Offloader::fillType(QVariantList input, int queryId, bb::cascades::GroupDat
             }
         }
 
-        gdm->insertList(input);
-        return true;
+        return input;
     }
 
-    return false;
+    return QVariantList();
 }
 
 
