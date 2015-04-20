@@ -30,6 +30,7 @@ Container
     
     onCreationCompleted: {
         Application.thumbnail.connect(doLookup);
+        helper.textualChange.connect(doLookup);
         doLookup();
     }
 
