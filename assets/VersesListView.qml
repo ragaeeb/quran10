@@ -119,9 +119,15 @@ ListView
     
     function clearPrevious()
     {
-        var data = verseModel.value(previousPlayedIndex);
-        data.playing = false;
-        verseModel.replace(previousPlayedIndex, data);
+        if (previousPlayedIndex >= 0)
+        {
+            var data = verseModel.value(previousPlayedIndex);
+            
+            if (data) {
+                data.playing = false;
+                verseModel.replace(previousPlayedIndex, data);
+            }
+        }
     }
     
     function onMetaDataChanged(metaData)
