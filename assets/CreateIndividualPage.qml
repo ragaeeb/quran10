@@ -35,7 +35,7 @@ Page
                 console.log("UserEvent: NewSite");
                 var uri = persist.showBlockingPrompt( qsTr("Enter url"), qsTr("Please enter the website address for this individual:"), "http://", qsTr("Enter url (ie: http://mtws.com)"), 100, false, qsTr("Save"), qsTr("Cancel"), SystemUiInputMode.Url ).trim();
 
-                if ( textUtils.isUri(uri) ) {
+                if ( textUtils.isUrl(uri) ) {
                     tafsirHelper.addWebsite(createRijaal, individualId, uri);
                 } else {
                     persist.showToast( qsTr("Invalid URL entered!"), "images/menu/ic_remove_site.png" );
