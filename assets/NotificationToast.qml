@@ -22,12 +22,12 @@ Delegate
         }
     }
     
-    function init(text, iconUri)
+    function init(text, iconUri, plainText)
     {
         if (text.length > 0)
         {
             var allData = data;
-            allData.push( {'body': text, 'icon': iconUri} );
+            allData.push( {'body': text, 'icon': iconUri, 'plainText': plainText ? plainText : text} );
             data = allData;
 
             if (!active) {
@@ -125,7 +125,8 @@ Delegate
                         horizontalAlignment: HorizontalAlignment.Fill
                         verticalAlignment: VerticalAlignment.Fill
                         
-                        Label {
+                        Label
+                        {
                             id: bodyLabel
                             multiline: true
                             textStyle.fontSize: FontSize.XSmall
@@ -143,6 +144,24 @@ Delegate
                         ImagePaintDefinition {
                             id: bg
                             imageSource: "images/toast/toast_bg.amd"
+                        }
+                    ]
+                    
+                    contextActions: [
+                        ActionSet
+                        {
+                            subtitle: bodyLabel.text
+                            
+                            ActionItem
+                            {
+                                imageSource: "images/menu/ic_copy.png"
+                                title: qsTr("Copy") + Retranslate.onLanguageChanged
+                                
+                                onTriggered: {
+                                    console.log("UserEvent: CopyQuote");
+                                    persist.copyToClipboard( data[data.length-1].plainText );
+                                }
+                            }
                         }
                     ]
                 }

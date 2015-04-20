@@ -107,90 +107,119 @@ QtObject
         
         Container
         {
+            layout: DockLayout {}
             horizontalAlignment: HorizontalAlignment.Fill
             verticalAlignment: VerticalAlignment.Fill
-            leftPadding: 10; rightPadding: 10
             
-            gestureHandlers: [
-                FontSizePincher
-                {
-                    key: "tafsirSize"
-                    minValue: 6
-                    maxValue: 18
-                    userEventId: "AyatTafsirDialogPinched"
-                }
-            ]
-            
-            TextArea
+            Container
             {
-                id: authors
-                editable: false
-                backgroundVisible: false
-                content.flags: TextContentFlag.ActiveText | TextContentFlag.EmoticonsOff
-                input.flags: TextInputFlag.AutoCapitalizationOff | TextInputFlag.AutoCorrectionOff | TextInputFlag.SpellCheckOff | TextInputFlag.WordSubstitutionOff | TextInputFlag.AutoPeriodOff
-                textStyle.color: Color.White
-                textStyle.fontSize: FontSize.PointValue
-                textStyle.fontSizeValue: body.textStyle.fontSizeValue
-                bottomPadding: 0; bottomMargin: 0
+                horizontalAlignment: HorizontalAlignment.Fill
                 verticalAlignment: VerticalAlignment.Fill
-                
-                activeTextHandler: ActiveTextHandler
-                {
-                    onTriggered: {
-                        var link = event.href.toString();
-                        
-                        if ( link.match("\\d+") ) {
-                            persist.invoke("com.canadainc.Quran10.bio.previewer", "", "", "", link);
-                        }
-                        
-                        event.abort();
-                    }
-                }
-            }
-            
-            TextArea
-            {
-                id: body
-                editable: false
-                backgroundVisible: false
-                content.flags: TextContentFlag.ActiveText | TextContentFlag.EmoticonsOff
-                input.flags: TextInputFlag.AutoCapitalizationOff | TextInputFlag.AutoCorrectionOff | TextInputFlag.SpellCheckOff | TextInputFlag.WordSubstitutionOff | TextInputFlag.AutoPeriodOff
+                background: Color.Black
                 opacity: 0
-                textStyle.color: Color.White
-                topPadding: 0;
-                textStyle.fontSize: FontSize.PointValue
-                textStyle.fontSizeValue: persist.getValueFor("tafsirSize")
-                bottomPadding: 0; bottomMargin: 0
-                verticalAlignment: VerticalAlignment.Fill
-                
-                function onSettingChanged(key)
-                {
-                    if (key == "tafsirSize") {
-                        textStyle.fontSizeValue = persist.getValueFor("tafsirSize");
-                    }
-                }
-                
-                onCreationCompleted: {
-                    persist.settingChanged.connect(onSettingChanged);
-                }
-                
-                onTextChanged: {
-                    fader.play();
-                }
                 
                 animations: [
                     FadeTransition {
-                        id: fader
-                        delay: 500
+                        id: shader
                         fromOpacity: 0
-                        toOpacity: 1
+                        toOpacity: 0.35
                         duration: 750
-                        easingCurve: StockCurve.QuinticOut
+                        easingCurve: StockCurve.BackOut
+                    }
+                ]
+            }
+            
+            Container
+            {
+                horizontalAlignment: HorizontalAlignment.Fill
+                verticalAlignment: VerticalAlignment.Fill
+                leftPadding: 10; rightPadding: 10
+                
+                gestureHandlers: [
+                    FontSizePincher
+                    {
+                        key: "tafsirSize"
+                        minValue: 6
+                        maxValue: 18
+                        userEventId: "AyatTafsirDialogPinched"
                     }
                 ]
                 
-                layoutProperties: StackLayoutProperties {
-                    spaceQuota: 1
+                TextArea
+                {
+                    id: authors
+                    editable: false
+                    backgroundVisible: false
+                    content.flags: TextContentFlag.ActiveText | TextContentFlag.EmoticonsOff
+                    input.flags: TextInputFlag.AutoCapitalizationOff | TextInputFlag.AutoCorrectionOff | TextInputFlag.SpellCheckOff | TextInputFlag.WordSubstitutionOff | TextInputFlag.AutoPeriodOff
+                    textStyle.color: Color.White
+                    textStyle.fontSize: FontSize.PointValue
+                    textStyle.fontSizeValue: body.textStyle.fontSizeValue
+                    bottomPadding: 0; bottomMargin: 0
+                    verticalAlignment: VerticalAlignment.Fill
+                    
+                    activeTextHandler: ActiveTextHandler
+                    {
+                        onTriggered: {
+                            var link = event.href.toString();
+                            
+                            if ( link.match("\\d+") ) {
+                                persist.invoke("com.canadainc.Quran10.bio.previewer", "", "", "", link);
+                            }
+                            
+                            event.abort();
+                        }
+                    }
+                }
+                
+                TextArea
+                {
+                    id: body
+                    editable: false
+                    backgroundVisible: false
+                    content.flags: TextContentFlag.ActiveText | TextContentFlag.EmoticonsOff
+                    input.flags: TextInputFlag.AutoCapitalizationOff | TextInputFlag.AutoCorrectionOff | TextInputFlag.SpellCheckOff | TextInputFlag.WordSubstitutionOff | TextInputFlag.AutoPeriodOff
+                    opacity: 0
+                    textStyle.color: Color.White
+                    topPadding: 0;
+                    textStyle.fontSize: FontSize.PointValue
+                    textStyle.fontSizeValue: persist.getValueFor("tafsirSize")
+                    bottomPadding: 0; bottomMargin: 0
+                    verticalAlignment: VerticalAlignment.Fill
+                    
+                    function onSettingChanged(key)
+                    {
+                        if (key == "tafsirSize") {
+                            textStyle.fontSizeValue = persist.getValueFor("tafsirSize");
+                        }
+                    }
+                    
+                    onCreationCompleted: {
+                        persist.settingChanged.connect(onSettingChanged);
+                    }
+                    
+                    onTextChanged: {
+                        fader.play();
+                    }
+                    
+                    animations: [
+                        FadeTransition {
+                            id: fader
+                            delay: 500
+                            fromOpacity: 0
+                            toOpacity: 1
+                            duration: 750
+                            easingCurve: StockCurve.QuinticOut
+                            
+                            onEnded: {
+                                shader.play();
+                            }
+                        }
+                    ]
+                    
+                    layoutProperties: StackLayoutProperties {
+                        spaceQuota: 1
+                    }
                 }
             }
             
