@@ -62,11 +62,11 @@ Page
             result += " ";
             
             if (metadata.birth && metadata.death) {
-                result += qsTr("(%1-%2 AH)").arg(metadata.birth).arg(metadata.death);
+                result += "(%1)".arg( global.getHijriYear(metadata.birth, metadata.death) );
             } else if (metadata.birth) {
-                result += qsTr("(born %1 AH)").arg(metadata.birth);
+                result += qsTr("(born %1)").arg( global.getHijriYear(metadata.birth) );
             } else if (metadata.death) {
-                result += qsTr("(died %1 AH)").arg(metadata.death);
+                result += qsTr("(died %1)").arg( global.getHijriYear(metadata.death) );
             }
             
             result += "\n";
@@ -256,7 +256,7 @@ Page
                         {
                             id: sli
                             description: ListItemData.body.replace(/\n/g, " ")
-                            imageSource: ListItemData.points > 0 ? "images/list/ic_like.png" : ListItemData.points == 0 ? "images/list/ic_bio.png" : "images/list/ic_dislike.png"
+                            imageSource: ListItemData.points > 0 ? "images/list/ic_like.png" : ListItemData.points == undefined || ListItemData.points == 0 ? "images/list/ic_bio.png" : "images/list/ic_dislike.png"
                             title: ListItemData.author ? ListItemData.author : ListItemData.reference ? ListItemData.reference : ""
                             
                             contextMenuHandler: [

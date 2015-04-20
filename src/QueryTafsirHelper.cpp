@@ -196,8 +196,8 @@ void QueryTafsirHelper::editIndividual(QObject* caller, qint64 id, QString const
     args << protect(kunya);
     args << protect(displayName);
     args << ( hidden ? 1 : QVariant() );
-    args << ( birth > 0 ? birth : QVariant() );
-    args << ( death > 0 ? death : QVariant() );
+    args << ( birth != 0 ? birth : QVariant() );
+    args << ( death != 0 ? death : QVariant() );
     args << ( female ? 1 : QVariant() );
     args << ( location > 0 ? location : QVariant() );
 
@@ -350,8 +350,8 @@ void QueryTafsirHelper::createIndividual(QObject* caller, QString const& prefix,
     args << name;
     args << protect(kunya);
     args << protect(displayName);
-    args << ( birth > 0 ? birth : QVariant() );
-    args << ( death > 0 ? death : QVariant() );
+    args << ( birth != 0 ? birth : QVariant() );
+    args << ( death != 0 ? death : QVariant() );
     args << ( location > 0 ? location : QVariant() );
 
     m_sql->executeQuery(caller, query, QueryId::AddIndividual, args);
