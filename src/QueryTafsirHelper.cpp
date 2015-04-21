@@ -66,14 +66,6 @@ void QueryTafsirHelper::editBio(QObject* caller, qint64 bioId, QString const& bo
 }
 
 
-void QueryTafsirHelper::addCompanions(QObject* caller, QVariantList const& ids)
-{
-    LOGGER(ids);
-
-    m_sql->executeQuery(caller, QString("INSERT OR IGNORE INTO companions VALUES(%1)").arg( TextUtils::getPlaceHolders( ids.size() ) ), QueryId::AddCompanions, ids);
-}
-
-
 void QueryTafsirHelper::addWebsite(QObject* caller, qint64 individualId, QString const& address)
 {
     QString query = QString("INSERT INTO websites (individual,uri) VALUES(%1,?)").arg(individualId);
@@ -89,13 +81,13 @@ void QueryTafsirHelper::addLocation(QObject* caller, QString const& city, qreal 
 }
 
 
-void QueryTafsirHelper::addQuote(QObject* caller, QString const& author, QString const& body, QString const& reference)
+void QueryTafsirHelper::addQuote(QObject* caller, QString const& author, QString const& body, QString const& reference, qint64 suiteId, QString const& uri)
 {
-    LOGGER(author << body << reference);
+    LOGGER(author << body << reference << suiteId << uri);
 
     qint64 authorId = generateIndividualField(caller, author);
-    QString query = QString("INSERT INTO quotes (author,body,reference) VALUES(%1,?,?)").arg(authorId);
-    m_sql->executeQuery(caller, query, QueryId::AddQuote, QVariantList() << body << reference);
+    QString query = QString("INSERT INTO quotes (author,body,reference,suite_id,uri) VALUES(%1,?,?,?,?)").arg(authorId);
+    m_sql->executeQuery(caller, query, QueryId::AddQuote, QVariantList() << body << reference << suiteId ? suiteId : QVariant() << protect(uri) );
 }
 
 
@@ -184,11 +176,11 @@ void QueryTafsirHelper::editTafsirPage(QObject* caller, qint64 suitePageId, QStr
 }
 
 
-void QueryTafsirHelper::editIndividual(QObject* caller, qint64 id, QString const& prefix, QString const& name, QString const& kunya, QString const& displayName, bool hidden, int birth, int death, bool female, int location)
+void QueryTafsirHelper::editIndividual(QObject* caller, qint64 id, QString const& prefix, QString const& name, QString const& kunya, QString const& displayName, bool hidden, int birth, int death, bool female, int location, bool companion)
 {
     LOGGER( id << prefix << name << kunya << displayName << hidden << birth << death << female << location );
 
-    QString query = QString("UPDATE individuals SET prefix=?, name=?, kunya=?, displayName=?, hidden=?, birth=?, death=?, female=?, location=? WHERE id=%1").arg(id);
+    QString query = QString("UPDATE individuals SET prefix=?, name=?, kunya=?, displayName=?, hidden=?, birth=?, death=?, female=?, location=?, is_companion=? WHERE id=%1").arg(id);
 
     QVariantList args;
     args << protect(prefix);
@@ -200,18 +192,19 @@ void QueryTafsirHelper::editIndividual(QObject* caller, qint64 id, QString const
     args << ( death != 0 ? death : QVariant() );
     args << ( female ? 1 : QVariant() );
     args << ( location > 0 ? location : QVariant() );
+    args << ( companion ? 1 : QVariant() );
 
     m_sql->executeQuery(caller, query, QueryId::EditIndividual, args);
 }
 
 
-void QueryTafsirHelper::editQuote(QObject* caller, qint64 quoteId, QString const& author, QString const& body, QString const& reference)
+void QueryTafsirHelper::editQuote(QObject* caller, qint64 quoteId, QString const& author, QString const& body, QString const& reference, qint64 suiteId, QString const& uri)
 {
-    LOGGER(quoteId << author << body << reference);
+    LOGGER(quoteId << author << body << reference << suiteId << uri);
 
     qint64 authorId = generateIndividualField(caller, author);
-    QString query = QString("UPDATE quotes SET author=%2,body=?,reference=? WHERE id=%1").arg(quoteId).arg(authorId);
-    m_sql->executeQuery(caller, query, QueryId::EditQuote, QVariantList() << body << reference);
+    QString query = QString("UPDATE quotes SET author=%2,body=?,reference=?,suiteId=?,uri=? WHERE id=%1").arg(quoteId).arg(authorId);
+    m_sql->executeQuery(caller, query, QueryId::EditQuote, QVariantList() << body << reference << suiteId ? suiteId : QVariant() << protect(uri) );
 }
 
 
@@ -225,7 +218,7 @@ void QueryTafsirHelper::editLocation(QObject* caller, qint64 id, QString const& 
 
 
 void QueryTafsirHelper::fetchAllIndividuals(QObject* caller) {
-    m_sql->executeQuery(caller, "SELECT individuals.id,prefix,name,kunya,hidden,birth,death,companions.id AS companion_id FROM individuals LEFT JOIN companions ON individuals.id=companions.id ORDER BY name,kunya,prefix", QueryId::FetchAllIndividuals);
+    m_sql->executeQuery(caller, "SELECT individuals.id,prefix,name,kunya,hidden,birth,death,is_companion FROM individuals ORDER BY name,kunya,prefix", QueryId::FetchAllIndividuals);
 }
 
 
@@ -268,7 +261,7 @@ void QueryTafsirHelper::fetchStudents(QObject* caller, qint64 individualId)
 
 void QueryTafsirHelper::fetchFrequentIndividuals(QObject* caller, int n)
 {
-    m_sql->executeQuery(caller, QString("SELECT author AS id,prefix,name,kunya,hidden,displayName,birth,death,companions.id AS companion_id FROM (SELECT author,COUNT(author) AS n FROM suites GROUP BY author UNION SELECT translator AS author,COUNT(translator) AS n FROM suites GROUP BY author UNION SELECT explainer AS author,COUNT(explainer) AS n FROM suites GROUP BY author ORDER BY n DESC LIMIT %1) INNER JOIN individuals ON individuals.id=author LEFT JOIN companions ON companions.id=individuals.id GROUP BY individuals.id ORDER BY name,kunya,prefix").arg(n), QueryId::FetchAllIndividuals);
+    m_sql->executeQuery(caller, QString("SELECT author AS id,prefix,name,kunya,hidden,displayName,birth,death,is_companion FROM (SELECT author,COUNT(author) AS n FROM suites GROUP BY author UNION SELECT translator AS author,COUNT(translator) AS n FROM suites GROUP BY author UNION SELECT explainer AS author,COUNT(explainer) AS n FROM suites GROUP BY author ORDER BY n DESC LIMIT %1) INNER JOIN individuals ON individuals.id=author GROUP BY individuals.id ORDER BY name,kunya,prefix").arg(n), QueryId::FetchAllIndividuals);
 }
 
 
@@ -338,7 +331,7 @@ qint64 QueryTafsirHelper::generateIndividualField(QObject* caller, QString const
 }
 
 
-void QueryTafsirHelper::createIndividual(QObject* caller, QString const& prefix, QString const& name, QString const& kunya, QString const& displayName, int birth, int death, int location)
+void QueryTafsirHelper::createIndividual(QObject* caller, QString const& prefix, QString const& name, QString const& kunya, QString const& displayName, int birth, int death, int location, bool companion)
 {
     LOGGER( prefix << name << kunya << displayName << birth << death << location );
 
@@ -353,6 +346,7 @@ void QueryTafsirHelper::createIndividual(QObject* caller, QString const& prefix,
     args << ( birth != 0 ? birth : QVariant() );
     args << ( death != 0 ? death : QVariant() );
     args << ( location > 0 ? location : QVariant() );
+    args << ( companion ? 1 : QVariant() );
 
     m_sql->executeQuery(caller, query, QueryId::AddIndividual, args);
 }
@@ -387,19 +381,6 @@ void QueryTafsirHelper::linkAyatsToTafsir(QObject* caller, qint64 suitePageId, Q
     }
 
     m_sql->endTransaction(caller, QueryId::LinkAyatsToTafsir);
-}
-
-
-void QueryTafsirHelper::removeCompanions(QObject* caller, QVariantList const& ids)
-{
-    LOGGER(ids);
-
-    QStringList allIds;
-    foreach (QVariant const& id, ids) {
-        allIds << QString::number( id.toLongLong() );
-    }
-
-    m_sql->executeQuery(caller, QString("DELETE FROM companions WHERE id IN (%1)").arg( allIds.join(",") ), QueryId::RemoveCompanions);
 }
 
 
@@ -496,7 +477,7 @@ void QueryTafsirHelper::replaceIndividual(QObject* caller, qint64 toReplaceId, q
 void QueryTafsirHelper::searchIndividuals(QObject* caller, QString const& trimmedText)
 {
     LOGGER(trimmedText);
-    m_sql->executeQuery(caller, QString("SELECT i.id,prefix,name,kunya,hidden,birth,death,companions.id AS companion_id FROM individuals i LEFT JOIN companions ON i.id=companions.id WHERE %1  ORDER BY name,kunya,prefix").arg( NAME_SEARCH("i") ), QueryId::SearchIndividuals, QVariantList() << trimmedText << trimmedText << trimmedText);
+    m_sql->executeQuery(caller, QString("SELECT id,prefix,name,kunya,hidden,birth,death,is_companion FROM individuals i WHERE %1 ORDER BY name,kunya,prefix").arg( NAME_SEARCH("i") ), QueryId::SearchIndividuals, QVariantList() << trimmedText << trimmedText << trimmedText);
 }
 
 

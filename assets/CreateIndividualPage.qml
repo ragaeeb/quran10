@@ -6,7 +6,7 @@ Page
 {
     id: createRijaal
     property variant individualId
-    signal createIndividual(variant id, string prefix, string name, string kunya, string displayName, bool hidden, int birth, int death, bool female, int location)
+    signal createIndividual(variant id, string prefix, string name, string kunya, string displayName, bool hidden, int birth, int death, bool female, int location, bool companion)
     actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
     
     onIndividualIdChanged: {
@@ -93,6 +93,7 @@ Page
             
             hidden.checked = data.hidden == 1;
             female.checked = data.female == 1;
+            companion.checked = data.is_companion == 1;
             titleBar.title = name.text = data.name;
             
             if (data.prefix) {
@@ -145,7 +146,7 @@ Page
                 location.validator.validate();
                 
                 if (name.validator.valid && location.validator.valid) {
-                    createIndividual(individualId, prefix.text.trim(), name.text.trim(), kunya.text.trim(), displayName.text.trim(), hidden.checked, parseInt( birth.text.trim() ), parseInt( death.text.trim() ), female.checked, parseInt( location.text.trim() ) );
+                    createIndividual(individualId, prefix.text.trim(), name.text.trim(), kunya.text.trim(), displayName.text.trim(), hidden.checked, parseInt( birth.text.trim() ), parseInt( death.text.trim() ), female.checked, parseInt( location.text.trim() ), companion.checked );
                 } else if (!location.validator.valid) {
                     persist.showToast( qsTr("Invalid location specified!"), "images/toast/incomplete_field.png" );
                 } else {
@@ -183,6 +184,11 @@ Page
                     CheckBox {
                         id: female
                         text: qsTr("Female") + Retranslate.onLanguageChanged
+                    }
+                    
+                    CheckBox {
+                        id: companion
+                        text: qsTr("Companion") + Retranslate.onLanguageChanged
                     }
                 }
                 

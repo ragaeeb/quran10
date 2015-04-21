@@ -13,7 +13,6 @@ class QueryId
 public:
     enum Type {
         AddBio,
-        AddCompanions,
         AddIndividual,
         AddLocation,
         AddQuote,
@@ -70,7 +69,6 @@ public:
         LinkingAyatsToTafsir,
         RemoveBio,
         RemoveBookmark,
-        RemoveCompanions,
 		RemoveIndividual,
         RemoveLocation,
         RemoveQuote,
