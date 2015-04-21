@@ -118,7 +118,7 @@ Page
                     DoubleTapHandler {
                         onDoubleTapped: {
                             console.log("UserEvent: BioBodyTapped");
-                            body.text = textUtils.optimize( persist.getClipboardText() );
+                            body.text = textUtils.optimize( global.getCapitalizedClipboard() );
                         }
                     }
                 ]

@@ -36,9 +36,16 @@ QtObject
         }
     }
     
-    function getSuffix(birth, death, companionId, female)
+    function getCapitalizedClipboard()
     {
-        if (companionId)
+        var x = persist.getClipboardText();
+        x = x.charAt(0).toUpperCase() + x.slice(1); 
+        return x;
+    }
+    
+    function getSuffix(birth, death, isCompanion, female)
+    {
+        if (isCompanion)
         {
             if (female) {
                 return qsTr("رضي الله عنها");

@@ -85,10 +85,8 @@ Page
                 gestureHandlers: [
                     DoubleTapHandler {
                         onDoubleTapped: {
-                            console.log("UserEvent: QuoteBodyDoubleTapped");
-                            var x = persist.getClipboardText();
-                            x = x.charAt(0).toUpperCase() + x.slice(1); 
-                            bodyField.text = x;
+                            console.log("UserEvent: QuoteBodyDoubleTapped"); 
+                            bodyField.text = global.getCapitalizedClipboard();
                         }
                     }
                 ]
@@ -107,6 +105,57 @@ Page
                         onDoubleTapped: {
                             console.log("UserEvent: QuoteRefDoubleTapped");
                             referenceField.text = persist.getClipboardText();
+                        }
+                    }
+                ]
+            }
+            
+            TextField
+            {
+                id: suiteId
+                horizontalAlignment: HorizontalAlignment.Fill
+                content.flags: TextContentFlag.ActiveTextOff | TextContentFlag.EmoticonsOff
+                input.flags: TextInputFlag.SpellCheckOff | TextInputFlag.AutoPeriodOff | TextInputFlag.AutoCorrectionOff
+                hintText: qsTr("Suite ID...") + Retranslate.onLanguageChanged
+                
+                gestureHandlers: [
+                    DoubleTapHandler
+                    {
+                        function onPicked(data)
+                        {
+                            suiteId.text = data.id.toString();
+                            navigationPane.pop();
+                        }
+                        
+                        onDoubleTapped: {
+                            console.log("UserEvent: QuoteSuiteDoubleTapped");
+                            definition.source = "TafsirPickerPage.qml";
+                            
+                            var p = definition.createObject();
+                            p.tafsirPicked.connect(onPicked);
+                            p.reload();
+                            
+                            navigationPane.push(p);
+                        }
+                    }
+                ]
+            }
+            
+            TextField
+            {
+                id: uriField
+                horizontalAlignment: HorizontalAlignment.Fill
+                content.flags: TextContentFlag.EmoticonsOff | TextContentFlag.ActiveTextOff
+                input.flags: TextInputFlag.AutoCapitalizationOff | TextInputFlag.AutoCorrectionOff | TextInputFlag.SpellCheckOff | TextInputFlag.WordSubstitutionOff | TextInputFlag.AutoPeriodOff
+                input.submitKey: SubmitKey.Submit
+                inputMode: TextFieldInputMode.Url
+                hintText: qsTr("URL (for reference purposes only)") + Retranslate.onLanguageChanged
+                
+                gestureHandlers: [
+                    DoubleTapHandler {
+                        onDoubleTapped: {
+                            console.log("UserEvent: QuoteUriDoubleTapped");
+                            uriField.text = persist.getClipboardText();
                         }
                     }
                 ]

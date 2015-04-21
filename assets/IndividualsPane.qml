@@ -16,7 +16,7 @@ NavigationPane
         }
     }
     
-    function onCreate(id, prefix, name, kunya, displayName, hidden, birth, death, female, location)
+    function onCreate(id, prefix, name, kunya, displayName, hidden, birth, death, female, location, companion)
     {
         tafsirHelper.createIndividual(navigationPane, prefix, name, kunya, displayName, birth, death, location);
         popToRoot();
@@ -24,9 +24,9 @@ NavigationPane
     
     function onEdit(id, prefix, name, kunya, displayName, hidden, birth, death, female, location)
     {
-        tafsirHelper.editIndividual(navigationPane, id, prefix, name, kunya, displayName, hidden, birth, death, female, location);
+        tafsirHelper.editIndividual(navigationPane, id, prefix, name, kunya, displayName, hidden, birth, death, female, location, companion);
         
-        var obj = {'id': id, 'prefix': prefix, 'name': name, 'kunya': kunya, 'displayName': displayName, 'hidden': hidden ? 1 : 0, 'female': female ? 1 : 0};
+        var obj = {'id': id, 'prefix': prefix, 'name': name, 'kunya': kunya, 'displayName': displayName, 'hidden': hidden ? 1 : undefined, 'female': female ? 1 : undefined, 'is_companion': companion ? 1 : undefined};
         
         if (birth > 0) {
             obj["birth"] = birth;
