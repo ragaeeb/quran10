@@ -18,11 +18,11 @@ NavigationPane
     
     function onCreate(id, prefix, name, kunya, displayName, hidden, birth, death, female, location, companion)
     {
-        tafsirHelper.createIndividual(navigationPane, prefix, name, kunya, displayName, birth, death, location);
+        tafsirHelper.createIndividual(navigationPane, prefix, name, kunya, displayName, birth, death, location, companion);
         popToRoot();
     }
     
-    function onEdit(id, prefix, name, kunya, displayName, hidden, birth, death, female, location)
+    function onEdit(id, prefix, name, kunya, displayName, hidden, birth, death, female, location, companion)
     {
         tafsirHelper.editIndividual(navigationPane, id, prefix, name, kunya, displayName, hidden, birth, death, female, location, companion);
         
@@ -65,8 +65,6 @@ NavigationPane
             persist.showToast( qsTr("Successfully added companions!"), "images/menu/ic_set_companions.png" );
         } else if (id == QueryId.RemoveCompanions) {
             persist.showToast( qsTr("Successfully removed from companions!"), "images/menu/ic_remove_companions.png" );
-        } else if (id == QueryId.AddBio) {
-            persist.showToast( qsTr("Successfully added biography!"), "images/menu/ic_add_bio.png" );
         }
     }
     
@@ -122,6 +120,22 @@ NavigationPane
             
             ActionItem
             {
+                id: bios
+                imageSource: "images/tabs/ic_bio.png"
+                title: qsTr("Biographies") + Retranslate.onLanguageChanged
+                ActionBar.placement: ActionBarPlacement.OnBar
+                
+                onTriggered: {
+                    console.log("UserEvent: Biographies");
+                    definition.source = "BiographiesPage.qml";
+                    var page = definition.createObject();
+                    page.reload();
+                    navigationPane.push(page);
+                }
+            },
+            
+            ActionItem
+            {
                 id: copyAction
                 imageSource: "images/menu/ic_copy_from_english.png"
                 title: qsTr("Copy From English") + Retranslate.onLanguageChanged
@@ -147,22 +161,6 @@ NavigationPane
                 }
             }
         ]
-        
-        function onBioSaved(data)
-        {
-            tafsirHelper.addBio(navigationPane, data.target, data.body, data.reference, data.author_id, data.points);
-            popToRoot();
-        }
-        
-        function addBio(ListItemData)
-        {
-            definition.source = "CreateBioPage.qml";
-            var page = definition.createObject();
-            page.createBio.connect(onBioSaved);
-            page.data = {'target': ListItemData.id};
-            
-            navigationPane.push(page);
-        }
         
         function edit(ListItem)
         {
@@ -272,18 +270,6 @@ NavigationPane
                         {
                             title: sli.title
                             subtitle: sli.description
-
-                            ActionItem
-                            {
-                                id: addBio
-                                imageSource: "images/menu/ic_add_bio.png"
-                                title: qsTr("Add Biography") + Retranslate.onLanguageChanged
-                                
-                                onTriggered: {
-                                    console.log("UserEvent: AddBio");
-                                    sli.ListItem.view.pickerPage.addBio(ListItemData);
-                                }
-                            }
 
                             ActionItem
                             {

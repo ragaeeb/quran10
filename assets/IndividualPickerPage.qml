@@ -34,6 +34,7 @@ Page
     
     titleBar: TitleBar {
         title: qsTr("Select Individual") + Retranslate.onLanguageChanged
+        scrollBehavior: TitleBarScrollBehavior.NonSticky
     }
     
     function performSearch()

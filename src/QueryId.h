@@ -13,6 +13,7 @@ class QueryId
 public:
     enum Type {
         AddBio,
+        AddBioLink,
         AddIndividual,
         AddLocation,
         AddQuote,
@@ -31,6 +32,7 @@ public:
         EditTafsirPage,
         FetchAdjacentAyat,
         FetchAllAyats,
+        FetchAllBios,
         FetchAllBookmarks,
         FetchAllChapterAyatCount,
         FetchAllChapters,
@@ -47,6 +49,7 @@ public:
         FetchAyats,
         FetchAyatsForTafsir,
         FetchBio,
+        FetchBioMetadata,
         FetchChapters,
         FetchJuz,
         FetchLastProgress,
@@ -68,6 +71,7 @@ public:
         LinkAyatsToTafsir,
         LinkingAyatsToTafsir,
         RemoveBio,
+        RemoveBioLink,
         RemoveBookmark,
 		RemoveIndividual,
         RemoveLocation,
