@@ -177,7 +177,7 @@ void Offloader::addToHomeScreen(int chapter, int verse, QString const& label)
 
     if (!added) {
         toastMessage = tr("Could not add %1 to home screen").arg(label);
-        icon = ASSET_YELLOW_DELETE;
+        icon = "images/dropdown/suite_changes_cancel.png";
     }
 
     m_persist->showToast(toastMessage, icon);

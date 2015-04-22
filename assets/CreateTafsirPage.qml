@@ -143,7 +143,8 @@ Page
                 ]
             }
 
-            TextArea {
+            TextArea
+            {
                 id: referenceField
                 hintText: qsTr("Reference...") + Retranslate.onLanguageChanged
                 minHeight: ui.sdu(18.75)
@@ -152,7 +153,8 @@ Page
                 input.flags: TextInputFlag.AutoCapitalization | TextInputFlag.AutoCorrectionOff | TextInputFlag.SpellCheckOff | TextInputFlag.WordSubstitutionOff | TextInputFlag.AutoPeriodOff
                 
                 gestureHandlers: [
-                    DoubleTapHandler {
+                    DoubleTapHandler
+                    {
                         onDoubleTapped: {
                             console.log("UserEvent: TafsirRefDoubleTapped");
                             referenceField.text = persist.getClipboardText();

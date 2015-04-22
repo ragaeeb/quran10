@@ -12,18 +12,18 @@ NavigationPane
     function reload()
     {
         busy.delegateActive = true;
-        helper.fetchAllQuotes(listView);
+        helper.fetchAllBios(listView);
     }
     
     onCreationCompleted: {
-        deviceUtils.attachTopBottomKeys(quotePickerPage, listView, true);
+        deviceUtils.attachTopBottomKeys(bioPickerPage, listView, true);
         reload();
         helper.textualChange.connect(reload);
     }
     
     Page
     {
-        id: quotePickerPage
+        id: bioPickerPage
         actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
         
         actions: [
@@ -42,17 +42,17 @@ NavigationPane
                 
                 function onCreate(id, author, body, reference)
                 {
-                    tafsirHelper.addQuote(listView, author, body, reference);
+                    tafsirHelper.addBio(listView, author, body, reference);
                     
-                    while (navigationPane.top != quotePickerPage) {
+                    while (navigationPane.top != bioPickerPage) {
                         navigationPane.pop();
                     }
                 }
                 
                 onTriggered: {
-                    definition.source = "CreateQuotePage.qml";
+                    definition.source = "CreateBioPage.qml";
                     var page = definition.createObject();
-                    page.createQuote.connect(onCreate);
+                    page.createBio.connect(onCreate);
                     
                     navigationPane.push(page);
                 }
@@ -74,7 +74,7 @@ NavigationPane
                     TextField
                     {
                         id: searchField
-                        hintText: qsTr("Enter text to search...") + Retranslate.onLanguageChanged
+                        hintText: qsTr("Enter biography to search...") + Retranslate.onLanguageChanged
                         horizontalAlignment: HorizontalAlignment.Fill
                         bottomMargin: 0
                         
@@ -91,7 +91,7 @@ NavigationPane
                                     reload();
                                 } else {
                                     busy.delegateActive = true;
-                                    tafsirHelper.searchQuote(listView, searchColumn.selectedValue, query);
+                                    tafsirHelper.searchBio(listView, searchColumn.selectedValue, query);
                                 }
                             }
                         }
@@ -157,7 +157,7 @@ NavigationPane
                 
                 function onDataLoaded(id, data)
                 {
-                    if (id == QueryId.FetchAllQuotes && data.length > 0)
+                    if (id == QueryId.FetchAllBios && data.length > 0)
                     {
                         if ( adm.isEmpty() ) {
                             adm.append(data);
@@ -167,14 +167,14 @@ NavigationPane
                         }
                         
                         navigationPane.parent.unreadContentCount = data.length;
-                    } else if (id == QueryId.RemoveQuote) {
-                        persist.showToast( qsTr("Quote removed!"), "images/menu/ic_delete_quote.png" );
-                    } else if (id == QueryId.EditQuote) {
-                        persist.showToast( qsTr("Quote updated!"), "images/menu/ic_edit_quote.png" );
-                    } else if (id == QueryId.AddQuote) {
-                        persist.showToast( qsTr("Quote added!"), "images/menu/ic_add_quote.png" );
+                    } else if (id == QueryId.RemoveBio) {
+                        persist.showToast( qsTr("Biography removed!"), "images/menu/ic_remove_bio.png" );
+                    } else if (id == QueryId.EditBio) {
+                        persist.showToast( qsTr("Biography updated!"), "images/menu/ic_edit_bio.png" );
+                    } else if (id == QueryId.AddBio) {
+                        persist.showToast( qsTr("Biography added!"), "images/menu/ic_add_bio.png" );
                         reload();
-                    } else if (id == QueryId.SearchQuote) {
+                    } else if (id == QueryId.SearchBio) {
                         adm.clear();
                         adm.append(data);
                     }
@@ -187,7 +187,7 @@ NavigationPane
                 function onEdit(id, author, body, reference)
                 {
                     busy.delegateActive = true;
-                    tafsirHelper.editQuote(listView, id, author, body, reference);
+                    tafsirHelper.editBio(listView, id, author, body, reference);
                     
                     var current = dataModel.data(editIndexPath);
                     current["body"] = body;
@@ -195,39 +195,39 @@ NavigationPane
                     
                     dataModel.replace(editIndexPath[0], current);
                     
-                    while (navigationPane.top != quotePickerPage) {
+                    while (navigationPane.top != bioPickerPage) {
                         navigationPane.pop();
                     }
                 }
                 
-                function openQuote(ListItemData)
+                function openBio(ListItemData)
                 {
-                    definition.source = "CreateQuotePage.qml";
+                    definition.source = "CreateBioPage.qml";
                     var page = definition.createObject();
-                    page.quoteId = ListItemData.id;
+                    page.bioId = ListItemData.id;
                     
                     navigationPane.push(page);
                     
                     return page;
                 }
                 
-                function duplicateQuote(ListItemData)
+                function duplicateBio(ListItemData)
                 {
-                    var page = openQuote(ListItemData);
-                    page.createQuote.connect(addAction.onCreate);
-                    page.titleBar.title = qsTr("New Quote");
+                    var page = openBio(ListItemData);
+                    page.createBio.connect(addAction.onCreate);
+                    page.titleBar.title = qsTr("New Bio");
                 }
                 
                 function editItem(indexPath, ListItemData)
                 {
                     editIndexPath = indexPath;
-                    var page = openQuote(ListItemData);
-                    page.createQuote.connect(onEdit);
+                    var page = openBio(ListItemData);
+                    page.createBio.connect(onEdit);
                 }
                 
                 function removeItem(ListItemData) {
                     busy.delegateActive = true;
-                    tafsirHelper.removeQuote(listView, ListItemData.id);
+                    tafsirHelper.removeBio(listView, ListItemData.id);
                 }
                 
                 listItemComponents: [
@@ -237,7 +237,7 @@ NavigationPane
                         {
                             id: rootItem
                             description: ListItemData.body
-                            imageSource: "images/list/ic_quote.png"
+                            imageSource: "images/list/ic_bio.png"
                             title: ListItemData.author
                             
                             contextActions: [
@@ -248,45 +248,21 @@ NavigationPane
                                     
                                     ActionItem
                                     {
-                                        imageSource: "images/menu/ic_edit_quote.png"
+                                        imageSource: "images/menu/ic_edit_bio.png"
                                         title: qsTr("Edit") + Retranslate.onLanguageChanged
                                         
                                         onTriggered: {
-                                            console.log("UserEvent: EditQuote");
+                                            console.log("UserEvent: EditBio");
                                             rootItem.ListItem.view.editItem(rootItem.ListItem.indexPath, ListItemData);
-                                        }
-                                    }
-                                    
-                                    ActionItem
-                                    {
-                                        imageSource: "images/menu/ic_copy.png"
-                                        title: qsTr("Copy") + Retranslate.onLanguageChanged
-                                        
-                                        onTriggered: {
-                                            console.log("UserEvent: CopyQuote");
-                                            var body = qsTr("“%1” - %2 [%3]").arg(ListItemData.body).arg(ListItemData.author).arg(ListItemData.reference);
-                                            persist.copyToClipboard(body);
-                                        }
-                                    }
-                                    
-                                    ActionItem
-                                    {
-                                        imageSource: "images/menu/ic_preview.png"
-                                        title: qsTr("Preview") + Retranslate.onLanguageChanged
-                                        
-                                        onTriggered: {
-                                            console.log("UserEvent: PreviewQuote");
-                                            var body = qsTr("<html><i>“%1”</i>\n\n- <b>%2</b>\n\n[%3]</html>").arg( ListItemData.body.replace(/&/g,"&amp;") ).arg(ListItemData.author).arg( ListItemData.reference.replace(/&/g,"&amp;") );
-                                            notification.init(body, "images/menu/ic_preview.png");
                                         }
                                     }
                                     
                                     DeleteActionItem
                                     {
-                                        imageSource: "images/menu/ic_delete_quote.png"
+                                        imageSource: "images/menu/ic_remove_bio.png"
                                         
                                         onTriggered: {
-                                            console.log("UserEvent: DeleteQuoteTriggered");
+                                            console.log("UserEvent: DeleteBio");
                                             rootItem.ListItem.view.removeItem(ListItemData);
                                             rootItem.ListItem.view.dataModel.removeAt(rootItem.ListItem.indexPath[0]);
                                         }
@@ -298,20 +274,20 @@ NavigationPane
                 ]
                 
                 onTriggered: {
-                    console.log("UserEvent: AdminQuoteTriggered");
+                    console.log("UserEvent: AdminBioTriggered");
                     var d = dataModel.data(indexPath);
-                    duplicateQuote(d);
+                    duplicateBio(d);
                 }
             }
             
             EmptyDelegate
             {
                 id: noElements
-                graphic: "images/placeholders/empty_suites.png"
-                labelText: qsTr("No quotes matched your search criteria. Please try a different search term.") + Retranslate.onLanguageChanged
+                graphic: "images/placeholders/empty_bios.png"
+                labelText: qsTr("No biographies matched your search criteria. Please try a different search term.") + Retranslate.onLanguageChanged
                 
                 onImageTapped: {
-                    console.log("UserEvent: NoQuotesTapped");
+                    console.log("UserEvent: NoBiosTapped");
                     searchField.requestFocus();
                 }
             }
@@ -319,7 +295,7 @@ NavigationPane
             ProgressControl
             {
                 id: busy
-                asset: "images/progress/loading_quotes.png"
+                asset: "images/progress/loading_bios.png"
             }
         }   
     }
