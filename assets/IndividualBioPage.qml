@@ -198,31 +198,6 @@ Page
                     }
                 }
                 
-                function onBioSaved(data)
-                {
-                    tafsirHelper.editBio(bioPage, data.id, data.body, data.reference, data.author_id, data.points);
-                    bioModel.updateItem(editIndexPath, data);
-                    
-                    popToRoot();
-                }
-                
-                function editBio(ListItem)
-                {
-                    editIndexPath = ListItem.indexPath;
-                    definition.source = "CreateBioPage.qml";
-                    var page = definition.createObject();
-                    page.createBio.connect(onBioSaved);
-                    page.data = ListItem.data;
-                    
-                    navigationPane.push(page);
-                }
-                
-                function removeBio(ListItem)
-                {
-                    tafsirHelper.removeBio(bioPage, ListItem.data.id);
-                    bioModel.removeAt(ListItem.indexPath);
-                }
-                
                 function removeStudent(ListItem)
                 {
                     tafsirHelper.removeStudent(bioPage, individualId, ListItem.data.id);
@@ -264,45 +239,6 @@ Page
                                 description: ListItemData.body.replace(/\n/g, " ")
                                 imageSource: ListItemData.points > 0 ? "images/list/ic_like.png" : ListItemData.points == 0 ? "images/list/ic_bio.png" : "images/list/ic_dislike.png"
                                 title: ListItemData.author ? ListItemData.author : ListItemData.reference ? ListItemData.reference : ""
-                                
-                                contextMenuHandler: [
-                                    ContextMenuHandler {
-                                        onPopulating: {
-                                            if (!reporter.isAdmin) {
-                                                event.abort();
-                                            }
-                                        }
-                                    }
-                                ]
-                                
-                                contextActions: [
-                                    ActionSet
-                                    {
-                                        title: sli.title
-                                        subtitle: sli.description
-                                        
-                                        ActionItem
-                                        {
-                                            imageSource: "images/menu/ic_edit_bio.png"
-                                            title: qsTr("Edit") + Retranslate.onLanguageChanged
-                                            
-                                            onTriggered: {
-                                                console.log("UserEvent: EditBio");
-                                                sli.ListItem.view.editBio(sli.ListItem);
-                                            }
-                                        }
-                                        
-                                        DeleteActionItem
-                                        {
-                                            imageSource: "images/menu/ic_remove_bio.png"
-                                            
-                                            onTriggered: {
-                                                console.log("UserEvent: RemoveBio");
-                                                sli.ListItem.view.removeBio(sli.ListItem);
-                                            }
-                                        }
-                                    }
-                                ]
                             }
                             
                             TextArea
@@ -313,7 +249,6 @@ Page
                                 input.flags: TextInputFlag.SpellCheckOff
                                 text: "%1\n%2".arg(ListItemData.body).arg(ListItemData.reference ? ListItemData.reference : "") + Retranslate.onLanguageChanged
                                 horizontalAlignment: HorizontalAlignment.Fill
-                                textStyle.textAlign: TextAlign.Center
                                 visible: ListItemData.isExpanded == 1
                             }
                             

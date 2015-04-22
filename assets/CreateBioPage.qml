@@ -1,39 +1,46 @@
 import bb.cascades 1.3
+import com.canadainc.data 1.0
 
 Page
 {
-    property variant data
-    signal createBio(variant content)
+    id: createBioPage
+    property variant bioId
+    signal createBio(variant bioId, string authorField, string heading, string body, string reference)
     actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
     
-    onDataChanged: {
-        if (data)
+    onBioIdChanged: {
+        if (bioId) {
+            tafsirHelper.fetchBioMetadata(createBioPage, bioId);
+        }
+    }
+    
+    function onDataLoaded(id, data)
+    {
+        if (id == QueryId.FetchBioMetadata)
         {
-            for (var i = sc.count()-1; i >= 0; i--)
-            {
-                if ( sc.at(i).value == data.points ) {
-                    sc.selectedIndex = i;
-                    break;
-                }
+            var e = data[0];
+            
+            if (e.author) {
+                authorField.text = e.author.toString();
             }
             
-            if (data.from_id) {
-                from.text = data.from_id.toString();
+            if (e.heading) {
+                heading.text = e.heading;
             }
             
-            if (data.reference) {
-                reference.text = data.reference;
+            if (e.reference) {
+                reference.text = e.reference;
             }
             
-            if (data.body) {
-                body.text = data.body;
+            if (e.body) {
+                body.text = e.body;
             }
         }
     }
     
     titleBar: TitleBar
     {
-        title: data && data.body ? qsTr("Edit Biography") + Retranslate.onLanguageChanged : qsTr("Create Biography") + Retranslate.onLanguageChanged
+        title: bioId > 0 ? qsTr("Edit Biography") + Retranslate.onLanguageChanged : qsTr("Create Biography") + Retranslate.onLanguageChanged
         
         acceptAction: ActionItem
         {
@@ -44,14 +51,7 @@ Page
             
             onTriggered: {
                 console.log("UserEvent: SaveBio");
-                
-                var result = data;
-                result.author_id = from.text.trim();
-                result.points = sc.selectedValue;
-                result.body = body.text.trim();
-                result.reference = reference.text.trim();
-                
-                createBio(result);
+                createBio( bioId, authorField.text.trim(), heading.text.trim(), body.text.trim(), reference.text.trim() );
             }
         }
     }
@@ -66,39 +66,28 @@ Page
             horizontalAlignment: HorizontalAlignment.Fill
             verticalAlignment: VerticalAlignment.Fill
             
-            SegmentedControl
-            {
-                id: sc
-                horizontalAlignment: HorizontalAlignment.Fill
-                bottomMargin: 0
-                
-                Option {
-                    id: jarh
-                    imageSource: "images/list/ic_dislike.png"
-                    text: qsTr("Jarh") + Retranslate.onLanguageChanged
-                    value: -1
-                }
-                
-                Option {
-                    id: bioOption
-                    imageSource: "images/list/mime_doc.png"
-                    text: qsTr("Biography") + Retranslate.onLanguageChanged
-                    value: undefined
-                    selected: true
-                }
-                
-                Option {
-                    id: tahdeel
-                    imageSource: "images/list/ic_like.png"
-                    text: qsTr("Tahdeel") + Retranslate.onLanguageChanged
-                    value: 1
-                }
-            }
-            
             IndividualTextField
             {
-                id: from
+                id: authorField
                 hintText: qsTr("Author name") + Retranslate.onLanguageChanged
+            }
+            
+            TextField
+            {
+                id: heading
+                horizontalAlignment: HorizontalAlignment.Fill
+                hintText: qsTr("Heading...") + Retranslate.onLanguageChanged
+                input.flags: TextInputFlag.AutoCapitalizationOff | TextInputFlag.AutoCorrectionOff | TextInputFlag.SpellCheckOff | TextInputFlag.WordSubstitutionOff | TextInputFlag.AutoPeriodOff
+                content.flags: TextContentFlag.ActiveTextOff | TextContentFlag.EmoticonsOff
+                
+                gestureHandlers: [
+                    DoubleTapHandler {
+                        onDoubleTapped: {
+                            console.log("UserEvent: BioHeadingDoubleTapped");
+                            heading.text = textUtils.toTitleCase( persist.getClipboardText() );
+                        }
+                    }
+                ]
             }
             
             TextArea
@@ -107,7 +96,7 @@ Page
                 content.flags: TextContentFlag.ActiveTextOff | TextContentFlag.EmoticonsOff
                 input.flags: TextInputFlag.SpellCheck | TextInputFlag.AutoCapitalization | TextInputFlag.Prediction
                 horizontalAlignment: HorizontalAlignment.Fill
-                hintText: jarh.selected ? qsTr("Enter criticism here...") + Retranslate.onLanguageChanged : tahdeel.selected ? qsTr("Enter praise here...") + Retranslate.onLanguageChanged : qsTr("Enter biography here...") + Retranslate.onLanguageChanged
+                hintText: qsTr("Enter body here...") + Retranslate.onLanguageChanged
                 minHeight: ui.sdu(25)
                 
                 onTextChanging: {

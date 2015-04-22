@@ -92,7 +92,8 @@ Page
                 ]
             }
 
-            TextArea {
+            TextArea
+            {
                 id: referenceField
                 hintText: qsTr("Reference...") + Retranslate.onLanguageChanged
                 minHeight: 150

@@ -43,11 +43,7 @@ NavigationPane
                         type: "header"
                         
                         Header {
-                            ListItem.onIndexPathChanged: {
-                                console.log("***", ListItem.indexPath, ListItem.view.dataModel.data([1,0]).name);
-                            }
-                            
-                            title: ListItem.view.dataModel.data( [ListItem.indexPath[0],0] ).name
+                            title: global.getHeaderData(ListItem).name
                             subtitle: ListItem.view.dataModel.childCount(ListItem.indexPath)
                         }
                     },

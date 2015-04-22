@@ -23,6 +23,10 @@ QtObject
         imageSource: "images/backgrounds/header_bg.png"
     }
     
+    function getHeaderData(ListItem) {
+        return ListItem.view.dataModel.data( [ListItem.indexPath[0],0] );
+    }
+    
     function getHijriYear(y1, y2)
     {
         if (y1 > 0 && y2 > 0) {
