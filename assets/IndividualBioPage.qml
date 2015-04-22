@@ -78,9 +78,9 @@ Page
         } else if (id == QueryId.EditBio) {
             persist.showToast( qsTr("Biography successfully updated!"), "images/menu/ic_edit_bio.png" );
         } else if (id == QueryId.RemoveTeacher) {
-            persist.showToast( qsTr("Teacher removed!"), "images/menu/ic_edit_bio.png" );
+            persist.showToast( qsTr("Teacher removed!"), "images/menu/ic_remove_teacher.png" );
         } else if (id == QueryId.RemoveStudent) {
-            persist.showToast( qsTr("Student removed!"), "images/menu/ic_edit_bio.png" );
+            persist.showToast( qsTr("Student removed!"), "images/menu/ic_remove_student.png" );
         } else if (id == QueryId.AddTeacher) {
             persist.showToast( qsTr("Teacher added!"), "images/menu/ic_edit_bio.png" );
         } else if (id == QueryId.AddStudent) {
@@ -252,58 +252,6 @@ Page
                     {
                         type: "bio"
                         
-                        StandardListItem
-                        {
-                            id: sli
-                            description: ListItemData.body.replace(/\n/g, " ")
-                            imageSource: ListItemData.points > 0 ? "images/list/ic_like.png" : ListItemData.points == undefined || ListItemData.points == 0 ? "images/list/ic_bio.png" : "images/list/ic_dislike.png"
-                            title: ListItemData.author ? ListItemData.author : ListItemData.reference ? ListItemData.reference : ""
-                            
-                            contextMenuHandler: [
-                                ContextMenuHandler {
-                                    onPopulating: {
-                                        if (!reporter.isAdmin) {
-                                            event.abort();
-                                        }
-                                    }
-                                }
-                            ]
-                            
-                            contextActions: [
-                                ActionSet
-                                {
-                                    title: sli.title
-                                    subtitle: sli.description
-                                    
-                                    ActionItem
-                                    {
-                                        imageSource: "images/menu/ic_edit_bio.png"
-                                        title: qsTr("Edit") + Retranslate.onLanguageChanged
-                                        
-                                        onTriggered: {
-                                            console.log("UserEvent: EditBio");
-                                            sli.ListItem.view.editBio(sli.ListItem);
-                                        }
-                                    }
-                                    
-                                    DeleteActionItem
-                                    {
-                                        imageSource: "images/menu/ic_remove_bio.png"
-                                        
-                                        onTriggered: {
-                                            console.log("UserEvent: RemoveBio");
-                                            sli.ListItem.view.removeBio(sli.ListItem);
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    },
-                    
-                    ListItemComponent
-                    {
-                        type: "expanded_bio"
-                        
                         Container
                         {
                             id: bioContainer
@@ -312,9 +260,49 @@ Page
                             
                             StandardListItem
                             {
+                                id: sli
                                 description: ListItemData.body.replace(/\n/g, " ")
                                 imageSource: ListItemData.points > 0 ? "images/list/ic_like.png" : ListItemData.points == 0 ? "images/list/ic_bio.png" : "images/list/ic_dislike.png"
                                 title: ListItemData.author ? ListItemData.author : ListItemData.reference ? ListItemData.reference : ""
+                                
+                                contextMenuHandler: [
+                                    ContextMenuHandler {
+                                        onPopulating: {
+                                            if (!reporter.isAdmin) {
+                                                event.abort();
+                                            }
+                                        }
+                                    }
+                                ]
+                                
+                                contextActions: [
+                                    ActionSet
+                                    {
+                                        title: sli.title
+                                        subtitle: sli.description
+                                        
+                                        ActionItem
+                                        {
+                                            imageSource: "images/menu/ic_edit_bio.png"
+                                            title: qsTr("Edit") + Retranslate.onLanguageChanged
+                                            
+                                            onTriggered: {
+                                                console.log("UserEvent: EditBio");
+                                                sli.ListItem.view.editBio(sli.ListItem);
+                                            }
+                                        }
+                                        
+                                        DeleteActionItem
+                                        {
+                                            imageSource: "images/menu/ic_remove_bio.png"
+                                            
+                                            onTriggered: {
+                                                console.log("UserEvent: RemoveBio");
+                                                sli.ListItem.view.removeBio(sli.ListItem);
+                                            }
+                                        }
+                                    }
+                                ]
                             }
                             
                             TextArea
@@ -323,16 +311,17 @@ Page
                                 backgroundVisible: false
                                 content.flags: TextContentFlag.ActiveText | TextContentFlag.EmoticonsOff
                                 input.flags: TextInputFlag.SpellCheckOff
-                                text: qsTr("%1\n%2").arg(ListItemData.body).arg(ListItemData.reference ? ListItemData.reference : "") + Retranslate.onLanguageChanged
+                                text: "%1\n%2".arg(ListItemData.body).arg(ListItemData.reference ? ListItemData.reference : "") + Retranslate.onLanguageChanged
                                 horizontalAlignment: HorizontalAlignment.Fill
                                 textStyle.textAlign: TextAlign.Center
+                                visible: ListItemData.isExpanded == 1
                             }
                             
                             ImageView {
                                 topMargin: 0; bottomMargin: 0
                                 imageSource: "images/dividers/divider_bio.png"
                                 horizontalAlignment: HorizontalAlignment.Center
-                                visible: itemRoot.ListItem.indexInSection < itemRoot.ListItem.sectionSize-1
+                                visible: (itemRoot.ListItem.indexInSection < itemRoot.ListItem.sectionSize-1) && ListItemData.isExpanded == 1
                             }
                         }
                     },
@@ -488,10 +477,7 @@ Page
                     if (d.type == "student" || d.type == "teacher") {
                         persist.invoke( "com.canadainc.Quran10.bio.previewer", "", "", "", d.id.toString() );
                     } else if (d.type == "bio") {
-                        d.type = "expanded_bio";
-                        bioModel.updateItem(indexPath, d);
-                    } else if (d.type == "expanded_bio") {
-                        d.type = "bio";
+                        d.isExpanded = d.isExpanded == 1 ? 0 : 1;
                         bioModel.updateItem(indexPath, d);
                     } else if (d.type == "tafsir") {
                         console.log("UserEvent: InvokeTafsir");

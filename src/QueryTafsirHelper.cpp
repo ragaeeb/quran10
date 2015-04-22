@@ -87,7 +87,11 @@ void QueryTafsirHelper::addQuote(QObject* caller, QString const& author, QString
 
     qint64 authorId = generateIndividualField(caller, author);
     QString query = QString("INSERT INTO quotes (author,body,reference,suite_id,uri) VALUES(%1,?,?,?,?)").arg(authorId);
-    m_sql->executeQuery(caller, query, QueryId::AddQuote, QVariantList() << body << reference << suiteId ? suiteId : QVariant() << protect(uri) );
+    QVariantList args = QVariantList() << body << reference;
+    args <<  (suiteId ? suiteId : QVariant() );
+    args << protect(uri);
+
+    m_sql->executeQuery(caller, query, QueryId::AddQuote, args);
 }
 
 
@@ -204,7 +208,11 @@ void QueryTafsirHelper::editQuote(QObject* caller, qint64 quoteId, QString const
 
     qint64 authorId = generateIndividualField(caller, author);
     QString query = QString("UPDATE quotes SET author=%2,body=?,reference=?,suiteId=?,uri=? WHERE id=%1").arg(quoteId).arg(authorId);
-    m_sql->executeQuery(caller, query, QueryId::EditQuote, QVariantList() << body << reference << suiteId ? suiteId : QVariant() << protect(uri) );
+    QVariantList args = QVariantList() << body << reference;
+    args << ( suiteId ? suiteId : QVariant() );
+    args << protect(uri);
+
+    m_sql->executeQuery(caller, query, QueryId::EditQuote, args);
 }
 
 
