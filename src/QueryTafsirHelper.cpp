@@ -271,7 +271,7 @@ void QueryTafsirHelper::fetchAllLocations(QObject* caller, QString const& city)
 
 void QueryTafsirHelper::fetchAllOrigins(QObject* caller)
 {
-    m_sql->executeQuery(caller, QString("SELECT %1 AS name,i.id,city,latitude,longitude FROM individuals i INNER JOIN locations ON i.location=locations.id WHERE i.hidden ISNULL").arg( NAME_FIELD("i") ), QueryId::FetchAllOrigins);
+    m_sql->executeQuery(caller, QString("SELECT %1 AS name,i.id,city,latitude+((RANDOM()%10)*0.001),longitude+((RANDOM()%10)*0.001) FROM individuals i INNER JOIN locations ON i.location=locations.id WHERE i.hidden ISNULL").arg( NAME_FIELD("i") ), QueryId::FetchAllOrigins);
 }
 
 
@@ -510,10 +510,15 @@ void QueryTafsirHelper::replaceIndividual(QObject* caller, qint64 toReplaceId, q
     LOGGER(toReplaceId << actualId);
 
     m_sql->startTransaction(caller, QueryId::ReplacingIndividual);
+    m_sql->executeQuery(caller, QString("UPDATE biographies SET author=%1 WHERE author=%2").arg(actualId).arg(toReplaceId), QueryId::ReplacingIndividual);
+    m_sql->executeQuery(caller, QString("UPDATE mentions SET target=%1 WHERE target=%2").arg(actualId).arg(toReplaceId), QueryId::ReplacingIndividual);
     m_sql->executeQuery(caller, QString("UPDATE quotes SET author=%1 WHERE author=%2").arg(actualId).arg(toReplaceId), QueryId::ReplacingIndividual);
     m_sql->executeQuery(caller, QString("UPDATE suites SET author=%1 WHERE author=%2").arg(actualId).arg(toReplaceId), QueryId::ReplacingIndividual);
     m_sql->executeQuery(caller, QString("UPDATE suites SET translator=%1 WHERE translator=%2").arg(actualId).arg(toReplaceId), QueryId::ReplacingIndividual);
     m_sql->executeQuery(caller, QString("UPDATE suites SET explainer=%1 WHERE explainer=%2").arg(actualId).arg(toReplaceId), QueryId::ReplacingIndividual);
+    m_sql->executeQuery(caller, QString("UPDATE teachers SET student=%1 WHERE student=%2").arg(actualId).arg(toReplaceId), QueryId::ReplacingIndividual);
+    m_sql->executeQuery(caller, QString("UPDATE teachers SET individual=%1 WHERE individual=%2").arg(actualId).arg(toReplaceId), QueryId::ReplacingIndividual);
+    m_sql->executeQuery(caller, QString("UPDATE websites SET individual=%1 WHERE individual=%2").arg(actualId).arg(toReplaceId), QueryId::ReplacingIndividual);
     m_sql->executeQuery(caller, QString("DELETE FROM individuals WHERE id=%1").arg(toReplaceId), QueryId::ReplacingIndividual);
     m_sql->endTransaction(caller, QueryId::ReplaceIndividual);
 }
