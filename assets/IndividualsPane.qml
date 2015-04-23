@@ -18,15 +18,39 @@ NavigationPane
     
     function onCreate(id, prefix, name, kunya, displayName, hidden, birth, death, female, location, companion)
     {
-        tafsirHelper.createIndividual(navigationPane, prefix, name, kunya, displayName, birth, death, location, companion);
+        id = tafsirHelper.createIndividual(navigationPane, prefix, name, kunya, displayName, birth, death, location, companion);
         popToRoot();
+        
+        var obj = {'id': id, 'name': name, 'hidden': hidden ? 1 : undefined, 'female': female ? 1 : undefined, 'is_companion': companion ? 1 : undefined};
+        
+        if (displayName.length > 0) {
+            obj["name"] = displayName;
+        }
+        
+        if (birth > 0) {
+            obj["birth"] = birth;
+        }
+        
+        if (death > 0) {
+            obj["death"] = death;
+        }
+        
+        if (location > 0) {
+            obj["location"] = location;
+        }
+        
+        individualPicker.model.insert(0, obj);
     }
     
     function onEdit(id, prefix, name, kunya, displayName, hidden, birth, death, female, location, companion)
     {
         tafsirHelper.editIndividual(navigationPane, id, prefix, name, kunya, displayName, hidden, birth, death, female, location, companion);
         
-        var obj = {'id': id, 'prefix': prefix, 'name': name, 'kunya': kunya, 'displayName': displayName, 'hidden': hidden ? 1 : undefined, 'female': female ? 1 : undefined, 'is_companion': companion ? 1 : undefined};
+        var obj = {'id': id, 'name': name, 'hidden': hidden ? 1 : undefined, 'female': female ? 1 : undefined, 'is_companion': companion ? 1 : undefined};
+        
+        if (displayName.length > 0) {
+            obj["name"] = displayName;
+        }
         
         if (birth > 0) {
             obj["birth"] = birth;
@@ -48,8 +72,7 @@ NavigationPane
     {
         if (id == QueryId.AddIndividual)
         {
-            persist.showToast( qsTr("Individual added!"), "images/menu/ic_add_suite.png" );
-            individualPicker.fetchAllIndividuals(individualPicker.pickerList);
+            persist.showToast( qsTr("Individual added!"), "images/menu/ic_add_rijaal.png" );
         } else if (id == QueryId.CopyIndividualsFromSource) {
             persist.showToast( qsTr("Successfully ported individuals!"), "images/dropdown/ic_save_individual.png" );
         }  else if (id == QueryId.EditIndividual) {
@@ -61,10 +84,8 @@ NavigationPane
         } else if (id == QueryId.ReplaceIndividual) {
             persist.showToast( qsTr("Successfully replaced individual!"), "images/menu/ic_delete_quote.png" );
             individualPicker.fetchAllIndividuals(individualPicker.pickerList);
-        } else if (id == QueryId.AddCompanions) {
-            persist.showToast( qsTr("Successfully added companions!"), "images/menu/ic_set_companions.png" );
-        } else if (id == QueryId.RemoveCompanions) {
-            persist.showToast( qsTr("Successfully removed from companions!"), "images/menu/ic_remove_companions.png" );
+        } else if (id == QueryId.AddBioLink) {
+            persist.showToast( qsTr("Successfully added biography!"), "images/menu/ic_add_bio.png" );
         }
     }
     
@@ -158,6 +179,23 @@ NavigationPane
             }
         ]
         
+        function onBioSaved(id, author, heading, body, reference)
+        {
+            var id = tafsirHelper.addBio(navigationPane, body, reference, author, heading);
+            tafsirHelper.addBioLink(navigationPane, id, pickerList.dataModel.data(editIndexPath).id, undefined);
+            popToRoot();
+        }
+        
+        function addBio(ListItem)
+        {
+            editIndexPath = ListItem.indexPath;
+            definition.source = "CreateBioPage.qml";
+            var page = definition.createObject();
+            page.createBio.connect(onBioSaved);
+            
+            navigationPane.push(page);
+        }
+        
         function edit(ListItem)
         {
             editIndexPath = ListItem.indexPath;
@@ -199,61 +237,6 @@ NavigationPane
             navigationPane.push(ipp);
         }
         
-        pickerList.multiSelectAction: MultiSelectActionItem {
-            imageSource: "images/menu/ic_select_individuals.png"
-        }
-        
-        pickerList.onSelectionChanged: {
-            var n = individualPicker.pickerList.selectionList().length;
-            individualPicker.pickerList.multiSelectHandler.status = qsTr("%n individuals selected", "", n);
-            setCompanions.enabled = n > 0;
-        }
-        
-        pickerList.multiSelectHandler.actions: [
-            ActionItem
-            {
-                id: setCompanions
-                imageSource: "images/menu/ic_set_companions.png"
-                title: qsTr("Set As Companions") + Retranslate.onLanguageChanged
-                
-                onTriggered: {
-                    console.log("UserEvent: SetCompanions");
-                    tafsirHelper.addCompanions( navigationPane, getSelectedIds() );
-                    
-                    var all = individualPicker.pickerList.selectionList();
-                    
-                    for (var i = all.length-1; i >= 0; i--)
-                    {
-                        var c = individualPicker.model.data(all[i]);
-                        c["companion_id"] = c.id;
-                        individualPicker.model.replace(all[i][0], c);
-                    }
-                }
-            },
-            
-            DeleteActionItem
-            {
-                id: removeCompanions
-                enabled: setCompanions.enabled
-                imageSource: "images/menu/ic_remove_companions.png"
-                title: qsTr("Remove Companions") + Retranslate.onLanguageChanged
-                
-                onTriggered: {
-                    console.log("UserEvent: RemoveCompanions");
-                    tafsirHelper.removeCompanions( navigationPane, getSelectedIds() );
-                    
-                    var all = individualPicker.pickerList.selectionList();
-                    
-                    for (var i = all.length-1; i >= 0; i--)
-                    {
-                        var c = individualPicker.model.data(all[i]);
-                        delete c["companion_id"];
-                        individualPicker.model.replace(all[i][0], c);
-                    }
-                }
-            }
-        ]
-        
         pickerList.listItemComponents: [
             ListItemComponent
             {
@@ -269,6 +252,17 @@ NavigationPane
                         {
                             title: sli.title
                             subtitle: sli.description
+
+                            ActionItem
+                            {
+                                imageSource: "images/menu/ic_add_bio.png"
+                                title: qsTr("Add Biography") + Retranslate.onLanguageChanged
+                                
+                                onTriggered: {
+                                    console.log("UserEvent: NewBio");
+                                    sli.ListItem.view.pickerPage.addBio(sli.ListItem);
+                                }
+                            }
 
                             ActionItem
                             {

@@ -368,12 +368,12 @@ qint64 QueryTafsirHelper::generateIndividualField(QObject* caller, QString const
 }
 
 
-void QueryTafsirHelper::createIndividual(QObject* caller, QString const& prefix, QString const& name, QString const& kunya, QString const& displayName, int birth, int death, int location, bool companion)
+qint64 QueryTafsirHelper::createIndividual(QObject* caller, QString const& prefix, QString const& name, QString const& kunya, QString const& displayName, int birth, int death, int location, bool companion)
 {
-    LOGGER( prefix << name << kunya << displayName << birth << death << location );
+    LOGGER( prefix << name << kunya << displayName << birth << death << location << companion );
 
     qint64 id = QDateTime::currentMSecsSinceEpoch();
-    QString query = QString("INSERT INTO individuals (id,prefix,name,kunya,displayName,birth,death,location) VALUES (%1,?,?,?,?,?,?,?)").arg(id);
+    QString query = QString("INSERT INTO individuals (id,prefix,name,kunya,displayName,birth,death,location,is_companion) VALUES (%1,?,?,?,?,?,?,?,?)").arg(id);
 
     QVariantList args;
     args << protect(prefix);
@@ -386,6 +386,8 @@ void QueryTafsirHelper::createIndividual(QObject* caller, QString const& prefix,
     args << ( companion ? 1 : QVariant() );
 
     m_sql->executeQuery(caller, query, QueryId::AddIndividual, args);
+
+    return id;
 }
 
 
