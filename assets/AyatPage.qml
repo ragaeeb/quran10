@@ -434,8 +434,22 @@ Page
             
             ScrollView
             {
+                id: sv
                 horizontalAlignment: HorizontalAlignment.Fill
                 verticalAlignment: VerticalAlignment.Fill
+                
+                gestureHandlers: [
+                    PinchHandler
+                    {
+                        onPinchStarted: {
+                            sv.scrollViewProperties.scrollMode = ScrollMode.None; // this hack is needed due to a bug in 10.3 OS, pinch gestures are not detected on the labels unless the scrollmode is set to none 
+                        }
+                        
+                        onPinchEnded: {
+                            sv.scrollViewProperties.scrollMode = ScrollMode.Vertical;
+                        }
+                    }
+                ]
                 
                 Container
                 {
@@ -579,6 +593,12 @@ Page
                             minValue: 4 ? 4 : 6
                             maxValue: 20 ? 20 : 30
                             userEventId: "PinchedTranslation"
+                        },
+                        
+                        PinchHandler {
+                            onPinchStarted: {
+                                console.log("*** PINCH STARTED");
+                            }
                         }
                     ]
                 }
