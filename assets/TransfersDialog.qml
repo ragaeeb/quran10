@@ -306,7 +306,7 @@ Delegate
                                         type: "recitation"
                                         
                                         TransferListItem {
-                                            successImageSource: "images/list/mime_mp3.png"
+                                            successImageSource: "images/list/transfer_recitation.png"
                                         }
                                     },
                                     
