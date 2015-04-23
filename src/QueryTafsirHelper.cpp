@@ -247,7 +247,7 @@ void QueryTafsirHelper::fetchAllBios(QObject* caller) {
 
 
 void QueryTafsirHelper::fetchAllIndividuals(QObject* caller) {
-    m_sql->executeQuery(caller, "SELECT individuals.id,prefix,name,kunya,hidden,birth,death,is_companion FROM individuals ORDER BY name,kunya,prefix", QueryId::FetchAllIndividuals);
+    m_sql->executeQuery(caller, QString("SELECT i.id,%1 AS name,is_companion FROM individuals i ORDER BY displayName,name").arg( NAME_FIELD("i") ), QueryId::FetchAllIndividuals);
 }
 
 
@@ -298,7 +298,7 @@ void QueryTafsirHelper::fetchStudents(QObject* caller, qint64 individualId)
 
 void QueryTafsirHelper::fetchFrequentIndividuals(QObject* caller, int n)
 {
-    m_sql->executeQuery(caller, QString("SELECT author AS id,prefix,name,kunya,hidden,displayName,birth,death,is_companion FROM (SELECT author,COUNT(author) AS n FROM suites GROUP BY author UNION SELECT translator AS author,COUNT(translator) AS n FROM suites GROUP BY author UNION SELECT explainer AS author,COUNT(explainer) AS n FROM suites GROUP BY author ORDER BY n DESC LIMIT %1) INNER JOIN individuals ON individuals.id=author GROUP BY individuals.id ORDER BY name,kunya,prefix").arg(n), QueryId::FetchAllIndividuals);
+    m_sql->executeQuery(caller, QString("SELECT author AS id,%2 AS name,is_companion FROM (SELECT author,COUNT(author) AS n FROM suites GROUP BY author UNION SELECT translator AS author,COUNT(translator) AS n FROM suites GROUP BY author UNION SELECT explainer AS author,COUNT(explainer) AS n FROM suites GROUP BY author ORDER BY n DESC LIMIT %1) INNER JOIN individuals i ON i.id=author GROUP BY i.id ORDER BY displayName,name").arg(n).arg( NAME_FIELD("i") ), QueryId::FetchAllIndividuals);
 }
 
 
@@ -527,7 +527,7 @@ void QueryTafsirHelper::replaceIndividual(QObject* caller, qint64 toReplaceId, q
 void QueryTafsirHelper::searchIndividuals(QObject* caller, QString const& trimmedText)
 {
     LOGGER(trimmedText);
-    m_sql->executeQuery(caller, QString("SELECT id,prefix,name,kunya,hidden,birth,death,is_companion FROM individuals i WHERE %1 ORDER BY name,kunya,prefix").arg( NAME_SEARCH("i") ), QueryId::SearchIndividuals, QVariantList() << trimmedText << trimmedText << trimmedText);
+    m_sql->executeQuery(caller, QString("SELECT id,%2 AS name,is_companion FROM individuals i WHERE %1 ORDER BY displayName,name").arg( NAME_SEARCH("i") ).arg( NAME_FIELD("i") ), QueryId::SearchIndividuals, QVariantList() << trimmedText << trimmedText << trimmedText);
 }
 
 

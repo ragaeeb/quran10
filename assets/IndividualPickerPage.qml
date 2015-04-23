@@ -139,8 +139,11 @@ Page
                 listItemComponents: [
                     ListItemComponent
                     {
-                        IndividualListItem {
+                        StandardListItem
+                        {
                             id: sli
+                            imageSource: ListItemData.is_companion ? "images/list/ic_companion.png" : "images/list/ic_individual.png"
+                            title: ListItemData.name
                         }
                     }
                 ]

@@ -86,10 +86,6 @@ NavigationPane
         property variant toReplaceId
         property variant editIndexPath
         
-        onCreationCompleted: {
-            performSearch();
-        }
-        
         onContentLoaded: {
             navigationPane.parent.unreadContentCount = size;
         }
@@ -261,9 +257,12 @@ NavigationPane
         pickerList.listItemComponents: [
             ListItemComponent
             {
-                IndividualListItem
+                StandardListItem
+                
                 {
                     id: sli
+                    imageSource: ListItemData.is_companion ? "images/list/ic_companion.png" : "images/list/ic_individual.png"
+                    title: ListItemData.name
                     
                     contextActions: [
                         ActionSet
