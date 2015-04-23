@@ -279,10 +279,9 @@ Page
                 onTriggered: {
                     var data = listView.dataModel.data(indexPath);
                     
-                    if ( sortOrder.selectedOption != juzOption || indexPath.length > 1 )
-                    {
+                    if (data.surah_id) {
                         console.log("UserEvent: SurahTriggered");
-                        picked(data.surah_id, 0);
+                        picked(data.surah_id, data.verse_number ? data.verse_number : 0);
                     } else {
                         console.log("UserEvent: JuzTriggered");
                         juzPicked(data);

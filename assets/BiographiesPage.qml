@@ -50,6 +50,8 @@ Page
                 
                 var e = {'bio_id': id, 'author': author, 'reference': reference, 'body': body, 'heading': heading};
                 adm.insert(e);
+                
+                listView.scrollToPosition(ScrollPosition.Beginning, ScrollAnimation.Smooth);
             }
             
             onTriggered: {
@@ -176,10 +178,10 @@ Page
                 navigationPane.push(page);
             }
             
-            function removeBio(ListItem)
+            function removeBio(ListItem, ListItemData)
             {
                 busy.delegateActive = true;
-                tafsirHelper.removeBio(listView, ListItem.data);
+                tafsirHelper.removeBio(listView, ListItemData);
                 adm.removeAt(ListItem.indexPath);
             }
             
@@ -256,7 +258,7 @@ Page
                                     
                                     onTriggered: {
                                         console.log("UserEvent: DeleteBio");
-                                        header.ListItem.view.removeBio(header.ListItem);
+                                        header.ListItem.view.removeBio(header.ListItem, ListItemData);
                                     }
                                 }
                             }
