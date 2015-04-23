@@ -236,18 +236,19 @@ Page
                             StandardListItem
                             {
                                 id: sli
-                                description: ListItemData.body.replace(/\n/g, " ")
+                                description: ListItemData.body.replace(/\n/g, " ").substring(0, 150)
                                 imageSource: ListItemData.points > 0 ? "images/list/ic_like.png" : ListItemData.points == 0 ? "images/list/ic_bio.png" : "images/list/ic_dislike.png"
                                 title: ListItemData.author ? ListItemData.author : ListItemData.reference ? ListItemData.reference : ""
                             }
                             
                             TextArea
                             {
+                                id: bioBody
                                 editable: false
                                 backgroundVisible: false
                                 content.flags: TextContentFlag.ActiveText | TextContentFlag.EmoticonsOff
                                 input.flags: TextInputFlag.SpellCheckOff
-                                text: "%1\n%2".arg(ListItemData.body).arg(ListItemData.reference ? ListItemData.reference : "") + Retranslate.onLanguageChanged
+                                text: "%1\n\n%2".arg(ListItemData.body).arg(ListItemData.reference ? ListItemData.reference : "") + Retranslate.onLanguageChanged
                                 horizontalAlignment: HorizontalAlignment.Fill
                                 visible: ListItemData.isExpanded == 1
                             }
@@ -256,7 +257,7 @@ Page
                                 topMargin: 0; bottomMargin: 0
                                 imageSource: "images/dividers/divider_bio.png"
                                 horizontalAlignment: HorizontalAlignment.Center
-                                visible: (itemRoot.ListItem.indexInSection < itemRoot.ListItem.sectionSize-1) && ListItemData.isExpanded == 1
+                                visible: bioBody.visible
                             }
                         }
                     },
