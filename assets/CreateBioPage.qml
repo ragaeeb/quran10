@@ -46,7 +46,7 @@ Page
         {
             id: saveAction
             title: qsTr("Save") + Retranslate.onLanguageChanged
-            imageSource: "images/dropdown/save_quote.png"
+            imageSource: "images/dropdown/save_bio.png"
             enabled: false
             
             onTriggered: {
