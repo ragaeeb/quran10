@@ -16,7 +16,7 @@ Page
     
     function onDataLoaded(id, data)
     {
-        if (id == QueryId.FetchBioMetadata)
+        if (id == QueryId.FetchBioMetadata && data.length > 0)
         {
             var e = data[0];
             
