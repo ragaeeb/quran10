@@ -45,7 +45,7 @@ Page
                 toVerse = data[1].verse_number;
             }
             
-            ranges = {'from_surah_id': data[0].surah_id, 'from_verse_id': data[0].verse_id, 'to_surah_id': toChapter, 'to_verse_id': toVerse};
+            ranges = {'from_surah_id': data[0].surah_id, 'from_verse_id': data[0].verse_number, 'to_surah_id': toChapter, 'to_verse_id': toVerse};
         }
     }
 
