@@ -28,6 +28,38 @@ Page
                         text = qsTr("Translation Last Updated: %1").arg( new Date(translationVersion).toDateString() );
                     }
                 }
+                
+                contextActions: [
+                    ActionSet
+                    {
+                        id: actionSet
+                        title: versionInfo.text
+                        
+                        ActionItem
+                        {
+                            imageSource: "images/menu/ic_upload_local.png"
+                            title: qsTr("Check for Updates") + Retranslate.onLanguageChanged
+                            
+                            onTriggered: {
+                                console.log("UserEvent: CheckForUpdate");
+                                enabled = false;
+                                var params = {'language': helper.translation};
+                                helper.updateCheckNeeded(params);
+                            }
+                            
+                            function onFinished(cookie, data)
+                            {
+                                if (cookie.updateCheck) {
+                                    enabled = true;
+                                }
+                            }
+                            
+                            onCreationCompleted: {
+                                queue.requestComplete.connect(onFinished);
+                            }
+                        }
+                    }
+                ]
             }
         ]
     }
