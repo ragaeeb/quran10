@@ -12,13 +12,10 @@ CREATE TABLE quotes (id INTEGER PRIMARY KEY, author INTEGER REFERENCES individua
 CREATE TABLE explanations (id INTEGER PRIMARY KEY, surah_id INTEGER NOT NULL, from_verse_number INTEGER, to_verse_number INTEGER, suite_page_id INTEGER NOT NULL REFERENCES suite_pages(id) ON DELETE CASCADE ON UPDATE CASCADE, UNIQUE(surah_id, from_verse_number, suite_page_id) ON CONFLICT REPLACE, CHECK(from_verse_number > 0 AND from_verse_number <= 286 AND to_verse_number >= from_verse_number AND to_verse_number <= 286 AND surah_id > 0 AND surah_id <= 114));
 
 CREATE INDEX IF NOT EXISTS individuals_index ON individuals(birth,death,female,location,is_companion);
-CREATE INDEX IF NOT EXISTS teachers_index ON teachers(individual, teacher);
-CREATE INDEX IF NOT EXISTS websites_index ON websites(individual);
-CREATE INDEX IF NOT EXISTS mentions_index ON mentions(from_id,target,points);
 CREATE INDEX IF NOT EXISTS suites_index ON suites(author,translator,explainer);
 CREATE INDEX IF NOT EXISTS suite_pages_index ON suite_pages(suite_id);
 CREATE INDEX IF NOT EXISTS quotes_index ON quotes(author);
-CREATE INDEX IF NOT EXISTS explanations_index ON explanations(surah_id,from_verse_number,to_verse_number,suite_page_id);
+CREATE INDEX IF NOT EXISTS explanations_index ON explanations(to_verse_number);
 
 CREATE TABLE mentions_citations (id INTEGER PRIMARY KEY, mention_id INTEGER REFERENCES mentions(id) ON DELETE CASCADE ON UPDATE CASCADE, individual REFERENCES individuals(id) ON DELETE CASCADE ON UPDATE CASCADE);
 CREATE TABLE quotes_citations (id INTEGER PRIMARY KEY, quote_id INTEGER REFERENCES quotes(id) ON DELETE CASCADE ON UPDATE CASCADE, individual REFERENCES individuals(id) ON DELETE CASCADE ON UPDATE CASCADE);
