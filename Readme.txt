@@ -1,3 +1,7 @@
+PRAGMA writable_schema = 1;
+delete from sqlite_master where type in ('table', 'index', 'trigger');
+PRAGMA writable_schema = 0;
+
 sqlite3 quran_tafsir_english.db;
 CREATE TABLE locations (id INTEGER PRIMARY KEY, city TEXT NOT NULL UNIQUE ON CONFLICT IGNORE, latitude REAL NOT NULL, longitude REAL NOT NULL);
 CREATE TABLE individuals (id INTEGER PRIMARY KEY, prefix TEXT, name TEXT, kunya TEXT, hidden INTEGER, birth INTEGER, death INTEGER, female INTEGER, displayName TEXT, location INTEGER REFERENCES locations(id) ON DELETE SET NULL ON UPDATE CASCADE, is_companion INTEGER, CHECK(is_companion=1 AND female=1 AND hidden=1 AND name <> '' AND prefix <> '' AND kunya <> '' AND displayName <> ''));
@@ -16,6 +20,12 @@ CREATE INDEX IF NOT EXISTS suites_index ON suites(author,translator,explainer);
 CREATE INDEX IF NOT EXISTS suite_pages_index ON suite_pages(suite_id);
 CREATE INDEX IF NOT EXISTS quotes_index ON quotes(author);
 CREATE INDEX IF NOT EXISTS explanations_index ON explanations(to_verse_number);
+
+ATTACH DATABASE 'quran_tafsir_english.db' AS e;
+INSERT INTO locations SELECT * FROM e.locations;
+INSERT INTO individuals SELECT * FROM e.individuals;
+INSERT INTO teachers SELECT * FROM e.teachers;
+INSERT INTO websites SELECT * FROM e.websites;
 
 CREATE TABLE mentions_citations (id INTEGER PRIMARY KEY, mention_id INTEGER REFERENCES mentions(id) ON DELETE CASCADE ON UPDATE CASCADE, individual REFERENCES individuals(id) ON DELETE CASCADE ON UPDATE CASCADE);
 CREATE TABLE quotes_citations (id INTEGER PRIMARY KEY, quote_id INTEGER REFERENCES quotes(id) ON DELETE CASCADE ON UPDATE CASCADE, individual REFERENCES individuals(id) ON DELETE CASCADE ON UPDATE CASCADE);
