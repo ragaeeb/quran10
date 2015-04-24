@@ -50,7 +50,7 @@ NavigationPane
                 }
                 
                 onTriggered: {
-                    definition.source = "CreateQuotePage.qml";
+                    global.definition.source = "CreateQuotePage.qml";
                     var page = definition.createObject();
                     page.createQuote.connect(onCreate);
                     
@@ -130,7 +130,7 @@ NavigationPane
                         
                         Option {
                             description: qsTr("Search reference field") + Retranslate.onLanguageChanged
-                            imageSource: "images/dropdown/search_reference.png"
+                            imageSource: "images/dropdown/search_quote_reference.png"
                             text: qsTr("Reference") + Retranslate.onLanguageChanged
                             value: "reference"
                         }
@@ -202,7 +202,7 @@ NavigationPane
                 
                 function openQuote(ListItemData)
                 {
-                    definition.source = "CreateQuotePage.qml";
+                    global.definition.source = "CreateQuotePage.qml";
                     var page = definition.createObject();
                     page.quoteId = ListItemData.id;
                     
@@ -323,10 +323,4 @@ NavigationPane
             }
         }   
     }
-    
-    attachedObjects: [
-        ComponentDefinition {
-            id: definition
-        }
-    ]
 }

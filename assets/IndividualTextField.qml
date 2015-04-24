@@ -18,7 +18,7 @@ TextField
             
             onDoubleTapped: {
                 console.log("UserEvent: AuthorDoubleTapped");
-                definition.source = "IndividualPickerPage.qml";
+                global.definition.source = "IndividualPickerPage.qml";
 
                 var p = definition.createObject();
                 p.picked.connect(onPicked);

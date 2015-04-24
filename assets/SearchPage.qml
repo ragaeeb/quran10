@@ -130,7 +130,7 @@ Page
             onTriggered: {
                 console.log("UserEvent: AddSearchFieldTriggered");
                 
-                definition.source = "SearchConstraint.qml";
+                global.definition.source = "SearchConstraint.qml";
                 var additional = definition.createObject();
                 searchContainer.insert(1, additional);
                 
@@ -277,7 +277,7 @@ Page
                                 onClicked: {
                                     console.log("UserEvent: EditRestrictSurahSearch");
                                     
-                                    definition.source = "SurahPickerPage.qml";
+                                    global.definition.source = "SurahPickerPage.qml";
                                     var picker = definition.createObject();
                                     
                                     picker.picked.connect(onPicked);
@@ -311,7 +311,7 @@ Page
         id: searchContainer
         horizontalAlignment: HorizontalAlignment.Fill
         verticalAlignment: VerticalAlignment.Fill
-        background: bg.imagePaint
+        background: global.mainBackground.imagePaint
         
         TextField
         {
@@ -479,15 +479,4 @@ Page
             }
         }
     }
-    
-    attachedObjects: [
-        ImagePaintDefinition {
-            id: bg
-            imageSource: "images/backgrounds/background.png"
-        },
-        
-        ComponentDefinition {
-            id: definition
-        }
-    ]
 }
