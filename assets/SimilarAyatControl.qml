@@ -22,6 +22,7 @@ ResizableContainer
         id: similarList
         maxHeight: screenHeight*ratio
         property bool showTranslation: helper.showTranslation
+        scrollRole: ScrollRole.Main
         
         dataModel: ArrayDataModel {
             id: adm

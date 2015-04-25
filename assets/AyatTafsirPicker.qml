@@ -42,6 +42,7 @@ ResizableContainer
         ListView
         {
             id: tafsirList
+            scrollRole: ScrollRole.Main
             
             function onDataLoaded(id, data)
             {

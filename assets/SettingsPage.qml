@@ -21,6 +21,7 @@ Page
         {  
             horizontalAlignment: HorizontalAlignment.Fill
             verticalAlignment: VerticalAlignment.Fill
+            scrollRole: ScrollRole.Main
             
             Container
             {
