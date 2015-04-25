@@ -271,8 +271,7 @@ Page
             
             onTriggered: {
                 console.log("UserEvent: TafsirContentTriggered");
-                global.definition.source = "TafsirAyats.qml";
-                var page = definition.createObject();
+                var page = global.createObject("TafsirAyats.qml");
                 page.suitePageId = dataModel.data(indexPath).id;
                 
                 navigationPane.push(page);

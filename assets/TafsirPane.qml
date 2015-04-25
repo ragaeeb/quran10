@@ -32,8 +32,7 @@ NavigationPane
         id: tafsirPicker
         
         onTafsirPicked: {
-            global.definition.source = "TafsirContentsPage.qml";
-            var page = definition.createObject();
+            var page = global.createObject("TafsirContentsPage.qml");
             page.title = data.title;
             page.suiteId = data.id;
             
@@ -49,8 +48,7 @@ NavigationPane
                 
                 onTriggered: {
                     console.log("UserEvent: NewSuite");
-                    global.definition.source = "CreateTafsirPage.qml";
-                    var page = definition.createObject();
+                    var page = global.createObject("CreateTafsirPage.qml");
                     page.createTafsir.connect(onCreate);
                     
                     navigationPane.push(page);

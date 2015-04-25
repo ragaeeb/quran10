@@ -128,8 +128,7 @@ Page
         scrollBehavior: TitleBarScrollBehavior.Sticky
         
         onTitleTapped: {
-            global.definition.source = "ChapterTafsirPicker.qml";
-            var p = definition.createObject();
+            var p = global.createObject("ChapterTafsirPicker.qml");
             p.chapterNumber = chapterNumber;
             
             navigationPane.push(p);
@@ -179,8 +178,7 @@ Page
                     {
                         var d = dataModel.data(indexPath);
                         
-                        global.definition.source = "AyatPage.qml";
-                        var ayatPage = definition.createObject();
+                        var ayatPage = global.createObject("AyatPage.qml");
                         ayatPage.surahId = d.surah_id;
                         ayatPage.verseId = d.verse_id;
                         

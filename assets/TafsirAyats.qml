@@ -63,8 +63,7 @@ Page
             
             onTriggered: {
                 console.log("UserEvent: LookupChapter");
-                global.definition.source = "SearchPage.qml";
-                var p = definition.createObject();
+                var p = global.createObject("SearchPage.qml");
                 p.picked.connect(onPicked);
                 
                 prompt.resetIndexPath();
@@ -143,10 +142,9 @@ Page
             
             onTriggered: {
                 console.log("UserEvent: LookupChapter");
-                global.definition.source = "SurahPickerPage.qml";
                 
                 prompt.resetIndexPath();
-                var p = definition.createObject();
+                var p = global.createObject("SurahPickerPage.qml");
                 p.picked.connect(onPicked);
                 p.focusOnSearchBar = true;
                 p.ready();
@@ -231,13 +229,13 @@ Page
                 console.log("UserEvent: TafsirAyatTriggered");
                 
 				var d = dataModel.data(indexPath);
-				global.definition.source = "AyatPage.qml";
+				var src = "AyatPage.qml";
 
 				if (!d.from_verse_number) {
-					global.definition.source = "SurahPage.qml";
+					src = "SurahPage.qml";
 				}
 				
-                var page = definition.createObject();
+                var page = global.createObject(src);
 				
 				if (d.from_verse_number) {
 					page.surahId = d.surah_id;

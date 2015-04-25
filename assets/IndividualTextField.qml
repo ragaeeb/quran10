@@ -18,9 +18,8 @@ TextField
             
             onDoubleTapped: {
                 console.log("UserEvent: AuthorDoubleTapped");
-                global.definition.source = "IndividualPickerPage.qml";
 
-                var p = definition.createObject();
+                var p = global.createObject("IndividualPickerPage.qml");
                 p.picked.connect(onPicked);
                 tafsirHelper.fetchFrequentIndividuals(p.pickerList);
                 

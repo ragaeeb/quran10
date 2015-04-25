@@ -9,7 +9,6 @@ Page
     property bool andMode: true
     property alias listControl: listView
     property alias busyControl: busy
-    property alias def: definition
     property alias model: adm
     property variant googleResults: []
     signal performSearch()
@@ -130,8 +129,7 @@ Page
             onTriggered: {
                 console.log("UserEvent: AddSearchFieldTriggered");
                 
-                global.definition.source = "SearchConstraint.qml";
-                var additional = definition.createObject();
+                var additional = global.createObject("SearchConstraint.qml");
                 searchContainer.insert(1, additional);
                 
                 additional.textField.requestFocus();
@@ -198,6 +196,7 @@ Page
                     {
                         id: excludeContainer
                         horizontalAlignment: HorizontalAlignment.Fill
+                        leftPadding: 10; rightPadding: 10; bottomPadding: 10
                         
                         Container
                         {
@@ -277,8 +276,7 @@ Page
                                 onClicked: {
                                     console.log("UserEvent: EditRestrictSurahSearch");
                                     
-                                    global.definition.source = "SurahPickerPage.qml";
-                                    var picker = definition.createObject();
+                                    var picker = global.createObject("SurahPickerPage.qml");
                                     
                                     picker.picked.connect(onPicked);
                                     navigationPane.push(picker);
