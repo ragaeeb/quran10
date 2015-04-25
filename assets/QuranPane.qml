@@ -133,7 +133,7 @@ NavigationPane
                 var all = pickerList.selectionList();
                 var n = all.length;
                 compareAction.enabled = n > 1 && n < 5;
-                openAction.enabled = n > 0;
+                openAction.enabled = n > 0 && (sortValue == "juz" || sortValue == "normal");
                 pickerList.multiSelectHandler.status = qsTr("%n chapters selected", "", n);
             }
         }
@@ -148,6 +148,10 @@ NavigationPane
             } else {
                 tutorial.execActionBar("compare", qsTr("Use the '%1' action to compare two or more surahs side by side. A maximum of 4 surahs may be compared at once.").arg(compareAction.title), "l" );
                 tutorial.execActionBar("openRange", qsTr("Use the '%1' action to open all the surah between the first selection and the last selection.").arg(openAction.title), "r");
+                
+                if (!openAction.enabled) {
+                    tutorial.execActionBar("openRangeDisabled", qsTr("Note that the '%1' action is only available in the 'Normal' and 'Juz' display modes.").arg(openAction.title), "r");
+                }
             }
         }
 
@@ -216,7 +220,9 @@ NavigationPane
                 ]
             },
             
-            ActionItem {
+            ActionItem
+            {
+                id: selectAll
                 title: qsTr("Select All") + Retranslate.onLanguageChanged
                 imageSource: "images/menu/ic_select_all.png"
                 enabled: pickerPage.sortValue != "juz"
@@ -277,7 +283,7 @@ NavigationPane
             ready();
             
             tutorial.execActionBar( "openMushaf", qsTr("Tap here to open the mushaf!") );
-            tutorial.execActionBar("selectAllSurahs", qsTr("Tap here to view the entire Qu'ran (all the surahs)!"), "r");
+            tutorial.execActionBar("selectAllSurahs", qsTr("Tap on the '%1' action to view the entire Qu'ran (all the surahs)!").arg(selectAll.title), "r");
             var noMoreTutorialsLeft = tutorial.exec("lpSurahPicker", "Press and hold on a surah for a menu to select multiple chapters.", HorizontalAlignment.Center, VerticalAlignment.Center, ui.du(2), 0, 0, ui.du(2));
             
             if ( !noMoreTutorialsLeft && persist.getValueFor("hideRandomQuote") != 1 ) {
@@ -286,6 +292,10 @@ NavigationPane
             
             buttonControl.onLastPositionUpdated();
             global.lastPositionUpdated.connect(buttonControl.onLastPositionUpdated);
+            
+            if (!selectAll.enabled) {
+                tutorial.execActionBar("selectAllDisabled", qsTr("The '%1' feature is not available for the Juz display mode.").arg(selectAll.title), "r");
+            }
         }
         
         onCreationCompleted: {
