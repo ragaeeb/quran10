@@ -50,7 +50,8 @@ NavigationPane
                 }
                 
                 onTriggered: {
-                    var page = global.createObject("CreateQuotePage.qml");
+                    global.definition.source = "CreateQuotePage.qml";
+                    var page = definition.createObject();
                     page.createQuote.connect(onCreate);
                     
                     navigationPane.push(page);
@@ -201,7 +202,8 @@ NavigationPane
                 
                 function openQuote(ListItemData)
                 {
-                    var page = global.createObject("CreateQuotePage.qml");
+                    global.definition.source = "CreateQuotePage.qml";
+                    var page = definition.createObject();
                     page.quoteId = ListItemData.id;
                     
                     navigationPane.push(page);

@@ -14,7 +14,8 @@ NavigationPane
         id: searchPage
         
         onPicked: {
-            var page = global.createObject("AyatPage.qml");
+            def.source = "AyatPage.qml";
+            var page = def.createObject();
             
             page.surahId = surahId;
             page.verseId = verseId;

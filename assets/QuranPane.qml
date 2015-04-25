@@ -10,14 +10,16 @@ NavigationPane
 
         if ( tutorial.promptVideo("http://youtu.be/7nA27gIxZ08") ) {}
         else if ( reporter.online && !persist.containsFlag("alFurqanAdvertised") ) {
-            var advertisement = global.createObject("AlFurqanAdvertisement.qml");
+            global.definition.source = "AlFurqanAdvertisement.qml";
+            var advertisement = definition.createObject();
             advertisement.open();
         }
     }
     
     function onAyatPicked(surahId, verseId)
     {
-        var ayatPage = global.createObject("AyatPage.qml");
+        global.definition.source = "AyatPage.qml";
+        var ayatPage = definition.createObject();
         ayatPage.surahId = surahId;
         ayatPage.verseId = verseId;
         
@@ -26,7 +28,8 @@ NavigationPane
     
     function onOpenChapter(surahId)
     {
-        var p = global.createObject("ChapterTafsirPicker.qml");
+        global.definition.source = "ChapterTafsirPicker.qml";
+        var p = definition.createObject();
         p.chapterNumber = surahId;
         
         navigationPane.push(p);
@@ -165,7 +168,8 @@ NavigationPane
                 
                 onTriggered: {
                     console.log("UserEvent: CompareSurahs");
-                    var p = global.createObject("CompareSurahsPage.qml");
+                    global.definition.source = "CompareSurahsPage.qml";
+                    var p = definition.createObject();
                     
                     var all = pickerPage.pickerList.selectionList();
                     var surahIds = [];
@@ -188,7 +192,8 @@ NavigationPane
                 
                 onTriggered: {
                     console.log("UserEvent: OpenSurahs");
-                    var p = global.createObject("SurahPage.qml");
+                    global.definition.source = "SurahPage.qml";
+                    var p = definition.createObject();
                     p.picked.connect(onAyatPicked);
                     p.openChapterTafsir.connect(onOpenChapter);
                     
@@ -208,7 +213,8 @@ NavigationPane
                 
                 onTriggered: {
                     console.log("UserEvent: LaunchMushaf");
-                    var sheet = global.createObject("MushafSheet.qml");
+                    global.definition.source = "MushafSheet.qml";
+                    var sheet = definition.createObject();
                     
                     sheet.open();
                 }
@@ -243,14 +249,16 @@ NavigationPane
         ]
         
         onJuzPicked: {
-            var surahPage = global.createObject("JuzPage.qml");
+            global.definition.source = "JuzPage.qml";
+            var surahPage = definition.createObject();
             navigationPane.push(surahPage);
             
             surahPage.juzId = juzId;
         }
         
         onPicked: {
-            var surahPage = global.createObject("SurahPage.qml");
+            global.definition.source = "SurahPage.qml";
+            var surahPage = definition.createObject();
             surahPage.picked.connect(onAyatPicked);
             surahPage.openChapterTafsir.connect(onOpenChapter);
             

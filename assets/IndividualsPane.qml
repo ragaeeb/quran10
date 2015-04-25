@@ -127,7 +127,8 @@ NavigationPane
                 
                 onTriggered: {
                     console.log("UserEvent: NewIndividual");
-                    var page = global.createObject("CreateIndividualPage.qml");
+                    global.definition.source = "CreateIndividualPage.qml";
+                    var page = definition.createObject();
                     page.createIndividual.connect(onCreate);
                     
                     navigationPane.push(page);
@@ -143,7 +144,8 @@ NavigationPane
                 
                 onTriggered: {
                     console.log("UserEvent: Biographies");
-                    var page = global.createObject("BiographiesPage.qml");
+                    global.definition.source = "BiographiesPage.qml";
+                    var page = definition.createObject();
                     page.reload();
                     navigationPane.push(page);
                 }
@@ -197,7 +199,8 @@ NavigationPane
         function edit(ListItem)
         {
             editIndexPath = ListItem.indexPath;
-            var page = global.createObject("CreateIndividualPage.qml");
+            global.definition.source = "CreateIndividualPage.qml";
+            var page = definition.createObject();
             page.individualId = ListItem.data.id;
             page.createIndividual.connect(onEdit);
             
@@ -227,7 +230,8 @@ NavigationPane
         function replace(ListItemData)
         {
             toReplaceId = ListItemData.id;
-            var ipp = global.createObject("IndividualPickerPage.qml");
+            global.definition.source = "IndividualPickerPage.qml";
+            var ipp = definition.createObject();
             ipp.picked.connect(onActualPicked);
             
             navigationPane.push(ipp);
@@ -321,7 +325,8 @@ NavigationPane
         ]
         
         onPicked: {
-            var page = global.createObject("IndividualBioPage.qml");
+            global.definition.source = "IndividualBioPage.qml";
+            var page = definition.createObject();
             page.individualId = individualId;
             
             navigationPane.push(page);

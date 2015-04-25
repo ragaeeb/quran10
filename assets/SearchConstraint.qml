@@ -35,8 +35,8 @@ Container
                 
                 onEnded: {
                     tutorial.execBelowTitleBar("constraintTip", qsTr("There are two kinds of constraints: You can either choose 'AND' or 'OR'.").arg(included.title), 0, "l" );
-                    tutorial.execBelowTitleBar("constraintTip2", qsTr("If you want to search for a verse which has the words 'life' AND 'give' AND 'death' in it, you would enter the three words into the three text fields by tapping on the 'Add' action twice, and use the AND constraint."), 0, "l", undefined, "images/dropdown/search_and.png" );
-                    tutorial.execBelowTitleBar("constraintTip3", qsTr("If you want to search for a verse which has the words 'life' OR 'give' then you would enter the two words into the two text fields by adding the 'Add' action once, and use the OR constraint."), 0, "l", undefined, "images/dropdown/search_or.png" );
+                    tutorial.execBelowTitleBar("constraintTip2", qsTr("If you want to search for a verse which has the words 'life' AND 'give' AND 'death' in it, you would enter the three words into the three text fields by tapping on the 'Add' action twice, and use the AND constraint."), 0, "l", "images/dropdown/search_and.png" );
+                    tutorial.execBelowTitleBar("constraintTip3", qsTr("If you want to search for a verse which has the words 'life' OR 'give' then you would enter the two words into the two text fields by adding the 'Add' action once, and use the OR constraint."), 0, "l", "images/dropdown/search_or.png" );
                 }
             }
         ]

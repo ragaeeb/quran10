@@ -244,7 +244,8 @@ NavigationPane
                     console.log("UserEvent: FavouriteTriggered");
                     var data = dataModel.data(indexPath);
                     
-                    var sp = global.createObject("AyatPage.qml");
+                    global.definition.source = "AyatPage.qml";
+                    var sp = definition.createObject();
                     navigationPane.push(sp);
                     sp.surahId = data.surah_id;
                     sp.verseId = data.verse_id;
