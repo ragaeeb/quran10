@@ -156,6 +156,7 @@ Page
             {
                 id: bios
                 property variant editIndexPath
+                scrollRole: ScrollRole.Main
                 
                 layout: StackListLayout {
                     headerMode: ListHeaderMode.Sticky
@@ -196,6 +197,35 @@ Page
                     } else {
                         return data.type;
                     }
+                }
+                
+                function onBioSaved(bioId, author, heading, body, reference)
+                {
+                    tafsirHelper.editBio(bioPage, bioId, body, reference, author, heading);
+
+                    var current = dataModel.data(editIndexPath);
+                    current["body"] = body;
+                    current["reference"] = reference;
+                    bioModel.updateItem(editIndexPath, current);
+                    
+                    popToRoot();
+                }
+                
+                function editBio(ListItem)
+                {
+                    editIndexPath = ListItem.indexPath;
+                    definition.source = "CreateBioPage.qml";
+                    var page = definition.createObject();
+                    page.createBio.connect(onBioSaved);
+                    page.bioId = ListItem.data.id;
+                    
+                    navigationPane.push(page);
+                }
+                
+                function removeBio(ListItem)
+                {
+                    tafsirHelper.removeBio(bioPage, ListItem.data.id);
+                    bioModel.removeAt(ListItem.indexPath);
                 }
                 
                 function removeStudent(ListItem)
@@ -239,6 +269,45 @@ Page
                                 description: ListItemData.body.replace(/\n/g, " ").substring(0, 150)
                                 imageSource: ListItemData.points > 0 ? "images/list/ic_like.png" : ListItemData.points == 0 ? "images/list/ic_bio.png" : "images/list/ic_dislike.png"
                                 title: ListItemData.author ? ListItemData.author : ListItemData.reference ? ListItemData.reference : ""
+                                
+                                contextMenuHandler: [
+                                    ContextMenuHandler {
+                                        onPopulating: {
+                                            if (!reporter.isAdmin) {
+                                                event.abort();
+                                            }
+                                        }
+                                    }
+                                ]
+                                
+                                contextActions: [
+                                    ActionSet
+                                    {
+                                        title: sli.title
+                                        subtitle: sli.description
+                                        
+                                        ActionItem
+                                        {
+                                            imageSource: "images/menu/ic_edit_bio.png"
+                                            title: qsTr("Edit") + Retranslate.onLanguageChanged
+                                            
+                                            onTriggered: {
+                                                console.log("UserEvent: EditBio");
+                                                bioContainer.ListItem.view.editBio(bioContainer.ListItem);
+                                            }
+                                        }
+                                        
+                                        DeleteActionItem
+                                        {
+                                            imageSource: "images/menu/ic_remove_bio.png"
+                                            
+                                            onTriggered: {
+                                                console.log("UserEvent: RemoveBio");
+                                                bioContainer.ListItem.view.removeBio(bioContainer.ListItem);
+                                            }
+                                        }
+                                    }
+                                ]
                             }
                             
                             TextArea
