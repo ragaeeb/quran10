@@ -35,11 +35,14 @@ Page
                 console.log("UserEvent: NewSite");
                 var uri = persist.showBlockingPrompt( qsTr("Enter url"), qsTr("Please enter the website address for this individual:"), "http://", qsTr("Enter url (ie: http://mtws.com)"), 100, false, qsTr("Save"), qsTr("Cancel"), SystemUiInputMode.Url ).trim();
 
-                if ( textUtils.isUrl(uri) ) {
-                    tafsirHelper.addWebsite(createRijaal, individualId, uri);
-                } else {
-                    persist.showToast( qsTr("Invalid URL entered!"), "images/menu/ic_remove_site.png" );
-                    console.log("FailedRegex", uri);
+                if (uri.length > 0)
+                {
+                    if ( textUtils.isUrl(uri) ) {
+                        tafsirHelper.addWebsite(createRijaal, individualId, uri);
+                    } else {
+                        persist.showToast( qsTr("Invalid URL entered!"), "images/menu/ic_remove_site.png" );
+                        console.log("FailedRegex", uri);
+                    }
                 }
             }
         },
@@ -55,11 +58,14 @@ Page
                 console.log("UserEvent: NewEmail");
                 var email = persist.showBlockingPrompt( qsTr("Enter email"), qsTr("Please enter the email address for this individual:"), "", qsTr("Enter email (ie: abc@hotmail.com)"), 100, false, qsTr("Save"), qsTr("Cancel"), SystemUiInputMode.Email ).trim();
 
-                if ( textUtils.isEmail(email) ) {
-                    tafsirHelper.addWebsite(createRijaal, individualId, email);
-                } else {
-                    persist.showToast( qsTr("Invalid email entered!"), "images/menu/ic_remove_email.png" );
-                    console.log("FailedRegex", email);
+                if (email.length > 0)
+                {
+                    if ( textUtils.isEmail(email) ) {
+                        tafsirHelper.addWebsite(createRijaal, individualId, email);
+                    } else {
+                        persist.showToast( qsTr("Invalid email entered!"), "images/menu/ic_remove_email.png" );
+                        console.log("FailedRegex", email);
+                    }
                 }
             }
         },
@@ -75,11 +81,14 @@ Page
                 console.log("UserEvent: NewPhone");
                 var phone = persist.showBlockingPrompt( qsTr("Enter phone number"), qsTr("Please enter the phone number for this individual:"), "", qsTr("Enter phone (ie: +44133441623)"), 100, false, qsTr("Save"), qsTr("Cancel"), SystemUiInputMode.Phone ).trim();
                 
-                if ( textUtils.isPhoneNumber(phone) ) {
-                    tafsirHelper.addWebsite(createRijaal, individualId, phone);
-                } else {
-                    persist.showToast( qsTr("Invalid email entered!"), "images/menu/ic_remove_phone.png" );
-                    console.log("FailedRegex", phone);
+                if (phone.length > 0)
+                {
+                    if ( textUtils.isPhoneNumber(phone) ) {
+                        tafsirHelper.addWebsite(createRijaal, individualId, phone);
+                    } else {
+                        persist.showToast( qsTr("Invalid email entered!"), "images/menu/ic_remove_phone.png" );
+                        console.log("FailedRegex", phone);
+                    }
                 }
             }
         }
@@ -124,7 +133,11 @@ Page
             results = offloader.fillType(results, id);
             adm.clear();
             adm.append(results);
-        } else if (id == QueryId.RemoveWebsite || id == QueryId.AddWebsite) {
+        } else if (id == QueryId.AddWebsite) {
+            persist.showToast( qsTr("Website added!"), "asset:///images/menu/ic_add_site.png" );
+            tafsirHelper.fetchAllWebsites(createRijaal, individualId);
+        } else if (id == QueryId.RemoveWebsite) {
+            persist.showToast( qsTr("Entry removed!"), "asset:///images/menu/ic_remove_site.png" );
             tafsirHelper.fetchAllWebsites(createRijaal, individualId);
         }
     }

@@ -74,13 +74,13 @@ NavigationPane
         {
             persist.showToast( qsTr("Individual added!"), "images/menu/ic_add_rijaal.png" );
         } else if (id == QueryId.CopyIndividualsFromSource) {
-            persist.showToast( qsTr("Successfully ported individuals!"), "images/dropdown/ic_save_individual.png" );
+            persist.showToast( qsTr("Successfully ported individuals!"), "images/menu/ic_copy_from_english.png" );
         }  else if (id == QueryId.EditIndividual) {
-            persist.showToast( qsTr("Successfully edited individual"), "images/dropdown/ic_save_individual.png" );
+            persist.showToast( qsTr("Successfully edited individual"), "images/menu/ic_edit_rijaal.png" );
         } else if (id == QueryId.AddIndividual) {
-            persist.showToast( qsTr("Successfully added individual"), "images/dropdown/ic_save_individual.png" );
+            persist.showToast( qsTr("Successfully added individual"), "images/menu/ic_select_individuals.png" );
         } else if (id == QueryId.RemoveIndividual) {
-            persist.showToast( qsTr("Successfully deleted individual!"), "images/menu/ic_delete_quote.png" );
+            persist.showToast( qsTr("Successfully deleted individual!"), "images/menu/ic_delete_individual.png" );
         } else if (id == QueryId.ReplaceIndividual) {
             persist.showToast( qsTr("Successfully replaced individual!"), "images/menu/ic_delete_quote.png" );
             individualPicker.fetchAllIndividuals(individualPicker.pickerList);

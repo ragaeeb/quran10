@@ -80,11 +80,11 @@ Page
         } else if (id == QueryId.RemoveTeacher) {
             persist.showToast( qsTr("Teacher removed!"), "images/menu/ic_remove_teacher.png" );
         } else if (id == QueryId.RemoveStudent) {
-            persist.showToast( qsTr("Student removed!"), "images/menu/ic_remove_student.png" );
+            persist.showToast( qsTr("Student removed!"), "images/menu/ic_remove_companions.png" );
         } else if (id == QueryId.AddTeacher) {
-            persist.showToast( qsTr("Teacher added!"), "images/menu/ic_edit_bio.png" );
+            persist.showToast( qsTr("Teacher added!"), "images/menu/ic_set_companions.png" );
         } else if (id == QueryId.AddStudent) {
-            persist.showToast( qsTr("Student added!"), "images/menu/ic_edit_bio.png" );
+            persist.showToast( qsTr("Student added!"), "images/menu/ic_add_student.png" );
         }
         
         data = offloader.fillType(data, id);
