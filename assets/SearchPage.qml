@@ -198,6 +198,7 @@ Page
                     {
                         id: excludeContainer
                         horizontalAlignment: HorizontalAlignment.Fill
+                        leftPadding: 10; rightPadding: 10; bottomPadding: 10
                         
                         Container
                         {
