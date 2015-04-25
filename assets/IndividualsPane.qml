@@ -127,8 +127,7 @@ NavigationPane
                 
                 onTriggered: {
                     console.log("UserEvent: NewIndividual");
-                    global.definition.source = "CreateIndividualPage.qml";
-                    var page = definition.createObject();
+                    var page = global.createObject("CreateIndividualPage.qml");
                     page.createIndividual.connect(onCreate);
                     
                     navigationPane.push(page);
@@ -144,8 +143,7 @@ NavigationPane
                 
                 onTriggered: {
                     console.log("UserEvent: Biographies");
-                    global.definition.source = "BiographiesPage.qml";
-                    var page = definition.createObject();
+                    var page = global.createObject("BiographiesPage.qml");
                     page.reload();
                     navigationPane.push(page);
                 }
@@ -199,8 +197,7 @@ NavigationPane
         function edit(ListItem)
         {
             editIndexPath = ListItem.indexPath;
-            global.definition.source = "CreateIndividualPage.qml";
-            var page = definition.createObject();
+            var page = global.createObject("CreateIndividualPage.qml");
             page.individualId = ListItem.data.id;
             page.createIndividual.connect(onEdit);
             
@@ -230,8 +227,7 @@ NavigationPane
         function replace(ListItemData)
         {
             toReplaceId = ListItemData.id;
-            global.definition.source = "IndividualPickerPage.qml";
-            var ipp = definition.createObject();
+            var ipp = global.createObject("IndividualPickerPage.qml");
             ipp.picked.connect(onActualPicked);
             
             navigationPane.push(ipp);
@@ -325,8 +321,7 @@ NavigationPane
         ]
         
         onPicked: {
-            global.definition.source = "IndividualBioPage.qml";
-            var page = definition.createObject();
+            var page = global.createObject("IndividualBioPage.qml");
             page.individualId = individualId;
             
             navigationPane.push(page);

@@ -153,8 +153,7 @@ Page
             {
                 editIndexPath = indexPath;
                 
-                global.definition.source = "CreateTafsirPage.qml";
-                var page = definition.createObject();
+                var page = global.createObject("CreateTafsirPage.qml");
                 page.suiteId = ListItemData.id;
                 page.createTafsir.connect(onEdit);
                 

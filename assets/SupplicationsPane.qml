@@ -63,8 +63,7 @@ NavigationPane
                 
                 function onPicked(surahId, verseId)
                 {
-                    global.definition.source = "AyatPage.qml";
-                    var ayatPage = definition.createObject();
+                    var ayatPage = global.createObject("AyatPage.qml");
                     ayatPage.surahId = surahId;
                     ayatPage.verseId = verseId;
 
@@ -78,8 +77,7 @@ NavigationPane
                     {
                         var data = dataModel.data(indexPath);
                         
-                        global.definition.source = "SurahPage.qml";
-                        var sp = definition.createObject();
+                        var sp = global.createObject("SurahPage.qml");
                         sp.picked.connect(onPicked);
                         navigationPane.push(sp);
                         sp.fromSurahId = data.surah_id;

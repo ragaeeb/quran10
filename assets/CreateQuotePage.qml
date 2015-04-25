@@ -130,9 +130,8 @@ Page
                         
                         onDoubleTapped: {
                             console.log("UserEvent: QuoteSuiteDoubleTapped");
-                            global.definition.source = "TafsirPickerPage.qml";
-                            
-                            var p = definition.createObject();
+
+                            var p = global.createObject("TafsirPickerPage.qml");
                             p.tafsirPicked.connect(onPicked);
                             p.reload();
                             

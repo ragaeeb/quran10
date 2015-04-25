@@ -79,8 +79,7 @@ Page
             onTriggered: {
                 console.log("UserEvent: ChapterTafsirPicked");
 
-                global.definition.source = "AyatTafsirDialog.qml";
-                var htd = definition.createObject();
+                var htd = global.createObject("AyatTafsirDialog.qml");
                 htd.suitePageId = dataModel.data(indexPath).id;
                 htd.open();
             }

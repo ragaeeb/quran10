@@ -29,6 +29,12 @@ QtObject
     
     property variant definition: ComponentDefinition {}
     
+    function createObject(qml)
+    {
+        definition.source = qml;
+        return definition.createObject();
+    }
+    
     function getHeaderData(ListItem) {
         return ListItem.view.dataModel.data( [ListItem.indexPath[0],0] );
     }

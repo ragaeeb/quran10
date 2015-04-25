@@ -58,6 +58,7 @@ public:
         FetchQuote,
         FetchRandomAyat,
         FetchRandomQuote,
+        FetchReverseSimilar,
         FetchSimilarAyatContent,
         FetchStudents,
         FetchSurahHeader,
