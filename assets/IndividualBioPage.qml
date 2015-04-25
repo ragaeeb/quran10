@@ -456,8 +456,9 @@ Page
             
             onTriggered: {
                 console.log("UserEvent: AddStudent");
+                global.definition.source = "IndividualPickerPage.qml";
                 
-                var p = global.createObject("IndividualPickerPage.qml");
+                var p = definition.createObject();
                 p.picked.connect(onPicked);
                 
                 navigationPane.push(p);
@@ -479,8 +480,9 @@ Page
             
             onTriggered: {
                 console.log("UserEvent: AddTeacher");
+                global.definition.source = "IndividualPickerPage.qml";
                 
-                var p = global.createObject("IndividualPickerPage.qml");
+                var p = definition.createObject();
                 p.picked.connect(onPicked);
                 
                 navigationPane.push(p);

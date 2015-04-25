@@ -56,7 +56,8 @@ Page
             
             onTriggered: {
                 console.log("UserEvent: AddBio");
-                var page = global.createObject("CreateBioPage.qml");
+                global.definition.source = "CreateBioPage.qml";
+                var page = definition.createObject();
                 page.createBio.connect(onBioSaved);
                 
                 navigationPane.push(page);
@@ -143,7 +144,8 @@ Page
             function addBioLink(ListItem)
             {
                 editIndexPath = ListItem.indexPath;
-                var c = global.createObject("IndividualPickerPage.qml");
+                global.definition.source = "IndividualPickerPage.qml";
+                var c = definition.createObject();
                 c.picked.connect(onPicked);
 
                 navigationPane.push(c);
@@ -167,8 +169,9 @@ Page
             function editBio(ListItem)
             {
                 editIndexPath = ListItem.indexPath;
+                global.definition.source = "CreateBioPage.qml";
 
-                var page = global.createObject("CreateBioPage.qml");
+                var page = definition.createObject();
                 page.createBio.connect(onEditBio);
                 page.bioId = ListItem.data;
                 

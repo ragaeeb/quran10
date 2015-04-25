@@ -69,7 +69,8 @@ Page
     
     function showExplanation(id)
     {
-        var htd = global.createObject("AyatTafsirDialog.qml");
+        global.definition.source = "AyatTafsirDialog.qml";
+        var htd = definition.createObject();
         htd.suitePageId = id;
         htd.open();
     }

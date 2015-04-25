@@ -532,7 +532,8 @@ Page
     
     function createLocationPicker()
     {
-        var p = global.createObject("LocationPickerPage.qml");
+        global.definition.source = "LocationPickerPage.qml";
+        var p = definition.createObject();
         p.picked.connect(dth.onPicked);
         
         navigationPane.push(p);
