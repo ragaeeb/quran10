@@ -23,12 +23,6 @@ QtObject
         imageSource: "images/backgrounds/header_bg.png"
     }
     
-    property variant mainBackground: ImagePaintDefinition {
-        imageSource: "images/backgrounds/background.png"
-    }
-    
-    property variant definition: ComponentDefinition {}
-    
     function getHeaderData(ListItem) {
         return ListItem.view.dataModel.data( [ListItem.indexPath[0],0] );
     }

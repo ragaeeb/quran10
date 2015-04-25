@@ -50,7 +50,7 @@ NavigationPane
                 }
                 
                 onTriggered: {
-                    global.definition.source = "CreateQuotePage.qml";
+                    definition.source = "CreateQuotePage.qml";
                     var page = definition.createObject();
                     page.createQuote.connect(onCreate);
                     
@@ -202,7 +202,7 @@ NavigationPane
                 
                 function openQuote(ListItemData)
                 {
-                    global.definition.source = "CreateQuotePage.qml";
+                    definition.source = "CreateQuotePage.qml";
                     var page = definition.createObject();
                     page.quoteId = ListItemData.id;
                     
@@ -323,4 +323,10 @@ NavigationPane
             }
         }   
     }
+    
+    attachedObjects: [
+        ComponentDefinition {
+            id: definition
+        }
+    ]
 }

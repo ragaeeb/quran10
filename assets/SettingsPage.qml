@@ -68,6 +68,20 @@ Page
                     }
                     
                     Option {
+                        text: qsTr("Malay") + Retranslate.onLanguageChanged
+                        description: qsTr("Abdullah Muhammad Basmeih") + Retranslate.onLanguageChanged
+                        value: "malay"
+                        imageSource: "images/dropdown/ic_translation.png"
+                    }
+                    
+                    Option {
+                        text: qsTr("Russian") + Retranslate.onLanguageChanged
+                        description: qsTr("Elmir Kuliev") + Retranslate.onLanguageChanged
+                        value: "russian"
+                        imageSource: "images/dropdown/ic_translation.png"
+                    }
+                    
+                    Option {
                         text: qsTr("Spanish") + Retranslate.onLanguageChanged
                         description: qsTr("Julio Cortes") + Retranslate.onLanguageChanged
                         value: "spanish"
@@ -77,7 +91,7 @@ Page
                     Option {
                         id: thai
                         text: qsTr("Thai") + Retranslate.onLanguageChanged
-                        description: qsTr("King Fahad Complex") + Retranslate.onLanguageChanged
+                        description: qsTr("Thailand") + Retranslate.onLanguageChanged
                         value: "thai"
                         imageSource: "images/dropdown/ic_translation.png"
                     }

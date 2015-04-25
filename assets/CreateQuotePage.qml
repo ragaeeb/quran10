@@ -130,7 +130,7 @@ Page
                         
                         onDoubleTapped: {
                             console.log("UserEvent: QuoteSuiteDoubleTapped");
-                            global.definition.source = "TafsirPickerPage.qml";
+                            definition.source = "TafsirPickerPage.qml";
                             
                             var p = definition.createObject();
                             p.tafsirPicked.connect(onPicked);
@@ -163,4 +163,10 @@ Page
             }
         }
     }
+    
+    attachedObjects: [
+        ComponentDefinition {
+            id: definition
+        }
+    ]
 }
