@@ -80,11 +80,11 @@ Page
         } else if (id == QueryId.RemoveTeacher) {
             persist.showToast( qsTr("Teacher removed!"), "images/menu/ic_remove_teacher.png" );
         } else if (id == QueryId.RemoveStudent) {
-            persist.showToast( qsTr("Student removed!"), "images/menu/ic_remove_companions.png" );
+            persist.showToast( qsTr("Student removed!"), "images/menu/ic_remove_student.png" );
         } else if (id == QueryId.AddTeacher) {
-            persist.showToast( qsTr("Teacher added!"), "images/menu/ic_set_companions.png" );
+            persist.showToast( qsTr("Teacher added!"), "images/menu/ic_edit_bio.png" );
         } else if (id == QueryId.AddStudent) {
-            persist.showToast( qsTr("Student added!"), "images/menu/ic_add_student.png" );
+            persist.showToast( qsTr("Student added!"), "images/menu/ic_edit_bio.png" );
         }
         
         data = offloader.fillType(data, id);
@@ -113,7 +113,7 @@ Page
                 FadeTransition {
                     id: ft
                     fromOpacity: 0
-                    toOpacity: 0.65
+                    toOpacity: 0.5
                     easingCurve: StockCurve.SineOut
                     duration: 2000
                 }
@@ -441,6 +441,10 @@ Page
             imageSource: "images/backgrounds/background_ayat_page.jpg"
         },
         
+        ComponentDefinition {
+            id: definition
+        },
+        
         ActionItem
         {
             id: addStudent
@@ -456,7 +460,7 @@ Page
             
             onTriggered: {
                 console.log("UserEvent: AddStudent");
-                global.definition.source = "IndividualPickerPage.qml";
+                definition.source = "IndividualPickerPage.qml";
                 
                 var p = definition.createObject();
                 p.picked.connect(onPicked);
@@ -480,7 +484,7 @@ Page
             
             onTriggered: {
                 console.log("UserEvent: AddTeacher");
-                global.definition.source = "IndividualPickerPage.qml";
+                definition.source = "IndividualPickerPage.qml";
                 
                 var p = definition.createObject();
                 p.picked.connect(onPicked);

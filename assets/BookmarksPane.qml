@@ -120,7 +120,7 @@ NavigationPane
         Container
         {
             horizontalAlignment: HorizontalAlignment.Fill
-            background: global.mainBackground.imagePaint
+            background: back.imagePaint
             layout: DockLayout {}
             
             EmptyDelegate
@@ -244,7 +244,7 @@ NavigationPane
                     console.log("UserEvent: FavouriteTriggered");
                     var data = dataModel.data(indexPath);
                     
-                    global.definition.source = "AyatPage.qml";
+                    definition.source = "AyatPage.qml";
                     var sp = definition.createObject();
                     navigationPane.push(sp);
                     sp.surahId = data.surah_id;
@@ -258,6 +258,16 @@ NavigationPane
     }
     
     attachedObjects: [
+        ImagePaintDefinition
+        {
+            id: back
+            imageSource: "images/backgrounds/background.png"
+        },
+        
+        ComponentDefinition {
+            id: definition
+        },
+        
         FilePicker {
             id: filePicker
             defaultType: FileType.Other

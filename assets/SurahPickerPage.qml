@@ -78,7 +78,7 @@ Page
     
     Container
     {
-        background: global.mainBackground.imagePaint
+        background: back.imagePaint
         horizontalAlignment: HorizontalAlignment.Fill
         verticalAlignment: VerticalAlignment.Fill
         layout: DockLayout {}
@@ -403,4 +403,11 @@ Page
             sortOrder.expanded = true;
         }
     }
+    
+    attachedObjects: [
+        ImagePaintDefinition {
+            id: back
+            imageSource: "images/backgrounds/background.png"
+        }
+    ]
 }

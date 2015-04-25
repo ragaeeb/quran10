@@ -128,7 +128,7 @@ Page
         scrollBehavior: TitleBarScrollBehavior.Sticky
         
         onTitleTapped: {
-            global.definition.source = "ChapterTafsirPicker.qml";
+            definition.source = "ChapterTafsirPicker.qml";
             var p = definition.createObject();
             p.chapterNumber = chapterNumber;
             
@@ -179,7 +179,7 @@ Page
                     {
                         var d = dataModel.data(indexPath);
                         
-                        global.definition.source = "AyatPage.qml";
+                        definition.source = "AyatPage.qml";
                         var ayatPage = definition.createObject();
                         ayatPage.surahId = d.surah_id;
                         ayatPage.verseId = d.verse_id;
@@ -225,6 +225,10 @@ Page
                     Application.mainWindow.screenIdleMode = player.playing ? 1 : 0;
                 }
             }
+        },
+        
+        ComponentDefinition {
+            id: definition
         }
     ]
 }

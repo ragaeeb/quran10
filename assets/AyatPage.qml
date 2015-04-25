@@ -69,7 +69,7 @@ Page
     
     function showExplanation(id)
     {
-        global.definition.source = "AyatTafsirDialog.qml";
+        definition.source = "AyatTafsirDialog.qml";
         var htd = definition.createObject();
         htd.suitePageId = id;
         htd.open();
@@ -615,4 +615,10 @@ Page
             asset: "images/progress/loading_ayat.png"
         }
     }
+    
+    attachedObjects: [
+        ComponentDefinition {
+            id: definition
+        }
+    ]
 }
