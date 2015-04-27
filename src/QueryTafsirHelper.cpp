@@ -228,7 +228,7 @@ void QueryTafsirHelper::editQuote(QObject* caller, qint64 quoteId, QString const
     LOGGER(quoteId << author << body << reference << suiteId << uri);
 
     qint64 authorId = generateIndividualField(caller, author);
-    QString query = QString("UPDATE quotes SET author=%2,body=?,reference=?,suiteId=?,uri=? WHERE id=%1").arg(quoteId).arg(authorId);
+    QString query = QString("UPDATE quotes SET author=%2,body=?,reference=?,suite_id=?,uri=? WHERE id=%1").arg(quoteId).arg(authorId);
     QVariantList args = QVariantList() << body << reference;
     args << ( !suiteId.isEmpty() ? suiteId.toLongLong() : QVariant() );
     args << protect(uri);
