@@ -5,7 +5,7 @@ Page
 {
     id: createPage
     property variant quoteId
-    signal createQuote(variant id, string author, string body, string reference)
+    signal createQuote(variant id, string author, string body, string reference, variant suiteId, string uri)
     actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
     
     onQuoteIdChanged: {
@@ -23,6 +23,14 @@ Page
             authorField.text = data.author_id.toString();
             bodyField.text = data.body;
             referenceField.text = data.reference;
+            
+            if (data.suite_id) {
+                suiteId.text = data.suite_id.toString();
+            }
+            
+            if (data.uri) {
+                uriField.text = data.uri;
+            }
         }
     }
     
@@ -41,7 +49,7 @@ Page
                 authorField.validator.validate();
                 
                 if (authorField.validator.valid && bodyField.text.trim().length > 3 && referenceField.text.trim().length > 3) {
-                    createQuote( quoteId, authorField.text.trim(), bodyField.text.trim(), referenceField.text.trim() );
+                    createQuote( quoteId, authorField.text.trim(), bodyField.text.trim(), referenceField.text.trim(), suiteId.text, uriField.text );
                 }
             }
         }
