@@ -1,4 +1,5 @@
 import bb.cascades 1.2
+import bb.system 1.0
 import com.canadainc.data 1.0
 
 Page
@@ -22,6 +23,41 @@ Page
             shortcuts: [
                 SystemShortcut {
                     type: SystemShortcuts.Search
+                }
+            ]
+        },
+        
+        ActionItem {
+            id: addLocation
+            imageSource: "images/menu/ic_add_location.png"
+            title: qsTr("Add Location") + Retranslate.onLanguageChanged
+            ActionBar.placement: 'Signature' in ActionBarPlacement ? ActionBarPlacement["Signature"] : ActionBarPlacement.OnBar
+            
+            onTriggered: {
+                console.log("UserEvent: NewLocation");
+                var latitude = parseFloat( persist.showBlockingPrompt( qsTr("Enter latitude"), qsTr("Please enter the latitude of this location:"), "", qsTr("Enter any non-zero value"), 15, false, qsTr("OK"), qsTr("Cancel"), SystemUiInputMode.NumericKeypad ).trim() );
+                
+                if (latitude != 0)
+                {
+                    var longitude = parseFloat( persist.showBlockingPrompt( qsTr("Enter longitude"), qsTr("Please enter the longitude of this location:"), "", qsTr("Enter any non-zero value"), 15, false, qsTr("OK"), qsTr("Cancel"), SystemUiInputMode.NumericKeypad ).trim() );
+                    
+                    if (longitude != 0)
+                    {
+                        var city = persist.showBlockingPrompt( qsTr("Enter city"), qsTr("Please enter the name of this location:"), "", qsTr("Enter any non-empty value"), 20, false, qsTr("OK"), qsTr("Cancel"), SystemUiInputMode.Default ).trim();
+                        
+                        if (city.length > 0)
+                        {
+                            var id = tafsirHelper.addLocation(listView, city, latitude, longitude);
+                            var d = {'id': id, 'city': city, 'latitude': latitude, 'longitude': longitude};
+                            adm.insert(0, d);
+                        }
+                    }
+                }
+            }
+            
+            shortcuts: [
+                SystemShortcut {
+                    type: SystemShortcuts.CreateNew
                 }
             ]
         }
