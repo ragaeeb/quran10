@@ -28,9 +28,15 @@ Container
         label.text = "(%2:%3) %1".arg(verse.text).arg(verse.surah_id).arg(verse.verse_id);
     }
     
+    function onTextualChange()
+    {
+        lastTime = 0;
+        doLookup();
+    }
+    
     onCreationCompleted: {
         Application.thumbnail.connect(doLookup);
-        helper.textualChange.connect(doLookup);
+        helper.textualChange.connect(onTextualChange);
         doLookup();
     }
 

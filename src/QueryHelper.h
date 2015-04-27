@@ -52,7 +52,6 @@ public:
     int translationSize() const;
 
     Q_INVOKABLE bool searchQuery(QObject* caller, QString const& trimmedText, int chapterNumber=0, QVariantList const& additional=QVariantList(), bool andMode=true);
-    Q_INVOKABLE void copyIndividualsFromSource(QObject* caller, QString const& source);
     Q_INVOKABLE void fetchAdjacentAyat(QObject* caller, int surahId, int verseId, int delta);
     Q_INVOKABLE void fetchAllAyats(QObject* caller, int fromChapter, int toChapter=0);
     Q_INVOKABLE void fetchAllChapterAyatCount(QObject* caller);
@@ -80,7 +79,6 @@ public:
     Q_INVOKABLE void fetchTafsirContent(QObject* caller, qint64 suitePageId);
     Q_INVOKABLE void fetchTafsirCountForAyat(QObject* caller, int chapterNumber, int verseNumber);
     Q_INVOKABLE void fetchTransliteration(QObject* caller, int chapter, int verse);
-    Q_INVOKABLE void replaceIndividualsFromSource(QObject* caller, QString const& source);
     Q_SLOT void initForeignKeys();
     Q_SLOT void lazyInit();
     Q_SLOT void refreshDatabase();

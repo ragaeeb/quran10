@@ -160,7 +160,7 @@ Page
                             tutorial.execBelowTitleBar( "dloadDir", qsTr("To change the directory where the mushaf pages, ayat images, and recitations are downloaded, set it here."), ui.du(21), "r" );
                             tutorial.exec( "overlay", qsTr("Sometimes BlackBerry 10's font rules override the arabic rulings of the Qu'ran, and some letters get disconnected. It does not change the meaning however it looks slightly different from the original mushaf text, if you want to prevent this, choose '%1' to display images for the ayats instead of text. Please note that this will have a negative performance impact.").arg(joinDisconnected.text), HorizontalAlignment.Right, VerticalAlignment.Center, 0, 0, 0, ui.du(8) );
                             tutorial.exec( "keepAwake", qsTr("Use the '%1' feature if you want to keep the device screen lit up when the app is playing the recitation so you can follow along and not have to continually touch the screen.").arg(keepAwake.text), HorizontalAlignment.Right, VerticalAlignment.Center);
-                            tutorial.exec( "hideBenefits", qsTr("Use the '%1' feature if you want to supress the random quotes that shows up in the start of the app.").arg(hideBenefits.text), HorizontalAlignment.Left, VerticalAlignment.Center);
+                            tutorial.exec( "hideBenefits", qsTr("Use the '%1' feature if you want to supress the random quotes that shows up in the start of the app.").arg(hideBenefits.text), HorizontalAlignment.Left, VerticalAlignment.Center, 0, 0, 0, 0, "images/menu/ic_copy_from_english.png");
                         }
                     }
                     

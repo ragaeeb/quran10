@@ -7,6 +7,8 @@ Page
     property int juzId
     property variant ranges
     actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
+    signal picked(int surahId, int verseId)
+    signal openChapterTafsir(int surahId)
 
     onJuzIdChanged:
     {
@@ -17,14 +19,14 @@ Page
     onRangesChanged: {
         if (ranges)
         {
-            listView.chapterNumber = ranges.from_surah_id;
+            awaker.lv.chapterNumber = ranges.from_surah_id;
             ctb.chapterNumber = ranges.from_surah_id;
             helper.fetchAllAyats(juzPage, ranges.from_surah_id, ranges.to_surah_id);
         }
     }
     
     onPeekedAtChanged: {
-        listView.secretPeek = peekedAt;
+        awaker.lv.secretPeek = peekedAt;
     }
     
     function onDataLoaded(id, data)
@@ -33,8 +35,8 @@ Page
         {
             data = offloader.removeOutOfRange(data, ranges.from_surah_id, ranges.from_verse_id, ranges.to_surah_id, ranges.to_verse_id);
             
-            listView.theDataModel.clear();
-            listView.theDataModel.append(data);
+            awaker.lv.theDataModel.clear();
+            awaker.lv.theDataModel.append(data);
             busy.delegateActive = false;
         } else if (id == QueryId.FetchJuz) {
             var toChapter = 114;
@@ -50,77 +52,12 @@ Page
     }
 
     onCreationCompleted: {
-        deviceUtils.attachTopBottomKeys(juzPage, listView);
-        
         helper.textualChange.connect( function() {
             rangesChanged();
         });
-    }
-
-    actions: [
-        ActionItem
-        {
-            id: playAllAction
-            title: player.playing ? qsTr("Pause") : qsTr("Play All")
-            imageSource: player.playing ? "images/menu/ic_pause.png" : "images/menu/ic_play.png"
-            ActionBar.placement: 'Signature' in ActionBarPlacement ? ActionBarPlacement["Signature"] : ActionBarPlacement.OnBar
-            
-            shortcuts: [
-                Shortcut {
-                    key: qsTr("A") + Retranslate.onLanguageChanged
-                }
-            ]
-            
-            function onReady(uri) {
-                player.play(uri);
-            }
-            
-            function performPlayback()
-            {
-                listView.previousPlayedIndex = -1;
-                recitation.downloadAndPlayAll(listView.dataModel);
-            }
-            
-            function onFinished(yesClicked)
-            {
-                if (yesClicked)
-                {
-                    persist.setFlag("hideDataWarning", 1);
-                    performPlayback();
-                }
-            }
-            
-            onCreationCompleted: {
-                recitation.readyToPlay.connect(onReady);
-            }
-            
-            onTriggered:
-            {
-                console.log("UserEvent: PlayAll");
-                
-                if (player.active) {
-                    player.togglePlayback();
-                } else if ( !persist.containsFlag("hideDataWarning") && !player.active ) {
-                    persist.showDialog( playAllAction, qsTr("Confirmation"), qsTr("We are about to download a whole bunch of MP3 recitations, you should only attempt to do this if you have either an unlimited data plan, or are connected via Wi-Fi. Otherwise you might incur a lot of data charges. Are you sure you want to continue? If you select No you can always attempt to download again later.") );
-                } else {
-                    performPlayback();
-                }
-            }
-        },
         
-        ActionItem
-        {
-            title: player.repeat ? qsTr("Disable Repeat") + Retranslate.onLanguageChanged : qsTr("Enable Repeat") + Retranslate.onLanguageChanged
-            imageSource: player.repeat ? "images/menu/ic_repeat_on.png" : "images/menu/ic_repeat_off.png"
-            ActionBar.placement: ActionBarPlacement.OnBar
-            
-            onTriggered: {
-                console.log("UserEvent: RepeatAction");
-                player.repeat = !player.repeat;
-                persist.saveValueFor("repeat", player.repeat ? 1 : 0, false);
-            }
-        }
-    ]
+        mainContainer.add(awaker.lv);
+    }
     
     titleBar: ChapterTitleBar
     {
@@ -145,6 +82,7 @@ Page
         
         Container
         {
+            id: mainContainer
             horizontalAlignment: HorizontalAlignment.Fill
             verticalAlignment: VerticalAlignment.Fill
             
@@ -160,50 +98,8 @@ Page
                         --juzId;
                     }
                     
-                    player.stop();
+                    awaker.lazyPlayer.stop();
                 }
-            }
-            
-            VersesListView
-            {
-                id: listView
-                
-                onBlockPeekChanged: {
-                    navigationPane.peekEnabled = !blockPeek;
-                }
-                
-                onTriggered: {
-                    console.log("UserEvent: VerseTriggered");
-                    
-                    if (!scrolled)
-                    {
-                        var d = dataModel.data(indexPath);
-                        
-                        definition.source = "AyatPage.qml";
-                        var ayatPage = definition.createObject();
-                        ayatPage.surahId = d.surah_id;
-                        ayatPage.verseId = d.verse_id;
-                        
-                        navigationPane.push(ayatPage);
-                    }
-                }
-                
-                attachedObjects: [
-                    ListScrollStateHandler {
-                        id: scroller
-                        
-                        onFirstVisibleItemChanged: {
-                            if (firstVisibleItem.length > 0)
-                            {
-                                var current = listView.theDataModel.data(firstVisibleItem);
-                                
-                                if (current.surah_id != ctb.chapterNumber) {
-                                    ctb.chapterNumber = current.surah_id;
-                                }
-                            }
-                        }
-                    }
-                ]
             }
         }
         
@@ -215,20 +111,18 @@ Page
     }
     
     attachedObjects: [
-        LazyMediaPlayer
-        {
-            id: player
-            repeat: persist.getValueFor("repeat") == 1
-            
-            onPlayingChanged: {
-                if ( persist.getValueFor("keepAwakeDuringPlay") == 1 ) {
-                    Application.mainWindow.screenIdleMode = player.playing ? 1 : 0;
-                }
-            }
-        },
-        
         ComponentDefinition {
             id: definition
+        },
+        
+        Awaker
+        {
+            id: awaker
+            parentPage: juzPage
+            
+            onVersePicked: {
+                picked(surahId, verseId);
+            }
         }
     ]
 }

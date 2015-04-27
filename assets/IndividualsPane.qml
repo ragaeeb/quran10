@@ -70,12 +70,9 @@ NavigationPane
     
     function onDataLoaded(id, data)
     {
-        if (id == QueryId.AddIndividual)
-        {
+        if (id == QueryId.AddIndividual) {
             persist.showToast( qsTr("Individual added!"), "images/menu/ic_add_rijaal.png" );
-        } else if (id == QueryId.CopyIndividualsFromSource) {
-            persist.showToast( qsTr("Successfully ported individuals!"), "images/menu/ic_copy_from_english.png" );
-        }  else if (id == QueryId.EditIndividual) {
+        } else if (id == QueryId.EditIndividual) {
             persist.showToast( qsTr("Successfully edited individual"), "images/menu/ic_edit_rijaal.png" );
         } else if (id == QueryId.AddIndividual) {
             persist.showToast( qsTr("Successfully added individual"), "images/menu/ic_select_individuals.png" );
@@ -148,33 +145,6 @@ NavigationPane
                     var page = definition.createObject();
                     page.reload();
                     navigationPane.push(page);
-                }
-            },
-            
-            ActionItem
-            {
-                id: copyAction
-                imageSource: "images/menu/ic_copy_from_english.png"
-                title: qsTr("Copy From English") + Retranslate.onLanguageChanged
-                enabled: helper.translation != "english"
-                
-                function onFinished(confirmed, remember)
-                {
-                    if (confirmed)
-                    {
-                        console.log("UserEvent: CopyIndividualsFromEnglishResult", confirmed, remember);
-
-                        if (remember) {
-                            helper.replaceIndividualsFromSource(individualPicker.pickerList, "english");
-                        } else {
-                            helper.copyIndividualsFromSource(individualPicker.pickerList, "english");
-                        }
-                    }
-                }
-                
-                onTriggered: {
-                    console.log("UserEvent: CopyIndividualsFromEnglish");
-                    persist.showDialog( copyAction, qsTr("Confirmation"), qsTr("Are you sure you want to port over the data from the source database?"), qsTr("Yes"), qsTr("No"), qsTr("Replace Existing") );
                 }
             }
         ]

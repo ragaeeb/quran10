@@ -23,7 +23,6 @@ public:
         AddTeacher,
         AddWebsite,
         ClearAllBookmarks,
-        CopyIndividualsFromSource,
         EditBio,
         EditIndividual,
         EditLocation,
