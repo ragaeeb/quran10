@@ -248,22 +248,25 @@ NavigationPane
             }
         ]
         
-        onJuzPicked: {
-            definition.source = "JuzPage.qml";
-            var surahPage = definition.createObject();
-            navigationPane.push(surahPage);
-            
-            surahPage.juzId = juzId;
-        }
-        
-        onPicked: {
-            definition.source = "SurahPage.qml";
+        function createAndAttach(p)
+        {
+            definition.source = p;
             var surahPage = definition.createObject();
             surahPage.picked.connect(onAyatPicked);
             surahPage.openChapterTafsir.connect(onOpenChapter);
             
             navigationPane.push(surahPage);
             
+            return surahPage;
+        }
+        
+        onJuzPicked: {
+            var surahPage = createAndAttach("JuzPage.qml");
+            surahPage.juzId = juzId;
+        }
+        
+        onPicked: {
+            var surahPage = createAndAttach("SurahPage.qml");
             surahPage.fromSurahId = chapter;
             surahPage.toSurahId = chapter;
             surahPage.requestedVerse = verse;

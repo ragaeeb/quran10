@@ -5,6 +5,8 @@
 
 #include <QFutureWatcher>
 
+#include <bb/cascades/Page>
+
 #define KEY_RECITER "qaree"
 
 namespace canadainc {

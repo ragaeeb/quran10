@@ -257,7 +257,7 @@ void QueryHelper::fetchAllTafsirForChapter(QObject* caller, int chapterNumber)
     LOGGER(chapterNumber);
 
     ATTACH_TAFSIR;
-    m_sql.executeQuery(caller, QString("SELECT suite_page_id AS id,name AS author,title,heading FROM explanations INNER JOIN suite_pages ON suite_pages.id=explanations.suite_page_id INNER JOIN suites ON suites.id=suite_pages.suite_id INNER JOIN individuals ON individuals.id=suites.author WHERE explanations.surah_id=%1 AND from_verse_number ISNULL").arg(chapterNumber), QueryId::FetchTafsirForSurah);
+    m_sql.executeQuery(caller, QString("SELECT suite_page_id AS id,%2 AS author,title,heading FROM explanations INNER JOIN suite_pages ON suite_pages.id=explanations.suite_page_id INNER JOIN suites ON suites.id=suite_pages.suite_id INNER JOIN individuals i ON i.id=suites.author WHERE explanations.surah_id=%1 AND from_verse_number ISNULL").arg(chapterNumber).arg( NAME_FIELD("i") ), QueryId::FetchTafsirForSurah);
 }
 
 
@@ -466,26 +466,6 @@ QString QueryHelper::tafsirName() const {
 
 QString QueryHelper::translation() const {
     return m_translation;
-}
-
-
-void QueryHelper::copyIndividualsFromSource(QObject* caller, QString const& source)
-{
-    LOGGER(source);
-    QString src = TAFSIR_NAME(source);
-    m_sql.attachIfNecessary(src, true);
-    m_sql.executeQuery(caller, QString("INSERT INTO %1.individuals SELECT * FROM %2.individuals WHERE id IN (SELECT id FROM %2.individuals WHERE id NOT IN (SELECT id FROM %1.individuals))").arg( tafsirName() ).arg(src), QueryId::CopyIndividualsFromSource);
-    m_sql.detach(src);
-}
-
-
-void QueryHelper::replaceIndividualsFromSource(QObject* caller, QString const& source)
-{
-    LOGGER(source);
-    QString src = TAFSIR_NAME(source);
-    m_sql.attachIfNecessary(src, true);
-    m_sql.executeQuery(caller, QString("INSERT OR REPLACE INTO %1.individuals SELECT * FROM %2.individuals").arg( tafsirName() ).arg(src), QueryId::CopyIndividualsFromSource);
-    m_sql.detach(src);
 }
 
 
