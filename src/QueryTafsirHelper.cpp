@@ -102,14 +102,14 @@ qint64 QueryTafsirHelper::addLocation(QObject* caller, QString const& city, qrea
 }
 
 
-void QueryTafsirHelper::addQuote(QObject* caller, QString const& author, QString const& body, QString const& reference, qint64 suiteId, QString const& uri)
+void QueryTafsirHelper::addQuote(QObject* caller, QString const& author, QString const& body, QString const& reference, QString const& suiteId, QString const& uri)
 {
     LOGGER(author << body << reference << suiteId << uri);
 
     qint64 authorId = generateIndividualField(caller, author);
     QString query = QString("INSERT INTO quotes (author,body,reference,suite_id,uri) VALUES(%1,?,?,?,?)").arg(authorId);
     QVariantList args = QVariantList() << body << reference;
-    args <<  (suiteId ? suiteId : QVariant() );
+    args <<  ( !suiteId.isEmpty() ? suiteId.toLongLong() : QVariant() );
     args << protect(uri);
 
     m_sql->executeQuery(caller, query, QueryId::AddQuote, args);
@@ -223,14 +223,14 @@ void QueryTafsirHelper::editIndividual(QObject* caller, qint64 id, QString const
 }
 
 
-void QueryTafsirHelper::editQuote(QObject* caller, qint64 quoteId, QString const& author, QString const& body, QString const& reference, qint64 suiteId, QString const& uri)
+void QueryTafsirHelper::editQuote(QObject* caller, qint64 quoteId, QString const& author, QString const& body, QString const& reference, QString const& suiteId, QString const& uri)
 {
     LOGGER(quoteId << author << body << reference << suiteId << uri);
 
     qint64 authorId = generateIndividualField(caller, author);
     QString query = QString("UPDATE quotes SET author=%2,body=?,reference=?,suiteId=?,uri=? WHERE id=%1").arg(quoteId).arg(authorId);
     QVariantList args = QVariantList() << body << reference;
-    args << ( suiteId ? suiteId : QVariant() );
+    args << ( !suiteId.isEmpty() ? suiteId.toLongLong() : QVariant() );
     args << protect(uri);
 
     m_sql->executeQuery(caller, query, QueryId::EditQuote, args);

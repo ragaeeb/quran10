@@ -40,9 +40,9 @@ NavigationPane
                     }
                 ]
                 
-                function onCreate(id, author, body, reference)
+                function onCreate(id, author, body, reference, suiteId, uri)
                 {
-                    tafsirHelper.addQuote(listView, author, body, reference);
+                    tafsirHelper.addQuote( listView, author, body, reference, suiteId, uri );
                     
                     while (navigationPane.top != quotePickerPage) {
                         navigationPane.pop();
@@ -184,14 +184,16 @@ NavigationPane
                     noElements.delegateActive = !listView.visible;
                 }
                 
-                function onEdit(id, author, body, reference)
+                function onEdit(id, author, body, reference, suiteId, uri)
                 {
                     busy.delegateActive = true;
-                    tafsirHelper.editQuote(listView, id, author, body, reference);
+                    tafsirHelper.editQuote(listView, id, author, body, reference, suiteId, uri);
                     
                     var current = dataModel.data(editIndexPath);
                     current["body"] = body;
                     current["reference"] = reference;
+                    current["suite_id"] = suiteId;
+                    current["uri"] = uri;
                     
                     dataModel.replace(editIndexPath[0], current);
                     

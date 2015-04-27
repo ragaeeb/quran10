@@ -122,7 +122,7 @@ TabbedPane
         tutorial.exec("swipeOpenTabMenu", qsTr("Swipe right to open the menu!"), HorizontalAlignment.Left, VerticalAlignment.Center, 0, 0, 0, 0, undefined, "r");
     }
     
-    function onSidebarVisualStateChanged(newState)
+    function onSidebarVisualStateChanged()
     {
         sidebarStateChanged.disconnect(onSidebarVisualStateChanged);
 

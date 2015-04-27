@@ -285,7 +285,7 @@ void QueryHelper::fetchQuote(QObject* caller, qint64 id)
     LOGGER(id);
 
     ATTACH_TAFSIR;
-    QString query = QString("SELECT quotes.author AS author_id, body,reference FROM quotes INNER JOIN individuals ON individuals.id=quotes.author WHERE quotes.id=%1").arg(id);
+    QString query = QString("SELECT quotes.author AS author_id, body,reference,suite_id,uri FROM quotes INNER JOIN individuals ON individuals.id=quotes.author WHERE quotes.id=%1").arg(id);
     m_sql.executeQuery(caller, query, QueryId::FetchQuote);
 }
 
