@@ -89,11 +89,16 @@ void QueryTafsirHelper::addWebsite(QObject* caller, qint64 individualId, QString
 }
 
 
-void QueryTafsirHelper::addLocation(QObject* caller, QString const& city, qreal latitude, qreal longitude)
+qint64 QueryTafsirHelper::addLocation(QObject* caller, QString const& city, qreal latitude, qreal longitude)
 {
     LOGGER(city << latitude << longitude);
-    QString query = "INSERT INTO locations (city,latitude,longitude) VALUES(?,?,?)";
-    m_sql->executeQuery(caller, query, QueryId::AddLocation, QVariantList() << city << latitude << longitude);
+
+    qint64 now = QDateTime::currentMSecsSinceEpoch();
+
+    QString query = "INSERT INTO locations (id,city,latitude,longitude) VALUES(?,?,?,?)";
+    m_sql->executeQuery(caller, query, QueryId::AddLocation, QVariantList() << now << city << latitude << longitude);
+
+    return now;
 }
 
 

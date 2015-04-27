@@ -34,7 +34,7 @@ public:
 
     Q_INVOKABLE qint64 addBio(QObject* caller, QString const& body, QString const& reference, QString const& author, QString const& heading);
     Q_INVOKABLE qint64 addBioLink(QObject* caller, qint64 bioId, qint64 targetId, QVariant const& points);
-    Q_INVOKABLE void addLocation(QObject* caller, QString const& city, qreal latitude, qreal longitude);
+    Q_INVOKABLE qint64 addLocation(QObject* caller, QString const& city, qreal latitude, qreal longitude);
     Q_INVOKABLE void addQuote(QObject* caller, QString const& author, QString const& body, QString const& reference, qint64 suiteId, QString const& uri);
     Q_INVOKABLE void addStudent(QObject* caller, qint64 teacherId, qint64 studentId);
     Q_INVOKABLE void addTafsir(QObject* caller, QString const& author, QString const& translator, QString const& explainer, QString const& title, QString const& description, QString const& reference);
