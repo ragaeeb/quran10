@@ -59,14 +59,15 @@ ResizableContainer
                     ft.play();
                 }
             }
-            
-            function addToHomeScreen(ListItemData)
+            function onFinished(name, tafsirId)
             {
-                var name = persist.showBlockingPrompt( qsTr("Enter name"), qsTr("You can use this to quickly recognize this tafsir on your home screen."), ListItemData.title, qsTr("Shortcut name..."), 15, true, qsTr("Save") ).trim();
-                
                 if (name.length > 0) {
-                    offloader.addToHomeScreen(ListItemData.id, name);
+                    offloader.addToHomeScreen(tafsirId, name);
                 }
+            }
+            
+            function addToHomeScreen(ListItemData) {
+                persist.showPrompt( tafsirList, qsTr("Enter name"), qsTr("You can use this to quickly recognize this tafsir on your home screen."), ListItemData.title, qsTr("Shortcut name..."), 15, "onFinished", ListItemData.id );
             }
             
             onTriggered: {
