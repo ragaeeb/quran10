@@ -87,7 +87,7 @@ Sheet
                 function onFinished(message)
                 {
                     var surahId = parseInt( message.split("/")[0] );
-                    currentPage = pageNumbers[surahId-1];
+                    currentPage = pageNumbers[surahId];
                 }
                 
                 function onDataLoaded(id, data)
