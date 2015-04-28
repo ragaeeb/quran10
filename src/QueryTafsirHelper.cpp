@@ -523,7 +523,7 @@ void QueryTafsirHelper::replaceIndividual(QObject* caller, qint64 toReplaceId, q
     m_sql->executeQuery(caller, QString("UPDATE suites SET author=%1 WHERE author=%2").arg(actualId).arg(toReplaceId), QueryId::ReplacingIndividual);
     m_sql->executeQuery(caller, QString("UPDATE suites SET translator=%1 WHERE translator=%2").arg(actualId).arg(toReplaceId), QueryId::ReplacingIndividual);
     m_sql->executeQuery(caller, QString("UPDATE suites SET explainer=%1 WHERE explainer=%2").arg(actualId).arg(toReplaceId), QueryId::ReplacingIndividual);
-    m_sql->executeQuery(caller, QString("UPDATE teachers SET student=%1 WHERE student=%2").arg(actualId).arg(toReplaceId), QueryId::ReplacingIndividual);
+    m_sql->executeQuery(caller, QString("UPDATE teachers SET teacher=%1 WHERE teacher=%2").arg(actualId).arg(toReplaceId), QueryId::ReplacingIndividual);
     m_sql->executeQuery(caller, QString("UPDATE teachers SET individual=%1 WHERE individual=%2").arg(actualId).arg(toReplaceId), QueryId::ReplacingIndividual);
     m_sql->executeQuery(caller, QString("UPDATE websites SET individual=%1 WHERE individual=%2").arg(actualId).arg(toReplaceId), QueryId::ReplacingIndividual);
     m_sql->executeQuery(caller, QString("DELETE FROM individuals WHERE id=%1").arg(toReplaceId), QueryId::ReplacingIndividual);
