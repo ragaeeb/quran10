@@ -186,7 +186,7 @@ void RecitationHelper::memorize(bb::cascades::ArrayDataModel* adm, int from, int
 
         for (int j = 0; j < ITERATION; j++)
         {
-            for (int verse = from; verse <= to; verse++)
+            for (int verse = from; verse < to; verse++)
             {
                 QVariantMap q = adm->value(verse).toMap();
                 all << qMakePair<int,int>( q.value("surah_id").toInt(), q.value("verse_id").toInt() );
@@ -196,6 +196,8 @@ void RecitationHelper::memorize(bb::cascades::ArrayDataModel* adm, int from, int
         QFuture<QVariantMap> future = QtConcurrent::run(processPlaylist, m_persistance->getValueFor(KEY_RECITER).toString(), m_persistance->getValueFor(KEY_OUTPUT_FOLDER).toString(), all);
         m_futureResult.setFuture(future);
     }
+
+    LOGGER("*** XYZ");
 }
 
 
