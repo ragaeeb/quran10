@@ -80,7 +80,7 @@ NavigationPane
             persist.showToast( qsTr("Successfully deleted individual!"), "images/menu/ic_delete_individual.png" );
         } else if (id == QueryId.ReplaceIndividual) {
             persist.showToast( qsTr("Successfully replaced individual!"), "images/menu/ic_delete_quote.png" );
-            individualPicker.fetchAllIndividuals(individualPicker.pickerList);
+            tafsirHelper.fetchAllIndividuals(individualPicker.pickerList);
         } else if (id == QueryId.AddBioLink) {
             persist.showToast( qsTr("Successfully added biography!"), "images/menu/ic_add_bio.png" );
         }
