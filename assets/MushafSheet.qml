@@ -148,13 +148,18 @@ Sheet
                 title: qsTr("Page") + Retranslate.onLanguageChanged
                 ActionBar.placement: ActionBarPlacement.OnBar
                 
-                onTriggered: {
-                    console.log("UserEvent: JumpToPage");
-                    var pageNumber = parseInt( persist.showBlockingPrompt( qsTr("Enter page number"), qsTr("Please enter the page in the mushaf you want to jump to:"), "", qsTr("Enter value between 1 and 604 inclusive"), 3, false, qsTr("Jump"), qsTr("Cancel"), SystemUiInputMode.NumericKeypad ).trim() );
+                function onFinished(result)
+                {
+                    var pageNumber = parseInt(result);
                     
                     if (pageNumber >= 1 && pageNumber <= 604) {
                         currentPage = pageNumber;
                     }
+                }
+                
+                onTriggered: {
+                    console.log("UserEvent: JumpToPage");
+                    persist.showPrompt( jumpPage, qsTr("Enter page number"), qsTr("Please enter the page in the mushaf you want to jump to:"), "", qsTr("Enter value between 1 and 604 inclusive"), 3, false, qsTr("Jump"), qsTr("Cancel"), SystemUiInputMode.NumericKeypad );
                 }
             },
             

@@ -1,4 +1,5 @@
 import bb.cascades 1.3
+import bb.system 1.0
 import com.canadainc.data 1.0
 
 Page
@@ -182,7 +183,9 @@ Page
     }
     
     actions: [
-        ActionItem {
+        ActionItem
+        {
+            id: markFav
             enabled: !notFound.delegateActive
             title: qsTr("Mark Favourite") + Retranslate.onLanguageChanged
             imageSource: "images/menu/ic_mark_favourite.png"
@@ -193,19 +196,25 @@ Page
                 }
             ]
             
+            function onTagEntered(tag, name) {
+                bookmarkHelper.saveBookmark(root, surahId, verseId, name, tag);
+            }
+            
+            function onFinished(name)
+            {
+                if (name.length > 0) {
+                    persist.showPrompt( markFav, qsTr("Enter tag"), qsTr("You can use this to categorize related verses together."), "", qsTr("Enter a tag for this bookmark (ie: ramadan). You can leave this blank if you don't want to use a tag."), 50, "onTagEntered", name );
+                }
+            }
+            
             onTriggered: {
                 console.log("UserEvent: MarkFavourite");
-                var name = persist.showBlockingPrompt( qsTr("Enter name"), qsTr("You can use this to quickly recognize this ayah in the favourites tab."), translation.value, qsTr("Name..."), 50, true, qsTr("Save") ).trim();
-                
-                if (name.length > 0)
-                {
-                    var tag = persist.showBlockingPrompt( qsTr("Enter tag"), qsTr("You can use this to categorize related verses together."), "", qsTr("Enter a tag for this bookmark (ie: ramadan). You can leave this blank if you don't want to use a tag."), 50, false, qsTr("Save") ).trim();
-                    bookmarkHelper.saveBookmark(root, surahId, verseId, name, tag);
-                }
+                persist.showPrompt( markFav, qsTr("Enter name"), qsTr("You can use this to quickly recognize this ayah in the favourites tab."), translation.value, qsTr("Name..."), 50 );
             }
         },
         
         ActionItem {
+            id: addHome
             enabled: !notFound.delegateActive
             title: qsTr("Add Shortcut") + Retranslate.onLanguageChanged
             imageSource: "images/menu/ic_home.png"
@@ -217,13 +226,16 @@ Page
                 }
             ]
             
-            onTriggered: {
-                console.log("UserEvent: AddShortcutTriggered");
-                var name = persist.showBlockingPrompt( qsTr("Enter name"), qsTr("You can use this to quickly recognize this ayah on your home screen."), translation.value, qsTr("Shortcut name..."), 15, true, qsTr("Save") ).trim();
-                
+            function onFinished(name)
+            {
                 if (name.length > 0) {
                     offloader.addToHomeScreen(surahId, verseId, name);
                 }
+            }
+            
+            onTriggered: {
+                console.log("UserEvent: AddShortcutTriggered");
+                persist.showPrompt( addHome, qsTr("Enter name"), qsTr("You can use this to quickly recognize this ayah on your home screen."), translation.value, qsTr("Name..."), 15, "onFinished" );
             }
         },
         
