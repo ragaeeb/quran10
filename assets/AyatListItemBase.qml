@@ -100,9 +100,9 @@ Container
             onVisualStateChanged: {
                 if (cmh.visualState == ContextMenuVisualState.VisibleCompact)
                 {
-                    tutorial.exec("memorize", qsTr("Memorize: This mode begins the playback of the current verse followed by the next 7 verses 20 times each to help you memorize it."), HorizontalAlignment.Right, VerticalAlignment.Center, 0, ui.du(2), 0, 0, memorize.imageSource.toString(), "d");
-                    tutorial.exec("playFromHere", qsTr("Play From Here: This begins playback of the recitation starting from this verse"), HorizontalAlignment.Right, VerticalAlignment.Center, 0, ui.du(2), 0, 0, playFromHere.imageSource.toString(), "d");
-                    tutorial.exec("setBookmark", qsTr("You can use the Set Bookmark action to place a bookmark on this verse so you can resume your reading the next time right to this verse quickly."), HorizontalAlignment.Right, VerticalAlignment.Center, 0, ui.du(2), 0, 0, setBookmark.imageSource.toString(), "d");
+                    tutorial.exec("memorize", qsTr("%1: This mode begins the playback of the current verse followed by up to the next 7 verses 20 times each to help you memorize it.").arg(memorize.title), HorizontalAlignment.Right, VerticalAlignment.Center, 0, ui.du(2), 0, 0, memorize.imageSource.toString(), "d");
+                    tutorial.exec("playFromHere", qsTr("%1: This begins playback of the recitation starting from this verse.").arg(playFromHere.title), HorizontalAlignment.Right, VerticalAlignment.Center, 0, ui.du(2), 0, 0, playFromHere.imageSource.toString(), "d");
+                    tutorial.exec("setBookmark", qsTr("You can use the '%1' action to place a bookmark on this verse so you can resume your reading the next time right to this verse quickly.").arg(setBookmark.title), HorizontalAlignment.Right, VerticalAlignment.Center, 0, ui.du(2), 0, 0, setBookmark.imageSource.toString(), "d");
                     tutorial.exec("selectRangeOption", qsTr("You can use the 'Select Range' action to only play recitations for those, or copy/share them to your contacts."), HorizontalAlignment.Right, VerticalAlignment.Center, 0, ui.du(2), 0, 0, "images/menu/ic_range.png", "d");
                 }
             }
@@ -128,7 +128,8 @@ Container
                 }
             }
             
-            ActionItem {
+            ActionItem
+            {
                 id: playFromHere
                 
                 title: qsTr("Play From Here") + Retranslate.onLanguageChanged
@@ -139,13 +140,13 @@ Container
                     itemRoot.ListItem.view.play(itemRoot.ListItem.indexPath[0], -1);
                 }
             }
-            
+
             ActionItem
             {
                 id: setBookmark
                 title: qsTr("Set Bookmark") + Retranslate.onLanguageChanged
                 imageSource: "images/menu/ic_bookmark_add.png"
-                
+
                 onTriggered: {
                     console.log("UserEvent: SetBookmark");
                     itemRoot.ListItem.view.setBookmark(itemRoot.ListItem.data);

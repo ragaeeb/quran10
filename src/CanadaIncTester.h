@@ -61,7 +61,6 @@ class CanadaIncTester : public QObject
     ArrayDataModel* m_adm;
     QMap<QString, QElapsedTimer*> m_timers;
 
-public:
     CanadaIncTester(QMap<QString, QObject*> context)
     {
         QmlDocument* qml = QmlDocument::create("asset:///AllTests.qml").parent(this);
@@ -99,7 +98,7 @@ public:
         s->open();
     }
 
-
+public:
     Q_INVOKABLE void init(QObject* q)
     {
         QElapsedTimer* qet = new QElapsedTimer();
@@ -129,6 +128,10 @@ public:
         m_adm->replace(i, current);
     }
 
+
+    static void create(QMap<QString, QObject*> context) {
+        new CanadaIncTester(context);
+    }
 
     virtual ~CanadaIncTester() {}
 };

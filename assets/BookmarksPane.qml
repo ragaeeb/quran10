@@ -76,7 +76,7 @@ NavigationPane
                 function onRestored(result)
                 {
                     if (result) {
-                        persist.showBlockingDialog( qsTr("Successfully Restored"), qsTr("The app will now close itself so when you re-open it the restored bookmarks can take effect!"), qsTr("OK"), "" );
+                        persist.showBlockingDialog( qsTr("Successfully Restored"), qsTr("The app will now close itself so when you re-open it the restored favourites can take effect!"), qsTr("OK"), "" );
                         Application.requestExit();
                     } else {
                         persist.init( qsTr("The database could not be restored. Please re-check the backup file to ensure it is valid, and if the problem persists please file a bug report. Make sure to attach the backup file with your report!"), "images/menu/ic_restore_error.png" );
@@ -93,7 +93,7 @@ NavigationPane
                 id: clearBookmarks
                 enabled: listView.visible
                 imageSource: "images/menu/ic_clear_bookmarks.png"
-                title: qsTr("Clear Bookmarks") + Retranslate.onLanguageChanged
+                title: qsTr("Clear Favourites") + Retranslate.onLanguageChanged
                 
                 function onFinished(confirmed)
                 {
@@ -107,7 +107,7 @@ NavigationPane
                 
                 onTriggered: {
                     console.log("UserEvent: ClearFavourites");
-                    persist.showDialog( clearBookmarks, qsTr("Confirmation"), qsTr("Are you sure you want to clear all bookmarks?") );
+                    persist.showDialog( clearBookmarks, qsTr("Confirmation"), qsTr("Are you sure you want to clear all favourites?") );
                 }
             }
         ]
@@ -127,7 +127,7 @@ NavigationPane
             {
                 id: noElements
                 graphic: "images/placeholders/empty_bookmarks.png"
-                labelText: qsTr("You have no favourites. To mark a favourite, go to a hadith, and choose 'Mark Favourite' from the bottom action bar.") + Retranslate.onLanguageChanged
+                labelText: qsTr("You have no favourites. To mark a favourite, go to a verse, and choose 'Mark Favourite' from the bottom action bar.") + Retranslate.onLanguageChanged
             }
 
             ProgressControl
@@ -160,16 +160,16 @@ NavigationPane
                         
                         if ( listView.visible && tutorial.isTopPane(navigationPane, mainPage) )
                         {
-                            tutorial.execCentered( "bookmarkDel", qsTr("To delete an existing bookmark, simply press-and-hold on it and choose 'Remove' from the menu.") );
-                            tutorial.execActionBar( "backup", qsTr("Tap on the '%1' action to backup these bookmarks so you can restore them later if you ever switch devices.").arg(backup.title) );
-                            tutorial.execActionBar( "restore", qsTr("Tap on the '%1' action to restore bookmarks that you have backed up before.").arg(restore.title), "r" );
+                            tutorial.execCentered( "bookmarkDel", qsTr("To delete an existing favourite, simply press-and-hold on it and choose 'Remove' from the menu.") );
+                            tutorial.execActionBar( "backup", qsTr("Tap on the '%1' action to backup these favourites so you can restore them later if you ever switch devices.").arg(backup.title) );
+                            tutorial.execActionBar( "restore", qsTr("Tap on the '%1' action to restore favourites that you have backed up before.").arg(restore.title), "r" );
                         }
                     } else if (id == QueryId.ClearAllBookmarks) {
-                        persist.showToast( qsTr("Cleared all bookmarks!"), "images/menu/ic_favourite_remove.png" );
+                        persist.showToast( qsTr("Cleared all favourites!"), "images/menu/ic_favourite_remove.png" );
                         gdm.clear();
                         refresh();
                     } else if (id == QueryId.RemoveBookmark) {
-                        persist.showToast( qsTr("Removed bookmark!"), "images/menu/ic_favourite_remove.png" );
+                        persist.showToast( qsTr("Removed favourite!"), "images/menu/ic_favourite_remove.png" );
                     }
                 }
                 

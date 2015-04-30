@@ -27,11 +27,46 @@ Container
         
         QtObject
         {
-            id: randomFetch
-            objectName: "Fetch Random Ayat"
+            id: searchChapter
+            objectName: "Search With Restricted Chapter"
             
             function onDataLoaded(id, data)
             {
+                harness.update( searchChapter, data.length == 1
+                && data[0].surah_id == 3 && data[0].verse_id == 8);
+            }
+            
+            onCreationCompleted: {
+                harness.init(searchChapter);
+                helper.searchQuery(searchChapter, "الوهاب", 
+                3);
+            }
+        },
+        
+        QtObject
+        {
+            id: searchAnds
+            objectName: "Search With ANDs"
+            
+            function onDataLoaded(id, data)
+            {
+                harness.update( searchAnds, data.length == 1
+                && data[0].surah_id == 3 && data[0].verse_id == 8);
+            }
+            
+            onCreationCompleted: {
+                harness.init(searchAnds);
+                helper.searchQuery(searchChapter, "الوهاب", 
+                0, [""]);
+            }
+        },
+        
+        QtObject
+        {
+            id: randomFetch
+            objectName: "Fetch Random Ayat"
+            
+            function onDataLoaded(id, data) {
                 harness.update(randomFetch, data.length == 1);
             }
             
