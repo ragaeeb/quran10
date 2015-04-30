@@ -143,12 +143,12 @@ QString Offloader::textualizeAyats(bb::cascades::DataModel* adm, QVariantList co
     if (firstChapter == lastChapter)
     {
         if (firstVerse == lastVerse) {
-            footer = tr("%1 %2:%3").arg(chapterTitle).arg(firstChapter).arg(firstVerse);
+            footer = QString("%1 %2:%3").arg(chapterTitle).arg(firstChapter).arg(firstVerse);
         } else {
-            footer = tr("%1 %2:%3-%4").arg(chapterTitle).arg(firstChapter).arg(firstVerse).arg(lastVerse);
+            footer = QString("%1 %2:%3-%4").arg(chapterTitle).arg(firstChapter).arg(firstVerse).arg(lastVerse);
         }
     } else {
-        footer = tr("%1:%2-%3:%4").arg(firstChapter).arg(firstVerse).arg(lastChapter).arg(lastVerse);
+        footer = QString("%1:%2-%3:%4").arg(firstChapter).arg(firstVerse).arg(lastChapter).arg(lastVerse);
     }
 
     int n = selectedIndices.size();
