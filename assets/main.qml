@@ -119,7 +119,7 @@ TabbedPane
         
         tutorial.exec("openTabMenu", qsTr("Tap here to open the menu"), HorizontalAlignment.Left, VerticalAlignment.Bottom, ui.du(2), 0, 0, ui.du(1)/2);
         tutorial.exec("openAppMenu", qsTr("Swipe down from the top-bezel to display the Settings and Help and file bugs!"), HorizontalAlignment.Center, VerticalAlignment.Top, 0, 0, 0, ui.du(2), "images/menu/ic_bottom.png", "d");
-        tutorial.exec("swipeOpenTabMenu", qsTr("Swipe right to open the menu!"), HorizontalAlignment.Left, VerticalAlignment.Center, 0, 0, 0, 0, undefined, "r");
+        tutorial.exec("swipeOpenTabMenu", qsTr("Swipe right to expand the menu!"), HorizontalAlignment.Left, VerticalAlignment.Center, 0, 0, 0, 0, undefined, "r");
     }
     
     function onSidebarVisualStateChanged()

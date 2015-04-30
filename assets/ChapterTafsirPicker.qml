@@ -25,7 +25,7 @@ Page
                 listView.triggered([0]);
             }
         } else if (id == QueryId.FetchSurahHeader) {
-            titleBar.title = helper.showTranslation ? qsTr("%1 (%2) Tafsir").arg(data[0].transliteration).arg(data[0].translation) : qsTr("%1 Tafsir").arg(data[0].name);
+            titleBar.title = qsTr("%1 Tafsir").arg(helper.showTranslation ? data[0].transliteration : data[0].name);
         }
     }
     
