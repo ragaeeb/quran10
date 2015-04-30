@@ -93,7 +93,7 @@ Page
     onActionMenuVisualStateChanged: {
         if (actionMenuVisualState == ActionMenuVisualState.VisibleFull) {
             tutorial.exec( "nextVerse", qsTr("Tap on the '%1' action to go to verse after this one in the Qu'ran.").arg(nextVerse.title), HorizontalAlignment.Right, VerticalAlignment.Center, 0, ui.du(2), 0, 0, nextVerse.imageSource.toString() );
-            tutorial.exec( "prevVerse", qsTr("Tap on the '%1' action to go to verse after this one in the Qu'ran.").arg(prevVerse.title), HorizontalAlignment.Right, VerticalAlignment.Center, 0, ui.du(2), 0, 0, prevVerse.imageSource.toString() );
+            tutorial.exec( "prevVerse", qsTr("Tap on the '%1' action to go to verse before this one in the Qu'ran.").arg(prevVerse.title), HorizontalAlignment.Right, VerticalAlignment.Center, 0, ui.du(2), 0, 0, prevVerse.imageSource.toString() );
         }
     }
     
@@ -213,7 +213,8 @@ Page
             }
         },
         
-        ActionItem {
+        ActionItem
+        {
             id: addHome
             enabled: !notFound.delegateActive
             title: qsTr("Add Shortcut") + Retranslate.onLanguageChanged
@@ -241,6 +242,7 @@ Page
         
         ActionItem
         {
+            id: copyAction
             title: qsTr("Copy") + Retranslate.onLanguageChanged
             imageSource: "images/menu/ic_copy.png"
             
@@ -252,6 +254,7 @@ Page
         
         InvokeActionItem
         {
+            id: shareAction
             imageSource: "images/menu/ic_share.png"
             title: qsTr("Share") + Retranslate.onLanguageChanged
             ActionBar.placement: ActionBarPlacement.OnBar
@@ -339,9 +342,9 @@ Page
                     onCreationCompleted: {
                         play();
                         
-                        tutorial.execActionBar( "markFav", qsTr("To quickly access this verse again, tap on the 'Mark Favourite' action at the bottom to put it in the Favourites tab."));
-                        tutorial.execActionBar( "addShortcutHome", qsTr("To quickly access this verse again, tap on the 'Add Shortcut' action at the bottom to pin it to your homescreen."), "l" );
-                        tutorial.execActionBar( "share", qsTr("To share this verse with your friends tap on the 'Share' action at the bottom."), "r" );
+                        tutorial.execActionBar( "markFav", qsTr("To quickly access this verse again, tap on the '%1' action at the bottom to put it in the Favourites tab.").arg(markFav.title) );
+                        tutorial.execActionBar( "addShortcutHome", qsTr("To quickly access this verse again, tap on the '%1' action at the bottom to pin it to your homescreen.").arg(addHome.title), "l" );
+                        tutorial.execActionBar( "share", qsTr("To share this verse with your friends tap on the '%1' action at the bottom.").arg(shareAction.title), "r" );
                         tutorial.exec( "lpArabic", qsTr("Press-and-hold on the arabic text if you want to copy or share it."), HorizontalAlignment.Right, VerticalAlignment.Top, 0, ui.du(2), ui.du(21));
                     }
                     
@@ -605,12 +608,6 @@ Page
                             minValue: 4 ? 4 : 6
                             maxValue: 20 ? 20 : 30
                             userEventId: "PinchedTranslation"
-                        },
-                        
-                        PinchHandler {
-                            onPinchStarted: {
-                                console.log("*** PINCH STARTED");
-                            }
                         }
                     ]
                 }

@@ -258,7 +258,7 @@ QtObject
                         parser.process();
                         footer.visible = true;
                         
-                        tutorial.exec( "tapBio", qsTr("Tap on the author's name to see his/her profile and biography."), HorizontalAlignment.Left, VerticalAlignment.Top, ui.du(14), 0, ui.du(14) );
+                        tutorial.exec( "tapBio", qsTr("Tap on the author's name to see his/her profile, biography, quotes, and works."), HorizontalAlignment.Left, VerticalAlignment.Top, ui.du(14), 0, ui.du(14) );
                     }
                 }
             },
