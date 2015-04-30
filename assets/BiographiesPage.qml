@@ -45,13 +45,8 @@ Page
             
             function onBioSaved(id, author, heading, body, reference)
             {
-                id = tafsirHelper.addBio(listView, body, reference, author, heading);
+                tafsirHelper.addBio(listView, body, reference, author, heading);
                 popToRoot();
-                
-                var e = {'bio_id': id, 'author': author, 'reference': reference, 'body': body, 'heading': heading};
-                adm.insert(e);
-                
-                listView.scrollToPosition(ScrollPosition.Beginning, ScrollAnimation.Smooth);
             }
             
             onTriggered: {
@@ -94,44 +89,31 @@ Page
             
             function onDataLoaded(id, data)
             {
-                if (id == QueryId.FetchAllBios && data.length > 0) {
+                if (id == QueryId.FetchAllBios || id == QueryId.SearchBio) {
+                    adm.clear();
                     adm.insertList(data);
                 } else if (id == QueryId.RemoveBio) {
                     persist.showToast( qsTr("Biography removed!"), "images/menu/ic_remove_bio.png" );
+                    reload();
                 } else if (id == QueryId.RemoveBioLink) {
                     persist.showToast( qsTr("Biography unlinked!"), "images/menu/ic_remove_bio.png" );
+                    reload();
                 } else if (id == QueryId.EditBio) {
                     persist.showToast( qsTr("Biography updated!"), "images/menu/ic_edit_bio.png" );
+                    reload();
                 } else if (id == QueryId.AddBio) {
                     persist.showToast( qsTr("Successfully added biography!"), "images/menu/ic_add_bio.png" );
                     reload();
                 } else if (id == QueryId.AddBioLink) {
                     persist.showToast( qsTr("Biography linked!"), "images/menu/ic_add_bio.png" );
-                    popToRoot();
-                } else if (id == QueryId.SearchBio) {
-                    adm.clear();
-                    adm.insertList(data);
+                    reload();
                 }
                 
+                popToRoot();
                 busy.delegateActive = false;
                 listView.visible = !adm.isEmpty();
                 noElements.delegateActive = !listView.visible;
-            }
-            
-            function onEdit(id, author, body, reference)
-            {
-                busy.delegateActive = true;
-                tafsirHelper.editBio(listView, id, author, body, reference);
-                
-                var current = dataModel.data(editIndexPath);
-                current["body"] = body;
-                current["reference"] = reference;
-                
-                dataModel.replace(editIndexPath[0], current);
-                
-                while (navigationPane.top != bioPickerPage) {
-                    navigationPane.pop();
-                }
+                listView.scrollToPosition(ScrollPosition.Beginning, ScrollAnimation.None);
             }
             
             function onPicked(individualId, name)
@@ -151,19 +133,8 @@ Page
                 navigationPane.push(c);
             }
             
-            function onEditBio(bioId, author, heading, body, reference)
-            {
+            function onEditBio(bioId, author, heading, body, reference) {
                 tafsirHelper.editBio(listView, bioId, body, reference, author, heading);
-
-                var indexPath = [editIndexPath[0],0];
-                var current = adm.data(indexPath);
-                current["bio_id"] = bioId;
-                current["heading"] = heading;
-                current["body"] = body;
-                current["reference"] = reference;
-                adm.updateItem(indexPath, current);
-                
-                popToRoot();
             }
             
             function editBio(ListItem)
@@ -182,14 +153,12 @@ Page
             {
                 busy.delegateActive = true;
                 tafsirHelper.removeBio(listView, ListItemData);
-                adm.removeAt(ListItem.indexPath);
             }
             
             function removeBioLink(ListItem)
             {
                 busy.delegateActive = true;
                 tafsirHelper.removeBioLink(listView, ListItem.data.mention_id);
-                adm.removeAt(ListItem.indexPath);
             }
             
             listItemComponents: [
@@ -350,9 +319,7 @@ Page
                         points = 1;
                     }
                     
-                    var id = tafsirHelper.addBioLink(listView, bioId, target, points);
-                    var e = {'bio_id': bioId, 'mention_id': id, 'points': points, 'target': targetName};
-                    adm.insert(e);
+                    tafsirHelper.addBioLink(listView, bioId, target, points);
                 }
             }
         }

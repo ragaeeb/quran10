@@ -377,7 +377,7 @@ void QueryHelper::fetchBio(QObject* caller, qint64 individualId)
     LOGGER(individualId);
 
     ATTACH_TAFSIR;
-    m_sql.executeQuery(caller, QString("SELECT mentions.id,%1 AS author,heading,body,reference,points FROM mentions INNER JOIN biographies ON mentions.bio_id=biographies.id LEFT JOIN individuals i ON target=i.id WHERE target=%2").arg( NAME_FIELD("i") ).arg(individualId), QueryId::FetchBio);
+    m_sql.executeQuery(caller, QString("SELECT mentions.id,%1 AS author,heading,body,bio_id,reference,points FROM mentions INNER JOIN biographies ON mentions.bio_id=biographies.id LEFT JOIN individuals i ON target=i.id WHERE target=%2").arg( NAME_FIELD("i") ).arg(individualId), QueryId::FetchBio);
 }
 
 
