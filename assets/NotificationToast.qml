@@ -162,6 +162,23 @@ Delegate
                                     persist.copyToClipboard( data[data.length-1].plainText );
                                 }
                             }
+                            
+                            InvokeActionItem
+                            {
+                                id: shareAction
+                                imageSource: "images/menu/ic_share.png"
+                                title: qsTr("Share") + Retranslate.onLanguageChanged
+                                
+                                query {
+                                    mimeType: "text/plain"
+                                    invokeActionId: "bb.action.SHARE"
+                                }
+                                
+                                onTriggered: {
+                                    console.log("UserEvent: ShareQuote");
+                                    data = persist.convertToUtf8( data[data.length-1].plainText );
+                                }
+                            }
                         }
                     ]
                 }
