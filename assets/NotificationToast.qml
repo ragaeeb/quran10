@@ -2,6 +2,7 @@ import bb.cascades 1.2
 
 Delegate
 {
+    id: quoteRoot
     property variant data: []
     
     function showNext()
@@ -194,7 +195,7 @@ Delegate
                                 
                                 onTriggered: {
                                     console.log("UserEvent: ShareQuote");
-                                    data = persist.convertToUtf8( data[data.length-1].plainText );
+                                    data = persist.convertToUtf8( quoteRoot.data[quoteRoot.data.length-1].plainText );
                                 }
                             }
                         }
