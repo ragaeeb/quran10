@@ -49,7 +49,7 @@ FullScreenDialog
             id: rotationHandler
             
             onOrientationChanged: {
-                parser.maxHeightValue = orientation == UIOrientation.Portrait ? deviceUtils.pixelSize.height-150 : deviceUtils.pixelSize.width;
+                parser.maxHeightValue = orientation == UIOrientation.Portrait ? deviceUtils.pixelSize.height-150 : deviceUtils.pixelSize.width-150;
             }
             
             onCreationCompleted: {
