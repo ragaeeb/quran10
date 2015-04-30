@@ -83,6 +83,11 @@ QtObject
     {
         id: player
         repeat: persist.getValueFor("repeat") == 1
+        
+        onError: {
+            console.log(message);
+            persist.showToast( message, "asset:///images/toast/yellow_delete.png" );
+        }
     }
     
     property variant lv: VersesListView

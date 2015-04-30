@@ -93,9 +93,15 @@ Container
     }
     
     attachedObjects: [
-        LazyMediaPlayer {
+        LazyMediaPlayer
+        {
             id: player
             repeat: true
+            
+            onError: {
+                console.log(message);
+                persist.showToast( message, "asset:///images/toast/yellow_delete.png" );
+            }
         }
     ]
 }
