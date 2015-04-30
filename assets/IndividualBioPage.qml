@@ -211,20 +211,20 @@ Page
                     popToRoot();
                 }
                 
-                function editBio(ListItem)
+                function editBio(ListItem, ListItemData)
                 {
                     editIndexPath = ListItem.indexPath;
                     definition.source = "CreateBioPage.qml";
                     var page = definition.createObject();
                     page.createBio.connect(onBioSaved);
-                    page.bioId = ListItem.data.id;
+                    page.bioId = ListItemData.bio_id;
                     
                     navigationPane.push(page);
                 }
                 
-                function removeBio(ListItem)
+                function removeBio(ListItem, ListItemData)
                 {
-                    tafsirHelper.removeBio(bioPage, ListItem.data.id);
+                    tafsirHelper.removeBio(bioPage, ListItemData.bio_id);
                     bioModel.removeAt(ListItem.indexPath);
                 }
                 
@@ -293,7 +293,7 @@ Page
                                             
                                             onTriggered: {
                                                 console.log("UserEvent: EditBio");
-                                                bioContainer.ListItem.view.editBio(bioContainer.ListItem);
+                                                bioContainer.ListItem.view.editBio(bioContainer.ListItem, ListItemData);
                                             }
                                         }
                                         
@@ -303,7 +303,7 @@ Page
                                             
                                             onTriggered: {
                                                 console.log("UserEvent: RemoveBio");
-                                                bioContainer.ListItem.view.removeBio(bioContainer.ListItem);
+                                                bioContainer.ListItem.view.removeBio(bioContainer.ListItem, ListItemData);
                                             }
                                         }
                                     }

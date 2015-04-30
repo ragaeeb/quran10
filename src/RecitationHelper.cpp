@@ -196,8 +196,6 @@ void RecitationHelper::memorize(bb::cascades::ArrayDataModel* adm, int from, int
         QFuture<QVariantMap> future = QtConcurrent::run(processPlaylist, m_persistance->getValueFor(KEY_RECITER).toString(), m_persistance->getValueFor(KEY_OUTPUT_FOLDER).toString(), all);
         m_futureResult.setFuture(future);
     }
-
-    LOGGER("*** XYZ");
 }
 
 
