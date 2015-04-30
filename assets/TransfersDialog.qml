@@ -339,7 +339,7 @@ Delegate
                     id: rotationHandler
                     
                     onOrientationChanged: {
-                        contentContainer.maxHeight = orientation == UIOrientation.Portrait ? deviceUtils.pixelSize.height-150 : deviceUtils.pixelSize.width;
+                        contentContainer.maxHeight = orientation == UIOrientation.Portrait ? deviceUtils.pixelSize.height-150 : deviceUtils.pixelSize.width-150;
                     }
                     
                     onCreationCompleted: {

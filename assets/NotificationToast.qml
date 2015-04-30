@@ -88,7 +88,7 @@ Delegate
                 Container
                 {
                     id: toastBg
-                    topPadding: 20; leftPadding: 20; rightPadding: 25; bottomPadding: 50
+                    topPadding: 20; leftPadding: 20; rightPadding: 25; bottomPadding: 20
                     horizontalAlignment: HorizontalAlignment.Center
                     verticalAlignment: VerticalAlignment.Center
                     background: bg.imagePaint
@@ -119,24 +119,30 @@ Delegate
                         }
                     }
                     
-                    Container
+                    ScrollView
                     {
-                        leftPadding: 160; topPadding: 20
                         horizontalAlignment: HorizontalAlignment.Fill
                         verticalAlignment: VerticalAlignment.Fill
                         
-                        Label
+                        Container
                         {
-                            id: bodyLabel
-                            multiline: true
-                            textStyle.fontSize: FontSize.XSmall
-                            textStyle.fontStyle: FontStyle.Italic
-                            textStyle.color: Color.Black
-                            scaleX: 1.25
-                            scaleY: 1.25
-                            opacity: 0
+                            leftPadding: 160; topPadding: 20; bottomPadding: 30
                             horizontalAlignment: HorizontalAlignment.Fill
-                            verticalAlignment: VerticalAlignment.Center
+                            verticalAlignment: VerticalAlignment.Fill
+                            
+                            Label
+                            {
+                                id: bodyLabel
+                                multiline: true
+                                textStyle.fontSize: FontSize.XSmall
+                                textStyle.fontStyle: FontStyle.Italic
+                                textStyle.color: Color.Black
+                                scaleX: 1.25
+                                scaleY: 1.25
+                                opacity: 0
+                                horizontalAlignment: HorizontalAlignment.Fill
+                                verticalAlignment: VerticalAlignment.Center
+                            }
                         }
                     }
                     
@@ -144,6 +150,18 @@ Delegate
                         ImagePaintDefinition {
                             id: bg
                             imageSource: "images/toast/toast_bg.amd"
+                        },
+                        
+                        OrientationHandler {
+                            id: rotationHandler
+                            
+                            onOrientationChanged: {
+                                toastBg.maxHeight = orientation == UIOrientation.Portrait ? deviceUtils.pixelSize.height-200 : deviceUtils.pixelSize.width-200;
+                            }
+                            
+                            onCreationCompleted: {
+                                orientationChanged(orientation);
+                            }
                         }
                     ]
                     
@@ -188,22 +206,17 @@ Delegate
                         onTapped: {
                             console.log("UserEvent: NotificationToastTapped");
                             
-                            if (event.propagationPhase == PropagationPhase.AtTarget)
+                            if ( mainAnim.isPlaying() )
                             {
-                                console.log("UserEvent: NotificationOutsideBounds");
-                                
-                                if ( mainAnim.isPlaying() )
-                                {
-                                    mainAnim.stop();
-                                    dialogContainer.opacity = dialogFt.toOpacity;
-                                    toastIcon.opacity = toastIconFt.toOpacity;
-                                    toastIcon.rotationZ = toastIconRt.toAngleZ;
-                                    bodyLabel.opacity = bodyLabelFt.toOpacity;
-                                    bodyLabel.scaleX = bodyLabelSt.toX;
-                                    bodyLabel.scaleY = bodyLabelSt.toY;
-                                } else {
-                                    root.dismiss();
-                                }
+                                mainAnim.stop();
+                                dialogContainer.opacity = dialogFt.toOpacity;
+                                toastIcon.opacity = toastIconFt.toOpacity;
+                                toastIcon.rotationZ = toastIconRt.toAngleZ;
+                                bodyLabel.opacity = bodyLabelFt.toOpacity;
+                                bodyLabel.scaleX = bodyLabelSt.toX;
+                                bodyLabel.scaleY = bodyLabelSt.toY;
+                            } else {
+                                root.dismiss();
                             }
                         }
                     }
