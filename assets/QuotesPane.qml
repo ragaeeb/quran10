@@ -278,7 +278,7 @@ NavigationPane
                                         
                                         onTriggered: {
                                             console.log("UserEvent: PreviewQuote");
-                                            var body = qsTr("<html><i>“%1”</i>\n\n- <b>%2</b>\n\n[%3]</html>").arg( ListItemData.body.replace(/&/g,"&amp;") ).arg(ListItemData.author).arg( ListItemData.reference.replace(/&/g,"&amp;") );
+                                            var body = "<html><i>“%1”</i>\n\n- <b>%2</b>\n\n[%3]</html>".arg( ListItemData.body.replace(/&/g,"&amp;") ).arg(ListItemData.author).arg( ListItemData.reference.replace(/&/g,"&amp;") );
                                             notification.init(body, "images/menu/ic_preview.png");
                                         }
                                     }

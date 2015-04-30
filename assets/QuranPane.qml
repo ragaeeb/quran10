@@ -280,8 +280,8 @@ NavigationPane
                 
                 if (quote.hidden != 1)
                 {
-                    var plainText = qsTr("“%1” - %2 [%3]").arg(quote.body).arg(quote.author).arg(quote.reference);
-                    var body = qsTr("<html><i>“%1”</i>\n\n- <b>%2%4</b>\n\n[%3]</html>").arg( quote.body.replace(/&/g,"&amp;") ).arg(quote.author).arg( quote.reference.replace(/&/g,"&amp;") ).arg( global.getSuffix(quote.birth, quote.death, quote.is_companion, quote.female == 1) );
+                    var plainText = "“%1” - %2 [%3]".arg(quote.body).arg(quote.author).arg(quote.reference);
+                    var body = "<html><i>“%1”</i>\n\n- <b>%2%4</b>\n\n[%3]</html>".arg( quote.body.replace(/&/g,"&amp;") ).arg(quote.author).arg( quote.reference.replace(/&/g,"&amp;") ).arg( global.getSuffix(quote.birth, quote.death, quote.is_companion, quote.female == 1) );
                     notification.init(body, "images/list/ic_quote.png", plainText);
                 } else {
                     console.log("QuoteSuppressed");

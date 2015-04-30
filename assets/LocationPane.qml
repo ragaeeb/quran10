@@ -51,7 +51,9 @@ NavigationPane
                         mapView.setLocationOnVisible();
                         navigationPane.parent.unreadContentCount = data.length;
                         
-                        tutorial.execCentered("ummahMap", qsTr("Ahlus Sunnah is from all over the world. Here are where some of the students of knowledge, callers of Islam, and scholars of Islam are located or were from.\n\nYou can do a pinch gesture on this map to zoom in on specific cities, and tap on an individual to see their name.\n\nYou can then tap on the arrow to see a biography of them including their works."), "images/tutorial/pinch.png");
+                        tutorial.execCentered("ummahMap", qsTr("Ahlus Sunnah is from all over the world. Here are where some of the students of knowledge, callers of Islam, and scholars of Islam are located or were from."), "images/menu/ic_help.png");
+                        tutorial.execCentered("ummahPinch", qsTr("You can do a pinch gesture on this map to zoom in on specific cities to see them in more detail."), "images/tutorial/pinch.png");
+                        tutorial.execCentered("ummahTapInfo", qsTr("Tap on any of the individuals, and then tap on the arrow to open their biography and see their works.") );
                     }
                 }
                 

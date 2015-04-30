@@ -112,7 +112,7 @@ Page
                         var value = data[0].name;
                         
                         if (helper.showTranslation) {
-                            value += qsTr("\n(%1)").arg(data[0].transliteration);
+                            value += "\n(%1)".arg(data[0].transliteration);
                         }
                         
                         titleLabel.text = value;
