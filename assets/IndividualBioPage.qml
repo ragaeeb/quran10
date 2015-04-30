@@ -179,13 +179,13 @@ Page
                         return qsTr("Teachers");
                     } else if (ListItemData == "student") {
                         return qsTr("Students");
-                    } else if (ListItemData == "uri") {
+                    } else if (ListItemData == "website") {
                         return qsTr("Websites");
                     } else if (ListItemData == "email") {
                         return qsTr("Email Addresses");
                     } else if (ListItemData == "phone") {
                         return qsTr("Phone Numbers");
-                    } else  {
+                    } else {
                         return qsTr("Quotes");
                     }
                 }
