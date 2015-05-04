@@ -6,6 +6,7 @@
 #include <bb/cascades/Page>
 #include <bb/cascades/Sheet>
 #include <bb/cascades/StandardListItem>
+#include <bb/cascades/TitleBar>
 
 #include "Logger.h"
 
@@ -89,10 +90,10 @@ class CanadaIncTester : public QObject
         lv->setListItemProvider( new TestResultListItemProvider() );
         lv->setDataModel(m_adm);
 
-        Page* p = Page::create();
-        p->setContent(lv);
-
         Sheet* s = Sheet::create().parent(this);
+
+        Page* p = Page::create().titleBar( TitleBar::create().dismissAction( ActionItem::create().title("Close").onTriggered( s, SLOT( close() ) ) ) );
+        p->setContent(lv);
         s->setContent(p);
 
         s->open();
