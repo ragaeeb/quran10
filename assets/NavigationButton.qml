@@ -1,11 +1,11 @@
-import bb.cascades 1.0
+import bb.cascades 1.3
 
 ImageButton
 {
     pressedImageSource: defaultImageSource
     property int multiplier: 1
     rotationZ: 180*multiplier
-    translationX: 1000*multiplier
+    translationX: (deviceUtils.pixelSize.width-ui.du(12))*multiplier
     signal animationFinished()
     
     animations: [
@@ -16,7 +16,7 @@ ImageButton
             
             TranslateTransition
             {
-                fromX: 1000*multiplier
+                fromX: (deviceUtils.pixelSize.width-ui.du(12))*multiplier
                 toX: 0
                 easingCurve: StockCurve.QuinticOut
                 duration: 1500

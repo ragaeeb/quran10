@@ -64,6 +64,16 @@ Page
         id: ctb
         scrollBehavior: TitleBarScrollBehavior.Sticky
         
+        onNavigationTapped: {
+            if (right) {
+                ++juzId;
+            } else {
+                --juzId;
+            }
+            
+            awaker.lazyPlayer.stop();
+        }
+        
         onTitleTapped: {
             definition.source = "ChapterTafsirPicker.qml";
             var p = definition.createObject();
@@ -85,22 +95,6 @@ Page
             id: mainContainer
             horizontalAlignment: HorizontalAlignment.Fill
             verticalAlignment: VerticalAlignment.Fill
-            
-            ChapterNavigationBar
-            {
-                id: cnb
-                chapterNumber: ctb.chapterNumber
-                
-                onNavigationTapped: {
-                    if (right) {
-                        ++juzId;
-                    } else {
-                        --juzId;
-                    }
-                    
-                    awaker.lazyPlayer.stop();
-                }
-            }
         }
         
         ProgressControl

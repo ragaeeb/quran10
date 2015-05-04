@@ -266,7 +266,7 @@ NavigationPane
                                         
                                         onTriggered: {
                                             console.log("UserEvent: CopyQuote");
-                                            var body = qsTr("“%1” - %2 [%3]").arg(ListItemData.body).arg(ListItemData.author).arg(ListItemData.reference);
+                                            var body = "“%1” - %2 [%3]".arg(ListItemData.body).arg(ListItemData.author).arg(ListItemData.reference);
                                             persist.copyToClipboard(body);
                                         }
                                     }

@@ -10,6 +10,7 @@ QtObject
     onParentPageChanged: {
         parentPage.addAction(playAllAction);
         parentPage.addAction(repeat);
+        parentPage.addAction(follow);
         deviceUtils.attachTopBottomKeys(parentPage, awaker.lv);
     }
     
@@ -76,6 +77,19 @@ QtObject
             console.log("UserEvent: RepeatAction");
             player.repeat = !player.repeat;
             persist.saveValueFor("repeat", player.repeat ? 1 : 0, false);
+        }
+    }
+    
+    property variant followAction: ActionItem
+    {
+        id: follow
+        title: listView.follow ? qsTr("Follow On") + Retranslate.onLanguageChanged : qsTr("Follow Off") + Retranslate.onLanguageChanged
+        imageSource: listView.follow ? "images/menu/ic_follow_on.png" : "images/menu/ic_follow_off.png"
+        ActionBar.placement: ActionBarPlacement.OnBar
+        
+        onTriggered: {
+            console.log("UserEvent: FollowTapped");
+            persist.saveValueFor("follow", listView.follow ? 0 : 1);
         }
     }
     
