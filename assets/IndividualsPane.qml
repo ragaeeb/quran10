@@ -35,7 +35,7 @@ NavigationPane
             obj["death"] = death;
         }
         
-        if (location > 0) {
+        if (location.length > 0) {
             obj["location"] = location;
         }
         

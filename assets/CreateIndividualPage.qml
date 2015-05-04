@@ -6,7 +6,7 @@ Page
 {
     id: createRijaal
     property variant individualId
-    signal createIndividual(variant id, string prefix, string name, string kunya, string displayName, bool hidden, int birth, int death, bool female, int location, bool companion)
+    signal createIndividual(variant id, string prefix, string name, string kunya, string displayName, bool hidden, int birth, int death, bool female, variant location, bool companion)
     actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
     
     onIndividualIdChanged: {
@@ -159,7 +159,7 @@ Page
                 location.validator.validate();
                 
                 if (name.validator.valid && location.validator.valid) {
-                    createIndividual(individualId, prefix.text.trim(), name.text.trim(), kunya.text.trim(), displayName.text.trim(), hidden.checked, parseInt( birth.text.trim() ), parseInt( death.text.trim() ), female.checked, parseInt( location.text.trim() ), companion.checked );
+                    createIndividual(individualId, prefix.text.trim(), name.text.trim(), kunya.text.trim(), displayName.text.trim(), hidden.checked, parseInt( birth.text.trim() ), parseInt( death.text.trim() ), female.checked, location.text.trim(), companion.checked );
                 } else if (!location.validator.valid) {
                     persist.showToast( qsTr("Invalid location specified!"), "images/toast/incomplete_field.png" );
                 } else {
