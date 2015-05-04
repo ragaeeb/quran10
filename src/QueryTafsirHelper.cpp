@@ -201,7 +201,7 @@ void QueryTafsirHelper::editTafsirPage(QObject* caller, qint64 suitePageId, QStr
 }
 
 
-void QueryTafsirHelper::editIndividual(QObject* caller, qint64 id, QString const& prefix, QString const& name, QString const& kunya, QString const& displayName, bool hidden, int birth, int death, bool female, int location, bool companion)
+void QueryTafsirHelper::editIndividual(QObject* caller, qint64 id, QString const& prefix, QString const& name, QString const& kunya, QString const& displayName, bool hidden, int birth, int death, bool female, QString const& location, bool companion)
 {
     LOGGER( id << prefix << name << kunya << displayName << hidden << birth << death << female << location );
 
@@ -216,7 +216,7 @@ void QueryTafsirHelper::editIndividual(QObject* caller, qint64 id, QString const
     args << ( birth != 0 ? birth : QVariant() );
     args << ( death != 0 ? death : QVariant() );
     args << ( female ? 1 : QVariant() );
-    args << ( location > 0 ? location : QVariant() );
+    args << ( !location.isEmpty() ? location.toLongLong() : QVariant() );
     args << ( companion ? 1 : QVariant() );
 
     m_sql->executeQuery(caller, query, QueryId::EditIndividual, args);
@@ -373,7 +373,7 @@ qint64 QueryTafsirHelper::generateIndividualField(QObject* caller, QString const
 }
 
 
-qint64 QueryTafsirHelper::createIndividual(QObject* caller, QString const& prefix, QString const& name, QString const& kunya, QString const& displayName, int birth, int death, int location, bool companion)
+qint64 QueryTafsirHelper::createIndividual(QObject* caller, QString const& prefix, QString const& name, QString const& kunya, QString const& displayName, int birth, int death, QString const& location, bool companion)
 {
     LOGGER( prefix << name << kunya << displayName << birth << death << location << companion );
 
@@ -387,7 +387,7 @@ qint64 QueryTafsirHelper::createIndividual(QObject* caller, QString const& prefi
     args << protect(displayName);
     args << ( birth != 0 ? birth : QVariant() );
     args << ( death != 0 ? death : QVariant() );
-    args << ( location > 0 ? location : QVariant() );
+    args << ( !location.isEmpty() ? location.toLongLong() : QVariant() );
     args << ( companion ? 1 : QVariant() );
 
     m_sql->executeQuery(caller, query, QueryId::AddIndividual, args);
