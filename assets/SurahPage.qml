@@ -14,8 +14,7 @@ Page
 
     onToSurahIdChanged:
     {
-        awaker.lv.chapterNumber = fromSurahId;
-        ctb.chapterNumber = fromSurahId;
+        ctb.chapterNumber = awaker.lv.chapterNumber = fromSurahId;
         busy.delegateActive = true;
         helper.fetchAllAyats(surahPage, fromSurahId, toSurahId);
     }
@@ -65,6 +64,24 @@ Page
     {
         id: ctb
         
+        onNavigationTapped: {
+            if (right) {
+                ++fromSurahId;
+            } else {
+                --fromSurahId;
+            }
+            
+            requestedVerse = 0;
+            
+            if (toSurahId > 0) {
+                toSurahId = 0;
+            } else {
+                toSurahIdChanged();
+            }
+            
+            awaker.lazyPlayer.stop();
+        }
+        
         onTitleTapped: {
             openChapterTafsir(chapterNumber);
         }
@@ -82,30 +99,6 @@ Page
             id: mainContainer
             horizontalAlignment: HorizontalAlignment.Fill
             verticalAlignment: VerticalAlignment.Fill
-            
-            ChapterNavigationBar
-            {
-                id: cnb
-                chapterNumber: ctb.chapterNumber
-
-                onNavigationTapped: {
-                    if (right) {
-                        ++fromSurahId;
-                    } else {
-                        --fromSurahId;
-                    }
-
-                    requestedVerse = 0;
-
-                    if (toSurahId > 0) {
-                        toSurahId = 0;
-                    } else {
-                        toSurahIdChanged();
-                    }
-
-                    awaker.lazyPlayer.stop();
-                }
-            }
         }
         
         ProgressControl

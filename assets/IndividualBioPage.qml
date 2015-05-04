@@ -340,7 +340,7 @@ Page
                             editable: false
                             input.flags: TextInputFlag.SpellCheckOff
                             content.flags: TextContentFlag.ActiveTextOff | TextContentFlag.EmoticonsOff
-                            text: qsTr("“%1” (%2)").arg(ListItemData.body).arg(ListItemData.reference) + Retranslate.onLanguageChanged
+                            text: "“%1” (%2)".arg(ListItemData.body).arg(ListItemData.reference) + Retranslate.onLanguageChanged
                             horizontalAlignment: HorizontalAlignment.Fill
                             textStyle.textAlign: TextAlign.Center
                         }
