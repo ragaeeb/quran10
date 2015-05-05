@@ -316,6 +316,21 @@ Delegate
                     onEnded: {
                         root.close();
                     }
+                },
+                
+                Delegate {
+                    source: "ClassicBackDelegate.qml"
+                    
+                    onCreationCompleted: {
+                        active = 'locallyFocused' in dialogContainer;
+                    }
+                    
+                    onObjectChanged: {
+                        if (object) {
+                            object.parentControl = dialogContainer;
+                            object.triggered.connect(root.dismiss);
+                        }
+                    }
                 }
             ]
         }
