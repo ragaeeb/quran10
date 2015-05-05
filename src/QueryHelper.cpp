@@ -180,7 +180,7 @@ void QueryHelper::fetchRandomQuote(QObject* caller)
     LOGGER("fetchRandomQuote");
 
     ATTACH_TAFSIR;
-    m_sql.executeQuery(caller, QString("SELECT %1 AS author,i.hidden,body,TRIM( COALESCE(suites.title,'') || ' ' || quotes.reference ) AS reference,birth,death,female,is_companion FROM quotes INNER JOIN individuals i ON i.id=quotes.author LEFT JOIN suites ON quotes.suite_id=suites.id WHERE quotes.id=( ABS( RANDOM() % (SELECT COUNT() AS total_quotes FROM quotes) )+1 )").arg( NAME_FIELD("i") ), QueryId::FetchRandomQuote);
+    m_sql.executeQuery(caller, QString("SELECT %1 AS author,i.hidden,body,TRIM( COALESCE(suites.title,'') || ' ' || COALESCE(quotes.reference,'') ) AS reference,birth,death,female,is_companion FROM quotes INNER JOIN individuals i ON i.id=quotes.author LEFT JOIN suites ON quotes.suite_id=suites.id WHERE quotes.id=( ABS( RANDOM() % (SELECT COUNT() AS total_quotes FROM quotes) )+1 )").arg( NAME_FIELD("i") ), QueryId::FetchRandomQuote);
 }
 
 
