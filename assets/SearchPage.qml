@@ -141,6 +141,12 @@ Page
                 queryFieldsLocal.push(additional);
                 queryFields = queryFieldsLocal;
             }
+            
+            shortcuts: [
+                SystemShortcut {
+                    type: SystemShortcuts.CreateNew
+                }
+            ]
         },
         
         DeleteActionItem
