@@ -32,9 +32,16 @@ Delegate
                 }
             }
             
+            function onComplete()
+            {
+                if (reporter.online) {
+                    finish();
+                }
+            }
+            
             onCreationCompleted: {
                 open();
-                queue.queueCompleted.connect(root.finish);
+                queue.queueCompleted.connect(onComplete);
                 queue.isBlockedChanged.connect(root.finish);
             }
             
@@ -139,12 +146,6 @@ Delegate
                                 graphic: "images/placeholders/empty_downloads.png"
                                 labelText: qsTr("No downloads queued or active yet.") + Retranslate.onLanguageChanged
                             }
-                            
-                            OfflineDelegate
-                            {
-                                delegateActive: !reporter.online
-                                graphic: "images/toast/ic_offline.png"
-                            }
                         }
                         
                         Container
@@ -152,6 +153,15 @@ Delegate
                             horizontalAlignment: HorizontalAlignment.Fill
                             verticalAlignment: VerticalAlignment.Fill
                             visible: queue.queued > 0
+                            topPadding: offliner.delegateActive ? ui.sdu(4.25) : 0
+                            
+                            OfflineDelegate
+                            {
+                                id: offliner
+                                delegateActive: !reporter.online
+                                graphic: "images/toast/ic_offline.png"
+                                bottomMargin: 10
+                            }
                             
                             Header {
                                 subtitle: queue.queued

@@ -5,7 +5,6 @@ ImageButton
     pressedImageSource: defaultImageSource
     property int multiplier: 1
     rotationZ: 180*multiplier
-    translationX: (deviceUtils.pixelSize.width-ui.du(12))*multiplier
     signal animationFinished()
     
     animations: [
@@ -16,10 +15,13 @@ ImageButton
             
             TranslateTransition
             {
-                fromX: (deviceUtils.pixelSize.width-ui.du(12))*multiplier
                 toX: 0
                 easingCurve: StockCurve.QuinticOut
                 duration: 1500
+                
+                onCreationCompleted: {
+                    fromX = (deviceUtils.pixelSize.width-ui.du(12))*multiplier;
+                }
             }
             
             RotateTransition {
@@ -35,6 +37,7 @@ ImageButton
     ]
     
     onCreationCompleted: {
+        translationX = (deviceUtils.pixelSize.width-ui.du(12))*multiplier;
         prevTransition.play();
     }
 }
