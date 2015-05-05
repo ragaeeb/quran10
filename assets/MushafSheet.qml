@@ -38,6 +38,28 @@ Sheet
             }
         }
         
+        shortcuts: [
+            SystemShortcut
+            {
+                type: SystemShortcuts.PreviousSection
+                
+                onTriggered: {
+                    console.log("UserEvent: PrevPage");
+                    prevPage.clicked();
+                }
+            },
+            
+            SystemShortcut
+            {
+                type: SystemShortcuts.NextSection
+                
+                onTriggered: {
+                    console.log("UserEvent: PrevPage");
+                    nextPage.clicked();
+                }
+            }
+        ]
+        
         actions: [
             ActionItem
             {
@@ -336,6 +358,7 @@ Sheet
                 
                 NavigationButton
                 {
+                    id: nextPage
                     defaultImageSource: "images/title/ic_prev.png"
                     disabledImageSource: "images/title/ic_prev_disabled.png"
                     verticalAlignment: VerticalAlignment.Center
@@ -349,6 +372,7 @@ Sheet
                 
                 NavigationButton
                 {
+                    id: prevPage
                     multiplier: -1
                     defaultImageSource: "images/title/ic_next.png"
                     disabledImageSource: "images/title/ic_next_disabled.png"
