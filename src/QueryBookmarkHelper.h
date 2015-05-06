@@ -21,14 +21,25 @@ class QueryBookmarkHelper : public QObject
     DatabaseHelper* m_sql;
     bool initBookmarks(QObject* caller);
 
+private slots:
+    void onBookmarksRestored();
+    void onBookmarksSaved();
+
+signals:
+    void bookmarksUpdated();
+    void backupComplete(QString const& file);
+    void restoreComplete(bool success);
+
 public:
     QueryBookmarkHelper(DatabaseHelper* sql);
     virtual ~QueryBookmarkHelper();
 
+    Q_INVOKABLE void backup(QString const& destination);
     Q_INVOKABLE void clearAllBookmarks(QObject* caller);
     Q_INVOKABLE void fetchAllBookmarks(QObject* caller);
     Q_INVOKABLE void fetchLastProgress(QObject* caller);
     Q_INVOKABLE void removeBookmark(QObject* caller, int id);
+    Q_INVOKABLE void restore(QString const& source);
     Q_INVOKABLE void saveBookmark(QObject* caller, int surahId, int verseId, QString const& name, QString const& tag);
     Q_INVOKABLE void saveLegacyBookmarks(QObject* caller, QVariantList const& data);
     Q_INVOKABLE void saveLastProgress(QObject* caller, int surahId, int verseId);
