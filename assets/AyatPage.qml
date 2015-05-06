@@ -55,7 +55,7 @@ Page
             translation.value = translation.value + "\n\n(" + babName.title + " " + babName.subtitle + ")";
         } else if (id == QueryId.SaveBookmark) {
             persist.showToast( qsTr("Favourite added for Chapter %1, Verse %2").arg(surahId).arg(verseId), "images/menu/ic_bookmark_add.png" );
-            global.bookmarksUpdated();
+            bookmarkHelper.bookmarksUpdated();
         } else if (id == QueryId.FetchTransliteration) {
             transliteration.text = data[0].html;
         } else if (id == QueryId.FetchAdjacentAyat) {

@@ -54,7 +54,7 @@ NavigationPane
                 }
                 
                 onCreationCompleted: {
-                    offloader.backupComplete.connect(onSaved);
+                    bookmarkHelper.backupComplete.connect(onSaved);
                 }
             },
             
@@ -76,15 +76,14 @@ NavigationPane
                 function onRestored(result)
                 {
                     if (result) {
-                        persist.showBlockingDialog( qsTr("Successfully Restored"), qsTr("The app will now close itself so when you re-open it the restored favourites can take effect!"), qsTr("OK"), "" );
-                        Application.requestExit();
+                        persist.showToast( qsTr("Successfully Restored!"), imageSource.toString() );
                     } else {
-                        persist.init( qsTr("The database could not be restored. Please re-check the backup file to ensure it is valid, and if the problem persists please file a bug report. Make sure to attach the backup file with your report!"), "images/menu/ic_restore_error.png" );
+                        persist.showToast( qsTr("The database could not be restored. Please re-check the backup file to ensure it is valid, and if the problem persists please file a bug report. Make sure to attach the backup file with your report!"), "images/list/transfer_error.png" );
                     }
                 }
                 
                 onCreationCompleted: {
-                    offloader.restoreComplete.connect(onRestored);
+                    bookmarkHelper.restoreComplete.connect(onRestored);
                 }
             },
             
@@ -194,7 +193,7 @@ NavigationPane
                 onCreationCompleted: {
                     busy.delegateActive = true;
                     onBookmarksUpdated();
-                    global.bookmarksUpdated.connect(onBookmarksUpdated);
+                    bookmarkHelper.bookmarksUpdated.connect(onBookmarksUpdated);
                 }
                 
                 listItemComponents: [
@@ -281,9 +280,9 @@ NavigationPane
                 console.log("UserEvent: FileSelected", selectedFiles[0]);
                 
                 if (mode == FilePickerMode.Picker) {
-                    offloader.restore(selectedFiles[0]);
+                    bookmarkHelper.restore(selectedFiles[0]);
                 } else {
-                    offloader.backup(selectedFiles[0]);
+                    bookmarkHelper.backup(selectedFiles[0]);
                 }
             }
         }

@@ -4,6 +4,7 @@
 #include "DatabaseHelper.h"
 #include "Logger.h"
 #include "QueryId.h"
+#include "ThreadUtils.h"
 
 namespace quran {
 
@@ -113,6 +114,58 @@ void QueryBookmarkHelper::saveLastProgress(QObject* caller, int surahId, int ver
 
     QString query = QString("INSERT INTO progress (timestamp,surah_id,verse_id) VALUES (%1,%2,%3)").arg( QDateTime::currentMSecsSinceEpoch() ).arg(surahId).arg(verseId);
     m_sql->executeQuery(caller, query, QueryId::SaveLastProgress);
+}
+
+
+void QueryBookmarkHelper::backup(QString const& destination)
+{
+    LOGGER(destination);
+
+    QFutureWatcher<QString>* qfw = new QFutureWatcher<QString>(this);
+    connect( qfw, SIGNAL( finished() ), this, SLOT( onBookmarksSaved() ) );
+
+    QFuture<QString> future = QtConcurrent::run(&ThreadUtils::compressBookmarks, destination);
+    qfw->setFuture(future);
+}
+
+
+void QueryBookmarkHelper::onBookmarksSaved()
+{
+    QFutureWatcher<QString>* qfw = static_cast< QFutureWatcher<QString>* >( sender() );
+    QString result = qfw->result();
+
+    emit backupComplete(result);
+
+    qfw->deleteLater();
+}
+
+
+void QueryBookmarkHelper::restore(QString const& source)
+{
+    LOGGER(source);
+
+    QFutureWatcher<bool>* qfw = new QFutureWatcher<bool>(this);
+    connect( qfw, SIGNAL( finished() ), this, SLOT( onBookmarksRestored() ) );
+
+    QFuture<bool> future = QtConcurrent::run(&ThreadUtils::performRestore, source);
+    qfw->setFuture(future);
+}
+
+
+void QueryBookmarkHelper::onBookmarksRestored()
+{
+    QFutureWatcher<bool>* qfw = static_cast< QFutureWatcher<bool>* >( sender() );
+    bool result = qfw->result();
+
+    if (result) {
+        m_sql->detach("bookmarks"); // so we reload next call
+        emit bookmarksUpdated();
+    }
+
+    LOGGER("RestoreResult" << result);
+    emit restoreComplete(result);
+
+    qfw->deleteLater();
 }
 
 

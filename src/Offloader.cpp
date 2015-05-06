@@ -80,53 +80,6 @@ void Offloader::decorateTafsir(bb::cascades::ArrayDataModel* adm)
 }
 
 
-void Offloader::backup(QString const& destination)
-{
-    LOGGER(destination);
-
-    QFutureWatcher<QString>* qfw = new QFutureWatcher<QString>(this);
-    connect( qfw, SIGNAL( finished() ), this, SLOT( onBookmarksSaved() ) );
-
-    QFuture<QString> future = QtConcurrent::run(&ThreadUtils::compressBookmarks, destination);
-    qfw->setFuture(future);
-}
-
-
-void Offloader::onBookmarksSaved()
-{
-    QFutureWatcher<QString>* qfw = static_cast< QFutureWatcher<QString>* >( sender() );
-    QString result = qfw->result();
-
-    emit backupComplete(result);
-
-    qfw->deleteLater();
-}
-
-
-void Offloader::restore(QString const& source)
-{
-    LOGGER(source);
-
-    QFutureWatcher<bool>* qfw = new QFutureWatcher<bool>(this);
-    connect( qfw, SIGNAL( finished() ), this, SLOT( onBookmarksRestored() ) );
-
-    QFuture<bool> future = QtConcurrent::run(&ThreadUtils::performRestore, source);
-    qfw->setFuture(future);
-}
-
-
-void Offloader::onBookmarksRestored()
-{
-    QFutureWatcher<bool>* qfw = static_cast< QFutureWatcher<bool>* >( sender() );
-    bool result = qfw->result();
-
-    LOGGER("RestoreResult" << result);
-    emit restoreComplete(result);
-
-    qfw->deleteLater();
-}
-
-
 QString Offloader::textualizeAyats(bb::cascades::DataModel* adm, QVariantList const& selectedIndices, QString const& chapterTitle, bool showTranslation)
 {
     QVariantMap first = adm->data( selectedIndices.first().toList() ).toMap();
