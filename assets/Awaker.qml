@@ -42,6 +42,8 @@ QtObject
                 persist.setFlag("hideDataWarning", 1);
                 performPlayback();
             }
+            
+            analytics.record( "DownloadRecitationConfirm", yesClicked.toString() );
         }
         
         function onReady(uri) {
@@ -63,6 +65,8 @@ QtObject
             } else {
                 performPlayback();
             }
+            
+            analytics.record("PlayAll", listView.chapterNumber);
         }
     }
     
@@ -77,6 +81,8 @@ QtObject
             console.log("UserEvent: RepeatAction");
             player.repeat = !player.repeat;
             persist.saveValueFor("repeat", player.repeat ? 1 : 0, false);
+            
+            analytics.record( "RepeatAction", player.repeat.toString() );
         }
     }
     
@@ -90,6 +96,8 @@ QtObject
         onTriggered: {
             console.log("UserEvent: FollowTapped");
             persist.saveValueFor("follow", listView.follow ? 0 : 1);
+            
+            analytics.record( "FollowTapped", listView.follow.toString() );
         }
     }
     
@@ -114,6 +122,8 @@ QtObject
             if (!scrolled) {
                 var d = dataModel.data(indexPath);
                 versePicked(d.surah_id, d.verse_id);
+                
+                analytics.record( "VerseTriggered", d.surah_id+":"+d.verse_id );
             }
         }
         
