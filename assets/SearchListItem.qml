@@ -6,7 +6,7 @@ Container
     property alias bodyText: bodyLabel
     horizontalAlignment: HorizontalAlignment.Fill
     verticalAlignment: VerticalAlignment.Fill
-    background: ListItem.active || ListItem.selected || 'navigation' in rootItem && navigation.wantsHighlight ? global.headerBackground.imagePaint : undefined
+    background: ListItem.active || ListItem.selected || 'navigation' in rootItem && rootItem.navigation.wantsHighlight ? global.headerBackground.imagePaint : undefined
     
     ListItem.onInitializedChanged: {
         if (initialized) {
