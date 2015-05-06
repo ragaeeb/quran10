@@ -32,6 +32,7 @@ TabbedPane
 	    
         onTriggered: {
             console.log("UserEvent: QuranTab");
+            analytics.record("QuranTab");
         }
 	    
         delegate: Delegate {
@@ -48,6 +49,7 @@ TabbedPane
 
         onTriggered: {
             console.log("UserEvent: FavouritesTab");
+            analytics.record("FavouritesTab");
         }
 
         delegate: Delegate {
