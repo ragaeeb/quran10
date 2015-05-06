@@ -35,6 +35,7 @@ class QueueDownloader : public QObject
 
 private slots:
     void onDownloadProgress(QVariant const& cookie, qint64 bytesReceived, qint64 bytesTotal);
+    void onOnlineChanged();
     void onRequestComplete(QVariant const& cookie, QByteArray const& data, bool error);
 
 public:
