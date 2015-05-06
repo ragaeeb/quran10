@@ -85,6 +85,10 @@ Page
         translation.value = "";
         translation.resetText();
         
+        titleControl.removeOption(similarOption);
+        titleControl.removeOption(tafsirOption);
+        ayatOption.selected = true;
+        
         busy.delegateActive = true;
         helper.fetchAyat(root, surahId, verseId);
     }
