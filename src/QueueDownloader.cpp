@@ -9,6 +9,7 @@ QueueDownloader::QueueDownloader(QObject* parent) :
 {
     connect( &m_network, SIGNAL( requestComplete(QVariant const&, QByteArray const&, bool) ), this, SLOT( onRequestComplete(QVariant const&, QByteArray const&, bool) ) );
     connect( &m_network, SIGNAL( downloadProgress(QVariant const&, qint64, qint64) ), this, SLOT( onDownloadProgress(QVariant const&, qint64, qint64) ) );
+    connect( &m_network, SIGNAL( onlineChanged() ), this, SLOT( onOnlineChanged() ) );
     connect( &m_network, SIGNAL( sizeFetched(QVariant const&, qint64) ), this, SIGNAL( sizeFetched(QVariant const&, qint64) ) );
 
     m_model.setParent(this);
@@ -25,10 +26,9 @@ bool QueueDownloader::processNext()
     // 1 element, -1
     // 2 elements, 0
 
-    if ( m_currentIndex < m_model.size() )
+    if ( m_currentIndex < m_model.size() && m_network.online() )
     {
         QVariantMap current = m_model.value(m_currentIndex).toMap();
-        current["timestamp"] = QDateTime::currentMSecsSinceEpoch();
 
         LOGGER("Request completed, now processing" << current);
         QUrl uri = current.value(URI_KEY).toUrl();
@@ -43,6 +43,14 @@ bool QueueDownloader::processNext()
     }
 
     return false;
+}
+
+
+void QueueDownloader::onOnlineChanged()
+{
+    if ( m_network.online() ) {
+        processNext();
+    }
 }
 
 
