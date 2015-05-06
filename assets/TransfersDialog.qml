@@ -153,7 +153,7 @@ Delegate
                             horizontalAlignment: HorizontalAlignment.Fill
                             verticalAlignment: VerticalAlignment.Fill
                             visible: queue.queued > 0
-                            topPadding: offliner.delegateActive ? ui.sdu(4.25) : 0
+                            topPadding: offliner.delegateActive ? ui.sdu(6) : 0
                             
                             OfflineDelegate
                             {
