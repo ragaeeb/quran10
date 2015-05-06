@@ -78,6 +78,13 @@ Page
     
     function reload()
     {
+        transliteration.resetText();
+        body.value = "";
+        body.resetText();
+        
+        translation.value = "";
+        translation.resetText();
+        
         busy.delegateActive = true;
         helper.fetchAyat(root, surahId, verseId);
     }
@@ -495,7 +502,7 @@ Page
                                 onTapped: {
                                     console.log("UserEvent: TappedAyatArabic");
                                     
-                                    if (!transliteration.visible) {
+                                    if (!transliteration.visible && helper.showTranslation) {
                                         helper.fetchTransliteration(root, surahId, verseId);
                                     }
                                 }
