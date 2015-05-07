@@ -181,7 +181,7 @@ NavigationPane
                     p.surahIds = surahIds;
                     navigationPane.push(p);
                     
-                    analytics.record("CompareSurahs", surahIds.toString());
+                    reporter.record("CompareSurahs", surahIds.toString());
                 }
             },
             
@@ -204,7 +204,7 @@ NavigationPane
                     p.toSurahId = pickerPage.pickerList.dataModel.data(all[all.length-1]).surah_id;
                     navigationPane.push(p);
                     
-                    analytics.record("OpenSurahs", p.fromSurahId+"-"+p.toSurahId);
+                    reporter.record("OpenSurahs", p.fromSurahId+"-"+p.toSurahId);
                 }
             }
         ]
@@ -221,7 +221,7 @@ NavigationPane
                     var sheet = definition.createObject();
                     sheet.open();
                     
-                    analytics.record("LaunchMushaf");
+                    reporter.record("LaunchMushaf");
                 }
                 
                 shortcuts: [
@@ -244,7 +244,7 @@ NavigationPane
                     pickerPage.pickerList.multiSelectHandler.active = true;
                     pickerPage.pickerList.selectAll();
                     
-                    analytics.record("SelectAllSurahs");
+                    reporter.record("SelectAllSurahs");
                 }
                 
                 shortcuts: [

@@ -11,7 +11,7 @@ Page
         helper.fetchAllTafsirForChapter(root, chapterNumber);
         helper.fetchSurahHeader(root, chapterNumber);
         
-        analytics.record("ChapterTafsirPicker", chapterNumber);
+        reporter.record("ChapterTafsirPicker", chapterNumber);
     }
     
     function onDataLoaded(id, data)

@@ -40,7 +40,7 @@ Page
         if (cookie == "search" && all && all.length > 0)
         {
             helper.fetchAyats(listView, all);
-            analytics.record("GoogleResults", all.length.toString());
+            reporter.record("GoogleResults", all.length.toString());
         }
     }
     
@@ -104,7 +104,7 @@ Page
             tutorial.execActionBar( "removeConstraints", qsTr("Tap on the '%1' action to clear all the constraint fields.").arg(removeSearchAction.title), "x" );
         }
         
-        analytics.record("SearchPageActionMenu", actionMenuVisualState.toString());
+        reporter.record("SearchPageActionMenu", actionMenuVisualState.toString());
     }
     
     actions: [
@@ -118,7 +118,7 @@ Page
                 console.log("UserEvent: SearchActionTriggered");
                 performSearch();
                 
-                analytics.record("SearchActionTriggered");
+                reporter.record("SearchActionTriggered");
             }
             
             shortcuts: [
@@ -147,7 +147,7 @@ Page
                 queryFieldsLocal.push(additional);
                 queryFields = queryFieldsLocal;
                 
-                analytics.record("AddSearchField");
+                reporter.record("AddSearchField");
             }
             
             shortcuts: [
@@ -175,7 +175,7 @@ Page
                 searchField.resetText();
                 searchField.requestFocus();
                 
-                analytics.record("RemoveConstraints");
+                reporter.record("RemoveConstraints");
             }
         }
     ]
@@ -268,7 +268,7 @@ Page
                                                 console.log("UserEvent: CancelRestrictSurahSearch");
                                                 included.surahId = 0;
                                                 
-                                                analytics.record("CancelRestrictSurahSearch");
+                                                reporter.record("CancelRestrictSurahSearch");
                                             }
                                         }
                                     }
@@ -300,7 +300,7 @@ Page
                                     
                                     picker.ready();
                                     
-                                    analytics.record("EditRestrictSurahSearch");
+                                    reporter.record("EditRestrictSurahSearch");
                                 }
                                 
                                 layoutProperties: StackLayoutProperties {
@@ -318,7 +318,7 @@ Page
                             text: qsTr("Use Google Assitance") + Retranslate.onLanguageChanged
                             
                             onValueChanged: {
-                                analytics.record("UseGoogle", checked.toString());
+                                reporter.record("UseGoogle", checked.toString());
                             }
                         }
                     }
@@ -348,7 +348,7 @@ Page
                 
                 onSubmitted: {
                     performSearch();
-                    analytics.record("SearchEnterPressed");
+                    reporter.record("SearchEnterPressed");
                 }
             }
             
@@ -492,7 +492,7 @@ Page
                     var d = dataModel.data(indexPath);
                     picked(d.surah_id, d.verse_id);
                     
-                    analytics.record("AyatTriggeredFromSearch");
+                    reporter.record("AyatTriggeredFromSearch");
                 }
             }
             

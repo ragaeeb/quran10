@@ -180,7 +180,7 @@ Delegate
                                     console.log("UserEvent: CopyQuote");
                                     persist.copyToClipboard( data[data.length-1].plainText );
                                     
-                                    analytics.record("CopyQuote");
+                                    reporter.record("CopyQuote");
                                 }
                             }
                             
@@ -199,7 +199,7 @@ Delegate
                                     console.log("UserEvent: ShareQuote");
                                     data = persist.convertToUtf8( quoteRoot.data[quoteRoot.data.length-1].plainText );
                                     
-                                    analytics.record("ShareQuote");
+                                    reporter.record("ShareQuote");
                                 }
                             }
                         }

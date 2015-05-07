@@ -37,7 +37,7 @@ ImageButton
     ]
     
     onClicked: {
-        analytics.record("NavButtonClicked", multiplier.toString());
+        reporter.record("NavButtonClicked", multiplier.toString());
     }
     
     onCreationCompleted: {

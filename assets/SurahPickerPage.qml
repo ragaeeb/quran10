@@ -136,7 +136,7 @@ Page
                     
                     onValueChanged: {
                         if (diff) {
-                            analytics.record("DisplayOption", sortOrder.selectedValue);
+                            reporter.record("DisplayOption", sortOrder.selectedValue);
                         }
                     }
                     
@@ -189,10 +189,10 @@ Page
                             
                             if (tokens.length > 0) {
                                 var verse = parseInt(tokens[1]);
-                                analytics.record("SurahVerseShortcut", surah+":"+verse);
+                                reporter.record("SurahVerseShortcut", surah+":"+verse);
                                 picked(surah, verse);
                             } else {
-                                analytics.record("SurahVerseShortcut", surah+":0");
+                                reporter.record("SurahVerseShortcut", surah+":0");
                                 picked(surah, 0);
                             }
                         }
@@ -290,11 +290,11 @@ Page
                     if (data.surah_id) {
                         console.log("UserEvent: SurahTriggered");
                         picked(data.surah_id, data.verse_number ? data.verse_number : 0);
-                        analytics.record("SurahTriggered", data.surah_id+":"+(data.verse_number ? data.verse_number : 0));
+                        reporter.record("SurahTriggered", data.surah_id+":"+(data.verse_number ? data.verse_number : 0));
                     } else {
                         console.log("UserEvent: JuzTriggered");
                         juzPicked(data);
-                        analytics.record("JuzTriggered", data.toString());
+                        reporter.record("JuzTriggered", data.toString());
                     }
                 }
                 

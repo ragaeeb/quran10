@@ -19,7 +19,7 @@ Sheet
                     console.log("UserEvent: AlFurqanTwitter");
                     persist.openUri("https://twitter.com/AlFurqanArabic");
                     
-                    analytics.record("AlFurqanTwitter");
+                    reporter.record("AlFurqanTwitter");
                 }
             },
             
@@ -33,7 +33,7 @@ Sheet
                     console.log("UserEvent: AlFurqanFacebook");
                     persist.openUri("https://www.facebook.com/AlFurqanArabicMakkah");
                     
-                    analytics.record("AlFurqanFacebook");
+                    reporter.record("AlFurqanFacebook");
                 }
             },
             
@@ -47,7 +47,7 @@ Sheet
                     console.log("UserEvent: AlFurqanEmail");
                     persist.invoke("", "", "", "mailto:alfurqanarabic1@gmail.com");
                     
-                    analytics.record("AlFurqanEmail");
+                    reporter.record("AlFurqanEmail");
                 }
             }
         ]
@@ -65,7 +65,7 @@ Sheet
                     console.log("UserEvent: AlFurqanBBM");
                     persist.invoke("", "", "", "pin:55C89DD5");
                     
-                    analytics.record("AlFurqanBBM");
+                    reporter.record("AlFurqanBBM");
                 }
             }
             
@@ -78,7 +78,7 @@ Sheet
                     console.log("UserEvent: AlFurqanBack");
                     persist.setFlag("alFurqanAdvertised", 1);
                     
-                    analytics.record("AlFurqanBack");
+                    reporter.record("AlFurqanBack");
                     root.close();
                 }
             }

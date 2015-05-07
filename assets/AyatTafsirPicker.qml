@@ -65,7 +65,7 @@ ResizableContainer
                 if (name.length > 0)
                 {
                     offloader.addToHomeScreen(tafsirId, name);
-                    analytics.record("AddTafsirHome", tafsirId.toString());
+                    reporter.record("AddTafsirHome", tafsirId.toString());
                 }
             }
             

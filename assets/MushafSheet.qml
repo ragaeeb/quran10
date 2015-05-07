@@ -13,7 +13,7 @@ Sheet
     onCurrentPageChanged: {
         mushaf.requestPage(currentPage);
         
-        analytics.record("CurrentMushafPage", currentPage);
+        reporter.record("CurrentMushafPage", currentPage);
     }
     
     function activate()
@@ -39,7 +39,7 @@ Sheet
                 tutorial.execActionBar( "mushafDownloadAll", qsTr("Quran10 does its best to minimize your data usage by lazily downloading the pages as you need them. However, if you want to download them all at once tap on the '%1' action.").arg(downloadAll.title), "images/menu/ic_download_mushaf.png" );
             }
             
-            analytics.record("MushafActionMenu", actionMenuVisualState.toString());
+            reporter.record("MushafActionMenu", actionMenuVisualState.toString());
         }
         
         shortcuts: [
@@ -50,7 +50,7 @@ Sheet
                 onTriggered: {
                     console.log("UserEvent: PrevPage");
                     prevPage.clicked();
-                    analytics.record("PrevPageShortcut");
+                    reporter.record("PrevPageShortcut");
                 }
             },
             
@@ -61,7 +61,7 @@ Sheet
                 onTriggered: {
                     console.log("UserEvent: NextPage");
                     nextPage.clicked();
-                    analytics.record("NextPageShortcut");
+                    reporter.record("NextPageShortcut");
                 }
             }
         ]
@@ -81,7 +81,7 @@ Sheet
                     
                     sheet.close();
                     
-                    analytics.record("MushafBack");
+                    reporter.record("MushafBack");
                 }
                 
                 function onAboutToQuit() {
@@ -107,7 +107,7 @@ Sheet
                     persist.invoke("com.canadainc.Quran10.surah.picker");
                     timer.stop();
                     
-                    analytics.record("JumpSurah");
+                    reporter.record("JumpSurah");
                 }
                 
                 shortcuts: [
@@ -115,7 +115,7 @@ Sheet
                         key: qsTr("J") + Retranslate.onLanguageChanged
                         
                         onTriggered: {
-                            analytics.record("JumpShortcut");
+                            reporter.record("JumpShortcut");
                         }
                     }
                 ]
@@ -125,7 +125,7 @@ Sheet
                     var surahId = parseInt( message.split("/")[0] );
                     currentPage = pageNumbers[surahId];
                     
-                    analytics.record("JumpSurahResult", surahId);
+                    reporter.record("JumpSurahResult", surahId);
                 }
                 
                 function onDataLoaded(id, data)
@@ -177,7 +177,7 @@ Sheet
                     console.log("UserEvent: StretchTriggered");
                     mushaf.stretchMushaf = !mushaf.stretchMushaf;
                     
-                    analytics.record("StretchMushaf", mushaf.stretchMushaf.toString());
+                    reporter.record("StretchMushaf", mushaf.stretchMushaf.toString());
                 }
             },
             
@@ -196,14 +196,14 @@ Sheet
                         currentPage = pageNumber;
                     }
                     
-                    analytics.record("JumpToPageNumber", pageNumber.toString());
+                    reporter.record("JumpToPageNumber", pageNumber.toString());
                 }
                 
                 onTriggered: {
                     console.log("UserEvent: JumpToPage");
                     persist.showPrompt( jumpPage, qsTr("Enter page number"), qsTr("Please enter the page in the mushaf you want to jump to:"), "", qsTr("Enter value between 1 and 604 inclusive"), 3, false, qsTr("Jump"), qsTr("Cancel"), SystemUiInputMode.NumericKeypad );
                     
-                    analytics.record("JumpToPage");
+                    reporter.record("JumpToPage");
                 }
             },
             
@@ -218,7 +218,7 @@ Sheet
                     console.log("UserEvent: MushafDownloadAll");
                     mushaf.fetchMushafSize();
                     
-                    analytics.record("MushafDownloadAll");
+                    reporter.record("MushafDownloadAll");
                 }
             }
         ]
@@ -235,7 +235,7 @@ Sheet
                     mushaf.mushafStyle = selectedValue;
                     currentPageChanged();
                     
-                    analytics.record("MushafStyleSet", selectedVlue);
+                    reporter.record("MushafStyleSet", selectedVlue);
                 }
             }
             

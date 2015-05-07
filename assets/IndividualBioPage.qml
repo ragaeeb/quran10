@@ -494,6 +494,8 @@ Page
                     } else if (d.type == "email") {
                         persist.invoke("", "", "", "mailto:"+d.uri);
                     }
+                    
+                    reporter.record("BioTapped", individualId+":"+d.type);
                 }
                 
                 layoutProperties: StackLayoutProperties {

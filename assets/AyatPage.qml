@@ -100,7 +100,7 @@ Page
         titleControl.removeOption(tafsirOption);
         ayatOption.selected = true;
         
-        analytics.record("ShiftAyat", surahId+":"+verseId+","+i);
+        reporter.record("ShiftAyat", surahId+":"+verseId+","+i);
     }
     
     onActionMenuVisualStateChanged: {
@@ -109,7 +109,7 @@ Page
             tutorial.exec( "prevVerse", qsTr("Tap on the '%1' action to go to verse before this one in the Qu'ran.").arg(prevVerse.title), HorizontalAlignment.Right, VerticalAlignment.Center, 0, ui.du(2), 0, 0, prevVerse.imageSource.toString() );
         }
         
-        analytics.record("AyatPageMenuOpened", actionMenuVisualState.toString());
+        reporter.record("AyatPageMenuOpened", actionMenuVisualState.toString());
     }
     
     onCreationCompleted: {
@@ -152,7 +152,7 @@ Page
                         pluginsDelegate.source = "RecitationControl.qml";
                         pluginsDelegate.delegateActive = true;
                         
-                        analytics.record("OpenAyatRecitation", surahId+":"+verseId);
+                        reporter.record("OpenAyatRecitation", surahId+":"+verseId);
                     } else {
                         if (pluginsDelegate.control.played) {
                             player.stop();
@@ -179,7 +179,7 @@ Page
                         pluginsDelegate.source = "SimilarAyatControl.qml";
                         pluginsDelegate.delegateActive = true;
                         
-                        analytics.record("OpenAyatSimilar", surahId+":"+verseId);
+                        reporter.record("OpenAyatSimilar", surahId+":"+verseId);
                     } else {
                         body.text = body.value;
                         translation.text = translation.value;
@@ -201,7 +201,7 @@ Page
                         pluginsDelegate.source = "AyatTafsirPicker.qml";
                         pluginsDelegate.delegateActive = true;
                         
-                        analytics.record("OpenAyatTafsir", surahId+":"+verseId);
+                        reporter.record("OpenAyatTafsir", surahId+":"+verseId);
                     }
                 }
             }
@@ -225,8 +225,8 @@ Page
             function onTagEntered(tag, name)
             {
                 bookmarkHelper.saveBookmark(root, surahId, verseId, name, tag);
-                analytics.record("MarkFavourite", surahId+":"+verseId);
-                analytics.record("FavouriteTag", tag);
+                reporter.record("MarkFavourite", surahId+":"+verseId);
+                reporter.record("FavouriteTag", tag);
             }
             
             function onFinished(name)
@@ -261,7 +261,7 @@ Page
                 if (name.length > 0)
                 {
                     offloader.addToHomeScreen(surahId, verseId, name);
-                    analytics.record("AddAyatShortcut", surahId+":"+verseId);
+                    reporter.record("AddAyatShortcut", surahId+":"+verseId);
                 }
             }
             
@@ -280,7 +280,7 @@ Page
             onTriggered: {
                 console.log("UserEvent: CopyAyat");
                 persist.copyToClipboard(body.value+"\n\n"+translation.value);
-                analytics.record("CopyAyat", surahId+":"+verseId);
+                reporter.record("CopyAyat", surahId+":"+verseId);
             }
         },
         
@@ -299,7 +299,7 @@ Page
             onTriggered: {
                 console.log("UserEvent: ShareAyat");
                 data = persist.convertToUtf8(body.value+"\n\n"+translation.value);
-                analytics.record("ShareAyat", surahId+":"+verseId);
+                reporter.record("ShareAyat", surahId+":"+verseId);
             }
         },
         
@@ -320,7 +320,7 @@ Page
                     type: SystemShortcuts.PreviousSection
                     
                     onTriggered: {
-                        analytics.record("PrevAyatShortcut", surahId+":"+verseId);
+                        reporter.record("PrevAyatShortcut", surahId+":"+verseId);
                     }
                 }
             ]
@@ -343,7 +343,7 @@ Page
                     type: SystemShortcuts.NextSection
                     
                     onTriggered: {
-                        analytics.record("NextAyatShortcut", surahId+":"+verseId);
+                        reporter.record("NextAyatShortcut", surahId+":"+verseId);
                     }
                 }
             ]
@@ -408,7 +408,7 @@ Page
                         //else if ( persist.reviewed() ) {}
                         else if ( reporter.performCII() ) {}
                         
-                        analytics.record("AyatOpened", surahId+":"+verseId);
+                        reporter.record("AyatOpened", surahId+":"+verseId);
                     }
                 }
             ]
@@ -445,7 +445,7 @@ Page
                         onTapped: {
                             if (similarOption.selected) {
                                 pluginsDelegate.control.ratio = 0.4;
-                                analytics.record("AyatHeaderTapped", surahId+":"+verseId);
+                                reporter.record("AyatHeaderTapped", surahId+":"+verseId);
                             }
                         }
                     }
@@ -543,7 +543,7 @@ Page
                                         helper.fetchTransliteration(root, surahId, verseId);
                                     }
                                     
-                                    analytics.record("TappedAyatArabic", surahId+":"+verseId);
+                                    reporter.record("TappedAyatArabic", surahId+":"+verseId);
                                 }
                             },
                             
@@ -570,7 +570,7 @@ Page
                                         console.log("UserEvent: CopyArabicOnly");
                                         persist.copyToClipboard(body.value);
                                         
-                                        analytics.record("CopyArabicOnly", surahId+":"+verseId);
+                                        reporter.record("CopyArabicOnly", surahId+":"+verseId);
                                     }
                                 }
                                 
@@ -588,7 +588,7 @@ Page
                                         console.log("UserEvent: ShareArabicOnly");
                                         data = persist.convertToUtf8(body.value);
                                         
-                                        analytics.record("ShareArabicOnly", surahId+":"+verseId);
+                                        reporter.record("ShareArabicOnly", surahId+":"+verseId);
                                     }
                                 }
                             }
@@ -630,7 +630,7 @@ Page
                                         console.log("UserEvent: CopyTranslationOnly");
                                         persist.copyToClipboard(translation.value);
                                         
-                                        analytics.record("CopyTranslationOnly", surahId+":"+verseId);
+                                        reporter.record("CopyTranslationOnly", surahId+":"+verseId);
                                     }
                                 }
                                 
@@ -648,7 +648,7 @@ Page
                                         console.log("UserEvent: ShareTranslationOnly");
                                         data = persist.convertToUtf8(translation.value);
                                         
-                                        analytics.record("ShareTranslationOnly", surahId+":"+verseId);
+                                        reporter.record("ShareTranslationOnly", surahId+":"+verseId);
                                     }
                                 }
                             }
