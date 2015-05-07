@@ -103,7 +103,7 @@ Page
                     
                     onValueChanged: {
                         if (diff) {
-                            analytics.record("Translation", sortOrder.selectedValue);
+                            reporter.record("Translation", sortOrder.selectedValue);
                         }
                     }
                 }
@@ -147,19 +147,12 @@ Page
                                 selectedOption = selectedQaree;
                             }
                             
-                            console.log("*** KJK");
                             tutorial.execBelowTitleBar( "translation", qsTr("If you want to show a specific translation for the Qu'ran, choose it here.") );
-                            console.log("*** KJK33");
                             tutorial.execBelowTitleBar( "qaree", qsTr("If you want to use a specific qaree to recite the Qu'ran set it here."), ui.du(8) );
-                            console.log("*** KJK44");
                             tutorial.execBelowTitleBar( "dloadDir", qsTr("To change the directory where the mushaf pages, ayat images, and recitations are downloaded, set it here."), ui.du(21), "r" );
-                            console.log("*** KJK55");
                             tutorial.exec( "overlay", qsTr("Sometimes BlackBerry 10's font rules override the arabic rulings of the Qu'ran, and some letters get disconnected. It does not change the meaning however it looks slightly different from the original mushaf text, if you want to prevent this, choose '%1' to display images for the ayats instead of text. Please note that this will have a negative performance impact.").arg(joinDisconnected.text), HorizontalAlignment.Right, VerticalAlignment.Center, 0, 0, 0, ui.du(8) );
-                            console.log("*** KJK6");
                             tutorial.exec( "keepAwake", qsTr("Use the '%1' feature if you want to keep the device screen lit up when the app is playing the recitation so you can follow along and not have to continually touch the screen.").arg(keepAwake.text), HorizontalAlignment.Right, VerticalAlignment.Center);
-                            console.log("*** KJK7");
-                            tutorial.exec( "hideBenefits", qsTr("Use the '%1' feature if you want to supress the random quotes that shows up in the start of the app.").arg(hideBenefits.text), HorizontalAlignment.Left, VerticalAlignment.Center, 0, 0, 0, 0, "images/menu/ic_copy_from_english.png");
-                            console.log("*** KJK88");
+                            tutorial.execCentered( "hideBenefits", qsTr("Use the '%1' feature if you want to supress the random quotes that shows up in the start of the app.").arg(hideBenefits.text), "images/menu/ic_copy_from_english.png");
                         }
                     }
                     
@@ -175,7 +168,7 @@ Page
                         var diff = persist.saveValueFor("qaree", selectedValue);
                         
                         if (diff) {
-                            analytics.record("Qaree", selectedValue);
+                            reporter.record("Qaree", selectedValue);
                         }
                     }
                     
@@ -207,7 +200,7 @@ Page
                                 var diff = persist.saveValueFor("output", result);
                                 
                                 if (diff) {
-                                    analytics.record("OutputFolder", result);
+                                    reporter.record("OutputFolder", result);
                                 }
                             }
                         }
@@ -253,7 +246,7 @@ Page
                             console.log("UserEvent: EditOutputDir");
                             filePicker.open();
                             
-                            analytics.record("EditOutputDir");
+                            reporter.record("EditOutputDir");
                         }
                     }
                     
@@ -273,7 +266,7 @@ Page
                             app.checkMissingAyatImages();
                         }
                         
-                        analytics.record("JoinDisconnected", checked.toString());
+                        reporter.record("JoinDisconnected", checked.toString());
                     }
                     
                     onCheckedChanged: {
@@ -293,7 +286,7 @@ Page
                     text: qsTr("Keep Awake During Recitation") + Retranslate.onLanguageChanged
                     
                     onValueChanged: {
-                        analytics.record("KeepAwake", checked.toString());
+                        reporter.record("KeepAwake", checked.toString());
                     }
                     
                     onCheckedChanged: {
@@ -313,7 +306,7 @@ Page
                     text: qsTr("Hide Random Benefits") + Retranslate.onLanguageChanged
                     
                     onValueChanged: {
-                        analytics.record("HideBenefits", checked.toString());
+                        reporter.record("HideBenefits", checked.toString());
                     }
                     
                     onCheckedChanged: {

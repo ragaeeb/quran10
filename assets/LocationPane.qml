@@ -34,6 +34,7 @@ NavigationPane
                 
                 onCaptionButtonClicked: {
                     persist.invoke( "com.canadainc.Quran10.bio.previewer", "", "", "", focusedId );
+                    reporter.record("OpenMapIndividual", focusedId);
                 }
                 
                 function onDataLoaded(id, data)

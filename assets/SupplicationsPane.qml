@@ -86,7 +86,7 @@ NavigationPane
                         sp.toSurahId = data.surah_id;
                         sp.requestedVerse = data.verse_number_start;
                         
-                        analytics.record("SupplicationTriggered", data.surah_id+":"+data.verse_number_start);
+                        reporter.record("SupplicationTriggered", data.surah_id+":"+data.verse_number_start);
                     }
                 }
                 

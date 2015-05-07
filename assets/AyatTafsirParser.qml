@@ -127,7 +127,7 @@ QtObject
                         easingCurve: StockCurve.BackOut
                         
                         onEnded: {
-                            analytics.record("TafsirOpened", suitePageId.toString());
+                            reporter.record("TafsirOpened", suitePageId.toString());
                         }
                     }
                 ]
@@ -169,6 +169,7 @@ QtObject
                             
                             if ( link.match("\\d+") ) {
                                 persist.invoke("com.canadainc.Quran10.bio.previewer", "", "", "", link);
+                                reporter.record("OpenTafsirLink", link);
                             }
                             
                             event.abort();

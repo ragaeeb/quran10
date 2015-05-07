@@ -39,7 +39,7 @@ ListView
         previousPlayedIndex = -1;
         recitation.downloadAndPlayAll(verseModel, from, to);
         
-        analytics.record("PlayFrom", verseModel.value(from).surah_id+":"+verseModel.value(from).verse_id)+","+to;
+        reporter.record("PlayFrom", verseModel.value(from).surah_id+":"+verseModel.value(from).verse_id)+","+to;
     }
     
     onSelectionChanged: {
@@ -81,7 +81,7 @@ ListView
                     var last = selectedIndices[selectedIndices.length-1][0];
 
                     play(first, last);
-                    analytics.record( "MultiPlay", verseModel.data(first).surah_id+":"+verseModel.data(first).verse_id+"-"+verseModel.data(last).surah_id+":"+verseModel.data(last).verse_id );
+                    reporter.record( "MultiPlay", verseModel.data(first).surah_id+":"+verseModel.data(first).verse_id+"-"+verseModel.data(last).surah_id+":"+verseModel.data(last).verse_id );
                 }
             },
             
@@ -96,7 +96,7 @@ ListView
                     console.log("UserEvent: MultiCopy");
                     persist.copyToClipboard( offloader.textualizeAyats(verseModel, selectionList(), ctb.text, helper.showTranslation) );
                     
-                    analytics.record("MultiCopy");
+                    reporter.record("MultiCopy");
                 }
             },
             
@@ -116,7 +116,7 @@ ListView
                     console.log("UserEvent: MultiShare");
                     data = persist.convertToUtf8( offloader.textualizeAyats(verseModel, selectionList(), ctb.text, helper.showTranslation) );
                     
-                    analytics.record("MultiShare");
+                    reporter.record("MultiShare");
                 }
             }
         ]
@@ -207,7 +207,7 @@ ListView
         var end = Math.min( from+8, dataModel.size() );
         
         recitation.memorize(verseModel, from, end);
-        analytics.record("Memorize", verseModel.value(from).surah_id+":"+verseModel.value(from).verse_id);
+        reporter.record("Memorize", verseModel.value(from).surah_id+":"+verseModel.value(from).verse_id);
     }
     
     function onDataLoaded(id, data)
@@ -220,7 +220,7 @@ ListView
     
     function setBookmark(ListItemData) {
         bookmarkHelper.saveLastProgress(listView, ListItemData.surah_id, ListItemData.verse_id);
-        analytics.record("SetBookmark", ListItemData.surah_id+":"+ListItemData.verse_id);
+        reporter.record("SetBookmark", ListItemData.surah_id+":"+ListItemData.verse_id);
     }
     
     function refresh()

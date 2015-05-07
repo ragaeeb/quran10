@@ -32,7 +32,7 @@ TabbedPane
 	    
         onTriggered: {
             console.log("UserEvent: QuranTab");
-            analytics.record("QuranTab");
+            reporter.record("QuranTab");
         }
 	    
         delegate: Delegate {
@@ -49,7 +49,7 @@ TabbedPane
 
         onTriggered: {
             console.log("UserEvent: FavouritesTab");
-            analytics.record("FavouritesTab");
+            reporter.record("FavouritesTab");
         }
 
         delegate: Delegate {
@@ -66,7 +66,7 @@ TabbedPane
 
         onTriggered: {
             console.log("UserEvent: SearchTab");
-            analytics.record("SearchTab");
+            reporter.record("SearchTab");
         }
 
         delegate: Delegate {
@@ -83,7 +83,7 @@ TabbedPane
         
         onTriggered: {
             console.log("UserEvent: SupplicationsTab");
-            analytics.record("SupplicationsTab");
+            reporter.record("SupplicationsTab");
         }
         
         delegate: Delegate {
@@ -100,7 +100,7 @@ TabbedPane
         
         onTriggered: {
             console.log("UserEvent: UmmahTab");
-            analytics.record("UmmahTab");
+            reporter.record("UmmahTab");
         }
         
         delegate: Delegate {
@@ -149,7 +149,7 @@ TabbedPane
         tutorial.exec("tabsDuaa", qsTr("In the Supplications tab you will find a collection of some of the many du'aa that are found across the Qu'ran."), HorizontalAlignment.Left, VerticalAlignment.Top, ui.du(1), 0, ui.du(10), 0, supplications.imageSource.toString(), "d" );
         tutorial.exec("tabsUmmah", qsTr("In the Ummah tab you can browse the various callers, students of knowledge, and scholars of the past and present."), HorizontalAlignment.Left, VerticalAlignment.Top, ui.du(1), 0, ui.du(10), 0, ummahTab.imageSource.toString(), "d" );
         
-        analytics.record( "TabbedPaneExpanded", root.sidebarVisualState.toString() );
+        reporter.record( "TabbedPaneExpanded", root.sidebarVisualState.toString() );
     }
     
     onCreationCompleted: {
