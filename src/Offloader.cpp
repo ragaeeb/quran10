@@ -1,6 +1,7 @@
 #include "precompiled.h"
 
 #include "Offloader.h"
+#include "AppLogFetcher.h"
 #include "CommonConstants.h"
 #include "IOUtils.h"
 #include "Logger.h"
@@ -131,6 +132,8 @@ void Offloader::addToHomeScreen(int chapter, int verse, QString const& label)
     if (!added) {
         toastMessage = tr("Could not add %1 to home screen").arg(label);
         icon = "images/dropdown/suite_changes_cancel.png";
+
+        AppLogFetcher::getInstance()->record("FailedAddHome", label);
     }
 
     m_persist->showToast(toastMessage, icon);
@@ -148,6 +151,8 @@ void Offloader::addToHomeScreen(qint64 suitePageId, QString const& label)
     if (!added) {
         toastMessage = tr("Could not add %1 to home screen").arg(label);
         icon = ASSET_YELLOW_DELETE;
+
+        AppLogFetcher::getInstance()->record("FailedAddHome", label);
     }
 
     m_persist->showToast(toastMessage, icon);
@@ -223,6 +228,7 @@ bool Offloader::computeNecessaryUpdates(QVariantMap q, QByteArray const& data)
         }
     } else if (forcedUpdate) { // if this is a mandatory update, then show error message
         m_persist->showToast( tr("There is a problem communicating with the server so the app cannot download the necessary files just yet. Please try opening the app again later and it should automatically try the update again..."), "asset:///images/toast/ic_offline.png" );
+        AppLogFetcher::getInstance()->record("FailedServerResponse", QString(data));
         return false;
     }
 
