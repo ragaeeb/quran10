@@ -19,8 +19,8 @@ Container
                 && data[2].surah_id == 38 && data[2].verse_id == 35 );
             }
             
-            onCreationCompleted: {
-                harness.init(sampleSearch);
+            function run()
+            {
                 helper.searchQuery(sampleSearch, "الوهاب");
             }
         },
@@ -36,8 +36,8 @@ Container
                 && data[0].surah_id == 3 && data[0].verse_id == 8);
             }
             
-            onCreationCompleted: {
-                harness.init(searchChapter);
+            function run()
+            {
                 helper.searchQuery(searchChapter, "الوهاب", 
                 3);
             }
@@ -54,10 +54,9 @@ Container
                 && data[0].surah_id == 3 && data[0].verse_id == 14);
             }
             
-            onCreationCompleted: {
-                harness.init(searchAnds);
-                helper.searchQuery(searchAnds, "life", 
-                0, ["gold"]);
+            function run()
+            {
+                helper.searchQuery(searchAnds, "life", 0, ["gold"]);
             }
         },
         
@@ -72,10 +71,9 @@ Container
                 && data[0].surah_id == 4 && data[0].verse_id == 43);
             }
             
-            onCreationCompleted: {
-                harness.init(searchOrs);
-                helper.searchQuery(searchOrs, "nature", 
-                0, ["arouse"], false);
+            function run()
+            {
+                helper.searchQuery(searchOrs, "nature", 0, ["arouse"], false);
             }
         },
         
@@ -90,8 +88,7 @@ Container
                 && data[0].surah_id == 1 && data[0].verse_id == 2);
             }
             
-            onCreationCompleted: {
-                harness.init(fetchAdjacent);
+            function run() {
                 helper.fetchAdjacentAyat(fetchAdjacent, 1, 1, 1);
             }
         },
@@ -105,8 +102,8 @@ Container
                 harness.update( fetchAdjacent2, data.length == 0 );
             }
             
-            onCreationCompleted: {
-                harness.init(fetchAdjacent2);
+            function run()
+            {
                 helper.fetchAdjacentAyat(fetchAdjacent2, 1, 1, -1);
             }
         },
@@ -120,8 +117,8 @@ Container
                 harness.update( fetchAdjacent3, data.length == 0);
             }
             
-            onCreationCompleted: {
-                harness.init(fetchAdjacent3);
+            function run()
+            {
                 helper.fetchAdjacentAyat(fetchAdjacent3, 114, 6, 1);
             }
         },
@@ -135,8 +132,8 @@ Container
                 harness.update(randomFetch, data.length == 1);
             }
             
-            onCreationCompleted: {
-                harness.init(randomFetch);
+            function run()
+            {
                 helper.fetchRandomAyat(randomFetch);
             }
         }
