@@ -125,6 +125,10 @@ QtObject
                         toOpacity: 0.35
                         duration: 750
                         easingCurve: StockCurve.BackOut
+                        
+                        onEnded: {
+                            analytics.record("TafsirOpened", suitePageId.toString());
+                        }
                     }
                 ]
             }

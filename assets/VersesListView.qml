@@ -38,6 +38,8 @@ ListView
         clearPrevious();
         previousPlayedIndex = -1;
         recitation.downloadAndPlayAll(verseModel, from, to);
+        
+        analytics.record("PlayFrom", verseModel.value(from).surah_id+":"+verseModel.value(from).verse_id)+","+to;
     }
     
     onSelectionChanged: {
@@ -205,6 +207,7 @@ ListView
         var end = Math.min( from+8, dataModel.size() );
         
         recitation.memorize(verseModel, from, end);
+        analytics.record("Memorize", verseModel.value(from).surah_id+":"+verseModel.value(from).verse_id);
     }
     
     function onDataLoaded(id, data)
@@ -217,6 +220,7 @@ ListView
     
     function setBookmark(ListItemData) {
         bookmarkHelper.saveLastProgress(listView, ListItemData.surah_id, ListItemData.verse_id);
+        analytics.record("SetBookmark", ListItemData.surah_id+":"+ListItemData.verse_id);
     }
     
     function refresh()
