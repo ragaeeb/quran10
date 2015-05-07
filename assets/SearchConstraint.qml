@@ -22,6 +22,7 @@ Container
         
         onClicked: {
             andMode = !andMode;
+            analytics.record("SearchConstraintClicked", andMode.toString());
         }
         
         animations: [

@@ -33,8 +33,10 @@ Container
             if (!played) {
                 recitation.downloadAndPlay(root.surahId, root.verseId);
                 played = true;
+                analytics.record("AyatDownloadPlay", root.surahId+":"+root.verseId);
             } else {
                 player.togglePlayback();
+                analytics.record("AyatPlayPause");
             }
         }
         
@@ -101,6 +103,8 @@ Container
             onError: {
                 console.log(message);
                 persist.showToast( message, "asset:///images/toast/yellow_delete.png" );
+                
+                analytics.record("AyatPlayError", message);
             }
         }
     ]

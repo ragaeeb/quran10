@@ -59,6 +59,7 @@ ResizableContainer
                     ft.play();
                 }
             }
+
             function onFinished(name, tafsirId)
             {
                 if (name.length > 0) {

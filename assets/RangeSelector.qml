@@ -13,6 +13,8 @@ QtObject
             activated = true;
             console.log("UserEvent: SelectRangeTriggered");
             tutorial.exec("selectRange", qsTr("Now select the last ayat that you want to perform the actions of the menu on.\n\nYou can also select an ayat above the current one to start there and end at the current one."), HorizontalAlignment.Center, VerticalAlignment.Center, 0, 0, 0, 0, undefined, "d");
+            
+            analytics.record("SelectRangeTriggered");
         }
     }
 

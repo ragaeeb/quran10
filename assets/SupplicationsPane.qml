@@ -85,6 +85,8 @@ NavigationPane
                         sp.fromSurahId = data.surah_id;
                         sp.toSurahId = data.surah_id;
                         sp.requestedVerse = data.verse_number_start;
+                        
+                        analytics.record("SupplicationTriggered", data.surah_id+":"+data.verse_number_start);
                     }
                 }
                 
@@ -108,13 +110,13 @@ NavigationPane
                         helper.fetchAllDuaa(listView);
                     });
                 }
-                
-                attachedObjects: [
-                    ComponentDefinition {
-                        id: definition
-                    }
-                ]
             }
         }
     }
+    
+    attachedObjects: [
+        ComponentDefinition {
+            id: definition
+        }
+    ]
 }

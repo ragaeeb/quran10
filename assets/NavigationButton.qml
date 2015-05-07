@@ -36,6 +36,10 @@ ImageButton
         }
     ]
     
+    onClicked: {
+        analytics.record("NavButtonClicked", multiplier.toString());
+    }
+    
     onCreationCompleted: {
         translationX = (deviceUtils.pixelSize.width-ui.du(12))*multiplier;
         prevTransition.play();
