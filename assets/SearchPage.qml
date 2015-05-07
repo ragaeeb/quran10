@@ -37,8 +37,10 @@ Page
     
     function onCaptured(all, cookie)
     {
-        if (cookie == "search" && all && all.length > 0) {
+        if (cookie == "search" && all && all.length > 0)
+        {
             helper.fetchAyats(listView, all);
+            analytics.record("GoogleResults", all.length.toString());
         }
     }
     
