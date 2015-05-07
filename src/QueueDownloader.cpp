@@ -30,8 +30,8 @@ bool QueueDownloader::processNext()
     {
         QVariantMap current = m_model.value(m_currentIndex).toMap();
 
-        LOGGER("Request completed, now processing" << current);
         QUrl uri = current.value(URI_KEY).toUrl();
+        LOGGER("Request completed, now processing" << uri.host()+"/"+uri.path());
 
         m_uriToIndex.insert( uri.toString(), m_currentIndex );
         m_network.doGet(uri, current);

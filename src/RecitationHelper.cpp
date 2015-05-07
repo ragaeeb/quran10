@@ -1,6 +1,7 @@
 #include "precompiled.h"
 
 #include "RecitationHelper.h"
+#include "AppLogFetcher.h"
 #include "CommonConstants.h"
 #include "InvocationUtils.h"
 #include "IOUtils.h"
@@ -244,10 +245,12 @@ void RecitationHelper::onPlaylistReady()
 {
     QVariantMap result = m_futureResult.result();
 
-    LOGGER(result);
-
-    if ( result.contains(PLAYLIST_ERROR) ) {
-        m_persistance->showToast( result.value(PLAYLIST_ERROR).toString(), ASSET_YELLOW_DELETE );
+    if ( result.contains(PLAYLIST_ERROR) )
+    {
+        LOGGER("PlaylistError");
+        QString message = result.value(PLAYLIST_ERROR).toString();
+        m_persistance->showToast( message, ASSET_YELLOW_DELETE );
+        AppLogFetcher::getInstance()->record("PlaylistError", message);
     } else if ( result.contains(KEY_QUEUE) ) {
         QVariantList queue = result.value(KEY_QUEUE).toList();
         m_anchor = result.value(ANCHOR_KEY).toString();
