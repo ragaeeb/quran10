@@ -67,7 +67,7 @@ public:
     Q_INVOKABLE void fetchAyats(QObject* caller, QVariantList const& input);
     Q_INVOKABLE void fetchAyatsForTafsir(QObject* caller, qint64 suitePageId);
     Q_INVOKABLE void fetchBio(QObject* caller, qint64 individualId);
-    Q_INVOKABLE void fetchChapter(QObject* caller, int chapter);
+    Q_INVOKABLE void fetchChapter(QObject* caller, int chapter, bool juzMode=false);
     Q_INVOKABLE void fetchChapters(QObject* caller, QString const& text=QString());
     Q_INVOKABLE void fetchJuzInfo(QObject* caller, int juzId);
     Q_INVOKABLE void fetchPageNumbers(QObject* caller);
