@@ -101,6 +101,8 @@ Page
         if (actionMenuVisualState == ActionMenuVisualState.VisibleFull) {
             tutorial.execActionBar( "removeConstraints", qsTr("Tap on the '%1' action to clear all the constraint fields.").arg(removeSearchAction.title), "x" );
         }
+        
+        analytics.record("SearchPageActionMenu", actionMenuVisualState.toString());
     }
     
     actions: [
@@ -113,6 +115,8 @@ Page
             onTriggered: {
                 console.log("UserEvent: SearchActionTriggered");
                 performSearch();
+                
+                analytics.record("SearchActionTriggered");
             }
             
             shortcuts: [
@@ -128,7 +132,7 @@ Page
             ActionBar.placement: ActionBarPlacement.OnBar
             
             onTriggered: {
-                console.log("UserEvent: AddSearchFieldTriggered");
+                console.log("UserEvent: AddSearchField");
                 
                 definition.source = "SearchConstraint.qml";
                 var additional = definition.createObject();
@@ -140,6 +144,8 @@ Page
                 var queryFieldsLocal = queryFields;
                 queryFieldsLocal.push(additional);
                 queryFields = queryFieldsLocal;
+                
+                analytics.record("AddSearchField");
             }
             
             shortcuts: [
@@ -166,6 +172,8 @@ Page
                 queryFields = newFields;
                 searchField.resetText();
                 searchField.requestFocus();
+                
+                analytics.record("RemoveConstraints");
             }
         }
     ]
@@ -191,10 +199,6 @@ Page
             
             expandableArea
             {
-                onExpandedChanged: {
-                    console.log("UserEvent: IncludeExpanded", expanded);
-                }
-                
                 content: ScrollView
                 {
                     horizontalAlignment: HorizontalAlignment.Fill
@@ -261,6 +265,8 @@ Page
                                             onTriggered: {
                                                 console.log("UserEvent: CancelRestrictSurahSearch");
                                                 included.surahId = 0;
+                                                
+                                                analytics.record("CancelRestrictSurahSearch");
                                             }
                                         }
                                     }
@@ -291,6 +297,8 @@ Page
                                     navigationPane.push(picker);
                                     
                                     picker.ready();
+                                    
+                                    analytics.record("EditRestrictSurahSearch");
                                 }
                                 
                                 layoutProperties: StackLayoutProperties {
@@ -306,6 +314,10 @@ Page
                             enabled: helper.showTranslation
                             key: "searchGoogle"
                             text: qsTr("Use Google Assitance") + Retranslate.onLanguageChanged
+                            
+                            onValueChanged: {
+                                analytics.record("UseGoogle", checked.toString());
+                            }
                         }
                     }
                 }
@@ -334,6 +346,7 @@ Page
                 
                 onSubmitted: {
                     performSearch();
+                    analytics.record("SearchEnterPressed");
                 }
             }
             
@@ -476,6 +489,8 @@ Page
                     console.log("UserEvent: AyatTriggeredFromSearch");
                     var d = dataModel.data(indexPath);
                     picked(d.surah_id, d.verse_id);
+                    
+                    analytics.record("AyatTriggeredFromSearch");
                 }
             }
             

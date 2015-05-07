@@ -23,6 +23,8 @@ NavigationPane
             if (actionMenuVisualState == ActionMenuVisualState.VisibleFull) {
                 tutorial.execActionBar( "clearBookmarks", qsTr("Tap on the '%1' action to clear all the bookmarks.").arg(clearBookmarks.title), "x" );
             }
+            
+            analytics.record("BookmarkPageMenu", actionMenuVisualState.toString());
         }
         
         actions: [
@@ -36,6 +38,10 @@ NavigationPane
                 shortcuts: [
                     SystemShortcut {
                         type: SystemShortcuts.CreateNew
+                        
+                        onTriggered: {
+                            analytics.record("BackupShortcut");
+                        }
                     }
                 ]
                 
@@ -47,10 +53,14 @@ NavigationPane
                     filePicker.allowOverwrite = true;
                     
                     filePicker.open();
+                    
+                    analytics.record("Backup");
                 }
                 
                 function onSaved(result) {
                     persist.showToast( qsTr("Successfully backed up to %1").arg(result), "images/menu/ic_backup.png" );
+                    
+                    analytics.record("BackupResult", result);
                 }
                 
                 onCreationCompleted: {
@@ -71,6 +81,8 @@ NavigationPane
                     filePicker.mode = FilePickerMode.Picker
                     
                     filePicker.open();
+
+                    analytics.record("Restore");
                 }
                 
                 function onRestored(result)
@@ -80,6 +92,8 @@ NavigationPane
                     } else {
                         persist.showToast( qsTr("The database could not be restored. Please re-check the backup file to ensure it is valid, and if the problem persists please file a bug report. Make sure to attach the backup file with your report!"), "images/list/transfer_error.png" );
                     }
+                    
+                    analytics.record("RestoreResult", result.toString());
                 }
                 
                 onCreationCompleted: {
@@ -102,11 +116,15 @@ NavigationPane
                     } else {
                         console.log("UserEvent: ClearFavouritesPromptNo");
                     }
+                    
+                    analytics.record("ClearFavouritesResult", confirmed.toString());
                 }
                 
                 onTriggered: {
                     console.log("UserEvent: ClearFavourites");
                     persist.showDialog( clearBookmarks, qsTr("Confirmation"), qsTr("Are you sure you want to clear all favourites?") );
+                    
+                    analytics.record("ClearFavourites");
                 }
             }
         ]
@@ -180,10 +198,13 @@ NavigationPane
                     navigationPane.parent.unreadContentCount = gdm.size();
                 }
                 
-                function deleteBookmark(indexPath) {
+                function deleteBookmark(indexPath)
+                {
                     bookmarkHelper.removeBookmark( listView, dataModel.data(indexPath).id );
                     gdm.removeAt(indexPath);
                     refresh();
+                    
+                    analytics.record("DeleteFavourite");
                 }
                 
                 function onBookmarksUpdated() {
@@ -248,6 +269,8 @@ NavigationPane
                     navigationPane.push(sp);
                     sp.surahId = data.surah_id;
                     sp.verseId = data.verse_id;
+                    
+                    analytics.record("FavouriteTriggered", sp.surahId+":"+sp.verseId);
                 }
                 
                 horizontalAlignment: HorizontalAlignment.Fill

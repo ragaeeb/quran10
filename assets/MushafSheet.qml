@@ -12,6 +12,8 @@ Sheet
     
     onCurrentPageChanged: {
         mushaf.requestPage(currentPage);
+        
+        analytics.record("CurrentMushafPage", currentPage);
     }
     
     function activate()
@@ -36,6 +38,8 @@ Sheet
                 tutorial.execCentered( "mushafAspectFill", qsTr("Use the 'Aspect Fill' action to resize the mushaf according to its original dimensions. In this mode you will have to do pinch-and-zoom and pan gestures with your fingers in order to view the different parts of the page."), "images/menu/ic_aspect_fill.png" );
                 tutorial.execActionBar( "mushafDownloadAll", qsTr("Quran10 does its best to minimize your data usage by lazily downloading the pages as you need them. However, if you want to download them all at once tap on the '%1' action.").arg(downloadAll.title), "images/menu/ic_download_mushaf.png" );
             }
+            
+            analytics.record("MushafActionMenu", actionMenuVisualState.toString());
         }
         
         shortcuts: [
@@ -46,6 +50,7 @@ Sheet
                 onTriggered: {
                     console.log("UserEvent: PrevPage");
                     prevPage.clicked();
+                    analytics.record("PrevPageShortcut");
                 }
             },
             
@@ -54,8 +59,9 @@ Sheet
                 type: SystemShortcuts.NextSection
                 
                 onTriggered: {
-                    console.log("UserEvent: PrevPage");
+                    console.log("UserEvent: NextPage");
                     nextPage.clicked();
+                    analytics.record("NextPageShortcut");
                 }
             }
         ]
@@ -74,6 +80,8 @@ Sheet
                     tutorial.execCentered( "mushafSaveClose", qsTr("The app automatically saves the last page number you left off (Page %1) so you can easily pick up where you left off when you come back.").arg(currentPage), "images/menu/ic_select_more_chapters.png" );
                     
                     sheet.close();
+                    
+                    analytics.record("MushafBack");
                 }
                 
                 function onAboutToQuit() {
@@ -98,11 +106,17 @@ Sheet
                     hiddenTitle.visibility = ChromeVisibility.Hidden;
                     persist.invoke("com.canadainc.Quran10.surah.picker");
                     timer.stop();
+                    
+                    analytics.record("JumpSurah");
                 }
                 
                 shortcuts: [
                     Shortcut {
                         key: qsTr("J") + Retranslate.onLanguageChanged
+                        
+                        onTriggered: {
+                            analytics.record("JumpShortcut");
+                        }
                     }
                 ]
                 
@@ -110,6 +124,8 @@ Sheet
                 {
                     var surahId = parseInt( message.split("/")[0] );
                     currentPage = pageNumbers[surahId];
+                    
+                    analytics.record("JumpSurahResult", surahId);
                 }
                 
                 function onDataLoaded(id, data)
@@ -160,6 +176,8 @@ Sheet
                 onTriggered: {
                     console.log("UserEvent: StretchTriggered");
                     mushaf.stretchMushaf = !mushaf.stretchMushaf;
+                    
+                    analytics.record("StretchMushaf", mushaf.stretchMushaf.toString());
                 }
             },
             
@@ -177,11 +195,15 @@ Sheet
                     if (pageNumber >= 1 && pageNumber <= 604) {
                         currentPage = pageNumber;
                     }
+                    
+                    analytics.record("JumpToPageNumber", pageNumber.toString());
                 }
                 
                 onTriggered: {
                     console.log("UserEvent: JumpToPage");
                     persist.showPrompt( jumpPage, qsTr("Enter page number"), qsTr("Please enter the page in the mushaf you want to jump to:"), "", qsTr("Enter value between 1 and 604 inclusive"), 3, false, qsTr("Jump"), qsTr("Cancel"), SystemUiInputMode.NumericKeypad );
+                    
+                    analytics.record("JumpToPage");
                 }
             },
             
@@ -195,6 +217,8 @@ Sheet
                 onTriggered: {
                     console.log("UserEvent: MushafDownloadAll");
                     mushaf.fetchMushafSize();
+                    
+                    analytics.record("MushafDownloadAll");
                 }
             }
         ]
@@ -210,6 +234,8 @@ Sheet
                 {
                     mushaf.mushafStyle = selectedValue;
                     currentPageChanged();
+                    
+                    analytics.record("MushafStyleSet", selectedVlue);
                 }
             }
             

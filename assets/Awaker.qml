@@ -66,7 +66,9 @@ QtObject
                 performPlayback();
             }
             
-            analytics.record("PlayAll", listView.chapterNumber);
+            var first = listView.dataModel.data([0]);
+            var last = listView.dataModel.data( listView.dataModel.size()-1 );
+            analytics.record("PlayAll", first.surah_id+":"+first.verse_id+"-"+last.surah_id+":"+last.verse_id);
         }
     }
     

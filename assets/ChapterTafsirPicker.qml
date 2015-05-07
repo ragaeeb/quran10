@@ -10,6 +10,8 @@ Page
     onChapterNumberChanged: {
         helper.fetchAllTafsirForChapter(root, chapterNumber);
         helper.fetchSurahHeader(root, chapterNumber);
+        
+        analytics.record("ChapterTafsirPicker", chapterNumber);
     }
     
     function onDataLoaded(id, data)

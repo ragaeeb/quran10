@@ -45,6 +45,8 @@ Page
                                 enabled = false;
                                 var params = {'language': helper.translation};
                                 helper.updateCheckNeeded(params);
+                                
+                                analytics.record("CheckForTafsirUpdate", helper.translation);
                             }
                             
                             function onFinished(cookie, data)

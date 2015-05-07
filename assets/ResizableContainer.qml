@@ -19,6 +19,7 @@ Container
             {
                 onTapped: {
                     ratio = 0.7;
+                    analytics.record("ResizeContainerTapped");
                 }
             }
         ]

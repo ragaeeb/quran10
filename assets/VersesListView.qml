@@ -79,6 +79,7 @@ ListView
                     var last = selectedIndices[selectedIndices.length-1][0];
 
                     play(first, last);
+                    analytics.record( "MultiPlay", verseModel.data(first).surah_id+":"+verseModel.data(first).verse_id+"-"+verseModel.data(last).surah_id+":"+verseModel.data(last).verse_id );
                 }
             },
             
@@ -92,6 +93,8 @@ ListView
                 onTriggered: {
                     console.log("UserEvent: MultiCopy");
                     persist.copyToClipboard( offloader.textualizeAyats(verseModel, selectionList(), ctb.text, helper.showTranslation) );
+                    
+                    analytics.record("MultiCopy");
                 }
             },
             
@@ -110,6 +113,8 @@ ListView
                 onTriggered: {
                     console.log("UserEvent: MultiShare");
                     data = persist.convertToUtf8( offloader.textualizeAyats(verseModel, selectionList(), ctb.text, helper.showTranslation) );
+                    
+                    analytics.record("MultiShare");
                 }
             }
         ]
