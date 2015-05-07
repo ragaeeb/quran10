@@ -163,7 +163,7 @@ Page
                     {
                         if (textValue.length == 0 && sortOrder.selectedOption == juzOption) {
                             helper.fetchAllChapters(listView);
-                        } else if ( textValue.match(/^\d{1,3}:\d{1,3}$/) || textValue.match(/^\d{1,3}$/) ) {
+                        } else if ( textValue.match(/^\d{1,3}:\d{1,3}$/) || textValue.match(/^\d{1,3}:{0,1}$/) ) {
                             var tokens = textValue.split(":");
                             var surah = parseInt(tokens[0]);
                             helper.fetchChapter(listView, surah);
@@ -182,7 +182,7 @@ Page
                     onSubmitted: {
                         var textValue = text.trim();
                         
-                        if ( textValue.match(/^\d{1,3}:\d{1,3}$/) || textValue.match(/^\d{1,3}$/) )
+                        if ( textValue.match(/^\d{1,3}:\d{1,3}$/) || textValue.match(/^\d{1,3}:{0,1}$/) )
                         {
                             var tokens = textValue.split(":");
                             var surah = parseInt(tokens[0]);

@@ -141,14 +141,27 @@ void QueryHelper::fetchChapters(QObject* caller, QString const& text)
 }
 
 
-void QueryHelper::fetchChapter(QObject* caller, int chapter)
+void QueryHelper::fetchChapter(QObject* caller, int chapter, bool juzMode)
 {
     LOGGER(chapter);
 
-    if ( showTranslation() ) {
-        m_sql.executeQuery(caller, QString("SELECT a.id AS surah_id,name,verse_count,revelation_order,transliteration,j.id AS juz_id,verse_number FROM surahs a INNER JOIN chapters t ON a.id=t.id LEFT JOIN juzs j ON j.surah_id=a.id WHERE a.id=%1").arg(chapter), QueryId::FetchChapters);
+    if (juzMode)
+    {
+        if ( showTranslation() ) {
+            m_sql.executeQuery(caller, QString("SELECT a.id AS surah_id,name,verse_count,revelation_order,transliteration,j.id AS juz_id,verse_number FROM surahs a INNER JOIN chapters t ON a.id=t.id LEFT JOIN juzs j ON j.surah_id=a.id WHERE a.id=%1").arg(chapter), QueryId::FetchChapters);
+        } else {
+            m_sql.executeQuery(caller, QString("SELECT surahs.id AS surah_id,name,verse_count,revelation_order,j.id AS juz_id,verse_number FROM surahs LEFT JOIN juzs j ON j.surah_id=a.id WHERE id=%1").arg(chapter), QueryId::FetchChapters );
+        }
     } else {
-        m_sql.executeQuery(caller, QString("SELECT surahs.id AS surah_id,name,verse_count,revelation_order,j.id AS juz_id,verse_number FROM surahs LEFT JOIN juzs j ON j.surah_id=a.id WHERE id=%1").arg(chapter), QueryId::FetchChapters );
+        QString query = "SELECT id AS surah_id,name,verse_count,revelation_order FROM surahs";
+
+        if ( showTranslation() ) {
+            query = "SELECT a.id AS surah_id,name,verse_count,revelation_order,transliteration FROM surahs a INNER JOIN chapters t ON a.id=t.id";
+        }
+
+        query += QString(" WHERE surah_id=%1").arg(chapter);
+
+        m_sql.executeQuery(caller, query, QueryId::FetchChapters);
     }
 }
 
