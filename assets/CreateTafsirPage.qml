@@ -88,12 +88,14 @@ Page
             IndividualTextField
             {
                 id: translatorField
+                field: "translator"
                 hintText: qsTr("Translator") + Retranslate.onLanguageChanged
             }
             
             IndividualTextField
             {
                 id: explainerField
+                field: "explainer"
                 hintText: qsTr("Explainer") + Retranslate.onLanguageChanged
             }
             

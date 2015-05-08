@@ -301,9 +301,9 @@ void QueryTafsirHelper::fetchStudents(QObject* caller, qint64 individualId)
 }
 
 
-void QueryTafsirHelper::fetchFrequentIndividuals(QObject* caller, int n)
+void QueryTafsirHelper::fetchFrequentIndividuals(QObject* caller, QString const& table, QString const& field, int n)
 {
-    m_sql->executeQuery(caller, QString("SELECT author AS id,%2 AS name,is_companion FROM (SELECT author,COUNT(author) AS n FROM suites GROUP BY author UNION SELECT translator AS author,COUNT(translator) AS n FROM suites GROUP BY author UNION SELECT explainer AS author,COUNT(explainer) AS n FROM suites GROUP BY author ORDER BY n DESC LIMIT %1) INNER JOIN individuals i ON i.id=author GROUP BY i.id ORDER BY displayName,name").arg(n).arg( NAME_FIELD("i") ), QueryId::FetchAllIndividuals);
+    m_sql->executeQuery(caller, QString("SELECT %4 AS id,%2 AS name,is_companion FROM (SELECT %4,COUNT(%4) AS n FROM %3 GROUP BY %4 ORDER BY n DESC LIMIT %1) INNER JOIN individuals i ON i.id=%4 GROUP BY i.id ORDER BY name").arg(n).arg( NAME_FIELD("i") ).arg(table).arg(field), QueryId::FetchAllIndividuals);
 }
 
 
