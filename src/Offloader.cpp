@@ -59,7 +59,7 @@ void Offloader::onResultsDecorated()
 }
 
 
-void Offloader::decorateTafsir(bb::cascades::ArrayDataModel* adm)
+void Offloader::decorateTafsir(bb::cascades::ArrayDataModel* adm, QString const& defaultImage)
 {
     for (int i = adm->size()-1; i >= 0; i--)
     {
@@ -73,7 +73,7 @@ void Offloader::decorateTafsir(bb::cascades::ArrayDataModel* adm)
         } else if ( body.endsWith("pdf") ) {
             qvm[TAFSIR_MIME_IMAGE] = "images/list/mime_pdf.png";
         } else {
-            qvm[TAFSIR_MIME_IMAGE] = "images/list/ic_tafsir.png";
+            qvm[TAFSIR_MIME_IMAGE] = defaultImage;
         }
 
         adm->replace(i, qvm);

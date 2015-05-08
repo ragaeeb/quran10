@@ -19,6 +19,7 @@ Page
         if (id == QueryId.FetchTafsirForSurah)
         {
             adm.append(data);
+            offloader.decorateTafsir(adm, "images/list/ic_chapter_tafsir.png");
             
             emptyDelegate.delegateActive = adm.isEmpty();
             listView.visible = !emptyDelegate.delegateActive;
@@ -73,7 +74,7 @@ Page
                         id: rootItem
                         title: ListItemData.author
                         description: ListItemData.heading && ListItemData.heading.length > 0 ? ListItemData.heading : ListItemData.title
-                        imageSource: "images/list/ic_chapter_tafsir.png"
+                        imageSource: ListItemData.imageSource
                     }
                 }
             ]
