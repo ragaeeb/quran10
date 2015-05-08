@@ -261,7 +261,7 @@ void QueryHelper::fetchAllTafsirForAyat(QObject* caller, int chapterNumber, int 
     LOGGER(chapterNumber << verseNumber);
 
     ATTACH_TAFSIR;
-    m_sql.executeQuery(caller, QString("SELECT suite_page_id AS id,%3 AS author,title,body,heading FROM explanations INNER JOIN suite_pages ON suite_pages.id=explanations.suite_page_id INNER JOIN suites ON suites.id=suite_pages.suite_id INNER JOIN individuals i ON i.id=suites.author WHERE explanations.surah_id=%1 AND (%2 BETWEEN from_verse_number AND to_verse_number)").arg(chapterNumber).arg(verseNumber).arg( NAME_FIELD("i") ), QueryId::FetchTafsirForAyat);
+    m_sql.executeQuery(caller, QString("SELECT suite_page_id AS id,%3 AS author,title,substr(body,-5) AS body,heading FROM explanations INNER JOIN suite_pages ON suite_pages.id=explanations.suite_page_id INNER JOIN suites ON suites.id=suite_pages.suite_id INNER JOIN individuals i ON i.id=suites.author WHERE explanations.surah_id=%1 AND (%2 BETWEEN from_verse_number AND to_verse_number)").arg(chapterNumber).arg(verseNumber).arg( NAME_FIELD("i") ), QueryId::FetchTafsirForAyat);
 }
 
 
@@ -270,7 +270,7 @@ void QueryHelper::fetchAllTafsirForChapter(QObject* caller, int chapterNumber)
     LOGGER(chapterNumber);
 
     ATTACH_TAFSIR;
-    m_sql.executeQuery(caller, QString("SELECT suite_page_id AS id,%2 AS author,title,heading FROM explanations INNER JOIN suite_pages ON suite_pages.id=explanations.suite_page_id INNER JOIN suites ON suites.id=suite_pages.suite_id INNER JOIN individuals i ON i.id=suites.author WHERE explanations.surah_id=%1 AND from_verse_number ISNULL").arg(chapterNumber).arg( NAME_FIELD("i") ), QueryId::FetchTafsirForSurah);
+    m_sql.executeQuery(caller, QString("SELECT suite_page_id AS id,%2 AS author,title,heading,substr(body,-5) AS body FROM explanations INNER JOIN suite_pages ON suite_pages.id=explanations.suite_page_id INNER JOIN suites ON suites.id=suite_pages.suite_id INNER JOIN individuals i ON i.id=suites.author WHERE explanations.surah_id=%1 AND from_verse_number ISNULL").arg(chapterNumber).arg( NAME_FIELD("i") ), QueryId::FetchTafsirForSurah);
 }
 
 
