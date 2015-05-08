@@ -69,6 +69,7 @@ Page
             IndividualTextField
             {
                 id: authorField
+                table: "biographies"
                 hintText: qsTr("Author name") + Retranslate.onLanguageChanged
             }
             

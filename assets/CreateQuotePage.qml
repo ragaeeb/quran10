@@ -70,6 +70,7 @@ Page
             {
                 id: authorField
                 hintText: qsTr("Author name") + Retranslate.onLanguageChanged
+                table: "quotes"
                 
                 validator: Validator
                 {

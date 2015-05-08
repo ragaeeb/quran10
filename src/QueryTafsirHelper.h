@@ -54,7 +54,7 @@ public:
     Q_INVOKABLE void fetchAllOrigins(QObject* caller);
     Q_INVOKABLE void fetchAllWebsites(QObject* caller, qint64 individualId);
     Q_INVOKABLE void fetchBioMetadata(QObject* caller, qint64 bioId);
-    Q_INVOKABLE void fetchFrequentIndividuals(QObject* caller, int n=7);
+    Q_INVOKABLE void fetchFrequentIndividuals(QObject* caller, QString const& table="suites", QString const& field="author", int n=7);
     Q_INVOKABLE void fetchIndividualData(QObject* caller, qint64 individualId);
     Q_INVOKABLE void fetchStudents(QObject* caller, qint64 individualId);
     Q_INVOKABLE void fetchTafsirMetadata(QObject* caller, qint64 suiteId);
