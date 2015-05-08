@@ -262,9 +262,8 @@ Page
                         listView.visible = !adm.isEmpty();
                     } else if (id == QueryId.AddLocation) {
                         persist.showToast( qsTr("Location added!"), "images/toast/ic_location_added.png" );
-                        performSearch();
                     } else if (id == QueryId.RemoveLocation) {
-                        persist.showToast( qsTr("Location removed!"), "images/toast/ic_remove_location.png" );
+                        persist.showToast( qsTr("Location removed!"), "images/menu/ic_remove_location.png" );
                     } else if (id == QueryId.EditLocation) {
                         persist.showToast( qsTr("Location updated!"), "images/menu/ic_edit_location.png" );
                     }
@@ -274,10 +273,11 @@ Page
                     var d = dataModel.data(indexPath);
                     console.log("UserEvent: CityPicked");
                     
-                    if (d.formatted_address)
+                    var city = d.formatted_address;
+                    
+                    if (city)
                     {
                         var parts = d.address_components;
-                        var city = "";
                         var latitude = d.geometry.location.lat;
                         var longitude = d.geometry.location.lng;
                         
@@ -290,12 +290,8 @@ Page
                             }
                         }
                         
-                        if (city.length > 0) {
-                            tafsirHelper.addLocation(listView, city, latitude, longitude);
-                            searchField.text = city;
-                        } else {
-                            persist.showToast( qsTr("Could not find city metadata."), "images/menu/ic_validate_location.png" );
-                        }
+                        var id = tafsirHelper.addLocation(listView, city, latitude, longitude);
+                        picked(id, city);
                     } else {
                         picked(d.id, d.city);
                     }
