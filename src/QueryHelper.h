@@ -83,7 +83,7 @@ public:
     Q_SLOT void lazyInit();
     Q_SLOT void refreshDatabase();
 
-    QObject* getExecutor();
+    Q_INVOKABLE QObject* getExecutor();
     QObject* getTafsirHelper();
     QString tafsirName() const;
     QString tafsirVersion() const;

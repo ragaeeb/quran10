@@ -35,13 +35,13 @@ Page
             
             onTriggered: {
                 console.log("UserEvent: NewLocation");
-                var latitude = parseFloat( persist.showBlockingPrompt( qsTr("Enter latitude"), qsTr("Please enter the latitude of this location:"), "", qsTr("Enter any non-zero value"), 15, false, qsTr("OK"), qsTr("Cancel"), SystemUiInputMode.NumericKeypad ).trim() );
+                var latitude = parseFloat( persist.showBlockingPrompt( qsTr("Enter latitude"), qsTr("Please enter the latitude of this location:"), "", qsTr("Enter any non-zero value"), 15, false, qsTr("OK"), qsTr("Cancel"), SystemUiInputMode.NumbersAndPunctuation ).trim() );
                 
-                if (latitude != 0)
+                if ( latitude != 0 && !isNaN(latitude) )
                 {
-                    var longitude = parseFloat( persist.showBlockingPrompt( qsTr("Enter longitude"), qsTr("Please enter the longitude of this location:"), "", qsTr("Enter any non-zero value"), 15, false, qsTr("OK"), qsTr("Cancel"), SystemUiInputMode.NumericKeypad ).trim() );
+                    var longitude = parseFloat( persist.showBlockingPrompt( qsTr("Enter longitude"), qsTr("Please enter the longitude of this location:"), "", qsTr("Enter any non-zero value"), 15, false, qsTr("OK"), qsTr("Cancel"), SystemUiInputMode.NumbersAndPunctuation ).trim() );
                     
-                    if (longitude != 0)
+                    if ( longitude != 0 && !isNaN(longitude) )
                     {
                         var city = persist.showBlockingPrompt( qsTr("Enter city"), qsTr("Please enter the name of this location:"), "", qsTr("Enter any non-empty value"), 20, false, qsTr("OK"), qsTr("Cancel"), SystemUiInputMode.Default ).trim();
                         
