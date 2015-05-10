@@ -39,10 +39,15 @@ Delegate
                 }
             }
             
+            function onIndexChanged() {
+                listView.scrollToItem([queue.currentIndex]);
+            }
+            
             onCreationCompleted: {
                 open();
                 queue.queueCompleted.connect(onComplete);
                 queue.isBlockedChanged.connect(root.finish);
+                queue.currentIndexChanged.connect(onIndexChanged);
             }
             
             function finish()
@@ -54,7 +59,7 @@ Delegate
             
             onOpened: {
                 tt.play();
-                listView.scrollToItem([queue.currentIndex]);
+                onIndexChanged();
                 dialogContainer.opacity = 1;
             }
             
