@@ -46,6 +46,7 @@ class ApplicationUI : public QObject
     void processInvoke();
     void initGlobals();
     void complain(QString const& message);
+    static void onErrorMessage(const char* msg);
 
 private slots:
     void childCardDone(bb::system::CardDoneMessage const& message=bb::system::CardDoneMessage());

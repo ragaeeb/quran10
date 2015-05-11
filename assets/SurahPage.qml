@@ -20,9 +20,12 @@ Page
 
     onToSurahIdChanged:
     {
-        ctb.chapterNumber = awaker.lv.chapterNumber = fromSurahId;
-        busy.delegateActive = true;
-        helper.fetchAllAyats(surahPage, fromSurahId, toSurahId);
+        if (fromSurahId > 0 && toSurahId > 0)
+        {
+            ctb.chapterNumber = awaker.lv.chapterNumber = fromSurahId;
+            busy.delegateActive = true;
+            helper.fetchAllAyats(surahPage, fromSurahId, toSurahId);
+        }
     }
     
     function reloadNeeded() {

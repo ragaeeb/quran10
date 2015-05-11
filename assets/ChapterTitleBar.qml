@@ -10,9 +10,12 @@ TitleBar
     signal navigationTapped(bool right);
 
     onChapterNumberChanged: {
-        helper.fetchSurahHeader(titleControl, chapterNumber);
-        prev.enabled = chapterNumber > 1;
-        next.enabled = chapterNumber < 114;
+        if (chapterNumber > 0)
+        {
+            helper.fetchSurahHeader(titleControl, chapterNumber);
+            prev.enabled = chapterNumber > 1;
+            next.enabled = chapterNumber < 114;
+        }
     }
 
     onCreationCompleted: {
