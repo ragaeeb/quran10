@@ -142,7 +142,7 @@ QVariantList ThreadUtils::normalizeJuzs(QVariantList const& source)
         if ( current.value("juz_id").toInt() > 0 )
         {
             lastJuzId = current.value("juz_id").toInt();
-            int surah = current.value("surah_id").toInt();
+            int surah = current.value(KEY_CHAPTER_ID).toInt();
 
             if ( current.value("verse_number").toInt() > 1 && !processed.contains(surah) )
             {
@@ -170,8 +170,8 @@ QVariantList ThreadUtils::removeOutOfRange(QVariantList input, int fromChapter, 
     while ( i.hasNext() )
     {
         QVariantMap c = i.next().toMap();
-        int chapter = c.value("surah_id").toInt();
-        int verse = c.value("verse_id").toInt();
+        int chapter = c.value(KEY_CHAPTER_ID).toInt();
+        int verse = c.value(KEY_VERSE_ID).toInt();
 
         if ( (chapter == fromChapter && verse < fromVerse) || (chapter == toChapter && verse >= toVerse) ) {
             i.remove();
@@ -303,7 +303,7 @@ bool ThreadUtils::allAyatImagesExist(QVariantList const& surahData, QString cons
         foreach (QVariant const& surah, surahData)
         {
             QVariantMap s = surah.toMap();
-            int id = s.value("surah_id").toInt();
+            int id = s.value(KEY_CHAPTER_ID).toInt();
             int n = s.value("verse_count").toInt();
 
             for (int i = 1; i <= n; i++)
@@ -341,6 +341,29 @@ void ThreadUtils::cleanLegacyPics()
     }
 
     LOGGER("Removed" << count);
+}
+
+
+QVariantMap ThreadUtils::matchSurah(QVariantMap input, QVariantList const& allSurahs)
+{
+    QString surahName = input.value(KEY_TRANSLITERATION).toString();
+
+    foreach (QVariant q, allSurahs)
+    {
+        QVariantMap current = q.toMap();
+        QString transliteration = current.value(KEY_TRANSLITERATION).toString();
+
+        if ( TextUtils::isSimilar(transliteration, surahName, 70) )
+        {
+            current[KEY_TRANSLITERATION] = transliteration;
+            current[KEY_VERSE_NUMBER] = input[KEY_VERSE_NUMBER];
+            input = current;
+            LOGGER(current);
+            break;
+        }
+    }
+
+    return input;
 }
 
 

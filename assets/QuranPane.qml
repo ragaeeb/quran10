@@ -274,9 +274,8 @@ NavigationPane
         
         onPicked: {
             var surahPage = createAndAttach("SurahPage.qml");
-            surahPage.fromSurahId = chapter;
-            surahPage.toSurahId = chapter;
-            surahPage.requestedVerse = verse;
+            surahPage.surahId = chapter;
+            surahPage.verseId = verse;
         }
         
         function onDataLoaded(id, data)

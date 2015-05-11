@@ -6,11 +6,17 @@ Page
     id: surahPage
     property int fromSurahId
     property int toSurahId
-    property int requestedVerse
+    property int surahId
+    property int verseId
     property alias showContextMenu: awaker.showContext
     actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
     signal picked(int surahId, int verseId)
     signal openChapterTafsir(int surahId)
+    
+    onSurahIdChanged: {
+        fromSurahId = surahId;
+        toSurahId = surahId;
+    }
 
     onToSurahIdChanged:
     {
@@ -35,15 +41,14 @@ Page
             {
                 awaker.lv.theDataModel.clear();
                 awaker.lv.theDataModel.append(data);
-                
-                if (requestedVerse > 0) {
-                    var target = [requestedVerse-1]
+
+                if (verseId > 0) {
+                    var target = [verseId-1];
                     awaker.lv.scrollToItem(target, ScrollAnimation.None);
-                    awaker.lv.select(target,true);
-                    requestedVerse = 0;
+                    awaker.lv.select(target, true);
                 } else if (fromSurahId > 1 && fromSurahId != 9) {
                     awaker.lv.scrollToPosition(0, ScrollAnimation.None);
-                    awaker.lv.scroll(-100, ScrollAnimation.Smooth);
+                    awaker.lv.scroll(-195, ScrollAnimation.Smooth);
                 }
             } else {
                 for (var i = data.length-1; i >= 0; i--) {
@@ -71,7 +76,7 @@ Page
                 --fromSurahId;
             }
             
-            requestedVerse = 0;
+            verseId = 0;
             
             if (toSurahId > 0) {
                 toSurahId = 0;

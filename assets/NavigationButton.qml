@@ -8,27 +8,13 @@ ImageButton
     signal animationFinished()
     
     animations: [
-        SequentialAnimation
+        RotateTransition
         {
             id: prevTransition
+            fromAngleZ: 180*multiplier
+            toAngleZ: 0
+            duration: 1000
             delay: 1000
-            
-            TranslateTransition
-            {
-                toX: 0
-                easingCurve: StockCurve.QuinticOut
-                duration: 1500
-                
-                onCreationCompleted: {
-                    fromX = (deviceUtils.pixelSize.width-ui.du(12))*multiplier;
-                }
-            }
-            
-            RotateTransition {
-                fromAngleZ: 180*multiplier
-                toAngleZ: 0
-                duration: 1000
-            }
             
             onEnded: {
                 animationFinished();
@@ -41,7 +27,6 @@ ImageButton
     }
     
     onCreationCompleted: {
-        translationX = (deviceUtils.pixelSize.width-ui.du(12))*multiplier;
         prevTransition.play();
     }
 }

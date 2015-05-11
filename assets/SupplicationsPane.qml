@@ -82,9 +82,8 @@ NavigationPane
                         var sp = definition.createObject();
                         sp.picked.connect(onPicked);
                         navigationPane.push(sp);
-                        sp.fromSurahId = data.surah_id;
-                        sp.toSurahId = data.surah_id;
-                        sp.requestedVerse = data.verse_number_start;
+                        sp.surahId = data.surah_id;
+                        sp.verseId = data.verse_number_start;
                         
                         reporter.record("SupplicationTriggered", data.surah_id+":"+data.verse_number_start);
                     }
