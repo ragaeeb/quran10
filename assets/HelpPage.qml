@@ -8,6 +8,10 @@ Page
     {
         id: atb
         videoTutorialUri: "http://youtu.be/7nA27gIxZ08"
+        
+        onContentExpanded: {
+            tutorial.execBelowTitleBar("forceUpdate", qsTr("Press-and-hold here and choose '%1' to check for the latest tafir, quotes, and biographies.").arg(updateCheck.title), ui.du(4));
+        }
 
         expandedContent: [
             Label
@@ -37,6 +41,7 @@ Page
                         
                         ActionItem
                         {
+                            id: updateCheck
                             imageSource: "images/menu/ic_upload_local.png"
                             title: qsTr("Check for Updates") + Retranslate.onLanguageChanged
                             
