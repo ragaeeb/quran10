@@ -78,19 +78,22 @@ Page
     
     function reload()
     {
-        transliteration.resetText();
-        body.value = "";
-        body.resetText();
-        
-        translation.value = "";
-        translation.resetText();
-        
-        titleControl.removeOption(similarOption);
-        titleControl.removeOption(tafsirOption);
-        ayatOption.selected = true;
-        
-        busy.delegateActive = true;
-        helper.fetchAyat(root, surahId, verseId);
+        if (surahId > 0 && verseId > 0)
+        {
+            transliteration.resetText();
+            body.value = "";
+            body.resetText();
+            
+            translation.value = "";
+            translation.resetText();
+            
+            titleControl.removeOption(similarOption);
+            titleControl.removeOption(tafsirOption);
+            ayatOption.selected = true;
+            
+            busy.delegateActive = true;
+            helper.fetchAyat(root, surahId, verseId);
+        }
     }
     
     function shift(i)

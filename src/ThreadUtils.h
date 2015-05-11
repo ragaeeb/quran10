@@ -41,6 +41,7 @@ struct ThreadUtils
     static void cleanLegacyPics();
     static void compressFiles(QSet<QString>& attachments);
     static void onResultsDecorated(SimilarReference const& result);
+    static QVariantMap matchSurah(QVariantMap input, QVariantList const& allSurahs);
 };
 
 } /* namespace quran */

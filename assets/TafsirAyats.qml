@@ -243,8 +243,7 @@ Page
 					page.surahId = d.surah_id;
 					page.verseId = dataModel.data(indexPath).from_verse_number;
 				} else {
-					page.fromSurahId = d.surah_id;
-					page.toSurahId = d.surah_id;
+                    page.surahId = d.surah_id;
 					prompt.indexPath = indexPath;
 					page.picked.connect(lookupAction.onPicked);
 				}

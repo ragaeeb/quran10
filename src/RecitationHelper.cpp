@@ -142,7 +142,7 @@ void RecitationHelper::memorize(bb::cascades::ArrayDataModel* adm, int from, int
         for (int i = from; i <= to; i++)
         {
             QVariantMap q = adm->value(i).toMap();
-            QPair<int,int> ayat = qMakePair<int,int>( q.value("surah_id").toInt(), q.value("verse_id").toInt() );
+            QPair<int,int> ayat = qMakePair<int,int>( q.value(KEY_CHAPTER_ID).toInt(), q.value(KEY_VERSE_ID).toInt() );
             m_ayatToIndex.insert(ayat, i);
         }
 
@@ -163,7 +163,7 @@ void RecitationHelper::memorize(bb::cascades::ArrayDataModel* adm, int from, int
                 for (int j = 0; j < ITERATION; j++)
                 {
                     QVariantMap q = adm->value(verse).toMap();
-                    all << qMakePair<int,int>( q.value("surah_id").toInt(), q.value("verse_id").toInt() );
+                    all << qMakePair<int,int>( q.value(KEY_CHAPTER_ID).toInt(), q.value(KEY_VERSE_ID).toInt() );
                 }
             }
 
@@ -172,7 +172,7 @@ void RecitationHelper::memorize(bb::cascades::ArrayDataModel* adm, int from, int
                 for (int verse = fromVerse; verse < endPoint; verse++)
                 {
                     QVariantMap q = adm->value(verse).toMap();
-                    all << qMakePair<int,int>( q.value("surah_id").toInt(), q.value("verse_id").toInt() );
+                    all << qMakePair<int,int>( q.value(KEY_CHAPTER_ID).toInt(), q.value(KEY_VERSE_ID).toInt() );
                 }
             }
 
@@ -190,7 +190,7 @@ void RecitationHelper::memorize(bb::cascades::ArrayDataModel* adm, int from, int
             for (int verse = from; verse < to; verse++)
             {
                 QVariantMap q = adm->value(verse).toMap();
-                all << qMakePair<int,int>( q.value("surah_id").toInt(), q.value("verse_id").toInt() );
+                all << qMakePair<int,int>( q.value(KEY_CHAPTER_ID).toInt(), q.value(KEY_VERSE_ID).toInt() );
             }
         }
 
@@ -279,7 +279,7 @@ void RecitationHelper::downloadAndPlayAll(bb::cascades::ArrayDataModel* adm, int
         for (int i = from; i <= n; i++)
         {
             QVariantMap q = adm->value(i).toMap();
-            QPair<int,int> ayat = qMakePair<int,int>( q.value("surah_id").toInt(), q.value("verse_id").toInt() );
+            QPair<int,int> ayat = qMakePair<int,int>( q.value(KEY_CHAPTER_ID).toInt(), q.value(KEY_VERSE_ID).toInt() );
             all << ayat;
             m_ayatToIndex.insert(ayat, i);
         }

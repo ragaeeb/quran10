@@ -75,7 +75,6 @@ TitleBar
             Container
             {
                 id: prevContainer
-                horizontalAlignment: HorizontalAlignment.Fill
                 verticalAlignment: VerticalAlignment.Center
                 leftPadding: 10
 
@@ -95,7 +94,7 @@ TitleBar
             Container
             {
                 id: nextContainer
-                horizontalAlignment: HorizontalAlignment.Fill
+                horizontalAlignment: HorizontalAlignment.Right
                 verticalAlignment: VerticalAlignment.Center
                 rightPadding: 10
                 
@@ -115,9 +114,6 @@ TitleBar
                     onAnimationFinished: {
                         tutorial.exec("surahNavigation", qsTr("Tap the right arrow to navigate to the next chapter."), HorizontalAlignment.Right, VerticalAlignment.Top );
                         tutorial.exec("navigateSurahLeft", qsTr("Tap the left arrow to navigate to the previous chapter."), HorizontalAlignment.Left, VerticalAlignment.Top );
-                        
-                        prevContainer.horizontalAlignment = HorizontalAlignment.Left;
-                        nextContainer.horizontalAlignment = HorizontalAlignment.Right;
                     }
                 }
             }

@@ -85,10 +85,10 @@ QString Offloader::textualizeAyats(bb::cascades::DataModel* adm, QVariantList co
 {
     QVariantMap first = adm->data( selectedIndices.first().toList() ).toMap();
     QVariantMap last = adm->data( selectedIndices.last().toList() ).toMap();
-    int firstChapter = first.value("surah_id").toInt();
-    int lastChapter = last.value("surah_id").toInt();
-    int firstVerse = first.value("verse_id").toInt();
-    int lastVerse = last.value("verse_id").toInt();
+    int firstChapter = first.value(KEY_CHAPTER_ID).toInt();
+    int lastChapter = last.value(KEY_CHAPTER_ID).toInt();
+    int firstVerse = first.value(KEY_VERSE_ID).toInt();
+    int lastVerse = last.value(KEY_VERSE_ID).toInt();
 
     QString footer;
     QStringList ayats;

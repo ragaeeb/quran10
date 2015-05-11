@@ -1,6 +1,7 @@
 #include "precompiled.h"
 
 #include "QueryBookmarkHelper.h"
+#include "CommonConstants.h"
 #include "DatabaseHelper.h"
 #include "Logger.h"
 #include "QueryId.h"
@@ -97,8 +98,8 @@ void QueryBookmarkHelper::saveLegacyBookmarks(QObject* caller, QVariantList cons
     foreach (QVariant const& q, data)
     {
         QVariantMap qvm = q.toMap();
-        int surahId = qvm.value("surah_id").toInt();
-        int verseId = qvm.value("verse_id").toInt();
+        int surahId = qvm.value(KEY_CHAPTER_ID).toInt();
+        int verseId = qvm.value(KEY_VERSE_ID).toInt();
         QString name = qvm.value("surah_name").toString();
         QString query = QString("INSERT INTO bookmarks (surah_id,verse_id,name,tag,timestamp) VALUES (%1,%2,?,?,%3)").arg(surahId).arg(verseId).arg( QDateTime::currentMSecsSinceEpoch() );
         m_sql->executeQuery(caller, query, QueryId::SettingUpBookmarks, QVariantList() << name << "");
