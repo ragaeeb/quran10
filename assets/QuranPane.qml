@@ -202,6 +202,7 @@ NavigationPane
                     var all = pickerPage.pickerList.selectionList();
                     p.fromSurahId = pickerPage.pickerList.dataModel.data(all[0]).surah_id;
                     p.toSurahId = pickerPage.pickerList.dataModel.data(all[all.length-1]).surah_id;
+                    p.loadAyats();
                     navigationPane.push(p);
                     
                     reporter.record("OpenSurahs", p.fromSurahId+"-"+p.toSurahId);
