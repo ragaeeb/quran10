@@ -34,6 +34,7 @@ Page
                 
                 PersistDropDown
                 {
+                    id: translation
                     title: qsTr("Translation") + Retranslate.onLanguageChanged
                     horizontalAlignment: HorizontalAlignment.Fill
                     key: "translation"
@@ -103,7 +104,7 @@ Page
                     
                     onValueChanged: {
                         if (diff) {
-                            reporter.record("Translation", sortOrder.selectedValue);
+                            reporter.record("Translation", translation.selectedValue);
                         }
                     }
                 }
