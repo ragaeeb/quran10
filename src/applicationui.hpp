@@ -57,6 +57,7 @@ private slots:
 	void onMissingAyatImagesFinished();
 	void onPicked(int chapter, int verse);
     void onRequestComplete(QVariant const& cookie, QByteArray const& data);
+    void onSearchPicked(int chapter, int verse);
     void onUpdateCheckNeeded(QVariantMap const& params);
     void onDeflationDone(QVariantMap const& m);
     void onDownloadPlugins(QVariantList const& m);
