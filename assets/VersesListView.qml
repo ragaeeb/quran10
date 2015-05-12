@@ -31,6 +31,7 @@ ListView
     
     leadingVisual: BismillahControl {
         delegateActive: chapterNumber > 1 && chapterNumber != 9
+        sizeValue: primarySize
     }
     
     function play(from, to)
