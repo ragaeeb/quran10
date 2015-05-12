@@ -156,7 +156,6 @@ Sheet
                         }
 
                         pageNumbers = surahs;
-                        dropDownDelegate.control.expanded = true;
                     }
                 }
                 
@@ -235,7 +234,7 @@ Sheet
                     mushaf.mushafStyle = selectedValue;
                     currentPageChanged();
                     
-                    reporter.record("MushafStyleSet", selectedVlue);
+                    reporter.record("MushafStyleSet", selectedValue);
                 }
             }
             
