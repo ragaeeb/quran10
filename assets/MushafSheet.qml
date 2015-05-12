@@ -245,7 +245,7 @@ Sheet
                 
                 for (var i = 0; i < n; i++)
                 {
-                    if ( style == optionAt(i).value ) {
+                    if ( style && style == optionAt(i).value ) {
                         optionAt(i).selected = true;
                         break;
                     }
@@ -257,6 +257,7 @@ Sheet
                     imageSource: "images/dropdown/style_tijweed.png"
                     text: qsTr("Tajweed") + Retranslate.onLanguageChanged
                     value: "style1"
+                    selected: true
                 },
                 
                 Option {
