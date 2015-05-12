@@ -3,6 +3,7 @@ import bb.cascades 1.2
 ControlDelegate
 {
     horizontalAlignment: HorizontalAlignment.Fill
+    property real sizeValue
     
     sourceComponent: ComponentDefinition
     {
@@ -20,7 +21,7 @@ ControlDelegate
                 textStyle.textAlign: TextAlign.Center
                 textStyle.color: Color.Black
                 textStyle.fontSize: FontSize.PointValue
-                textStyle.fontSizeValue: primarySize
+                textStyle.fontSizeValue: sizeValue
                 textStyle.base: global.textFont
                 
                 multiline: true

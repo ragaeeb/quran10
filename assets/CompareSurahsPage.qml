@@ -163,7 +163,6 @@ Page
                             id: alv
                             property alias theDataModel: verseModel
                             property int chapterNumber
-                            property int translationSize: helper.translationSize
                             property int primarySize: helper.primarySize
                             property alias custom: customTextStyle
                             
@@ -172,7 +171,8 @@ Page
                             }
                             
                             leadingVisual: BismillahControl {
-                                delegateActive: chapterNumber > 1 && chapterNumber != 9
+                                delegateActive: alv.chapterNumber > 1 && alv.chapterNumber != 9
+                                sizeValue: alv.primarySize
                             }
                             
                             function refresh()
