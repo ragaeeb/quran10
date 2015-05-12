@@ -8,6 +8,7 @@ Container
     verticalAlignment: VerticalAlignment.Fill
     property bool downloaded: false
     property bool played: false
+    property alias playerRef: player
 
     layout: StackLayout {
         orientation: LayoutOrientation.LeftToRight

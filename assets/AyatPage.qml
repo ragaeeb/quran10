@@ -158,7 +158,7 @@ Page
                         reporter.record("OpenAyatRecitation", surahId+":"+verseId);
                     } else {
                         if (pluginsDelegate.control.played) {
-                            player.stop();
+                            pluginsDelegate.control.playerRef.stop();
                         }
                     }
                 }
