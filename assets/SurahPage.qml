@@ -74,18 +74,12 @@ Page
         
         onNavigationTapped: {
             if (right) {
-                ++fromSurahId;
+                ++surahId;
             } else {
-                --fromSurahId;
+                --surahId;
             }
             
             verseId = 0;
-            
-            if (toSurahId > 0) {
-                toSurahId = 0;
-            } else {
-                toSurahIdChanged();
-            }
             
             awaker.lazyPlayer.stop();
         }
