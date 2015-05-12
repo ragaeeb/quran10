@@ -17,6 +17,11 @@ Page
         fromSurahId = surahId;
         toSurahId = surahId;
         
+        loadAyats();
+    }
+    
+    function loadAyats()
+    {
         if (fromSurahId > 0 && toSurahId > 0)
         {
             ctb.chapterNumber = awaker.lv.chapterNumber = fromSurahId;
