@@ -16,10 +16,7 @@ Page
     onSurahIdChanged: {
         fromSurahId = surahId;
         toSurahId = surahId;
-    }
-
-    onToSurahIdChanged:
-    {
+        
         if (fromSurahId > 0 && toSurahId > 0)
         {
             ctb.chapterNumber = awaker.lv.chapterNumber = fromSurahId;
@@ -29,7 +26,7 @@ Page
     }
     
     function reloadNeeded() {
-        toSurahIdChanged();
+        surahIdChanged();
     }
     
     onPeekedAtChanged: {
