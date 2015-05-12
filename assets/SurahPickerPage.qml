@@ -129,7 +129,7 @@ Page
                     Option {
                         id: recent
                         text: qsTr("Revelation Order") + Retranslate.onLanguageChanged
-                        description: qsTr("Display chapters int he order they were revealed") + Retranslate.onLanguageChanged
+                        description: qsTr("Display chapters in the order they were revealed") + Retranslate.onLanguageChanged
                         imageSource: "images/dropdown/sort_revelation.png"
                         value: "revelation_order"
                     }

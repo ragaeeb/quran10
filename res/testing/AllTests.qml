@@ -491,6 +491,8 @@ Container
             }
         },
         
+        // ----------- TAFSIR DATABASE TESTS
+        
         QtObject
         {
             id: createLocation
@@ -503,6 +505,38 @@ Container
             
             function run() {
                 locationId = tafsirHelper.addLocation(this, "XYZ", 45.12, -45.12);
+            }
+        },
+        
+        QtObject
+        {
+            id: createPerson
+            property variant individualId
+            property variant studentId
+            property variant teacherId
+            property int count
+            objectName: "Create Individual"
+            
+            function onDataLoaded(id, data)
+            {
+                if (id == QueryId.AddIndividual) {
+                    ++count;
+                }
+            }
+            
+            onCountChanged: {
+                if (count == 3) {
+                    harness.assert(this, true);
+                }
+            }
+            
+            function run()
+            {
+                count = 0;
+                
+                individualId = tafsirHelper.createIndividual(this, "Imam", "X", "K", "D", -3, 50, createLocation.locationId.toString(), true);
+                teacherId = tafsirHelper.createIndividual(this, "Hafidh", "X1", "K1", "D1", 5, 50, "", false);
+                studentId = tafsirHelper.createIndividual(this, "Shaykh", "X2", "K2", "D2", -3, 50, "", false);
             }
         },
         
@@ -534,25 +568,6 @@ Container
         
         QtObject
         {
-            id: createPerson
-            property variant individualId
-            objectName: "Create Individual"
-            
-            function onDataLoaded(id, data)
-            {
-                if (id == QueryId.AddIndividual) {
-                    harness.assert(this, true);
-                }
-            }
-            
-            function run()
-            {
-                individualId = tafsirHelper.createIndividual(this, "Imam", "X", "K", "D", -3, 50, createLocation.locationId.toString(), true);
-            }
-        },
-        
-        QtObject
-        {
             objectName: "Remove Location"
             
             function onDataLoaded(id, data) {
@@ -561,6 +576,43 @@ Container
             
             function run() {
                 tafsirHelper.removeLocation(this, createLocation.locationId);
+            }
+        },
+        
+        QtObject
+        {
+            objectName: "Edit Individual"
+            
+            function onDataLoaded(id, data) {
+                harness.assert(this, true);
+            }
+            
+            function run() {
+                individualId = tafsirHelper.editIndividual(this, createPerson.individualId, "Shaykh", "Y", "K", "D", -4, 51, "", true);
+            }
+        },
+        
+        QtObject
+        {
+            objectName: "Fetch Individual Data"
+            
+            function onDataLoaded(id, data)
+            {
+                var result = data[0];
+                
+                harness.assert(this, [1, data.length,
+                    "Shaykh", result.prefix,
+                    "Y", result.name,
+                    "K", result.kunya,
+                    "D", result.displayName,
+                    -4, result.birth,
+                    51, result.death,
+                    null, result.location,
+                    1, result.is_companion]);
+            }
+            
+            function run() {
+                individualId = tafsirHelper.fetchIndividualData(this, createPerson.individualId);
             }
         },
         
