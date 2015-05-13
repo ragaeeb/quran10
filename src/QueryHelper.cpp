@@ -72,6 +72,19 @@ void QueryHelper::settingChanged(QString const& key)
         QFile tafsirFile( QString("%1/%2.db").arg( QDir::homePath() ).arg( tafsirName() ) );
 
         if ( !tafsirFile.exists() || tafsirFile.size() == 0 ) { // tafsir doesn't exist, download it
+            m_sql.startTransaction(NULL, QueryId::SettingUpTafsir);
+
+            QStringList statements;
+            statements << "CREATE TABLE IF NOT EXISTS bookmarks.bookmarks (id INTEGER PRIMARY KEY, surah_id INTEGER, verse_id INTEGER, name TEXT, tag TEXT, timestamp INTEGER)";
+            statements << "CREATE TABLE IF NOT EXISTS bookmarks.bookmarked_tafsir (id INTEGER PRIMARY KEY, suite_page_id INTEGER, name TEXT, tag TEXT, timestamp INTEGER)";
+            statements << "CREATE TABLE IF NOT EXISTS bookmarks.progress (timestamp INTEGER PRIMARY KEY, surah_id INTEGER, verse_id INTEGER, name TEXT)";
+
+            foreach (QString const& q, statements) {
+                m_sql.executeInternal(q, QueryId::SettingUpTafsir);
+            }
+
+            m_sql->endTransaction(caller, QueryId::SetupBookmarks);
+
             params[KEY_TAFSIR] = tafsirName();
             forcedUpdates << KEY_TAFSIR;
         } else if ( m_persist->isUpdateNeeded(KEY_LAST_UPDATE, 60) ) {
