@@ -90,7 +90,9 @@ public:
         SearchQuote,
         SearchTafsir,
         SettingUpBookmarks,
+        SettingUpTafsir,
         SetupBookmarks,
+        SetupTafsir,
         UnlinkAyatsFromTafsir,
         UpdateTafsirLink
     };

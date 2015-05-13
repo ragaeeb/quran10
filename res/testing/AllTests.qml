@@ -8,6 +8,20 @@ Container
     attachedObjects: [
         QtObject
         {
+            objectName: "Setup"
+            
+            function run()
+            {
+                var srcOK = harness.copy("quran_english.db", "quran_test.db", false, true, true);
+                
+                if (srcOK) {
+                    helper.getExecutor().attachIfNecessary("quran_test_tafsir");
+                }
+            }
+        },
+        
+        QtObject
+        {
             objectName: "Basic Search With 3 Results"
             
             function onDataLoaded(id, data)
@@ -626,6 +640,22 @@ Container
             
             function run() {
                 tafsirHelper.removeIndividual(this, createPerson.individualId);
+            }
+        },
+        
+        QtObject
+        {
+            objectName: "Tear Down"
+            
+            function onDataLoaded(id, data)
+            {
+                harness.assert( this, [3, data.length, 3, data[0].surah_id, 8, data[0].verse_id, 38, data[1].surah_id == 38, 9, data[1].verse_id, 38, data[2].surah_id, 35, data[2].verse_id]);
+            }
+            
+            function run()
+            {
+                var srcOK = harness.copy("quran_arabic.db", "quran_test.db", false, true, true);
+                helper.searchQuery(this, "الوهاب");
             }
         }
     ]
