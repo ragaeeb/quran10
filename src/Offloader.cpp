@@ -192,20 +192,20 @@ bool Offloader::computeNecessaryUpdates(QVariantMap q, QByteArray const& data)
 
         QString message;
 
-        if (tafsirUpdateNeeded && translationUpdateNeeded)
+        if (tafsirUpdateNeeded && translationUpdateNeeded && serverTranslationSize > 0 && serverTafsirSize > 0)
         {
             if (forcedUpdate) {
                 message = tr("Quran10 needs to download and install translation and tafsir files. The total size is ~%1. Do you want to download them now? If you say No you can download them at a later time but the app will not function as expected in the meantime!").arg( TextUtils::bytesToSize(serverTafsirSize+serverTranslationSize) );
             } else {
                 message = tr("There are newer translation and tafsir files available. The total download size is ~%1. Do you want to download them now? If you say No you can download them at a later time.").arg( TextUtils::bytesToSize(serverTafsirSize+serverTranslationSize) );
             }
-        } else if (tafsirUpdateNeeded) {
+        } else if (tafsirUpdateNeeded && serverTafsirSize > 0) {
             if (forcedUpdate) {
                 message = tr("Quran10 needs to download and install tafsir files. The total size is ~%1. Do you want to download it now? If you say No you can download it at a later time but the app will not function as expected in the meantime!").arg( TextUtils::bytesToSize(serverTafsirSize) );
             } else {
                 message = tr("There are newer tafsir files available. The total download size is ~%1. Do you want to download it now? If you say No you can download it at a later time.").arg( TextUtils::bytesToSize(serverTafsirSize) );
             }
-        } else if ( translationUpdateNeeded && requestData.contains(KEY_TRANSLATION) ) {
+        } else if ( translationUpdateNeeded && requestData.contains(KEY_TRANSLATION) && serverTranslationSize > 0 ) {
             if (forcedUpdate) {
                 message = tr("Quran10 needs to download and install translation files. The total size is ~%1. Do you want to download it now? If you say No you can download it at a later time but the app will not function as expected in the meantime!").arg( TextUtils::bytesToSize(serverTranslationSize) );
             } else {
