@@ -7,7 +7,7 @@ Page
     titleBar: AboutTitleBar
     {
         id: atb
-        videoTutorialUri: "http://youtu.be/7nA27gIxZ08"
+        videoTutorialUri: "http://youtu.be/YOXtjnNWVZM"
         
         onContentExpanded: {
             tutorial.execBelowTitleBar("forceUpdate", qsTr("Press-and-hold here and choose '%1' to check for the latest tafir, quotes, and biographies.").arg(updateCheck.title), ui.du(4));

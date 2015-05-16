@@ -1,4 +1,5 @@
-import bb.cascades 1.2
+import QtQuick 1.0
+import bb.cascades 1.3
 import com.canadainc.data 1.0
 
 Page
@@ -9,6 +10,7 @@ Page
     property alias busyControl: busy
     property alias model: adm
     property alias allowEditing: listView.showContextMenu
+    property alias searchField: tftk.textField
     signal picked(variant individualId, string name)
     signal contentLoaded(int size)
     
@@ -32,9 +34,24 @@ Page
         }
     ]
     
-    titleBar: TitleBar {
-        title: qsTr("Select Individual") + Retranslate.onLanguageChanged
-        scrollBehavior: TitleBarScrollBehavior.NonSticky
+    titleBar: TitleBar
+    {
+        kind: TitleBarKind.TextField
+        kindProperties: TextFieldTitleBarKindProperties
+        {
+            id: tftk
+            textField.hintText: qsTr("Enter text to search...") + Retranslate.onLanguageChanged
+            textField.input.submitKey: SubmitKey.Search
+            textField.input.flags: TextInputFlag.AutoCapitalizationOff | TextInputFlag.SpellCheck | TextInputFlag.WordSubstitution | TextInputFlag.AutoPeriodOff | TextInputFlag.AutoCorrection
+            textField.input.submitKeyFocusBehavior: SubmitKeyFocusBehavior.Lose
+            textField.input.onSubmitted: {
+                performSearch();
+            }
+            
+            onCreationCompleted: {
+                textField.input["keyLayout"] = 7;
+            }
+        }
     }
     
     function performSearch()
@@ -54,6 +71,7 @@ Page
     
     onCreationCompleted: {
         helper.textualChange.connect(performSearch);
+        deviceUtils.attachTopBottomKeys(individualPage, listView);
     }
     
     Container
@@ -77,96 +95,47 @@ Page
             }
         }
         
-        Container
+        ListView
         {
-            horizontalAlignment: HorizontalAlignment.Fill
-            verticalAlignment: VerticalAlignment.Fill
+            id: listView
+            property alias pickerPage: individualPage
+            property bool showContextMenu: false
+            scrollRole: ScrollRole.Main
             
-            TextField
-            {
-                id: searchField
-                hintText: qsTr("Enter text to search...") + Retranslate.onLanguageChanged
-                horizontalAlignment: HorizontalAlignment.Fill
-                bottomMargin: 0
-                
-                input {
-                    submitKey: SubmitKey.Search
-                    flags: TextInputFlag.AutoCapitalizationOff | TextInputFlag.SpellCheck | TextInputFlag.WordSubstitutionOff | TextInputFlag.AutoPeriodOff | TextInputFlag.AutoCorrectionOff
-                    submitKeyFocusBehavior: SubmitKeyFocusBehavior.Lose
-                    
-                    onSubmitted: {
-                        performSearch();
-                    }
-                }
-                
-                onCreationCompleted: {
-                    input["keyLayout"] = 7;
-                }
-                
-                animations: [
-                    TranslateTransition {
-                        fromY: -150
-                        toY: 0
-                        easingCurve: StockCurve.QuarticInOut
-                        duration: 200
-                        
-                        onCreationCompleted: {
-                            play();
-                        }
-                        
-                        onStarted: {
-                            searchField.requestFocus();
-                        }
-                        
-                        onEnded: {
-                            deviceUtils.attachTopBottomKeys(individualPage, listView);
-                        }
-                    }
-                ]
+            dataModel: ArrayDataModel {
+                id: adm
             }
             
-            ListView
-            {
-                id: listView
-                property alias pickerPage: individualPage
-                property bool showContextMenu: false
-                scrollRole: ScrollRole.Main
-                
-                dataModel: ArrayDataModel {
-                    id: adm
-                }
-                
-                listItemComponents: [
-                    ListItemComponent
-                    {
-                        StandardListItem
-                        {
-                            id: sli
-                            imageSource: ListItemData.is_companion ? "images/list/ic_companion.png" : "images/list/ic_individual.png"
-                            title: ListItemData.name
-                        }
-                    }
-                ]
-                
-                function onDataLoaded(id, data)
+            listItemComponents: [
+                ListItemComponent
                 {
-                    if (id == QueryId.SearchIndividuals || id == QueryId.FetchAllIndividuals)
+                    StandardListItem
                     {
-                        adm.clear();
-                        adm.append(data);
-                        
-                        contentLoaded(data.length);
-                        busy.delegateActive = false;
-                        noElements.delegateActive = adm.isEmpty();
-                        listView.visible = !adm.isEmpty();
+                        id: sli
+                        imageSource: ListItemData.is_companion ? "images/list/ic_companion.png" : "images/list/ic_individual.png"
+                        title: ListItemData.name
                     }
                 }
-                
-                onTriggered: {
-                    var d = dataModel.data(indexPath);
-                    console.log("UserEvent: IndividualPicked", d.name);
-                    picked(d.id, d.name);
+            ]
+            
+            function onDataLoaded(id, data)
+            {
+                if (id == QueryId.SearchIndividuals || id == QueryId.FetchAllIndividuals)
+                {
+                    adm.clear();
+                    adm.append(data);
+                    
+                    contentLoaded(data.length);
+                    busy.delegateActive = false;
+                    noElements.delegateActive = adm.isEmpty();
+                    listView.visible = !adm.isEmpty();
                 }
+            }
+            
+            onTriggered: {
+                var d = dataModel.data(indexPath);
+                console.log("UserEvent: IndividualPicked", d.name);
+                picked(d.id, d.name);
             }
         }
         
@@ -176,4 +145,16 @@ Page
             asset: "images/progress/loading_individuals.png"
         }
     }
+    
+    attachedObjects: [
+        Timer {
+            interval: 250
+            repeat: false
+            running: true
+            
+            onTriggered: {
+                tftk.textField.requestFocus();
+            }
+        }
+    ]
 }

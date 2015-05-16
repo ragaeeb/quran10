@@ -1,4 +1,4 @@
-import bb.cascades 1.0
+import bb.cascades 1.3
 import com.canadainc.data 1.0
 
 Page
@@ -6,6 +6,7 @@ Page
     id: tafsirPickerPage
     actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
     signal tafsirPicked(variant data)
+    property alias searchField: tftk.textField
     
     onCreationCompleted: {
         deviceUtils.attachTopBottomKeys(tafsirPickerPage, listView, true);
@@ -23,95 +24,28 @@ Page
     
     titleBar: TitleBar
     {
-        id: tb
-        kind: TitleBarKind.FreeForm
-        kindProperties: FreeFormTitleBarKindProperties
+        kind: TitleBarKind.TextField
+        kindProperties: TextFieldTitleBarKindProperties
         {
-            Container
-            {
-                horizontalAlignment: HorizontalAlignment.Fill
-                verticalAlignment: VerticalAlignment.Fill
-                topPadding: 10; bottomPadding: 20; leftPadding: 10
+            id: tftk
+            textField.hintText: qsTr("Enter text to search...") + Retranslate.onLanguageChanged
+            textField.input.submitKey: SubmitKey.Search
+            textField.input.flags: TextInputFlag.AutoCapitalizationOff | TextInputFlag.SpellCheck | TextInputFlag.WordSubstitution | TextInputFlag.AutoPeriodOff | TextInputFlag.AutoCorrection
+            textField.input.submitKeyFocusBehavior: SubmitKeyFocusBehavior.Lose
+            textField.input.onSubmitted: {
+                var query = textField.text.trim();
                 
-                TextField
-                {
-                    id: searchField
-                    hintText: qsTr("Enter text to search...") + Retranslate.onLanguageChanged
-                    horizontalAlignment: HorizontalAlignment.Fill
-                    bottomMargin: 0
-                    
-                    input {
-                        submitKey: SubmitKey.Search
-                        flags: TextInputFlag.AutoCapitalizationOff | TextInputFlag.SpellCheck | TextInputFlag.WordSubstitution | TextInputFlag.AutoPeriodOff | TextInputFlag.AutoCorrection
-                        submitKeyFocusBehavior: SubmitKeyFocusBehavior.Lose
-                        
-                        onSubmitted: {
-                            var query = searchField.text.trim();
-                            
-                            if (query.length == 0) {
-                                adm.clear();
-                                reload();
-                            } else {
-                                busy.delegateActive = true;
-                                tafsirHelper.searchTafsir(listView, searchColumn.selectedValue, query);
-                            }
-                        }
-                    }
-                    
-                    onCreationCompleted: {
-                        input["keyLayout"] = 7;
-                    }
+                if (query.length == 0) {
+                    adm.clear();
+                    reload();
+                } else {
+                    busy.delegateActive = true;
+                    tafsirHelper.searchTafsir(listView, searchColumn.selectedValue, query);
                 }
             }
             
-            expandableArea.onExpandedChanged: {
-                searchField.requestFocus();
-            }
-            
-            expandableArea.content: Container
-            {
-                DropDown
-                {
-                    id: searchColumn
-                    title: qsTr("Field") + Retranslate.onLanguageChanged
-                    
-                    Option {
-                        description: qsTr("Search author field") + Retranslate.onLanguageChanged
-                        imageSource: "images/dropdown/search_author.png"
-                        text: qsTr("Author") + Retranslate.onLanguageChanged
-                        value: "author"
-                    }
-                    
-                    Option {
-                        description: qsTr("Search tafsir body") + Retranslate.onLanguageChanged
-                        imageSource: "images/dropdown/search_body.png"
-                        text: qsTr("Body") + Retranslate.onLanguageChanged
-                        value: "body"
-                    }
-                    
-                    Option {
-                        description: qsTr("Search reference field") + Retranslate.onLanguageChanged
-                        imageSource: "images/dropdown/search_reference.png"
-                        selected: true
-                        text: qsTr("Reference") + Retranslate.onLanguageChanged
-                        value: "reference"
-                    }
-                    
-                    Option {
-                        description: qsTr("Search title field") + Retranslate.onLanguageChanged
-                        imageSource: "images/dropdown/search_title.png"
-                        selected: true
-                        text: qsTr("Title") + Retranslate.onLanguageChanged
-                        value: "title"
-                    }
-                    
-                    Option {
-                        description: qsTr("Search translator field") + Retranslate.onLanguageChanged
-                        imageSource: "images/dropdown/search_translator.png"
-                        text: qsTr("Translator") + Retranslate.onLanguageChanged
-                        value: "translator"
-                    }
-                }
+            onCreationCompleted: {
+                textField.input["keyLayout"] = 7;
             }
         }
     }
@@ -130,6 +64,47 @@ Page
             
             dataModel: ArrayDataModel {
                 id: adm
+            }
+            
+            leadingVisual: DropDown
+            {
+                id: searchColumn
+                horizontalAlignment: HorizontalAlignment.Fill
+                title: qsTr("Field") + Retranslate.onLanguageChanged
+                
+                Option {
+                    description: qsTr("Search author field") + Retranslate.onLanguageChanged
+                    imageSource: "images/dropdown/search_author.png"
+                    text: qsTr("Author") + Retranslate.onLanguageChanged
+                    value: "author"
+                }
+                
+                Option {
+                    description: qsTr("Search tafsir body") + Retranslate.onLanguageChanged
+                    imageSource: "images/dropdown/search_body.png"
+                    text: qsTr("Body") + Retranslate.onLanguageChanged
+                    value: "body"
+                }
+                
+                Option {
+                    description: qsTr("Search reference field") + Retranslate.onLanguageChanged
+                    imageSource: "images/dropdown/search_reference.png"
+                    text: qsTr("Reference") + Retranslate.onLanguageChanged
+                    value: "reference"
+                }
+                Option {
+                    description: qsTr("Search translator field") + Retranslate.onLanguageChanged
+                    imageSource: "images/dropdown/search_translator.png"
+                    text: qsTr("Translator") + Retranslate.onLanguageChanged
+                    value: "translator"
+                }                    
+                Option {
+                    description: qsTr("Search title field") + Retranslate.onLanguageChanged
+                    imageSource: "images/dropdown/search_title.png"
+                    selected: true
+                    text: qsTr("Title") + Retranslate.onLanguageChanged
+                    value: "title"
+                }
             }
             
             function onEdit(id, author, translator, explainer, title, description, reference)
