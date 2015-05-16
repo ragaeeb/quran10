@@ -69,6 +69,14 @@ Page
         }
     }
     
+    function refresh()
+    {
+        contentLoaded( adm.size() );
+        busy.delegateActive = false;
+        noElements.delegateActive = adm.isEmpty();
+        listView.visible = !adm.isEmpty();
+    }
+    
     onCreationCompleted: {
         helper.textualChange.connect(performSearch);
         deviceUtils.attachTopBottomKeys(individualPage, listView);
@@ -125,10 +133,7 @@ Page
                     adm.clear();
                     adm.append(data);
                     
-                    contentLoaded(data.length);
-                    busy.delegateActive = false;
-                    noElements.delegateActive = adm.isEmpty();
-                    listView.visible = !adm.isEmpty();
+                    refresh();
                 }
             }
             
