@@ -8,7 +8,7 @@ NavigationPane
     onPopTransitionEnded: {
         page.destroy();
 
-        if ( tutorial.promptVideo("http://youtu.be/7nA27gIxZ08") ) {}
+        if ( tutorial.promptVideo("http://youtu.be/YOXtjnNWVZM") ) {}
         else if ( reporter.online && !persist.containsFlag("alFurqanAdvertised") ) {
             definition.source = "AlFurqanAdvertisement.qml";
             var advertisement = definition.createObject();
@@ -314,6 +314,9 @@ NavigationPane
             if (!selectAll.enabled) {
                 tutorial.execActionBar("selectAllDisabled", qsTr("The '%1' feature is not available for the Juz display mode.").arg(selectAll.title), "r");
             }
+            
+            if ( reporter.performCII() ) {}
+            //else if ( persist.reviewed() ) {}
         }
         
         onCreationCompleted: {

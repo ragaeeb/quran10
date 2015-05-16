@@ -408,9 +408,6 @@ Page
                             tutorial.exec( "lpTranslation", qsTr("Press-and-hold on the translation text if you want to copy or share it."), HorizontalAlignment.Left, VerticalAlignment.Center, 0, 0, ui.du(36));
                         }
 
-                        //else if ( persist.reviewed() ) {}
-                        else if ( reporter.performCII() ) {}
-                        
                         reporter.record("AyatOpened", surahId+":"+verseId);
                     }
                 }
