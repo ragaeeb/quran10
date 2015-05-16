@@ -70,9 +70,7 @@ NavigationPane
     
     function onDataLoaded(id, data)
     {
-        if (id == QueryId.AddIndividual) {
-            persist.showToast( qsTr("Individual added!"), "images/menu/ic_add_rijaal.png" );
-        } else if (id == QueryId.EditIndividual) {
+        if (id == QueryId.EditIndividual) {
             persist.showToast( qsTr("Successfully edited individual"), "images/menu/ic_edit_rijaal.png" );
         } else if (id == QueryId.AddIndividual) {
             persist.showToast( qsTr("Successfully added individual"), "images/menu/ic_select_individuals.png" );
@@ -84,6 +82,8 @@ NavigationPane
         } else if (id == QueryId.AddBioLink) {
             persist.showToast( qsTr("Successfully added biography!"), "images/menu/ic_add_bio.png" );
         }
+        
+        individualPicker.refresh();
     }
     
     function getSelectedIds()

@@ -1,3 +1,4 @@
+import QtQuick 1.0
 import bb.cascades 1.3
 import bb.system 1.2
 import com.canadainc.data 1.0
@@ -232,6 +233,8 @@ Page
                     horizontalAlignment: HorizontalAlignment.Fill
                     content.flags: TextContentFlag.ActiveTextOff | TextContentFlag.EmoticonsOff
                     input.flags: TextInputFlag.SpellCheckOff | TextInputFlag.AutoPeriodOff | TextInputFlag.AutoCorrectionOff
+                    input.keyLayout: KeyLayout.Contact
+                    inputMode: TextFieldInputMode.Text
                     input.submitKey: SubmitKey.Next
                     input.submitKeyFocusBehavior: SubmitKeyFocusBehavior.Next
                     
@@ -263,6 +266,8 @@ Page
                     content.flags: TextContentFlag.ActiveTextOff | TextContentFlag.EmoticonsOff
                     input.flags: TextInputFlag.SpellCheckOff | TextInputFlag.AutoPeriodOff | TextInputFlag.AutoCorrectionOff
                     input.submitKey: SubmitKey.Next
+                    input.keyLayout: KeyLayout.Contact
+                    inputMode: TextFieldInputMode.Text
                     input.submitKeyFocusBehavior: SubmitKeyFocusBehavior.Next
                     
                     gestureHandlers: [
@@ -326,6 +331,8 @@ Page
                     horizontalAlignment: HorizontalAlignment.Fill
                     content.flags: TextContentFlag.ActiveTextOff | TextContentFlag.EmoticonsOff
                     input.flags: TextInputFlag.SpellCheckOff | TextInputFlag.AutoPeriodOff | TextInputFlag.AutoCorrectionOff
+                    input.keyLayout: KeyLayout.Contact
+                    inputMode: TextFieldInputMode.Text
                     input.submitKey: SubmitKey.Next
                     input.submitKeyFocusBehavior: SubmitKeyFocusBehavior.Next
                     
@@ -347,6 +354,8 @@ Page
                     content.flags: TextContentFlag.ActiveTextOff | TextContentFlag.EmoticonsOff
                     input.flags: TextInputFlag.SpellCheckOff | TextInputFlag.AutoPeriodOff | TextInputFlag.AutoCorrectionOff
                     input.submitKey: SubmitKey.Search
+                    input.keyLayout: KeyLayout.Text
+                    inputMode: TextFieldInputMode.Text
 
                     input.onSubmitted: {
                         console.log("UserEvent: CityOfBirthSubmit");
@@ -542,7 +551,6 @@ Page
         }
     }
     
-    
     function createLocationPicker()
     {
         definition.source = "LocationPickerPage.qml";
@@ -553,4 +561,18 @@ Page
         
         return p;
     }
+    
+    attachedObjects: [
+        Timer {
+            interval: 250
+            running: true
+            repeat: false
+            
+            onTriggered: {
+                if (!individualId) {
+                    name.requestFocus();
+                }
+            }
+        }        
+    ]
 }
