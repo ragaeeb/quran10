@@ -21,7 +21,7 @@ QueryHelper::QueryHelper(Persistance* persist) :
         m_sql( QString("%1/assets/dbase/quran_arabic.db").arg( QCoreApplication::applicationDirPath() ) ),
         m_persist(persist), m_bookmarkHelper(&m_sql), m_tafsirHelper(&m_sql)
 {
-    connect( persist, SIGNAL( settingChanged(QString const&) ), this, SLOT( settingChanged(QString const&) ), Qt::DirectConnection );
+    connect( persist, SIGNAL( settingChanged(QString const&) ), this, SLOT( settingChanged(QString const&) ), Qt::QueuedConnection );
 }
 
 
