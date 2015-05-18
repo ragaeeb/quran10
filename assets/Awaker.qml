@@ -3,6 +3,7 @@ import com.canadainc.data 1.0
 
 QtObject
 {
+    id: awakerObj
     property variant parentPage
     property alias showContext: listView.showContextMenu
     signal versePicked(int surahId, int verseId)
@@ -67,7 +68,7 @@ QtObject
             }
             
             var first = listView.dataModel.data([0]);
-            var last = listView.dataModel.data( listView.dataModel.size()-1 );
+            var last = listView.dataModel.data( [listView.dataModel.size()-1] );
             reporter.record("PlayAll", first.surah_id+":"+first.verse_id+"-"+last.surah_id+":"+last.verse_id);
         }
     }
@@ -151,45 +152,20 @@ QtObject
         ]
     }
     
-    function onPopped(page)
-    {
-        if ( deviceUtils.isEqual(page, parentPage) )
-        {
-            navigationPane.peekEnabled = true;
-            Application.mainWindow.screenIdleMode = 0;
-        }
-    }
-    
     function onPushed(page)
     {
-        if ( !deviceUtils.isEqual(navigationPane.top, parentPage) )
-        {
+        var isTopPage = deviceUtils.isEqual(navigationPane.top, parentPage);
+        
+        if (!isTopPage) {
             navigationPane.peekEnabled = true;
-            Application.mainWindow.screenIdleMode = 0;
         }
-    }
-    
-    function onSettingChanged(key)
-    {
-        if (key == "keepAwakeDuringPlay")
-        {
-            var keepAwake = persist.getValueFor("keepAwakeDuringPlay") == 1;
-            Application.mainWindow.screenIdleMode = player.playing && keepAwake && Application.isFullscreen() && Application.isAwake() ? 1 : 0;
-        }
-    }
-    
-    function refresh() {
-        onSettingChanged("keepAwakeDuringPlay");
+        
+        mushaf.isTopPage = isTopPage;
     }
     
     onCreationCompleted: {
         navigationPane.pushTransitionEnded.connect(onPushed);
-        navigationPane.popTransitionEnded.connect(onPopped);
-        persist.settingChanged.connect(onSettingChanged);
-        player.playingChanged.connect(refresh);
-        Application.invisible.connect(refresh);
-        Application.thumbnail.connect(refresh);
-        Application.fullscreen.connect(refresh);
-        Application.awake.connect(refresh);
+        navigationPane.popTransitionEnded.connect(onPushed);
+        mushaf.registerPlayer(player);
     }
 }

@@ -107,6 +107,8 @@ QVariantMap processPlaylist(QString const& reciter, QString const& outputDirecto
 
 namespace quran {
 
+using namespace canadainc;
+
 RecitationHelper::RecitationHelper(QueueDownloader* queue, Persistance* p, QObject* parent) :
         QObject(parent), m_persistance(p), m_queue(queue)
 {

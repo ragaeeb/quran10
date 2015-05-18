@@ -279,16 +279,12 @@ Page
                     }
                 }
                 
-                PersistCheckBox
+                CheckBox
                 {
                     id: keepAwake
+                    checked: mushaf.keepAwake
                     topMargin: 20
-                    key: "keepAwakeDuringPlay"
                     text: qsTr("Keep Awake During Recitation") + Retranslate.onLanguageChanged
-                    
-                    onValueChanged: {
-                        reporter.record("KeepAwake", checked.toString());
-                    }
                     
                     onCheckedChanged: {
                         if (checked) {
@@ -296,6 +292,8 @@ Page
                         } else {
                             infoText.text = qsTr("Your device screen can go to sleep as normal while the recitation is playing.") + Retranslate.onLanguageChanged
                         }
+                        
+                        mushaf.keepAwake = checked;
                     }
                 }
                 
