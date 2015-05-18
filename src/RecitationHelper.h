@@ -9,14 +9,14 @@
 
 #define KEY_RECITER "qaree"
 
-namespace canadainc {
-    class Persistance;
-}
-
 namespace bb {
     namespace cascades {
         class ArrayDataModel;
     }
+}
+
+namespace canadainc {
+    class Persistance;
 }
 
 namespace quran {
