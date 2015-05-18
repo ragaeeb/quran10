@@ -164,12 +164,10 @@ ListView
     }
     
     onCreationCompleted: {
-        persist.settingChanged.connect(onSettingChanged);
+        persist.registerForSetting(listView, "follow");
+        persist.registerForSetting(listView, "overlayAyatImages");
         player.metaDataChanged.connect(onMetaDataChanged);
         player.playbackCompleted.connect(clearPrevious);
-        
-        onSettingChanged("follow");
-        onSettingChanged("overlayAyatImages");
 
         if (showImages) {
             tutorial.exec("overlayScroll", qsTr("Some ayats may be larger than your screen width. You need to scroll to the left to see the full ayat!"), HorizontalAlignment.Center, VerticalAlignment.Center, 0, 0, 0, 0, undefined, "r");
@@ -189,12 +187,12 @@ ListView
         tutorial.exec( "backButton", qsTr("Tap on the Back key to return to the previous page."), HorizontalAlignment.Left, VerticalAlignment.Bottom );
     }
 
-    function onSettingChanged(key)
+    function onSettingChanged(newValue, key)
     {
         if (key == "follow") {
-            follow = persist.getValueFor("follow") == 1;
+            follow = newValue == 1;
         } else if (key == "overlayAyatImages") {
-            showImages = persist.getValueFor("overlayAyatImages") == 1;
+            showImages = newValue == 1;
         }
     }
     

@@ -193,19 +193,15 @@ QtObject
                         textStyle.color: Color.White
                         topPadding: 0;
                         textStyle.fontSize: FontSize.PointValue
-                        textStyle.fontSizeValue: persist.getValueFor("tafsirSize")
                         bottomPadding: 0; bottomMargin: 0
                         verticalAlignment: VerticalAlignment.Fill
                         
-                        function onSettingChanged(key)
-                        {
-                            if (key == "tafsirSize") {
-                                textStyle.fontSizeValue = persist.getValueFor("tafsirSize");
-                            }
+                        function onSettingChanged(newValue) {
+                            textStyle.fontSizeValue = newValue;
                         }
                         
                         onCreationCompleted: {
-                            persist.settingChanged.connect(onSettingChanged);
+                            persist.registerForSetting(body, "tafsirSize");
                         }
                         
                         onTextChanged: {

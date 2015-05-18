@@ -21,7 +21,7 @@ QueryHelper::QueryHelper(Persistance* persist) :
         m_sql( QString("%1/assets/dbase/quran_arabic.db").arg( QCoreApplication::applicationDirPath() ) ),
         m_persist(persist), m_bookmarkHelper(&m_sql), m_tafsirHelper(&m_sql)
 {
-    connect( persist, SIGNAL( settingChanged(QString const&) ), this, SLOT( settingChanged(QString const&) ), Qt::QueuedConnection );
+    connect( persist, SIGNAL( settingChanged(QString const&) ), this, SLOT( settingChanged(QString const&) ), Qt::DirectConnection );
 }
 
 
@@ -99,8 +99,6 @@ void QueryHelper::settingChanged(QString const& key)
         emit textualChange();
     } else if (key == KEY_TRANSLATION_SIZE || key == KEY_PRIMARY_SIZE) {
         emit fontSizeChanged();
-    } else if (key == KEY_JOIN_LETTERS) {
-        emit textualChange();
     }
 }
 
