@@ -565,15 +565,22 @@ Page
         }
     ]
     
+    function reload()
+    {
+        bioModel.clear();
+        individualIdChanged();
+    }
+    
+    function cleanUp() {
+        helper.textualChange.disconnect(reload);
+    }
+    
     onCreationCompleted: {
         if (reporter.isAdmin) {
             addAction(addTeacher);
             addAction(addStudent);
         }
         
-        helper.textualChange.connect( function() {
-            bioModel.clear();
-            individualIdChanged();
-        });
+        helper.textualChange.connect(reload);
     }
 }
