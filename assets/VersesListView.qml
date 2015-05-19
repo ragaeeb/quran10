@@ -23,6 +23,10 @@ ListView
         id: verseModel
     }
     
+    onShowImagesChanged: {
+        refresh();
+    }
+    
     onScrolledChanged: {
         if (scrolled) {
             timer.restart();
