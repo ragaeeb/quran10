@@ -6,7 +6,7 @@ NavigationPane
     id: navigationPane
     
     onPopTransitionEnded: {
-        page.destroy();
+        deviceUtils.cleanUpAndDestroy(page);
 
         if ( tutorial.promptVideo("http://youtu.be/YOXtjnNWVZM") ) {}
         else if ( reporter.online && !persist.containsFlag("alFurqanAdvertised") ) {

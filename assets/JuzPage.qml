@@ -50,12 +50,20 @@ Page
             ranges = {'from_surah_id': data[0].surah_id, 'from_verse_id': data[0].verse_number, 'to_surah_id': toChapter, 'to_verse_id': toVerse};
         }
     }
+    
+    function reload() {
+        rangesChanged();
+    }
+    
+    function cleanUp()
+    {
+        awaker.cleanUp();
+        ctb.cleanUp();
+        helper.textualChange.disconnect(reload);
+    }
 
     onCreationCompleted: {
-        helper.textualChange.connect( function() {
-            rangesChanged();
-        });
-        
+        helper.textualChange.connect(reload);
         mainContainer.add(awaker.lv);
     }
     

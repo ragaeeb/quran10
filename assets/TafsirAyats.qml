@@ -117,6 +117,10 @@ Page
         }
     ]
     
+    function cleanUp() {
+        admin.ayatsCaptured.disconnect(extractAyats.onCaptured);
+    }
+    
     titleBar: TitleBar
     {
         scrollBehavior: TitleBarScrollBehavior.NonSticky

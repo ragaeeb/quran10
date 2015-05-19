@@ -70,6 +70,10 @@ Page
             }
         ]
     }
+    
+    function cleanUp() {
+        queue.requestComplete.disconnect(updateCheck.onFinished);
+    }
 
     Container
     {

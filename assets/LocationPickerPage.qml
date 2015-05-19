@@ -317,6 +317,10 @@ Page
         }
     }
     
+    function cleanUp() {
+        app.locationsFound.disconnect(onLocationsFound);
+    }
+    
     onCreationCompleted: {
         app.locationsFound.connect(onLocationsFound);
     }

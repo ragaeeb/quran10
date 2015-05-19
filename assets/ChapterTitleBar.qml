@@ -17,13 +17,17 @@ TitleBar
             next.enabled = chapterNumber < 114;
         }
     }
+    
+    function reload() {
+        chapterNumberChanged();
+    }
+    
+    function cleanUp() {
+        helper.textualChange.disconnect(reload);
+    }
 
     onCreationCompleted: {
-        helper.textualChange.connect( function() {
-            chapterNumberChanged();
-        });
-        
-        tutorial.exec("chapterTitleBar", qsTr("Tap here to open all the explanations for this chapter."), HorizontalAlignment.Center, VerticalAlignment.Top, 0, 0, ui.du(5));
+        helper.textualChange.connect(reload);
     }
 
     kind: TitleBarKind.FreeForm
@@ -115,6 +119,7 @@ TitleBar
                     }
                     
                     onAnimationFinished: {
+                        tutorial.exec("chapterTitleBar", qsTr("Tap here to open all the explanations for this chapter."), HorizontalAlignment.Center, VerticalAlignment.Top, 0, 0, ui.du(5));
                         tutorial.exec("surahNavigation", qsTr("Tap the right arrow to navigate to the next chapter."), HorizontalAlignment.Right, VerticalAlignment.Top );
                         tutorial.exec("navigateSurahLeft", qsTr("Tap the left arrow to navigate to the previous chapter."), HorizontalAlignment.Left, VerticalAlignment.Top );
                     }

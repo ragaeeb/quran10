@@ -7,7 +7,7 @@ NavigationPane
     property alias searchField: tftk.textField
     
     onPopTransitionEnded: {
-        page.destroy();
+        deviceUtils.cleanUpAndDestroy(page);
     }
     
     function reload()

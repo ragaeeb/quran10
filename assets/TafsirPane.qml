@@ -6,7 +6,7 @@ NavigationPane
     id: navigationPane
 
     onPopTransitionEnded: {
-        page.destroy();
+        deviceUtils.cleanUpAndDestroy(page);
     }
     
     function onCreate(id, author, translator, explainer, title, description, reference)

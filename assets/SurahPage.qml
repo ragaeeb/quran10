@@ -13,6 +13,13 @@ Page
     signal picked(int surahId, int verseId)
     signal openChapterTafsir(int surahId)
     
+    function cleanUp()
+    {
+        awaker.cleanUp();
+        ctb.cleanUp();
+        helper.textualChange.disconnect(reloadNeeded);
+    }
+    
     onSurahIdChanged: {
         fromSurahId = surahId;
         toSurahId = surahId;

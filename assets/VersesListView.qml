@@ -23,6 +23,13 @@ ListView
         id: verseModel
     }
     
+    function cleanUp()
+    {
+        rangeSelector.cleanUp();
+        player.metaDataChanged.disconnect(onMetaDataChanged);
+        player.playbackCompleted.disconnect(clearPrevious);
+    }
+    
     onShowImagesChanged: {
         refresh();
     }
@@ -261,6 +268,7 @@ ListView
     
     attachedObjects: [
         RangeSelector {
+            id: rangeSelector
             itemName: qsTr("ayahs")
         },
         

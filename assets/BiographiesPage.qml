@@ -20,6 +20,11 @@ Page
         }
     }
     
+    function cleanUp()
+    {
+        helper.textualChange.disconnect(reload);
+    }
+    
     onCreationCompleted: {
         deviceUtils.attachTopBottomKeys(bioPickerPage, listView, true);
         helper.textualChange.connect(reload);

@@ -64,6 +64,9 @@ Delegate
             }
             
             onClosed: {
+                queue.queueCompleted.disconnect(onComplete);
+                queue.isBlockedChanged.disconnect(root.finish);
+                queue.currentIndexChanged.disconnect(onIndexChanged);
                 active = false;
             }
             

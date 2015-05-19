@@ -98,9 +98,15 @@ Page
         }
     ]
     
+    function reload() {
+        chapterNumberChanged();
+    }
+    
+    function cleanUp() {
+        helper.textualChange.disconnect(reload);
+    }
+    
     onCreationCompleted: {
-        helper.textualChange.connect( function() {
-            chapterNumberChanged();
-        });
+        helper.textualChange.connect(reload);
     }
 }
