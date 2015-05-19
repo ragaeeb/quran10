@@ -39,8 +39,8 @@
 
     <!-- Fourth digit segment of the package version. First three segments are taken from the 
          <versionNumber> element.  Must be an integer from 0 to 2^16-1 -->
-    <buildId>4</buildId>
-    <packageLocale>ar,fr,hi,id,ru,es</packageLocale>
+    <buildId>5</buildId>
+    <packageLocale>ar,fr,id,ru</packageLocale>
                  
     <!-- A string value (such as "v1", "2.5", or "Alpha 1") that represents the version of the application, as it should be shown to users. Optional. -->
     <!-- <versionLabel></versionLabel> -->
@@ -119,11 +119,30 @@
 			<image>icon.png</image>
 		</icon>
 		<invoke-target-pattern>
-			<pattern-value type="regex">[0-9]{1,3}\s{0,1}+:\s{0,1}[0-9]{1,3}\)</pattern-value>
+			<!-- something like 2:15) or 2 : 15] -->		
+			<pattern-value type="regex">[0-9]{1,3}\s{0,1}:\s{0,1}[0-9]{1,3}[\)\]]</pattern-value>
 		</invoke-target-pattern>
 
 		<invoke-target-pattern>
-			<pattern-value type="regex">A[lrLR]-[a-zA-Z]{3,11}\s{0,1}:\s{0,1}[0-9]{1,3}</pattern-value>
+			<!-- Ar-Rahman: 55] -->		
+			<pattern-value type="regex">[A-Za-z\-']+\s{0,1}:\s{0,1}[0-9]{1,3}[\)\]]</pattern-value>
+		</invoke-target-pattern>		
+	</invoke-target>
+	
+	<invoke-target id="com.canadainc.Quran10.verse_range">
+		<invoke-target-type>card.previewer</invoke-target-type>
+		<invoke-target-name>Quran10</invoke-target-name> 
+		<icon>
+			<image>icon.png</image>
+		</icon>
+		<invoke-target-pattern>
+			<!-- something like 5:55-56) or 5:55-67] -->		
+			<pattern-value type="regex">[0-9]{1,3}\s{0,1}:[0-9]{1,3}\s{0,1}-\s{0,1}[0-9]{1,3}[\)\]]</pattern-value>
+		</invoke-target-pattern>
+		
+		<invoke-target-pattern>
+			<!-- Ar-Rahman: 55-57] -->
+			<pattern-value type="regex">[A-Za-z\-']+\s{0,1}:\s{0,1}[0-9]{1,3}\s{0,1}-\s{0,1}[0-9]{1,3}[\)\]]</pattern-value>
 		</invoke-target-pattern>
 	</invoke-target>
 	
@@ -184,8 +203,8 @@
     <asset path="../canadainc/assets/ProgressControl.qml">assets/ProgressControl.qml</asset>
     <asset path="../canadainc/assets/TutorialTip.qml">assets/TutorialTip.qml</asset>
     <asset path="res/testing/AllTests.qml">assets/AllTests.qml</asset>
-    <asset path="/Users/synonymous2/workspace/java/CanadaIncIslamicUtils/res/quran10/quran_arabic.db">assets/dbase/quran_arabic.db</asset>
-    <asset path="/Users/synonymous2/workspace/java/CanadaIncIslamicUtils/res/quran10/quran_english.db">assets/dbase/quran_english.db</asset>
+    <asset path="C:/Users/synonymous2/workspace/java/CanadaIncIslamicUtils/res/quran10/quran_arabic.db">assets/dbase/quran_arabic.db</asset>
+    <asset path="C:/Users/synonymous2/workspace/java/CanadaIncIslamicUtils/res/quran10/quran_english.db">assets/dbase/quran_english.db</asset>
 
     <!-- Request permission to execute native code.  Required for native applications. -->
     <permission system="true">run_native</permission>
