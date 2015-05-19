@@ -5,21 +5,15 @@ Container
 {
     id: root
     
+    function pausecomp(millis)
+    {
+        var d = new Date();
+        var curDate = null;
+        do { curDate = new Date(); }
+        while(curDate-d < millis);
+    }
+    
     attachedObjects: [
-        QtObject
-        {
-            objectName: "Setup"
-            
-            function run()
-            {
-                var srcOK = harness.copy("quran_english.db", "quran_test.db", false, true, true);
-                
-                if (srcOK) {
-                    helper.getExecutor().attachIfNecessary("quran_test_tafsir");
-                }
-            }
-        },
-        
         QtObject
         {
             objectName: "Basic Search With 3 Results"
@@ -540,16 +534,22 @@ Container
             
             onCountChanged: {
                 if (count == 3) {
-                    harness.assert(this, true);
+                    harness.assert(createPerson, true);
                 }
             }
             
             function run()
             {
                 count = 0;
-                
+
                 individualId = tafsirHelper.createIndividual(this, "Imam", "X", "K", "D", -3, 50, createLocation.locationId.toString(), true);
+                
+                pausecomp(1);
+                
                 teacherId = tafsirHelper.createIndividual(this, "Hafidh", "X1", "K1", "D1", 5, 50, "", false);
+                
+                pausecomp(1);
+                
                 studentId = tafsirHelper.createIndividual(this, "Shaykh", "X2", "K2", "D2", -3, 50, "", false);
             }
         },
@@ -640,22 +640,6 @@ Container
             
             function run() {
                 tafsirHelper.removeIndividual(this, createPerson.individualId);
-            }
-        },
-        
-        QtObject
-        {
-            objectName: "Tear Down"
-            
-            function onDataLoaded(id, data)
-            {
-                harness.assert( this, [3, data.length, 3, data[0].surah_id, 8, data[0].verse_id, 38, data[1].surah_id == 38, 9, data[1].verse_id, 38, data[2].surah_id, 35, data[2].verse_id]);
-            }
-            
-            function run()
-            {
-                var srcOK = harness.copy("quran_arabic.db", "quran_test.db", false, true, true);
-                helper.searchQuery(this, "الوهاب");
             }
         }
     ]
