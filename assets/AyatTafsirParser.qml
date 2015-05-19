@@ -196,7 +196,7 @@ QtObject
                         bottomPadding: 0; bottomMargin: 0
                         verticalAlignment: VerticalAlignment.Fill
                         
-                        function onSettingChanged(newValue) {
+                        function onSettingChanged(newValue, key) {
                             textStyle.fontSizeValue = newValue;
                         }
                         
