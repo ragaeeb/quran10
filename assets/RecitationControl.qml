@@ -8,7 +8,15 @@ Container
     verticalAlignment: VerticalAlignment.Fill
     property bool downloaded: false
     property bool played: false
-    property alias playerRef: player
+    
+    function cleanUp()
+    {
+        if (played) {
+            player.stop();
+        }
+
+        recitation.readyToPlay.disconnect(onReady);
+    }
 
     layout: StackLayout {
         orientation: LayoutOrientation.LeftToRight

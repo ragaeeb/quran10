@@ -88,6 +88,12 @@ TabbedPane
         
         delegate: Delegate {
             source: "SupplicationsPane.qml"
+            
+            onActiveChanged: {
+                if (!active && object) {
+                    object.cleanUp();
+                }
+            }
         }
     }
     

@@ -44,14 +44,22 @@ Page
         }
     }
     
+    function reload() {
+        searchTextChanged();
+    }
+    
+    function cleanUp()
+    {
+        tutorial.tutorialFinished.disconnect(onTutorialFinished);
+        admin.ayatsCaptured.disconnect(onCaptured);
+        helper.textualChange.disconnect(reload);
+    }
+    
     onCreationCompleted: {
         deviceUtils.attachTopBottomKeys(searchRoot, listView);
         tutorial.tutorialFinished.connect(onTutorialFinished);
         admin.ayatsCaptured.connect(onCaptured);
-
-        helper.textualChange.connect( function() {
-            searchTextChanged();
-        });
+        helper.textualChange.connect(reload);
     }
     
     function getAdditionalQueries()

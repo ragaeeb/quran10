@@ -77,6 +77,10 @@ Page
         listView.visible = !adm.isEmpty();
     }
     
+    function cleanUp() {
+        helper.textualChange.disconnect(performSearch);
+    }
+    
     onCreationCompleted: {
         helper.textualChange.connect(performSearch);
         deviceUtils.attachTopBottomKeys(individualPage, listView);

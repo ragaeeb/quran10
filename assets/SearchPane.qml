@@ -6,7 +6,7 @@ NavigationPane
     property alias searchText: searchPage.searchText
     
     onPopTransitionEnded: {
-        page.destroy();
+        deviceUtils.cleanUpAndDestroy(page);
     }
     
     SearchPage

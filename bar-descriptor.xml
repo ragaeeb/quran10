@@ -202,7 +202,7 @@
     <asset path="../canadainc/assets/PersistDropDown.qml">assets/PersistDropDown.qml</asset>
     <asset path="../canadainc/assets/ProgressControl.qml">assets/ProgressControl.qml</asset>
     <asset path="../canadainc/assets/TutorialTip.qml">assets/TutorialTip.qml</asset>
-    <asset path="res/testing/AllTests.qml">assets/AllTests.qml</asset>
+    <!--<asset path="res/testing/AllTests.qml">assets/AllTests.qml</asset>-->
     <asset path="C:/Users/synonymous2/workspace/java/CanadaIncIslamicUtils/res/quran10/quran_arabic.db">assets/dbase/quran_arabic.db</asset>
     <asset path="C:/Users/synonymous2/workspace/java/CanadaIncIslamicUtils/res/quran10/quran_english.db">assets/dbase/quran_english.db</asset>
 

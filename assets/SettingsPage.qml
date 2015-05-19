@@ -7,6 +7,14 @@ Page
     id: settingsPage
     actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
     
+    function cleanUp()
+    {
+        admin.uploadProgress.disconnect(progressIndicator.onNetworkProgressChanged);
+        admin.compressing.disconnect(progressIndicator.onCompressing);
+        admin.compressed.disconnect(progressIndicator.onCompressed);
+        admin.compressProgress.disconnect(progressIndicator.onCompressProgress);
+    }
+    
     titleBar: TitleBar {
         title: qsTr("Settings") + Retranslate.onLanguageChanged
     }

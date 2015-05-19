@@ -388,6 +388,12 @@ Page
         }
     }
     
+    function cleanUp()
+    {
+        helper.textualChange.disconnect(onChanged);
+        tutorial.tutorialFinished.disconnect(onTutorialFinished);
+    }
+    
     function ready()
     {
         sortOrder.key = "surahPickerOption";

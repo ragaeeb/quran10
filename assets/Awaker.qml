@@ -163,6 +163,14 @@ QtObject
         mushaf.isTopPage = isTopPage;
     }
     
+    function cleanUp()
+    {
+        navigationPane.pushTransitionEnded.disconnect(onPushed);
+        navigationPane.popTransitionEnded.disconnect(onPushed);
+        recitation.readyToPlay.disconnect(playAllAction.onReady);
+        listView.cleanUp();
+    }
+    
     onCreationCompleted: {
         navigationPane.pushTransitionEnded.connect(onPushed);
         navigationPane.popTransitionEnded.connect(onPushed);

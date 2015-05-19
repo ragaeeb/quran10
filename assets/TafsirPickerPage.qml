@@ -10,10 +10,17 @@ Page
     
     onCreationCompleted: {
         deviceUtils.attachTopBottomKeys(tafsirPickerPage, listView, true);
-        helper.textualChange.connect( function() {
-            adm.clear();
-            reload();
-        });
+        helper.textualChange.connect(clearAndReload);
+    }
+    
+    function cleanUp() {
+        helper.textualChange.disconnect(clearAndReload);
+    }
+    
+    function clearAndReload()
+    {
+        adm.clear();
+        reload();
     }
     
     function reload()

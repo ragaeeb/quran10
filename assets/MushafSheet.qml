@@ -300,9 +300,16 @@ Sheet
                 
                 ControlDelegate
                 {
+                    id: stretchView
                     delegateActive: mushaf.stretchMushaf
                     horizontalAlignment: HorizontalAlignment.Fill
                     verticalAlignment: VerticalAlignment.Fill
+                    
+                    onDelegateActiveChanged: {
+                        if (!delegateActive && control) {
+                            control.cleanUp();
+                        }
+                    }
                     
                     sourceComponent: ComponentDefinition
                     {
@@ -323,6 +330,10 @@ Sheet
                                 }
                             }
                             
+                            function cleanUp() {
+                                mushaf.mushafPageReady.disconnect(onPageReady);
+                            }
+                            
                             function onPageReady(imageData) {
                                 currentImageSource = imageData.localUri;
                             }
@@ -336,9 +347,16 @@ Sheet
                 
                 ControlDelegate
                 {
+                    id: nonStretchView
                     delegateActive: !mushaf.stretchMushaf
                     horizontalAlignment: HorizontalAlignment.Center
                     verticalAlignment: VerticalAlignment.Center
+                    
+                    onDelegateActiveChanged: {
+                        if (!delegateActive && control) {
+                            control.cleanUp();
+                        }
+                    }
                     
                     sourceComponent: ComponentDefinition
                     {
@@ -352,8 +370,13 @@ Sheet
                             scrollViewProperties.scrollMode: ScrollMode.Both
                             scrollRole: ScrollRole.Main
                             
+                            function cleanUp() {
+                                mushaf.mushafPageReady.disconnect(nonStretchImage.onPageReady);
+                            }
+                            
                             ImageView
                             {
+                                id: nonStretchImage
                                 scalingMethod: ScalingMethod.AspectFill
                                 horizontalAlignment: HorizontalAlignment.Center
                                 verticalAlignment: VerticalAlignment.Center
@@ -443,6 +466,9 @@ Sheet
     }
     
     onClosed: {
+        app.childCardFinished.disconnect(jumpSurah.onFinished);
+        tutorial.tutorialFinished.disconnect(onFinished);
+        Application.aboutToQuit.disconnect(onAboutToQuit);       
         destroy();
     }
     

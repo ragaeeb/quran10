@@ -6,7 +6,7 @@ NavigationPane
     id: navigationPane
     
     onPopTransitionEnded: {
-        page.destroy();
+        deviceUtils.cleanUpAndDestroy(page);
     }
     
     Page
@@ -101,16 +101,21 @@ NavigationPane
                         tutorial.exec( "tapSupplication", qsTr("These are some of the supplications found throughout the Qu'ran. Tap on any one of them to open it."), HorizontalAlignment.Center, VerticalAlignment.Center, 0, 0, 0, 0, undefined, "d" );
                     }
                 }
-                
-                onCreationCompleted: {
-                    helper.fetchAllDuaa(listView);
-                    
-                    helper.textualChange.connect( function() {
-                        helper.fetchAllDuaa(listView);
-                    });
-                }
             }
         }
+    }
+    
+    function reload() {
+        helper.fetchAllDuaa(listView);
+    }
+    
+    function cleanUp() {
+        helper.textualChange.disconnect(reload);
+    }
+    
+    onCreationCompleted: {
+        reload();
+        helper.textualChange.connect(reload);
     }
     
     attachedObjects: [

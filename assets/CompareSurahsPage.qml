@@ -45,6 +45,10 @@ Page
         }
     }
     
+    function cleanUp() {
+        helper.textualChange.disconnect(loadVerses);
+    }
+    
     onCreationCompleted: {
         helper.textualChange.connect(loadVerses);
     }

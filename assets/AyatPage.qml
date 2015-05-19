@@ -115,6 +115,10 @@ Page
         reporter.record("AyatPageMenuOpened", actionMenuVisualState.toString());
     }
     
+    function cleanUp() {
+        helper.textualChange.disconnect(reload);
+    }
+    
     onCreationCompleted: {
         helper.textualChange.connect(reload);
     }
@@ -156,10 +160,8 @@ Page
                         pluginsDelegate.delegateActive = true;
                         
                         reporter.record("OpenAyatRecitation", surahId+":"+verseId);
-                    } else {
-                        if (pluginsDelegate.control.played) {
-                            pluginsDelegate.control.playerRef.stop();
-                        }
+                    } else if (pluginsDelegate.control) {
+                        pluginsDelegate.control.cleanUp();
                     }
                 }
             }

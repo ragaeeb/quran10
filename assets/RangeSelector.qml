@@ -17,6 +17,10 @@ QtObject
             reporter.record("SelectRangeTriggered");
         }
     }
+    
+    function cleanUp() {
+        parent.selectionChanged.disconnect(onSelectionChanged);
+    }
 
     function onSelectionChanged()
     {
