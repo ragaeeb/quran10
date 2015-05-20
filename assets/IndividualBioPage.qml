@@ -268,7 +268,7 @@ Page
                                 id: sli
                                 description: ListItemData.body.replace(/\n/g, " ").substring(0, 150)
                                 imageSource: ListItemData.points > 0 ? "images/list/ic_like.png" : ListItemData.points == 0 ? "images/list/ic_bio.png" : "images/list/ic_dislike.png"
-                                title: ListItemData.author ? ListItemData.author : ListItemData.reference ? ListItemData.reference : ""
+                                title: ListItemData.heading ? ListItemData.heading : ListItemData.author ? ListItemData.author : ListItemData.reference ? ListItemData.reference : ""
                                 
                                 contextMenuHandler: [
                                     ContextMenuHandler {
