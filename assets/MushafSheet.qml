@@ -69,6 +69,7 @@ Sheet
         actions: [
             ActionItem
             {
+                id: backButton
                 imageSource: "images/ic_quran.png"
                 title: qsTr("Back") + Retranslate.onLanguageChanged
                 ActionBar.placement: 'Signature' in ActionBarPlacement ? ActionBarPlacement["Signature"] : ActionBarPlacement.OnBar
@@ -468,7 +469,7 @@ Sheet
     onClosed: {
         app.childCardFinished.disconnect(jumpSurah.onFinished);
         tutorial.tutorialFinished.disconnect(prevPage.onFinished);
-        Application.aboutToQuit.disconnect(onAboutToQuit);       
+        Application.aboutToQuit.disconnect(backButton.onAboutToQuit);       
         destroy();
     }
     
