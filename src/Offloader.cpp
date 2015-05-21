@@ -12,6 +12,8 @@
 #include "ThreadUtils.h"
 #include "ZipThread.h"
 
+#define ATTRIBUTE_TYPE_BIO "bio"
+#define KEY_ATTRIBUTE_TYPE "type"
 #define TRANSLATION_ARCHIVE_PASSWORD "7DE_1ddFGXy81_"
 #define TAFSIR_MIME_IMAGE "imageSource"
 
@@ -405,7 +407,7 @@ QVariantList Offloader::fillType(QVariantList input, int queryId)
     QMap<int,QString> map;
     map[QueryId::FetchAllTafsir] = "tafsir";
     map[QueryId::FetchAllQuotes] = "quote";
-    map[QueryId::FetchBio] = "bio";
+    map[QueryId::FetchBio] = ATTRIBUTE_TYPE_BIO;
     map[QueryId::FetchTeachers] = "teacher";
     map[QueryId::FetchStudents] = "student";
     map[QueryId::FetchAllWebsites] = "website";
@@ -422,8 +424,14 @@ QVariantList Offloader::fillType(QVariantList input, int queryId)
         {
             QVariantMap q = input[i].toMap();
 
-            if ( !q.contains("type") ) {
-                q["type"] = type;
+            if ( !q.contains(KEY_ATTRIBUTE_TYPE) )
+            {
+                if ( type == ATTRIBUTE_TYPE_BIO && q.value("points").toInt() == 2 ) { //
+                    q[KEY_ATTRIBUTE_TYPE] = "citing";
+                } else {
+                    q[KEY_ATTRIBUTE_TYPE] = type;
+                }
+
                 input[i] = q;
             }
         }

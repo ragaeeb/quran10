@@ -167,8 +167,10 @@ Page
                 
                 function getHeaderName(ListItemData)
                 {
-                    if (ListItemData == "bio" || ListItemData == "expanded_bio") {
+                    if (ListItemData == "bio") {
                         return qsTr("Biographies");
+                    } else if (ListItemData == "citing") {
+                        return qsTr("Citings");
                     } else if (ListItemData == "tafsir") {
                         return qsTr("Works");
                     } else if (ListItemData == "teacher") {
@@ -226,10 +228,21 @@ Page
                         
                         StandardListItem
                         {
-                            id: sli
-                            description: ListItemData.body.replace(/\n/g, " ").substring(0, 150)
-                            imageSource: ListItemData.points > 1 ? "images/list/ic_tafsir.png" : ListItemData.points > 0 ? "images/list/ic_like.png" : ListItemData.points < 0 ? "images/list/ic_dislike.png" : "images/list/ic_bio.png"
-                            title: ListItemData.heading ? ListItemData.heading : ListItemData.title ? ListItemData.title : ListItemData.author ? ListItemData.author : ListItemData.reference ? ListItemData.reference : ""
+                            description: ListItemData.heading ? ListItemData.heading : ListItemData.title ? ListItemData.title : ""
+                            imageSource: ListItemData.points > 0 ? "images/list/ic_like.png" : ListItemData.points < 0 ? "images/list/ic_dislike.png" : "images/list/ic_bio.png"
+                            title: ListItemData.author ? ListItemData.author : ListItemData.reference ? ListItemData.reference : ""
+                        }
+                    },
+                    
+                    ListItemComponent
+                    {
+                        type: "citing"
+                        
+                        StandardListItem
+                        {
+                            description: ListItemData.heading ? ListItemData.heading : ListItemData.title ? ListItemData.title : ""
+                            imageSource: "images/list/ic_tafsir.png"
+                            title: ListItemData.author ? ListItemData.author : ListItemData.reference ? ListItemData.reference : ""
                         }
                     },
                     

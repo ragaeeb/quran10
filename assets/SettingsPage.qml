@@ -379,6 +379,14 @@ Page
                     }
                 }
                 
+                ImageView
+                {
+                    topMargin: 0; bottomMargin: 0
+                    imageSource: "images/dividers/divider_bio.png"
+                    horizontalAlignment: HorizontalAlignment.Center
+                    visible: progressIndicator.opacity == 0
+                }
+                
                 Label {
                     id: infoText
                     multiline: true
