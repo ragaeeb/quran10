@@ -18,6 +18,8 @@ Page
         }
     }
     
+    function cleanUp() {}
+    
     actions: [
         ActionItem
         {
