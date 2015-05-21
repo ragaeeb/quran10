@@ -353,7 +353,7 @@ QVariantMap ThreadUtils::matchSurah(QVariantMap input, QVariantList const& allSu
         QVariantMap current = q.toMap();
         QString transliteration = current.value(KEY_TRANSLITERATION).toString();
 
-        if ( TextUtils::isSimilar(transliteration, surahName, 70) )
+        if ( TextUtils::isSimilar(transliteration, surahName, 75) )
         {
             current[KEY_TRANSLITERATION] = transliteration;
             current[KEY_VERSE_NUMBER] = input[KEY_VERSE_NUMBER];
