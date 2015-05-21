@@ -12,6 +12,16 @@
 #define TRANSLATION QString("quran_%1").arg(m_translation)
 #define TAFSIR_NAME(language) QString("quran_tafsir_%1").arg(language)
 
+namespace {
+
+bool tafsirFileExists(QString const& t)
+{
+    QFile q( QString("%1/%2.db").arg( QDir::homePath() ).arg(t) );
+    return q.exists() && q.size() > 0;
+}
+
+}
+
 namespace quran {
 
 using namespace canadainc;
@@ -69,11 +79,11 @@ void QueryHelper::settingChanged(QString const& key)
             }
         }
 
-        QFile tafsirFile( QString("%1/%2.db").arg( QDir::homePath() ).arg( tafsirName() ) );
-
-        if ( !tafsirFile.exists() || tafsirFile.size() == 0 ) { // tafsir doesn't exist, download it
+        if ( !tafsirFileExists( tafsirName() ) ) { // tafsir doesn't exist, download it
             params[KEY_TAFSIR] = tafsirName();
             forcedUpdates << KEY_TAFSIR;
+
+            setupTables();
         } else if ( m_persist->isUpdateNeeded(KEY_LAST_UPDATE, 60) ) {
             params[KEY_TAFSIR] = tafsirName();
             params[KEY_TRANSLATION] = TRANSLATION;
@@ -447,6 +457,71 @@ void QueryHelper::fetchAllQuotes(QObject* caller, qint64 individualId)
     queryParams << "ORDER BY id DESC";
 
     m_sql.executeQuery(caller, queryParams.join(" "), QueryId::FetchAllQuotes);
+}
+
+
+void QueryHelper::setupTables()
+{
+    QString srcLanguage = ENGLISH_TRANSLATION;
+    QString srcTafsir = TAFSIR_NAME(srcLanguage);
+    bool port = m_translation != srcLanguage && tafsirFileExists(srcTafsir) ;
+
+    if (port) {
+        m_sql.attachIfNecessary(srcTafsir, true);
+    }
+
+    ATTACH_TAFSIR;
+    const QString currentTafsir = tafsirName();
+    m_sql.startTransaction(NULL, QueryId::SettingUpTafsir);
+
+    QStringList statements;
+    statements << "CREATE TABLE IF NOT EXISTS %1.locations (id INTEGER PRIMARY KEY, city TEXT NOT NULL UNIQUE ON CONFLICT IGNORE, latitude REAL NOT NULL, longitude REAL NOT NULL);";
+    statements << "CREATE TABLE IF NOT EXISTS %1.individuals (id INTEGER PRIMARY KEY, prefix TEXT, name TEXT, kunya TEXT, hidden INTEGER, birth INTEGER, death INTEGER, female INTEGER, displayName TEXT, location INTEGER REFERENCES locations(id) ON DELETE SET NULL ON UPDATE CASCADE, is_companion INTEGER, CHECK(is_companion=1 AND female=1 AND hidden=1 AND name <> '' AND prefix <> '' AND kunya <> '' AND displayName <> ''));";
+    statements << "CREATE TABLE IF NOT EXISTS %1.teachers (individual INTEGER NOT NULL REFERENCES individuals(id) ON DELETE CASCADE, teacher INTEGER NOT NULL REFERENCES individuals(id) ON DELETE CASCADE, UNIQUE(individual,teacher) ON CONFLICT IGNORE );";
+    statements << "CREATE TABLE IF NOT EXISTS %1.websites (id INTEGER PRIMARY KEY, individual INTEGER REFERENCES individuals(id) ON DELETE CASCADE ON UPDATE CASCADE, uri TEXT NOT NULL, UNIQUE(individual, uri) ON CONFLICT IGNORE CHECK(uri <> '') );";
+    statements << "CREATE TABLE IF NOT EXISTS %1.mentions (id INTEGER PRIMARY KEY, target INTEGER NOT NULL REFERENCES individuals(id) ON DELETE CASCADE ON UPDATE CASCADE, suite_page_id INTEGER NOT NULL REFERENCES suite_pages(id) ON DELETE CASCADE ON UPDATE CASCADE, points INTEGER, UNIQUE(target,suite_page_id) ON CONFLICT REPLACE);";
+    statements << "CREATE TABLE IF NOT EXISTS %1.parents (individual INTEGER NOT NULL REFERENCES individuals(id) ON DELETE CASCADE, parent_id INTEGER NOT NULL REFERENCES individuals(id) ON DELETE CASCADE, UNIQUE(individual,parent_id) ON CONFLICT IGNORE );";
+    statements << "CREATE TABLE IF NOT EXISTS %1.siblings (individual INTEGER NOT NULL REFERENCES individuals(id) ON DELETE CASCADE, sibling_id INTEGER NOT NULL REFERENCES individuals(id) ON DELETE CASCADE, UNIQUE(individual,sibling_id) ON CONFLICT IGNORE );";
+    statements << "CREATE TABLE IF NOT EXISTS %1.suites (id INTEGER PRIMARY KEY, author INTEGER REFERENCES individuals(id) ON DELETE CASCADE ON UPDATE CASCADE, translator INTEGER REFERENCES individuals(id) ON DELETE CASCADE ON UPDATE CASCADE, explainer INTEGER REFERENCES individuals(id) ON DELETE CASCADE ON UPDATE CASCADE, title TEXT NOT NULL, description TEXT, reference TEXT, CHECK(title <> '' AND description <> '' AND reference <> ''));";
+    statements << "CREATE TABLE IF NOT EXISTS %1.suite_pages (id INTEGER PRIMARY KEY, suite_id INTEGER NOT NULL REFERENCES suites(id) ON DELETE CASCADE, body TEXT NOT NULL, heading TEXT, reference TEXT, CHECK(body <> '' AND heading <> '' AND reference <> ''));";
+    statements << "CREATE TABLE IF NOT EXISTS %1.quotes (id INTEGER PRIMARY KEY, author INTEGER REFERENCES individuals(id) ON DELETE CASCADE ON UPDATE CASCADE, body TEXT NOT NULL, reference TEXT, uri TEXT, suite_id INTEGER REFERENCES suites(id), CHECK(body <> '' AND reference <> '' AND uri <> '' AND (reference NOT NULL OR suite_id NOT NULL)));";
+    statements << "CREATE TABLE IF NOT EXISTS %1.explanations (id INTEGER PRIMARY KEY, surah_id INTEGER NOT NULL, from_verse_number INTEGER, to_verse_number INTEGER, suite_page_id INTEGER NOT NULL REFERENCES suite_pages(id) ON DELETE CASCADE ON UPDATE CASCADE, UNIQUE(surah_id, from_verse_number, suite_page_id) ON CONFLICT REPLACE, CHECK(from_verse_number > 0 AND from_verse_number <= 286 AND to_verse_number >= from_verse_number AND to_verse_number <= 286 AND surah_id > 0 AND surah_id <= 114));";
+
+    QStringList portStatements;
+    if (port)
+    {
+        portStatements << "INSERT INTO %1.locations SELECT * FROM %2.locations;";
+        portStatements << "INSERT INTO %1.individuals SELECT * FROM %2.individuals;";
+        portStatements << "INSERT INTO %1.teachers SELECT * FROM %2.teachers;";
+        portStatements << "INSERT INTO %1.parents SELECT * FROM %2.parents;";
+        portStatements << "INSERT INTO %1.siblings SELECT * FROM %2.siblings;";
+        portStatements << "INSERT INTO %1.websites SELECT * FROM %2.websites;";
+    }
+
+    QStringList indexStatements;
+    indexStatements << "CREATE INDEX IF NOT EXISTS %1.individuals_index ON individuals(birth,death,female,location,is_companion);";
+    indexStatements << "CREATE INDEX IF NOT EXISTS %1.suites_index ON suites(author,translator,explainer);";
+    indexStatements << "CREATE INDEX IF NOT EXISTS %1.suite_pages_index ON suite_pages(suite_id);";
+    indexStatements << "CREATE INDEX IF NOT EXISTS %1.quotes_index ON quotes(author);";
+    indexStatements << "CREATE INDEX IF NOT EXISTS %1.explanations_index ON explanations(to_verse_number);";
+
+    foreach (QString const& q, statements) {
+        m_sql.executeInternal( q.arg(currentTafsir), QueryId::SettingUpTafsir);
+    }
+
+    foreach (QString const& q, portStatements) {
+        m_sql.executeInternal( q.arg(currentTafsir).arg(srcTafsir), QueryId::SettingUpTafsir);
+    }
+
+    foreach (QString const& q, indexStatements) {
+        m_sql.executeInternal( q.arg(currentTafsir), QueryId::SettingUpTafsir);
+    }
+
+    m_sql.endTransaction(NULL, QueryId::SetupTafsir);
+
+    if (port) {
+        m_sql.detach(srcTafsir);
+    }
 }
 
 
