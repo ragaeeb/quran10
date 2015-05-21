@@ -486,6 +486,7 @@ void QueryHelper::setupTables()
     statements << "CREATE TABLE IF NOT EXISTS %1.suite_pages (id INTEGER PRIMARY KEY, suite_id INTEGER NOT NULL REFERENCES suites(id) ON DELETE CASCADE, body TEXT NOT NULL, heading TEXT, reference TEXT, CHECK(body <> '' AND heading <> '' AND reference <> ''));";
     statements << "CREATE TABLE IF NOT EXISTS %1.quotes (id INTEGER PRIMARY KEY, author INTEGER REFERENCES individuals(id) ON DELETE CASCADE ON UPDATE CASCADE, body TEXT NOT NULL, reference TEXT, uri TEXT, suite_id INTEGER REFERENCES suites(id), CHECK(body <> '' AND reference <> '' AND uri <> '' AND (reference NOT NULL OR suite_id NOT NULL)));";
     statements << "CREATE TABLE IF NOT EXISTS %1.explanations (id INTEGER PRIMARY KEY, surah_id INTEGER NOT NULL, from_verse_number INTEGER, to_verse_number INTEGER, suite_page_id INTEGER NOT NULL REFERENCES suite_pages(id) ON DELETE CASCADE ON UPDATE CASCADE, UNIQUE(surah_id, from_verse_number, suite_page_id) ON CONFLICT REPLACE, CHECK(from_verse_number > 0 AND from_verse_number <= 286 AND to_verse_number >= from_verse_number AND to_verse_number <= 286 AND surah_id > 0 AND surah_id <= 114));";
+    executeAndClear(statements);
 
     QStringList portStatements;
     if (port)
@@ -498,30 +499,34 @@ void QueryHelper::setupTables()
         portStatements << "INSERT INTO %1.websites SELECT * FROM %2.websites;";
     }
 
-    QStringList indexStatements;
-    indexStatements << "CREATE INDEX IF NOT EXISTS %1.individuals_index ON individuals(birth,death,female,location,is_companion);";
-    indexStatements << "CREATE INDEX IF NOT EXISTS %1.suites_index ON suites(author,translator,explainer);";
-    indexStatements << "CREATE INDEX IF NOT EXISTS %1.suite_pages_index ON suite_pages(suite_id);";
-    indexStatements << "CREATE INDEX IF NOT EXISTS %1.quotes_index ON quotes(author);";
-    indexStatements << "CREATE INDEX IF NOT EXISTS %1.explanations_index ON explanations(to_verse_number);";
-
-    foreach (QString const& q, statements) {
-        m_sql.executeInternal( q.arg(currentTafsir), QueryId::SettingUpTafsir);
-    }
-
     foreach (QString const& q, portStatements) {
         m_sql.executeInternal( q.arg(currentTafsir).arg(srcTafsir), QueryId::SettingUpTafsir);
     }
 
-    foreach (QString const& q, indexStatements) {
-        m_sql.executeInternal( q.arg(currentTafsir), QueryId::SettingUpTafsir);
-    }
+    statements << "CREATE INDEX IF NOT EXISTS %1.individuals_index ON individuals(birth,death,female,location,is_companion);";
+    statements << "CREATE INDEX IF NOT EXISTS %1.suites_index ON suites(author,translator,explainer);";
+    statements << "CREATE INDEX IF NOT EXISTS %1.suite_pages_index ON suite_pages(suite_id);";
+    statements << "CREATE INDEX IF NOT EXISTS %1.quotes_index ON quotes(author);";
+    statements << "CREATE INDEX IF NOT EXISTS %1.explanations_index ON explanations(to_verse_number);";
+    executeAndClear(statements);
 
     m_sql.endTransaction(NULL, QueryId::SetupTafsir);
 
     if (port) {
         m_sql.detach(srcTafsir);
     }
+}
+
+
+void QueryHelper::executeAndClear(QStringList& statements)
+{
+    const QString currentTafsir = tafsirName();
+
+    foreach (QString const& q, statements) {
+        m_sql.executeInternal( q.arg(currentTafsir), QueryId::SettingUpTafsir);
+    }
+
+    statements.clear();
 }
 
 

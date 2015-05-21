@@ -35,6 +35,8 @@ class QueryHelper : public QObject
     QueryBookmarkHelper m_bookmarkHelper;
     QueryTafsirHelper m_tafsirHelper;
 
+    void executeAndClear(QStringList& statements);
+
 private slots:
     void settingChanged(QString const& key);
 
