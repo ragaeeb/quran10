@@ -25,6 +25,8 @@ Page
         }
     }
     
+    function cleanUp() {}
+    
     titleBar: TitleBar {
         id: tb
         scrollBehavior: TitleBarScrollBehavior.NonSticky
@@ -239,7 +241,7 @@ Page
                 } else if (id == QueryId.RemoveTafsirPage) {
                     persist.showToast( qsTr("Tafsir page removed!"), "images/menu/ic_delete_suite_page.png" );
                 } else if (id == QueryId.EditTafsirPage) {
-                    persist.showToast( qsTr("Tafsir page updated!"), "images/menu/ic_edit_suite_page.png" );
+                    persist.showToast( qsTr("Tafsir page updated!"), "images/menu/ic_edit_bio.png" );
                 }
                 
                 busy.delegateActive = false;
@@ -247,7 +249,8 @@ Page
                 noElements.delegateActive = !listView.visible;
             }
             
-            function removeItem(ListItemData) {
+            function removeItem(ListItemData)
+            {
                 tafsirHelper.removeTafsirPage(listView, ListItemData.id);
                 busy.delegateActive = true;
             }

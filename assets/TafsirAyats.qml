@@ -6,17 +6,30 @@ Page
 {
     id: narrationsPage
     property variant suitePageId
-    
     actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
     
     onSuitePageIdChanged: {
-        if (suitePageId) {
+        if (suitePageId)
+        {
             helper.fetchAyatsForTafsir(listView, suitePageId);
+            tafsirHelper.fetchBioMetadata(listView, suitePageId);
+        }
+    }
+    
+    function popToRoot()
+    {
+        while (navigationPane.top != narrationsPage) {
+            navigationPane.pop();
         }
     }
     
     onCreationCompleted: {
         deviceUtils.attachTopBottomKeys(narrationsPage, listView);
+
+        bioTypeDialog.appendItem( qsTr("Jarh") );
+        bioTypeDialog.appendItem( qsTr("Biography"), true, true );
+        bioTypeDialog.appendItem( qsTr("Tahdeel") );
+        bioTypeDialog.appendItem( qsTr("Cited") );
     }
     
     actions: [
@@ -126,6 +139,32 @@ Page
         scrollBehavior: TitleBarScrollBehavior.NonSticky
         title: qsTr("Ayats") + Retranslate.onLanguageChanged
         
+        dismissAction: ActionItem
+        {
+            id: addLink
+            imageSource: "images/menu/ic_add_bio.png"
+            title: qsTr("Add Link") + Retranslate.onLanguageChanged
+            ActionBar.placement: ActionBarPlacement.OnBar
+            
+            function onPicked(individualId, name)
+            {
+                bioTypeDialog.target = individualId;
+                bioTypeDialog.targetName = name;
+                bioTypeDialog.show();
+                
+                popToRoot();
+            }
+            
+            onTriggered: {
+                console.log("UserEvent: AddLink");
+                definition.source = "IndividualPickerPage.qml";
+                var c = definition.createObject();
+                c.picked.connect(onPicked);
+                
+                navigationPane.push(c);
+            }
+        }
+        
         acceptAction: ActionItem
         {
 			id: lookupAction
@@ -202,7 +241,7 @@ Page
             
             function onDataLoaded(id, data)
             {
-                if (id == QueryId.FetchAyatsForTafsir)
+                if (id == QueryId.FetchAyatsForTafsir || id == QueryId.FetchBioMetadata)
                 {
                     if ( adm.isEmpty() )
                     {
@@ -213,20 +252,28 @@ Page
                         admin.doDiff(data, adm);
                         listView.scrollToPosition(ScrollPosition.Beginning, ScrollAnimation.Smooth);
                     }
+                    
+                    busy.delegateActive = false;
                 } else if (id == QueryId.UnlinkAyatsFromTafsir) {
                     persist.showToast( qsTr("Ayat unlinked from tafsir"), "images/menu/ic_unlink_tafsir_ayat.png" );
+                    busy.delegateActive = false;
                 } else if (id == QueryId.LinkAyatsToTafsir) {
                     persist.showToast( qsTr("Ayat linked to tafsir!"), "images/menu/ic_link_ayat_to_tafsir.png" );
                     suitePageIdChanged();
-                    
-                    while (navigationPane.top != narrationsPage) {
-                        navigationPane.pop();
-                    }
+                    popToRoot();
+                    busy.delegateActive = true;
                 } else if (id == QueryId.UpdateTafsirLink) {
                     persist.showToast( qsTr("Ayat link updated"), "images/menu/ic_update_link.png" );
+                    busy.delegateActive = false;
+                } else if (id == QueryId.RemoveBioLink) {
+                    persist.showToast( qsTr("Biography unlinked!"), "images/menu/ic_remove_bio.png" );
+                    busy.delegateActive = false;
+                } else if (id == QueryId.AddBioLink) {
+                    persist.showToast( qsTr("Biography linked!"), "images/dropdown/save_bio.png" );
+                    suitePageIdChanged();
+                    busy.delegateActive = true;
                 }
                 
-                busy.delegateActive = false;
                 listView.visible = !adm.isEmpty();
                 noElements.delegateActive = !listView.visible;
             }
@@ -237,22 +284,34 @@ Page
 				var d = dataModel.data(indexPath);
 				definition.source = "AyatPage.qml";
 
-				if (!d.from_verse_number) {
-					definition.source = "SurahPage.qml";
-				}
-				
-                var page = definition.createObject();
-				
-				if (d.from_verse_number) {
-					page.surahId = d.surah_id;
-					page.verseId = dataModel.data(indexPath).from_verse_number;
-				} else {
-                    page.surahId = d.surah_id;
-					prompt.indexPath = indexPath;
-					page.picked.connect(lookupAction.onPicked);
-				}
-				
-                navigationPane.push(page);
+                if ( itemType(d, indexPath) == "ayat" )
+                {
+                    if (!d.from_verse_number) {
+                        definition.source = "SurahPage.qml";
+                    }
+                    
+                    var page = definition.createObject();
+                    
+                    if (d.from_verse_number) {
+                        page.surahId = d.surah_id;
+                        page.verseId = dataModel.data(indexPath).from_verse_number;
+                    } else {
+                        page.surahId = d.surah_id;
+                        prompt.indexPath = indexPath;
+                        page.picked.connect(lookupAction.onPicked);
+                    }
+                    
+                    navigationPane.push(page);
+                } else {
+                    persist.invoke( "com.canadainc.Quran10.bio.previewer", "", "", "", d.target_id.toString() );
+                }
+            }
+            
+            function removeBioLink(ListItem)
+            {
+                busy.delegateActive = true;
+                tafsirHelper.removeBioLink(listView, ListItem.data.id);
+                adm.removeAt(ListItem.indexPath[0]);
             }
             
             function updateLink(ListItem)
@@ -279,13 +338,54 @@ Page
             
             function unlink(ListItem)
             {
+                busy.delegateActive = true;
                 tafsirHelper.unlinkAyatsForTafsir(listView, [ListItem.data.id], suitePageId);
                 adm.removeAt(ListItem.indexPath[0]);
+            }
+            
+            function itemType(data, indexPath)
+            {
+                if (data.surah_id) {
+                    return "ayat";
+                } else {
+                    return "bio";
+                }
             }
             
             listItemComponents: [
                 ListItemComponent
                 {
+                    type: "bio"
+                    
+                    StandardListItem
+                    {
+                        id: bioRoot
+                        title: ListItemData.target
+                        imageSource: ListItemData.points > 1 ? "images/list/ic_tafsir.png" : ListItemData.points > 0 ? "images/list/ic_like.png" : ListItemData.points < 0 ? "images/list/ic_dislike.png" : "images/tabs/ic_bio.png"
+                        
+                        contextActions: [
+                            ActionSet
+                            {
+                                title: bioRoot.title
+                                
+                                DeleteActionItem
+                                {
+                                    imageSource: "images/menu/ic_remove_bio.png"
+                                    
+                                    onTriggered: {
+                                        console.log("UserEvent: DeleteBioLink");
+                                        bioRoot.ListItem.view.removeBioLink(bioRoot.ListItem);
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
+                
+                ListItemComponent
+                {
+                    type: "ayat"
+                    
                     StandardListItem
                     {
                         id: rootItem
@@ -401,6 +501,34 @@ Page
                     } else {
                         persist.showToast( qsTr("Invalid entry specified. Please enter something with the Chapter:Verse scheme (ie: 2:55 for Surah Baqara vese #55)"), "images/toast/invalid_entry.png" );
                     }
+                }
+            }
+        },
+        
+        SystemListDialog
+        {
+            id: bioTypeDialog
+            property variant target
+            property string targetName
+            title: qsTr("Biography Type") + Retranslate.onLanguageChanged
+            body: qsTr("Please select the type of biography this is:") + Retranslate.onLanguageChanged
+            cancelButton.label: qsTr("Cancel")
+            confirmButton.label: qsTr("OK") + Retranslate.onLanguageChanged
+            
+            onFinished: {
+                if (value == SystemUiResult.ConfirmButtonSelection)
+                {
+                    var selectedIndex = selectedIndices[0];
+                    
+                    if (selectedIndex == 0) {
+                        selectedIndex = -1;
+                    } else if (selectedIndex == 2) {
+                        selectedIndex = 1;
+                    } else if (selectedIndex == 3) {
+                        selectedIndex = 2;
+                    }
+                    
+                    tafsirHelper.addBioLink(listView, suitePageId, target, selectedIndex);
                 }
             }
         }

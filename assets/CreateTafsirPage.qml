@@ -20,7 +20,9 @@ Page
         {
             var data = results[0];
             
-            authorField.text = data.author.toString();
+            if (data.author) {
+                authorField.text = data.author.toString();
+            }
             
             if (data.translator) {
                 translatorField.text = data.translator.toString();
@@ -48,10 +50,9 @@ Page
             
             onTriggered: {
                 console.log("UserEvent: CreateTafsirSaveTriggered");
-                authorField.validator.validate();
                 titleField.validator.validate();
                 
-                if (authorField.validator.valid && titleField.validator.valid) {
+                if (titleField.validator.valid) {
                     createTafsir( suiteId, authorField.text.trim(), translatorField.text.trim(), explainerField.text.trim(), titleField.text.trim(), descriptionField.text.trim(), referenceField.text.trim() );
                 }
             }
@@ -73,16 +74,6 @@ Page
             {
                 id: authorField
                 hintText: qsTr("Author name") + Retranslate.onLanguageChanged
-                
-                validator: Validator
-                {
-                    errorMessage: qsTr("Author name cannot be empty...") + Retranslate.onLanguageChanged
-                    mode: ValidationMode.FocusLost
-                    
-                    onValidate: {
-                        valid = authorField.text.trim().length > 0;
-                    }
-                }
             }
             
             IndividualTextField

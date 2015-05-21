@@ -73,10 +73,6 @@ Page
 
             body.text = "\n"+result;
             ft.play();
-        } else if (id == QueryId.RemoveBio) {
-            persist.showToast( qsTr("Biography successfully removed!"), "images/menu/ic_remove_bio.png" );
-        } else if (id == QueryId.EditBio) {
-            persist.showToast( qsTr("Biography successfully updated!"), "images/menu/ic_edit_bio.png" );
         } else if (id == QueryId.RemoveTeacher) {
             persist.showToast( qsTr("Teacher removed!"), "images/menu/ic_remove_teacher.png" );
         } else if (id == QueryId.RemoveStudent) {
@@ -199,35 +195,6 @@ Page
                     }
                 }
                 
-                function onBioSaved(bioId, author, heading, body, reference)
-                {
-                    tafsirHelper.editBio(bioPage, bioId, body, reference, author, heading);
-
-                    var current = dataModel.data(editIndexPath);
-                    current["body"] = body;
-                    current["reference"] = reference;
-                    bioModel.updateItem(editIndexPath, current);
-                    
-                    popToRoot();
-                }
-                
-                function editBio(ListItem, ListItemData)
-                {
-                    editIndexPath = ListItem.indexPath;
-                    definition.source = "CreateBioPage.qml";
-                    var page = definition.createObject();
-                    page.createBio.connect(onBioSaved);
-                    page.bioId = ListItemData.bio_id;
-                    
-                    navigationPane.push(page);
-                }
-                
-                function removeBio(ListItem, ListItemData)
-                {
-                    tafsirHelper.removeBio(bioPage, ListItemData.bio_id);
-                    bioModel.removeAt(ListItem.indexPath);
-                }
-                
                 function removeStudent(ListItem)
                 {
                     tafsirHelper.removeStudent(bioPage, individualId, ListItem.data.id);
@@ -257,77 +224,12 @@ Page
                     {
                         type: "bio"
                         
-                        Container
+                        StandardListItem
                         {
-                            id: bioContainer
-                            horizontalAlignment: HorizontalAlignment.Fill
-                            verticalAlignment: VerticalAlignment.Fill
-                            
-                            StandardListItem
-                            {
-                                id: sli
-                                description: ListItemData.body.replace(/\n/g, " ").substring(0, 150)
-                                imageSource: ListItemData.points > 0 ? "images/list/ic_like.png" : ListItemData.points == 0 ? "images/list/ic_bio.png" : "images/list/ic_dislike.png"
-                                title: ListItemData.heading ? ListItemData.heading : ListItemData.author ? ListItemData.author : ListItemData.reference ? ListItemData.reference : ""
-                                
-                                contextMenuHandler: [
-                                    ContextMenuHandler {
-                                        onPopulating: {
-                                            if (!reporter.isAdmin) {
-                                                event.abort();
-                                            }
-                                        }
-                                    }
-                                ]
-                                
-                                contextActions: [
-                                    ActionSet
-                                    {
-                                        title: sli.title
-                                        subtitle: sli.description
-                                        
-                                        ActionItem
-                                        {
-                                            imageSource: "images/menu/ic_edit_bio.png"
-                                            title: qsTr("Edit") + Retranslate.onLanguageChanged
-                                            
-                                            onTriggered: {
-                                                console.log("UserEvent: EditBio");
-                                                bioContainer.ListItem.view.editBio(bioContainer.ListItem, ListItemData);
-                                            }
-                                        }
-                                        
-                                        DeleteActionItem
-                                        {
-                                            imageSource: "images/menu/ic_remove_bio.png"
-                                            
-                                            onTriggered: {
-                                                console.log("UserEvent: RemoveBio");
-                                                bioContainer.ListItem.view.removeBio(bioContainer.ListItem, ListItemData);
-                                            }
-                                        }
-                                    }
-                                ]
-                            }
-                            
-                            TextArea
-                            {
-                                id: bioBody
-                                editable: false
-                                backgroundVisible: false
-                                content.flags: TextContentFlag.ActiveText | TextContentFlag.EmoticonsOff
-                                input.flags: TextInputFlag.SpellCheckOff
-                                text: "%1\n\n%2".arg(ListItemData.body).arg(ListItemData.reference ? ListItemData.reference : "") + Retranslate.onLanguageChanged
-                                horizontalAlignment: HorizontalAlignment.Fill
-                                visible: ListItemData.isExpanded == 1
-                            }
-                            
-                            ImageView {
-                                topMargin: 0; bottomMargin: 0
-                                imageSource: "images/dividers/divider_bio.png"
-                                horizontalAlignment: HorizontalAlignment.Center
-                                visible: bioBody.visible
-                            }
+                            id: sli
+                            description: ListItemData.body.replace(/\n/g, " ").substring(0, 150)
+                            imageSource: ListItemData.points > 1 ? "images/list/ic_tafsir.png" : ListItemData.points > 0 ? "images/list/ic_like.png" : ListItemData.points < 0 ? "images/list/ic_dislike.png" : "images/list/ic_bio.png"
+                            title: ListItemData.heading ? ListItemData.heading : ListItemData.title ? ListItemData.title : ListItemData.author ? ListItemData.author : ListItemData.reference ? ListItemData.reference : ""
                         }
                     },
                     
@@ -482,8 +384,7 @@ Page
                     if (d.type == "student" || d.type == "teacher") {
                         persist.invoke( "com.canadainc.Quran10.bio.previewer", "", "", "", d.id.toString() );
                     } else if (d.type == "bio") {
-                        d.isExpanded = d.isExpanded == 1 ? 0 : 1;
-                        bioModel.updateItem(indexPath, d);
+                        persist.invoke( "com.canadainc.Quran10.tafsir.previewer", "", "", "quran://tafsir/"+d.suite_page_id.toString() );
                     } else if (d.type == "tafsir") {
                         console.log("UserEvent: InvokeTafsir");
                         helper.fetchAllTafsirForSuite(bioPage, d.id);

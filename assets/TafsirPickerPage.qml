@@ -154,7 +154,7 @@ Page
                     StandardListItem
                     {
                         id: rootItem
-                        description: ListItemData.author
+                        description: ListItemData.author ? ListItemData.author : qsTr("Unknown") + Retranslate.onLanguageChanged
                         imageSource: "images/list/ic_tafsir.png"
                         title: ListItemData.title
                         

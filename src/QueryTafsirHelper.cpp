@@ -32,58 +32,22 @@ QueryTafsirHelper::QueryTafsirHelper(DatabaseHelper* sql) : m_sql(sql)
 }
 
 
-qint64 QueryTafsirHelper::addBio(QObject* caller, QString const& body, QString const& reference, QString const& author, QString const& heading)
+qint64 QueryTafsirHelper::addBioLink(QObject* caller, qint64 suitePageId, qint64 targetId, QVariant const& points)
 {
-    LOGGER( body.length() << reference.length() << author << heading );
-
-    qint64 id = QDateTime::currentMSecsSinceEpoch();
-    QVariantList args = QVariantList() << id << body << protect(reference) << protect(heading);
-
-    if ( !author.isEmpty() ) {
-        args << generateIndividualField(caller, author);
-    } else {
-        args << QVariant();
-    }
-
-    QString query = "INSERT INTO biographies (id,body,reference,heading,author) VALUES(?,?,?,?,?)";
-    m_sql->executeQuery(caller, query, QueryId::AddBio, args);
-
-    return id;
-}
-
-
-qint64 QueryTafsirHelper::addBioLink(QObject* caller, qint64 bioId, qint64 targetId, QVariant const& points)
-{
-    LOGGER(bioId << targetId << points);
+    LOGGER(suitePageId << targetId << points);
 
     qint64 id = QDateTime::currentMSecsSinceEpoch();
 
-    QString query = "INSERT INTO mentions (id,target,bio_id,points) VALUES(?,?,?,?)";
-    m_sql->executeQuery(caller, query, QueryId::AddBioLink, QVariantList() << id << targetId << bioId << points);
+    QString query = "INSERT INTO mentions (id,target,suite_page_id,points) VALUES(?,?,?,?)";
+    m_sql->executeQuery(caller, query, QueryId::AddBioLink, QVariantList() << id << targetId << suitePageId << points);
 
     return id;
-}
-
-
-void QueryTafsirHelper::editBio(QObject* caller, qint64 bioId, QString const& body, QString const& reference, QString const& author, QString const& heading)
-{
-    LOGGER( bioId << body.length() << reference.length() << author << heading );
-
-    QVariantList args = QVariantList() << body << protect(reference) << protect(heading);
-
-    if ( !author.isEmpty() ) {
-        args << generateIndividualField(caller, author);
-    } else {
-        args << QVariant();
-    }
-
-    QString query = QString("UPDATE biographies SET body=?, reference=?, heading=?, author=? WHERE id=%1").arg(bioId);
-    m_sql->executeQuery(caller, query, QueryId::EditBio, args);
 }
 
 
 void QueryTafsirHelper::addWebsite(QObject* caller, qint64 individualId, QString const& address)
 {
+    LOGGER(individualId << address);
     QString query = QString("INSERT INTO websites (individual,uri) VALUES(%1,?)").arg(individualId);
     m_sql->executeQuery(caller, query, QueryId::AddWebsite, QVariantList() << address);
 }
@@ -120,15 +84,23 @@ void QueryTafsirHelper::addTafsir(QObject* caller, QString const& author, QStrin
 {
     LOGGER(author << translator << explainer << title << description << reference);
 
-    QStringList fields = QStringList() << "id" << "author" << "title" << "description" << "reference";
-    QVariantList args = QVariantList() << QDateTime::currentMSecsSinceEpoch() << generateIndividualField(caller, author) << title << protect(description) << reference;
+    QStringList fields = QStringList() << "id" << "title" << "description" << "reference";
+    QVariantList args = QVariantList() << QDateTime::currentMSecsSinceEpoch() << title << protect(description) << reference;
 
-    if ( !translator.isEmpty() ) {
+    if ( !author.isEmpty() )
+    {
+        fields << "author";
+        args << generateIndividualField(caller, author);
+    }
+
+    if ( !translator.isEmpty() )
+    {
         fields << "translator";
         args << generateIndividualField(caller, translator);
     }
 
-    if ( !explainer.isEmpty() ) {
+    if ( !explainer.isEmpty() )
+    {
         fields << "explainer";
         args << generateIndividualField(caller, explainer);
     }
@@ -246,11 +218,6 @@ void QueryTafsirHelper::editLocation(QObject* caller, qint64 id, QString const& 
 }
 
 
-void QueryTafsirHelper::fetchAllBios(QObject* caller) {
-    m_sql->executeQuery(caller, QString("SELECT biographies.id AS bio_id,mentions.id AS mention_id,%1 AS author,%2 AS target,heading,body,reference,points FROM biographies LEFT JOIN mentions ON mentions.bio_id=biographies.id LEFT JOIN individuals i ON biographies.author=i.id LEFT JOIN individuals j ON mentions.target=j.id").arg( NAME_FIELD("i") ).arg( NAME_FIELD("j") ), QueryId::FetchAllBios);
-}
-
-
 void QueryTafsirHelper::fetchAllIndividuals(QObject* caller) {
     m_sql->executeQuery(caller, QString("SELECT i.id,%1 AS name,is_companion FROM individuals i ORDER BY displayName,name").arg( NAME_FIELD("i") ), QueryId::FetchAllIndividuals);
 }
@@ -280,10 +247,10 @@ void QueryTafsirHelper::fetchAllOrigins(QObject* caller)
 }
 
 
-void QueryTafsirHelper::fetchBioMetadata(QObject* caller, qint64 bioId)
+void QueryTafsirHelper::fetchBioMetadata(QObject* caller, qint64 suitePageId)
 {
-    LOGGER(bioId);
-    m_sql->executeQuery(caller, QString("SELECT * FROM biographies WHERE id=%1").arg(bioId), QueryId::FetchBioMetadata);
+    LOGGER(suitePageId);
+    m_sql->executeQuery(caller, QString("SELECT mentions.id,%1 AS target,points,mentions.target AS target_id FROM mentions LEFT JOIN individuals i ON mentions.target=i.id WHERE suite_page_id=%2").arg( NAME_FIELD("i") ).arg(suitePageId), QueryId::FetchBioMetadata);
 }
 
 
@@ -316,9 +283,9 @@ void QueryTafsirHelper::fetchAllWebsites(QObject* caller, qint64 individualId)
 
 void QueryTafsirHelper::fetchAllTafsir(QObject* caller, qint64 individualId)
 {
-    LOGGER("fetchAllTafsir");
+    LOGGER(individualId);
 
-    QStringList queryParams = QStringList() << QString("SELECT suites.id AS id,%1 AS author,title FROM suites INNER JOIN individuals i ON i.id=suites.author").arg( NAME_FIELD("i") );
+    QStringList queryParams = QStringList() << QString("SELECT suites.id AS id,%1 AS author,title FROM suites LEFT JOIN individuals i ON i.id=suites.author").arg( NAME_FIELD("i") );
 
     if (individualId) {
         queryParams << QString("WHERE (author=%1 OR translator=%1 OR explainer=%1)").arg(individualId);
@@ -428,14 +395,6 @@ void QueryTafsirHelper::linkAyatsToTafsir(QObject* caller, qint64 suitePageId, Q
 }
 
 
-void QueryTafsirHelper::removeBio(QObject* caller, qint64 id)
-{
-    LOGGER(id);
-    QString query = QString("DELETE FROM biographies WHERE id=%1").arg(id);
-    m_sql->executeQuery(caller, query, QueryId::RemoveBio);
-}
-
-
 void QueryTafsirHelper::removeBioLink(QObject* caller, qint64 id)
 {
     LOGGER(id);
@@ -517,7 +476,6 @@ void QueryTafsirHelper::replaceIndividual(QObject* caller, qint64 toReplaceId, q
     LOGGER(toReplaceId << actualId);
 
     m_sql->startTransaction(caller, QueryId::ReplacingIndividual);
-    m_sql->executeQuery(caller, QString("UPDATE biographies SET author=%1 WHERE author=%2").arg(actualId).arg(toReplaceId), QueryId::ReplacingIndividual);
     m_sql->executeQuery(caller, QString("UPDATE mentions SET target=%1 WHERE target=%2").arg(actualId).arg(toReplaceId), QueryId::ReplacingIndividual);
     m_sql->executeQuery(caller, QString("UPDATE quotes SET author=%1 WHERE author=%2").arg(actualId).arg(toReplaceId), QueryId::ReplacingIndividual);
     m_sql->executeQuery(caller, QString("UPDATE suites SET author=%1 WHERE author=%2").arg(actualId).arg(toReplaceId), QueryId::ReplacingIndividual);
@@ -525,6 +483,10 @@ void QueryTafsirHelper::replaceIndividual(QObject* caller, qint64 toReplaceId, q
     m_sql->executeQuery(caller, QString("UPDATE suites SET explainer=%1 WHERE explainer=%2").arg(actualId).arg(toReplaceId), QueryId::ReplacingIndividual);
     m_sql->executeQuery(caller, QString("UPDATE teachers SET teacher=%1 WHERE teacher=%2").arg(actualId).arg(toReplaceId), QueryId::ReplacingIndividual);
     m_sql->executeQuery(caller, QString("UPDATE teachers SET individual=%1 WHERE individual=%2").arg(actualId).arg(toReplaceId), QueryId::ReplacingIndividual);
+    m_sql->executeQuery(caller, QString("UPDATE parents SET parent_id=%1 WHERE teacparent_idher=%2").arg(actualId).arg(toReplaceId), QueryId::ReplacingIndividual);
+    m_sql->executeQuery(caller, QString("UPDATE parents SET individual=%1 WHERE individual=%2").arg(actualId).arg(toReplaceId), QueryId::ReplacingIndividual);
+    m_sql->executeQuery(caller, QString("UPDATE siblings SET sibling_id=%1 WHERE sibling_id=%2").arg(actualId).arg(toReplaceId), QueryId::ReplacingIndividual);
+    m_sql->executeQuery(caller, QString("UPDATE siblings SET individual=%1 WHERE individual=%2").arg(actualId).arg(toReplaceId), QueryId::ReplacingIndividual);
     m_sql->executeQuery(caller, QString("UPDATE websites SET individual=%1 WHERE individual=%2").arg(actualId).arg(toReplaceId), QueryId::ReplacingIndividual);
     m_sql->executeQuery(caller, QString("DELETE FROM individuals WHERE id=%1").arg(toReplaceId), QueryId::ReplacingIndividual);
     m_sql->endTransaction(caller, QueryId::ReplaceIndividual);
