@@ -519,16 +519,17 @@ Page
                 if (value == SystemUiResult.ConfirmButtonSelection)
                 {
                     var selectedIndex = selectedIndices[0];
+                    var points;
                     
                     if (selectedIndex == 0) {
-                        selectedIndex = -1;
+                        points = -1;
                     } else if (selectedIndex == 2) {
-                        selectedIndex = 1;
+                        points = 1;
                     } else if (selectedIndex == 3) {
-                        selectedIndex = 2;
+                        points = 2;
                     }
                     
-                    tafsirHelper.addBioLink(listView, suitePageId, target, selectedIndex);
+                    tafsirHelper.addBioLink(listView, suitePageId, target, points);
                 }
             }
         }
