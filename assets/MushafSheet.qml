@@ -467,7 +467,7 @@ Sheet
     
     onClosed: {
         app.childCardFinished.disconnect(jumpSurah.onFinished);
-        tutorial.tutorialFinished.disconnect(onFinished);
+        tutorial.tutorialFinished.disconnect(prevPage.onFinished);
         Application.aboutToQuit.disconnect(onAboutToQuit);       
         destroy();
     }
