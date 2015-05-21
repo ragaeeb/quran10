@@ -396,7 +396,7 @@ Page
                     
                     if (d.type == "student" || d.type == "teacher") {
                         persist.invoke( "com.canadainc.Quran10.bio.previewer", "", "", "", d.id.toString() );
-                    } else if (d.type == "bio") {
+                    } else if (d.type == "bio" || d.type == "citing") {
                         persist.invoke( "com.canadainc.Quran10.tafsir.previewer", "", "", "quran://tafsir/"+d.suite_page_id.toString() );
                     } else if (d.type == "tafsir") {
                         console.log("UserEvent: InvokeTafsir");
