@@ -82,6 +82,7 @@ public:
     Q_SLOT void initForeignKeys();
     Q_SLOT void lazyInit();
     Q_SLOT void refreshDatabase();
+    Q_SLOT void setupTables();
 
     Q_INVOKABLE QObject* getExecutor();
     QObject* getTafsirHelper();
