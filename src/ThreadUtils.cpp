@@ -28,7 +28,7 @@ QString ThreadUtils::compressBookmarks(QString const& destinationZip)
     bool result = JlCompress::compressFile(destinationZip, BOOKMARKS_PATH, BACKUP_ZIP_PASSWORD);
     QFileInfo f(destinationZip);
 
-    return result ? f.fileName() : "";
+    return result && f.size() > 0 ? f.fileName() : "";
 }
 
 void ThreadUtils::compressFiles(QSet<QString>& attachments)
