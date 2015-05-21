@@ -42,10 +42,10 @@ class ApplicationUI : public QObject
 
     ApplicationUI(bb::cascades::Application *app);
     void init(QString const& qml);
-    void finishWithToast(QString const& message);
     void processInvoke();
     void initGlobals();
     void complain(QString const& message);
+    void finishWithToast(QString const& message);
     static void onErrorMessage(const char* msg);
 
 private slots:
@@ -61,6 +61,7 @@ private slots:
     void onUpdateCheckNeeded(QVariantMap const& params);
     void onDeflationDone(QVariantMap const& m);
     void onDownloadPlugins(QVariantList const& m);
+    void report(QString const& message);
 
 signals:
     void childCardFinished(QString const& message);
