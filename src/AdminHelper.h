@@ -43,7 +43,7 @@ private slots:
     void uploadUpdates();
 
 signals:
-    void compressed();
+    void compressed(bool success);
     void compressProgress(qint64 current, qint64 total);
     void compressing();
     void ayatsCaptured(QVariantList const& result, QString const& cookie);

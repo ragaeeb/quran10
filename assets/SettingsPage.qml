@@ -345,9 +345,14 @@ Page
                         infoText.text = qsTr("Uploading %1/%2...").arg( current.toString() ).arg( total.toString() );
                     }
                     
-                    function onCompressed()
+                    function onCompressed(success)
                     {
-                        infoText.text = qsTr("Uploading...");
+                        if (success) {
+                            infoText.text = qsTr("Uploading...");
+                        } else {
+                            infoText.text = qsTr("Error...");
+                        }
+
                         busy.delegateActive = false;
                     }
                     
