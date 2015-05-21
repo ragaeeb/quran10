@@ -99,6 +99,39 @@ NavigationPane
                 horizontalAlignment: HorizontalAlignment.Fill
                 verticalAlignment: VerticalAlignment.Fill
                 
+                SegmentedControl
+                {
+                    id: searchColumn
+                    horizontalAlignment: HorizontalAlignment.Fill
+                    bottomMargin: 0
+                    
+                    Option {
+                        description: qsTr("Search author field") + Retranslate.onLanguageChanged
+                        imageSource: "images/dropdown/search_author.png"
+                        text: qsTr("Author") + Retranslate.onLanguageChanged
+                        value: "author"
+                    }
+                    
+                    Option {
+                        description: qsTr("Search quote text") + Retranslate.onLanguageChanged
+                        imageSource: "images/dropdown/search_quote_body.png"
+                        text: qsTr("Body") + Retranslate.onLanguageChanged
+                        value: "body"
+                        selected: true
+                    }
+                    
+                    Option {
+                        description: qsTr("Search reference field") + Retranslate.onLanguageChanged
+                        imageSource: "images/dropdown/search_quote_reference.png"
+                        text: qsTr("Reference") + Retranslate.onLanguageChanged
+                        value: "reference"
+                    }
+                    
+                    layoutProperties: StackLayoutProperties {
+                        spaceQuota: 1
+                    }
+                }
+                
                 ListView
                 {
                     id: listView
@@ -107,47 +140,6 @@ NavigationPane
                     
                     dataModel: ArrayDataModel {
                         id: adm
-                    }
-                    
-                    leadingVisual: Container
-                    {
-                        horizontalAlignment: HorizontalAlignment.Fill
-                        
-                        layout: StackLayout {
-                            orientation: LayoutOrientation.LeftToRight
-                        }
-                        
-                        SegmentedControl
-                        {
-                            id: searchColumn
-                            horizontalAlignment: HorizontalAlignment.Fill
-                            
-                            Option {
-                                description: qsTr("Search author field") + Retranslate.onLanguageChanged
-                                imageSource: "images/dropdown/search_author.png"
-                                text: qsTr("Author") + Retranslate.onLanguageChanged
-                                value: "author"
-                            }
-                            
-                            Option {
-                                description: qsTr("Search quote text") + Retranslate.onLanguageChanged
-                                imageSource: "images/dropdown/search_quote_body.png"
-                                text: qsTr("Body") + Retranslate.onLanguageChanged
-                                value: "body"
-                                selected: true
-                            }
-                            
-                            Option {
-                                description: qsTr("Search reference field") + Retranslate.onLanguageChanged
-                                imageSource: "images/dropdown/search_quote_reference.png"
-                                text: qsTr("Reference") + Retranslate.onLanguageChanged
-                                value: "reference"
-                            }
-                            
-                            layoutProperties: StackLayoutProperties {
-                                spaceQuota: 1
-                            }
-                        }
                     }
                     
                     function onDataLoaded(id, data)
