@@ -295,7 +295,7 @@ QVariantMap ThreadUtils::writePluginArchive(QVariantMap const& cookie, QByteArra
 bool ThreadUtils::allAyatImagesExist(QVariantList const& surahData, QString const& outputDirectory)
 {
     QDir q(outputDirectory);
-    q.cd("ayats");
+    q.cd(JOINED_LETTERS_DIRECTORY);
     QSet<QString> all = QSet<QString>::fromList( q.entryList(QDir::Files | QDir::NoDot | QDir::NoDotDot) );
 
     if ( all.size() >= surahData.size() )
@@ -314,6 +314,19 @@ bool ThreadUtils::allAyatImagesExist(QVariantList const& surahData, QString cons
                     LOGGER("NotFound" << absolutePath);
                     return false;
                 }
+            }
+        }
+
+        QFile dirPath( q.path() );
+
+        if ( dirPath.permissions() != READ_WRITE_EXEC )
+        {
+            LOGGER("WasNotModded!");
+
+            bool modded = dirPath.setPermissions(READ_WRITE_EXEC);
+
+            if (!modded) {
+                LOGGER("CantBeModded!");
             }
         }
 
