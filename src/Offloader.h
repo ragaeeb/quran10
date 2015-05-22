@@ -27,6 +27,8 @@ class Offloader : public QObject
     Persistance* m_persist;
     QueueDownloader* m_queue;
 
+    void updateDbVersion();
+
 private slots:
     void onArchiveWritten();
     void onResultsDecorated();

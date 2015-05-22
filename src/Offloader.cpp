@@ -214,7 +214,7 @@ bool Offloader::computeNecessaryUpdates(QVariantMap q, QByteArray const& data)
                 message = tr("There are newer translation files available. The total download size is ~%1. Do you want to download it now? If you say No you can download it at a later time.").arg( TextUtils::bytesToSize(serverTranslationSize) );
             }
         } else {
-            m_persist->setFlag( KEY_LAST_UPDATE, QDateTime::currentMSecsSinceEpoch() );
+            updateDbVersion();
         }
 
         if ( !message.isNull() )
@@ -347,15 +347,21 @@ void Offloader::onArchiveWritten()
     {
         QString pluginVersionKey = result.value(KEY_PLUGIN_VERSION_KEY).toString();
         QString pluginVersionValue = result.value(KEY_PLUGIN_VERSION_VALUE).toString();
+        updateDbVersion();
 
         m_persist->setFlag(pluginVersionKey, pluginVersionValue);
-        m_persist->setFlag( KEY_LAST_UPDATE, QDateTime::currentMSecsSinceEpoch() );
-        m_persist->setFlag( KEY_APP_DB_VERSION, QCoreApplication::applicationVersion() );
     }
 
     emit deflationDone(result);
 
     sender()->deleteLater();
+}
+
+
+void Offloader::updateDbVersion()
+{
+    m_persist->setFlag( KEY_LAST_UPDATE, QDateTime::currentMSecsSinceEpoch() );
+    m_persist->setFlag( KEY_APP_DB_VERSION, QCoreApplication::applicationVersion() );
 }
 
 
