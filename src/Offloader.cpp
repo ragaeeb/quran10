@@ -349,6 +349,8 @@ void Offloader::onArchiveWritten()
         QString pluginVersionValue = result.value(KEY_PLUGIN_VERSION_VALUE).toString();
 
         m_persist->setFlag(pluginVersionKey, pluginVersionValue);
+        m_persist->setFlag( KEY_LAST_UPDATE, QDateTime::currentMSecsSinceEpoch() );
+        m_persist->setFlag( KEY_APP_DB_VERSION, QCoreApplication::applicationVersion() );
     }
 
     emit deflationDone(result);

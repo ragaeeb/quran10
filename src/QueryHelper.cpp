@@ -38,17 +38,14 @@ QueryHelper::QueryHelper(Persistance* persist) :
 
 void QueryHelper::lazyInit()
 {
-    LOGGER("*** LazyInit!");
     refreshDatabase();
 
     QTime time = QTime::currentTime();
     qsrand( (uint)time.msec() );
-    LOGGER("*** Finished LazyInit!");
 }
 
 
-void QueryHelper::refreshDatabase()
-{
+void QueryHelper::refreshDatabase() {
     settingChanged(KEY_TRANSLATION);
 }
 
