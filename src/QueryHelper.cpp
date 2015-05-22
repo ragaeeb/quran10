@@ -9,7 +9,8 @@
 #include "ThreadUtils.h"
 
 #define ATTACH_TAFSIR m_sql.attachIfNecessary( tafsirName(), true );
-#define TRANSLATION QString("quran_%1").arg(m_translation)
+#define TRANSLATION_NAME(language) QString("quran_%1").arg(language)
+#define TRANSLATION TRANSLATION_NAME(m_translation)
 #define TAFSIR_NAME(language) QString("quran_tafsir_%1").arg(language)
 
 namespace {
@@ -37,10 +38,12 @@ QueryHelper::QueryHelper(Persistance* persist) :
 
 void QueryHelper::lazyInit()
 {
+    LOGGER("*** LazyInit!");
     refreshDatabase();
 
     QTime time = QTime::currentTime();
     qsrand( (uint)time.msec() );
+    LOGGER("*** Finished LazyInit!");
 }
 
 
@@ -54,7 +57,9 @@ void QueryHelper::settingChanged(QString const& key)
 {
     if (key == KEY_TRANSLATION)
     {
-        if ( showTranslation() ) {
+        if ( showTranslation() )
+        {
+            m_sql.detach( TRANSLATION_NAME(ENGLISH_TRANSLATION) ); // in case we had to fall back
             m_sql.detach(TRANSLATION);
         }
 
@@ -74,6 +79,8 @@ void QueryHelper::settingChanged(QString const& key)
             if ( !translationFile.exists() || translationFile.size() == 0 ) { // translation doesn't exist, download it
                 params[KEY_TRANSLATION] = TRANSLATION;
                 forcedUpdates << KEY_TRANSLATION;
+                LOGGER("Using english translation as fallback...");
+                m_sql.attachIfNecessary( TRANSLATION_NAME(ENGLISH_TRANSLATION) ); // fall back to English for the time being...
             } else {
                 m_sql.attachIfNecessary(TRANSLATION, inHome); // since english translation is loaded by default
             }
