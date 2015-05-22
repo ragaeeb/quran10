@@ -235,7 +235,7 @@ void QueryHelper::fetchAllAyats(QObject* caller, int fromChapter, int toChapter)
 
     if ( m_persist->getValueFor(KEY_JOIN_LETTERS).toInt() == 1 )
     {
-        QDir q( QString("%1/ayats").arg( m_persist->getValueFor(KEY_OUTPUT_FOLDER).toString() ) );
+        QDir q( QString("%1/%2").arg( m_persist->getValueFor(KEY_OUTPUT_FOLDER).toString() ).arg(JOINED_LETTERS_DIRECTORY) );
 
         if ( q.exists() )
         {
