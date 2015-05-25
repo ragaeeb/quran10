@@ -20,16 +20,17 @@ Page
                 horizontalAlignment: HorizontalAlignment.Fill
                 
                 onCreationCompleted: {
-                    var body = qsTr("Version information not detected...");
                     var tafsirVersion = parseInt(helper.tafsirVersion);
                     var translationVersion = parseInt(helper.translationVersion);
-                    
+                                        
                     if (tafsirVersion > 0 && translationVersion > 0) {
                         text = qsTr("Tafsir Last Updated: %1\nTranslation Last Updated: %2").arg( Qt.formatDate(tafsirVersion, "MMM d, yyyy") ).arg( Qt.formatDate(translationVersion, "MMM d, yyyy") );
                     } else if (tafsirVersion > 0) {
                         text = qsTr("Tafsir Last Updated: %1").arg( new Date(tafsirVersion).toDateString() );
                     } else if (translationVersion > 0) {
                         text = qsTr("Translation Last Updated: %1").arg( new Date(translationVersion).toDateString() );
+                    } else {
+                        text = qsTr("Version information not detected...");
                     }
                 }
                 
