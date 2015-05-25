@@ -466,6 +466,7 @@ void QueryHelper::fetchAllQuotes(QObject* caller, qint64 individualId)
 
 void QueryHelper::setupTables()
 {
+    LOGGER("RunningSetup");
     QString srcLanguage = ENGLISH_TRANSLATION;
     QString srcTafsir = TAFSIR_NAME(srcLanguage);
     bool port = m_translation != srcLanguage && tafsirFileExists(srcTafsir) ;
@@ -495,6 +496,7 @@ void QueryHelper::setupTables()
     QStringList portStatements;
     if (port)
     {
+        LOGGER("PortingFromEnglishDB...");
         portStatements << "INSERT INTO %1.locations SELECT * FROM %2.locations;";
         portStatements << "INSERT INTO %1.individuals SELECT * FROM %2.individuals;";
         portStatements << "INSERT INTO %1.teachers SELECT * FROM %2.teachers;";
@@ -515,10 +517,14 @@ void QueryHelper::setupTables()
     executeAndClear(statements);
 
     m_sql.endTransaction(NULL, QueryId::SetupTafsir);
+    LOGGER("ClearingTafsirVersion...");
+    m_persist->setFlag( KEY_TAFSIR_VERSION(m_translation) );
 
     if (port) {
         m_sql.detach(srcTafsir);
     }
+
+    LOGGER("SetupCompleted");
 }
 
 
@@ -575,6 +581,11 @@ QObject* QueryHelper::getExecutor() {
 
 QObject* QueryHelper::getTafsirHelper() {
     return &m_tafsirHelper;
+}
+
+
+QString QueryHelper::translationName() const {
+    return TRANSLATION;
 }
 
 
