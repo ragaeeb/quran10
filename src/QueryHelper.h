@@ -25,8 +25,10 @@ class QueryHelper : public QObject
     Q_PROPERTY(bool showTranslation READ showTranslation NOTIFY textualChange)
     Q_PROPERTY(int primarySize READ primarySize NOTIFY fontSizeChanged)
     Q_PROPERTY(int translationSize READ translationSize NOTIFY fontSizeChanged)
+    Q_PROPERTY(QString tafsirName READ tafsirName NOTIFY textualChange)
     Q_PROPERTY(QString tafsirVersion READ tafsirVersion NOTIFY textualChange)
     Q_PROPERTY(QString translation READ translation NOTIFY textualChange)
+    Q_PROPERTY(QString translationName READ translationName NOTIFY textualChange)
     Q_PROPERTY(QString translationVersion READ translationVersion NOTIFY textualChange)
 
     DatabaseHelper m_sql;
@@ -91,6 +93,7 @@ public:
     QString tafsirName() const;
     QString tafsirVersion() const;
     QString translation() const;
+    QString translationName() const;
     QString translationVersion() const;
     QueryBookmarkHelper* getBookmarkHelper();
 };

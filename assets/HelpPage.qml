@@ -19,10 +19,11 @@ Page
                 id: versionInfo
                 horizontalAlignment: HorizontalAlignment.Fill
                 
-                onCreationCompleted: {
+                function recompute()
+                {
                     var tafsirVersion = parseInt(helper.tafsirVersion);
                     var translationVersion = parseInt(helper.translationVersion);
-                                        
+                    
                     if (tafsirVersion > 0 && translationVersion > 0) {
                         text = qsTr("Tafsir Last Updated: %1\nTranslation Last Updated: %2").arg( Qt.formatDate(tafsirVersion, "MMM d, yyyy") ).arg( Qt.formatDate(translationVersion, "MMM d, yyyy") );
                     } else if (tafsirVersion > 0) {
@@ -32,6 +33,11 @@ Page
                     } else {
                         text = qsTr("Version information not detected...");
                     }
+                }
+                
+                onCreationCompleted: {
+                    helper.textualChange.connect(recompute);
+                    recompute();
                 }
                 
                 contextActions: [
@@ -49,7 +55,7 @@ Page
                             onTriggered: {
                                 console.log("UserEvent: CheckForUpdate");
                                 enabled = false;
-                                var params = {'language': helper.translation};
+                                var params = {'language': helper.translation, 'tafsir': helper.tafsirName, 'translation': helper.translationName};
                                 helper.updateCheckNeeded(params);
                                 
                                 reporter.record("CheckForTafsirUpdate", helper.translation);
@@ -74,6 +80,7 @@ Page
     
     function cleanUp() {
         queue.requestComplete.disconnect(updateCheck.onFinished);
+        helper.textualChange.disconnect(versionInfo.recompute);
     }
 
     Container
