@@ -63,6 +63,10 @@ NavigationPane
                 ]
             }
         ]
+        
+        onCreationCompleted: {
+            reload();
+        }
     }
     
     attachedObjects: [

@@ -1,3 +1,4 @@
+import QtQuick 1.0
 import bb.cascades 1.3
 import com.canadainc.data 1.0
 
@@ -7,6 +8,7 @@ Page
     actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
     signal tafsirPicked(variant data)
     property alias searchField: tftk.textField
+    property alias autoFocus: focuser.running
     
     onCreationCompleted: {
         deviceUtils.attachTopBottomKeys(tafsirPickerPage, listView, true);
@@ -229,10 +231,6 @@ Page
                     listView.visible = !adm.isEmpty();
                     noElements.delegateActive = !listView.visible;
                 }
-                
-                onCreationCompleted: {
-                    reload();
-                }
             }
         }
         
@@ -253,5 +251,18 @@ Page
             id: busy
             asset: "images/progress/loading_suites.png"
         }
-    }   
+    }
+    
+    attachedObjects: [
+        Timer {
+            id: focuser
+            interval: 250
+            repeat: false
+            running: false
+            
+            onTriggered: {
+                tftk.textField.requestFocus();
+            }
+        }
+    ]   
 }
