@@ -143,6 +143,7 @@ Page
                             
                             var p = definition.createObject();
                             p.tafsirPicked.connect(onPicked);
+                            p.autoFocus = true;
                             p.reload();
                             
                             navigationPane.push(p);
