@@ -161,7 +161,7 @@ Page
                 dataModel: GroupDataModel
                 {
                     id: bioModel
-                    sortingKeys: ["type", "uri"]
+                    sortingKeys: ["type", "uri", "teacher", "student"]
                     grouping: ItemGrouping.ByFullValue
                 }
                 
