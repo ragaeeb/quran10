@@ -15,6 +15,54 @@ Page
     signal contentLoaded(int size)
     
     actions: [
+        ActionItem
+        {
+            id: addAction
+            imageSource: "images/menu/ic_add_rijaal.png"
+            title: qsTr("Add") + Retranslate.onLanguageChanged
+            ActionBar.placement: ActionBarPlacement.OnBar
+            
+            shortcuts: [
+                SystemShortcut {
+                    type: SystemShortcuts.CreateNew
+                }
+            ]
+            
+            function onCreate(id, prefix, name, kunya, displayName, hidden, birth, death, female, location, companion)
+            {
+                id = tafsirHelper.createIndividual(listView, prefix, name, kunya, displayName, birth, death, location, companion);
+                
+                var obj = {'id': id, 'name': name, 'hidden': hidden ? 1 : undefined, 'female': female ? 1 : undefined, 'is_companion': companion ? 1 : undefined};
+                
+                if (displayName.length > 0) {
+                    obj["name"] = displayName;
+                }
+                
+                if (birth > 0) {
+                    obj["birth"] = birth;
+                }
+                
+                if (death > 0) {
+                    obj["death"] = death;
+                }
+                
+                if (location.length > 0) {
+                    obj["location"] = location;
+                }
+                
+                adm.insert(0, obj);
+            }
+            
+            onTriggered: {
+                console.log("UserEvent: NewIndividual");
+                definition.source = "CreateIndividualPage.qml";
+                var page = definition.createObject();
+                page.createIndividual.connect(onCreate);
+                
+                navigationPane.push(page);
+            }
+        },
+        
         ActionItem {
             id: searchAction
             imageSource: "images/menu/ic_search_individual.png"
@@ -138,7 +186,13 @@ Page
                     adm.append(data);
                     
                     refresh();
-                }
+                } else if (id == QueryId.AddIndividual) {
+                    persist.showToast( qsTr("Successfully added individual"), "images/menu/ic_select_individuals.png" );
+                    
+                    while (navigationPane.top != individualPage) {
+                        navigationPane.pop();
+                    }
+                } 
             }
             
             onTriggered: {

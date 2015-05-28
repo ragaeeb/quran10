@@ -16,32 +16,6 @@ NavigationPane
         }
     }
     
-    function onCreate(id, prefix, name, kunya, displayName, hidden, birth, death, female, location, companion)
-    {
-        id = tafsirHelper.createIndividual(navigationPane, prefix, name, kunya, displayName, birth, death, location, companion);
-        popToRoot();
-        
-        var obj = {'id': id, 'name': name, 'hidden': hidden ? 1 : undefined, 'female': female ? 1 : undefined, 'is_companion': companion ? 1 : undefined};
-        
-        if (displayName.length > 0) {
-            obj["name"] = displayName;
-        }
-        
-        if (birth > 0) {
-            obj["birth"] = birth;
-        }
-        
-        if (death > 0) {
-            obj["death"] = death;
-        }
-        
-        if (location.length > 0) {
-            obj["location"] = location;
-        }
-        
-        individualPicker.model.insert(0, obj);
-    }
-    
     function onEdit(id, prefix, name, kunya, displayName, hidden, birth, death, female, location, companion)
     {
         tafsirHelper.editIndividual(navigationPane, id, prefix, name, kunya, displayName, hidden, birth, death, female, location, companion);
@@ -72,8 +46,6 @@ NavigationPane
     {
         if (id == QueryId.EditIndividual) {
             persist.showToast( qsTr("Successfully edited individual"), "images/menu/ic_edit_rijaal.png" );
-        } else if (id == QueryId.AddIndividual) {
-            persist.showToast( qsTr("Successfully added individual"), "images/menu/ic_select_individuals.png" );
         } else if (id == QueryId.RemoveIndividual) {
             persist.showToast( qsTr("Successfully deleted individual!"), "images/menu/ic_delete_individual.png" );
         } else if (id == QueryId.ReplaceIndividual) {
@@ -105,31 +77,6 @@ NavigationPane
         onContentLoaded: {
             navigationPane.parent.unreadContentCount = size;
         }
-        
-        actions: [
-            ActionItem
-            {
-                id: addAction
-                imageSource: "images/menu/ic_add_rijaal.png"
-                title: qsTr("Add") + Retranslate.onLanguageChanged
-                ActionBar.placement: ActionBarPlacement.OnBar
-                
-                shortcuts: [
-                    SystemShortcut {
-                        type: SystemShortcuts.CreateNew
-                    }
-                ]
-                
-                onTriggered: {
-                    console.log("UserEvent: NewIndividual");
-                    definition.source = "CreateIndividualPage.qml";
-                    var page = definition.createObject();
-                    page.createIndividual.connect(onCreate);
-                    
-                    navigationPane.push(page);
-                }
-            }
-        ]
         
         function edit(ListItem)
         {
