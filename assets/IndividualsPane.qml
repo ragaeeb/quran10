@@ -46,14 +46,14 @@ NavigationPane
     {
         if (id == QueryId.EditIndividual) {
             persist.showToast( qsTr("Successfully edited individual"), "images/menu/ic_edit_rijaal.png" );
+            individualPicker.refresh();
         } else if (id == QueryId.RemoveIndividual) {
             persist.showToast( qsTr("Successfully deleted individual!"), "images/menu/ic_delete_individual.png" );
+            individualPicker.refresh();
         } else if (id == QueryId.ReplaceIndividual) {
-            persist.showToast( qsTr("Successfully replaced individual!"), "images/menu/ic_delete_quote.png" );
+            persist.showToast( qsTr("Successfully replaced individual!"), "images/menu/ic_replace_individual.png" );
             tafsirHelper.fetchAllIndividuals(individualPicker.pickerList);
         }
-        
-        individualPicker.refresh();
     }
     
     function getSelectedIds()
@@ -103,7 +103,7 @@ NavigationPane
                 individualPicker.busyControl.delegateActive = true;
                 tafsirHelper.replaceIndividual(navigationPane, toReplaceId, actualId);
             } else {
-                notification.init( qsTr("The source and replacement individuals cannot be the same!"), "images/toast/ic_duplicate_replace.png" );
+                persist.showToast( qsTr("The source and replacement individuals cannot be the same!"), "images/toast/ic_duplicate_replace.png" );
             }
             
             popToRoot();
@@ -123,7 +123,6 @@ NavigationPane
             ListItemComponent
             {
                 StandardListItem
-                
                 {
                     id: sli
                     imageSource: ListItemData.is_companion ? "images/list/ic_companion.png" : "images/list/ic_individual.png"

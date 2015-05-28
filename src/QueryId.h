@@ -79,6 +79,8 @@ public:
         RemoveWebsite,
         ReplacingIndividual,
         ReplaceIndividual,
+        ReplacingSuite,
+        ReplaceSuite,
         SaveBookmark,
         SaveLastProgress,
         SaveLegacyBookmarks,

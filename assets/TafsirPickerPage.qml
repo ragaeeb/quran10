@@ -12,6 +12,7 @@ Page
     property alias suiteList: listView
     property alias filter: searchColumn.selectedValue
     property alias busyControl: busy.delegateActive
+    property bool allowMultiple: false
     
     onCreationCompleted: {
         deviceUtils.attachTopBottomKeys(tafsirPickerPage, listView, true);
@@ -26,6 +27,13 @@ Page
     {
         adm.clear();
         reload();
+    }
+    
+    function popToRoot()
+    {
+        while (navigationPane.top != tafsirPickerPage) {
+            navigationPane.pop();
+        }
     }
     
     function reload()
@@ -121,7 +129,40 @@ Page
             {
                 id: listView
                 property variant editIndexPath
+                property variant destMergeId
                 scrollRole: ScrollRole.Main
+
+                multiSelectAction: MultiSelectActionItem {
+                    enabled: allowMultiple                    
+                }
+                
+                onSelectionChanged: {
+                    var n = selectionList().length;
+                    multiSelectHandler.status = qsTr("%n suites selected", "", n);
+                    selectMulti.enabled = n > 0;
+                }
+                
+                multiSelectHandler.actions: [
+                    ActionItem
+                    {
+                        id: selectMulti
+                        enabled: false
+                        imageSource: "images/menu/ic_select_more_chapters.png"
+                        title: qsTr("Select") + Retranslate.onLanguageChanged
+                        
+                        onTriggered: {
+                            console.log("UserEvent: SelectMultipleTafsir");
+                            
+                            var all = listView.selectionList();
+                            
+                            for (var i = all.length-1; i >= 0; i--) {
+                                all[i] = adm.data(all[i]);
+                            }
+                            
+                            tafsirPicked(all);
+                        }
+                    }
+                ]
                 
                 dataModel: ArrayDataModel {
                     id: adm
@@ -139,9 +180,7 @@ Page
                     
                     dataModel.replace(editIndexPath[0], current);
                     
-                    while (navigationPane.top != tafsirPickerPage) {
-                        navigationPane.pop();
-                    }
+                    popToRoot();
                 }
                 
                 function editItem(indexPath, ListItemData)
@@ -154,6 +193,41 @@ Page
                     page.createTafsir.connect(onEdit);
                     
                     navigationPane.push(page);
+                }
+                
+                function onActualPicked(suitesToMerge)
+                {
+                    var cleaned = [];
+                    
+                    for (var i = suitesToMerge.length-1; i >= 0; i--)
+                    {
+                        var current = suitesToMerge[i].id;
+                        
+                        if (current != destMergeId) {
+                            cleaned.push(current);
+                        }
+                    }
+                    
+                    if (cleaned.length > 0)
+                    {
+                        busy.delegateActive = true;
+                        tafsirHelper.mergeSuites(listView, cleaned, destMergeId);
+                    } else {
+                        persist.showToast( qsTr("The source and replacement suites cannot be the same!"), "images/toast/ic_duplicate_replace.png" );
+                    }
+                    
+                    popToRoot();
+                }
+                
+                function merge(ListItemData)
+                {
+                    destMergeId = ListItemData.id;
+                    definition.source = "TafsirPickerPage.qml";
+                    var ipp = definition.createObject();
+                    ipp.allowMultiple = true;
+                    ipp.tafsirPicked.connect(onActualPicked);
+                    
+                    navigationPane.push(ipp);
                 }
                 
                 function removeItem(ListItemData) {
@@ -189,6 +263,17 @@ Page
                                         }
                                     }
                                     
+                                    ActionItem
+                                    {
+                                        imageSource: "images/menu/ic_replace_individual.png"
+                                        title: qsTr("Merge") + Retranslate.onLanguageChanged
+                                        
+                                        onTriggered: {
+                                            console.log("UserEvent: MergeSuite");
+                                            rootItem.ListItem.view.merge(ListItemData);
+                                        }
+                                    }
+                                    
                                     DeleteActionItem
                                     {
                                         imageSource: "images/menu/ic_remove_suite.png"
@@ -206,8 +291,14 @@ Page
                 ]
                 
                 onTriggered: {
-                    console.log("UserEvent: AdminTafsirTriggered");
-                    tafsirPicked( dataModel.data(indexPath) );
+                    if (allowMultiple)
+                    {
+                        multiSelectHandler.active = true;
+                        toggleSelection(indexPath);
+                    } else {
+                        console.log("UserEvent: AdminTafsirTriggered");
+                        tafsirPicked( [dataModel.data(indexPath)] );
+                    }
                 }
                 
                 function onDataLoaded(id, data)
@@ -229,6 +320,9 @@ Page
                     } else if (id == QueryId.SearchTafsir || id == QueryId.FindDuplicates) {
                         adm.clear();
                         adm.append(data);
+                    } else if (id == QueryId.ReplaceSuite) {
+                        persist.showToast( qsTr("Successfully merged suite!"), "images/menu/ic_replace_individual.png" );
+                        clearAndReload();
                     }
                     
                     busy.delegateActive = false;

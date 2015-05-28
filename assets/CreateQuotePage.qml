@@ -133,7 +133,7 @@ Page
                     {
                         function onPicked(data)
                         {
-                            suiteId.text = data.id.toString();
+                            suiteId.text = data[0].id.toString();
                             navigationPane.pop();
                         }
                         
