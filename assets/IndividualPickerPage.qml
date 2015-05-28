@@ -20,7 +20,7 @@ Page
             id: addAction
             imageSource: "images/menu/ic_add_rijaal.png"
             title: qsTr("Add") + Retranslate.onLanguageChanged
-            ActionBar.placement: ActionBarPlacement.OnBar
+            ActionBar.placement: 'Signature' in ActionBarPlacement ? ActionBarPlacement["Signature"] : ActionBarPlacement.OnBar
             
             shortcuts: [
                 SystemShortcut {
@@ -67,7 +67,7 @@ Page
             id: searchAction
             imageSource: "images/menu/ic_search_individual.png"
             title: qsTr("Search") + Retranslate.onLanguageChanged
-            ActionBar.placement: 'Signature' in ActionBarPlacement ? ActionBarPlacement["Signature"] : ActionBarPlacement.OnBar
+            ActionBar.placement: ActionBarPlacement.OnBar
             
             onTriggered: {
                 console.log("UserEvent: SearchActionTriggered");
