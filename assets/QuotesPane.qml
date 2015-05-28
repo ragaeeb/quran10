@@ -57,6 +57,25 @@ NavigationPane
                     
                     navigationPane.push(page);
                 }
+            },
+            
+            ActionItem
+            {
+                imageSource: "images/menu/ic_search_action.png"
+                title: qsTr("Find Duplicates") + Retranslate.onLanguageChanged
+                ActionBar.placement: ActionBarPlacement.OnBar
+                
+                onTriggered: {
+                    console.log("UserEvent: FindDuplicateQuotes");
+                    busy.delegateActive = true;
+                    helper.findDuplicateQuotes(listView, searchColumn.selectedValue);
+                }
+                
+                shortcuts: [
+                    SystemShortcut {
+                        type: SystemShortcuts.Search
+                    }
+                ]
             }
         ]
         
@@ -161,7 +180,7 @@ NavigationPane
                         } else if (id == QueryId.AddQuote) {
                             persist.showToast( qsTr("Quote added!"), "images/menu/ic_add_quote.png" );
                             reload();
-                        } else if (id == QueryId.SearchQuote) {
+                        } else if (id == QueryId.SearchQuote || id == QueryId.FindDuplicates) {
                             adm.clear();
                             adm.append(data);
                         }
@@ -228,6 +247,7 @@ NavigationPane
                                 description: ListItemData.body
                                 imageSource: "images/list/ic_quote.png"
                                 title: ListItemData.author
+                                status: ListItemData.c ? ListItemData.c : undefined
                                 
                                 contextActions: [
                                     ActionSet

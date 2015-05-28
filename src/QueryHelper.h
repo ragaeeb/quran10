@@ -83,6 +83,7 @@ public:
     Q_INVOKABLE void fetchTafsirContent(QObject* caller, qint64 suitePageId);
     Q_INVOKABLE void fetchTafsirCountForAyat(QObject* caller, int chapterNumber, int verseNumber);
     Q_INVOKABLE void fetchTransliteration(QObject* caller, int chapter, int verse);
+    Q_INVOKABLE void findDuplicateQuotes(QObject* caller, QString const& field);
     Q_SLOT void initForeignKeys();
     Q_SLOT void lazyInit();
     Q_SLOT void refreshDatabase();

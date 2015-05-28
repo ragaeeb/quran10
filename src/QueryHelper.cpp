@@ -448,7 +448,7 @@ void QueryHelper::fetchAllQarees(QObject* caller, int minLevel)
 
 void QueryHelper::fetchAllQuotes(QObject* caller, qint64 individualId)
 {
-    LOGGER("fetchAllQuotes" << individualId);
+    LOGGER(individualId);
 
     ATTACH_TAFSIR;
 
@@ -461,6 +461,15 @@ void QueryHelper::fetchAllQuotes(QObject* caller, qint64 individualId)
     queryParams << "ORDER BY id DESC";
 
     m_sql.executeQuery(caller, queryParams.join(" "), QueryId::FetchAllQuotes);
+}
+
+
+void QueryHelper::findDuplicateQuotes(QObject* caller, QString const& field)
+{
+    LOGGER(field);
+
+    QString query = QString("SELECT quotes.id AS id,%1 AS author,body,reference,COUNT(*) c FROM quotes INNER JOIN individuals i ON i.id=quotes.author GROUP BY %2 HAVING c > 1").arg( NAME_FIELD("i") ).arg(field);
+    m_sql.executeQuery(caller, query, QueryId::FindDuplicates);
 }
 
 
