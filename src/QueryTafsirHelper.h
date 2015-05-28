@@ -59,6 +59,7 @@ public:
     Q_INVOKABLE void findDuplicateSuites(QObject* caller, QString const& field);
     Q_INVOKABLE void linkAyatsToTafsir(QObject* caller, qint64 suitePageId, QVariantList const& chapterVerseData);
     Q_INVOKABLE void linkAyatToTafsir(QObject* caller, qint64 suitePageId, int chapter, int fromVerse, int toVerse, QueryId::Type linkId=QueryId::LinkAyatsToTafsir);
+    Q_INVOKABLE void mergeSuites(QObject* caller, QVariantList const& toReplaceIds, qint64 actualId);
     Q_INVOKABLE void removeBioLink(QObject* caller, qint64 id);
     Q_INVOKABLE void removeIndividual(QObject* caller, qint64 id);
     Q_INVOKABLE void removeLocation(QObject* caller, qint64 id);

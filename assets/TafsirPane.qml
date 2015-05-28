@@ -34,8 +34,8 @@ NavigationPane
         onTafsirPicked: {
             definition.source = "TafsirContentsPage.qml";
             var page = definition.createObject();
-            page.title = data.title;
-            page.suiteId = data.id;
+            page.title = data[0].title;
+            page.suiteId = data[0].id;
             
             navigationPane.push(page);
         }
