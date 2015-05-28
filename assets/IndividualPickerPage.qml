@@ -155,50 +155,56 @@ Page
             }
         }
         
-        ListView
+        Container
         {
-            id: listView
-            property alias pickerPage: individualPage
-            property bool showContextMenu: false
-            scrollRole: ScrollRole.Main
+            horizontalAlignment: HorizontalAlignment.Fill
+            verticalAlignment: VerticalAlignment.Fill
             
-            dataModel: ArrayDataModel {
-                id: adm
-            }
-            
-            listItemComponents: [
-                ListItemComponent
-                {
-                    StandardListItem
-                    {
-                        id: sli
-                        imageSource: ListItemData.is_companion ? "images/list/ic_companion.png" : "images/list/ic_individual.png"
-                        title: ListItemData.name
-                    }
-                }
-            ]
-            
-            function onDataLoaded(id, data)
+            ListView
             {
-                if (id == QueryId.SearchIndividuals || id == QueryId.FetchAllIndividuals)
-                {
-                    adm.clear();
-                    adm.append(data);
-                    
-                    refresh();
-                } else if (id == QueryId.AddIndividual) {
-                    persist.showToast( qsTr("Successfully added individual"), "images/menu/ic_select_individuals.png" );
-                    
-                    while (navigationPane.top != individualPage) {
-                        navigationPane.pop();
+                id: listView
+                property alias pickerPage: individualPage
+                property bool showContextMenu: false
+                scrollRole: ScrollRole.Main
+                
+                dataModel: ArrayDataModel {
+                    id: adm
+                }
+                
+                listItemComponents: [
+                    ListItemComponent
+                    {
+                        StandardListItem
+                        {
+                            id: sli
+                            imageSource: ListItemData.is_companion ? "images/list/ic_companion.png" : "images/list/ic_individual.png"
+                            title: ListItemData.name
+                        }
                     }
-                } 
-            }
-            
-            onTriggered: {
-                var d = dataModel.data(indexPath);
-                console.log("UserEvent: IndividualPicked", d.name);
-                picked(d.id, d.name);
+                ]
+                
+                function onDataLoaded(id, data)
+                {
+                    if (id == QueryId.SearchIndividuals || id == QueryId.FetchAllIndividuals)
+                    {
+                        adm.clear();
+                        adm.append(data);
+                        
+                        refresh();
+                    } else if (id == QueryId.AddIndividual) {
+                        persist.showToast( qsTr("Successfully added individual"), "images/menu/ic_select_individuals.png" );
+                        
+                        while (navigationPane.top != individualPage) {
+                            navigationPane.pop();
+                        }
+                    } 
+                }
+                
+                onTriggered: {
+                    var d = dataModel.data(indexPath);
+                    console.log("UserEvent: IndividualPicked", d.name);
+                    picked(d.id, d.name);
+                }
             }
         }
         

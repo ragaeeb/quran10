@@ -218,8 +218,22 @@ void QueryTafsirHelper::editLocation(QObject* caller, qint64 id, QString const& 
 }
 
 
-void QueryTafsirHelper::fetchAllIndividuals(QObject* caller) {
-    m_sql->executeQuery(caller, QString("SELECT i.id,%1 AS name,is_companion FROM individuals i ORDER BY displayName,name").arg( NAME_FIELD("i") ), QueryId::FetchAllIndividuals);
+void QueryTafsirHelper::fetchAllIndividuals(QObject* caller, bool companionsOnly, bool orderByDeath)
+{
+    QString query = "SELECT i.id,%1 AS name,is_companion FROM individuals i ORDER BY displayName,name";
+    QStringList tokens;
+
+    if (orderByDeath) {
+        tokens << "death";
+    }
+
+    tokens << "displayName" << "name";
+
+    if (companionsOnly) {
+        query += " WHERE is_companion=1";
+    }
+
+    m_sql->executeQuery(caller, query.arg( NAME_FIELD("i") ), QueryId::FetchAllIndividuals);
 }
 
 

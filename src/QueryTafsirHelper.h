@@ -46,7 +46,7 @@ public:
     Q_INVOKABLE void editQuote(QObject* caller, qint64 quoteId, QString const& author, QString const& body, QString const& reference, QString const& suiteId, QString const& uri);
     Q_INVOKABLE void editTafsir(QObject* caller, qint64 suiteId, QString const& author, QString const& translator, QString const& explainer, QString const& title, QString const& description, QString const& reference);
     Q_INVOKABLE void editTafsirPage(QObject* caller, qint64 suitePageId, QString const& body, QString const& heading, QString const& reference);
-    Q_INVOKABLE void fetchAllIndividuals(QObject* caller);
+    Q_INVOKABLE void fetchAllIndividuals(QObject* caller, bool companionsOnly=false, bool orderByDeath=false);
     Q_INVOKABLE void fetchAllLocations(QObject* caller, QString const& city=QString());
     Q_INVOKABLE void fetchAllOrigins(QObject* caller);
     Q_INVOKABLE void fetchAllWebsites(QObject* caller, qint64 individualId);
