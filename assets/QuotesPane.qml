@@ -145,10 +145,6 @@ NavigationPane
                         text: qsTr("Reference") + Retranslate.onLanguageChanged
                         value: "reference"
                     }
-                    
-                    layoutProperties: StackLayoutProperties {
-                        spaceQuota: 1
-                    }
                 }
                 
                 ListView
