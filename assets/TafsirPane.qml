@@ -61,6 +61,25 @@ NavigationPane
                         type: SystemShortcuts.CreateNew
                     }
                 ]
+            },
+            
+            ActionItem
+            {
+                imageSource: "images/menu/ic_search_action.png"
+                title: qsTr("Find Duplicates") + Retranslate.onLanguageChanged
+                ActionBar.placement: ActionBarPlacement.OnBar
+                
+                onTriggered: {
+                    console.log("UserEvent: FindDuplicateSuites");
+                    tafsirPicker.busyControl = true;
+                    tafsirHelper.findDuplicateSuites(tafsirPicker.suiteList, tafsirPicker.filter);
+                }
+                
+                shortcuts: [
+                    SystemShortcut {
+                        type: SystemShortcuts.Search
+                    }
+                ]
             }
         ]
         

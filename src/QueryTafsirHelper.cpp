@@ -297,6 +297,15 @@ void QueryTafsirHelper::fetchAllTafsir(QObject* caller, qint64 individualId)
 }
 
 
+void QueryTafsirHelper::findDuplicateSuites(QObject* caller, QString const& field)
+{
+    LOGGER(field);
+
+    QString query = QString("SELECT suites.id AS id,%1 AS author,title,COUNT(*) c FROM suites LEFT JOIN individuals i ON i.id=suites.author GROUP BY %2 HAVING c > 1").arg( NAME_FIELD("i") ).arg(field);
+    m_sql->executeQuery(caller, query, QueryId::FindDuplicates);
+}
+
+
 void QueryTafsirHelper::fetchTafsirMetadata(QObject* caller, qint64 suiteId)
 {
     LOGGER(suiteId);

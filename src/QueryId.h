@@ -64,6 +64,7 @@ public:
         FetchTafsirHeader,
         FetchTeachers,
         FetchTransliteration,
+        FindDuplicates,
         LinkAyatsToTafsir,
         LinkingAyatsToTafsir,
         RemoveBioLink,

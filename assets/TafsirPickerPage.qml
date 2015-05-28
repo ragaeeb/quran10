@@ -9,6 +9,9 @@ Page
     signal tafsirPicked(variant data)
     property alias searchField: tftk.textField
     property alias autoFocus: focuser.running
+    property alias suiteList: listView
+    property alias filter: searchColumn.selectedValue
+    property alias busyControl: busy.delegateActive
     
     onCreationCompleted: {
         deviceUtils.attachTopBottomKeys(tafsirPickerPage, listView, true);
@@ -167,6 +170,7 @@ Page
                             description: ListItemData.author ? ListItemData.author : qsTr("Unknown") + Retranslate.onLanguageChanged
                             imageSource: "images/list/ic_tafsir.png"
                             title: ListItemData.title
+                            status: ListItemData.c ? ListItemData.c : undefined
                             
                             contextActions: [
                                 ActionSet
@@ -222,7 +226,7 @@ Page
                         persist.showToast( qsTr("Tafsir removed!"), "images/menu/ic_remove_suite.png" );
                     } else if (id == QueryId.EditTafsir) {
                         persist.showToast( qsTr("Tafsir updated!"), "images/menu/ic_edit_suite.png" );
-                    } else if (id == QueryId.SearchTafsir) {
+                    } else if (id == QueryId.SearchTafsir || id == QueryId.FindDuplicates) {
                         adm.clear();
                         adm.append(data);
                     }
