@@ -48,8 +48,8 @@ Page
                 console.log("UserEvent: CreateQuoteSaveTriggered");
                 authorField.validator.validate();
                 
-                if (authorField.validator.valid && bodyField.text.trim().length > 3 && referenceField.text.trim().length > 3) {
-                    createQuote( quoteId, authorField.text.trim(), bodyField.text.trim(), referenceField.text.trim(), suiteId.text, uriField.text );
+                if ( authorField.validator.valid && bodyField.text.trim().length > 3 && ( suiteId.text.trim().length > 0 || referenceField.text.trim().length > 3) ) {
+                    createQuote( quoteId, authorField.text.trim(), bodyField.text.trim(), referenceField.text.trim(), suiteId.text.trim(), uriField.text.trim() );
                 }
             }
         }
