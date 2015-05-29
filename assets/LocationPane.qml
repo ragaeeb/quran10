@@ -59,7 +59,7 @@ NavigationPane
                 }
                 
                 onCreationCompleted: {
-                    tafsirHelper.fetchAllOrigins(mapView);
+                    helper.fetchAllOrigins(mapView);
                 }
             }
         }

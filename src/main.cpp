@@ -8,7 +8,7 @@ using namespace quran;
 Q_DECL_EXPORT int main(int argc, char **argv)
 {
     Application app(argc, argv);
-    ApplicationUI::create(&app);
+    ApplicationUI ui;
 
     return Application::exec();
 }

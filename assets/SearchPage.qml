@@ -37,7 +37,7 @@ Page
     
     function onCaptured(all, cookie)
     {
-        if (cookie == "search" && all && all.length > 0)
+        if (all && all.length > 0)
         {
             helper.fetchAyats(listView, all);
             reporter.record("GoogleResults", all.length.toString());
@@ -51,14 +51,14 @@ Page
     function cleanUp()
     {
         tutorial.tutorialFinished.disconnect(onTutorialFinished);
-        admin.ayatsCaptured.disconnect(onCaptured);
+        app.ayatsCaptured.disconnect(onCaptured);
         helper.textualChange.disconnect(reload);
     }
     
     onCreationCompleted: {
         deviceUtils.attachTopBottomKeys(searchRoot, listView);
         tutorial.tutorialFinished.connect(onTutorialFinished);
-        admin.ayatsCaptured.connect(onCaptured);
+        app.ayatsCaptured.connect(onCaptured);
         helper.textualChange.connect(reload);
     }
     

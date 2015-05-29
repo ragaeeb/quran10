@@ -128,18 +128,6 @@ TabbedPane
 
     function checkAdminStatus()
     {
-        app.lazyInitComplete.disconnect(checkAdminStatus);
-        reporter.adminEnabledChanged.disconnect(checkAdminStatus);
-        
-        if (reporter.isAdmin)
-        {
-            add(quotesTab);
-            add(tafsirTab);
-            add(rijaalTab);
-        } else {
-            reporter.adminEnabledChanged.connect(checkAdminStatus);
-        }
-        
         tutorial.exec("openTabMenu", qsTr("Tap here to open the menu"), HorizontalAlignment.Left, VerticalAlignment.Bottom, ui.du(2), 0, 0, ui.du(1)/2);
         tutorial.exec("openAppMenu", qsTr("Swipe down from the top-bezel to display the Settings and Help and file bugs!"), HorizontalAlignment.Center, VerticalAlignment.Top, 0, 0, 0, ui.du(2), "images/menu/ic_bottom.png", "d");
         tutorial.exec("swipeOpenTabMenu", qsTr("Swipe right to expand the menu!"), HorizontalAlignment.Left, VerticalAlignment.Center, 0, 0, 0, 0, undefined, "r");
@@ -162,60 +150,4 @@ TabbedPane
         app.lazyInitComplete.connect(checkAdminStatus);
         sidebarStateChanged.connect(onSidebarVisualStateChanged);
     }
-    
-    attachedObjects: [
-        Tab
-        {
-            id: quotesTab
-            title: qsTr("Quotes") + Retranslate.onLanguageChanged
-            description: qsTr("Sayings of the Salaf") + Retranslate.onLanguageChanged
-            imageSource: "images/tabs/ic_quotes.png"
-            delegateActivationPolicy: TabDelegateActivationPolicy.ActivateWhenSelected
-            newContentAvailable: admin.pendingUpdates
-            
-            onTriggered: {
-                console.log("UserEvent: Quotes");
-            }
-            
-            delegate: Delegate {
-                source: "QuotesPane.qml"
-            }
-        },
-        
-        Tab
-        {
-            id: tafsirTab
-            title: qsTr("Tafsir") + Retranslate.onLanguageChanged
-            description: qsTr("Explanations") + Retranslate.onLanguageChanged
-            imageSource: "images/tabs/ic_tafsir.png"
-            delegateActivationPolicy: TabDelegateActivationPolicy.ActivateWhenSelected
-            newContentAvailable: admin.pendingUpdates
-            
-            onTriggered: {
-                console.log("UserEvent: TafsirTab");
-            }
-            
-            delegate: Delegate {
-                source: "TafsirPane.qml"
-            }
-        },
-        
-        Tab
-        {
-            id: rijaalTab
-            title: qsTr("Rijaal") + Retranslate.onLanguageChanged
-            description: qsTr("Individuals") + Retranslate.onLanguageChanged
-            imageSource: "images/list/ic_companion.png"
-            delegateActivationPolicy: TabDelegateActivationPolicy.ActivateWhenSelected
-            newContentAvailable: admin.pendingUpdates
-            
-            onTriggered: {
-                console.log("UserEvent: RijaalTab");
-            }
-            
-            delegate: Delegate {
-                source: "IndividualsPane.qml"
-            }
-        }
-    ]
 }

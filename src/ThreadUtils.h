@@ -42,6 +42,7 @@ struct ThreadUtils
     static void compressFiles(QSet<QString>& attachments);
     static void onResultsDecorated(SimilarReference const& result);
     static QVariantMap matchSurah(QVariantMap input, QVariantList const& allSurahs);
+    static QVariantList captureAyatsInBody(QString body, QMap<QString, int> const& chapterToId);
 };
 
 } /* namespace quran */
