@@ -99,9 +99,9 @@ Page
     function shift(i)
     {
         helper.fetchAdjacentAyat(root, surahId, verseId, i);
+        titleControl.selectedOption = ayatOption;
         titleControl.removeOption(similarOption);
         titleControl.removeOption(tafsirOption);
-        ayatOption.selected = true;
         
         reporter.record("ShiftAyat", surahId+":"+verseId+","+i);
     }
