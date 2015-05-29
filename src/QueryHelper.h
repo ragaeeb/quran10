@@ -4,12 +4,17 @@
 #include "DatabaseHelper.h"
 #include "QueryId.h"
 #include "QueryBookmarkHelper.h"
-#include "QueryTafsirHelper.h"
 
 #define AYAT_NUMERIC_PATTERN "^\\d{1,3}:\\d{1,3}$"
 #define SIMILAR_DB "similar"
 #define TAFSIR_ARABIC_DB "tafsir_arabic"
 #define ENGLISH_TRANSLATION "english"
+
+#define CHAPTER_KEY "chapter"
+#define FROM_VERSE_KEY "fromVerse"
+#define TO_VERSE_KEY "toVerse"
+#define NAME_FIELD(var) QString("coalesce(%1.displayName, TRIM((coalesce(%1.prefix,'') || ' ' || %1.name || ' ' || coalesce(%1.kunya,''))))").arg(var)
+#define NAME_SEARCH(var) QString("%1.name LIKE '%' || ? || '%' OR %1.displayName LIKE '%' || ? || '%' OR %1.kunya LIKE '%' || ? || '%'").arg(var)
 
 namespace canadainc {
 	class Persistance;
@@ -35,7 +40,6 @@ class QueryHelper : public QObject
     Persistance* m_persist;
     QString m_translation;
     QueryBookmarkHelper m_bookmarkHelper;
-    QueryTafsirHelper m_tafsirHelper;
 
     void executeAndClear(QStringList& statements);
 
@@ -61,30 +65,34 @@ public:
     Q_INVOKABLE void fetchAllChapterAyatCount(QObject* caller);
     Q_INVOKABLE void fetchAllChapters(QObject* caller);
     Q_INVOKABLE void fetchAllDuaa(QObject* caller);
+    Q_INVOKABLE void fetchAllOrigins(QObject* caller);
     Q_INVOKABLE void fetchAllQarees(QObject* caller, int minLevel=1);
     Q_INVOKABLE void fetchAllQuotes(QObject* caller, qint64 individualId=0);
     Q_INVOKABLE void fetchAllTafsir(QObject* caller, qint64 individualId=0);
     Q_INVOKABLE void fetchAllTafsirForAyat(QObject* caller, int chapterNumber, int verseNumber);
     Q_INVOKABLE void fetchAllTafsirForChapter(QObject* caller, int chapterNumber);
     Q_INVOKABLE void fetchAllTafsirForSuite(QObject* caller, qint64 suiteId);
+    Q_INVOKABLE void fetchAllWebsites(QObject* caller, qint64 individualId);
     Q_INVOKABLE void fetchAyat(QObject* caller, int surahId, int ayatId);
     Q_INVOKABLE void fetchAyats(QObject* caller, QVariantList const& input);
     Q_INVOKABLE void fetchAyatsForTafsir(QObject* caller, qint64 suitePageId);
     Q_INVOKABLE void fetchBio(QObject* caller, qint64 individualId);
     Q_INVOKABLE void fetchChapter(QObject* caller, int chapter, bool juzMode=false);
     Q_INVOKABLE void fetchChapters(QObject* caller, QString const& text=QString());
+    Q_INVOKABLE void fetchIndividualData(QObject* caller, qint64 individualId);
     Q_INVOKABLE void fetchJuzInfo(QObject* caller, int juzId);
     Q_INVOKABLE void fetchPageNumbers(QObject* caller);
     Q_INVOKABLE void fetchQuote(QObject* caller, qint64 id);
     Q_INVOKABLE void fetchRandomAyat(QObject* caller);
     Q_INVOKABLE void fetchRandomQuote(QObject* caller);
     Q_INVOKABLE void fetchSimilarAyatContent(QObject* caller, int chapterNumber, int verseNumber);
+    Q_INVOKABLE void fetchStudents(QObject* caller, qint64 individualId);
     Q_INVOKABLE void fetchSurahHeader(QObject* caller, int chapterNumber);
     Q_INVOKABLE void fetchTafsirContent(QObject* caller, qint64 suitePageId);
     Q_INVOKABLE void fetchTafsirCountForAyat(QObject* caller, int chapterNumber, int verseNumber);
+    Q_INVOKABLE void fetchTeachers(QObject* caller, qint64 individualId);
     Q_INVOKABLE void fetchTransliteration(QObject* caller, int chapter, int verse);
     Q_INVOKABLE void findDuplicateQuotes(QObject* caller, QString const& field);
-    Q_SLOT void initForeignKeys();
     Q_SLOT void lazyInit();
     Q_SLOT void refreshDatabase();
     Q_SLOT void setupTables();

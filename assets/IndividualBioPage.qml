@@ -13,10 +13,10 @@ Page
             helper.fetchBio(bioPage, individualId);
             helper.fetchAllQuotes(bioPage, individualId);
             helper.fetchAllTafsir(bioPage, individualId);
-            tafsirHelper.fetchIndividualData(bioPage, individualId);
-            tafsirHelper.fetchTeachers(bioPage, individualId);
-            tafsirHelper.fetchStudents(bioPage, individualId);
-            tafsirHelper.fetchAllWebsites(bioPage, individualId);
+            helper.fetchIndividualData(bioPage, individualId);
+            helper.fetchTeachers(bioPage, individualId);
+            helper.fetchStudents(bioPage, individualId);
+            helper.fetchAllWebsites(bioPage, individualId);
         }
     }
     
@@ -73,14 +73,6 @@ Page
 
             body.text = "\n"+result;
             ft.play();
-        } else if (id == QueryId.RemoveTeacher) {
-            persist.showToast( qsTr("Teacher removed!"), "images/menu/ic_remove_teacher.png" );
-        } else if (id == QueryId.RemoveStudent) {
-            persist.showToast( qsTr("Student removed!"), "images/menu/ic_remove_companions.png" );
-        } else if (id == QueryId.AddTeacher) {
-            persist.showToast( qsTr("Teacher added!"), "images/menu/ic_set_companions.png" );
-        } else if (id == QueryId.AddStudent) {
-            persist.showToast( qsTr("Student added!"), "images/menu/ic_add_student.png" );
         }
         
         data = offloader.fillType(data, id);
@@ -197,18 +189,6 @@ Page
                     }
                 }
                 
-                function removeStudent(ListItem)
-                {
-                    tafsirHelper.removeStudent(bioPage, individualId, ListItem.data.id);
-                    bioModel.removeAt(ListItem.indexPath);
-                }
-                
-                function removeTeacher(ListItem)
-                {
-                    tafsirHelper.removeTeacher(bioPage, individualId, ListItem.data.id);
-                    bioModel.removeAt(ListItem.indexPath);
-                }
-                
                 listItemComponents: [
                     ListItemComponent
                     {
@@ -282,33 +262,6 @@ Page
                             id: teacherSli
                             imageSource: "images/list/ic_teacher.png"
                             title: ListItemData.teacher
-                            
-                            contextMenuHandler: [
-                                ContextMenuHandler {
-                                    onPopulating: {
-                                        if (!reporter.isAdmin) {
-                                            event.abort();
-                                        }
-                                    }
-                                }
-                            ]
-                            
-                            contextActions: [
-                                ActionSet
-                                {
-                                    title: teacherSli.title
-                                    
-                                    DeleteActionItem
-                                    {
-                                        imageSource: "images/menu/ic_remove_teacher.png"
-                                        
-                                        onTriggered: {
-                                            console.log("UserEvent: RemoveTeacher");
-                                            teacherSli.ListItem.view.removeTeacher(teacherSli.ListItem);
-                                        }
-                                    }
-                                }
-                            ]
                         }
                     },
                     
@@ -321,33 +274,6 @@ Page
                             id: studentSli
                             imageSource: "images/list/ic_student.png"
                             title: ListItemData.student
-                            
-                            contextMenuHandler: [
-                                ContextMenuHandler {
-                                    onPopulating: {
-                                        if (!reporter.isAdmin) {
-                                            event.abort();
-                                        }
-                                    }
-                                }
-                            ]
-                            
-                            contextActions: [
-                                ActionSet
-                                {
-                                    title: studentSli.title
-                                    
-                                    DeleteActionItem
-                                    {
-                                        imageSource: "images/menu/ic_remove_student.png"
-                                        
-                                        onTriggered: {
-                                            console.log("UserEvent: RemoveStudent");
-                                            studentSli.ListItem.view.removeStudent(studentSli.ListItem);
-                                        }
-                                    }
-                                }
-                            ]
                         }
                     },
                     
@@ -428,54 +354,6 @@ Page
         
         ComponentDefinition {
             id: definition
-        },
-        
-        ActionItem
-        {
-            id: addStudent
-            ActionBar.placement: 'Signature' in ActionBarPlacement ? ActionBarPlacement["Signature"] : ActionBarPlacement.OnBar
-            imageSource: "images/menu/ic_add_student.png"
-            title: qsTr("Add Student") + Retranslate.onLanguageChanged
-            
-            function onPicked(student, name)
-            {
-                tafsirHelper.addStudent(bioPage, individualId, student);
-                checkForDuplicate( {'id': student, 'student': name, 'type': "student"} );
-            }
-            
-            onTriggered: {
-                console.log("UserEvent: AddStudent");
-                definition.source = "IndividualPickerPage.qml";
-                
-                var p = definition.createObject();
-                p.picked.connect(onPicked);
-                
-                navigationPane.push(p);
-            }
-        },
-        
-        ActionItem
-        {
-            id: addTeacher
-            ActionBar.placement: ActionBarPlacement.OnBar
-            imageSource: "images/menu/ic_add_teacher.png"
-            title: qsTr("Add Teacher") + Retranslate.onLanguageChanged
-            
-            function onPicked(teacher, name)
-            {
-                tafsirHelper.addTeacher(bioPage, individualId, teacher);
-                checkForDuplicate( {'id': teacher, 'teacher': name, 'type': "teacher"} );
-            }
-            
-            onTriggered: {
-                console.log("UserEvent: AddTeacher");
-                definition.source = "IndividualPickerPage.qml";
-                
-                var p = definition.createObject();
-                p.picked.connect(onPicked);
-                
-                navigationPane.push(p);
-            }
         }
     ]
     
@@ -490,11 +368,6 @@ Page
     }
     
     onCreationCompleted: {
-        if (reporter.isAdmin) {
-            addAction(addTeacher);
-            addAction(addStudent);
-        }
-        
         helper.textualChange.connect(reload);
     }
 }

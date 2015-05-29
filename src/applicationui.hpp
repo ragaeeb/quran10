@@ -1,7 +1,6 @@
 #ifndef ApplicationUI_HPP_
 #define ApplicationUI_HPP_
 
-#include "AdminHelper.h"
 #include "LazySceneCover.h"
 #include "MushafHelper.h"
 #include "Offloader.h"
@@ -36,11 +35,10 @@ class ApplicationUI : public QObject
 	QueueDownloader m_queue;
     MushafHelper m_mushaf;
     RecitationHelper m_recitation;
-    AdminHelper m_admin;
     Offloader m_offloader;
     TextUtils m_textUtils;
+    QMap<QString, int> m_chapters;
 
-    ApplicationUI(bb::cascades::Application *app);
     void init(QString const& qml);
     void processInvoke();
     void initGlobals();
@@ -52,6 +50,7 @@ private slots:
     void childCardDone(bb::system::CardDoneMessage const& message=bb::system::CardDoneMessage());
 	void invoked(bb::system::InvokeRequest const& request);
 	void lazyInit();
+	void onCaptureCompleted();
 	void onDataLoaded(QVariant id, QVariant data);
 	void onChapterMatched();
 	void onMissingAyatImagesFinished();
@@ -64,13 +63,14 @@ private slots:
     void report(QString const& message);
 
 signals:
+    void ayatsCaptured(QVariantList const& result);
     void childCardFinished(QString const& message);
     void initialize();
     void lazyInitComplete();
     void locationsFound(QVariant const& locations);
 
 public:
-	static void create(bb::cascades::Application* app);
+    ApplicationUI();
     virtual ~ApplicationUI();
 
     Q_SLOT void checkMissingAyatImages();

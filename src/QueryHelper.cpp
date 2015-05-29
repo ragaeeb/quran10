@@ -2,7 +2,6 @@
 
 #include "QueryHelper.h"
 #include "CommonConstants.h"
-#include "customsqldatasource.h"
 #include "Logger.h"
 #include "Persistance.h"
 #include "TextUtils.h"
@@ -30,7 +29,7 @@ using namespace bb::data;
 
 QueryHelper::QueryHelper(Persistance* persist) :
         m_sql( QString("%1/assets/dbase/quran_arabic.db").arg( QCoreApplication::applicationDirPath() ) ),
-        m_persist(persist), m_bookmarkHelper(&m_sql), m_tafsirHelper(&m_sql)
+        m_persist(persist), m_bookmarkHelper(&m_sql)
 {
     connect( persist, SIGNAL( settingChanged(QString const&) ), this, SLOT( settingChanged(QString const&) ), Qt::QueuedConnection );
 }
@@ -261,13 +260,6 @@ void QueryHelper::fetchJuzInfo(QObject* caller, int juzId)
 }
 
 
-void QueryHelper::fetchAllTafsir(QObject* caller, qint64 individualId)
-{
-    ATTACH_TAFSIR;
-    m_tafsirHelper.fetchAllTafsir(caller, individualId);
-}
-
-
 void QueryHelper::fetchAllTafsirForAyat(QObject* caller, int chapterNumber, int verseNumber)
 {
     LOGGER(chapterNumber << verseNumber);
@@ -464,12 +456,55 @@ void QueryHelper::fetchAllQuotes(QObject* caller, qint64 individualId)
 }
 
 
-void QueryHelper::findDuplicateQuotes(QObject* caller, QString const& field)
+void QueryHelper::fetchAllOrigins(QObject* caller)
 {
-    LOGGER(field);
+    m_sql.executeQuery(caller, QString("SELECT %1 AS name,i.id,city,latitude+((RANDOM()%10)*0.0001) AS latitude,longitude+((RANDOM()%10)*0.0001) AS longitude FROM individuals i INNER JOIN locations ON i.location=locations.id WHERE i.hidden ISNULL").arg( NAME_FIELD("i") ), QueryId::FetchAllOrigins);
+}
 
-    QString query = QString("SELECT quotes.id AS id,%1 AS author,body,reference,COUNT(*) c FROM quotes INNER JOIN individuals i ON i.id=quotes.author GROUP BY %2 HAVING c > 1").arg( NAME_FIELD("i") ).arg(field);
-    m_sql.executeQuery(caller, query, QueryId::FindDuplicates);
+
+void QueryHelper::fetchTeachers(QObject* caller, qint64 individualId)
+{
+    LOGGER(individualId);
+    m_sql.executeQuery(caller, QString("SELECT i.id,%1 AS teacher FROM teachers INNER JOIN individuals i ON teachers.teacher=i.id WHERE teachers.individual=%2 AND i.hidden ISNULL").arg( NAME_FIELD("i") ).arg(individualId), QueryId::FetchTeachers);
+}
+
+
+void QueryHelper::fetchStudents(QObject* caller, qint64 individualId)
+{
+    LOGGER(individualId);
+    m_sql.executeQuery(caller, QString("SELECT i.id,%1 AS student FROM teachers INNER JOIN individuals i ON teachers.individual=i.id WHERE teachers.teacher=%2 AND i.hidden ISNULL").arg( NAME_FIELD("i") ).arg(individualId), QueryId::FetchStudents);
+}
+
+
+void QueryHelper::fetchAllWebsites(QObject* caller, qint64 individualId)
+{
+    LOGGER(individualId);
+    m_sql.executeQuery(caller, QString("SELECT id,uri FROM websites WHERE individual=%1 ORDER BY uri").arg(individualId), QueryId::FetchAllWebsites);
+}
+
+
+void QueryHelper::fetchAllTafsir(QObject* caller, qint64 individualId)
+{
+    LOGGER(individualId);
+
+    QStringList queryParams = QStringList() << QString("SELECT suites.id AS id,%1 AS author,title FROM suites LEFT JOIN individuals i ON i.id=suites.author").arg( NAME_FIELD("i") );
+
+    if (individualId) {
+        queryParams << QString("WHERE (author=%1 OR translator=%1 OR explainer=%1)").arg(individualId);
+    }
+
+    queryParams << "ORDER BY id DESC";
+
+    m_sql.executeQuery(caller, queryParams.join(" "), QueryId::FetchAllTafsir);
+}
+
+
+void QueryHelper::fetchIndividualData(QObject* caller, qint64 individualId)
+{
+    LOGGER(individualId);
+
+    QString query = QString("SELECT * FROM individuals WHERE id=%1").arg(individualId);
+    m_sql.executeQuery(caller, query, QueryId::FetchIndividualData);
 }
 
 
@@ -518,13 +553,6 @@ void QueryHelper::setupTables()
         m_sql.executeInternal( q.arg(currentTafsir).arg(srcTafsir), QueryId::SettingUpTafsir);
     }
 
-    statements << "CREATE INDEX IF NOT EXISTS %1.individuals_index ON individuals(birth,death,female,location,is_companion);";
-    statements << "CREATE INDEX IF NOT EXISTS %1.suites_index ON suites(author,translator,explainer);";
-    statements << "CREATE INDEX IF NOT EXISTS %1.suite_pages_index ON suite_pages(suite_id);";
-    statements << "CREATE INDEX IF NOT EXISTS %1.quotes_index ON quotes(author);";
-    statements << "CREATE INDEX IF NOT EXISTS %1.explanations_index ON explanations(to_verse_number);";
-    executeAndClear(statements);
-
     m_sql.endTransaction(NULL, QueryId::SetupTafsir);
     LOGGER("ClearingTafsirVersion...");
     m_persist->setFlag( KEY_TAFSIR_VERSION(m_translation) );
@@ -546,11 +574,6 @@ void QueryHelper::executeAndClear(QStringList& statements)
     }
 
     statements.clear();
-}
-
-
-void QueryHelper::initForeignKeys() {
-    m_sql.enableForeignKeys();
 }
 
 
@@ -586,10 +609,6 @@ QueryBookmarkHelper* QueryHelper::getBookmarkHelper() {
 
 QObject* QueryHelper::getExecutor() {
     return &m_sql;
-}
-
-QObject* QueryHelper::getTafsirHelper() {
-    return &m_tafsirHelper;
 }
 
 

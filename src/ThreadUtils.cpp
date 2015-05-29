@@ -12,7 +12,45 @@
 
 #define BACKUP_ZIP_PASSWORD "X4*13f3*3qYk3_*"
 #define LIKE_CLAUSE QString("(%1 LIKE '%' || ? || '%')").arg(textField)
-#define MIN_CHARS_FOR_SURAH_SEARCH 2
+
+namespace {
+
+void analyzeVerse(QStringList tokens, int chapter, QVariantList& result)
+{
+    tokens = tokens.last().trimmed().split("-");
+    int fromVerse = tokens.first().trimmed().toInt();
+    int toVerse = tokens.last().trimmed().toInt();
+
+    if (chapter >= 1 && chapter <= 114 && fromVerse >= 1 && fromVerse <= 286 && toVerse >= fromVerse)
+    {
+        QVariantMap q;
+        q[CHAPTER_KEY] = chapter;
+        q[FROM_VERSE_KEY] = fromVerse;
+        q[TO_VERSE_KEY] = toVerse;
+        result << q;
+    }
+}
+
+void analyzeAyats(QRegExp const& regex, QVariantList& result, QString const& body)
+{
+    int pos = 0;
+    while ( (pos = regex.indexIn(body, pos) ) != -1)
+    {
+        QString current = regex.capturedTexts().first();
+        current.remove(")");
+        current.remove("(");
+        current.remove(" ");
+        QStringList tokens = current.split(":");
+
+        int chapter = tokens.first().trimmed().toInt();
+
+        analyzeVerse(tokens, chapter, result);;
+
+        pos += regex.matchedLength();
+    }
+}
+
+}
 
 namespace quran {
 
@@ -377,6 +415,47 @@ QVariantMap ThreadUtils::matchSurah(QVariantMap input, QVariantList const& allSu
     }
 
     return input;
+}
+
+
+QVariantList ThreadUtils::captureAyatsInBody(QString body, QMap<QString, int> const& chapterToId)
+{
+    body.remove( QChar(8217) ); // remove special apostrophe character
+    body = body.simplified();
+
+    QVariantList result;
+    analyzeAyats( QRegExp("[0-9]{1,3}:[0-9]{1,3}\\s{0,1}-\\s{0,1}[0-9]{1,3}[\\)\\]]|[0-9]{1,3}:[0-9]{1,3}[\\)\\]]|\\([0-9]{1,3}\\) {0,1}: {0,1}[0-9]{1,3}- {0,1}[0-9]{1,3}|\\([0-9]{1,3}\\) {0,1}: {0,1}[0-9]{1,3}"), result, body );
+
+    QRegExp nameRegex = QRegExp("[A-Za-z\\-']+\\s{0,1}:\\s{0,1}[0-9]{1,3}\\s{0,1}-\\s{0,1}[0-9]{1,3}[\\)\\]]|[A-Za-z\\-']+\\s{0,1}:\\s{0,1}[0-9]{1,3}[\\)\\]]");
+    int pos = 0;
+
+    while ( (pos = nameRegex.indexIn(body, pos) ) != -1)
+    {
+        QString current = nameRegex.capturedTexts().first();
+        LOGGER(current);
+        current.chop(1);
+        QStringList tokens = current.split(":");
+
+        QString chapterName = tokens.first().trimmed();
+        int chapter = 0;
+
+        QStringList chapters = chapterToId.keys();
+
+        for (int i = chapters.size()-1; i >= 0; i--)
+        {
+            if ( canadainc::TextUtils::isSimilar(chapters[i], chapterName, 70) )
+            {
+                chapter = chapterToId.value(chapters[i]);
+                break;
+            }
+        }
+
+        analyzeVerse(tokens, chapter, result);
+
+        pos += nameRegex.matchedLength();
+    }
+
+    return result;
 }
 
 
