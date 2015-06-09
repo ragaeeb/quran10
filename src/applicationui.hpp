@@ -48,6 +48,7 @@ private slots:
 	void invoked(bb::system::InvokeRequest const& request);
 	void lazyInit();
 	void onCaptureCompleted();
+	void onDatabasePorted();
 	void onDataLoaded(QVariant id, QVariant data);
 	void onChapterMatched();
 	void onMissingAyatImagesFinished();

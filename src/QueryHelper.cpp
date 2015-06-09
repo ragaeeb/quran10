@@ -627,6 +627,11 @@ QString QueryHelper::translationVersion() const {
 }
 
 
+void QueryHelper::disable() {
+    m_sql.setEnabled(false);
+}
+
+
 QueryHelper::~QueryHelper()
 {
 }

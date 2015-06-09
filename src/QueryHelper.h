@@ -94,6 +94,7 @@ public:
     Q_SLOT void lazyInit();
     Q_SLOT void refreshDatabase();
     Q_SLOT void setupTables();
+    void disable();
 
     Q_INVOKABLE QObject* getExecutor();
     QString tafsirName() const;

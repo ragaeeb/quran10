@@ -459,4 +459,20 @@ QVariantList ThreadUtils::captureAyatsInBody(QString body, QMap<QString, int> co
 }
 
 
+bool ThreadUtils::replaceDatabase(QString const& src)
+{
+    QFileInfo qfi(src);
+    QString dest = QString("%1/%2").arg( QDir::homePath() ).arg( qfi.fileName() );
+
+    if ( QFile::exists(dest) ) {
+        LOGGER("Removing" << dest);
+        LOGGER( QFile::remove(dest) );
+    }
+
+    LOGGER(src << dest);
+
+    return QFile::copy(src, dest);
+}
+
+
 } /* namespace quran */
