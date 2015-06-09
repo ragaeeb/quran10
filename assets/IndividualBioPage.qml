@@ -118,7 +118,7 @@ Page
                 id: body
                 editable: false
                 backgroundVisible: false
-                content.flags: TextContentFlag.ActiveText | TextContentFlag.EmoticonsOff
+                content.flags: TextContentFlag.ActiveTextOff | TextContentFlag.EmoticonsOff
                 input.flags: TextInputFlag.SpellCheckOff
                 topPadding: 0;
                 textStyle.fontSize: FontSize.Large
