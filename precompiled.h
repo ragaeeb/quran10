@@ -23,6 +23,8 @@
 
 #include <bb/data/JsonDataAccess>
 
+#include <bb/system/InvokeManager>
+
 #include <QFutureWatcher>
 
 #include <QtConcurrentRun>

@@ -91,13 +91,11 @@ public:
     Q_INVOKABLE void fetchTafsirCountForAyat(QObject* caller, int chapterNumber, int verseNumber);
     Q_INVOKABLE void fetchTeachers(QObject* caller, qint64 individualId);
     Q_INVOKABLE void fetchTransliteration(QObject* caller, int chapter, int verse);
-    Q_INVOKABLE void findDuplicateQuotes(QObject* caller, QString const& field);
     Q_SLOT void lazyInit();
     Q_SLOT void refreshDatabase();
     Q_SLOT void setupTables();
 
     Q_INVOKABLE QObject* getExecutor();
-    QObject* getTafsirHelper();
     QString tafsirName() const;
     QString tafsirVersion() const;
     QString translation() const;

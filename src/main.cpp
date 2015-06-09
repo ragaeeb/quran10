@@ -10,8 +10,10 @@ Q_DECL_EXPORT int main(int argc, char **argv)
 {
     Application app(argc, argv);
 
-    registerLogging( QString::number( app.applicationPid() ) );
-    ApplicationUI ui;
+    bb::system::InvokeManager i;
+
+    registerLogging( i.startupMode() == bb::system::ApplicationStartupMode::InvokeCard ? "card" : "ui" );
+    ApplicationUI appui(&i);
 
     return Application::exec();
 }

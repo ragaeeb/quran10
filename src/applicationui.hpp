@@ -8,7 +8,6 @@
 #include "QueryHelper.h"
 #include "QueueDownloader.h"
 #include "RecitationHelper.h"
-#include "TextUtils.h"
 
 #include <bb/system/CardDoneMessage>
 
@@ -35,7 +34,6 @@ class ApplicationUI : public QObject
     MushafHelper m_mushaf;
     RecitationHelper m_recitation;
     Offloader m_offloader;
-    TextUtils m_textUtils;
     QMap<QString, int> m_chapters;
 
     void init(QString const& qml);
@@ -69,7 +67,7 @@ signals:
     void locationsFound(QVariant const& locations);
 
 public:
-    ApplicationUI();
+    ApplicationUI(bb::system::InvokeManager* im);
     virtual ~ApplicationUI();
 
     Q_SLOT void checkMissingAyatImages();
