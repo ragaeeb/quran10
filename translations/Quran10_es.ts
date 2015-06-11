@@ -64,12 +64,12 @@
     <message>
         <location filename="../assets/Awaker.qml" line="79"/>
         <source>Disable Repeat</source>
-        <translation type="unfinished"></translation>
+        <translation>Desactivar repetición</translation>
     </message>
     <message>
         <location filename="../assets/Awaker.qml" line="79"/>
         <source>Enable Repeat</source>
-        <translation type="unfinished"></translation>
+        <translation>Activar repetición</translation>
     </message>
     <message>
         <location filename="../assets/Awaker.qml" line="95"/>
@@ -145,7 +145,7 @@
     <message>
         <location filename="../assets/AyatPage.qml" line="135"/>
         <source>Verse</source>
-        <translation type="unfinished"></translation>
+        <translation>Versículo</translation>
     </message>
     <message>
         <location filename="../assets/AyatPage.qml" line="151"/>
@@ -171,7 +171,7 @@
     <message>
         <location filename="../assets/AyatPage.qml" line="221"/>
         <source>Mark Favourite</source>
-        <translation type="unfinished"></translation>
+        <translation>Marcar como favorito</translation>
     </message>
     <message>
         <location filename="../assets/AyatPage.qml" line="240"/>
@@ -192,7 +192,7 @@
         <location filename="../assets/AyatPage.qml" line="246"/>
         <location filename="../assets/AyatPage.qml" line="275"/>
         <source>Enter name</source>
-        <translation type="unfinished"></translation>
+        <translation>Escriba el nombre</translation>
     </message>
     <message>
         <location filename="../assets/AyatPage.qml" line="246"/>
@@ -385,7 +385,7 @@ Explained by: &lt;a href=&quot;%2&quot;&gt;%1&lt;/a&gt;%3</source>
     <message>
         <location filename="../assets/AyatTafsirPicker.qml" line="73"/>
         <source>Enter name</source>
-        <translation type="unfinished"></translation>
+        <translation>Escriba el nombre</translation>
     </message>
     <message>
         <location filename="../assets/AyatTafsirPicker.qml" line="73"/>
@@ -771,7 +771,7 @@ Finally, there is built-in support to do efficient and fast lookups for any sura
     <message>
         <location filename="../assets/MushafSheet.qml" line="101"/>
         <source>Surah</source>
-        <translation type="unfinished"></translation>
+        <translation>Capítulo</translation>
     </message>
     <message>
         <location filename="../assets/MushafSheet.qml" line="116"/>
@@ -791,7 +791,7 @@ Finally, there is built-in support to do efficient and fast lookups for any sura
     <message>
         <location filename="../assets/MushafSheet.qml" line="188"/>
         <source>Page</source>
-        <translation type="unfinished"></translation>
+        <translation>Ir a la página</translation>
     </message>
     <message>
         <location filename="../assets/MushafSheet.qml" line="204"/>
@@ -811,7 +811,7 @@ Finally, there is built-in support to do efficient and fast lookups for any sura
     <message>
         <location filename="../assets/MushafSheet.qml" line="204"/>
         <source>Jump</source>
-        <translation type="unfinished"></translation>
+        <translation>Saltar</translation>
     </message>
     <message>
         <location filename="../assets/MushafSheet.qml" line="204"/>
@@ -831,7 +831,7 @@ Finally, there is built-in support to do efficient and fast lookups for any sura
     <message>
         <location filename="../assets/MushafSheet.qml" line="265"/>
         <source>Page %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ir a la página %1</translation>
     </message>
     <message>
         <location filename="../assets/MushafSheet.qml" line="271"/>
@@ -902,12 +902,12 @@ Finally, there is built-in support to do efficient and fast lookups for any sura
     <message>
         <location filename="../src/MushafHelper.cpp" line="37"/>
         <source>The download was corrupt. Please retry the download again...</source>
-        <translation type="unfinished"></translation>
+        <translation>Archivos dañados</translation>
     </message>
     <message>
         <location filename="../src/MushafHelper.cpp" line="112"/>
         <source>Page #%1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ir a la página #%1</translation>
     </message>
     <message>
         <location filename="../src/RecitationHelper.cpp" line="41"/>
@@ -1052,12 +1052,12 @@ You can also select an ayat above the current one to start there and end at the 
     <message>
         <location filename="../assets/SearchConstraint.qml" line="18"/>
         <source>AND</source>
-        <translation type="unfinished"></translation>
+        <translation>Y</translation>
     </message>
     <message>
         <location filename="../assets/SearchConstraint.qml" line="18"/>
         <source>OR</source>
-        <translation type="unfinished"></translation>
+        <translation>O</translation>
     </message>
     <message>
         <location filename="../assets/SearchConstraint.qml" line="38"/>
@@ -1290,7 +1290,7 @@ https://www.youtube.com/watch?v=BDY8i9VQeZM</source>
     <message>
         <location filename="../assets/SettingsPage.qml" line="157"/>
         <source>To change the directory where the mushaf pages, ayat images, and recitations are downloaded, set it here.</source>
-        <translation type="unfinished"></translation>
+        <translation>Elegir ubicación para almacenar los archivos del Corán.</translation>
     </message>
     <message>
         <location filename="../assets/SettingsPage.qml" line="158"/>
@@ -1410,12 +1410,12 @@ https://www.youtube.com/watch?v=BDY8i9VQeZM</source>
     <message>
         <location filename="../assets/SurahPickerPage.qml" line="101"/>
         <source>Display Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Configuración de pantalla</translation>
     </message>
     <message>
         <location filename="../assets/SurahPickerPage.qml" line="107"/>
         <source>Alphabetical Order</source>
-        <translation type="unfinished"></translation>
+        <translation>Alfabético</translation>
     </message>
     <message>
         <location filename="../assets/SurahPickerPage.qml" line="108"/>
@@ -1425,7 +1425,7 @@ https://www.youtube.com/watch?v=BDY8i9VQeZM</source>
     <message>
         <location filename="../assets/SurahPickerPage.qml" line="115"/>
         <source>Juz</source>
-        <translation type="unfinished"></translation>
+        <translation>Yuz</translation>
     </message>
     <message>
         <location filename="../assets/SurahPickerPage.qml" line="116"/>
@@ -1643,7 +1643,7 @@ Press-and-hold on a verse to be able to play specific verses, or share them with
     <message>
         <location filename="../assets/main.qml" line="63"/>
         <source>Find</source>
-        <translation type="unfinished"></translation>
+        <translation>Buscar en El Corán</translation>
     </message>
     <message>
         <location filename="../assets/main.qml" line="79"/>
@@ -1785,7 +1785,7 @@ Press-and-hold on a verse to be able to play specific verses, or share them with
     <message>
         <location filename="../src/MushafHelper.cpp" line="161"/>
         <source>Page #%1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ir a la página #%1</translation>
     </message>
     <message>
         <location filename="../src/MushafHelper.cpp" line="182"/>
@@ -1919,7 +1919,7 @@ Press-and-hold on a verse to be able to play specific verses, or share them with
         <location filename="../src/Offloader.cpp" line="322"/>
         <location filename="../src/Offloader.cpp" line="330"/>
         <source>Uncompressing...</source>
-        <translation>Descomprimir...</translation>
+        <translation>Procesando la descarga…</translation>
     </message>
     <message>
         <location filename="../src/Offloader.cpp" line="484"/>
