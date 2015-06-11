@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="fr_FR">
+<TS version="2.0" language="es_ES">
 <context>
     <name>AlFurqanAdvertisement</name>
     <message>
@@ -16,7 +16,7 @@
     <message>
         <location filename="../assets/AlFurqanAdvertisement.qml" line="44"/>
         <source>Email</source>
-        <translation type="unfinished"></translation>
+        <translation>Correo electrónico</translation>
     </message>
     <message>
         <location filename="../assets/AlFurqanAdvertisement.qml" line="57"/>
@@ -31,7 +31,7 @@
     <message>
         <location filename="../assets/AlFurqanAdvertisement.qml" line="74"/>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Atrás</translation>
     </message>
 </context>
 <context>
@@ -39,7 +39,7 @@
     <message>
         <location filename="../assets/Awaker.qml" line="21"/>
         <source>Pause</source>
-        <translation type="unfinished"></translation>
+        <translation>Pausa</translation>
     </message>
     <message>
         <location filename="../assets/Awaker.qml" line="21"/>
@@ -54,7 +54,7 @@
     <message>
         <location filename="../assets/Awaker.qml" line="65"/>
         <source>Confirmation</source>
-        <translation type="unfinished"></translation>
+        <translation>Confirmar</translation>
     </message>
     <message>
         <location filename="../assets/Awaker.qml" line="65"/>
@@ -130,7 +130,7 @@
     <message>
         <location filename="../assets/AyatPage.qml" line="66"/>
         <source>Ayat not found</source>
-        <translation>Le contenu demandé est introuvable.</translation>
+        <translation>No se ha encontrado el contenido solicitado.</translation>
     </message>
     <message>
         <location filename="../assets/AyatPage.qml" line="111"/>
@@ -203,7 +203,7 @@
         <location filename="../assets/AyatPage.qml" line="246"/>
         <location filename="../assets/AyatPage.qml" line="275"/>
         <source>Name...</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre...</translation>
     </message>
     <message>
         <location filename="../assets/AyatPage.qml" line="254"/>
@@ -220,24 +220,24 @@
         <location filename="../assets/AyatPage.qml" line="571"/>
         <location filename="../assets/AyatPage.qml" line="631"/>
         <source>Copy</source>
-        <translation>Copier</translation>
+        <translation>Copiar</translation>
     </message>
     <message>
         <location filename="../assets/AyatPage.qml" line="296"/>
         <location filename="../assets/AyatPage.qml" line="585"/>
         <location filename="../assets/AyatPage.qml" line="645"/>
         <source>Share</source>
-        <translation type="unfinished">Partager</translation>
+        <translation>Compartir</translation>
     </message>
     <message>
         <location filename="../assets/AyatPage.qml" line="314"/>
         <source>Previous Verse</source>
-        <translation type="unfinished"></translation>
+        <translation>Anterior</translation>
     </message>
     <message>
         <location filename="../assets/AyatPage.qml" line="337"/>
         <source>Next Verse</source>
-        <translation type="unfinished"></translation>
+        <translation>Siguiente</translation>
     </message>
     <message>
         <location filename="../assets/AyatPage.qml" line="391"/>
@@ -297,7 +297,7 @@
     <message>
         <location filename="../assets/AyatPage.qml" line="426"/>
         <source>The ayat was not found in the database.</source>
-        <translation>Le contenu demandé est introuvable.</translation>
+        <translation>No se ha encontrado el contenido solicitado.</translation>
     </message>
     <message>
         <location filename="../assets/AyatPage.qml" line="444"/>
@@ -413,12 +413,12 @@ Explained by: &lt;a href=&quot;%2&quot;&gt;%1&lt;/a&gt;%3</source>
     <message>
         <location filename="../assets/BookmarksPane.qml" line="34"/>
         <source>Backup</source>
-        <translation type="unfinished"></translation>
+        <translation>Realizar copia de seguridad ahora</translation>
     </message>
     <message>
         <location filename="../assets/BookmarksPane.qml" line="50"/>
         <source>Select Destination</source>
-        <translation type="unfinished"></translation>
+        <translation>Carpeta</translation>
     </message>
     <message>
         <location filename="../assets/BookmarksPane.qml" line="61"/>
@@ -428,12 +428,12 @@ Explained by: &lt;a href=&quot;%2&quot;&gt;%1&lt;/a&gt;%3</source>
     <message>
         <location filename="../assets/BookmarksPane.qml" line="74"/>
         <source>Restore</source>
-        <translation type="unfinished"></translation>
+        <translation>Restaurar</translation>
     </message>
     <message>
         <location filename="../assets/BookmarksPane.qml" line="80"/>
         <source>Select File</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar archivo</translation>
     </message>
     <message>
         <location filename="../assets/BookmarksPane.qml" line="91"/>
@@ -448,12 +448,12 @@ Explained by: &lt;a href=&quot;%2&quot;&gt;%1&lt;/a&gt;%3</source>
     <message>
         <location filename="../assets/BookmarksPane.qml" line="109"/>
         <source>Clear Favourites</source>
-        <translation type="unfinished"></translation>
+        <translation>Borrar</translation>
     </message>
     <message>
         <location filename="../assets/BookmarksPane.qml" line="125"/>
         <source>Confirmation</source>
-        <translation type="unfinished"></translation>
+        <translation>Confirmar</translation>
     </message>
     <message>
         <location filename="../assets/BookmarksPane.qml" line="125"/>
@@ -463,12 +463,12 @@ Explained by: &lt;a href=&quot;%2&quot;&gt;%1&lt;/a&gt;%3</source>
     <message>
         <location filename="../assets/BookmarksPane.qml" line="133"/>
         <source>Favourites</source>
-        <translation type="unfinished"></translation>
+        <translation>Favoritos</translation>
     </message>
     <message>
         <location filename="../assets/BookmarksPane.qml" line="147"/>
         <source>You have no favourites. To mark a favourite, go to a verse, and choose &apos;Mark Favourite&apos; from the bottom action bar.</source>
-        <translation>Aucun favori.</translation>
+        <translation>No hay favoritos</translation>
     </message>
     <message>
         <location filename="../assets/BookmarksPane.qml" line="180"/>
@@ -493,12 +493,12 @@ Explained by: &lt;a href=&quot;%2&quot;&gt;%1&lt;/a&gt;%3</source>
     <message>
         <location filename="../assets/BookmarksPane.qml" line="189"/>
         <source>Removed favourite!</source>
-        <translation type="unfinished"></translation>
+        <translation>Eliminada de Favoritos</translation>
     </message>
     <message>
         <location filename="../assets/BookmarksPane.qml" line="225"/>
         <source>Uncategorized</source>
-        <translation type="unfinished"></translation>
+        <translation>Ninguna categoría</translation>
     </message>
 </context>
 <context>
@@ -511,7 +511,7 @@ Explained by: &lt;a href=&quot;%2&quot;&gt;%1&lt;/a&gt;%3</source>
     <message>
         <location filename="../assets/ChapterTafsirPicker.qml" line="53"/>
         <source>No tafsir found for that chapter.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sin resultados</translation>
     </message>
 </context>
 <context>
@@ -551,13 +551,6 @@ Explained by: &lt;a href=&quot;%2&quot;&gt;%1&lt;/a&gt;%3</source>
         <location filename="../assets/Cover.qml" line="59"/>
         <source>Quran10</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>CreateQuotePage</name>
-    <message>
-        <source>New Quote</source>
-        <translation type="obsolete">Nouvelle Citation</translation>
     </message>
 </context>
 <context>
@@ -616,11 +609,6 @@ Explained by: &lt;a href=&quot;%2&quot;&gt;%1&lt;/a&gt;%3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/HelpPage.qml" line="34"/>
-        <source>Version information not detected...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../assets/HelpPage.qml" line="28"/>
         <source>Tafsir Last Updated: %1
 Translation Last Updated: %2</source>
@@ -637,9 +625,14 @@ Translation Last Updated: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../assets/HelpPage.qml" line="34"/>
+        <source>Version information not detected...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../assets/HelpPage.qml" line="53"/>
         <source>Check for Updates</source>
-        <translation>Rech. mises à jour</translation>
+        <translation>Buscar actualizaciones</translation>
     </message>
     <message>
         <location filename="../assets/HelpPage.qml" line="104"/>
@@ -682,7 +675,7 @@ Finally, there is built-in support to do efficient and fast lookups for any sura
     <message>
         <location filename="../assets/IndividualBioPage.qml" line="167"/>
         <source>Works</source>
-        <translation type="unfinished"></translation>
+        <translation>Trabajo</translation>
     </message>
     <message>
         <location filename="../assets/IndividualBioPage.qml" line="169"/>
@@ -697,40 +690,22 @@ Finally, there is built-in support to do efficient and fast lookups for any sura
     <message>
         <location filename="../assets/IndividualBioPage.qml" line="173"/>
         <source>Websites</source>
-        <translation type="unfinished"></translation>
+        <translation>Sitio web</translation>
     </message>
     <message>
         <location filename="../assets/IndividualBioPage.qml" line="175"/>
         <source>Email Addresses</source>
-        <translation type="unfinished"></translation>
+        <translation>Dirección de correo</translation>
     </message>
     <message>
         <location filename="../assets/IndividualBioPage.qml" line="177"/>
         <source>Phone Numbers</source>
-        <translation type="unfinished"></translation>
+        <translation>Número de teléfono</translation>
     </message>
     <message>
         <location filename="../assets/IndividualBioPage.qml" line="179"/>
         <source>Quotes</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>IndividualPickerPage</name>
-    <message>
-        <source>Enter text to search...</source>
-        <translation type="obsolete">Entrez le texte à rechercher..</translation>
-    </message>
-</context>
-<context>
-    <name>IndividualsPane</name>
-    <message>
-        <source>Copy</source>
-        <translation type="obsolete">Copier</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="obsolete">Modifier</translation>
     </message>
 </context>
 <context>
@@ -757,57 +732,46 @@ Finally, there is built-in support to do efficient and fast lookups for any sura
     </message>
 </context>
 <context>
-    <name>LocationPickerPage</name>
-    <message>
-        <source>Enter text to search...</source>
-        <translation type="obsolete">Entrez le texte à rechercher..</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="obsolete">Modifier</translation>
-    </message>
-</context>
-<context>
     <name>MushafSheet</name>
     <message>
         <location filename="../assets/MushafSheet.qml" line="35"/>
         <source>Use the &apos;%1&apos; action to select a specific surah in the mushaf you want to jump to.</source>
-        <translation>Utilisez les &apos; %1 &apos; l&apos;action pour sélectionner une sourate spécifique dans le mushaf vous voulez aller.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../assets/MushafSheet.qml" line="36"/>
         <source>Use the &apos;%1&apos; action to jump to a specific page number in the mushaf.</source>
-        <translation>Utilisez les &apos;%1&apos; l&apos;action pour passer à un numéro de page spécifique dans le mushaf.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../assets/MushafSheet.qml" line="37"/>
         <source>Use the &apos;Stretch&apos; action to stretch the mushaf page to fill your screen size. Note that this may not always be visually attractive.</source>
-        <translation>Utilisez les &apos;Stretch&apos;action pour étirer la page mushaf pour remplir la taille de votre écran. Notez que cela peut ne pas toujours être visuellement attrayant.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../assets/MushafSheet.qml" line="38"/>
         <source>Use the &apos;Aspect Fill&apos; action to resize the mushaf according to its original dimensions. In this mode you will have to do pinch-and-zoom and pan gestures with your fingers in order to view the different parts of the page.</source>
-        <translation>Utilisez les &apos;Aspect Fill&apos; action pour redimensionner l&apos;mushaf selon ses dimensions d&apos;origine. Dans ce mode, vous aurez à faire de pincement et de zoom et de panoramique des gestes avec vos doigts afin de visualiser les différentes parties de la page.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../assets/MushafSheet.qml" line="39"/>
         <source>Quran10 does its best to minimize your data usage by lazily downloading the pages as you need them. However, if you want to download them all at once tap on the &apos;%1&apos; action.</source>
-        <translation>Quran10 fait de son mieux pour minimiser votre consommation de données en téléchargeant de maniere effective les pages que vous en avez besoin. Toutefois, si vous souhaitez les télécharger à la fois taper sur les &apos;%1&apos; action.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../assets/MushafSheet.qml" line="74"/>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Atrás</translation>
     </message>
     <message>
         <location filename="../assets/MushafSheet.qml" line="81"/>
         <source>The app automatically saves the last page number you left off (Page %1) so you can easily pick up where you left off when you come back.</source>
-        <translation>L&apos;application enregistre automatiquement le dernier numéro de la page vous avez quitté (Page %1) de sorte que vous pouvez facilement reprendre là où vous l&apos;avez laissé quand vous revenez.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../assets/MushafSheet.qml" line="101"/>
         <source>Surah</source>
-        <translation>Sourate</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../assets/MushafSheet.qml" line="116"/>
@@ -827,22 +791,22 @@ Finally, there is built-in support to do efficient and fast lookups for any sura
     <message>
         <location filename="../assets/MushafSheet.qml" line="188"/>
         <source>Page</source>
-        <translation>Page</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../assets/MushafSheet.qml" line="204"/>
         <source>Enter page number</source>
-        <translation>Entrez le numéro de la page</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../assets/MushafSheet.qml" line="204"/>
         <source>Please enter the page in the mushaf you want to jump to:</source>
-        <translation>S&apos;il vous plaît veuillez entrer dans la page dans le mushaf vous voulez sauter à:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../assets/MushafSheet.qml" line="204"/>
         <source>Enter value between 1 and 604 inclusive</source>
-        <translation>Entrez une valeure entiere comprise entre 1 et 604</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../assets/MushafSheet.qml" line="204"/>
@@ -852,17 +816,17 @@ Finally, there is built-in support to do efficient and fast lookups for any sura
     <message>
         <location filename="../assets/MushafSheet.qml" line="204"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <location filename="../assets/MushafSheet.qml" line="213"/>
         <source>Download All</source>
-        <translation type="unfinished"></translation>
+        <translation>Descargas</translation>
     </message>
     <message>
         <location filename="../assets/MushafSheet.qml" line="258"/>
         <source>Tajweed</source>
-        <translation>Lecture appliquée</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../assets/MushafSheet.qml" line="265"/>
@@ -872,52 +836,52 @@ Finally, there is built-in support to do efficient and fast lookups for any sura
     <message>
         <location filename="../assets/MushafSheet.qml" line="271"/>
         <source>No Tajweed</source>
-        <translation>Pas de Lecture appliquée</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../assets/MushafSheet.qml" line="439"/>
         <source>To go to the previous page, tap here.</source>
-        <translation>Pour aller à la page précédente, appuyez ici.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../assets/MushafSheet.qml" line="440"/>
         <source>To go to the next page, tap here.</source>
-        <translation>Pour aller à la page suivante, appuyez ici.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../assets/MushafSheet.qml" line="443"/>
         <source>Do a pinch gesture anywhere on the image to enlarge it or make it smaller! Or scroll right-to-left or vice-versa to pan the image.</source>
-        <translation>Faites un geste de pincement n&apos;importe où sur l&apos;image pour l&apos;agrandir ou la réduire! Ou faire défiler de droite à gauche ou vice - versa pour déplacer l&apos;image.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../assets/MushafSheet.qml" line="446"/>
         <source>To display the current page number, simply tap anywhere on the page and the title bar will come up.</source>
-        <translation>Pour afficher le numéro de la page actuelle, appuyez simplement n&apos;importe où sur la page et la barre de titre va monter.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../assets/MushafSheet.qml" line="447"/>
         <source>Use this mode to display the version of the Mushaf that has the pronunciation rules on it.</source>
-        <translation>Utiliser ce mode pour afficher la version du Mushaf qui possède ces règles de prononciation.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../assets/MushafSheet.qml" line="448"/>
         <source>Use this mode to display the version of the Mushaf that does not have pronunciation rules written on it.</source>
-        <translation>Utilisez ce mode pour afficher la version du Mushaf qui ne possède pas ces règles de prononciation écrites</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../assets/MushafSheet.qml" line="449"/>
         <source>This displays the current page number you are on.</source>
-        <translation>Ceci affiche le numéro de page que vous êtes actuellement.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../assets/MushafSheet.qml" line="478"/>
         <source>To exit the mushaf mode, simply tap on the Back button at the bottom.</source>
-        <translation>Pour quitter le mode Mushaf, appuyez simplement sur ​​le bouton Retour au fond.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../assets/MushafSheet.qml" line="479"/>
         <source>Tap in the bottom-right to open the menu.</source>
-        <translation>Appuyez en bas à droite pour ouvrir le menu.</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -925,12 +889,12 @@ Finally, there is built-in support to do efficient and fast lookups for any sura
     <message>
         <location filename="../assets/NotificationToast.qml" line="177"/>
         <source>Copy</source>
-        <translation>Copier</translation>
+        <translation>Copiar</translation>
     </message>
     <message>
         <location filename="../assets/NotificationToast.qml" line="191"/>
         <source>Share</source>
-        <translation>Partager</translation>
+        <translation>Compartir</translation>
     </message>
 </context>
 <context>
@@ -938,7 +902,7 @@ Finally, there is built-in support to do efficient and fast lookups for any sura
     <message>
         <location filename="../src/MushafHelper.cpp" line="37"/>
         <source>The download was corrupt. Please retry the download again...</source>
-        <translation>Le téléchargement était corrompu. S&apos;il vous plaît réessayer le téléchargement...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/MushafHelper.cpp" line="112"/>
@@ -948,65 +912,22 @@ Finally, there is built-in support to do efficient and fast lookups for any sura
     <message>
         <location filename="../src/RecitationHelper.cpp" line="41"/>
         <source>Quran10 does not have access to your Shared Folder. The app cannot download any recitations without this permission.</source>
-        <translation>Quran10 n&apos;a pas accès à votre dossier partagé. L&apos;application ne peut pas télécharger des récitations sans cette autorisation.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/RecitationHelper.cpp" line="51"/>
         <source>Quran10 does not seem to be able to write to the output folder. Please try selecting a different output folder or restart your device.</source>
-        <translation>Quran10 ne semble pas être en mesure d&apos;écrire dans le dossier de sortie. S&apos;il vous plaît essayez de sélectionner un dossier de sortie différent ou redémarrer votre appareil.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/RecitationHelper.cpp" line="71"/>
         <source>%1:%2 recitation</source>
-        <translation>%1:%2 récitation</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/RecitationHelper.cpp" line="97"/>
         <source>Quran10 could not write the playlist. Please try restarting your device.</source>
-        <translation>Quran10 ne pouvait pas écrire la liste de lecture. S&apos;il vous plaît essayez de redémarrer votre appareil.</translation>
-    </message>
-</context>
-<context>
-    <name>QuotesPane</name>
-    <message>
-        <source>Enter text to search...</source>
-        <translation type="obsolete">Entrez le texte à rechercher..</translation>
-    </message>
-    <message>
-        <source>Author</source>
-        <translation type="obsolete">Auteur</translation>
-    </message>
-    <message>
-        <source>Body</source>
-        <translation type="obsolete">Corps</translation>
-    </message>
-    <message>
-        <source>Reference</source>
-        <translation type="obsolete">Référence</translation>
-    </message>
-    <message>
-        <source>Quote removed!</source>
-        <translation type="obsolete">Citation enlevé!</translation>
-    </message>
-    <message>
-        <source>Quote updated!</source>
-        <translation type="obsolete">Citation jour!</translation>
-    </message>
-    <message>
-        <source>Quote added!</source>
-        <translation type="obsolete">Citation ajoutée!</translation>
-    </message>
-    <message>
-        <source>New Quote</source>
-        <translation type="obsolete">Nouvelle Citation</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="obsolete">Modifier</translation>
-    </message>
-    <message>
-        <source>Copy</source>
-        <translation type="obsolete">Copier</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1067,7 +988,7 @@ Finally, there is built-in support to do efficient and fast lookups for any sura
     <message>
         <location filename="../assets/QuranPane.qml" line="238"/>
         <source>Select All</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar todos</translation>
     </message>
     <message>
         <location filename="../assets/QuranPane.qml" line="253"/>
@@ -1156,7 +1077,7 @@ You can also select an ayat above the current one to start there and end at the 
     <message>
         <location filename="../assets/SearchConstraint.qml" line="53"/>
         <source>Enter search query</source>
-        <translation type="unfinished"></translation>
+        <translation>Escriba</translation>
     </message>
 </context>
 <context>
@@ -1180,17 +1101,17 @@ You can also select an ayat above the current one to start there and end at the 
         <location filename="../assets/SearchPage.qml" line="122"/>
         <location filename="../assets/SearchPage.qml" line="204"/>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Buscar</translation>
     </message>
     <message>
         <location filename="../assets/SearchPage.qml" line="141"/>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation>Agregar</translation>
     </message>
     <message>
         <location filename="../assets/SearchPage.qml" line="172"/>
         <source>Remove Constraints</source>
-        <translation type="unfinished"></translation>
+        <translation>Eliminar</translation>
     </message>
     <message>
         <location filename="../assets/SearchPage.qml" line="250"/>
@@ -1200,7 +1121,7 @@ You can also select an ayat above the current one to start there and end at the 
     <message>
         <location filename="../assets/SearchPage.qml" line="267"/>
         <source>Remove Restriction</source>
-        <translation type="unfinished"></translation>
+        <translation>Eliminar</translation>
     </message>
     <message>
         <location filename="../assets/SearchPage.qml" line="268"/>
@@ -1220,7 +1141,7 @@ You can also select an ayat above the current one to start there and end at the 
     <message>
         <location filename="../assets/SearchPage.qml" line="348"/>
         <source>Enter text to search...</source>
-        <translation type="unfinished">Entrez le texte à rechercher..</translation>
+        <translation>Escriba</translation>
     </message>
     <message>
         <location filename="../assets/SearchPage.qml" line="376"/>
@@ -1250,7 +1171,7 @@ You can also select an ayat above the current one to start there and end at the 
     <message>
         <location filename="../assets/SearchPage.qml" line="410"/>
         <source>No results found for your query. Try another query.</source>
-        <translation>Aucun résultat</translation>
+        <translation>Sin resultados</translation>
     </message>
 </context>
 <context>
@@ -1258,7 +1179,7 @@ You can also select an ayat above the current one to start there and end at the 
     <message>
         <location filename="../assets/SettingsPage.qml" line="15"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Configuración</translation>
     </message>
     <message>
         <location filename="../assets/SettingsPage.qml" line="42"/>
@@ -1268,7 +1189,7 @@ You can also select an ayat above the current one to start there and end at the 
     <message>
         <location filename="../assets/SettingsPage.qml" line="48"/>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation>Ninguno</translation>
     </message>
     <message>
         <location filename="../assets/SettingsPage.qml" line="49"/>
@@ -1278,7 +1199,7 @@ You can also select an ayat above the current one to start there and end at the 
     <message>
         <location filename="../assets/SettingsPage.qml" line="56"/>
         <source>English</source>
-        <translation type="unfinished"></translation>
+        <translation>Inglés</translation>
     </message>
     <message>
         <location filename="../assets/SettingsPage.qml" line="57"/>
@@ -1288,7 +1209,7 @@ You can also select an ayat above the current one to start there and end at the 
     <message>
         <location filename="../assets/SettingsPage.qml" line="63"/>
         <source>French</source>
-        <translation type="unfinished"></translation>
+        <translation>Francés</translation>
     </message>
     <message>
         <location filename="../assets/SettingsPage.qml" line="64"/>
@@ -1298,7 +1219,7 @@ You can also select an ayat above the current one to start there and end at the 
     <message>
         <location filename="../assets/SettingsPage.qml" line="70"/>
         <source>Indonesian</source>
-        <translation type="unfinished"></translation>
+        <translation>Indonesia</translation>
     </message>
     <message>
         <location filename="../assets/SettingsPage.qml" line="71"/>
@@ -1308,7 +1229,7 @@ You can also select an ayat above the current one to start there and end at the 
     <message>
         <location filename="../assets/SettingsPage.qml" line="77"/>
         <source>Spanish</source>
-        <translation type="unfinished"></translation>
+        <translation>Español</translation>
     </message>
     <message>
         <location filename="../assets/SettingsPage.qml" line="78"/>
@@ -1323,7 +1244,7 @@ You can also select an ayat above the current one to start there and end at the 
     <message>
         <location filename="../assets/SettingsPage.qml" line="86"/>
         <source>Thailand</source>
-        <translation type="unfinished"></translation>
+        <translation>Tailandia</translation>
     </message>
     <message>
         <location filename="../assets/SettingsPage.qml" line="92"/>
@@ -1394,7 +1315,7 @@ https://www.youtube.com/watch?v=BDY8i9VQeZM</source>
     <message>
         <location filename="../assets/SettingsPage.qml" line="200"/>
         <source>Select Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Carpeta</translation>
     </message>
     <message>
         <location filename="../assets/SettingsPage.qml" line="222"/>
@@ -1405,7 +1326,7 @@ https://www.youtube.com/watch?v=BDY8i9VQeZM</source>
     <message>
         <location filename="../assets/SettingsPage.qml" line="247"/>
         <source>Edit</source>
-        <translation type="unfinished">Modifier</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../assets/SettingsPage.qml" line="266"/>
@@ -1514,7 +1435,7 @@ https://www.youtube.com/watch?v=BDY8i9VQeZM</source>
     <message>
         <location filename="../assets/SurahPickerPage.qml" line="123"/>
         <source>Normal</source>
-        <translation type="unfinished"></translation>
+        <translation>Normal</translation>
     </message>
     <message>
         <location filename="../assets/SurahPickerPage.qml" line="124"/>
@@ -1571,48 +1492,7 @@ You can also enter &apos;2:3&apos; to go to Surah Baqara verse #3</source>
     <message>
         <location filename="../assets/SurahPickerPage.qml" line="352"/>
         <source>No chapters matched your search criteria. Please try a different search term.</source>
-        <translation>Aucun résultat</translation>
-    </message>
-</context>
-<context>
-    <name>TafsirAyats</name>
-    <message>
-        <source>Edit</source>
-        <translation type="obsolete">Modifier</translation>
-    </message>
-</context>
-<context>
-    <name>TafsirContentsPage</name>
-    <message>
-        <source>Copy</source>
-        <translation type="obsolete">Copier</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="obsolete">Modifier</translation>
-    </message>
-</context>
-<context>
-    <name>TafsirPickerPage</name>
-    <message>
-        <source>Enter text to search...</source>
-        <translation type="obsolete">Entrez le texte à rechercher..</translation>
-    </message>
-    <message>
-        <source>Author</source>
-        <translation type="obsolete">Auteur</translation>
-    </message>
-    <message>
-        <source>Body</source>
-        <translation type="obsolete">Corps</translation>
-    </message>
-    <message>
-        <source>Reference</source>
-        <translation type="obsolete">Référence</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="obsolete">Modifier</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1625,7 +1505,7 @@ You can also enter &apos;2:3&apos; to go to Surah Baqara verse #3</source>
     <message>
         <location filename="../assets/TransfersDialog.qml" line="176"/>
         <source>Download Queue</source>
-        <translation type="unfinished"></translation>
+        <translation>Descargas</translation>
     </message>
 </context>
 <context>
@@ -1648,22 +1528,22 @@ You can also enter &apos;2:3&apos; to go to Surah Baqara verse #3</source>
     <message>
         <location filename="../assets/VersesListView.qml" line="86"/>
         <source>Play</source>
-        <translation type="unfinished"></translation>
+        <translation>Reproducir</translation>
     </message>
     <message>
         <location filename="../assets/VersesListView.qml" line="104"/>
         <source>Copy</source>
-        <translation>Copier</translation>
+        <translation>Copiar</translation>
     </message>
     <message>
         <location filename="../assets/VersesListView.qml" line="120"/>
         <source>Share</source>
-        <translation type="unfinished">Partager</translation>
+        <translation>Compartir</translation>
     </message>
     <message>
         <location filename="../assets/VersesListView.qml" line="136"/>
         <source>None selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Ningún elemento seleccionado</translation>
     </message>
     <message>
         <location filename="../assets/VersesListView.qml" line="184"/>
@@ -1728,12 +1608,12 @@ Press-and-hold on a verse to be able to play specific verses, or share them with
     <message>
         <location filename="../assets/main.qml" line="18"/>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Ayuda</translation>
     </message>
     <message>
         <location filename="../assets/main.qml" line="21"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Configuración</translation>
     </message>
     <message>
         <location filename="../assets/main.qml" line="27"/>
@@ -1753,12 +1633,12 @@ Press-and-hold on a verse to be able to play specific verses, or share them with
     <message>
         <location filename="../assets/main.qml" line="48"/>
         <source>Favourites</source>
-        <translation type="unfinished"></translation>
+        <translation>Favoritos</translation>
     </message>
     <message>
         <location filename="../assets/main.qml" line="62"/>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Buscar</translation>
     </message>
     <message>
         <location filename="../assets/main.qml" line="63"/>
@@ -1862,7 +1742,7 @@ Press-and-hold on a verse to be able to play specific verses, or share them with
     <message>
         <location filename="../src/applicationui.cpp" line="401"/>
         <source>Update Check</source>
-        <translation>Vérification des mises à jour terminée</translation>
+        <translation>Comprobación de actualizaciones completada</translation>
     </message>
     <message>
         <location filename="../src/applicationui.cpp" line="512"/>
@@ -1872,17 +1752,17 @@ Press-and-hold on a verse to be able to play specific verses, or share them with
     <message>
         <location filename="../src/applicationui.cpp" line="512"/>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation>Aceptar</translation>
     </message>
     <message>
         <location filename="../src/applicationui.cpp" line="564"/>
         <source>&apos;%1&apos; Lookup</source>
-        <translation>Rechercher &apos;%1&apos;</translation>
+        <translation>Buscar &apos;(%1,%2)&apos;</translation>
     </message>
     <message>
         <location filename="../src/applicationui.cpp" line="580"/>
         <source>&apos;(%1,%2)&apos; Lookup</source>
-        <translation>Rechercher &apos;(%1,%2)&apos;</translation>
+        <translation>Buscar &apos;(%1,%2)&apos;</translation>
     </message>
     <message>
         <location filename="../src/applicationui.cpp" line="604"/>
@@ -1925,13 +1805,13 @@ Press-and-hold on a verse to be able to play specific verses, or share them with
     <message>
         <location filename="../src/MushafHelper.cpp" line="294"/>
         <source>Uncompressing...</source>
-        <translation type="unfinished"></translation>
+        <translation>Descomprimir...</translation>
     </message>
     <message>
         <location filename="../src/MushafHelper.cpp" line="310"/>
         <location filename="../src/MushafHelper.cpp" line="319"/>
         <source>Confirmation</source>
-        <translation type="unfinished"></translation>
+        <translation>Confirmar</translation>
     </message>
     <message>
         <location filename="../src/MushafHelper.cpp" line="310"/>
@@ -1942,13 +1822,13 @@ Press-and-hold on a verse to be able to play specific verses, or share them with
         <location filename="../src/MushafHelper.cpp" line="310"/>
         <location filename="../src/MushafHelper.cpp" line="319"/>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Sí</translation>
     </message>
     <message>
         <location filename="../src/MushafHelper.cpp" line="310"/>
         <location filename="../src/MushafHelper.cpp" line="319"/>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>No</translation>
     </message>
     <message>
         <location filename="../src/MushafHelper.cpp" line="319"/>
@@ -2003,27 +1883,27 @@ Press-and-hold on a verse to be able to play specific verses, or share them with
     <message>
         <location filename="../src/Offloader.cpp" line="226"/>
         <source>Updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Actualiz.</translation>
     </message>
     <message>
         <location filename="../src/Offloader.cpp" line="226"/>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Sí</translation>
     </message>
     <message>
         <location filename="../src/Offloader.cpp" line="226"/>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>No</translation>
     </message>
     <message>
         <location filename="../src/Offloader.cpp" line="226"/>
         <source>Don&apos;t ask again</source>
-        <translation type="unfinished"></translation>
+        <translation>No volver a mostrar.</translation>
     </message>
     <message>
         <location filename="../src/Offloader.cpp" line="232"/>
         <source>There is a problem communicating with the server so the app cannot download the necessary files just yet. Please try opening the app again later and it should automatically try the update again...</source>
-        <translation type="unfinished"></translation>
+        <translation>Error temporal de servidor</translation>
     </message>
     <message>
         <location filename="../src/Offloader.cpp" line="274"/>
@@ -2039,7 +1919,7 @@ Press-and-hold on a verse to be able to play specific verses, or share them with
         <location filename="../src/Offloader.cpp" line="322"/>
         <location filename="../src/Offloader.cpp" line="330"/>
         <source>Uncompressing...</source>
-        <translation type="unfinished"></translation>
+        <translation>Descomprimir...</translation>
     </message>
     <message>
         <location filename="../src/Offloader.cpp" line="484"/>
