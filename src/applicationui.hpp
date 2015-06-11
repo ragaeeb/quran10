@@ -2,6 +2,7 @@
 #define ApplicationUI_HPP_
 
 #include "LazySceneCover.h"
+#include "LocaleUtil.h"
 #include "MushafHelper.h"
 #include "Offloader.h"
 #include "Persistance.h"
@@ -25,6 +26,7 @@ class ApplicationUI : public QObject
 {
 	Q_OBJECT
 
+	LocaleUtil m_locale;
 	LazySceneCover m_sceneCover;
 	Persistance m_persistance;
 	QueryHelper m_helper;
