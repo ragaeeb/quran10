@@ -17,9 +17,9 @@ INSERT INTO individuals SELECT * FROM e.individuals;
 INSERT INTO teachers SELECT * FROM e.teachers;
 INSERT INTO websites SELECT * FROM e.websites;
 
-CREATE INDEX IF NOT EXISTS individuals_index ON individuals(birth,death,female,location,is_companion);
+CREATE INDEX IF NOT EXISTS individuals_index ON individuals(birth,death,female,hidden,location,is_companion);
 CREATE INDEX IF NOT EXISTS suites_index ON suites(author,translator,explainer);
 CREATE INDEX IF NOT EXISTS suite_pages_index ON suite_pages(suite_id);
-CREATE INDEX IF NOT EXISTS quotes_index ON quotes(author);
+CREATE INDEX IF NOT EXISTS quotes_index ON quotes(author,suite_id);
 CREATE INDEX IF NOT EXISTS explanations_index ON explanations(to_verse_number);
 VACUUM;
