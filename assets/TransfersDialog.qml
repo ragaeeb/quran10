@@ -201,8 +201,6 @@ Delegate
                                         return "recitation";
                                     } else if (data.updateCheck) {
                                         return "updateCheck";
-                                    } else if (data.geoLookup) {
-                                        return "geoLookup";
                                     } else if (data.localUri) {
                                         return "mushafPage";
                                     } else if (data.joinDownload || data.ayatImages) {
@@ -307,15 +305,6 @@ Delegate
                                         
                                         TransferListItem {
                                             successImageSource: "images/list/ic_mushaf_page.png"
-                                        }
-                                    },
-                                    
-                                    ListItemComponent
-                                    {
-                                        type: "geoLookup"
-                                        
-                                        TransferListItem {
-                                            successImageSource: "images/list/ic_geo_search.png"
                                         }
                                     },
                                     

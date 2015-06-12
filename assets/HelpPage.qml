@@ -4,6 +4,36 @@ Page
 {
     actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
 
+    actions: [
+        ActionItem
+        {
+            id: updateCheck
+            imageSource: "images/menu/ic_help.png"
+            ActionBar.placement: ActionBarPlacement.OnBar
+            title: qsTr("Check for Updates") + Retranslate.onLanguageChanged
+            
+            onTriggered: {
+                console.log("UserEvent: CheckForUpdate");
+                enabled = false;
+                var params = {'language': helper.translation, 'tafsir': helper.tafsirName, 'translation': helper.translationName};
+                helper.updateCheckNeeded(params);
+                
+                reporter.record("CheckForTafsirUpdate", helper.translation);
+            }
+            
+            function onFinished(cookie, data)
+            {
+                if (cookie.updateCheck) {
+                    enabled = true;
+                }
+            }
+            
+            onCreationCompleted: {
+                queue.requestComplete.connect(onFinished);
+            }
+        }
+    ]
+
     titleBar: AboutTitleBar
     {
         id: atb
@@ -39,41 +69,31 @@ Page
                     helper.textualChange.connect(recompute);
                     recompute();
                 }
+            },
+            
+            PersistDropDown
+            {
+                isFlag: true
+                key: "updateCheckFlag"
+                title: qsTr("Automatic Database Updating") + Retranslate.onLanguageChanged
                 
-                contextActions: [
-                    ActionSet
-                    {
-                        id: actionSet
-                        title: versionInfo.text
-                        
-                        ActionItem
-                        {
-                            id: updateCheck
-                            imageSource: "images/menu/ic_upload_local.png"
-                            title: qsTr("Check for Updates") + Retranslate.onLanguageChanged
-                            
-                            onTriggered: {
-                                console.log("UserEvent: CheckForUpdate");
-                                enabled = false;
-                                var params = {'language': helper.translation, 'tafsir': helper.tafsirName, 'translation': helper.translationName};
-                                helper.updateCheckNeeded(params);
-                                
-                                reporter.record("CheckForTafsirUpdate", helper.translation);
-                            }
-                            
-                            function onFinished(cookie, data)
-                            {
-                                if (cookie.updateCheck) {
-                                    enabled = true;
-                                }
-                            }
-                            
-                            onCreationCompleted: {
-                                queue.requestComplete.connect(onFinished);
-                            }
-                        }
-                    }
-                ]
+                Option {
+                    imageSource: "images/toast/yellow_delete.png"
+                    text: qsTr("Disabled") + Retranslate.onLanguageChanged
+                    value: -1
+                }
+                
+                Option {
+                    imageSource: "images/menu/ic_help.png"
+                    text: qsTr("Prompt") + Retranslate.onLanguageChanged
+                    value: undefined
+                }
+                
+                Option {
+                    imageSource: "images/menu/ic_select_all.png"
+                    text: qsTr("Automatic") + Retranslate.onLanguageChanged
+                    value: 1
+                }
             }
         ]
     }

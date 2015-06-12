@@ -67,15 +67,12 @@ signals:
     void childCardFinished(QString const& message);
     void initialize();
     void lazyInitComplete();
-    void locationsFound(QVariant const& locations);
 
 public:
     ApplicationUI(bb::system::InvokeManager* im);
     virtual ~ApplicationUI();
 
     Q_SLOT void checkMissingAyatImages();
-    Q_INVOKABLE void geoLookup(QString const& location);
-    Q_INVOKABLE void geoLookup(qreal latitude, qreal longitude);
 };
 
 } // quran
