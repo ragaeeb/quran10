@@ -59,17 +59,17 @@
     <message>
         <location filename="../assets/Awaker.qml" line="65"/>
         <source>We are about to download MP3 recitations, you should only attempt to do this if you have either a good data plan, or are connected via Wi-Fi. Otherwise you might incur a lot of data charges. Are you sure you want to continue? If you select No you can always attempt to download again later.</source>
-        <translation>Nous sommes sur le point de télécharger récitations MP3, pour le faire vous ne devriez procéder que si vous avez soit une connexion stable de données, ou vous etes connectés via Wi-Fi . Sinon, vous pourriez engager beaucoup de frais de données. Etes-vous sûr de vouloir continuer? Si vous veuillez sélectionner Non, vous pouvez toujours tenter de télécharger à nouveau de manière ultérieure.</translation>
+        <translation>Nous sommes sur le point de télécharger récitations MP3, pour le faire vous ne devriez procéder que si vous avez soit une connexion stable de données, ou vous etes connectés via Wi-Fi. Sinon, vous pourriez engager beaucoup de frais de données. Etes-vous sûr de vouloir continuer? Si vous veuillez sélectionner Non, vous pouvez toujours tenter de télécharger à nouveau de manière ultérieure.</translation>
     </message>
     <message>
         <location filename="../assets/Awaker.qml" line="79"/>
         <source>Disable Repeat</source>
-        <translation type="unfinished"></translation>
+        <translation>Désactiver la répétition</translation>
     </message>
     <message>
         <location filename="../assets/Awaker.qml" line="79"/>
         <source>Enable Repeat</source>
-        <translation type="unfinished"></translation>
+        <translation>Activer la répétition</translation>
     </message>
     <message>
         <location filename="../assets/Awaker.qml" line="95"/>
@@ -150,7 +150,7 @@
     <message>
         <location filename="../assets/AyatPage.qml" line="151"/>
         <source>Audio</source>
-        <translation type="unfinished"></translation>
+        <translation>Audio</translation>
     </message>
     <message numerus="yes">
         <location filename="../assets/AyatPage.qml" line="175"/>
@@ -171,7 +171,7 @@
     <message>
         <location filename="../assets/AyatPage.qml" line="221"/>
         <source>Mark Favourite</source>
-        <translation type="unfinished"></translation>
+        <translation>Marquer comme favori</translation>
     </message>
     <message>
         <location filename="../assets/AyatPage.qml" line="240"/>
@@ -186,13 +186,13 @@
     <message>
         <location filename="../assets/AyatPage.qml" line="240"/>
         <source>Enter a tag for this bookmark (ie: ramadan). You can leave this blank if you don&apos;t want to use a tag.</source>
-        <translation>Saisissez une étiquette pour ce signet (ex: ramadan) . Vous pouvez laisser ce champ vide si vous voulez pas utiliser d’étiquette.</translation>
+        <translation>Saisissez une étiquette pour ce signet (ex: ramadan). Vous pouvez laisser ce champ vide si vous voulez pas utiliser d’étiquette.</translation>
     </message>
     <message>
         <location filename="../assets/AyatPage.qml" line="246"/>
         <location filename="../assets/AyatPage.qml" line="275"/>
         <source>Enter name</source>
-        <translation type="unfinished"></translation>
+        <translation>Saisir le nom</translation>
     </message>
     <message>
         <location filename="../assets/AyatPage.qml" line="246"/>
@@ -203,7 +203,7 @@
         <location filename="../assets/AyatPage.qml" line="246"/>
         <location filename="../assets/AyatPage.qml" line="275"/>
         <source>Name...</source>
-        <translation type="unfinished"></translation>
+        <translation>Nom...</translation>
     </message>
     <message>
         <location filename="../assets/AyatPage.qml" line="254"/>
@@ -227,7 +227,7 @@
         <location filename="../assets/AyatPage.qml" line="585"/>
         <location filename="../assets/AyatPage.qml" line="645"/>
         <source>Share</source>
-        <translation type="unfinished">Partager</translation>
+        <translation>Partager</translation>
     </message>
     <message>
         <location filename="../assets/AyatPage.qml" line="314"/>
@@ -267,7 +267,7 @@
     <message>
         <location filename="../assets/AyatPage.qml" line="401"/>
         <source>There appears to be other verses with similar wording, choose the &apos;%1&apos; option at the top to view them in a split screen.</source>
-        <translation>Il semble y avoir d'autres versets avec des mots semblables , choisissez l’option du haut pour les afficher dans un écran séparé.</translation>
+        <translation>Il semble y avoir d'autres versets avec des mots semblables, choisissez l’option du haut pour les afficher dans un écran séparé.</translation>
     </message>
     <message>
         <location filename="../assets/AyatPage.qml" line="402"/>
@@ -316,7 +316,7 @@
 Please use the Audio option to play the verse, and only use the transliteration text as a tool to help you, and do not depend on it fully.</source>
         <translation>S'il vous plaît veuillez noter que les chercheurs ont mentionné d'éviter l'option de translittération comme cette dernière pourrait contenir beaucoup d'erreurs, car elle ne peut capturer correctement les prononciations et les règles de lecture en arabe.
 
-S'il vous plaît utilisez l'option audio pour lire le verset , et utiliser uniquement le texte de translittération comme un outil pour vous aider, et ne pas en dépendre  entièrement.</translation>
+S'il vous plaît utilisez l'option audio pour lire le verset, et utiliser uniquement le texte de translittération comme un outil pour vous aider, et ne pas en dépendre  entièrement.</translation>
     </message>
 </context>
 <context>
@@ -329,7 +329,7 @@ S'il vous plaît utilisez l'option audio pour lire le verset , et utiliser uniqu
     <message>
         <location filename="../assets/AyatTafsirDialog.qml" line="82"/>
         <source>If the font size is too small, you can simply do a pinch gesture to increase the font size!</source>
-        <translation>Si la taille de la police est trop petite , vous pouvez tout simplement faire un geste de pincement pour augmenter la taille de la police!</translation>
+        <translation>Si la taille de la police est trop petite, vous pouvez tout simplement faire un geste de pincement pour augmenter la taille de la police!</translation>
     </message>
 </context>
 <context>
@@ -366,7 +366,7 @@ Expliqué par: &lt;a href=&quot;%2&quot;&gt;%1&lt;/a&gt;%3</translation>
     <message>
         <location filename="../assets/AyatTafsirParser.qml" line="274"/>
         <source>Tap on the author&apos;s name to see his/her profile, biography, quotes, and works.</source>
-        <translation>Selectionner le nom de auteur &apos;s, pour voir ses/son profil, biographie , des citations et des œuvres.</translation>
+        <translation>Selectionner le nom de auteur &apos;s, pour voir ses/son profil, biographie, des citations et des œuvres.</translation>
     </message>
 </context>
 <context>
@@ -389,7 +389,7 @@ Expliqué par: &lt;a href=&quot;%2&quot;&gt;%1&lt;/a&gt;%3</translation>
     <message>
         <location filename="../assets/AyatTafsirPicker.qml" line="73"/>
         <source>Enter name</source>
-        <translation type="unfinished"></translation>
+        <translation>Saisir le nom</translation>
     </message>
     <message>
         <location filename="../assets/AyatTafsirPicker.qml" line="73"/>
@@ -467,7 +467,7 @@ Expliqué par: &lt;a href=&quot;%2&quot;&gt;%1&lt;/a&gt;%3</translation>
     <message>
         <location filename="../assets/BookmarksPane.qml" line="133"/>
         <source>Favourites</source>
-        <translation type="unfinished"></translation>
+        <translation>Favoris</translation>
     </message>
     <message>
         <location filename="../assets/BookmarksPane.qml" line="147"/>
@@ -492,17 +492,17 @@ Expliqué par: &lt;a href=&quot;%2&quot;&gt;%1&lt;/a&gt;%3</translation>
     <message>
         <location filename="../assets/BookmarksPane.qml" line="185"/>
         <source>Cleared all favourites!</source>
-        <translation type="unfinished"></translation>
+        <translation>Supprimé le favoris</translation>
     </message>
     <message>
         <location filename="../assets/BookmarksPane.qml" line="189"/>
         <source>Removed favourite!</source>
-        <translation type="unfinished"></translation>
+        <translation>Supprimé des favoris</translation>
     </message>
     <message>
         <location filename="../assets/BookmarksPane.qml" line="225"/>
         <source>Uncategorized</source>
-        <translation type="unfinished"></translation>
+        <translation>Aucune catégorie</translation>
     </message>
 </context>
 <context>
@@ -510,12 +510,12 @@ Expliqué par: &lt;a href=&quot;%2&quot;&gt;%1&lt;/a&gt;%3</translation>
     <message>
         <location filename="../assets/ChapterTafsirPicker.qml" line="31"/>
         <source>%1 Tafsir</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 Interpretation</translation>
     </message>
     <message>
         <location filename="../assets/ChapterTafsirPicker.qml" line="53"/>
         <source>No tafsir found for that chapter.</source>
-        <translation type="unfinished"></translation>
+        <translation>Aucun Tafsir disponible pour ce chapitre.</translation>
     </message>
 </context>
 <context>
@@ -523,17 +523,17 @@ Expliqué par: &lt;a href=&quot;%2&quot;&gt;%1&lt;/a&gt;%3</translation>
     <message>
         <location filename="../assets/ChapterTitleBar.qml" line="122"/>
         <source>Tap here to open all the explanations for this chapter.</source>
-        <translation type="unfinished"></translation>
+        <translation>Appuyez ici pour ouvrir toutes les explications relatives à ce chapitre.</translation>
     </message>
     <message>
         <location filename="../assets/ChapterTitleBar.qml" line="123"/>
         <source>Tap the right arrow to navigate to the next chapter.</source>
-        <translation type="unfinished"></translation>
+        <translation>Appuyez sur la flèche droite pour naviguer dans le chapitre suivant.</translation>
     </message>
     <message>
         <location filename="../assets/ChapterTitleBar.qml" line="124"/>
         <source>Tap the left arrow to navigate to the previous chapter.</source>
-        <translation type="unfinished"></translation>
+        <translation>Appuyez sur la flèche gauche pour naviguer au chapitre précédent.</translation>
     </message>
 </context>
 <context>
@@ -541,12 +541,12 @@ Expliqué par: &lt;a href=&quot;%2&quot;&gt;%1&lt;/a&gt;%3</translation>
     <message>
         <location filename="../assets/CompareSurahsPage.qml" line="11"/>
         <source>Compare</source>
-        <translation type="unfinished"></translation>
+        <translation>Comparer</translation>
     </message>
     <message>
         <location filename="../assets/CompareSurahsPage.qml" line="89"/>
         <source>You can now compare the surahs side-by-side by scrolling them individually.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vous pouvez maintenant comparer les sourates et côte-à- côte en défilement individuel.</translation>
     </message>
 </context>
 <context>
@@ -555,13 +555,6 @@ Expliqué par: &lt;a href=&quot;%2&quot;&gt;%1&lt;/a&gt;%3</translation>
         <location filename="../assets/Cover.qml" line="59"/>
         <source>Quran10</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>CreateQuotePage</name>
-    <message>
-        <source>New Quote</source>
-        <translation type="obsolete">Nouvelle Citation</translation>
     </message>
 </context>
 <context>
@@ -622,23 +615,24 @@ Expliqué par: &lt;a href=&quot;%2&quot;&gt;%1&lt;/a&gt;%3</translation>
     <message>
         <location filename="../assets/HelpPage.qml" line="34"/>
         <source>Version information not detected...</source>
-        <translation type="unfinished"></translation>
+        <translation>Les informations de cette version non été détectée...</translation>
     </message>
     <message>
         <location filename="../assets/HelpPage.qml" line="28"/>
         <source>Tafsir Last Updated: %1
 Translation Last Updated: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Commentaire Dernière mise à jour: %1
+Traduction Dernière mise à jour: %2</translation>
     </message>
     <message>
         <location filename="../assets/HelpPage.qml" line="30"/>
         <source>Tafsir Last Updated: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Commentaire Dernière mise à jour: %1</translation>
     </message>
     <message>
         <location filename="../assets/HelpPage.qml" line="32"/>
         <source>Translation Last Updated: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Traduction Dernière mise à jour: %1</translation>
     </message>
     <message>
         <location filename="../assets/HelpPage.qml" line="53"/>
@@ -658,7 +652,13 @@ While reading the chapters you can easily view the tafsir (Ibn Katheer&apos;s ex
 Finally, there is built-in support to do efficient and fast lookups for any surah or any text in the surah in any of the languages. Note that the search will only be done on the translation that you are currently on.
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Cette application facilite la lecture du Coran ; pour les musulmans utilisant le BlackBerry 10 pour obtenir une expérience native fluide et conveniente. elle comprend des traductions en plusieurs langues (anglais, français, indonésien, thaï, ourdou, et autres) ainsi que la version originale en arabe. Il ya un support pour la translittération ainsi que la récitation de verset par verset pour vous aider à mémoriser le Coran. Vous avez le choix de plusieurs Lecteurs.
+
+Il est un support intégré pour les versets de signet pour retrouver rapidement la dernière lecture. Il y’ a aussi un accès facile à la copie de certains versets pour rendre pratique tous vos partage avec vos contacts.
+
+En lisant les chapitres, vous pouvez facilement voir le tafsir (Ibn Kathir et l’explication parmi tant d'autres) de comprendre l'interprétation du verset selon les compagnons du Prophète (Sallahu Alayhi wa Sallam).
+
+Enfin, il est construit pour une prise en charge des recherches rapides et efficaces pour toutes les sourates ou tous les autres textes dans les sourates dans l'une des langues. Notez que la recherche ne sera faite sur la traduction que vous auriez utilisée ou selectionnée.</translation>
     </message>
 </context>
 <context>
@@ -666,17 +666,17 @@ Finally, there is built-in support to do efficient and fast lookups for any sura
     <message>
         <location filename="../assets/IndividualBioPage.qml" line="67"/>
         <source>(born %1)</source>
-        <translation type="unfinished"></translation>
+        <translation>(naissance %1)</translation>
     </message>
     <message>
         <location filename="../assets/IndividualBioPage.qml" line="69"/>
         <source>(died %1)</source>
-        <translation type="unfinished"></translation>
+        <translation>(décès %1)</translation>
     </message>
     <message>
         <location filename="../assets/IndividualBioPage.qml" line="163"/>
         <source>Biographies</source>
-        <translation type="unfinished"></translation>
+        <translation>Biographies</translation>
     </message>
     <message>
         <location filename="../assets/IndividualBioPage.qml" line="165"/>
@@ -686,55 +686,37 @@ Finally, there is built-in support to do efficient and fast lookups for any sura
     <message>
         <location filename="../assets/IndividualBioPage.qml" line="167"/>
         <source>Works</source>
-        <translation type="unfinished"></translation>
+        <translation>Oeuvre</translation>
     </message>
     <message>
         <location filename="../assets/IndividualBioPage.qml" line="169"/>
         <source>Teachers</source>
-        <translation type="unfinished"></translation>
+        <translation>Enseignants</translation>
     </message>
     <message>
         <location filename="../assets/IndividualBioPage.qml" line="171"/>
         <source>Students</source>
-        <translation type="unfinished"></translation>
+        <translation>Etudiants</translation>
     </message>
     <message>
         <location filename="../assets/IndividualBioPage.qml" line="173"/>
         <source>Websites</source>
-        <translation type="unfinished"></translation>
+        <translation>Sites Web</translation>
     </message>
     <message>
         <location filename="../assets/IndividualBioPage.qml" line="175"/>
         <source>Email Addresses</source>
-        <translation type="unfinished"></translation>
+        <translation>Adresses e-mail</translation>
     </message>
     <message>
         <location filename="../assets/IndividualBioPage.qml" line="177"/>
         <source>Phone Numbers</source>
-        <translation type="unfinished"></translation>
+        <translation>Numéros de téléphone</translation>
     </message>
     <message>
         <location filename="../assets/IndividualBioPage.qml" line="179"/>
         <source>Quotes</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>IndividualPickerPage</name>
-    <message>
-        <source>Enter text to search...</source>
-        <translation type="obsolete">Entrez le texte à rechercher..</translation>
-    </message>
-</context>
-<context>
-    <name>IndividualsPane</name>
-    <message>
-        <source>Copy</source>
-        <translation type="obsolete">Copier</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="obsolete">Modifier</translation>
+        <translation>Citations</translation>
     </message>
 </context>
 <context>
@@ -747,7 +729,7 @@ Finally, there is built-in support to do efficient and fast lookups for any sura
     <message>
         <location filename="../assets/LocationPane.qml" line="55"/>
         <source>Ahlus Sunnah is from all over the world. Here are where some of the students of knowledge, callers of Islam, and scholars of Islam are located or were from.</source>
-        <translation>Ahlus Sunnah provient de partout du monde. Voici où certains des élèves de la connaissance, les appelants de l'Islam , et les savants de l'Islam leur provenance et la où sont situés.</translation>
+        <translation>Ahlus Sunnah provient de partout du monde. Voici où certains des élèves de la connaissance, les appelants de l'Islam, et les savants de l'Islam leur provenance et la où sont situés.</translation>
     </message>
     <message>
         <location filename="../assets/LocationPane.qml" line="56"/>
@@ -758,17 +740,6 @@ Finally, there is built-in support to do efficient and fast lookups for any sura
         <location filename="../assets/LocationPane.qml" line="57"/>
         <source>Tap on any of the individuals, and then tap on the arrow to open their biography and see their works.</source>
         <translation>Selectioné sur l'un des individus, puis appuyez sur la flèche pour ouvrir leur biographie et voir leurs œuvres.</translation>
-    </message>
-</context>
-<context>
-    <name>LocationPickerPage</name>
-    <message>
-        <source>Enter text to search...</source>
-        <translation type="obsolete">Entrez le texte à rechercher..</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="obsolete">Modifier</translation>
     </message>
 </context>
 <context>
@@ -856,7 +827,7 @@ Finally, there is built-in support to do efficient and fast lookups for any sura
     <message>
         <location filename="../assets/MushafSheet.qml" line="204"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Annuler</translation>
     </message>
     <message>
         <location filename="../assets/MushafSheet.qml" line="213"/>
@@ -971,49 +942,6 @@ Finally, there is built-in support to do efficient and fast lookups for any sura
     </message>
 </context>
 <context>
-    <name>QuotesPane</name>
-    <message>
-        <source>Enter text to search...</source>
-        <translation type="obsolete">Entrez le texte à rechercher..</translation>
-    </message>
-    <message>
-        <source>Author</source>
-        <translation type="obsolete">Auteur</translation>
-    </message>
-    <message>
-        <source>Body</source>
-        <translation type="obsolete">Corps</translation>
-    </message>
-    <message>
-        <source>Reference</source>
-        <translation type="obsolete">Référence</translation>
-    </message>
-    <message>
-        <source>Quote removed!</source>
-        <translation type="obsolete">Citation enlevé!</translation>
-    </message>
-    <message>
-        <source>Quote updated!</source>
-        <translation type="obsolete">Citation jour!</translation>
-    </message>
-    <message>
-        <source>Quote added!</source>
-        <translation type="obsolete">Citation ajoutée!</translation>
-    </message>
-    <message>
-        <source>New Quote</source>
-        <translation type="obsolete">Nouvelle Citation</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="obsolete">Modifier</translation>
-    </message>
-    <message>
-        <source>Copy</source>
-        <translation type="obsolete">Copier</translation>
-    </message>
-</context>
-<context>
     <name>QuranPane</name>
     <message>
         <location filename="../assets/QuranPane.qml" line="63"/>
@@ -1051,7 +979,7 @@ Finally, there is built-in support to do efficient and fast lookups for any sura
     <message>
         <location filename="../assets/QuranPane.qml" line="167"/>
         <source>Compare</source>
-        <translation type="unfinished"></translation>
+        <translation>Comparer</translation>
     </message>
     <message>
         <location filename="../assets/QuranPane.qml" line="193"/>
@@ -1071,7 +999,7 @@ Finally, there is built-in support to do efficient and fast lookups for any sura
     <message>
         <location filename="../assets/QuranPane.qml" line="238"/>
         <source>Select All</source>
-        <translation type="unfinished"></translation>
+        <translation>Tout sélectionner</translation>
     </message>
     <message>
         <location filename="../assets/QuranPane.qml" line="253"/>
@@ -1135,12 +1063,12 @@ You can also select an ayat above the current one to start there and end at the 
     <message>
         <location filename="../assets/SearchConstraint.qml" line="18"/>
         <source>AND</source>
-        <translation type="unfinished"></translation>
+        <translation>ET</translation>
     </message>
     <message>
         <location filename="../assets/SearchConstraint.qml" line="18"/>
         <source>OR</source>
-        <translation type="unfinished"></translation>
+        <translation>OU</translation>
     </message>
     <message>
         <location filename="../assets/SearchConstraint.qml" line="38"/>
@@ -1160,7 +1088,7 @@ You can also select an ayat above the current one to start there and end at the 
     <message>
         <location filename="../assets/SearchConstraint.qml" line="53"/>
         <source>Enter search query</source>
-        <translation type="unfinished"></translation>
+        <translation>Saisissez du texte</translation>
     </message>
 </context>
 <context>
@@ -1184,17 +1112,17 @@ You can also select an ayat above the current one to start there and end at the 
         <location filename="../assets/SearchPage.qml" line="122"/>
         <location filename="../assets/SearchPage.qml" line="204"/>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Rechercher</translation>
     </message>
     <message>
         <location filename="../assets/SearchPage.qml" line="141"/>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter</translation>
     </message>
     <message>
         <location filename="../assets/SearchPage.qml" line="172"/>
         <source>Remove Constraints</source>
-        <translation type="unfinished"></translation>
+        <translation>Supprimer</translation>
     </message>
     <message>
         <location filename="../assets/SearchPage.qml" line="250"/>
@@ -1204,7 +1132,7 @@ You can also select an ayat above the current one to start there and end at the 
     <message>
         <location filename="../assets/SearchPage.qml" line="267"/>
         <source>Remove Restriction</source>
-        <translation type="unfinished"></translation>
+        <translation>Supprimer</translation>
     </message>
     <message>
         <location filename="../assets/SearchPage.qml" line="268"/>
@@ -1262,17 +1190,17 @@ You can also select an ayat above the current one to start there and end at the 
     <message>
         <location filename="../assets/SettingsPage.qml" line="15"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Paramètres</translation>
     </message>
     <message>
         <location filename="../assets/SettingsPage.qml" line="42"/>
         <source>Translation</source>
-        <translation type="unfinished"></translation>
+        <translation>Traduction</translation>
     </message>
     <message>
         <location filename="../assets/SettingsPage.qml" line="48"/>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation>Aucun(e)</translation>
     </message>
     <message>
         <location filename="../assets/SettingsPage.qml" line="49"/>
@@ -1282,7 +1210,7 @@ You can also select an ayat above the current one to start there and end at the 
     <message>
         <location filename="../assets/SettingsPage.qml" line="56"/>
         <source>English</source>
-        <translation type="unfinished"></translation>
+        <translation>Anglais</translation>
     </message>
     <message>
         <location filename="../assets/SettingsPage.qml" line="57"/>
@@ -1292,7 +1220,7 @@ You can also select an ayat above the current one to start there and end at the 
     <message>
         <location filename="../assets/SettingsPage.qml" line="63"/>
         <source>French</source>
-        <translation type="unfinished"></translation>
+        <translation>Français</translation>
     </message>
     <message>
         <location filename="../assets/SettingsPage.qml" line="64"/>
@@ -1302,7 +1230,7 @@ You can also select an ayat above the current one to start there and end at the 
     <message>
         <location filename="../assets/SettingsPage.qml" line="70"/>
         <source>Indonesian</source>
-        <translation type="unfinished"></translation>
+        <translation>Indonésie</translation>
     </message>
     <message>
         <location filename="../assets/SettingsPage.qml" line="71"/>
@@ -1312,7 +1240,7 @@ You can also select an ayat above the current one to start there and end at the 
     <message>
         <location filename="../assets/SettingsPage.qml" line="77"/>
         <source>Spanish</source>
-        <translation type="unfinished"></translation>
+        <translation>Espagnol</translation>
     </message>
     <message>
         <location filename="../assets/SettingsPage.qml" line="78"/>
@@ -1322,12 +1250,12 @@ You can also select an ayat above the current one to start there and end at the 
     <message>
         <location filename="../assets/SettingsPage.qml" line="85"/>
         <source>Thai</source>
-        <translation type="unfinished"></translation>
+        <translation>Thaï</translation>
     </message>
     <message>
         <location filename="../assets/SettingsPage.qml" line="86"/>
         <source>Thailand</source>
-        <translation type="unfinished"></translation>
+        <translation>Thaïlande</translation>
     </message>
     <message>
         <location filename="../assets/SettingsPage.qml" line="92"/>
@@ -1398,7 +1326,7 @@ https://www.youtube.com/watch?v=BDY8i9VQeZM</source>
     <message>
         <location filename="../assets/SettingsPage.qml" line="200"/>
         <source>Select Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Dossier</translation>
     </message>
     <message>
         <location filename="../assets/SettingsPage.qml" line="222"/>
@@ -1409,7 +1337,7 @@ https://www.youtube.com/watch?v=BDY8i9VQeZM</source>
     <message>
         <location filename="../assets/SettingsPage.qml" line="247"/>
         <source>Edit</source>
-        <translation type="unfinished">Modifier</translation>
+        <translation>Modifier</translation>
     </message>
     <message>
         <location filename="../assets/SettingsPage.qml" line="266"/>
@@ -1493,12 +1421,12 @@ https://www.youtube.com/watch?v=BDY8i9VQeZM</source>
     <message>
         <location filename="../assets/SurahPickerPage.qml" line="101"/>
         <source>Display Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Parametres d'affichage</translation>
     </message>
     <message>
         <location filename="../assets/SurahPickerPage.qml" line="107"/>
         <source>Alphabetical Order</source>
-        <translation type="unfinished"></translation>
+        <translation>Alphabétiquement</translation>
     </message>
     <message>
         <location filename="../assets/SurahPickerPage.qml" line="108"/>
@@ -1508,7 +1436,7 @@ https://www.youtube.com/watch?v=BDY8i9VQeZM</source>
     <message>
         <location filename="../assets/SurahPickerPage.qml" line="115"/>
         <source>Juz</source>
-        <translation type="unfinished"></translation>
+        <translation>Juz'</translation>
     </message>
     <message>
         <location filename="../assets/SurahPickerPage.qml" line="116"/>
@@ -1518,7 +1446,7 @@ https://www.youtube.com/watch?v=BDY8i9VQeZM</source>
     <message>
         <location filename="../assets/SurahPickerPage.qml" line="123"/>
         <source>Normal</source>
-        <translation type="unfinished"></translation>
+        <translation>Normale</translation>
     </message>
     <message>
         <location filename="../assets/SurahPickerPage.qml" line="124"/>
@@ -1557,7 +1485,7 @@ You can also enter &apos;2:3&apos; to go to Surah Baqara verse #3</source>
     <message>
         <location filename="../assets/SurahPickerPage.qml" line="241"/>
         <source>Juz %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Juz' %1</translation>
     </message>
     <message numerus="yes">
         <location filename="../assets/SurahPickerPage.qml" line="255"/>
@@ -1579,47 +1507,6 @@ You can also enter &apos;2:3&apos; to go to Surah Baqara verse #3</source>
     </message>
 </context>
 <context>
-    <name>TafsirAyats</name>
-    <message>
-        <source>Edit</source>
-        <translation type="obsolete">Modifier</translation>
-    </message>
-</context>
-<context>
-    <name>TafsirContentsPage</name>
-    <message>
-        <source>Copy</source>
-        <translation type="obsolete">Copier</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="obsolete">Modifier</translation>
-    </message>
-</context>
-<context>
-    <name>TafsirPickerPage</name>
-    <message>
-        <source>Enter text to search...</source>
-        <translation type="obsolete">Entrez le texte à rechercher..</translation>
-    </message>
-    <message>
-        <source>Author</source>
-        <translation type="obsolete">Auteur</translation>
-    </message>
-    <message>
-        <source>Body</source>
-        <translation type="obsolete">Corps</translation>
-    </message>
-    <message>
-        <source>Reference</source>
-        <translation type="obsolete">Référence</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="obsolete">Modifier</translation>
-    </message>
-</context>
-<context>
     <name>TransfersDialog</name>
     <message>
         <location filename="../assets/TransfersDialog.qml" line="155"/>
@@ -1629,7 +1516,7 @@ You can also enter &apos;2:3&apos; to go to Surah Baqara verse #3</source>
     <message>
         <location filename="../assets/TransfersDialog.qml" line="176"/>
         <source>Download Queue</source>
-        <translation type="unfinished"></translation>
+        <translation>Téléchargements</translation>
     </message>
 </context>
 <context>
@@ -1652,7 +1539,7 @@ You can also enter &apos;2:3&apos; to go to Surah Baqara verse #3</source>
     <message>
         <location filename="../assets/VersesListView.qml" line="86"/>
         <source>Play</source>
-        <translation type="unfinished"></translation>
+        <translation>Lire</translation>
     </message>
     <message>
         <location filename="../assets/VersesListView.qml" line="104"/>
@@ -1662,12 +1549,12 @@ You can also enter &apos;2:3&apos; to go to Surah Baqara verse #3</source>
     <message>
         <location filename="../assets/VersesListView.qml" line="120"/>
         <source>Share</source>
-        <translation type="unfinished">Partager</translation>
+        <translation>Partager</translation>
     </message>
     <message>
         <location filename="../assets/VersesListView.qml" line="136"/>
         <source>None selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Aucune sélection</translation>
     </message>
     <message>
         <location filename="../assets/VersesListView.qml" line="184"/>
@@ -1702,7 +1589,7 @@ You can also enter &apos;2:3&apos; to go to Surah Baqara verse #3</source>
     <message>
         <location filename="../assets/VersesListView.qml" line="196"/>
         <source>Use the follow button at the center of the left/right buttons if you want to follow the verses automatically as they are being recited.</source>
-        <translation type="unfinished"></translation>
+        <translation>Utilisez le bouton de suivi au centre des boutons gauche / droite si vous voulez faire suivre les versets automatiquement comme ils sont récités.</translation>
     </message>
     <message>
         <location filename="../assets/VersesListView.qml" line="197"/>
@@ -1732,12 +1619,12 @@ Press-and-hold on a verse to be able to play specific verses, or share them with
     <message>
         <location filename="../assets/main.qml" line="18"/>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Aide</translation>
     </message>
     <message>
         <location filename="../assets/main.qml" line="21"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Paramètres</translation>
     </message>
     <message>
         <location filename="../assets/main.qml" line="27"/>
@@ -1757,17 +1644,17 @@ Press-and-hold on a verse to be able to play specific verses, or share them with
     <message>
         <location filename="../assets/main.qml" line="48"/>
         <source>Favourites</source>
-        <translation type="unfinished"></translation>
+        <translation>Favoris</translation>
     </message>
     <message>
         <location filename="../assets/main.qml" line="62"/>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Rechercher</translation>
     </message>
     <message>
         <location filename="../assets/main.qml" line="63"/>
         <source>Find</source>
-        <translation type="unfinished"></translation>
+        <translation>Rechercher</translation>
     </message>
     <message>
         <location filename="../assets/main.qml" line="79"/>
@@ -1836,7 +1723,7 @@ Press-and-hold on a verse to be able to play specific verses, or share them with
         <location filename="../src/applicationui.cpp" line="290"/>
         <location filename="../src/applicationui.cpp" line="482"/>
         <source>Invalid surah specified!</source>
-        <translation type="unfinished"></translation>
+        <translation>Demande non valide.</translation>
     </message>
     <message>
         <location filename="../src/applicationui.cpp" line="319"/>
@@ -1846,7 +1733,7 @@ Press-and-hold on a verse to be able to play specific verses, or share them with
     <message>
         <location filename="../src/applicationui.cpp" line="347"/>
         <source>Invalid surah specified</source>
-        <translation type="unfinished"></translation>
+        <translation>Demande non valide.</translation>
     </message>
     <message>
         <location filename="../src/applicationui.cpp" line="357"/>
@@ -1929,13 +1816,13 @@ Press-and-hold on a verse to be able to play specific verses, or share them with
     <message>
         <location filename="../src/MushafHelper.cpp" line="294"/>
         <source>Uncompressing...</source>
-        <translation type="unfinished"></translation>
+        <translation>Décompresser...</translation>
     </message>
     <message>
         <location filename="../src/MushafHelper.cpp" line="310"/>
         <location filename="../src/MushafHelper.cpp" line="319"/>
         <source>Confirmation</source>
-        <translation type="unfinished"></translation>
+        <translation>Confirmer</translation>
     </message>
     <message>
         <location filename="../src/MushafHelper.cpp" line="310"/>
@@ -1946,13 +1833,13 @@ Press-and-hold on a verse to be able to play specific verses, or share them with
         <location filename="../src/MushafHelper.cpp" line="310"/>
         <location filename="../src/MushafHelper.cpp" line="319"/>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Oui</translation>
     </message>
     <message>
         <location filename="../src/MushafHelper.cpp" line="310"/>
         <location filename="../src/MushafHelper.cpp" line="319"/>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>Non</translation>
     </message>
     <message>
         <location filename="../src/MushafHelper.cpp" line="319"/>
@@ -2007,22 +1894,22 @@ Press-and-hold on a verse to be able to play specific verses, or share them with
     <message>
         <location filename="../src/Offloader.cpp" line="226"/>
         <source>Updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Mises à jour</translation>
     </message>
     <message>
         <location filename="../src/Offloader.cpp" line="226"/>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Oui</translation>
     </message>
     <message>
         <location filename="../src/Offloader.cpp" line="226"/>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>Non</translation>
     </message>
     <message>
         <location filename="../src/Offloader.cpp" line="226"/>
         <source>Don&apos;t ask again</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne plus afficher</translation>
     </message>
     <message>
         <location filename="../src/Offloader.cpp" line="232"/>
