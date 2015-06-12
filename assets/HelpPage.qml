@@ -38,10 +38,6 @@ Page
     {
         id: atb
         videoTutorialUri: "http://youtu.be/YOXtjnNWVZM"
-        
-        onContentExpanded: {
-            tutorial.execBelowTitleBar("forceUpdate", qsTr("Press-and-hold here and choose '%1' to check for the latest tafir, quotes, and biographies.").arg(updateCheck.title), ui.du(4));
-        }
 
         expandedContent: [
             Label
@@ -98,7 +94,8 @@ Page
         ]
     }
     
-    function cleanUp() {
+    function cleanUp()
+    {
         queue.requestComplete.disconnect(updateCheck.onFinished);
         helper.textualChange.disconnect(versionInfo.recompute);
     }
@@ -124,5 +121,9 @@ Page
                 text: qsTr("\n\nThis app facilitates the reading of Qu'ran for Muslims using BlackBerry 10 to get a smooth and fluid native experience. It includes translations in several languages (English, French, Indonesian, Thai, Urdu, and others) as well as the original Arabic version. There is support for transliteration as well as verse-by-verse recitation to help you memorize the Qu'ran. You have several reciters to choose from.\n\nThere is built-in support for bookmarking verses to quickly pick up where you left off reading. There is also easy access to copying certain verses to make it easy for you to share it with your contacts.\n\nWhile reading the chapters you can easily view the tafsir (Ibn Katheer's explanation among others) to understand the interpretation of the verse according to the companions of the Prophet (sallahu alayhi wa'sallam).\n\nFinally, there is built-in support to do efficient and fast lookups for any surah or any text in the surah in any of the languages. Note that the search will only be done on the translation that you are currently on.\n\n") + Retranslate.onLanguageChanged;
             }
         }
+    }
+    
+    onCreationCompleted: {
+        tutorial.execActionBar("forceUpdate", qsTr("Press-and-hold here and choose '%1' to check for the latest tafir, quotes, and biographies.").arg(updateCheck.title), "l");
     }
 }
