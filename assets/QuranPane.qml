@@ -316,7 +316,7 @@ NavigationPane
             }
             
             if ( reporter.performCII() ) {}
-            //else if ( persist.reviewed() ) {}
+            else if ( persist.reviewed() ) {}
         }
         
         onCreationCompleted: {
