@@ -742,22 +742,22 @@ Finally, there is built-in support to do efficient and fast lookups for any sura
     <message>
         <location filename="../assets/LocationPane.qml" line="20"/>
         <source>The Ummah</source>
-        <translation type="unfinished"></translation>
+        <translation>La Ummah</translation>
     </message>
     <message>
         <location filename="../assets/LocationPane.qml" line="55"/>
         <source>Ahlus Sunnah is from all over the world. Here are where some of the students of knowledge, callers of Islam, and scholars of Islam are located or were from.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ahlus Sunnah provient de partout du monde. Voici où certains des élèves de la connaissance, les appelants de l'Islam , et les savants de l'Islam leur provenance et la où sont situés.</translation>
     </message>
     <message>
         <location filename="../assets/LocationPane.qml" line="56"/>
         <source>You can do a pinch gesture on this map to zoom in on specific cities to see them in more detail.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vous pouvez faire un geste de pincement sur ​​cette carte pour faire un zoom sur des villes spécifiques pour les voir plus en détail.</translation>
     </message>
     <message>
         <location filename="../assets/LocationPane.qml" line="57"/>
         <source>Tap on any of the individuals, and then tap on the arrow to open their biography and see their works.</source>
-        <translation type="unfinished"></translation>
+        <translation>Selectioné sur l'un des individus, puis appuyez sur la flèche pour ouvrir leur biographie et voir leurs œuvres.</translation>
     </message>
 </context>
 <context>
@@ -826,7 +826,7 @@ Finally, there is built-in support to do efficient and fast lookups for any sura
     <message>
         <location filename="../assets/MushafSheet.qml" line="173"/>
         <source>Stretch</source>
-        <translation type="unfinished"></translation>
+        <translation>Etendue</translation>
     </message>
     <message>
         <location filename="../assets/MushafSheet.qml" line="188"/>
@@ -851,7 +851,7 @@ Finally, there is built-in support to do efficient and fast lookups for any sura
     <message>
         <location filename="../assets/MushafSheet.qml" line="204"/>
         <source>Jump</source>
-        <translation type="unfinished"></translation>
+        <translation>Aller à</translation>
     </message>
     <message>
         <location filename="../assets/MushafSheet.qml" line="204"/>
@@ -861,7 +861,7 @@ Finally, there is built-in support to do efficient and fast lookups for any sura
     <message>
         <location filename="../assets/MushafSheet.qml" line="213"/>
         <source>Download All</source>
-        <translation type="unfinished"></translation>
+        <translation>Télécharger Tout</translation>
     </message>
     <message>
         <location filename="../assets/MushafSheet.qml" line="258"/>
