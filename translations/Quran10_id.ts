@@ -1495,7 +1495,7 @@ You can also enter &apos;2:3&apos; to go to Surah Baqara verse #3</source>
     <message>
         <location filename="../assets/TransfersDialog.qml" line="155"/>
         <source>No downloads queued or active yet.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tidak ada antrian atau aktif unduhan.</translation>
     </message>
     <message>
         <location filename="../assets/TransfersDialog.qml" line="176"/>
@@ -1873,7 +1873,7 @@ Press-and-hold on a verse to be able to play specific verses, or share them with
     <message>
         <location filename="../src/Offloader.cpp" line="214"/>
         <source>There are newer translation files available. The total download size is ~%1. Do you want to download it now? If you say No you can download it at a later time.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tersedia file terjemahan baru. Total ukuran unduh ~%1. Anda ingin mengunduh sekarang? Jika tidak, anda dapat mengunduhnya lain waktu.</translation>
     </message>
     <message>
         <location filename="../src/Offloader.cpp" line="226"/>
@@ -1898,7 +1898,7 @@ Press-and-hold on a verse to be able to play specific verses, or share them with
     <message>
         <location filename="../src/Offloader.cpp" line="232"/>
         <source>There is a problem communicating with the server so the app cannot download the necessary files just yet. Please try opening the app again later and it should automatically try the update again...</source>
-        <translation>Kesalahan Server Sementara</translation>
+        <translation>Ada masalah saat mencoba koneksi ke server, sehingga aplikasi tidak dapat mengunduh file yang diperlukan. Silahkan buka aplikasi kembali dan mencoba update kembali...</translation>
     </message>
     <message>
         <location filename="../src/Offloader.cpp" line="274"/>
