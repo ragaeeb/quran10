@@ -1270,7 +1270,7 @@ You can also select an ayat above the current one to start there and end at the 
     <message>
         <location filename="../assets/SettingsPage.qml" line="100"/>
         <source>No translation will be displayed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vous n'avez aucune traduction active définie.</translation>
     </message>
     <message>
         <location filename="../assets/SettingsPage.qml" line="102"/>
