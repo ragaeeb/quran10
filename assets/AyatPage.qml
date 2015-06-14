@@ -124,36 +124,6 @@ Page
     
     function showTutorials()
     {
-        navigationPane.pushTransitionEnded.disconnect(showTutorials);
-        
-        if (tafsirOption.tafsirCount > 0 && similarOption.similarCount > 0)
-        {
-            tutorial.exec( "tafsir", qsTr("There are explanations of this verse by the people of knowledge! Tap on the '%1' option at the top to view them.").arg(tafsirOption.text), HorizontalAlignment.Right, VerticalAlignment.Top, 0, ui.du(2), ui.du(4));
-            tutorial.exec( "similarAyat", qsTr("There appears to be other verses with similar wording, choose the '%1' option at the top to view them in a split screen.").arg(similarOption.text), HorizontalAlignment.Center, VerticalAlignment.Top, ui.du(16), 0, ui.du(4));
-            tutorial.exec( "ayatAudio", qsTr("Tap on the '%1' option to listen to this verse over and over in isolation.").arg(recitationOption.text), HorizontalAlignment.Center, VerticalAlignment.Top, 0, ui.du(24), ui.du(4));
-        }
-        
-        if (body.text.length > 0)
-        {
-            tutorial.execCentered( "arabicZoom", qsTr("Do a pinch gesture on the arabic text to increase or decrease the size of the font!"), "images/tutorial/pinch.png" );
-            tutorial.exec( "transliteration", qsTr("Tap on the arabic text to show the transliteration."), HorizontalAlignment.Right, VerticalAlignment.Top, 0, ui.du(2), ui.du(21));
-        }
-        
-        if (helper.showTranslation) {
-            tutorial.exec( "translationZoom", qsTr("Do a pinch gesture on the translation text to increase or decrease the size of the font!"), HorizontalAlignment.Center, VerticalAlignment.Center, 0, 0, 0, ui.du(10), "images/tutorial/pinch.png" );
-            tutorial.exec( "lpTranslation", qsTr("Press-and-hold on the translation text if you want to copy or share it."), HorizontalAlignment.Left, VerticalAlignment.Center, 0, 0, ui.du(36));
-        }
-        
-        tutorial.execActionBar( "markFav", qsTr("To quickly access this verse again, tap on the '%1' action at the bottom to put it in the Favourites tab.").arg(markFav.title) );
-        tutorial.execActionBar( "addShortcutHome", qsTr("To quickly access this verse again, tap on the '%1' action at the bottom to pin it to your homescreen.").arg(addHome.title), "l" );
-        tutorial.execActionBar( "share", qsTr("To share this verse with your friends tap on the '%1' action at the bottom.").arg(shareAction.title), "r" );
-        tutorial.exec( "lpArabic", qsTr("Press-and-hold on the arabic text if you want to copy or share it."), HorizontalAlignment.Right, VerticalAlignment.Top, 0, ui.du(2), ui.du(21));
-        
-        reporter.record("AyatOpened", surahId+":"+verseId);
-    }
-    
-    function showTutorials()
-    {
         app.lazyInitComplete.disconnect(showTutorials);
         navigationPane.pushTransitionEnded.disconnect(showTutorials);
         
