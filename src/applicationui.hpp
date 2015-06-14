@@ -1,6 +1,7 @@
 #ifndef ApplicationUI_HPP_
 #define ApplicationUI_HPP_
 
+#include "InvokeHelper.h"
 #include "LazySceneCover.h"
 #include "LocaleUtil.h"
 #include "MushafHelper.h"
@@ -31,36 +32,25 @@ class ApplicationUI : public QObject
 	Persistance m_persistance;
 	QueryHelper m_helper;
 	bb::system::InvokeRequest m_request;
-	QObject* m_root;
 	QueueDownloader m_queue;
     MushafHelper m_mushaf;
     RecitationHelper m_recitation;
     Offloader m_offloader;
-    QMap<QString, int> m_chapters;
+    InvokeHelper m_invoke;
 
     void init(QString const& qml);
-    void processInvoke();
-    void initGlobals();
-    void complain(QString const& message);
-    void finishWithToast(QString const& message);
-    static void onErrorMessage(const char* msg);
 
 private slots:
     void childCardDone(bb::system::CardDoneMessage const& message=bb::system::CardDoneMessage());
 	void invoked(bb::system::InvokeRequest const& request);
 	void lazyInit();
 	void onCaptureCompleted();
-	void onDatabasePorted();
 	void onDataLoaded(QVariant id, QVariant data);
-	void onChapterMatched();
 	void onMissingAyatImagesFinished();
-	void onPicked(int chapter, int verse);
     void onRequestComplete(QVariant const& cookie, QByteArray const& data);
-    void onSearchPicked(int chapter, int verse);
     void onUpdateCheckNeeded(QVariantMap const& params);
     void onDeflationDone(QVariantMap const& m);
     void onDownloadPlugins(QVariantList const& m);
-    void report(QString const& message);
 
 signals:
     void ayatsCaptured(QVariantList const& result);
