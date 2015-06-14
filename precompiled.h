@@ -1,5 +1,3 @@
-#include <QFile>
-
 #include <bb/FileSystemInfo>
 
 #include <bb/cascades/pickers/FilePicker>
@@ -21,6 +19,7 @@
 
 #include <bb/platform/geo/GeoLocation>
 
+#include <bb/system/CardDoneMessage>
 #include <bb/system/InvokeManager>
 
 #include <QFutureWatcher>

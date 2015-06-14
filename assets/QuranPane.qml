@@ -315,8 +315,8 @@ NavigationPane
                 tutorial.execActionBar("selectAllDisabled", qsTr("The '%1' feature is not available for the Juz display mode.").arg(selectAll.title), "r");
             }
             
-            if ( reporter.performCII() ) {}
-            else if ( persist.reviewed() ) {}
+            //if ( reporter.performCII() ) {}
+            //else if ( persist.reviewed() ) {}
         }
         
         onCreationCompleted: {
