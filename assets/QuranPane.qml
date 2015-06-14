@@ -18,7 +18,7 @@ NavigationPane
                 advertisement = definition.createObject();
                 advertisement.open();
                 persist.setFlag("alFurqanAdvertised", true);
-            } else if ( tutorial.deferredCheck("alFurqanAdvertised", 5) ) {
+            } else if ( tutorial.deferredCheck("alFurqanQuranAdvertised", 5) ) {
                 definition.source = "AlFurqanAdvertisement.qml";
                 advertisement = definition.createObject();
                 advertisement.quran = true;
@@ -327,8 +327,8 @@ NavigationPane
                 tutorial.execActionBar("selectAllDisabled", qsTr("The '%1' feature is not available for the Juz display mode.").arg(selectAll.title), "r");
             }
             
-            //if ( reporter.performCII() ) {}
-            //else if ( persist.reviewed() ) {}
+            if ( reporter.performCII() ) {}
+            else if ( persist.reviewed() ) {}
         }
         
         onCreationCompleted: {
