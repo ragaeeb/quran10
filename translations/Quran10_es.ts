@@ -2,39 +2,6 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="es_ES">
 <context>
-    <name>AlFurqanAdvertisement</name>
-    <message>
-        <location filename="../assets/AlFurqanAdvertisement.qml" line="16"/>
-        <source>Twitter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/AlFurqanAdvertisement.qml" line="30"/>
-        <source>Facebook</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/AlFurqanAdvertisement.qml" line="44"/>
-        <source>Email</source>
-        <translation>Correo electrónico</translation>
-    </message>
-    <message>
-        <location filename="../assets/AlFurqanAdvertisement.qml" line="57"/>
-        <source>Learn Arabic!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/AlFurqanAdvertisement.qml" line="62"/>
-        <source>BBM</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/AlFurqanAdvertisement.qml" line="74"/>
-        <source>Back</source>
-        <translation>Atrás</translation>
-    </message>
-</context>
-<context>
     <name>Awaker</name>
     <message>
         <location filename="../assets/Awaker.qml" line="21"/>
@@ -949,17 +916,17 @@ Translation Last Updated: %2</source>
 <context>
     <name>QuranPane</name>
     <message>
-        <location filename="../assets/QuranPane.qml" line="63"/>
+        <location filename="../assets/QuranPane.qml" line="75"/>
         <source>Notice the button on the top left. This is used to track your Qu&apos;ran reading progress. You can use it to quickly jump to the verse you last left off.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="84"/>
+        <location filename="../assets/QuranPane.qml" line="96"/>
         <source>Ported legacy bookmarks!</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../assets/QuranPane.qml" line="140"/>
+        <location filename="../assets/QuranPane.qml" line="152"/>
         <source>%n chapters selected</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -967,62 +934,62 @@ Translation Last Updated: %2</source>
         </translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="152"/>
+        <location filename="../assets/QuranPane.qml" line="164"/>
         <source>Use the &apos;%1&apos; action to compare two or more surahs side by side. A maximum of 4 surahs may be compared at once.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="153"/>
+        <location filename="../assets/QuranPane.qml" line="165"/>
         <source>Use the &apos;%1&apos; action to open all the surah between the first selection and the last selection.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="156"/>
+        <location filename="../assets/QuranPane.qml" line="168"/>
         <source>Note that the &apos;%1&apos; action is only available in the &apos;Normal&apos; and &apos;Juz&apos; display modes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="167"/>
+        <location filename="../assets/QuranPane.qml" line="179"/>
         <source>Compare</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="193"/>
+        <location filename="../assets/QuranPane.qml" line="205"/>
         <source>Open Range</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="215"/>
+        <location filename="../assets/QuranPane.qml" line="227"/>
         <source>Mushaf</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="230"/>
+        <location filename="../assets/QuranPane.qml" line="242"/>
         <source>M</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="238"/>
+        <location filename="../assets/QuranPane.qml" line="250"/>
         <source>Select All</source>
         <translation>Seleccionar todos</translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="253"/>
+        <location filename="../assets/QuranPane.qml" line="265"/>
         <source>A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="303"/>
+        <location filename="../assets/QuranPane.qml" line="315"/>
         <source>Tap here to open the mushaf!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="304"/>
+        <location filename="../assets/QuranPane.qml" line="316"/>
         <source>Tap on the &apos;%1&apos; action to view the entire Qu&apos;ran (all the surahs)!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="315"/>
+        <location filename="../assets/QuranPane.qml" line="327"/>
         <source>The &apos;%1&apos; feature is not available for the Juz display mode.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1622,97 +1589,129 @@ Press-and-hold on a verse to be able to play specific verses, or share them with
 <context>
     <name>main</name>
     <message>
-        <location filename="../assets/main.qml" line="18"/>
+        <location filename="../assets/main.qml" line="63"/>
         <source>Help</source>
         <translation>Ayuda</translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="21"/>
+        <location filename="../assets/main.qml" line="66"/>
         <source>Settings</source>
         <translation>Configuración</translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="27"/>
+        <location filename="../assets/main.qml" line="86"/>
         <source>Qu&apos;ran</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="28"/>
+        <location filename="../assets/main.qml" line="87"/>
         <source>القرآن</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="46"/>
+        <location filename="../assets/main.qml" line="105"/>
         <source>Saved Verses</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="48"/>
+        <location filename="../assets/main.qml" line="107"/>
         <source>Favourites</source>
         <translation>Favoritos</translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="62"/>
+        <location filename="../assets/main.qml" line="121"/>
         <source>Search</source>
         <translation>Buscar</translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="63"/>
+        <location filename="../assets/main.qml" line="122"/>
         <source>Find</source>
         <translation>Buscar en El Corán</translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="79"/>
+        <location filename="../assets/main.qml" line="138"/>
         <source>Supplications</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="80"/>
+        <location filename="../assets/main.qml" line="139"/>
         <source>Du&apos;a from the Qu&apos;ran</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="102"/>
+        <location filename="../assets/main.qml" line="161"/>
         <source>The Ummah</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="103"/>
+        <location filename="../assets/main.qml" line="162"/>
         <source>The Muslim Ummah</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="135"/>
+        <location filename="../assets/main.qml" line="71"/>
         <source>Tap here to open the menu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="136"/>
+        <location filename="../assets/main.qml" line="44"/>
+        <source>Salat10</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/main.qml" line="44"/>
+        <source>We also have an app called &apos;Salat10&apos; to help you calculate accurate prayer timings! Do you want to visit BlackBerry World to download it?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/main.qml" line="44"/>
+        <location filename="../assets/main.qml" line="50"/>
+        <source>Yes</source>
+        <translation type="unfinished">Sí</translation>
+    </message>
+    <message>
+        <location filename="../assets/main.qml" line="44"/>
+        <location filename="../assets/main.qml" line="50"/>
+        <source>No</source>
+        <translation type="unfinished">No</translation>
+    </message>
+    <message>
+        <location filename="../assets/main.qml" line="50"/>
+        <source>Sunnah10</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/main.qml" line="50"/>
+        <source>We also have an app called &apos;Sunnah10&apos; to help you browse the books of hadith! Do you want to visit BlackBerry World to download it?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/main.qml" line="72"/>
         <source>Swipe down from the top-bezel to display the Settings and Help and file bugs!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="137"/>
+        <location filename="../assets/main.qml" line="73"/>
         <source>Swipe right to expand the menu!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="147"/>
+        <location filename="../assets/main.qml" line="17"/>
         <source>In the Favourites tab: Any verses you mark as favourite will end up here.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="148"/>
+        <location filename="../assets/main.qml" line="18"/>
         <source>In the Search tab you can use this to quickly find a specific verse via keywords.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="149"/>
+        <location filename="../assets/main.qml" line="19"/>
         <source>In the Supplications tab you will find a collection of some of the many du&apos;aa that are found across the Qu&apos;ran.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="150"/>
+        <location filename="../assets/main.qml" line="20"/>
         <source>In the Ummah tab you can browse the various callers, students of knowledge, and scholars of the past and present.</source>
         <translation type="unfinished"></translation>
     </message>
