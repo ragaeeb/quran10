@@ -121,28 +121,6 @@ QtObject
             {
                 horizontalAlignment: HorizontalAlignment.Fill
                 verticalAlignment: VerticalAlignment.Fill
-                background: Color.Black
-                opacity: 0
-                
-                animations: [
-                    FadeTransition {
-                        id: shader
-                        fromOpacity: 0
-                        toOpacity: 0.35
-                        duration: 750
-                        easingCurve: StockCurve.BackOut
-                        
-                        onEnded: {
-                            reporter.record("TafsirOpened", suitePageId.toString());
-                        }
-                    }
-                ]
-            }
-            
-            Container
-            {
-                horizontalAlignment: HorizontalAlignment.Fill
-                verticalAlignment: VerticalAlignment.Fill
                 leftPadding: 10; rightPadding: 10
                 
                 gestureHandlers: [
@@ -224,7 +202,7 @@ QtObject
                                 easingCurve: StockCurve.QuinticOut
                                 
                                 onEnded: {
-                                    shader.play();
+                                    reporter.record("TafsirOpened", suitePageId.toString());
                                 }
                             }
                         ]
