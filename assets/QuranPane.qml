@@ -8,11 +8,23 @@ NavigationPane
     onPopTransitionEnded: {
         deviceUtils.cleanUpAndDestroy(page);
 
-        if ( tutorial.promptVideo("http://youtu.be/YOXtjnNWVZM") ) {}
-        else if ( reporter.online && !persist.containsFlag("alFurqanAdvertised") ) {
-            definition.source = "AlFurqanAdvertisement.qml";
-            var advertisement = definition.createObject();
-            advertisement.open();
+        if (reporter.online)
+        {
+            var advertisement;
+            
+            if ( tutorial.promptVideo("http://youtu.be/YOXtjnNWVZM") ) {}
+            else if ( tutorial.deferredCheck("alFurqanAdvertised", 20) ) {
+                definition.source = "AlFurqanAdvertisement.qml";
+                advertisement = definition.createObject();
+                advertisement.open();
+                persist.setFlag("alFurqanAdvertised", true);
+            } else if ( tutorial.deferredCheck("alFurqanAdvertised", 5) ) {
+                definition.source = "AlFurqanAdvertisement.qml";
+                advertisement = definition.createObject();
+                advertisement.quran = true;
+                advertisement.open();
+                persist.setFlag("alFurqanQuranAdvertised", true);
+            }
         }
     }
     

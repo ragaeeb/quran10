@@ -99,7 +99,7 @@ Page
                         if (selectedOption == none) {
                             infoText.text = qsTr("No translation will be displayed.") + Retranslate.onLanguageChanged
                         } else if (selectedOption == english) {
-                            infoText.text = qsTr("Translation will be provided in %1 by %2. Please see why this is the only English translation we support:\nhttps://www.youtube.com/watch?v=BDY8i9VQeZM").arg(selectedOption.text).arg(selectedOption.description) + Retranslate.onLanguageChanged
+                            infoText.text = qsTr("Translation will be provided in %1 by %2. Please see why this is the only English translation we support:\nhttp://canadainc.org/hosting/quran_10/english_translation.htm").arg(selectedOption.text).arg(selectedOption.description) + Retranslate.onLanguageChanged
                             infoText.content.flags = TextContentFlag.ActiveText | TextContentFlag.EmoticonsOff;
                         } else {
                             infoText.text = qsTr("Translation will be provided in %1 by %2.").arg(selectedOption.text).arg(selectedOption.description) + Retranslate.onLanguageChanged
