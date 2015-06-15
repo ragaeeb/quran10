@@ -26,9 +26,9 @@ TabbedPane
     {
         if (result)
         {
-            if (cookie == "salat10") {
+            if (cookie.app == "salat10") {
                 persist.openUri("http://appworld.blackberry.com/webstore/content/21198062");
-            } else if (cookie == "sunnah10") {
+            } else if (cookie.app == "sunnah10") {
                 persist.openUri("http://appworld.blackberry.com/webstore/content/30105889");
             }
         }
@@ -40,14 +40,14 @@ TabbedPane
     {
         if (target == "com.canadainc.SalatTenService")
         {
-            if (result) {
-                persist.showDialog(root, "salat10", qsTr("Salat10"), qsTr("We also have an app called 'Salat10' to help you calculate accurate prayer timings! Do you want to visit BlackBerry World to download it?"), qsTr("Yes"), qsTr("No") );
+            if (!result) {
+                persist.showDialog(root, {'app': "salat10"}, qsTr("Salat10"), qsTr("We also have an app called 'Salat10' to help you calculate accurate prayer timings! Do you want to visit BlackBerry World to download it?"), qsTr("Yes"), qsTr("No") );
             }
             
             persist.setFlag("checkedSalat10", result);
         } else if (target == "com.canadainc.Sunnah10.shortcut") {
-            if (result) {
-                persist.showDialog(root, "sunnah10", qsTr("Sunnah10"), qsTr("We also have an app called 'Sunnah10' to help you browse the books of hadith! Do you want to visit BlackBerry World to download it?"), qsTr("Yes"), qsTr("No") );
+            if (!result) {
+                persist.showDialog(root, {'app': "sunnah10"}, qsTr("Sunnah10"), qsTr("We also have an app called 'Sunnah10' to help you browse the books of hadith! Do you want to visit BlackBerry World to download it?"), qsTr("Yes"), qsTr("No") );
             }
             
             persist.setFlag("checkedSunnah10", result);
