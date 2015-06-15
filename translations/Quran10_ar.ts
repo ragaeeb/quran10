@@ -110,17 +110,17 @@
         <translation>Tap on the &apos;%1&apos; action to go to verse before this one in the Qu&apos;ran.</translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="201"/>
+        <location filename="../assets/AyatPage.qml" line="171"/>
         <source>Verse</source>
         <translation>آية</translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="217"/>
+        <location filename="../assets/AyatPage.qml" line="187"/>
         <source>Audio</source>
         <translation>الصوت</translation>
     </message>
     <message numerus="yes">
-        <location filename="../assets/AyatPage.qml" line="241"/>
+        <location filename="../assets/AyatPage.qml" line="211"/>
         <source>%n similar</source>
         <translation>
             <numerusform>%n مماثلة</numerusform>
@@ -132,7 +132,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../assets/AyatPage.qml" line="264"/>
+        <location filename="../assets/AyatPage.qml" line="234"/>
         <source>%n tafsir</source>
         <translation>
             <numerusform>%n التفسير</numerusform>
@@ -144,159 +144,148 @@
         </translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="287"/>
+        <location filename="../assets/AyatPage.qml" line="257"/>
         <source>Mark Favourite</source>
         <translation>وضع علامة كمفضّلة</translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="306"/>
+        <location filename="../assets/AyatPage.qml" line="276"/>
         <source>Enter tag</source>
         <translation>أدخل الكود</translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="306"/>
+        <location filename="../assets/AyatPage.qml" line="276"/>
         <source>You can use this to categorize related verses together.</source>
         <translation>يمكنك استخدام هذا لتصنيف الآيات ذات الصلة معا.</translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="306"/>
+        <location filename="../assets/AyatPage.qml" line="276"/>
         <source>Enter a tag for this bookmark (ie: ramadan). You can leave this blank if you don&apos;t want to use a tag.</source>
         <translation>أدخل الكلمة الدلالية لهذا المرجعية (أي: رمضان). يمكنك ترك هذا فارغا إذا كنت لا ترغب في استخدام العلامة.</translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="312"/>
-        <location filename="../assets/AyatPage.qml" line="341"/>
+        <location filename="../assets/AyatPage.qml" line="282"/>
+        <location filename="../assets/AyatPage.qml" line="311"/>
         <source>Enter name</source>
         <translation>إدخال اسم</translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="312"/>
+        <location filename="../assets/AyatPage.qml" line="282"/>
         <source>You can use this to quickly recognize this ayah in the favourites tab.</source>
         <translation>يمكنك استخدام هذا الاعتراف بسرعة هذه الآية في علامة التبويب المفضلة.</translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="312"/>
-        <location filename="../assets/AyatPage.qml" line="341"/>
+        <location filename="../assets/AyatPage.qml" line="282"/>
+        <location filename="../assets/AyatPage.qml" line="311"/>
         <source>Name...</source>
         <translation>الاسم</translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="320"/>
+        <location filename="../assets/AyatPage.qml" line="290"/>
         <source>Add Shortcut</source>
         <translation>إضافة اختصار</translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="341"/>
+        <location filename="../assets/AyatPage.qml" line="311"/>
         <source>You can use this to quickly recognize this ayah on your home screen.</source>
         <translation>يمكنك استخدام هذا الاعتراف بسرعة هذه الآية على الشاشة الرئيسية.</translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="348"/>
-        <location filename="../assets/AyatPage.qml" line="587"/>
-        <location filename="../assets/AyatPage.qml" line="647"/>
+        <location filename="../assets/AyatPage.qml" line="318"/>
+        <location filename="../assets/AyatPage.qml" line="557"/>
+        <location filename="../assets/AyatPage.qml" line="617"/>
         <source>Copy</source>
         <translation>نسخ</translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="362"/>
-        <location filename="../assets/AyatPage.qml" line="601"/>
-        <location filename="../assets/AyatPage.qml" line="661"/>
+        <location filename="../assets/AyatPage.qml" line="332"/>
+        <location filename="../assets/AyatPage.qml" line="571"/>
+        <location filename="../assets/AyatPage.qml" line="631"/>
         <source>Share</source>
         <translation>مشاركة</translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="380"/>
+        <location filename="../assets/AyatPage.qml" line="350"/>
         <source>Previous Verse</source>
         <translation>السابق</translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="403"/>
+        <location filename="../assets/AyatPage.qml" line="373"/>
         <source>Next Verse</source>
         <translation>التالي</translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="147"/>
-        <location filename="../assets/AyatPage.qml" line="160"/>
+        <location filename="../assets/AyatPage.qml" line="130"/>
         <source>To quickly access this verse again, tap on the &apos;%1&apos; action at the bottom to put it in the Favourites tab.</source>
         <translation>للوصول بسرعة هذه الآية مرة أخرى، انقر على العمل &quot;%1&quot; في الجزء السفلي لوضعها في علامة التبويب المفضلة.</translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="148"/>
-        <location filename="../assets/AyatPage.qml" line="161"/>
+        <location filename="../assets/AyatPage.qml" line="131"/>
         <source>To quickly access this verse again, tap on the &apos;%1&apos; action at the bottom to pin it to your homescreen.</source>
         <translation>للوصول بسرعة هذه الآية مرة أخرى، اضغط على العمل &quot;%1&quot; في الجزء السفلي لليعلقون عليه إلى الشاشة الرئيسية الخاصة بك.</translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="149"/>
-        <location filename="../assets/AyatPage.qml" line="162"/>
+        <location filename="../assets/AyatPage.qml" line="132"/>
         <source>To share this verse with your friends tap on the &apos;%1&apos; action at the bottom.</source>
         <translation>لمشاركة هذه الآية مع أصدقائك اضغط على العمل &quot;%1&quot; في الجزء السفلي.</translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="150"/>
-        <location filename="../assets/AyatPage.qml" line="163"/>
+        <location filename="../assets/AyatPage.qml" line="133"/>
         <source>Press-and-hold on the arabic text if you want to copy or share it.</source>
         <translation>الصحافة والاستمرار على النص العربي إذا كنت ترغب في نسخ أو المشاركة فيها.</translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="131"/>
-        <location filename="../assets/AyatPage.qml" line="167"/>
+        <location filename="../assets/AyatPage.qml" line="137"/>
         <source>There are explanations of this verse by the people of knowledge! Tap on the &apos;%1&apos; option at the top to view them.</source>
         <translation>هناك تفسيرات هذه الآية من قبل أهل العلم! انقر على خيار &apos;%1&apos; في أعلى لعرضها.</translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="132"/>
-        <location filename="../assets/AyatPage.qml" line="168"/>
+        <location filename="../assets/AyatPage.qml" line="138"/>
         <source>There appears to be other verses with similar wording, choose the &apos;%1&apos; option at the top to view them in a split screen.</source>
         <translation>يبدو أن هناك آيات أخرى مع صيغة مماثلة، اختر الخيار &apos;%1&apos; في أعلى لعرضها في تقسيم الشاشة.</translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="133"/>
-        <location filename="../assets/AyatPage.qml" line="169"/>
+        <location filename="../assets/AyatPage.qml" line="139"/>
         <source>Tap on the &apos;%1&apos; option to listen to this verse over and over in isolation.</source>
         <translation>الصنبور على خيار &quot;%1&quot; للاستماع إلى هذه الآية مرارا وتكرارا في العزلة.</translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="138"/>
-        <location filename="../assets/AyatPage.qml" line="174"/>
+        <location filename="../assets/AyatPage.qml" line="144"/>
         <source>Do a pinch gesture on the arabic text to increase or decrease the size of the font!</source>
         <translation>هل لفتة قرصة على النص العربي لزيادة أو إنقاص حجم الخط!</translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="139"/>
-        <location filename="../assets/AyatPage.qml" line="175"/>
+        <location filename="../assets/AyatPage.qml" line="145"/>
         <source>Tap on the arabic text to show the transliteration.</source>
         <translation>انقر على النص العربي لإظهار الحروف.</translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="143"/>
-        <location filename="../assets/AyatPage.qml" line="179"/>
+        <location filename="../assets/AyatPage.qml" line="149"/>
         <source>Do a pinch gesture on the translation text to increase or decrease the size of the font!</source>
         <translation>هل لفتة قرصة على النص العربي لزيادة أو إنقاص حجم الخط!</translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="144"/>
-        <location filename="../assets/AyatPage.qml" line="180"/>
+        <location filename="../assets/AyatPage.qml" line="150"/>
         <source>Press-and-hold on the translation text if you want to copy or share it.</source>
         <translation>الصحافة والاستمرار على النص العربي إذا كنت ترغب في نسخ أو المشاركة فيها.</translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="442"/>
+        <location filename="../assets/AyatPage.qml" line="412"/>
         <source>The ayat was not found in the database.</source>
         <translation>المحتوى المطلوب غير متوفر.</translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="460"/>
+        <location filename="../assets/AyatPage.qml" line="430"/>
         <source>Chapter Name</source>
         <translation>الفصل اسم</translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="461"/>
+        <location filename="../assets/AyatPage.qml" line="431"/>
         <source>Displays the chapter information</source>
         <translation>يعرض المعلومات الفصل</translation>
     </message>
     <message>
-        <location filename="../assets/AyatPage.qml" line="508"/>
+        <location filename="../assets/AyatPage.qml" line="478"/>
         <source>Please note that the scholars have mentioned to avoid the transliteration option since when depended upon it may introduce many mistakes because it cannot capture the Arabic pronunciations and rules properly.
 
 Please use the Audio option to play the verse, and only use the transliteration text as a tool to help you, and do not depend on it fully.</source>
@@ -350,7 +339,7 @@ Explained by: &lt;a href=&quot;%2&quot;&gt;%1&lt;/a&gt;%3</source>
 تفسير: &lt;a href=&quot;%2&quot;&gt;%1&lt;/a&gt;%3</translation>
     </message>
     <message>
-        <location filename="../assets/AyatTafsirParser.qml" line="274"/>
+        <location filename="../assets/AyatTafsirParser.qml" line="252"/>
         <source>Tap on the author&apos;s name to see his/her profile, biography, quotes, and works.</source>
         <translation>انقر على اسم المؤلف لرؤية له / لها صورة، سيرة، ونقلت والأعمال.</translation>
     </message>
@@ -928,17 +917,17 @@ Translation Last Updated: %2</source>
 <context>
     <name>QuranPane</name>
     <message>
-        <location filename="../assets/QuranPane.qml" line="75"/>
+        <location filename="../assets/QuranPane.qml" line="73"/>
         <source>Notice the button on the top left. This is used to track your Qu&apos;ran reading progress. You can use it to quickly jump to the verse you last left off.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="96"/>
+        <location filename="../assets/QuranPane.qml" line="94"/>
         <source>Ported legacy bookmarks!</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../assets/QuranPane.qml" line="152"/>
+        <location filename="../assets/QuranPane.qml" line="150"/>
         <source>%n chapters selected</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -950,62 +939,62 @@ Translation Last Updated: %2</source>
         </translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="164"/>
+        <location filename="../assets/QuranPane.qml" line="162"/>
         <source>Use the &apos;%1&apos; action to compare two or more surahs side by side. A maximum of 4 surahs may be compared at once.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="165"/>
+        <location filename="../assets/QuranPane.qml" line="163"/>
         <source>Use the &apos;%1&apos; action to open all the surah between the first selection and the last selection.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="168"/>
+        <location filename="../assets/QuranPane.qml" line="166"/>
         <source>Note that the &apos;%1&apos; action is only available in the &apos;Normal&apos; and &apos;Juz&apos; display modes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="179"/>
+        <location filename="../assets/QuranPane.qml" line="177"/>
         <source>Compare</source>
         <translation type="unfinished">مقارنة</translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="205"/>
+        <location filename="../assets/QuranPane.qml" line="203"/>
         <source>Open Range</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="227"/>
+        <location filename="../assets/QuranPane.qml" line="225"/>
         <source>Mushaf</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="242"/>
+        <location filename="../assets/QuranPane.qml" line="240"/>
         <source>M</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="250"/>
+        <location filename="../assets/QuranPane.qml" line="248"/>
         <source>Select All</source>
         <translation>تحديد الكل</translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="265"/>
+        <location filename="../assets/QuranPane.qml" line="263"/>
         <source>A</source>
         <translation type="unfinished">A</translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="315"/>
+        <location filename="../assets/QuranPane.qml" line="313"/>
         <source>Tap here to open the mushaf!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="316"/>
+        <location filename="../assets/QuranPane.qml" line="314"/>
         <source>Tap on the &apos;%1&apos; action to view the entire Qu&apos;ran (all the surahs)!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="327"/>
+        <location filename="../assets/QuranPane.qml" line="325"/>
         <source>The &apos;%1&apos; feature is not available for the Juz display mode.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1267,7 +1256,7 @@ You can also select an ayat above the current one to start there and end at the 
     <message>
         <location filename="../assets/SettingsPage.qml" line="102"/>
         <source>Translation will be provided in %1 by %2. Please see why this is the only English translation we support:
-https://www.youtube.com/watch?v=BDY8i9VQeZM</source>
+http://canadainc.org/hosting/quran_10/english_translation.htm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
