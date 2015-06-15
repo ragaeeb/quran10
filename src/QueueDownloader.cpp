@@ -138,7 +138,6 @@ void QueueDownloader::onRequestComplete(QVariant const& cookie, QByteArray const
 QVariantMap QueueDownloader::updateData(QVariantMap cookie, bool error, QString const& pendingStatus)
 {
     if (error) {
-        LOGGER("Error" << cookie);
         cookie[KEY_ERROR] = true;
     } else if ( !pendingStatus.isEmpty() ) {
         cookie[KEY_BUSY] = pendingStatus;
