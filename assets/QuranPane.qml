@@ -17,13 +17,11 @@ NavigationPane
                 definition.source = "AlFurqanAdvertisement.qml";
                 advertisement = definition.createObject();
                 advertisement.open();
-                persist.setFlag("alFurqanAdvertised", true);
             } else if ( tutorial.deferredCheck("alFurqanQuranAdvertised", 5) ) {
                 definition.source = "AlFurqanAdvertisement.qml";
                 advertisement = definition.createObject();
                 advertisement.quran = true;
                 advertisement.open();
-                persist.setFlag("alFurqanQuranAdvertised", true);
             }
         }
     }
