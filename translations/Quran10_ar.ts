@@ -917,17 +917,17 @@ Translation Last Updated: %2</source>
 <context>
     <name>QuranPane</name>
     <message>
-        <location filename="../assets/QuranPane.qml" line="73"/>
+        <location filename="../assets/QuranPane.qml" line="70"/>
         <source>Notice the button on the top left. This is used to track your Qu&apos;ran reading progress. You can use it to quickly jump to the verse you last left off.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="94"/>
+        <location filename="../assets/QuranPane.qml" line="91"/>
         <source>Ported legacy bookmarks!</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../assets/QuranPane.qml" line="150"/>
+        <location filename="../assets/QuranPane.qml" line="147"/>
         <source>%n chapters selected</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -939,62 +939,62 @@ Translation Last Updated: %2</source>
         </translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="162"/>
+        <location filename="../assets/QuranPane.qml" line="159"/>
         <source>Use the &apos;%1&apos; action to compare two or more surahs side by side. A maximum of 4 surahs may be compared at once.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="163"/>
+        <location filename="../assets/QuranPane.qml" line="160"/>
         <source>Use the &apos;%1&apos; action to open all the surah between the first selection and the last selection.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="166"/>
+        <location filename="../assets/QuranPane.qml" line="163"/>
         <source>Note that the &apos;%1&apos; action is only available in the &apos;Normal&apos; and &apos;Juz&apos; display modes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="177"/>
+        <location filename="../assets/QuranPane.qml" line="174"/>
         <source>Compare</source>
         <translation type="unfinished">مقارنة</translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="203"/>
+        <location filename="../assets/QuranPane.qml" line="200"/>
         <source>Open Range</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="225"/>
+        <location filename="../assets/QuranPane.qml" line="222"/>
         <source>Mushaf</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="240"/>
+        <location filename="../assets/QuranPane.qml" line="237"/>
         <source>M</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="248"/>
+        <location filename="../assets/QuranPane.qml" line="245"/>
         <source>Select All</source>
         <translation>تحديد الكل</translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="263"/>
+        <location filename="../assets/QuranPane.qml" line="260"/>
         <source>A</source>
         <translation type="unfinished">A</translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="313"/>
+        <location filename="../assets/QuranPane.qml" line="310"/>
         <source>Tap here to open the mushaf!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="314"/>
+        <location filename="../assets/QuranPane.qml" line="311"/>
         <source>Tap on the &apos;%1&apos; action to view the entire Qu&apos;ran (all the surahs)!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="325"/>
+        <location filename="../assets/QuranPane.qml" line="322"/>
         <source>The &apos;%1&apos; feature is not available for the Juz display mode.</source>
         <translation type="unfinished"></translation>
     </message>
