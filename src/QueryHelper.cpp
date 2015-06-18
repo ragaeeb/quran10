@@ -20,6 +20,12 @@ bool tafsirFileExists(QString const& t)
     return q.exists() && q.size() > 0;
 }
 
+void patchFolder(QString const& folder)
+{
+    QFile dirPath(folder);
+    LOGGER( dirPath.setPermissions(READ_WRITE_EXEC) );
+}
+
 }
 
 namespace quran {
@@ -112,6 +118,8 @@ void QueryHelper::settingChanged(QString const& key)
         emit textualChange();
     } else if (key == KEY_TRANSLATION_SIZE || key == KEY_PRIMARY_SIZE) {
         emit fontSizeChanged();
+    } else if (key == KEY_OUTPUT_FOLDER) {
+        QtConcurrent::run( patchFolder, m_persist->getValueFor(key).toString() );
     }
 }
 
