@@ -118,8 +118,8 @@ Page
     function cleanUp()
     {
         helper.textualChange.disconnect(reload);
-        app.lazyInitComplete.connect(showTutorials);
-        navigationPane.pushTransitionEnded.connect(onPushed);
+        app.lazyInitComplete.disconnect(showTutorials);
+        navigationPane.pushTransitionEnded.disconnect(showTutorials);
     }
     
     function showTutorials()
