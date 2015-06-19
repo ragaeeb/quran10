@@ -1713,22 +1713,22 @@ Press-and-hold on a verse to be able to play specific verses, or share them with
 <context>
     <name>quran::ApplicationUI</name>
     <message>
-        <location filename="../src/applicationui.cpp" line="167"/>
+        <location filename="../src/applicationui.cpp" line="163"/>
         <source>Update Check</source>
         <translation>Проверка обновлений завершена</translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="265"/>
+        <location filename="../src/applicationui.cpp" line="261"/>
         <source>Successfully saved tafsir</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="267"/>
+        <location filename="../src/applicationui.cpp" line="263"/>
         <source>Successfully saved translation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="272"/>
+        <location filename="../src/applicationui.cpp" line="268"/>
         <source>Could not prepare the plugin for extraction. Please swipe-down from the top-bezel and file a bug report!</source>
         <translation>Не могу подготовить плагин для распаковки. Пожалуйста опустите верхнее окно настроек и заполните файл-отчет об ошибках</translation>
     </message>
