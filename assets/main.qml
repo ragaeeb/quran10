@@ -72,10 +72,8 @@ TabbedPane
             tutorial.exec("openAppMenu", qsTr("Swipe down from the top-bezel to display the Settings and Help and file bugs!"), HorizontalAlignment.Center, VerticalAlignment.Top, 0, 0, 0, ui.du(2), "images/menu/ic_bottom.png", "d");
             tutorial.exec("swipeOpenTabMenu", qsTr("Swipe right to expand the menu!"), HorizontalAlignment.Left, VerticalAlignment.Center, 0, 0, 0, 0, undefined, "r");
             
-            if ( deferredCheck("checkedSalat10", 10) ) {
+            if ( tutorial.deferredCheck("checkedSalat10", 10) ) {
                 persist.findTarget("headless:", "com.canadainc.SalatTenService", root);
-            } else if ( deferredCheck("checkedSunnah10", 15) ) {
-                persist.findTarget("sunnah://", "com.canadainc.Sunnah10.shortcut", root);
             }
         }
     }

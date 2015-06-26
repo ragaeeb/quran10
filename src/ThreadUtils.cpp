@@ -359,7 +359,7 @@ bool ThreadUtils::allAyatImagesExist(QVariantList const& surahData, QString cons
 
         if ( dirPath.permissions() != READ_WRITE_EXEC )
         {
-            LOGGER("WasNotModded!");
+            LOGGER("WasNotModded!" << q.path() );
 
             bool modded = dirPath.setPermissions(READ_WRITE_EXEC);
 
