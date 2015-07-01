@@ -321,6 +321,26 @@ Page
                     }
                 }
                 
+                PersistCheckBox
+                {
+                    id: disableSpacing
+                    topMargin: 20
+                    key: "disableSpacing"
+                    text: qsTr("Disable Extra Spacing") + Retranslate.onLanguageChanged
+                    
+                    onValueChanged: {
+                        reporter.record("DisableExtraSpacing", checked.toString());
+                    }
+                    
+                    onCheckedChanged: {
+                        if (checked) {
+                            infoText.text = qsTr("Extra spacing between the arabic ayat will be disabled. Note that this may cause performance issues.") + Retranslate.onLanguageChanged
+                        } else {
+                            infoText.text = qsTr("Extra spacing between the arabic text will be added to improve performance.") + Retranslate.onLanguageChanged
+                        }
+                    }
+                }
+                
                 ImageView
                 {
                     topMargin: 0; bottomMargin: 0

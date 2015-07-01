@@ -27,6 +27,7 @@ class QueryHelper : public QObject
 {
 	Q_OBJECT
     Q_PROPERTY(bool showTranslation READ showTranslation NOTIFY textualChange)
+	Q_PROPERTY(bool disableSpacing READ disableSpacing NOTIFY fontSizeChanged)
     Q_PROPERTY(int primarySize READ primarySize NOTIFY fontSizeChanged)
     Q_PROPERTY(int translationSize READ translationSize NOTIFY fontSizeChanged)
     Q_PROPERTY(QString tafsirName READ tafsirName NOTIFY textualChange)
@@ -54,6 +55,7 @@ public:
 	QueryHelper(Persistance* persist);
 	virtual ~QueryHelper();
 
+    bool disableSpacing() const;
     bool showTranslation() const;
     int primarySize() const;
     int translationSize() const;

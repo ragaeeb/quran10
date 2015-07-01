@@ -8,6 +8,7 @@ ListView
     property alias theDataModel: verseModel
     property alias activeDefinition: activeDef
     property int chapterNumber
+    property bool disableSpacing: helper.disableSpacing
     property int translationSize: helper.translationSize
     property int primarySize: helper.primarySize
     property int previousPlayedIndex
@@ -177,6 +178,7 @@ ListView
     onCreationCompleted: {
         persist.registerForSetting(listView, "follow");
         persist.registerForSetting(listView, "overlayAyatImages");
+        persist.registerForSetting(listView, "disableSpacing");
         player.metaDataChanged.connect(onMetaDataChanged);
         player.playbackCompleted.connect(clearPrevious);
 
@@ -204,6 +206,8 @@ ListView
             follow = newValue == 1;
         } else if (key == "overlayAyatImages") {
             showImages = newValue == 1;
+        } else if (key == "disableSpacing") {
+            disableSpacing = newValue == 1;
         }
     }
     

@@ -19,7 +19,7 @@ AyatListItemBase
         Label
         {
             id: firstLabel
-            text: "\n"+ListItemData.arabic+"\n"
+            text: itemRoot.ListItem.view.disableSpacing ? ListItemData.arabic : "\n"+ListItemData.arabic+"\n"
             multiline: true
             horizontalAlignment: HorizontalAlignment.Fill
             
