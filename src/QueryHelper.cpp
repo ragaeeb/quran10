@@ -585,6 +585,11 @@ void QueryHelper::executeAndClear(QStringList& statements)
 }
 
 
+bool QueryHelper::disableSpacing() const {
+    return m_persist->getValueFor("disableSpacing").toInt() == 1;
+}
+
+
 bool QueryHelper::showTranslation() const {
     return m_translation != ARABIC_KEY;
 }
