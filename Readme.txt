@@ -11,6 +11,14 @@ CREATE TABLE suite_pages (id INTEGER PRIMARY KEY, suite_id INTEGER NOT NULL REFE
 CREATE TABLE quotes (id INTEGER PRIMARY KEY, author INTEGER REFERENCES individuals(id) ON DELETE CASCADE ON UPDATE CASCADE, body TEXT NOT NULL, reference TEXT, uri TEXT, suite_id INTEGER REFERENCES suites(id), CHECK(body <> '' AND reference <> '' AND uri <> '' AND (reference NOT NULL OR suite_id NOT NULL)));
 CREATE TABLE explanations (id INTEGER PRIMARY KEY, surah_id INTEGER NOT NULL, from_verse_number INTEGER, to_verse_number INTEGER, suite_page_id INTEGER NOT NULL REFERENCES suite_pages(id) ON DELETE CASCADE ON UPDATE CASCADE, UNIQUE(surah_id, from_verse_number, suite_page_id) ON CONFLICT REPLACE, CHECK(from_verse_number > 0 AND from_verse_number <= 286 AND to_verse_number >= from_verse_number AND to_verse_number <= 286 AND surah_id > 0 AND surah_id <= 114));
 
+CREATE TABLE sects (id INTEGER PRIMARY KEY, name TEXT, birth INTEGER, death INTEGER, founder INTEGER REFERENCES individuals(id) ON DELETE CASCADE ON UPDATE CASCADE);
+CREATE TABLE beliefs (id INTEGER PRIMARY KEY, title TEXT, negation INTEGER REFERENCES beliefs(id));
+CREATE TABLE sect_beliefs (id INTEGER PRIMARY KEY, sect_id INTEGER REFERENCES sects(id) ON DELETE CASCADE ON UPDATE CASCADE, belief_id INTEGER REFERENCES beliefs(id) ON DELETE CASCADE ON UPDATE CASCADE);
+CREATE TABLE proof_ayats (id INTEGER PRIMARY KEY, belief_id INTEGER REFERENCES beliefs(id) ON DELETE CASCADE ON UPDATE CASCADE, surah_id INTEGER, from_verse INTEGER, to_verse INTEGER);
+CREATE TABLE statements (id INTEGER PRIMARY KEY, from_person INTEGER REFERENCES individuals(id) ON DELETE CASCADE ON UPDATE CASCADE, text TEXT, suite_page_id INTEGER REFERENCES suite_pages(id) ON DELETE CASCADE ON UPDATE CASCADE);
+CREATE TABLE affiliations (id INTEGER PRIMARY KEY, person_id INTEGER REFERENCES individuals(id) ON DELETE CASCADE ON UPDATE CASCADE, friend_id INTEGER REFERENCES individuals(id) ON DELETE CASCADE ON UPDATE CASCADE, suite_page_id INTEGER REFERENCES suite_pages(id) ON DELETE CASCADE ON UPDATE CASCADE);
+CREATE TABLE ascriptions (id INTEGER PRIMARY KEY, person_id INTEGER REFERENCES individuals(id) ON DELETE CASCADE ON UPDATE CASCADE, sect_id INTEGER REFERENCES sects(id) ON DELETE CASCADE ON UPDATE CASCADE, suite_page_id INTEGER REFERENCES suite_pages(id) ON DELETE CASCADE ON UPDATE CASCADE);
+
 ATTACH DATABASE 'quran_tafsir_english.db' AS e;
 INSERT INTO locations SELECT * FROM e.locations;
 INSERT INTO individuals SELECT * FROM e.individuals;
