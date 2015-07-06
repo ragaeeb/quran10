@@ -13,7 +13,7 @@
 #define CHAPTER_KEY "chapter"
 #define FROM_VERSE_KEY "fromVerse"
 #define TO_VERSE_KEY "toVerse"
-#define NAME_FIELD(var) QString("coalesce(%1.displayName, TRIM((coalesce(%1.prefix,'') || ' ' || %1.name || ' ' || coalesce(%1.kunya,''))))").arg(var)
+#define NAME_FIELD(var) QString("coalesce(%1.displayName, replace( TRIM( coalesce(%1.kunya,'') || ' ' || (coalesce(%1.prefix,'') || ' ' || %1.name) ) ), '  ', ' ' )").arg(var)
 
 namespace canadainc {
 	class Persistance;
