@@ -46,8 +46,6 @@ void InvokeHelper::init(QString const& qmlDoc, QMap<QString, QObject*> const& co
     qmlRegisterUncreatableType<QueryId>("com.canadainc.data", 1, 0, "QueryId", "Can't instantiate");
     qmlRegisterType<canadainc::LazyMediaPlayer>("com.canadainc.data", 1, 0, "LazyMediaPlayer");
 
-    DeviceUtils::create(this);
-
     QmlDocument* qml = QmlDocument::create("asset:///GlobalProperties.qml").parent(this);
     QObject* global = qml->createRootObject<QObject>();
     QmlDocument::defaultDeclarativeEngine()->rootContext()->setContextProperty("global", global);
