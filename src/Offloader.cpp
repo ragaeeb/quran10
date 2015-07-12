@@ -451,14 +451,14 @@ QVariantList Offloader::fillType(QVariantList input, int queryId)
 }
 
 
-void Offloader::renderMap(bb::cascades::maps::MapView* mapControl, qreal latitude, qreal longitude, QString const& name, QString const& city, qint64 id)
+void Offloader::renderMap(bb::cascades::maps::MapView* mapControl, QVariantMap const& data)
 {
-    GeoLocation* home = new GeoLocation(latitude, longitude);
-    home->setName(name);
-    home->setDescription(city);
-    home->setGeoId( QString::number(id) );
+    GeoLocation* home = new GeoLocation( data.value("latitude").toReal(), data.value("longitude").toReal() );
+    home->setName( data.value("name").toString() );
+    home->setDescription( data.value("city").toString() );
+    home->setGeoId( QString::number( data.value("id").toLongLong() ) );
     Marker m = home->marker();
-    m.setIconUri("asset:///images/ic_map_rijaal.png");
+    m.setIconUri( data.value("is_companion").toInt() == 1 ? "asset:///images/ic_map_companion.png" : "asset:///images/ic_map_rijaal.png");
     home->setMarker(m);
     mapControl->mapData()->add(home);
 }

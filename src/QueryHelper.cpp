@@ -466,7 +466,7 @@ void QueryHelper::fetchAllQuotes(QObject* caller, qint64 individualId)
 
 void QueryHelper::fetchAllOrigins(QObject* caller)
 {
-    m_sql.executeQuery(caller, QString("SELECT %1 AS name,i.id,city,latitude+((RANDOM()%10)*0.0001) AS latitude,longitude+((RANDOM()%10)*0.0001) AS longitude FROM individuals i INNER JOIN locations ON i.location=locations.id WHERE i.hidden ISNULL").arg( NAME_FIELD("i") ), QueryId::FetchAllOrigins);
+    m_sql.executeQuery(caller, QString("SELECT %1 AS name,i.id,city,i.is_companion,latitude+((RANDOM()%10)*0.0001) AS latitude,longitude+((RANDOM()%10)*0.0001) AS longitude FROM individuals i INNER JOIN locations ON i.location=locations.id WHERE i.hidden ISNULL").arg( NAME_FIELD("i") ), QueryId::FetchAllOrigins);
 }
 
 

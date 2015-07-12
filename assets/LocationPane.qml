@@ -41,12 +41,8 @@ NavigationPane
                 {
                     if (id == QueryId.FetchAllOrigins)
                     {
-                        for (var i = data.length-1; i >= 0; i--)
-                        {
-                            var current = data[i];
-                            var name = current.name;
-                            
-                            offloader.renderMap(mapView, current.latitude, current.longitude, name, current.city, current.id);
+                        for (var i = data.length-1; i >= 0; i--) {
+                            offloader.renderMap(mapView, data[i]);
                         }
                         
                         mapView.setLocationOnVisible();

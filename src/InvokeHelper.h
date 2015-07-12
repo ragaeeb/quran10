@@ -1,7 +1,7 @@
 #ifndef INVOKEHELPER_H_
 #define INVOKEHELPER_H_
 
-#include <QObject>
+#include "DeviceUtils.h"
 
 #include <bb/system/InvokeRequest>
 
@@ -27,6 +27,7 @@ class InvokeHelper : public QObject
     InvokeManager* m_invokeManager;
     QueryHelper* m_helper;
     QMap<QString, int> m_chapters;
+    canadainc::DeviceUtils m_deviceUtils;
 
     void finishWithToast(QString const& message);
 

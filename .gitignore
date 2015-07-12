@@ -1,3 +1,5 @@
 arm/Makefile
 arm/Makefile.Debug
 arm/Makefile.Release
+.settings/
+./translations/Quran10.ts

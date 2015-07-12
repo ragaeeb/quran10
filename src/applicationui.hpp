@@ -39,6 +39,7 @@ class ApplicationUI : public QObject
     InvokeHelper m_invoke;
 
     void init(QString const& qml);
+    void initDefault();
 
 private slots:
     void childCardDone(bb::system::CardDoneMessage const& message=bb::system::CardDoneMessage());
