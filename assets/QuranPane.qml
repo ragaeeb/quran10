@@ -11,11 +11,11 @@ NavigationPane
         var advertisement;
         
         if ( tutorial.promptVideo("http://youtu.be/YOXtjnNWVZM") ) {}
-        else if ( tutorial.deferredCheck("alFurqanAdvertised", 20) ) {
+        else if ( reporter.deferredCheck("alFurqanAdvertised", 20) ) {
             definition.source = "AlFurqanAdvertisement.qml";
             advertisement = definition.createObject();
             advertisement.open();
-        } else if ( tutorial.deferredCheck("alFurqanQuranAdvertised", 5) ) {
+        } else if ( reporter.deferredCheck("alFurqanQuranAdvertised", 5) ) {
             definition.source = "AlFurqanAdvertisement.qml";
             advertisement = definition.createObject();
             advertisement.quran = true;
