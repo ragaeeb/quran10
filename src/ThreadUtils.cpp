@@ -69,14 +69,10 @@ QString ThreadUtils::compressBookmarks(QString const& destinationZip)
     return result && f.size() > 0 ? f.fileName() : "";
 }
 
-void ThreadUtils::compressFiles(QSet<QString>& attachments)
+void ThreadUtils::compressFiles(Report& r, QString const& zipPath, const char* password)
 {
-    attachments << CARD_LOG_FILE;
-    attachments << BOOKMARKS_PATH;
-    canadainc::AppLogFetcher::removeInvalid(attachments);
-
-    JlCompress::compressFiles( ZIP_FILE_PATH, attachments.toList() );
-    QFile::remove(CARD_LOG_FILE);
+    r.attachments << BOOKMARKS_PATH;
+    JlCompress::compressFiles(zipPath, r.attachments, password);
 }
 
 bool ThreadUtils::performRestore(QString const& source)

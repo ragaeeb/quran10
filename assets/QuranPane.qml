@@ -321,10 +321,6 @@ NavigationPane
             if (!selectAll.enabled) {
                 tutorial.execActionBar("selectAllDisabled", qsTr("The '%1' feature is not available for the Juz display mode.").arg(selectAll.title), "r");
             }
-            
-            if ( reporter.performCII() ) {}
-            else if ( tutorial.promptReview() ) {}
-            else if ( tutorial.promptDonation() ) {}
         }
         
         onCreationCompleted: {
