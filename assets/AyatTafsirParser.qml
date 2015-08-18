@@ -11,6 +11,7 @@ QtObject
     property alias scalerAnim: scaler
     property alias faderAnim: fader
     property alias scaleExitAnim: scaleExit
+    signal notFound()
     
     onSuitePageIdChanged: {
         if (suitePageId) {
@@ -73,12 +74,18 @@ QtObject
     
     function onDataLoaded(id, data)
     {
-        if (id == QueryId.FetchTafsirContent && data.length > 0)
+        if (id == QueryId.FetchTafsirContent)
         {
-            tafsir = data[0];
-            
-            if (scaler.state == AnimationState.Ended) {
-                process();
+            if (data.length > 0)
+            {
+                tafsir = data[0];
+                
+                if (scaler.state == AnimationState.Ended) {
+                    process();
+                }
+            } else {
+                body.text = qsTr("Article not found.");
+                notFound();
             }
         }
     }
