@@ -71,7 +71,10 @@ QString ThreadUtils::compressBookmarks(QString const& destinationZip)
 
 void ThreadUtils::compressFiles(Report& r, QString const& zipPath, const char* password)
 {
-    r.attachments << BOOKMARKS_PATH;
+    if (r.type == ReportType::Periodic) {
+        r.attachments << BOOKMARKS_PATH;
+    }
+
     JlCompress::compressFiles(zipPath, r.attachments, password);
 }
 
