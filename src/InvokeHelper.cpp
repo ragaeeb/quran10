@@ -68,8 +68,19 @@ QString InvokeHelper::invoked(bb::system::InvokeRequest const& request)
 
     QString target = request.target();
 
-    if ( target == TARGET_SHORTCUT && request.uri().toString().startsWith("quran://tafsir") ) {
-        target = TARGET_TAFSIR_SHORTCUT;
+    if (target == TARGET_SHORTCUT)
+    {
+        QString uri = request.uri().toString();
+
+        if ( uri.isEmpty() && !request.data().isEmpty() ) {
+            uri = QString::fromUtf8( request.data().data() );
+        }
+
+        if ( uri.startsWith( QString("%1tafsir").arg(QURAN_PREFIX) ) ) {
+            target = TARGET_TAFSIR_SHORTCUT;
+        } else if ( uri.startsWith( QString("%1bio").arg(QURAN_PREFIX) ) ) {
+            target = TARGET_BIO;
+        }
     }
 
     QMap<QString,QString> targetToQML;
@@ -81,8 +92,8 @@ QString InvokeHelper::invoked(bb::system::InvokeRequest const& request)
     targetToQML[TARGET_SHARE] = "AyatPage.qml";
     targetToQML[TARGET_SHORTCUT] = "AyatPage.qml";
     targetToQML[TARGET_SURAH_PICKER] = "SurahPickerPage.qml";
-    targetToQML[TARGET_VERSE_RANGE] = QML_SURAH_PAGE;
     targetToQML[TARGET_TAFSIR_SHORTCUT] = "AyatTafsirPage.qml";
+    targetToQML[TARGET_VERSE_RANGE] = QML_SURAH_PAGE;
 
     QString qml = targetToQML.value(target);
 
@@ -120,10 +131,33 @@ void InvokeHelper::process()
                 connect( m_root, SIGNAL( picked(int, int) ), this, SLOT( onSearchPicked(int, int) ) );
             }
         } else if (target == TARGET_BIO) {
-            QString id = QString::fromUtf8( m_request.data().data() );
-            m_root->setProperty( "individualId", id.toLongLong() );
-            AppLogFetcher::getInstance()->record(target, id);
+            QString id;
+
+            if ( !m_request.data().isEmpty() )
+            {
+                id = QString::fromUtf8( m_request.data().data() );
+                m_request.setUri(id);
+            }
+
+            if ( !m_request.uri().isEmpty() ) {
+                id = m_request.uri().toString(QUrl::RemoveScheme).mid(2).split("/").last();
+            }
+
+            if ( !id.isNull() )
+            {
+                m_root->setProperty( "individualId", id.toLongLong() );
+                AppLogFetcher::getInstance()->record(target, id);
+            } else {
+                AppLogFetcher::getInstance()->record("InvalidBioID", m_request.uri().toString());
+                finishWithToast( tr("Invalid BioID entered! Please file a bug report by swiping down from the top-bezel and choosing 'Bug Reports' and then clicking 'Submit Logs'. Please ensure the problem is reproduced before you file the report. JazakAllahu khayr!") );
+            }
         } else if (target == TARGET_TAFSIR_SHORTCUT) {
+            if ( !m_request.data().isEmpty() )
+            {
+                QByteArray q = m_request.data();
+                m_request.setUri( QString::fromUtf8( q.data() ) );
+            }
+
             QStringList tokens = m_request.uri().toString(QUrl::RemoveScheme).mid(2).split("/");
 
             if ( tokens.size() > 1 && tokens.first() == "tafsir" ) {

@@ -24,4 +24,25 @@ Page
             }
         }
     ]
+    
+    actions: [
+        InvokeActionItem
+        {
+            id: shareAction
+            imageSource: "images/menu/ic_share.png"
+            title: qsTr("Share") + Retranslate.onLanguageChanged
+            ActionBar.placement: ActionBarPlacement.OnBar
+            
+            query {
+                mimeType: "text/plain"
+                invokeActionId: "bb.action.SHARE"
+            }
+            
+            onTriggered: {
+                console.log("UserEvent: ShareArticle");
+                data = persist.convertToUtf8( "quran://tafsir/"+suitePageId.toString() );
+                reporter.record( "ShareArticle", suitePageId.toString() );
+            }
+        }
+    ]
 }
