@@ -46,7 +46,7 @@ bool QueryBookmarkHelper::initBookmarks(QObject* caller)
         QStringList statements;
         statements << "CREATE TABLE IF NOT EXISTS bookmarks.bookmarks (id INTEGER PRIMARY KEY, surah_id INTEGER, verse_id INTEGER, name TEXT, tag TEXT, timestamp INTEGER)";
         statements << "CREATE TABLE IF NOT EXISTS bookmarks.bookmarked_tafsir (id INTEGER PRIMARY KEY, suite_page_id INTEGER, name TEXT, tag TEXT, timestamp INTEGER)";
-        statements << "CREATE TABLE IF NOT EXISTS bookmarks.progress (timestamp INTEGER PRIMARY KEY, surah_id INTEGER, verse_id INTEGER, name TEXT)";
+        statements << "CREATE TABLE IF NOT EXISTS bookmarks.progress (timestamp INTEGER PRIMARY KEY, surah_id INTEGER, verse_id INTEGER)";
 
         foreach (QString const& q, statements) {
             m_sql->executeInternal(q, QueryId::SettingUpBookmarks);

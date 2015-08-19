@@ -136,12 +136,19 @@ void InvokeHelper::process()
             if ( !m_request.data().isEmpty() )
             {
                 id = QString::fromUtf8( m_request.data().data() );
+
+                if ( !id.startsWith(QURAN_PREFIX) ) {
+                    id = QURAN_PREFIX+id;
+                }
+
                 m_request.setUri(id);
             }
 
             if ( !m_request.uri().isEmpty() ) {
                 id = m_request.uri().toString(QUrl::RemoveScheme).mid(2).split("/").last();
             }
+
+            LOGGER("IdParsed" << id);
 
             if ( !id.isNull() )
             {
