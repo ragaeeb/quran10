@@ -176,6 +176,11 @@
 			<mime-type>*</mime-type>
 			<property var="uris" value="quran://"/>
 		</filter>
+		
+		<invoke-target-pattern>
+			<!-- Any string that starts with the link -->		
+			<pattern-value type="regex">^(quran://)[a-z0-9/]+$</pattern-value>
+		</invoke-target-pattern>
 	</invoke-target>
 	
 	<invoke-target id="com.canadainc.Quran10.search">
