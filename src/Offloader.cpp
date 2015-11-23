@@ -129,7 +129,7 @@ void Offloader::addToHomeScreen(int chapter, int verse, QString const& label)
 
     bool added = bb::platform::HomeScreen().addShortcut( QString("asset:///images/menu/ic_mushaf.png"), TextUtils::sanitize(label), QString("quran://%1/%2").arg(chapter).arg(verse) );
     QString toastMessage = tr("Added %1 to home screen").arg(label);
-    QString icon = "asset:///images/menu/ic_home.png";
+    QString icon = "images/menu/ic_home.png";
 
     if (!added) {
         toastMessage = tr("Could not add %1 to home screen").arg(label);

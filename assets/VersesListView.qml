@@ -103,7 +103,7 @@ ListView
                 id: multiCopy
                 enabled: multiPlayAction.enabled
                 title: qsTr("Copy") + Retranslate.onLanguageChanged
-                imageSource: "images/menu/ic_copy.png"
+                imageSource: "images/common/ic_copy.png"
                 
                 onTriggered: {
                     console.log("UserEvent: MultiCopy");
