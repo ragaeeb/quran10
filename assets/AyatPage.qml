@@ -316,7 +316,7 @@ Page
         {
             id: copyAction
             title: qsTr("Copy") + Retranslate.onLanguageChanged
-            imageSource: "images/menu/ic_copy.png"
+            imageSource: "images/common/ic_copy.png"
             
             onTriggered: {
                 console.log("UserEvent: CopyAyat");
@@ -555,7 +555,7 @@ Page
                                 ActionItem
                                 {
                                     title: qsTr("Copy") + Retranslate.onLanguageChanged
-                                    imageSource: "images/menu/ic_copy.png"
+                                    imageSource: "images/common/ic_copy.png"
                                     
                                     onTriggered: {
                                         console.log("UserEvent: CopyArabicOnly");
@@ -615,7 +615,7 @@ Page
                                 ActionItem
                                 {
                                     title: qsTr("Copy") + Retranslate.onLanguageChanged
-                                    imageSource: "images/menu/ic_copy.png"
+                                    imageSource: "images/common/ic_copy.png"
                                     
                                     onTriggered: {
                                         console.log("UserEvent: CopyTranslationOnly");

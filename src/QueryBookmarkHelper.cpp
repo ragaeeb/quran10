@@ -14,9 +14,8 @@ QueryBookmarkHelper::QueryBookmarkHelper(DatabaseHelper* sql) : m_sql(sql)
 }
 
 
-void QueryBookmarkHelper::clearAllBookmarks(QObject* caller)
-{
-    m_sql->executeQuery(caller, "DELETE FROM bookmarks", QueryId::ClearAllBookmarks);
+void QueryBookmarkHelper::clearAllBookmarks(QObject* caller) {
+    m_sql->executeClear(caller, "bookmarks", QueryId::ClearAllBookmarks);
 }
 
 
@@ -71,9 +70,7 @@ void QueryBookmarkHelper::fetchLastProgress(QObject* caller)
 void QueryBookmarkHelper::removeBookmark(QObject* caller, int id)
 {
     LOGGER(id);
-
-    QString query = QString("DELETE FROM bookmarks WHERE id=%1").arg(id);
-    m_sql->executeQuery(caller, query, QueryId::RemoveBookmark);
+    m_sql->executeDelete(caller, "bookmarks", QueryId::RemoveBookmark, id);
 }
 
 
