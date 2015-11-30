@@ -60,13 +60,13 @@ TabbedPane
         allowDonations: true
         bbWorldID: "27022877"
         projectName: "quran10"
+        helpPageQml: "QuranHelp.qml"
         
         onFinished: {
             sidebarStateChanged.connect(onSidebarVisualStateChanged);
             
             tutorial.exec("openTabMenu", qsTr("Tap here to open the menu"), HorizontalAlignment.Left, VerticalAlignment.Bottom, ui.du(2), 0, 0, ui.du(1)/2);
-            tutorial.exec("openAppMenu", qsTr("Swipe down from the top-bezel to display the Settings and Help and file bugs!"), HorizontalAlignment.Center, VerticalAlignment.Top, 0, 0, 0, ui.du(2), "images/menu/ic_bottom.png", "d");
-            tutorial.exec("swipeOpenTabMenu", qsTr("Swipe right to expand the menu!"), HorizontalAlignment.Left, VerticalAlignment.Center, 0, 0, 0, 0, undefined, "r");
+            tutorial.execSwipe("swipeOpenTabMenu", qsTr("Swipe right to expand the menu!"), HorizontalAlignment.Left, VerticalAlignment.Center, "r");
             
             if ( reporter.deferredCheck("checkedSalat10", 10) ) {
                 persist.findTarget("headless:", "com.canadainc.SalatTenService", root);

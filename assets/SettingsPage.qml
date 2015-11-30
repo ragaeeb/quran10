@@ -132,7 +132,7 @@ Page
                     
                     Option {
                         text: qsTr("Urdu") + Retranslate.onLanguageChanged
-                        description: qsTr("Fateh Muhammad Jalandhry") + Retranslate.onLanguageChanged
+                        description: qsTr("Muhammad Junagarhi") + Retranslate.onLanguageChanged
                         value: "urdu"
                         imageSource: "images/dropdown/ic_translation.png"
                     }
