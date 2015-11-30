@@ -55,21 +55,21 @@ Page
                         text: qsTr("Albanian") + Retranslate.onLanguageChanged
                         description: qsTr("Sherif Ahmeti") + Retranslate.onLanguageChanged
                         value: "albanian"
-                        imageSource: "images/dropdown/ic_translation.png"
+                        imageSource: "images/dropdown/flags/albanian.jpg"
                     }
                     
                     Option {
                         text: qsTr("Bengali") + Retranslate.onLanguageChanged
                         description: qsTr("Muhiuddin Khan") + Retranslate.onLanguageChanged
                         value: "bengali"
-                        imageSource: "images/dropdown/ic_translation.png"
+                        imageSource: "images/dropdown/flags/bengali.jpg"
                     }
                     
                     Option {
                         text: qsTr("Bosnian") + Retranslate.onLanguageChanged
                         description: qsTr("Besim Korkut") + Retranslate.onLanguageChanged
                         value: "bosnian"
-                        imageSource: "images/dropdown/ic_translation.png"
+                        imageSource: "images/dropdown/flags/bosnian.jpg"
                     }
                     
                     Option {
@@ -91,28 +91,28 @@ Page
                         text: qsTr("German") + Retranslate.onLanguageChanged
                         description: qsTr("A. S. F. Bubenheim and N. Elyas") + Retranslate.onLanguageChanged
                         value: "german"
-                        imageSource: "images/dropdown/ic_translation.png"
+                        imageSource: "images/dropdown/flags/german.jpg"
                     }
                     
                     Option {
                         text: qsTr("Hausa") + Retranslate.onLanguageChanged
                         description: qsTr("Abubakar Mahmoud Gumi") + Retranslate.onLanguageChanged
                         value: "hausa"
-                        imageSource: "images/dropdown/ic_translation.png"
+                        imageSource: "images/dropdown/flags/hausa.jpg"
                     }
                     
                     Option {
                         text: qsTr("Indonesian") + Retranslate.onLanguageChanged
                         description: qsTr("Indonesian Ministry of Religious Affairs") + Retranslate.onLanguageChanged
                         value: "indo"
-                        imageSource: "images/dropdown/ic_translation.png"
+                        imageSource: "images/dropdown/flags/indo.jpg"
                     }
                     
                     Option {
                         text: qsTr("Russian") + Retranslate.onLanguageChanged
                         description: qsTr("Elmir Kuliev (with Abd ar-Rahman as-Saadi's commentaries)") + Retranslate.onLanguageChanged
                         value: "russian"
-                        imageSource: "images/dropdown/ic_translation.png"
+                        imageSource: "images/dropdown/flags/russian.jpg"
                     }
                     
                     Option {
@@ -127,21 +127,21 @@ Page
                         text: qsTr("Thai") + Retranslate.onLanguageChanged
                         description: qsTr("Thailand") + Retranslate.onLanguageChanged
                         value: "thai"
-                        imageSource: "images/dropdown/ic_translation.png"
+                        imageSource: "images/dropdown/flags/thai.jpg"
                     }
                     
                     Option {
                         text: qsTr("Urdu") + Retranslate.onLanguageChanged
                         description: qsTr("Muhammad Junagarhi") + Retranslate.onLanguageChanged
                         value: "urdu"
-                        imageSource: "images/dropdown/ic_translation.png"
+                        imageSource: "images/dropdown/flags/urdu.jpg"
                     }
                     
                     Option {
                         text: qsTr("Uyghur") + Retranslate.onLanguageChanged
                         description: qsTr("Muhammad Saleh") + Retranslate.onLanguageChanged
                         value: "uyghur"
-                        imageSource: "images/dropdown/ic_translation.png"
+                        imageSource: "images/dropdown/flags/uyghur.jpg"
                     }
                     
                     onSelectedOptionChanged: {
