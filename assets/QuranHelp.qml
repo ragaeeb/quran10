@@ -1,6 +1,6 @@
 import bb.cascades 1.3
 
-Page
+HelpPage
 {
     actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
 
@@ -33,12 +33,6 @@ Page
             }
         }
     ]
-
-    titleBar: AboutTitleBar
-    {
-        id: atb
-        videoTutorialUri: "http://youtu.be/YOXtjnNWVZM"
-    }
     
     function cleanUp()
     {

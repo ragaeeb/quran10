@@ -214,7 +214,6 @@
     <asset path="splash_lseries_landscape.png">splash_lseries_landscape.png</asset>
     <asset path="splash_lseries_portrait.png">splash_lseries_portrait.png</asset>
     <asset path="splash_n.png">splash_n.png</asset>
-	<asset path="../canadainc/assets/AboutTitleBar.qml">assets/AboutTitleBar.qml</asset>
 	<asset path="../canadainc/assets/AlFurqanAdvertisement.qml">assets/AlFurqanAdvertisement.qml</asset>
     <asset path="../canadainc/assets/BugReportPage.qml">assets/BugReportPage.qml</asset>
     <asset path="../canadainc/assets/CanadaIncMenu.qml">assets/CanadaIncMenu.qml</asset>
@@ -222,6 +221,7 @@
     <asset path="../canadainc/assets/EmptyDelegate.qml">assets/EmptyDelegate.qml</asset>
     <asset path="../canadainc/assets/FontSizePincher.qml">assets/FontSizePincher.qml</asset>
     <asset path="../canadainc/assets/FullScreenDialog.qml">assets/FullScreenDialog.qml</asset>
+	<asset path="../canadainc/assets/HelpPage.qml">assets/HelpPage.qml</asset>
     <asset path="../canadainc/assets/OfflineDelegate.qml">assets/OfflineDelegate.qml</asset>
     <asset path="../canadainc/assets/PermissionToast.qml">assets/PermissionToast.qml</asset>
     <asset path="../canadainc/assets/PersistCheckBox.qml">assets/PersistCheckBox.qml</asset>

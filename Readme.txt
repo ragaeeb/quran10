@@ -32,3 +32,5 @@ CREATE INDEX IF NOT EXISTS suite_pages_index ON suite_pages(suite_id);
 CREATE INDEX IF NOT EXISTS quotes_index ON quotes(author,suite_id);
 CREATE INDEX IF NOT EXISTS explanations_index ON explanations(to_verse_number);
 VACUUM;
+
+UPDATE verses SET translation = (SELECT text FROM x.verses WHERE sura=chapter_id AND ayah=verse_id) WHERE EXISTS (SELECT * FROM x.verses WHERE sura=chapter_id AND ayah=verse_id);
