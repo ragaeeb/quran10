@@ -1,5 +1,5 @@
 import QtQuick 1.0
-import bb.cascades 1.3
+import bb.cascades 1.2
 import bb.system 1.0
 import com.canadainc.data 1.0
 
@@ -21,6 +21,19 @@ Sheet
         hiddenTitle.visibility = ChromeVisibility.Overlay;
         mainPage.actionBarVisibility = ChromeVisibility.Overlay;
         timer.restart();
+        
+        tutorial.execActionBar( "mushafBack", qsTr("To exit the mushaf mode, simply tap on the Back button at the bottom.") );
+        tutorial.execActionBar( "mushafMenu", qsTr("Tap in the bottom-right to open the menu."), "x" );
+        tutorial.exec( "mushafPrevPage", qsTr("To go to the previous page, tap here."), HorizontalAlignment.Right, VerticalAlignment.Center );
+        tutorial.exec( "mushafNextPage", qsTr("To go to the next page, tap here."), HorizontalAlignment.Left, VerticalAlignment.Center );
+        
+        if (!mushaf.stretchMushaf) {
+            tutorial.execCentered("mushafZoom", qsTr("Do a pinch gesture anywhere on the image to enlarge it or make it smaller! Or scroll right-to-left or vice-versa to pan the image."), "images/common/pinch.png");
+        }
+        
+        tutorial.execTitle( "mushafTajweed", qsTr("Use this mode to display the version of the Mushaf that has the pronunciation rules on it."), "l" );
+        tutorial.execTitle( "mushafNoTajweed", qsTr("Use this mode to display the version of the Mushaf that does not have pronunciation rules written on it."), "r" );
+        tutorial.execTitle( "mushafPageNumber", qsTr("This displays the current page number you are on.") );
     }
     
     Page
@@ -32,11 +45,15 @@ Sheet
         onActionMenuVisualStateChanged: {
             if (actionMenuVisualState == ActionMenuVisualState.VisibleFull)
             {
-                tutorial.execCentered( "mushafJumpSurah", qsTr("Use the '%1' action to select a specific surah in the mushaf you want to jump to.").arg(jumpSurah.title), "images/menu/ic_jump.png" );
-                tutorial.execCentered( "mushafJumpPage", qsTr("Use the '%1' action to jump to a specific page number in the mushaf.").arg(jumpPage.title), "images/dropdown/jump_to_page.png" );
-                tutorial.execCentered( "mushafStretch", qsTr("Use the 'Stretch' action to stretch the mushaf page to fill your screen size. Note that this may not always be visually attractive."), "images/menu/ic_stretch.png" );
-                tutorial.execCentered( "mushafAspectFill", qsTr("Use the 'Aspect Fill' action to resize the mushaf according to its original dimensions. In this mode you will have to do pinch-and-zoom and pan gestures with your fingers in order to view the different parts of the page."), "images/menu/ic_aspect_fill.png" );
-                tutorial.execActionBar( "mushafDownloadAll", qsTr("Quran10 does its best to minimize your data usage by lazily downloading the pages as you need them. However, if you want to download them all at once tap on the '%1' action.").arg(downloadAll.title), "images/menu/ic_download_mushaf.png" );
+                tutorial.execOverFlow( "mushafJumpSurah", qsTr("Use the '%1' action to select a specific surah in the mushaf you want to jump to."), jumpSurah );
+                tutorial.execOverFlow( "mushafJumpPage", qsTr("Use the '%1' action to jump to a specific page number in the mushaf."), jumpPage );
+                tutorial.execOverFlow( "mushafDownloadAll", qsTr("Quran10 does its best to minimize your data usage by lazily downloading the pages as you need them. However, if you want to download them all at once tap on the '%1' action."), downloadAll );
+
+                if (mushaf.stretchMushaf) {
+                    tutorial.execOverFlow( "mushafAspectFill", qsTr("Use the '%1' action to resize the mushaf according to its original dimensions. In this mode you will have to do pinch-and-zoom and pan gestures with your fingers in order to view the different parts of the page."), stretchAction );
+                } else {
+                    tutorial.execOverFlow( "mushafStretch", qsTr("Use the '%1' action to stretch the mushaf page to fill your screen size. Note that this may not always be visually attractive."), stretchAction );
+                }
             }
             
             reporter.record("MushafActionMenu", actionMenuVisualState.toString());
@@ -436,17 +453,11 @@ Sheet
                     }
                     
                     onAnimationFinished: {
-                        tutorial.exec( "mushafPrevPage", qsTr("To go to the previous page, tap here."), HorizontalAlignment.Right, VerticalAlignment.Center );
-                        tutorial.exec( "mushafNextPage", qsTr("To go to the next page, tap here."), HorizontalAlignment.Left, VerticalAlignment.Center );
-                        
-                        if (!mushaf.stretchMushaf) {
-                            tutorial.execCentered("mushafZoom", qsTr("Do a pinch gesture anywhere on the image to enlarge it or make it smaller! Or scroll right-to-left or vice-versa to pan the image."), "images/tutorial/pinch.png");
-                        }
-                        
                         tutorial.execCentered( "mushafTapPage", qsTr("To display the current page number, simply tap anywhere on the page and the title bar will come up."), HorizontalAlignment.Left, VerticalAlignment.Center );
-                        tutorial.exec( "mushafTajweed", qsTr("Use this mode to display the version of the Mushaf that has the pronunciation rules on it."), HorizontalAlignment.Left, VerticalAlignment.Top, ui.du(2), 0, ui.du(4) );
-                        tutorial.exec( "mushafNoTajweed", qsTr("Use this mode to display the version of the Mushaf that does not have pronunciation rules written on it."), HorizontalAlignment.Right, VerticalAlignment.Top, 0, ui.du(2), ui.du(4) );
-                        tutorial.exec( "mushafPageNumber", qsTr("This displays the current page number you are on."), HorizontalAlignment.Center, VerticalAlignment.Top, 0, 0, ui.du(4) );
+                    }
+                    
+                    function onStarted(key) {
+                        timer.stop();
                     }
                     
                     function onFinished(key)
@@ -456,10 +467,13 @@ Sheet
                             hiddenTitle.visibility = ChromeVisibility.Overlay;
                             mainPage.actionBarVisibility = ChromeVisibility.Overlay;
                         }
+                        
+                        activate();
                     }
                     
                     onCreationCompleted: {
                         tutorial.tutorialFinished.connect(onFinished);
+                        tutorial.tutorialStarted.connect(onStarted);
                     }
                 }
             }
@@ -468,6 +482,7 @@ Sheet
     
     onClosed: {
         app.childCardFinished.disconnect(jumpSurah.onFinished);
+        tutorial.tutorialStarted.disconnect(prevPage.onStarted);
         tutorial.tutorialFinished.disconnect(prevPage.onFinished);
         Application.aboutToQuit.disconnect(backButton.onAboutToQuit);       
         destroy();
@@ -475,7 +490,5 @@ Sheet
     
     onOpened: {
         mushaf.requestPage(currentPage);
-        tutorial.execActionBar( "mushafBack", qsTr("To exit the mushaf mode, simply tap on the Back button at the bottom.") );
-        tutorial.execActionBar( "mushafMenu", qsTr("Tap in the bottom-right to open the menu."), "x" );
     }
 }

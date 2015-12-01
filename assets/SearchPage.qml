@@ -1,4 +1,4 @@
-import bb.cascades 1.3
+import bb.cascades 1.2
 import com.canadainc.data 1.0
 
 Page
@@ -29,7 +29,7 @@ Page
             titleBar.kindProperties.expandableArea.expanded = true;
             tutorial.execBelowTitleBar("searchOptions", qsTr("Tap on the '%1' button to restrict the search to only a specific surah.").arg(restrictButton.text) );
         } if (key == "searchOptions") {
-            tutorial.execBelowTitleBar("searchGoogle", qsTr("Sometimes the translations are not the same depending on where you got your translated text from. Quran10 can also search Google to find a better match than the ones found in the app. Enable the '%1' check box to enable it.").arg(searchGoogleCheckBox.text), ui.du(8) );
+            tutorial.execBelowTitleBar("searchGoogle", qsTr("Sometimes the translations are not the same depending on where you got your translated text from. Quran10 can also search Google to find a better match than the ones found in the app. Enable the '%1' check box to enable it.").arg(searchGoogleCheckBox.text), deviceUtils.du(8) );
         } else if (key == "searchGoogle") {
             titleBar.kindProperties.expandableArea.expanded = false;
         }
@@ -382,7 +382,7 @@ Page
                     
                     onEnded: {
                         tutorial.execActionBar("searchAction", qsTr("Tap here to perform the search or simply press the Enter key on the keyboard.") );
-                        tutorial.exec("tapSearchTitle", qsTr("Tap on the title bar to expand it and see more search options."), HorizontalAlignment.Center, VerticalAlignment.Top );
+                        tutorial.execTitle("tapSearchTitle", qsTr("Tap on the title bar to expand it and see more search options.") );
                         var isNew = tutorial.execActionBar("constraint", qsTr("Tap on the icon at the bottom of the action bar if you want to add additional constraints to the search."), "r" );
                         
                         if (!isNew) {

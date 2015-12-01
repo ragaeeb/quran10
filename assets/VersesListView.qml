@@ -1,5 +1,5 @@
 import QtQuick 1.0
-import bb.cascades 1.3
+import bb.cascades 1.2
 import com.canadainc.data 1.0
 
 ListView
@@ -74,8 +74,8 @@ ListView
         onActiveChanged: {
             if (active) {
                 tutorial.exec("selectRangeCopy", qsTr("Use the '%1' action if you want to copy the ayats to the clipboard so you can later paste it somewhere.").arg(multiCopy.title), HorizontalAlignment.Center, VerticalAlignment.Bottom);
-                tutorial.exec("selectRangePlay", qsTr("Use the '%1' action if you want to play the recitation of the selected ayats.").arg(multiPlayAction.title), HorizontalAlignment.Left, VerticalAlignment.Bottom, ui.du(22));
-                tutorial.exec("selectRangeShare", qsTr("Use the '%1' action if you want to share the ayats with one of your contacts or somewhere else.").arg(multiShare.title), HorizontalAlignment.Right, VerticalAlignment.Bottom, 0, ui.du(22));
+                tutorial.exec("selectRangePlay", qsTr("Use the '%1' action if you want to play the recitation of the selected ayats.").arg(multiPlayAction.title), HorizontalAlignment.Left, VerticalAlignment.Bottom, deviceUtils.du(22));
+                tutorial.exec("selectRangeShare", qsTr("Use the '%1' action if you want to share the ayats with one of your contacts or somewhere else.").arg(multiShare.title), HorizontalAlignment.Right, VerticalAlignment.Bottom, 0, deviceUtils.du(22));
             }
         }
         
@@ -185,19 +185,19 @@ ListView
         if (showImages) {
             tutorial.exec("overlayScroll", qsTr("Some ayats may be larger than your screen width. You need to scroll to the left to see the full ayat!"), HorizontalAlignment.Center, VerticalAlignment.Center, 0, 0, 0, 0, undefined, "r");
         } else {
-            tutorial.execCentered("zoom", qsTr("Do a pinch gesture on the arabic text to increase or decrease the size of the font!"), "images/tutorial/pinch.png");
+            tutorial.execCentered("zoom", qsTr("Do a pinch gesture on the arabic text to increase or decrease the size of the font!"), "images/common/pinch.png");
             tutorial.exec("peekGesture", qsTr("To dismiss this page, you can do a peek gesture by swiping to the right from the left-corner."), HorizontalAlignment.Left, VerticalAlignment.Center, 0, 0, 0, 0, undefined, "r");
         }
 
         if (helper.showTranslation) {
-            tutorial.exec("surahPageZoomTranslation", qsTr("Do a pinch gesture on the translation text to increase or decrease the size of the font!"), HorizontalAlignment.Center, VerticalAlignment.Center, 0, 0, 0, ui.du(12), "images/tutorial/pinch.png");
+            tutorial.exec("surahPageZoomTranslation", qsTr("Do a pinch gesture on the translation text to increase or decrease the size of the font!"), HorizontalAlignment.Center, VerticalAlignment.Center, 0, 0, 0, deviceUtils.du(12), "images/common/pinch.png");
         }
         
         tutorial.execActionBar( "repeat", qsTr("Tap on the repeat action at the bottom to enable or disable repeating the recitation in a loop once it finishes."), "l" );
         tutorial.execActionBar( "playAll", qsTr("Tap on the Play All button to play a recitation of all the verses on the screen.") );
         tutorial.execActionBar( "follow", qsTr("Use the follow button at the center of the left/right buttons if you want to follow the verses automatically as they are being recited."), "r" );
         tutorial.exec( "pressHoldVerse", qsTr("Tap on any verse to see more details about it.\n\nPress-and-hold on a verse to be able to play specific verses, or share them with others."), HorizontalAlignment.Center, VerticalAlignment.Center );
-        tutorial.exec( "backButton", qsTr("Tap on the Back key to return to the previous page."), HorizontalAlignment.Left, VerticalAlignment.Bottom );
+        tutorial.execActionBar( "backButton", qsTr("Tap on the Back button to return to the previous page."), "b" );
     }
 
     function onSettingChanged(newValue, key)

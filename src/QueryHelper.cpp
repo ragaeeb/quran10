@@ -8,6 +8,7 @@
 #include "ThreadUtils.h"
 
 #define ATTACH_TAFSIR m_sql.attachIfNecessary( tafsirName(), true );
+#define NAME_FIELD(var) QString("coalesce(%1.displayName, TRIM( replace( coalesce(%1.kunya,'') || ' ' || (coalesce(%1.prefix,'') || ' ' || %1.name), '  ', ' ' ) ) )").arg(var)
 #define TRANSLATION_NAME(language) QString("quran_%1").arg(language)
 #define TRANSLATION TRANSLATION_NAME(m_translation)
 #define TAFSIR_NAME(language) QString("quran_tafsir_%1").arg(language)

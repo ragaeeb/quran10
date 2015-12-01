@@ -1,14 +1,15 @@
-import bb.cascades 1.3
+import bb.cascades 1.2
 
 HelpPage
 {
     actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
+    videoTutorialUri: "http://youtu.be/YOXtjnNWVZM"
 
     actions: [
         ActionItem
         {
             id: updateCheck
-            imageSource: "images/menu/ic_help.png"
+            imageSource: "images/menu/ic_update_check.png"
             ActionBar.placement: ActionBarPlacement.OnBar
             title: qsTr("Check for Updates") + Retranslate.onLanguageChanged
             
@@ -82,26 +83,41 @@ HelpPage
             topMargin: 20
             
             Option {
-                imageSource: "images/toast/yellow_delete.png"
+                id: disabledUpdates
+                imageSource: "images/dropdown/ic_db_disabled.png"
+                description: qsTr("Never check for tafsir updates") + Retranslate.onLanguageChanged
                 text: qsTr("Disabled") + Retranslate.onLanguageChanged
                 value: -1
             }
             
             Option {
-                imageSource: "images/menu/ic_help.png"
+                id: promptUpdates
+                description: qsTr("Ask before downloading update") + Retranslate.onLanguageChanged
+                imageSource: "images/dropdown/ic_db_prompt.png"
                 text: qsTr("Prompt") + Retranslate.onLanguageChanged
                 value: undefined
             }
             
             Option {
-                imageSource: "images/menu/ic_select_all.png"
+                id: autoUpdates
+                description: qsTr("Automatically download updates when they are available") + Retranslate.onLanguageChanged
+                imageSource: "images/dropdown/ic_db_auto.png"
                 text: qsTr("Automatic") + Retranslate.onLanguageChanged
                 value: 1
+            }
+            
+            onExpandedChanged: {
+                if (expanded)
+                {
+                    tutorial.execBelowTitleBar( "disabledUpdates", qsTr("As more and more tafsir and biographies become available, the app can try to download them. Use the '%1' option to never check for these updates.").arg(disabledUpdates.text), deviceUtils.du(16) );
+                    tutorial.execBelowTitleBar( "promptUpdates", qsTr("To be prompted before downloading the latest tafsir updates, use the '%1' option.").arg(promptUpdates.text), deviceUtils.du(24) );
+                    tutorial.execBelowTitleBar( "autoUpdates", qsTr("To automatically download the latest tafsir updates as they become available, use the '%1' option.").arg(autoUpdates.text), deviceUtils.du(32) );
+                }
             }
         }
     }
     
     onCreationCompleted: {
-        tutorial.execActionBar("forceUpdate", qsTr("Press-and-hold here and choose '%1' to check for the latest tafir, quotes, and biographies.").arg(updateCheck.title), "l");
+        tutorial.execActionBar("forceUpdate", qsTr("Press-and-hold here and choose '%1' to check for the latest tafsir, quotes, and biographies.").arg(updateCheck.title), "l");
     }
 }

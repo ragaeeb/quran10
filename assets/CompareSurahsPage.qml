@@ -86,7 +86,7 @@ Page
             onLoadedChanged: {
                 if (loaded == surahIds.length) {
                     delegateActive = false;
-                    tutorial.exec( "compareScroll", qsTr("You can now compare the surahs side-by-side by scrolling them individually."), HorizontalAlignment.Center, VerticalAlignment.Center, 0, 0, 0, 0, "images/menu/ic_bottom.png", "d" );
+                    tutorial.execSwipe( "compareScroll", qsTr("You can now compare the surahs side-by-side by scrolling them individually."), HorizontalAlignment.Center, VerticalAlignment.Center, "d" );
                 }
             }
         }

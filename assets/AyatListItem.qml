@@ -1,4 +1,4 @@
-import bb.cascades 1.3
+import bb.cascades 1.2
 
 AyatListItemBase
 {
@@ -13,8 +13,8 @@ AyatListItemBase
     Container
     {
         horizontalAlignment: HorizontalAlignment.Fill
-        rightPadding: ui.sdu(1)
-        leftPadding: ui.sdu(1)
+        rightPadding: deviceUtils.du(1)
+        leftPadding: deviceUtils.du(1)
         
         Label
         {
