@@ -1,4 +1,4 @@
-import bb.cascades 1.3
+import bb.cascades 1.2
 
 Delegate
 {
@@ -103,19 +103,19 @@ Delegate
                         background: bg.imagePaint
                         horizontalAlignment: HorizontalAlignment.Right
                         verticalAlignment: VerticalAlignment.Center
-                        minHeight: ui.sdu(25)
-                        minWidth: ui.sdu(37.5)
-                        maxHeight: ui.sdu(50)
-                        maxWidth: ui.sdu(75)
+                        minHeight: deviceUtils.du(25)
+                        minWidth: deviceUtils.du(37.5)
+                        maxHeight: deviceUtils.du(50)
+                        maxWidth: deviceUtils.du(75)
                         rightPadding: 30
-                        translationX: ui.sdu(50)
+                        translationX: deviceUtils.du(50)
                         bottomPadding: 20
                         layout: DockLayout {}
                         
                         animations: [
                             TranslateTransition {
                                 id: tt
-                                fromX: ui.sdu(50)
+                                fromX: deviceUtils.du(50)
                                 toX: 0
                                 easingCurve: StockCurve.ExponentialOut
                                 delay: 250
@@ -126,7 +126,7 @@ Delegate
                             {
                                 id: out
                                 fromX: 0
-                                toX: ui.sdu(50)
+                                toX: deviceUtils.du(50)
                                 easingCurve: StockCurve.CircularIn
                                 delay: 250
                                 duration: 750
@@ -146,7 +146,7 @@ Delegate
                         
                         Container
                         {
-                            topPadding: ui.sdu(3.75)
+                            topPadding: deviceUtils.du(3.75)
                             
                             EmptyDelegate
                             {
@@ -161,7 +161,7 @@ Delegate
                             horizontalAlignment: HorizontalAlignment.Fill
                             verticalAlignment: VerticalAlignment.Fill
                             visible: queue.queued > 0
-                            topPadding: offliner.delegateActive ? ui.sdu(6) : 0
+                            topPadding: offliner.delegateActive ? deviceUtils.du(6) : 0
                             
                             OfflineDelegate
                             {
@@ -179,8 +179,8 @@ Delegate
                             ListView
                             {
                                 id: listView
-                                maxWidth: ui.sdu(75)
-                                maxHeight: ui.sdu(50)
+                                maxWidth: deviceUtils.du(75)
+                                maxHeight: deviceUtils.du(50)
                                 scrollRole: ScrollRole.Main
                                 
                                 onCreationCompleted: {

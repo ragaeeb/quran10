@@ -1,4 +1,4 @@
-import bb.cascades 1.3
+import bb.cascades 1.2
 import com.canadainc.data 1.0
 
 TitleBar
@@ -119,9 +119,9 @@ TitleBar
                     }
                     
                     onAnimationFinished: {
-                        tutorial.exec("chapterTitleBar", qsTr("Tap here to open all the explanations for this chapter."), HorizontalAlignment.Center, VerticalAlignment.Top, 0, 0, ui.du(5));
-                        tutorial.exec("surahNavigation", qsTr("Tap the right arrow to navigate to the next chapter."), HorizontalAlignment.Right, VerticalAlignment.Top );
-                        tutorial.exec("navigateSurahLeft", qsTr("Tap the left arrow to navigate to the previous chapter."), HorizontalAlignment.Left, VerticalAlignment.Top );
+                        tutorial.execTitle("chapterTitleBar", qsTr("Tap here to open all the explanations for this chapter.") );
+                        tutorial.execTitle("surahNavigation", qsTr("Tap the right arrow to navigate to the next chapter."), "r" );
+                        tutorial.execTitle("navigateSurahLeft", qsTr("Tap the left arrow to navigate to the previous chapter."), "l" );
                     }
                 }
             }

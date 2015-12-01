@@ -1,4 +1,4 @@
-import bb.cascades 1.3
+import bb.cascades 1.2
 
 Container
 {
@@ -100,10 +100,10 @@ Container
             onVisualStateChanged: {
                 if (cmh.visualState == ContextMenuVisualState.VisibleCompact)
                 {
-                    tutorial.exec("memorize", qsTr("%1: This mode begins the playback of the current verse followed by up to the next 7 verses 20 times each to help you memorize it.").arg(memorize.title), HorizontalAlignment.Right, VerticalAlignment.Center, 0, ui.du(2), 0, 0, memorize.imageSource.toString(), "d");
-                    tutorial.exec("playFromHere", qsTr("%1: This begins playback of the recitation starting from this verse.").arg(playFromHere.title), HorizontalAlignment.Right, VerticalAlignment.Center, 0, ui.du(2), 0, 0, playFromHere.imageSource.toString(), "d");
-                    tutorial.exec("setBookmark", qsTr("You can use the '%1' action to place a bookmark on this verse so you can resume your reading the next time right to this verse quickly.").arg(setBookmark.title), HorizontalAlignment.Right, VerticalAlignment.Center, 0, ui.du(2), 0, 0, setBookmark.imageSource.toString(), "d");
-                    tutorial.exec("selectRangeOption", qsTr("You can use the 'Select Range' action to only play recitations for those, or copy/share them to your contacts."), HorizontalAlignment.Right, VerticalAlignment.Center, 0, ui.du(2), 0, 0, "images/menu/ic_range.png", "d");
+                    tutorial.execOverFlow("memorize", qsTr("%1: This mode begins the playback of the current verse followed by up to the next 7 verses 20 times each to help you memorize it."), memorize);
+                    tutorial.execOverFlow("playFromHere", qsTr("%1: This begins playback of the recitation starting from this verse."), playFromHere);
+                    tutorial.execOverFlow("setBookmark", qsTr("You can use the '%1' action to place a bookmark on this verse so you can resume your reading the next time right to this verse quickly."), setBookmark);
+                    tutorial.execOverFlow("selectRangeOption", qsTr("You can use the '%1' action to only play recitations for specific ayat, or copy/share them to your contacts."), itemRoot.ListItem.view.multiSelectAction);
                 }
             }
         }

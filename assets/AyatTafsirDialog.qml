@@ -79,7 +79,7 @@ FullScreenDialog
             
             scalerAnim.onEnded: {
                 tutorial.exec( "tafsirExit", qsTr("To exit this dialog simply tap any area outside of the dialog (either at the bottom or at the top)!"), HorizontalAlignment.Center, VerticalAlignment.Bottom );
-                tutorial.execCentered( "tafsirPinch", qsTr("If the font size is too small, you can simply do a pinch gesture to increase the font size!"), "images/tutorial/pinch.png" );
+                tutorial.execCentered( "tafsirPinch", qsTr("If the font size is too small, you can simply do a pinch gesture to increase the font size!"), "images/common/pinch.png" );
             }
         }
     ]

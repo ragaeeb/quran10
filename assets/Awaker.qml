@@ -111,7 +111,7 @@ QtObject
         
         onError: {
             console.log(message);
-            persist.showToast( message, "asset:///images/toast/yellow_delete.png" );
+            persist.showToast( message, "images/ic_cancel.png" );
         }
     }
     

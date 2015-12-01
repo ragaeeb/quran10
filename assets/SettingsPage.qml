@@ -1,4 +1,4 @@
-import bb.cascades 1.3
+import bb.cascades 1.2
 import bb.cascades.pickers 1.0
 import com.canadainc.data 1.0
 
@@ -125,7 +125,7 @@ Page
                     Option {
                         id: thai
                         text: qsTr("Thai") + Retranslate.onLanguageChanged
-                        description: qsTr("Thailand") + Retranslate.onLanguageChanged
+                        description: qsTr("King Fahd Complex") + Retranslate.onLanguageChanged
                         value: "thai"
                         imageSource: "images/dropdown/flags/thai.jpg"
                     }
@@ -160,12 +160,24 @@ Page
                             reporter.record("Translation", translation.selectedValue);
                         }
                     }
+                    
+                    onExpandedChanged: {
+                        if (expanded) {
+                            tutorial.execCentered( "authenticTranslation", qsTr("Some users have inquired why we do not support certain translations of the Qur'an. Please note that we are doing our best to only support the most authentic and accurate translations of the Qur'an, which are provided by Saudi Arabia's King Fahd Complex (the original Mushaf publishers).\n\nWe do not support any translations which were done by literal, or linguistic, or intellectual derivations, and rather we support the translations which were verified using the understanding of the Companions of the Messenger (sallalahu alayhi wa'sallam) and the scholars who followed them in the correct understanding."), "images/toast/ic_info.png" );
+                        }
+                    }
                 }
                 
                 DropDown
                 {
                     id: reciter
                     title: qsTr("Reciter") + Retranslate.onLanguageChanged
+                    
+                    onExpandedChanged: {
+                        if (expanded) {
+                            tutorial.execCentered( "qareeTazkiyyat", qsTr("Some users have inquired why we do not support certain reciters. Please note that we are doing our best to stick to the Qarees who the scholars of Ahlus Sunnah have praised for their accuracy in their recitation, as well as their manhaj."), "images/toast/info_icon.png" );
+                        }
+                    }
                     
                     function onDataLoaded(id, data)
                     {
@@ -202,9 +214,9 @@ Page
                             }
                             
                             tutorial.execBelowTitleBar( "translation", qsTr("If you want to show a specific translation for the Qu'ran, choose it here.") );
-                            tutorial.execBelowTitleBar( "qaree", qsTr("If you want to use a specific qaree to recite the Qu'ran set it here."), ui.du(8) );
-                            tutorial.execBelowTitleBar( "dloadDir", qsTr("To change the directory where the mushaf pages, ayat images, and recitations are downloaded, set it here."), ui.du(21), "r" );
-                            tutorial.exec( "overlay", qsTr("Sometimes BlackBerry 10's font rules override the arabic rulings of the Qu'ran, and some letters get disconnected. It does not change the meaning however it looks slightly different from the original mushaf text, if you want to prevent this, choose '%1' to display images for the ayats instead of text. Please note that this will have a negative performance impact.").arg(joinDisconnected.text), HorizontalAlignment.Right, VerticalAlignment.Center, 0, 0, 0, ui.du(8) );
+                            tutorial.execBelowTitleBar( "qaree", qsTr("If you want to use a specific qaree to recite the Qu'ran set it here."), deviceUtils.du(8) );
+                            tutorial.execBelowTitleBar( "dloadDir", qsTr("To change the directory where the mushaf pages, ayat images, and recitations are downloaded, set it here."), deviceUtils.du(21), "r" );
+                            tutorial.exec( "overlay", qsTr("Sometimes BlackBerry 10's font rules override the arabic rulings of the Qu'ran, and some letters get disconnected. It does not change the meaning however it looks slightly different from the original mushaf text, if you want to prevent this, choose '%1' to display images for the ayats instead of text. Please note that this will have a negative performance impact.").arg(joinDisconnected.text), HorizontalAlignment.Right, VerticalAlignment.Center, 0, 0, 0, deviceUtils.du(8) );
                             tutorial.exec( "keepAwake", qsTr("Use the '%1' feature if you want to keep the device screen lit up when the app is playing the recitation so you can follow along and not have to continually touch the screen.").arg(keepAwake.text), HorizontalAlignment.Right, VerticalAlignment.Center);
                             tutorial.execCentered( "hideBenefits", qsTr("Use the '%1' feature if you want to supress the random quotes that shows up in the start of the app.").arg(hideBenefits.text), "images/menu/ic_copy_from_english.png");
                         }

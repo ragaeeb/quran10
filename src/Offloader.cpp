@@ -187,12 +187,13 @@ bool Offloader::computeNecessaryUpdates(QVariantMap q, QByteArray const& data)
         qint64 serverTafsirSize = result[1].toLongLong();
 
         qint64 serverTranslationVersion = result[4].toLongLong();
-        qint64 myTranslationVersion = m_persist->getFlag( KEY_TRANSLATION_VERSION(language) ).toLongLong();
+        qint64 myTranslationVersion = m_persist->getFlag( KEY_TRANSLATION_VERSION( QString("quran_%1").arg(language) ) ).toLongLong();
         qint64 serverTranslationSize = result[5].toLongLong();
         bool tafsirUpdateNeeded = serverTafsirVersion > myTafsirVersion || forcedUpdates.contains(KEY_TAFSIR);
         bool translationUpdateNeeded = serverTranslationVersion > myTranslationVersion || forcedUpdates.contains(KEY_TRANSLATION);
 
         QString message;
+        LOGGER(QString::number(serverTafsirVersion) << QString::number(myTafsirVersion) << QString::number(serverTranslationVersion) << QString::number(myTranslationVersion));
 
         if (tafsirUpdateNeeded && translationUpdateNeeded && serverTranslationSize > 0 && serverTafsirSize > 0)
         {
@@ -348,6 +349,8 @@ void Offloader::onArchiveWritten()
         QString pluginVersionKey = result.value(KEY_PLUGIN_VERSION_KEY).toString();
         QString pluginVersionValue = result.value(KEY_PLUGIN_VERSION_VALUE).toString();
         updateDbVersion();
+
+        LOGGER("****Z" << pluginVersionKey);
 
         m_persist->setFlag(pluginVersionKey, pluginVersionValue);
     }
