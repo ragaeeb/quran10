@@ -29,7 +29,7 @@ Page
             titleBar.kindProperties.expandableArea.expanded = true;
             tutorial.execBelowTitleBar("searchOptions", qsTr("Tap on the '%1' button to restrict the search to only a specific surah.").arg(restrictButton.text) );
         } if (key == "searchOptions") {
-            tutorial.execBelowTitleBar("searchGoogle", qsTr("Sometimes the translations are not the same depending on where you got your translated text from. Quran10 can also search Google to find a better match than the ones found in the app. Enable the '%1' check box to enable it.").arg(searchGoogleCheckBox.text), deviceUtils.du(8) );
+            tutorial.execBelowTitleBar("searchGoogle", qsTr("Sometimes the translations are not the same depending on where you got your translated text from. Quran10 can also search Google to find a better match than the ones found in the app. Enable the '%1' check box to enable it.").arg(searchGoogleCheckBox.text), tutorial.du(8) );
         } else if (key == "searchGoogle") {
             titleBar.kindProperties.expandableArea.expanded = false;
         }

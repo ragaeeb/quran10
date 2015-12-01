@@ -138,9 +138,9 @@ Page
                         if (expanded)
                         {
                             tutorial.execBelowTitleBar( "alphabetical", qsTr("To arrange the surahs in ascending order relative to their name use the '%1' option.").arg(alphabet.text) );
-                            tutorial.execBelowTitleBar( "juz", qsTr("To categorize the surahs into their respective Juz, use the '%1' option.").arg(juzOption.text), deviceUtils.du(8) );
-                            tutorial.execBelowTitleBar( "normal", qsTr("To arrange the surahs in the order they appear in the Mushaf, use the '%1' option.").arg(normal.text), deviceUtils.du(16) );
-                            tutorial.execBelowTitleBar( "recent", qsTr("To arrange the surahs in their original order of revelation (ascending), use the '%1' option.").arg(recent.text), deviceUtils.du(24) );
+                            tutorial.execBelowTitleBar( "juz", qsTr("To categorize the surahs into their respective Juz, use the '%1' option.").arg(juzOption.text), tutorial.du(8) );
+                            tutorial.execBelowTitleBar( "normal", qsTr("To arrange the surahs in the order they appear in the Mushaf, use the '%1' option.").arg(normal.text), tutorial.du(16) );
+                            tutorial.execBelowTitleBar( "recent", qsTr("To arrange the surahs in their original order of revelation (ascending), use the '%1' option.").arg(recent.text), tutorial.du(24) );
                         }
                     }
                     
@@ -222,7 +222,7 @@ Page
                             
                             textField.input["keyLayout"] = 7;
                             deviceUtils.attachTopBottomKeys(mainPage, listView);
-                            tutorial.execBelowTitleBar("qPaneSurahPicker", qsTr("Search for surah names here. For example you can enter 'Baqara' or 'Fatiha'.\n\nYou can also enter surah numbers like '2' to go directly to Surah Baqara.\n\nYou can also enter '2:3' to go to Surah Baqara verse #3"), deviceUtils.du(8));
+                            tutorial.execBelowTitleBar("qPaneSurahPicker", qsTr("Search for surah names here. For example you can enter 'Baqara' or 'Fatiha'.\n\nYou can also enter surah numbers like '2' to go directly to Surah Baqara.\n\nYou can also enter '2:3' to go to Surah Baqara verse #3"), tutorial.du(8));
                             tutorial.execBelowTitleBar("displayStyle", qsTr("Tap here on the '%1' to change the order of the surahs or display Juz related information!").arg(sortOrder.title) );
                         }
                     }
@@ -330,7 +330,7 @@ Page
                         gdm.sortingKeys = ["juz_id", "surah_id", "verse_number"];
                         data = offloader.normalizeJuzs(data);
                         
-                        tutorial.execBelowTitleBar("juzHeader", qsTr("Tap on any of the Juz headers to open that Juz, or tap on any of the surahs to open them individually."), deviceUtils.du(16));
+                        tutorial.execBelowTitleBar("juzHeader", qsTr("Tap on any of the Juz headers to open that Juz, or tap on any of the surahs to open them individually."), tutorial.du(16));
                     }
                     
                     var total = gdm.size();

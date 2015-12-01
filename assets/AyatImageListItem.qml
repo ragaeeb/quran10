@@ -43,7 +43,7 @@ AyatListItemBase
         {
             horizontalAlignment: HorizontalAlignment.Fill
             verticalAlignment: VerticalAlignment.Fill
-            topPadding: deviceUtils.du(1); bottomPadding: deviceUtils.du(1); leftPadding: deviceUtils.du(1); rightPadding: deviceUtils.du(1)
+            topPadding: tutorial.du(1); bottomPadding: tutorial.du(1); leftPadding: tutorial.du(1); rightPadding: tutorial.du(1)
             
             ImageView
             {
