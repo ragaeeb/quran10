@@ -14,7 +14,7 @@ ResizableContainer
         offloader.decorateSimilarResults(data, bodyControl.value, adm, bodyControl);
         
         tutorial.execBelowTitleBar( "relatedExpand", qsTr("You can expand this top section by tapping on the 'Related' header.") );
-        tutorial.exec( "relatedExpand2", qsTr("To minimize it, tap on the ayat header on the bottom pane."), HorizontalAlignment.Center, VerticalAlignment.Center, 0, 0, deviceUtils.du(12) );
+        tutorial.exec( "relatedExpand2", qsTr("To minimize it, tap on the ayat header on the bottom pane."), HorizontalAlignment.Center, VerticalAlignment.Center, 0, 0, tutorial.du(12) );
     }
     
     ListView

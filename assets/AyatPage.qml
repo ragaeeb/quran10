@@ -131,24 +131,24 @@ Page
         tutorial.execActionBar( "markFav", qsTr("To quickly access this verse again, tap on the '%1' action at the bottom to put it in the Favourites tab.").arg(markFav.title) );
         tutorial.execActionBar( "addShortcutHome", qsTr("To quickly access this verse again, tap on the '%1' action at the bottom to pin it to your homescreen.").arg(addHome.title), "l" );
         tutorial.execActionBar( "share", qsTr("To share this verse with your friends tap on the '%1' action at the bottom.").arg(shareAction.title), "r" );
-        tutorial.exec( "lpArabic", qsTr("Press-and-hold on the arabic text if you want to copy or share it."), HorizontalAlignment.Right, VerticalAlignment.Top, 0, deviceUtils.du(2), deviceUtils.du(21));
+        tutorial.exec( "lpArabic", qsTr("Press-and-hold on the arabic text if you want to copy or share it."), HorizontalAlignment.Right, VerticalAlignment.Top, 0, tutorial.du(2), tutorial.du(21));
         
         if (tafsirOption.tafsirCount > 0 && similarOption.similarCount > 0)
         {
             tutorial.execTitle( "tafsir", qsTr("There are explanations of this verse by the people of knowledge! Tap on the '%1' option at the top to view them.").arg(tafsirOption.text), "r");
-            tutorial.exec( "similarAyat", qsTr("There appears to be other verses with similar wording, choose the '%1' option at the top to view them in a split screen.").arg(similarOption.text), HorizontalAlignment.Center, VerticalAlignment.Top, deviceUtils.du(16), 0, deviceUtils.du(4));
-            tutorial.exec( "ayatAudio", qsTr("Tap on the '%1' option to listen to this verse over and over in isolation.").arg(recitationOption.text), HorizontalAlignment.Center, VerticalAlignment.Top, 0, deviceUtils.du(24), deviceUtils.du(4));
+            tutorial.exec( "similarAyat", qsTr("There appears to be other verses with similar wording, choose the '%1' option at the top to view them in a split screen.").arg(similarOption.text), HorizontalAlignment.Center, VerticalAlignment.Top, tutorial.du(16), 0, tutorial.du(4));
+            tutorial.exec( "ayatAudio", qsTr("Tap on the '%1' option to listen to this verse over and over in isolation.").arg(recitationOption.text), HorizontalAlignment.Center, VerticalAlignment.Top, 0, tutorial.du(24), tutorial.du(4));
         }
         
         if (body.text.length > 0)
         {
             tutorial.execCentered( "arabicZoom", qsTr("Do a pinch gesture on the arabic text to increase or decrease the size of the font!"), "images/common/pinch.png" );
-            tutorial.exec( "transliteration", qsTr("Tap on the arabic text to show the transliteration."), HorizontalAlignment.Right, VerticalAlignment.Top, 0, deviceUtils.du(2), deviceUtils.du(21));
+            tutorial.exec( "transliteration", qsTr("Tap on the arabic text to show the transliteration."), HorizontalAlignment.Right, VerticalAlignment.Top, 0, tutorial.du(2), tutorial.du(21));
         }
         
         if (helper.showTranslation) {
-            tutorial.exec( "translationZoom", qsTr("Do a pinch gesture on the translation text to increase or decrease the size of the font!"), HorizontalAlignment.Center, VerticalAlignment.Center, 0, 0, 0, deviceUtils.du(10), "images/common/pinch.png" );
-            tutorial.exec( "lpTranslation", qsTr("Press-and-hold on the translation text if you want to copy or share it."), HorizontalAlignment.Left, VerticalAlignment.Center, 0, 0, deviceUtils.du(36));
+            tutorial.exec( "translationZoom", qsTr("Do a pinch gesture on the translation text to increase or decrease the size of the font!"), HorizontalAlignment.Center, VerticalAlignment.Center, 0, 0, 0, tutorial.du(10), "images/common/pinch.png" );
+            tutorial.exec( "lpTranslation", qsTr("Press-and-hold on the translation text if you want to copy or share it."), HorizontalAlignment.Left, VerticalAlignment.Center, 0, 0, tutorial.du(36));
         }
         
         reporter.record("AyatOpened", surahId+":"+verseId);
@@ -476,7 +476,7 @@ Page
                             easingCurve: StockCurve.ExponentialIn
                             
                             onEnded: {
-                                tutorial.exec( "transliterationWarning", qsTr("Please note that the scholars have mentioned to avoid the transliteration option since when depended upon it may introduce many mistakes because it cannot capture the Arabic pronunciations and rules properly.\n\nPlease use the Audio option to play the verse, and only use the transliteration text as a tool to help you, and do not depend on it fully."), HorizontalAlignment.Center, VerticalAlignment.Top, 0, 0, deviceUtils.du(18) );
+                                tutorial.exec( "transliterationWarning", qsTr("Please note that the scholars have mentioned to avoid the transliteration option since when depended upon it may introduce many mistakes because it cannot capture the Arabic pronunciations and rules properly.\n\nPlease use the Audio option to play the verse, and only use the transliteration text as a tool to help you, and do not depend on it fully."), HorizontalAlignment.Center, VerticalAlignment.Top, 0, 0, tutorial.du(18) );
                             }
                         }
                     ]
@@ -506,8 +506,8 @@ Page
                 {
                     horizontalAlignment: HorizontalAlignment.Fill
                     verticalAlignment: VerticalAlignment.Fill
-                    leftPadding: deviceUtils.du(1)
-                    rightPadding: deviceUtils.du(1)
+                    leftPadding: tutorial.du(1)
+                    rightPadding: tutorial.du(1)
                     
                     Label
                     {

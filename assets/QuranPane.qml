@@ -54,7 +54,7 @@ NavigationPane
             text: progressData ? progressData.surah_id+":"+progressData.verse_id : ""
             imageSource: "images/dropdown/saved_bookmark.png"
             verticalAlignment: VerticalAlignment.Center
-            maxWidth: deviceUtils.du(18.75)
+            maxWidth: tutorial.du(18.75)
             translationX: -250
             scaleX: 1.1
             scaleY: 1.1
@@ -67,7 +67,7 @@ NavigationPane
             
             onVisibleChanged: {
                 if ( visible && tutorial.isTopPane(navigationPane, pickerPage) ) {
-                    tutorial.exec( "bookmarkAnchor", qsTr("Notice the button on the top left. This is used to track your Qu'ran reading progress. You can use it to quickly jump to the verse you last left off."), HorizontalAlignment.Left, VerticalAlignment.Top, deviceUtils.du(2), 0, deviceUtils.du(4) );
+                    tutorial.exec( "bookmarkAnchor", qsTr("Notice the button on the top left. This is used to track your Qu'ran reading progress. You can use it to quickly jump to the verse you last left off."), HorizontalAlignment.Left, VerticalAlignment.Top, tutorial.du(2), 0, tutorial.du(4) );
                 }
                 
                 if (visible && scaleX != 1) {
@@ -310,7 +310,7 @@ NavigationPane
         
         tutorial.execActionBar( "openMushaf", qsTr("Tap here to open the mushaf!") );
         tutorial.execActionBar("selectAllSurahs", qsTr("Tap on the '%1' action to view the entire Qu'ran (all the surahs)!").arg(selectAll.title), "r");
-        var noMoreTutorialsLeft = tutorial.exec("lpSurahPicker", "Press and hold on a surah for a menu to select multiple chapters.", HorizontalAlignment.Center, VerticalAlignment.Center, deviceUtils.du(2), 0, 0, deviceUtils.du(2));
+        var noMoreTutorialsLeft = tutorial.exec("lpSurahPicker", "Press and hold on a surah for a menu to select multiple chapters.", HorizontalAlignment.Center, VerticalAlignment.Center, tutorial.du(2), 0, 0, tutorial.du(2));
         
         if ( !noMoreTutorialsLeft && persist.getValueFor("hideRandomQuote") != 1 ) {
             helper.fetchRandomQuote(pickerPage);

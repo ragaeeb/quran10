@@ -113,9 +113,9 @@ HelpPage
             onExpandedChanged: {
                 if (expanded)
                 {
-                    tutorial.execBelowTitleBar( "disabledUpdates", qsTr("As more and more tafsir and biographies become available, the app can try to download them. Use the '%1' option to never check for these updates.").arg(disabledUpdates.text), deviceUtils.du(16) );
-                    tutorial.execBelowTitleBar( "promptUpdates", qsTr("To be prompted before downloading the latest tafsir updates, use the '%1' option.").arg(promptUpdates.text), deviceUtils.du(24) );
-                    tutorial.execBelowTitleBar( "autoUpdates", qsTr("To automatically download the latest tafsir updates as they become available, use the '%1' option.").arg(autoUpdates.text), deviceUtils.du(32) );
+                    tutorial.execBelowTitleBar( "disabledUpdates", qsTr("As more and more tafsir and biographies become available, the app can try to download them. Use the '%1' option to never check for these updates.").arg(disabledUpdates.text), tutorial.du(16) );
+                    tutorial.execBelowTitleBar( "promptUpdates", qsTr("To be prompted before downloading the latest tafsir updates, use the '%1' option.").arg(promptUpdates.text), tutorial.du(24) );
+                    tutorial.execBelowTitleBar( "autoUpdates", qsTr("To automatically download the latest tafsir updates as they become available, use the '%1' option.").arg(autoUpdates.text), tutorial.du(32) );
                 }
             }
         }

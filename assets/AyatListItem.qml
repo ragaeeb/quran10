@@ -13,8 +13,8 @@ AyatListItemBase
     Container
     {
         horizontalAlignment: HorizontalAlignment.Fill
-        rightPadding: deviceUtils.du(1)
-        leftPadding: deviceUtils.du(1)
+        rightPadding: tutorial.du(1)
+        leftPadding: tutorial.du(1)
         
         Label
         {

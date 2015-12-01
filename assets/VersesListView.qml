@@ -74,8 +74,8 @@ ListView
         onActiveChanged: {
             if (active) {
                 tutorial.exec("selectRangeCopy", qsTr("Use the '%1' action if you want to copy the ayats to the clipboard so you can later paste it somewhere.").arg(multiCopy.title), HorizontalAlignment.Center, VerticalAlignment.Bottom);
-                tutorial.exec("selectRangePlay", qsTr("Use the '%1' action if you want to play the recitation of the selected ayats.").arg(multiPlayAction.title), HorizontalAlignment.Left, VerticalAlignment.Bottom, deviceUtils.du(22));
-                tutorial.exec("selectRangeShare", qsTr("Use the '%1' action if you want to share the ayats with one of your contacts or somewhere else.").arg(multiShare.title), HorizontalAlignment.Right, VerticalAlignment.Bottom, 0, deviceUtils.du(22));
+                tutorial.exec("selectRangePlay", qsTr("Use the '%1' action if you want to play the recitation of the selected ayats.").arg(multiPlayAction.title), HorizontalAlignment.Left, VerticalAlignment.Bottom, tutorial.du(22));
+                tutorial.exec("selectRangeShare", qsTr("Use the '%1' action if you want to share the ayats with one of your contacts or somewhere else.").arg(multiShare.title), HorizontalAlignment.Right, VerticalAlignment.Bottom, 0, tutorial.du(22));
             }
         }
         
@@ -190,7 +190,7 @@ ListView
         }
 
         if (helper.showTranslation) {
-            tutorial.exec("surahPageZoomTranslation", qsTr("Do a pinch gesture on the translation text to increase or decrease the size of the font!"), HorizontalAlignment.Center, VerticalAlignment.Center, 0, 0, 0, deviceUtils.du(12), "images/common/pinch.png");
+            tutorial.exec("surahPageZoomTranslation", qsTr("Do a pinch gesture on the translation text to increase or decrease the size of the font!"), HorizontalAlignment.Center, VerticalAlignment.Center, 0, 0, 0, tutorial.du(12), "images/common/pinch.png");
         }
         
         tutorial.execActionBar( "repeat", qsTr("Tap on the repeat action at the bottom to enable or disable repeating the recitation in a loop once it finishes."), "l" );
