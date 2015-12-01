@@ -493,6 +493,11 @@ void Offloader::searchGoogle(QString const& query)
 }
 
 
+void Offloader::clearCachedDB() {
+    QtConcurrent::run(&ThreadUtils::clearCachedDB, m_persist->getValueFor(KEY_TRANSLATION).toString());
+}
+
+
 Offloader::~Offloader()
 {
 }

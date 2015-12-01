@@ -474,4 +474,26 @@ bool ThreadUtils::replaceDatabase(QString const& src)
 }
 
 
+void ThreadUtils::clearCachedDB(QString const& language)
+{
+    LOGGER(language);
+
+    QStringList all = QDir::home().entryList( QStringList() << "quran_*.db", QDir::Files | QDir::NoDot | QDir::NoDotDot );
+    LOGGER(all);
+
+    foreach (QString const& current, all)
+    {
+
+        if ( current.startsWith("quran_") ) // translation file
+        {
+            QString dbLang = current.split(".").first().split("_").last();
+
+            if (language != dbLang) {
+                QFile::remove( QString("%1/%2").arg( QDir::homePath() ).arg(current) );
+            }
+        }
+    }
+}
+
+
 } /* namespace quran */

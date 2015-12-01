@@ -34,3 +34,15 @@ CREATE INDEX IF NOT EXISTS explanations_index ON explanations(to_verse_number);
 VACUUM;
 
 UPDATE verses SET translation = (SELECT text FROM x.verses WHERE sura=chapter_id AND ayah=verse_id) WHERE EXISTS (SELECT * FROM x.verses WHERE sura=chapter_id AND ayah=verse_id);
+
+CREATE TABLE IF NOT EXISTS chapters (id INTEGER PRIMARY KEY, transliteration TEXT, translation TEXT);
+CREATE TABLE IF NOT EXISTS verses2 (chapter_id INTEGER REFERENCES chapters(id), verse_id INTEGER, translation TEXT);
+CREATE TABLE transliteration (chapter_id INTEGER REFERENCES chapters(id), verse_id INTEGER, html TEXT);
+INSERT INTO verses2 SELECT sura,ayah,text FROM verses;
+DROP TABLE properties;
+DROP TABLE verses;
+ALTER TABLE verses2 RENAME TO verses;
+ATTACH DATABASE 'quran_english.db' AS x;
+INSERT INTO chapters SELECT * FROM x.chapters;
+INSERT INTO transliteration SELECT * FROM x.transliteration;
+VACUUM;
