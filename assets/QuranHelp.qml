@@ -5,6 +5,10 @@ HelpPage
     actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
     videoTutorialUri: "http://youtu.be/YOXtjnNWVZM"
 
+    onClearCacheTriggered: {
+        offloader.clearCachedDB();
+    }
+
     actions: [
         ActionItem
         {

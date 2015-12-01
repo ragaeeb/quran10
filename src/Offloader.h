@@ -56,6 +56,7 @@ public:
     Q_INVOKABLE void renderMap(bb::cascades::maps::MapView* mapView, QVariantMap const& data);
     Q_INVOKABLE void searchGoogle(QString const& query);
     void processDownloadedPlugin(QVariantMap const& q, QByteArray const& data);
+    Q_INVOKABLE void clearCachedDB();
 };
 
 } /* namespace quran */

@@ -46,6 +46,7 @@ struct ThreadUtils
     static QVariantMap matchSurah(QVariantMap input, QVariantList const& allSurahs);
     static QVariantList captureAyatsInBody(QString body, QMap<QString, int> const& chapterToId);
     static bool replaceDatabase(QString const& src);
+    static void clearCachedDB(QString const& language);
 };
 
 } /* namespace quran */
