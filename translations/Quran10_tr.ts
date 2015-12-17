@@ -1914,7 +1914,7 @@ Press-and-hold on a verse to be able to play specific verses, or share them with
     <message>
         <location filename="../src/InvokeHelper.cpp" line="332"/>
         <source>OK</source>
-        <translation type="unfinished">Tamam</translation>
+        <translation>Tamam</translation>
     </message>
     <message>
         <location filename="../src/InvokeHelper.cpp" line="357"/>
