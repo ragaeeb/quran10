@@ -117,7 +117,7 @@ Page
                     
                     Option {
                         text: qsTr("Spanish") + Retranslate.onLanguageChanged
-                        description: qsTr("Julio Cortes") + Retranslate.onLanguageChanged
+                        description: qsTr("Abdel Gani Melara Navio") + Retranslate.onLanguageChanged
                         value: "spanish"
                         imageSource: "images/dropdown/ic_translation.png"
                     }
