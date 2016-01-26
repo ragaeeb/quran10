@@ -54,9 +54,7 @@ void InvokeHelper::init(QString const& qmlDoc, QMap<QString, QObject*> const& co
     global = qml->createRootObject<QObject>();
     QmlDocument::defaultDeclarativeEngine()->rootContext()->setContextProperty("notification", global);
 
-    qml = QmlDocument::create("asset:///TutorialTip.qml").parent(this);
-    global = qml->createRootObject<QObject>();
-    QmlDocument::defaultDeclarativeEngine()->rootContext()->setContextProperty("tutorial", global);
+    DeviceUtils::registerTutorialTips(this);
 
     m_root = CardUtils::initAppropriate(qmlDoc, context, parent);
 }
