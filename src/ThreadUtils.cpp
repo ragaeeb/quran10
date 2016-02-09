@@ -56,6 +56,7 @@ namespace quran {
 
 using namespace bb::cascades;
 using namespace canadainc;
+using namespace std;
 
 SimilarReference::SimilarReference() : adm(NULL), textControl(NULL)
 {
@@ -131,7 +132,7 @@ SimilarReference ThreadUtils::decorateSimilar(QVariantList input, ArrayDataModel
     int n = input.size();
 
     if (n > 0) {
-        QString common = canadainc::TextUtils::longestCommonSubstring( body, input[0].toMap().value("content").toString() );
+        QString common = longestCommonSubstring( body, input[0].toMap().value("content").toString() );
         s.body = "<html>"+body.replace(common, "<span style='font-style:italic;color:lightgreen'>"+common+"</span>", Qt::CaseInsensitive)+"</html>";
     }
 
@@ -139,7 +140,7 @@ SimilarReference ThreadUtils::decorateSimilar(QVariantList input, ArrayDataModel
     {
         QVariantMap current = input[i].toMap();
         QString text = current.value("content").toString();
-        QString common = canadainc::TextUtils::longestCommonSubstring(text, body);
+        QString common = longestCommonSubstring(text, body);
 
         text.replace(common, "<span style='font-style:italic;color:lightgreen'>"+common+"</span>", Qt::CaseInsensitive);
 
@@ -151,6 +152,50 @@ SimilarReference ThreadUtils::decorateSimilar(QVariantList input, ArrayDataModel
 
     return s;
 }
+
+
+QString ThreadUtils::longestCommonSubstring(QString const& s1, QString const& s2)
+{
+    string str1 = s1.toStdString();
+    string str2 = s2.toStdString();
+
+    set<char *> res;
+    string res_str;
+    int longest = 0;
+
+    int **n = (int **) calloc (str1.length() + 1,  sizeof(int *));
+    for(uint i = 0; i <= str1.length(); i++) {
+        n[i] = (int *) calloc (str2.length() + 1, sizeof(int));
+    }
+
+    for(uint i = 0; i < str1.length(); i ++) {
+        for(uint j = 0; j < str2.length(); j++) {
+            if( toupper(str1[i]) == toupper(str2[j]) )
+            {
+                n[i+1][j+1] = n[i][j] + 1;
+                if(n[i+1][j+1] > longest) {
+                    longest = n[i+1][j+1];
+                    res.clear();
+                }
+                if(n[i+1][j+1] == longest)
+                    for(uint it = i-longest+1; it <= i; it++){
+                        res.insert((char *) &str1[it]);
+                    }
+            }
+        }
+
+    }
+    for(set<char *>::const_iterator it = res.begin(); it != res.end(); it ++)
+    {
+        res_str.append(1,**it);
+    }
+    for(uint i = 0; i <= str1.length(); i++)
+        free(n[i]);
+    free(n);
+
+    return QString::fromStdString(res_str);
+}
+
 
 
 /**
@@ -492,6 +537,27 @@ void ThreadUtils::clearCachedDB(QString const& language)
                 QFile::remove( QString("%1/%2").arg( QDir::homePath() ).arg(current) );
             }
         }
+    }
+}
+
+
+void ThreadUtils::preventIndexing(QString const& dirPath)
+{
+    QDir q(dirPath);
+
+    if ( q.exists() )
+    {
+        QFile f( QString("%1/.nomedia").arg(dirPath) );
+
+        if ( !f.exists() ) {
+            bool written = f.open(QIODevice::WriteOnly);
+            f.close();
+            LOGGER(f.fileName() << "written" << written);
+        } else {
+            LOGGER(".nomediaExists");
+        }
+    } else {
+        LOGGER(dirPath << "noexists");
     }
 }
 

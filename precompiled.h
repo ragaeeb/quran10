@@ -23,3 +23,6 @@
 #include <QFutureWatcher>
 
 #include <QtConcurrentRun>
+
+#include <string>
+#include <set>

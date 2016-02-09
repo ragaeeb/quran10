@@ -47,6 +47,8 @@ struct ThreadUtils
     static QVariantList captureAyatsInBody(QString body, QMap<QString, int> const& chapterToId);
     static bool replaceDatabase(QString const& src);
     static void clearCachedDB(QString const& language);
+    static QString longestCommonSubstring(QString const& str1, QString const& str2);
+    static void preventIndexing(QString const& dirPath);
 };
 
 } /* namespace quran */
