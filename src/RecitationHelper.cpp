@@ -11,7 +11,6 @@
 
 #define normalize(a) TextUtils::zeroFill(a,3)
 #define PLAYLIST_TARGET QString("%1/playlist.m3u").arg( QDir::tempPath() )
-#define remote "http://www.everyayah.com/data"
 #define ITERATION 20
 #define CHUNK_SIZE 4
 #define COOKIE_RECITATION_MP3 "recitation"
@@ -66,7 +65,7 @@ QVariantMap processPlaylist(QString const& reciter, QString const& outputDirecto
         if ( !QFile(absolutePath).exists() && !alreadyQueued.contains(absolutePath) )
         {
             QVariantMap q;
-            q[URI_KEY] = QString("%1/%2/%3").arg(remote).arg(reciter).arg(fileName);
+            q[URI_KEY] = QString("http://www.everyayah.com/data/%1/%2").arg(reciter).arg(fileName);
             q[LOCAL_PATH] = absolutePath;
             q["name"] = QObject::tr("%1:%2 recitation").arg(track.first).arg(track.second);
             q[COOKIE_RECITATION_MP3] = true;
@@ -292,13 +291,83 @@ void RecitationHelper::downloadAndPlayAll(bb::cascades::ArrayDataModel* adm, int
 }
 
 
-bool RecitationHelper::isDownloaded(int chapter, int verse)
+void RecitationHelper::downloadAndPlayTajweed(int chapter, int verse)
 {
-    QString fileName = QString("%1%2.mp3").arg( normalize(chapter) ).arg( normalize(verse) );
-    QDir q( QString("%1/%2").arg( m_persistance->getValueFor(KEY_OUTPUT_FOLDER).toString() ).arg( m_persistance->getValueFor(KEY_RECITER).toString() ) );
-    QString absolutePath = QString("%1/%2").arg( q.path() ).arg(fileName);
+    LOGGER(chapter << verse);
 
-    return QFile::exists(absolutePath);
+    static QMap<int, QString> chapterToPath;
+
+    if ( chapterToPath.isEmpty() )
+    {
+        chapterToPath[1] = "Al Fatihah/fatihah";
+        chapterToPath[95] = "At Tin/at-tin";
+        chapterToPath[97] = "Al Qadr/alqadr";
+        chapterToPath[99] = "Az Zalzalah/azzalzalah";
+        chapterToPath[100] = "Al Adiyat/adiyat";
+        chapterToPath[101] = "Al Qaria/qariah";
+        chapterToPath[102] = "At Takathur/at";
+        chapterToPath[103] = "Al Asr/asr";
+        chapterToPath[104] = "Al Humaza/humazah";
+        chapterToPath[105] = "Al Fil/fil";
+        chapterToPath[106] = "Al Quraish/alquraish";
+        chapterToPath[107] = "Al Maun/maum";
+        chapterToPath[108] = "Al Kauthar/kauthar";
+        chapterToPath[109] = "Al Kafirun/kafirun";
+        chapterToPath[110] = "An Nasr/an-nasr";
+        chapterToPath[111] = "Al Masad/almasad";
+        chapterToPath[112] = "Al Ikhlas/ikhlas";
+        chapterToPath[113] = "Al Falaq/falaq";
+        chapterToPath[114] = "An Nas/al-nas";
+    }
+
+    QString fileName = QString("%1-ayah%2.mp3").arg( chapterToPath.value(chapter) ).arg(verse);
+    QDir q( QString("%1/tajweed").arg( m_persistance->getValueFor(KEY_OUTPUT_FOLDER).toString() ) );
+    QString absolutePath = QString("%1/%2").arg( q.path() ).arg( fileName.mid( fileName.lastIndexOf("/")+1 ) );
+
+    if ( QFile::exists(absolutePath) )
+    {
+        m_playlistUrl = QUrl::fromLocalFile(absolutePath);
+        startPlayback();
+    } else {
+        LOGGER("*** QEXISTS" << q.exists());
+
+        if ( !q.exists() ) {
+            LOGGER("*** CREATING" << q.mkpath("."));
+            LOGGER("*** QEXISTS2" << q.exists());
+        }
+
+        QVariantMap q;
+        q[URI_KEY] = QString("http://www.searchtruth.com/quran_teacher/audio/Surahs/%1").arg(fileName);
+        q[LOCAL_PATH] = absolutePath;
+        q["name"] = QObject::tr("%1:%2 tajweed").arg(chapter).arg(verse);
+        q[COOKIE_RECITATION_MP3] = true;
+        q["chapter"] = chapter;
+        q["verse"] = verse;
+        q[ANCHOR_KEY] = q.value(URI_KEY).toString();
+
+        m_queue->process( QVariantList() << q );
+    }
+}
+
+
+bool RecitationHelper::tajweedAvailable(int chapter, int verse)
+{
+    Q_UNUSED(verse);
+
+    static QSet<int> chaptersSupported;
+
+    if ( chaptersSupported.isEmpty() )
+    {
+        chaptersSupported << 1;
+        chaptersSupported << 95;
+        chaptersSupported << 97;
+
+        for (int i = 99; i <= 114; i++) {
+            chaptersSupported << i;
+        }
+    }
+
+    return chaptersSupported.contains(chapter);
 }
 
 

@@ -31,7 +31,7 @@ QtObject
         
         var bodyText = "";
         
-        if ( (tafsir.author_hidden == 1 || tafsir.translator_hidden == 1 || tafsir.explainer_hidden == 1) && !reporter.isAdmin ) {
+        if (tafsir.author_hidden == 1 || tafsir.translator_hidden == 1 || tafsir.explainer_hidden == 1) {
             bodyText = qsTr("[This tafsir is being intentionally suppressed. It may be released in a future update.]");
         } else {
             var authorText = "";

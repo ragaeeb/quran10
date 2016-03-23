@@ -113,14 +113,14 @@ NavigationPane
                         fromX: -250
                         toX: 0
                         easingCurve: StockCurve.QuinticOut
-                        duration: reporter.isAdmin ? 1 : 750
+                        duration: 750
                     }
                     
                     RotateTransition {
                         fromAngleZ: 360
                         toAngleZ: 0
                         easingCurve: StockCurve.ExponentialOut
-                        duration: reporter.isAdmin ? 1 : 750
+                        duration: 750
                     }
                     
                     ScaleTransition
@@ -129,7 +129,7 @@ NavigationPane
                         fromY: 1.1
                         toX: 1
                         toY: 1
-                        duration: reporter.isAdmin ? 1 : 500
+                        duration: 750
                         easingCurve: StockCurve.DoubleElasticOut
                     }
                 }

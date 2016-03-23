@@ -48,14 +48,12 @@ public:
     RecitationHelper(QueueDownloader* queue, Persistance* p, QObject* parent=NULL);
     virtual ~RecitationHelper();
 
-    /**
-     * @pre The directory must have been set up.
-     */
-    Q_INVOKABLE bool isDownloaded(int chapter, int verse);
     Q_INVOKABLE int extractIndex(QVariantMap const& m);
     Q_INVOKABLE void downloadAndPlay(int chapter, int verse);
+    Q_INVOKABLE void downloadAndPlayTajweed(int chapter, int verse);
     Q_INVOKABLE void downloadAndPlayAll(bb::cascades::ArrayDataModel* adm, int from=0, int to=-1);
     Q_INVOKABLE void memorize(bb::cascades::ArrayDataModel* adm, int from, int to);
+    Q_INVOKABLE bool tajweedAvailable(int chapter, int verse);
 };
 
 } /* namespace quran */

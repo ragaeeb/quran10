@@ -42,7 +42,7 @@ Page
                             easingCurve: StockCurve.CubicIn
                             fromOpacity: 0
                             toOpacity: 1
-                            duration: reporter.isAdmin ? 1 : 1000
+                            duration: 1000
                             
                             onEnded: {
                                 if (showJuz) {
@@ -213,7 +213,7 @@ Page
                     TranslateTransition {
                         id: translate
                         fromX: 1000
-                        duration: reporter.isAdmin ? 1 : 500
+                        duration: 500
                         
                         onEnded: {
                             if (deviceUtils.isPhysicalKeyboardDevice || focusOnSearchBar) {
