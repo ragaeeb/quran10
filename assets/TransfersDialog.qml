@@ -167,7 +167,6 @@ Delegate
                             {
                                 id: offliner
                                 delegateActive: !reporter.online
-                                graphic: "images/toast/ic_offline.png"
                                 bottomMargin: 10
                             }
                             

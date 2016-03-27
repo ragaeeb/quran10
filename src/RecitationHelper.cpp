@@ -17,6 +17,9 @@
 #define ANCHOR_KEY "anchor"
 #define PLAYLIST_KEY "playlist"
 #define LOCAL_PATH "local"
+#define KEY_CHAPTER "chapter"
+#define KEY_TRANSFER_NAME "name"
+#define KEY_VERSE "verse"
 #define KEY_QUEUE "queue"
 #define PLAYLIST_ERROR "error"
 
@@ -67,10 +70,10 @@ QVariantMap processPlaylist(QString const& reciter, QString const& outputDirecto
             QVariantMap q;
             q[URI_KEY] = QString("http://www.everyayah.com/data/%1/%2").arg(reciter).arg(fileName);
             q[LOCAL_PATH] = absolutePath;
-            q["name"] = QObject::tr("%1:%2 recitation").arg(track.first).arg(track.second);
+            q[KEY_TRANSFER_NAME] = QObject::tr("%1:%2 recitation").arg(track.first).arg(track.second);
             q[COOKIE_RECITATION_MP3] = true;
-            q["chapter"] = track.first;
-            q["verse"] = track.second;
+            q[KEY_CHAPTER] = track.first;
+            q[KEY_VERSE] = track.second;
 
             queue << q;
             alreadyQueued << absolutePath;
@@ -320,30 +323,31 @@ void RecitationHelper::downloadAndPlayTajweed(int chapter, int verse)
         chapterToPath[114] = "An Nas/al-nas";
     }
 
+    if (chapter == 1 && verse != 7) {
+        verse -= 1; // because basmalah is separate
+    }
+
     QString fileName = QString("%1-ayah%2.mp3").arg( chapterToPath.value(chapter) ).arg(verse);
+
+    if (chapter == 1 && verse == 0) {
+        fileName = QString("%1-ayah0%2.mp3").arg( chapterToPath.value(chapter) ).arg(verse+1);
+    }
+
     QDir q( QString("%1/tajweed").arg( m_persistance->getValueFor(KEY_OUTPUT_FOLDER).toString() ) );
     QString absolutePath = QString("%1/%2").arg( q.path() ).arg( fileName.mid( fileName.lastIndexOf("/")+1 ) );
+    m_playlistUrl = QUrl::fromLocalFile(absolutePath);
 
-    if ( QFile::exists(absolutePath) )
-    {
-        m_playlistUrl = QUrl::fromLocalFile(absolutePath);
+    if ( QFile::exists(absolutePath) ) {
         startPlayback();
     } else {
-        LOGGER("*** QEXISTS" << q.exists());
-
-        if ( !q.exists() ) {
-            LOGGER("*** CREATING" << q.mkpath("."));
-            LOGGER("*** QEXISTS2" << q.exists());
-        }
-
         QVariantMap q;
+        q[COOKIE_RECITATION_MP3] = true;
         q[URI_KEY] = QString("http://www.searchtruth.com/quran_teacher/audio/Surahs/%1").arg(fileName);
         q[LOCAL_PATH] = absolutePath;
-        q["name"] = QObject::tr("%1:%2 tajweed").arg(chapter).arg(verse);
-        q[COOKIE_RECITATION_MP3] = true;
-        q["chapter"] = chapter;
-        q["verse"] = verse;
-        q[ANCHOR_KEY] = q.value(URI_KEY).toString();
+        q[KEY_TRANSFER_NAME] = QObject::tr("%1:%2 tajweed").arg(chapter).arg(verse);
+        q[KEY_CHAPTER] = chapter;
+        q[KEY_VERSE] = verse;
+        m_anchor = q.value(URI_KEY).toString();
 
         m_queue->process( QVariantList() << q );
     }

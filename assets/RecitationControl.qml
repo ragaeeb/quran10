@@ -1,4 +1,5 @@
 import bb.cascades 1.2
+import bb.system 1.0
 import com.canadainc.data 1.0
 
 Container
@@ -7,12 +8,10 @@ Container
     horizontalAlignment: HorizontalAlignment.Fill
     verticalAlignment: VerticalAlignment.Fill
     property bool played: false
-    property bool tajweedPlayed: false
-    property bool showTajweed: recitation.tajweedAvailable(root.surahId, root.verseId)
     
     function cleanUp()
     {
-        if (played || tajweedPlayed) {
+        if (played) {
             player.stop();
         }
 
@@ -29,16 +28,19 @@ Container
         defaultImageSource: player.playing && played ? "images/menu/ic_pause.png" : "images/menu/ic_play.png";
         pressedImageSource: defaultImageSource
         verticalAlignment: VerticalAlignment.Center
-        preferredHeight: 64
-        preferredWidth: 64
+        preferredHeight: 96
+        preferredWidth: 96
         
         onClicked: {
             console.log("UserEvent: DownloadPlayButtonClicked");
             
-            if (!played) {
-                recitation.downloadAndPlay(root.surahId, root.verseId);
-                played = true;
-                reporter.record("AyatDownloadPlay", root.surahId+":"+root.verseId);
+            if (!played)
+            {
+                if ( recitation.tajweedAvailable(root.surahId, root.verseId) ) {
+                    sld.show();
+                } else {
+                    processPlay(0);
+                }
             } else {
                 player.togglePlayback();
                 reporter.record("AyatPlayPause");
@@ -96,69 +98,31 @@ Container
             rotator.play();
         }
     }
-    
-    ControlDelegate
-    {
-        id: tajweedDelegate
-        delegateActive: showTajweed
-        visible: delegateActive
-        
-        sourceComponent: ComponentDefinition
-        {
-            ImageButton
-            {
-                defaultImageSource: player.playing && tajweedPlayed ? "images/menu/ic_pause.png" : "images/menu/ic_play.png";
-                pressedImageSource: defaultImageSource
-                verticalAlignment: VerticalAlignment.Center
-                preferredHeight: 64
-                preferredWidth: 64
-                
-                onClicked: {
-                    console.log("UserEvent: TajweedPlayButtonClicked");
-                    
-                    if (!tajweedPlayed) {
-                        recitation.downloadAndPlayTajweed(root.surahId, root.verseId);
-                        tajweedPlayed = true;
-                        reporter.record("TajweedDownloadPlay", root.surahId+":"+root.verseId);
-                    } else {
-                        player.togglePlayback();
-                        reporter.record("TajweedPlayPause");
-                    }
-                }
-                
-                animations: [
-                    ScaleTransition
-                    {
-                        id: rotator2
-                        fromX: 0.8
-                        fromY: 0.8
-                        toX: 1
-                        toY: 1
-                        delay: 500
-                        duration: 1000
-                        easingCurve: StockCurve.ElasticOut
-                        
-                        onCreationCompleted: {
-                            tutorial.execBelowTitleBar( "tajweedPlay", qsTr("Tap on this Play button to begin a tajweed (pronunciation) tutorial of this ayat or download it if it is not yet downloaded."), 0, "r" );
-                        }
-                    }
-                ]
-            }
-        }
-    }
 
     function onReady(uri)
     {
         player.play(uri);
         rotator.play();
-        
-        if (showTajweed) {
-            rotator2.play();
-        }
     }
     
     onCreationCompleted: {
         recitation.readyToPlay.connect(onReady);
+        
+        sld.appendItem( qsTr("Recitation"), true, true );
+        sld.appendItem( qsTr("Tajweed") );
+    }
+    
+    function processPlay(selectedIndex)
+    {
+        if (selectedIndex == 0) {
+            recitation.downloadAndPlay(root.surahId, root.verseId);
+            reporter.record("AyatDownloadPlay", root.surahId+":"+root.verseId);
+        } else {
+            recitation.downloadAndPlayTajweed(root.surahId, root.verseId);
+            reporter.record("TajweedDownloadPlay", root.surahId+":"+root.verseId);
+        }
+        
+        played = true;
     }
     
     attachedObjects: [
@@ -172,6 +136,25 @@ Container
                 persist.showToast( message, "asset:///images/toast/yellow_delete.png" );
                 
                 reporter.record("AyatPlayError", message);
+            }
+        },
+        
+        SystemListDialog
+        {
+            id: sld
+            body: qsTr("Choose which type of audio of this verse you want to play:") + Retranslate.onLanguageChanged
+            title: qsTr("Recitation or Tajweed?") + Retranslate.onLanguageChanged
+            cancelButton.label: qsTr("Cancel") + Retranslate.onLanguageChanged
+            confirmButton.label: qsTr("OK") + Retranslate.onLanguageChanged
+            
+            onFinished: {
+                console.log("**S DFLKJ");
+                if (value == SystemUiResult.ConfirmButtonSelection) {
+                    console.log("**S DFLKJ222");
+                    console.log(selectedIndices);
+                    processPlay(selectedIndices[0]);
+                    console.log("**S DFLKJ444");
+                }
             }
         }
     ]
