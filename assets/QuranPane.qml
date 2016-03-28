@@ -8,19 +8,9 @@ NavigationPane
     onPopTransitionEnded: {
         deviceUtils.cleanUpAndDestroy(page);
 
-        var advertisement;
-        
         if ( tutorial.promptVideo("http://youtu.be/YOXtjnNWVZM") ) {}
-        else if ( reporter.deferredCheck("alFurqanAdvertised", 20) ) {
-            definition.source = "AlFurqanAdvertisement.qml";
-            advertisement = definition.createObject();
-            advertisement.open();
-        } else if ( reporter.deferredCheck("alFurqanQuranAdvertised", 5) ) {
-            definition.source = "AlFurqanAdvertisement.qml";
-            advertisement = definition.createObject();
-            advertisement.quran = true;
-            advertisement.open();
-        }
+        else if ( tutorial.showAd("markazAlHikmah", "Markaz", qsTr("Learn Qur'an & Arabic!"), "http://canadainc.org/hosting/alfurqan/al_furqan_logo.jpg", "56E8A18A", "http://instagram.com/MarkazAlHikmah", "admin@markazalhikmah.net", "https://www.facebook.com/profile.php?id=100010470699798", "https://twitter.com/markazalhikmah", 20) ) {}
+        else if ( tutorial.showAd("synonymous2", "Synonymous", qsTr("Graphics Design"), "http://canadainc.org/hosting/synonymous_arts.jpg", "C001E5D98", "http://instagram.com/synonymous2", "graphics@synonymous2.com", "https://www.facebook.com/synonymousarts", "https://twitter.com/synonymous2", 21) ) {}
     }
     
     function onAyatPicked(surahId, verseId)

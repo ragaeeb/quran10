@@ -36,21 +36,37 @@ TabbedPane
         reporter.record(cookie, result);
     }
     
+    function processTwitter(key, profile)
+    {
+        if ( !persist.containsFlag(key) )
+        {
+            persist.invoke("com.twitter.urihandler", "bb.action.VIEW", "", "twitter:connect:"+profile);
+            persist.setFlag(key, result);
+            
+            return true;
+        }
+        
+        return false;
+    }
+    
+    function processApp(result, appKey, appName, body, key)
+    {
+        if (!result) {
+            persist.showDialog(root, {'app': appKey}, appName, body.arg(appName), qsTr("Yes"), qsTr("No") );
+        }
+        
+        persist.setFlag(key, result);
+    }
+    
     function onTargetLookupFinished(target, result)
     {
-        if (target == "com.canadainc.SalatTenService")
-        {
-            if (!result) {
-                persist.showDialog(root, {'app': "salat10"}, qsTr("Salat10"), qsTr("We also have an app called 'Salat10' to help you calculate accurate prayer timings! Do you want to visit BlackBerry World to download it?"), qsTr("Yes"), qsTr("No") );
-            }
-            
-            persist.setFlag("checkedSalat10", result);
+        if (target == "com.canadainc.SalatTenService") {
+            processApp(result, "salat10", qsTr("Salat10"), qsTr("We also have an app called '%1' to help you calculate accurate prayer timings! Do you want to visit BlackBerry World to download it?"), "checkedSalat10");
         } else if (target == "com.canadainc.Sunnah10.shortcut") {
-            if (!result) {
-                persist.showDialog(root, {'app': "sunnah10"}, qsTr("Sunnah10"), qsTr("We also have an app called 'Sunnah10' to help you browse the books of hadith! Do you want to visit BlackBerry World to download it?"), qsTr("Yes"), qsTr("No") );
-            }
-            
-            persist.setFlag("checkedSunnah10", result);
+            processApp(result, "sunnah10", qsTr("Sunnah10"), qsTr("We also have an app called '%1' to help you browse the books of hadith! Do you want to visit BlackBerry World to download it?"), "checkedSunnah10");
+        } else if (target == "com.twitter.urihandler" && result) {
+            if ( processTwitter("checkedSynonymousTwitter", "synonymous2") ) {}
+            else if ( processTwitter("checkedMarkazTwitter", "markazalhikmah") ) {}
         }
     }
     
@@ -70,6 +86,8 @@ TabbedPane
             
             if ( reporter.deferredCheck("checkedSalat10", 10) ) {
                 persist.findTarget("headless:", "com.canadainc.SalatTenService", root);
+            } else if ( reporter.deferredCheck("checkedSynonymousTwitter", 0) ) {
+                persist.findTarget("twitter:connect", "com.twitter.urihandler", root);
             }
             
             quranTab.delegate.object.onLazyInitComplete();
