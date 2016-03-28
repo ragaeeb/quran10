@@ -36,11 +36,24 @@ TabbedPane
         reporter.record(cookie, result);
     }
     
-    function processTwitter(key, profile)
+    function processTwitter(key, profile, result)
     {
         if ( !persist.containsFlag(key) )
         {
             persist.invoke("com.twitter.urihandler", "bb.action.VIEW", "", "twitter:connect:"+profile);
+            persist.setFlag(key, result);
+            
+            return true;
+        }
+        
+        return false;
+    }
+    
+    function processUrl(key, uri, result)
+    {
+        if ( !persist.containsFlag(key) )
+        {
+            persist.openUri(uri);
             persist.setFlag(key, result);
             
             return true;
@@ -65,8 +78,9 @@ TabbedPane
         } else if (target == "com.canadainc.Sunnah10.shortcut") {
             processApp(result, "sunnah10", qsTr("Sunnah10"), qsTr("We also have an app called '%1' to help you browse the books of hadith! Do you want to visit BlackBerry World to download it?"), "checkedSunnah10");
         } else if (target == "com.twitter.urihandler" && result) {
-            if ( processTwitter("checkedSynonymousTwitter", "synonymous2") ) {}
-            else if ( processTwitter("checkedMarkazTwitter", "markazalhikmah") ) {}
+            if ( processTwitter("checkedMarkazTwitter", "markazalhikmah", result) ) {}
+        } else if (target == "com.rim.bb.app.facebook" && result) {
+            if ( processUrl("checkedMarkazFB", "https://www.facebook.com/profile.php?id=100010470699798", result) ) {}
         }
     }
     
@@ -86,10 +100,12 @@ TabbedPane
             
             if ( reporter.deferredCheck("checkedSalat10", 10) ) {
                 persist.findTarget("headless:", "com.canadainc.SalatTenService", root);
-            } else if ( reporter.deferredCheck("checkedSynonymousTwitter", 0) ) {
+            } else if ( reporter.deferredCheck("checkedMarkazTwitter", 8) ) {
                 persist.findTarget("twitter:connect", "com.twitter.urihandler", root);
+            } else if ( reporter.deferredCheck("checkedMarkazFB", 9) ) {
+                persist.findTarget("data://", "com.rim.bb.app.facebook", root);
             }
-            
+
             quranTab.delegate.object.onLazyInitComplete();
         }
     }
