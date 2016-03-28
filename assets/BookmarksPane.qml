@@ -122,7 +122,7 @@ NavigationPane
                 
                 onTriggered: {
                     console.log("UserEvent: ClearFavourites");
-                    persist.showDialog( clearBookmarks, qsTr("Confirmation"), qsTr("Are you sure you want to clear all favourites?") );
+                    persist.showConfirmDialog( clearBookmarks, qsTr("Are you sure you want to clear all favourites?") );
                     
                     reporter.record("ClearFavourites");
                 }
