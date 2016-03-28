@@ -23,8 +23,11 @@ bool tafsirFileExists(QString const& t)
 
 void patchFolder(QString const& folder)
 {
-    QFile dirPath(folder);
-    LOGGER( dirPath.setPermissions(READ_WRITE_EXEC) );
+    if ( NOT_APP_DIR(folder) )
+    {
+        QFile dirPath(folder);
+        LOGGER( dirPath.setPermissions(READ_WRITE_EXEC) );
+    }
 }
 
 }

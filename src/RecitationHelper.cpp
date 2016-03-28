@@ -39,11 +39,6 @@ QVariantMap processPlaylist(QString const& reciter, QString const& outputDirecto
 {
     QVariantMap result;
 
-    if ( !Persistance::hasSharedFolderAccess() ) {
-        result[PLAYLIST_ERROR] = QObject::tr("Quran10 does not have access to your Shared Folder. The app cannot download any recitations without this permission.");
-        return result;
-    }
-
     QDir q( QString("%1/%2").arg(outputDirectory).arg(reciter) );
     if ( !q.exists() ) {
         q.mkpath(".");

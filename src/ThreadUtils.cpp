@@ -401,7 +401,7 @@ bool ThreadUtils::allAyatImagesExist(QVariantList const& surahData, QString cons
 
         QFile dirPath( q.path() );
 
-        if ( dirPath.permissions() != READ_WRITE_EXEC )
+        if ( dirPath.permissions() != READ_WRITE_EXEC && NOT_APP_DIR(outputDirectory) )
         {
             LOGGER("WasNotModded!" << q.path() );
 
@@ -545,7 +545,7 @@ void ThreadUtils::preventIndexing(QString const& dirPath)
 {
     QDir q(dirPath);
 
-    if ( q.exists() )
+    if ( q.exists() && NOT_APP_DIR(dirPath) )
     {
         QFile f( QString("%1/.nomedia").arg(dirPath) );
 
