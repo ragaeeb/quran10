@@ -20,11 +20,6 @@
     </message>
     <message>
         <location filename="../assets/Awaker.qml" line="65"/>
-        <source>Confirmation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/Awaker.qml" line="65"/>
         <source>We are about to download MP3 recitations, you should only attempt to do this if you have either a good data plan, or are connected via Wi-Fi. Otherwise you might incur a lot of data charges. Are you sure you want to continue? If you select No you can always attempt to download again later.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -469,11 +464,6 @@ Explained by: &lt;a href=&quot;%2&quot;&gt;%1&lt;/a&gt;%3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/BookmarksPane.qml" line="125"/>
-        <source>Confirmation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../assets/BookmarksPane.qml" line="133"/>
         <source>Favourites</source>
         <translation type="unfinished"></translation>
@@ -834,23 +824,23 @@ Explained by: &lt;a href=&quot;%2&quot;&gt;%1&lt;/a&gt;%3</source>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/RecitationHelper.cpp" line="41"/>
-        <source>Quran10 does not have access to your Shared Folder. The app cannot download any recitations without this permission.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/RecitationHelper.cpp" line="51"/>
+        <location filename="../src/RecitationHelper.cpp" line="48"/>
         <source>Quran10 does not seem to be able to write to the output folder. Please try selecting a different output folder or restart your device.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/RecitationHelper.cpp" line="71"/>
+        <location filename="../src/RecitationHelper.cpp" line="68"/>
         <source>%1:%2 recitation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/RecitationHelper.cpp" line="97"/>
+        <location filename="../src/RecitationHelper.cpp" line="94"/>
         <source>Quran10 could not write the playlist. Please try restarting your device.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/RecitationHelper.cpp" line="342"/>
+        <source>%1:%2 tajweed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -859,7 +849,7 @@ Explained by: &lt;a href=&quot;%2&quot;&gt;%1&lt;/a&gt;%3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MushafHelper.cpp" line="112"/>
+        <location filename="../src/MushafHelper.cpp" line="129"/>
         <source>Page #%1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -867,83 +857,93 @@ Explained by: &lt;a href=&quot;%2&quot;&gt;%1&lt;/a&gt;%3</source>
 <context>
     <name>QuranHelp</name>
     <message>
-        <location filename="../assets/QuranHelp.qml" line="14"/>
+        <location filename="../assets/QuranHelp.qml" line="18"/>
         <source>Check for Updates</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranHelp.qml" line="62"/>
+        <location filename="../assets/QuranHelp.qml" line="66"/>
         <source>Tafsir Last Updated: %1
 Translation Last Updated: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranHelp.qml" line="64"/>
+        <location filename="../assets/QuranHelp.qml" line="68"/>
         <source>Tafsir Last Updated: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranHelp.qml" line="66"/>
+        <location filename="../assets/QuranHelp.qml" line="70"/>
         <source>Translation Last Updated: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranHelp.qml" line="68"/>
+        <location filename="../assets/QuranHelp.qml" line="72"/>
         <source>Database version information not detected...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranHelp.qml" line="82"/>
+        <location filename="../assets/QuranHelp.qml" line="86"/>
         <source>Automatic Database Updating</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranHelp.qml" line="88"/>
+        <location filename="../assets/QuranHelp.qml" line="92"/>
         <source>Never check for tafsir updates</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranHelp.qml" line="89"/>
+        <location filename="../assets/QuranHelp.qml" line="93"/>
         <source>Disabled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranHelp.qml" line="95"/>
+        <location filename="../assets/QuranHelp.qml" line="99"/>
         <source>Ask before downloading update</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranHelp.qml" line="97"/>
+        <location filename="../assets/QuranHelp.qml" line="101"/>
         <source>Prompt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranHelp.qml" line="103"/>
+        <location filename="../assets/QuranHelp.qml" line="107"/>
         <source>Automatically download updates when they are available</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranHelp.qml" line="105"/>
+        <location filename="../assets/QuranHelp.qml" line="109"/>
         <source>Automatic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranHelp.qml" line="112"/>
+        <location filename="../assets/QuranHelp.qml" line="116"/>
         <source>As more and more tafsir and biographies become available, the app can try to download them. Use the &apos;%1&apos; option to never check for these updates.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranHelp.qml" line="113"/>
+        <location filename="../assets/QuranHelp.qml" line="117"/>
         <source>To be prompted before downloading the latest tafsir updates, use the &apos;%1&apos; option.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranHelp.qml" line="114"/>
+        <location filename="../assets/QuranHelp.qml" line="118"/>
         <source>To automatically download the latest tafsir updates as they become available, use the &apos;%1&apos; option.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranHelp.qml" line="121"/>
+        <location filename="../assets/QuranHelp.qml" line="119"/>
+        <source>If the mushaf pages are not downloading, enable the &apos;%1&apos; option.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/QuranHelp.qml" line="129"/>
+        <source>Use Mirror Servers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/QuranHelp.qml" line="138"/>
         <source>Press-and-hold here and choose &apos;%1&apos; to check for the latest tafsir, quotes, and biographies.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -951,79 +951,84 @@ Translation Last Updated: %2</source>
 <context>
     <name>QuranPane</name>
     <message>
-        <location filename="../assets/QuranPane.qml" line="70"/>
+        <location filename="../assets/QuranPane.qml" line="59"/>
         <source>Notice the button on the top left. This is used to track your Qu&apos;ran reading progress. You can use it to quickly jump to the verse you last left off.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="91"/>
+        <location filename="../assets/QuranPane.qml" line="80"/>
         <source>Ported legacy bookmarks!</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../assets/QuranPane.qml" line="147"/>
+        <location filename="../assets/QuranPane.qml" line="136"/>
         <source>%n chapters selected</source>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="159"/>
+        <location filename="../assets/QuranPane.qml" line="148"/>
         <source>Use the &apos;%1&apos; action to compare two or more surahs side by side. A maximum of 4 surahs may be compared at once.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="160"/>
+        <location filename="../assets/QuranPane.qml" line="149"/>
         <source>Use the &apos;%1&apos; action to open all the surah between the first selection and the last selection.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="163"/>
+        <location filename="../assets/QuranPane.qml" line="152"/>
         <source>Note that the &apos;%1&apos; action is only available in the &apos;Normal&apos; and &apos;Juz&apos; display modes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="174"/>
+        <location filename="../assets/QuranPane.qml" line="163"/>
         <source>Compare</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="200"/>
+        <location filename="../assets/QuranPane.qml" line="189"/>
         <source>Open Range</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="245"/>
+        <location filename="../assets/QuranPane.qml" line="234"/>
         <source>Select All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="260"/>
+        <location filename="../assets/QuranPane.qml" line="249"/>
         <source>A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="311"/>
+        <location filename="../assets/QuranPane.qml" line="300"/>
         <source>Tap here to open the mushaf!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="312"/>
+        <location filename="../assets/QuranPane.qml" line="301"/>
         <source>Tap on the &apos;%1&apos; action to view the entire Qu&apos;ran (all the surahs)!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="323"/>
+        <location filename="../assets/QuranPane.qml" line="312"/>
         <source>The &apos;%1&apos; feature is not available for the Juz display mode.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="222"/>
+        <location filename="../assets/QuranPane.qml" line="211"/>
         <source>Mushaf</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/QuranPane.qml" line="237"/>
+        <location filename="../assets/QuranPane.qml" line="12"/>
+        <source>Learn Qur&apos;an &amp; Arabic!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/QuranPane.qml" line="226"/>
         <source>M</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1053,13 +1058,43 @@ You can also select an ayat above the current one to start there and end at the 
 <context>
     <name>RecitationControl</name>
     <message>
-        <location filename="../assets/RecitationControl.qml" line="62"/>
+        <location filename="../assets/RecitationControl.qml" line="60"/>
         <source>Tap on the Play button to begin playback of this ayat or download it if it is not yet downloaded.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/RecitationControl.qml" line="66"/>
+        <location filename="../assets/RecitationControl.qml" line="64"/>
         <source>Once playback begins, you can use the seek bar to rewind or forward the recitation.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/RecitationControl.qml" line="111"/>
+        <source>Recitation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/RecitationControl.qml" line="112"/>
+        <source>Tajweed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/RecitationControl.qml" line="145"/>
+        <source>Choose which type of audio of this verse you want to play:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/RecitationControl.qml" line="146"/>
+        <source>Recitation or Tajweed?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/RecitationControl.qml" line="147"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/RecitationControl.qml" line="148"/>
+        <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1293,11 +1328,6 @@ You can also select an ayat above the current one to start there and end at the 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/SettingsPage.qml" line="120"/>
-        <source>Julio Cortes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../assets/SettingsPage.qml" line="128"/>
         <source>King Fahd Complex</source>
         <translation type="unfinished"></translation>
@@ -1464,6 +1494,11 @@ We do not support any translations which were done by literal, or linguistic, or
     <message>
         <location filename="../assets/SettingsPage.qml" line="105"/>
         <source>Indonesian</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/SettingsPage.qml" line="120"/>
+        <source>Abdel Gani Melara Navio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1635,7 +1670,7 @@ You can also enter &apos;2:3&apos; to go to Surah Baqara verse #3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/TransfersDialog.qml" line="176"/>
+        <location filename="../assets/TransfersDialog.qml" line="175"/>
         <source>Download Queue</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1738,94 +1773,62 @@ Press-and-hold on a verse to be able to play specific verses, or share them with
 <context>
     <name>main</name>
     <message>
-        <location filename="../assets/main.qml" line="82"/>
+        <location filename="../assets/main.qml" line="55"/>
         <source>Qu&apos;ran</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="83"/>
+        <location filename="../assets/main.qml" line="56"/>
         <source>القرآن</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="103"/>
+        <location filename="../assets/main.qml" line="76"/>
         <source>Favourites</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="44"/>
-        <source>Salat10</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/main.qml" line="44"/>
-        <source>We also have an app called &apos;Salat10&apos; to help you calculate accurate prayer timings! Do you want to visit BlackBerry World to download it?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/main.qml" line="44"/>
-        <location filename="../assets/main.qml" line="50"/>
-        <source>Yes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/main.qml" line="44"/>
-        <location filename="../assets/main.qml" line="50"/>
-        <source>No</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/main.qml" line="50"/>
-        <source>Sunnah10</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/main.qml" line="50"/>
-        <source>We also have an app called &apos;Sunnah10&apos; to help you browse the books of hadith! Do you want to visit BlackBerry World to download it?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/main.qml" line="101"/>
+        <location filename="../assets/main.qml" line="74"/>
         <source>Saved Verses</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="117"/>
+        <location filename="../assets/main.qml" line="90"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="118"/>
+        <location filename="../assets/main.qml" line="91"/>
         <source>Find</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="134"/>
+        <location filename="../assets/main.qml" line="107"/>
         <source>Supplications</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="135"/>
+        <location filename="../assets/main.qml" line="108"/>
         <source>Du&apos;a from the Qu&apos;ran</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="157"/>
+        <location filename="../assets/main.qml" line="130"/>
         <source>The Ummah</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="158"/>
+        <location filename="../assets/main.qml" line="131"/>
         <source>The Muslim Ummah</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="68"/>
+        <location filename="../assets/main.qml" line="37"/>
         <source>Tap here to open the menu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/main.qml" line="69"/>
+        <location filename="../assets/main.qml" line="38"/>
         <source>Swipe right to expand the menu!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1858,17 +1861,17 @@ Press-and-hold on a verse to be able to play specific verses, or share them with
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="263"/>
+        <location filename="../src/applicationui.cpp" line="268"/>
         <source>Successfully saved tafsir</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="265"/>
+        <location filename="../src/applicationui.cpp" line="270"/>
         <source>Successfully saved translation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="270"/>
+        <location filename="../src/applicationui.cpp" line="275"/>
         <source>Could not prepare the plugin for extraction. Please swipe-down from the top-bezel and file a bug report!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1876,53 +1879,53 @@ Press-and-hold on a verse to be able to play specific verses, or share them with
 <context>
     <name>quran::InvokeHelper</name>
     <message>
-        <location filename="../src/InvokeHelper.cpp" line="159"/>
+        <location filename="../src/InvokeHelper.cpp" line="156"/>
         <source>Invalid BioID entered! Please file a bug report by swiping down from the top-bezel and choosing &apos;Bug Reports&apos; and then clicking &apos;Submit Logs&apos;. Please ensure the problem is reproduced before you file the report. JazakAllahu khayr!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/InvokeHelper.cpp" line="176"/>
+        <location filename="../src/InvokeHelper.cpp" line="173"/>
         <source>Invalid invocation scheme entered! Please file a bug report by swiping down from the top-bezel and choosing &apos;Bug Reports&apos; and then clicking &apos;Submit Logs&apos;. Please ensure the problem is reproduced before you file the report. JazakAllahu khayr!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/InvokeHelper.cpp" line="195"/>
-        <location filename="../src/InvokeHelper.cpp" line="323"/>
+        <location filename="../src/InvokeHelper.cpp" line="192"/>
+        <location filename="../src/InvokeHelper.cpp" line="320"/>
         <source>Invalid surah specified!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/InvokeHelper.cpp" line="224"/>
+        <location filename="../src/InvokeHelper.cpp" line="221"/>
         <source>Translation must be set to other than &apos;None&apos; for invocations to work.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/InvokeHelper.cpp" line="252"/>
+        <location filename="../src/InvokeHelper.cpp" line="249"/>
         <source>Invalid surah specified</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/InvokeHelper.cpp" line="262"/>
+        <location filename="../src/InvokeHelper.cpp" line="259"/>
         <source>This operation is not currently supported by Quran10 yet but may be added in the future.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/InvokeHelper.cpp" line="332"/>
+        <location filename="../src/InvokeHelper.cpp" line="329"/>
         <source>Quran10</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/InvokeHelper.cpp" line="332"/>
+        <location filename="../src/InvokeHelper.cpp" line="329"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/InvokeHelper.cpp" line="357"/>
+        <location filename="../src/InvokeHelper.cpp" line="354"/>
         <source>Database ported successfully!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/InvokeHelper.cpp" line="357"/>
+        <location filename="../src/InvokeHelper.cpp" line="354"/>
         <source>Database could not be copied!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1930,55 +1933,55 @@ Press-and-hold on a verse to be able to play specific verses, or share them with
 <context>
     <name>quran::MushafHelper</name>
     <message>
-        <location filename="../src/MushafHelper.cpp" line="161"/>
+        <location filename="../src/MushafHelper.cpp" line="178"/>
         <source>Page #%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MushafHelper.cpp" line="182"/>
+        <location filename="../src/MushafHelper.cpp" line="199"/>
         <source>Mushaf Metadata</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MushafHelper.cpp" line="231"/>
+        <location filename="../src/MushafHelper.cpp" line="251"/>
         <source>Connected Metadata</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MushafHelper.cpp" line="241"/>
+        <location filename="../src/MushafHelper.cpp" line="264"/>
         <source>Connected Letters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MushafHelper.cpp" line="294"/>
+        <location filename="../src/MushafHelper.cpp" line="317"/>
         <source>Uncompressing...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MushafHelper.cpp" line="310"/>
-        <location filename="../src/MushafHelper.cpp" line="319"/>
+        <location filename="../src/MushafHelper.cpp" line="333"/>
+        <location filename="../src/MushafHelper.cpp" line="342"/>
         <source>Confirmation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MushafHelper.cpp" line="310"/>
+        <location filename="../src/MushafHelper.cpp" line="333"/>
         <source>The total size of the images is ~%1 and it will need to be downloaded. Your device currently has ~%2 free space remaining. Make sure you are on a good Wi-Fi connection or have a good data plan. Do you wish to continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MushafHelper.cpp" line="310"/>
-        <location filename="../src/MushafHelper.cpp" line="319"/>
+        <location filename="../src/MushafHelper.cpp" line="333"/>
+        <location filename="../src/MushafHelper.cpp" line="342"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MushafHelper.cpp" line="310"/>
-        <location filename="../src/MushafHelper.cpp" line="319"/>
+        <location filename="../src/MushafHelper.cpp" line="333"/>
+        <location filename="../src/MushafHelper.cpp" line="342"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MushafHelper.cpp" line="319"/>
+        <location filename="../src/MushafHelper.cpp" line="342"/>
         <source>The total size of the mushaf is ~%1 and it will need to be downloaded. Your device currently has ~%2 free space remaining. Make sure you are on a good Wi-Fi connection or have a good data plan. Do you wish to continue?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2064,7 +2067,7 @@ Press-and-hold on a verse to be able to play specific verses, or share them with
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Offloader.cpp" line="487"/>
+        <location filename="../src/Offloader.cpp" line="485"/>
         <source>Google Search: %1</source>
         <translation type="unfinished"></translation>
     </message>

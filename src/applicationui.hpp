@@ -31,7 +31,6 @@ class ApplicationUI : public QObject
 	LazySceneCover m_sceneCover;
 	Persistance m_persistance;
 	QueryHelper m_helper;
-	bb::system::InvokeRequest m_request;
 	QueueDownloader m_queue;
     MushafHelper m_mushaf;
     RecitationHelper m_recitation;

@@ -22,68 +22,6 @@ TabbedPane
         reporter.record( "TabbedPaneExpanded", root.sidebarVisualState.toString() );
     }
     
-    function onFinished(result, cookie)
-    {
-        if (result)
-        {
-            if (cookie.app == "salat10") {
-                persist.openUri("http://appworld.blackberry.com/webstore/content/21198062");
-            } else if (cookie.app == "sunnah10") {
-                persist.openUri("http://appworld.blackberry.com/webstore/content/30105889");
-            }
-        }
-        
-        reporter.record(cookie, result);
-    }
-    
-    function processTwitter(key, profile, result)
-    {
-        if ( !persist.containsFlag(key) )
-        {
-            persist.invoke("com.twitter.urihandler", "bb.action.VIEW", "", "twitter:connect:"+profile);
-            persist.setFlag(key, result);
-            
-            return true;
-        }
-        
-        return false;
-    }
-    
-    function processUrl(key, uri, result)
-    {
-        if ( !persist.containsFlag(key) )
-        {
-            persist.openUri(uri);
-            persist.setFlag(key, result);
-            
-            return true;
-        }
-        
-        return false;
-    }
-    
-    function processApp(result, appKey, appName, body, key)
-    {
-        if (!result) {
-            persist.showDialog(root, {'app': appKey}, appName, body.arg(appName), qsTr("Yes"), qsTr("No") );
-        }
-        
-        persist.setFlag(key, result);
-    }
-    
-    function onTargetLookupFinished(target, result)
-    {
-        if (target == "com.canadainc.SalatTenService") {
-            processApp(result, "salat10", qsTr("Salat10"), qsTr("We also have an app called '%1' to help you calculate accurate prayer timings! Do you want to visit BlackBerry World to download it?"), "checkedSalat10");
-        } else if (target == "com.canadainc.Sunnah10.shortcut") {
-            processApp(result, "sunnah10", qsTr("Sunnah10"), qsTr("We also have an app called '%1' to help you browse the books of hadith! Do you want to visit BlackBerry World to download it?"), "checkedSunnah10");
-        } else if (target == "com.twitter.urihandler" && result) {
-            if ( processTwitter("checkedMarkazTwitter", "markazalhikmah", result) ) {}
-        } else if (target == "com.rim.bb.app.facebook" && result) {
-            if ( processUrl("checkedMarkazFB", "https://www.facebook.com/profile.php?id=100010470699798", result) ) {}
-        }
-    }
-    
     Menu.definition: CanadaIncMenu
     {
         id: menuDef
@@ -95,6 +33,7 @@ TabbedPane
         onFinished: {
             sidebarStateChanged.connect(onSidebarVisualStateChanged);
             
+            tutorial.execAppMenu();
             tutorial.exec("openTabMenu", qsTr("Tap here to open the menu"), HorizontalAlignment.Left, VerticalAlignment.Bottom, tutorial.du(2), 0, 0, tutorial.du(1)/2);
             tutorial.execSwipe("swipeOpenTabMenu", qsTr("Swipe right to expand the menu!"), HorizontalAlignment.Left, VerticalAlignment.Center, "r");
             

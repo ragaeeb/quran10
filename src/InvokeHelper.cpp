@@ -33,7 +33,6 @@ namespace quran {
 using namespace bb::cascades;
 using namespace bb::system;
 using namespace canadainc;
-using namespace quran;
 
 InvokeHelper::InvokeHelper(InvokeManager* invokeManager, QueryHelper* helper) :
         m_root(NULL), m_invokeManager(invokeManager), m_helper(helper)

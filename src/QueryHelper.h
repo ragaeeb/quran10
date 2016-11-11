@@ -2,12 +2,9 @@
 #define QUERYHELPER_H_
 
 #include "DatabaseHelper.h"
-#include "QueryId.h"
 #include "QueryBookmarkHelper.h"
 
 #define AYAT_NUMERIC_PATTERN "^\\d{1,3}:\\d{1,3}$"
-#define SIMILAR_DB "similar"
-#define TAFSIR_ARABIC_DB "tafsir_arabic"
 #define ENGLISH_TRANSLATION "english"
 
 #define CHAPTER_KEY "chapter"
@@ -75,14 +72,12 @@ public:
     Q_INVOKABLE void fetchAllWebsites(QObject* caller, qint64 individualId);
     Q_INVOKABLE void fetchAyat(QObject* caller, int surahId, int ayatId);
     Q_INVOKABLE void fetchAyats(QObject* caller, QVariantList const& input);
-    Q_INVOKABLE void fetchAyatsForTafsir(QObject* caller, qint64 suitePageId);
     Q_INVOKABLE void fetchBio(QObject* caller, qint64 individualId);
     Q_INVOKABLE void fetchChapter(QObject* caller, int chapter, bool juzMode=false);
     Q_INVOKABLE void fetchChapters(QObject* caller, QString const& text=QString());
     Q_INVOKABLE void fetchIndividualData(QObject* caller, qint64 individualId);
     Q_INVOKABLE void fetchJuzInfo(QObject* caller, int juzId);
     Q_INVOKABLE void fetchPageNumbers(QObject* caller);
-    Q_INVOKABLE void fetchQuote(QObject* caller, qint64 id);
     Q_INVOKABLE void fetchRandomAyat(QObject* caller);
     Q_INVOKABLE void fetchRandomQuote(QObject* caller);
     Q_INVOKABLE void fetchSimilarAyatContent(QObject* caller, int chapterNumber, int verseNumber);

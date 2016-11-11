@@ -13,7 +13,6 @@ namespace bb {
 
 namespace quran {
 
-using namespace quran;
 using namespace bb::system;
 
 class QueryHelper;

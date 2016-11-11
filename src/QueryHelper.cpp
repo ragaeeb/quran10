@@ -4,6 +4,7 @@
 #include "CommonConstants.h"
 #include "Logger.h"
 #include "Persistance.h"
+#include "QueryId.h"
 #include "TextUtils.h"
 #include "ThreadUtils.h"
 
@@ -307,27 +308,6 @@ void QueryHelper::fetchAllTafsirForSuite(QObject* caller, qint64 suiteId)
     QString query = QString("SELECT id,body,heading,reference FROM suite_pages WHERE suite_id=%1 ORDER BY id DESC").arg(suiteId);
     m_sql.executeQuery(caller, query, QueryId::FetchAllTafsirForSuite);
 }
-
-
-void QueryHelper::fetchQuote(QObject* caller, qint64 id)
-{
-    LOGGER(id);
-
-    ATTACH_TAFSIR;
-    QString query = QString("SELECT quotes.author AS author_id, body,reference,suite_id,uri FROM quotes INNER JOIN individuals ON individuals.id=quotes.author WHERE quotes.id=%1").arg(id);
-    m_sql.executeQuery(caller, query, QueryId::FetchQuote);
-}
-
-
-void QueryHelper::fetchAyatsForTafsir(QObject* caller, qint64 suitePageId)
-{
-    LOGGER(suitePageId);
-    ATTACH_TAFSIR;
-
-    QString query = QString("SELECT id,surah_id,from_verse_number,to_verse_number FROM explanations WHERE suite_page_id=%1 ORDER BY surah_id,from_verse_number,to_verse_number").arg(suitePageId);
-    m_sql.executeQuery(caller, query, QueryId::FetchAyatsForTafsir);
-}
-
 
 void QueryHelper::fetchTafsirContent(QObject* caller, qint64 suitePageId)
 {

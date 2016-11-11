@@ -3,6 +3,7 @@
 #include "Offloader.h"
 #include "AppLogFetcher.h"
 #include "CommonConstants.h"
+#include "DeviceUtils.h"
 #include "IOUtils.h"
 #include "Logger.h"
 #include "Persistance.h"
@@ -10,7 +11,6 @@
 #include "QueryId.h"
 #include "TextUtils.h"
 #include "ThreadUtils.h"
-#include "ZipThread.h"
 
 #define ATTRIBUTE_TYPE_BIO "bio"
 #define KEY_ATTRIBUTE_TYPE "type"
@@ -350,8 +350,6 @@ void Offloader::onArchiveWritten()
         QString pluginVersionValue = result.value(KEY_PLUGIN_VERSION_VALUE).toString();
         updateDbVersion();
 
-        LOGGER("****Z" << pluginVersionKey);
-
         m_persist->setFlag(pluginVersionKey, pluginVersionValue);
     }
 
@@ -375,7 +373,7 @@ QVariantList Offloader::decorateWebsites(QVariantList input)
         QVariantMap q = input[i].toMap();
         QString uri = q.value("uri").toString();
 
-        if ( TextUtils::isUrl(uri) )
+        if ( DeviceUtils::isUrl(uri) )
         {
             q["type"] = "website";
 
@@ -398,9 +396,9 @@ QVariantList Offloader::decorateWebsites(QVariantList input)
             }
 
             q["imageSource"] = uri;
-        } else if ( TextUtils::isEmail(uri) ) {
+        } else if ( DeviceUtils::isEmail(uri) ) {
             q["type"] = "email";
-        } else if ( TextUtils::isPhoneNumber(uri) ) {
+        } else if ( DeviceUtils::isPhoneNumber(uri) ) {
             q["type"] = "phone";
         } else {
             LOGGER("InvalidUriEncountered" << uri);
