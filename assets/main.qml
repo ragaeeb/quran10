@@ -125,23 +125,6 @@ TabbedPane
         }
     }
     
-    Tab {
-        id: ummahTab
-        title: qsTr("The Ummah") + Retranslate.onLanguageChanged
-        description: qsTr("The Muslim Ummah") + Retranslate.onLanguageChanged
-        imageSource: "images/tabs/ic_ummah.png"
-        delegateActivationPolicy: TabDelegateActivationPolicy.ActivatedWhileSelected
-        
-        onTriggered: {
-            console.log("UserEvent: UmmahTab");
-            reporter.record("UmmahTab");
-        }
-        
-        delegate: Delegate {
-            source: "LocationPane.qml"
-        }
-    }
-    
     function onTutorialFinished(key)
     {
         if (key == "tabsUmmah")

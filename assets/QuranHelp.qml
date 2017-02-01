@@ -4,40 +4,6 @@ HelpPage
 {
     actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
     videoTutorialUri: "http://youtu.be/YOXtjnNWVZM"
-
-    onClearCacheTriggered: {
-        offloader.clearCachedDB();
-    }
-
-    actions: [
-        ActionItem
-        {
-            id: updateCheck
-            imageSource: "images/menu/ic_update_check.png"
-            ActionBar.placement: ActionBarPlacement.OnBar
-            title: qsTr("Check for Updates") + Retranslate.onLanguageChanged
-            
-            onTriggered: {
-                console.log("UserEvent: CheckForUpdate");
-                enabled = false;
-                var params = {'language': helper.translation, 'tafsir': helper.tafsirName, 'translation': helper.translationName};
-                helper.updateCheckNeeded(params);
-                
-                reporter.record("CheckForTafsirUpdate", helper.translation);
-            }
-            
-            function onFinished(cookie, data)
-            {
-                if (cookie.updateCheck) {
-                    enabled = true;
-                }
-            }
-            
-            onCreationCompleted: {
-                queue.requestComplete.connect(onFinished);
-            }
-        }
-    ]
     
     function cleanUp()
     {

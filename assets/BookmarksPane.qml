@@ -78,7 +78,7 @@ NavigationPane
                 onTriggered: {
                     console.log("UserEvent: Restore");
                     filePicker.title = qsTr("Select File");
-                    filePicker.mode = FilePickerMode.Picker
+                    filePicker.mode = FilePickerMode.Picker;
                     
                     filePicker.open();
 

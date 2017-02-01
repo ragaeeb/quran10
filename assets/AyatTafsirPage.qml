@@ -17,13 +17,6 @@ Page
     attachedObjects: [
         AyatTafsirParser {
             id: parser
-            
-            onNotFound: {
-                var params = {'language': helper.translation, 'tafsir': helper.tafsirName, 'translation': helper.translationName};
-                helper.updateCheckNeeded(params);
-                
-                shareAction.enabled = false;
-            }
         }
     ]
     

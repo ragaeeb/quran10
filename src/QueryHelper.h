@@ -26,18 +26,13 @@ class QueryHelper : public QObject
 	Q_PROPERTY(bool disableSpacing READ disableSpacing NOTIFY fontSizeChanged)
     Q_PROPERTY(int primarySize READ primarySize NOTIFY fontSizeChanged)
     Q_PROPERTY(int translationSize READ translationSize NOTIFY fontSizeChanged)
-    Q_PROPERTY(QString tafsirName READ tafsirName NOTIFY textualChange)
-    Q_PROPERTY(QString tafsirVersion READ tafsirVersion NOTIFY textualChange)
     Q_PROPERTY(QString translation READ translation NOTIFY textualChange)
     Q_PROPERTY(QString translationName READ translationName NOTIFY textualChange)
-    Q_PROPERTY(QString translationVersion READ translationVersion NOTIFY textualChange)
 
     DatabaseHelper m_sql;
     Persistance* m_persist;
     QString m_translation;
     QueryBookmarkHelper m_bookmarkHelper;
-
-    void executeAndClear(QStringList& statements);
 
 private slots:
     void settingChanged(QString const& key);
@@ -45,7 +40,6 @@ private slots:
 signals:
     void fontSizeChanged();
     void textualChange();
-    void updateCheckNeeded(QVariantMap const& params);
 
 public:
 	QueryHelper(Persistance* persist);
@@ -69,10 +63,8 @@ public:
     Q_INVOKABLE void fetchAllTafsirForAyat(QObject* caller, int chapterNumber, int verseNumber);
     Q_INVOKABLE void fetchAllTafsirForChapter(QObject* caller, int chapterNumber);
     Q_INVOKABLE void fetchAllTafsirForSuite(QObject* caller, qint64 suiteId);
-    Q_INVOKABLE void fetchAllWebsites(QObject* caller, qint64 individualId);
     Q_INVOKABLE void fetchAyat(QObject* caller, int surahId, int ayatId);
     Q_INVOKABLE void fetchAyats(QObject* caller, QVariantList const& input);
-    Q_INVOKABLE void fetchBio(QObject* caller, qint64 individualId);
     Q_INVOKABLE void fetchChapter(QObject* caller, int chapter, bool juzMode=false);
     Q_INVOKABLE void fetchChapters(QObject* caller, QString const& text=QString());
     Q_INVOKABLE void fetchIndividualData(QObject* caller, qint64 individualId);
@@ -81,23 +73,16 @@ public:
     Q_INVOKABLE void fetchRandomAyat(QObject* caller);
     Q_INVOKABLE void fetchRandomQuote(QObject* caller);
     Q_INVOKABLE void fetchSimilarAyatContent(QObject* caller, int chapterNumber, int verseNumber);
-    Q_INVOKABLE void fetchStudents(QObject* caller, qint64 individualId);
     Q_INVOKABLE void fetchSurahHeader(QObject* caller, int chapterNumber);
     Q_INVOKABLE void fetchTafsirContent(QObject* caller, qint64 suitePageId);
     Q_INVOKABLE void fetchTafsirCountForAyat(QObject* caller, int chapterNumber, int verseNumber);
-    Q_INVOKABLE void fetchTeachers(QObject* caller, qint64 individualId);
     Q_INVOKABLE void fetchTransliteration(QObject* caller, int chapter, int verse);
     Q_SLOT void lazyInit();
     Q_SLOT void refreshDatabase();
-    Q_SLOT void setupTables();
-    void disable();
 
     Q_INVOKABLE QObject* getExecutor();
-    QString tafsirName() const;
-    QString tafsirVersion() const;
     QString translation() const;
     QString translationName() const;
-    QString translationVersion() const;
     QueryBookmarkHelper* getBookmarkHelper();
 };
 

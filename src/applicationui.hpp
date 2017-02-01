@@ -48,9 +48,7 @@ private slots:
 	void onDataLoaded(QVariant id, QVariant data);
 	void onMissingAyatImagesFinished();
     void onRequestComplete(QVariant const& cookie, QByteArray const& data);
-    void onUpdateCheckNeeded(QVariantMap const& params);
     void onDeflationDone(QVariantMap const& m);
-    void onDownloadPlugins(QVariantList const& m);
 
 signals:
     void ayatsCaptured(QVariantList const& result);

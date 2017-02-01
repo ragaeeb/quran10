@@ -9,7 +9,6 @@ NavigationPane
         deviceUtils.cleanUpAndDestroy(page);
 
         if ( tutorial.promptVideo("http://youtu.be/YOXtjnNWVZM") ) {}
-        else if ( tutorial.showAd("markazAlHikmah", "Markaz", qsTr("Learn Qur'an & Arabic!"), "http://canadainc.org/hosting/alfurqan/al_furqan_logo.jpg", "56E8A18A", "http://instagram.com/MarkazAlHikmah", "admin@markazalhikmah.net", "https://www.facebook.com/profile.php?id=100010470699798", "https://twitter.com/markazalhikmah", 20) ) {}
     }
     
     function onAyatPicked(surahId, verseId)

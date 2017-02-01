@@ -20,7 +20,6 @@
 #define TARGET_AYAT_PICKER "com.canadainc.Quran10.ayat.picker"
 #define TARGET_BIO "com.canadainc.Quran10.bio.previewer"
 #define TARGET_PREVIEW "com.canadainc.Quran10.previewer"
-#define TARGET_SHARE "com.canadainc.Quran10.share"
 #define TARGET_SEARCH "com.canadainc.Quran10.search"
 #define TARGET_SEARCH_PICKER "com.canadainc.Quran10.search.picker"
 #define TARGET_SHORTCUT "com.canadainc.Quran10.shortcut"
@@ -82,11 +81,9 @@ QString InvokeHelper::invoked(bb::system::InvokeRequest const& request)
 
     QMap<QString,QString> targetToQML;
     targetToQML[TARGET_AYAT_PICKER] = QML_SURAH_PAGE;
-    targetToQML[TARGET_BIO] = "IndividualBioPage.qml";
     targetToQML[TARGET_PREVIEW] = "AyatPage.qml";
     targetToQML[TARGET_SEARCH] = "SearchPage.qml";
     targetToQML[TARGET_SEARCH_PICKER] = "SearchPage.qml";
-    targetToQML[TARGET_SHARE] = "AyatPage.qml";
     targetToQML[TARGET_SHORTCUT] = "AyatPage.qml";
     targetToQML[TARGET_SURAH_PICKER] = "SurahPickerPage.qml";
     targetToQML[TARGET_TAFSIR_SHORTCUT] = "AyatTafsirPage.qml";
@@ -96,10 +93,6 @@ QString InvokeHelper::invoked(bb::system::InvokeRequest const& request)
 
     if ( qml.isNull() ) {
         qml = QML_SURAH_PAGE;
-    }
-
-    if (target == TARGET_SHARE) {
-        m_helper->disable();
     }
 
     m_request = request;
@@ -126,34 +119,6 @@ void InvokeHelper::process()
                 connect( m_root, SIGNAL( picked(int, int) ), this, SLOT( onPicked(int, int) ) );
             } else {
                 connect( m_root, SIGNAL( picked(int, int) ), this, SLOT( onSearchPicked(int, int) ) );
-            }
-        } else if (target == TARGET_BIO) {
-            QString id;
-
-            if ( !m_request.data().isEmpty() )
-            {
-                id = QString::fromUtf8( m_request.data().data() );
-
-                if ( !id.startsWith(QURAN_PREFIX) ) {
-                    id = QURAN_PREFIX+id;
-                }
-
-                m_request.setUri(id);
-            }
-
-            if ( !m_request.uri().isEmpty() ) {
-                id = m_request.uri().toString(QUrl::RemoveScheme).mid(2).split("/").last();
-            }
-
-            LOGGER("IdParsed" << id);
-
-            if ( !id.isNull() )
-            {
-                m_root->setProperty( "individualId", id.toLongLong() );
-                AppLogFetcher::getInstance()->record(target, id);
-            } else {
-                AppLogFetcher::getInstance()->record("InvalidBioID", m_request.uri().toString());
-                finishWithToast( tr("Invalid BioID entered! Please file a bug report by swiping down from the top-bezel and choosing 'Bug Reports' and then clicking 'Submit Logs'. Please ensure the problem is reproduced before you file the report. JazakAllahu khayr!") );
             }
         } else if (target == TARGET_TAFSIR_SHORTCUT) {
             if ( !m_request.data().isEmpty() )
@@ -247,16 +212,6 @@ void InvokeHelper::process()
             } else if (!pending) {
                 AppLogFetcher::getInstance()->record("InvalidSurah", QString::number(chapter));
                 finishWithToast( tr("Invalid surah specified") );
-            }
-        } else if (target == TARGET_SHARE) {
-            if ( AppLogFetcher::getInstance()->adminEnabled() )
-            {
-                QFutureWatcher<bool>* qfw = new QFutureWatcher<bool>(this);
-                connect( qfw, SIGNAL( finished() ), this, SLOT( onDatabasePorted() ) );
-                QFuture<bool> future = QtConcurrent::run( &ThreadUtils::replaceDatabase, m_request.uri().toLocalFile() );
-                qfw->setFuture(future);
-            } else {
-                finishWithToast( tr("This operation is not currently supported by Quran10 yet but may be added in the future.") );
             }
         }
     }

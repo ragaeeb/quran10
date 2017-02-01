@@ -102,14 +102,6 @@
 			<image>icon.png</image>
 		</icon>
 	</invoke-target>
-
-	<invoke-target id="com.canadainc.Quran10.bio.previewer">
-	<invoke-target-type>card.previewer</invoke-target-type>
-	<invoke-target-name>Quran10</invoke-target-name>
-		<icon>
-			<image>icon.png</image>
-		</icon>
-	</invoke-target>
 	
 	<invoke-target id="com.canadainc.Quran10.previewer">
 		<invoke-target-type>card.previewer</invoke-target-type>
@@ -191,16 +183,6 @@
 	</filter>
 	</invoke-target>
 	
-	<invoke-target id="com.canadainc.Quran10.share">
-		<invoke-target-type>card.composer</invoke-target-type>
-		<filter>
-			<action>bb.action.SHARE</action>
-			<mime-type>application/x-sqlite3</mime-type>
-			<property var="uris" value="file://" />
-			<property var="exts" value="db"/>
-		</filter>
-	</invoke-target>
-
     <asset path="icon.png">icon.png</asset>
     <asset path="assets">assets</asset>
     
@@ -214,7 +196,6 @@
     <asset path="splash_lseries_landscape.png">splash_lseries_landscape.png</asset>
     <asset path="splash_lseries_portrait.png">splash_lseries_portrait.png</asset>
     <asset path="splash_n.png">splash_n.png</asset>
-    <asset path="../CanadaIncAds/assets/AdHelper.qml">assets/AdHelper.qml</asset>
     <asset path="../canadainc/assets/BugReportPage.qml">assets/BugReportPage.qml</asset>
     <asset path="../canadainc/assets/CanadaIncMenu.qml">assets/CanadaIncMenu.qml</asset>
     <asset path="../canadainc/assets/ClassicBackDelegate.qml">assets/ClassicBackDelegate.qml</asset>
@@ -228,8 +209,7 @@
     <asset path="../canadainc/assets/PersistDropDown.qml">assets/PersistDropDown.qml</asset>
     <asset path="../canadainc/assets/ProgressControl.qml">assets/ProgressControl.qml</asset>
     <asset path="../canadainc/assets/TutorialTip.qml">assets/TutorialTip.qml</asset>
-    <asset path="/Users/rhaq/workspace/java/CanadaIncIslamicUtils/res/quran10/quran_arabic.db">assets/dbase/quran_arabic.db</asset>
-    <asset path="/Users/rhaq/workspace/java/CanadaIncIslamicUtils/res/quran10/quran_english.db">assets/dbase/quran_english.db</asset>
+    <asset path="res/quran_tafsir_english.db">assets/dbase/quran_tafsir_english.db</asset>
 
     <!-- Request permission to execute native code.  Required for native applications. -->
     <permission system="true">run_native</permission>

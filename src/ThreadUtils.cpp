@@ -3,6 +3,7 @@
 #include "ThreadUtils.h"
 #include "AppLogFetcher.h"
 #include "CommonConstants.h"
+#include "DatabaseHelper.h"
 #include "IOUtils.h"
 #include "JlCompress.h"
 #include "Logger.h"
@@ -11,7 +12,6 @@
 #include "TextUtils.h"
 
 #define BACKUP_ZIP_PASSWORD "X4*13f3*3qYk3_*"
-#define LIKE_CLAUSE QString("(%1 LIKE '%' || ? || '%')").arg(textField)
 
 namespace {
 
@@ -58,10 +58,6 @@ using namespace bb::cascades;
 using namespace canadainc;
 using namespace std;
 
-SimilarReference::SimilarReference() : adm(NULL), textControl(NULL)
-{
-}
-
 QString ThreadUtils::compressBookmarks(QString const& destinationZip)
 {
     bool result = JlCompress::compressFile(destinationZip, BOOKMARKS_PATH, BACKUP_ZIP_PASSWORD);
@@ -84,118 +80,6 @@ bool ThreadUtils::performRestore(QString const& source)
     QStringList files = JlCompress::extractDir( source, QDir::homePath(), BACKUP_ZIP_PASSWORD );
     return !files.isEmpty();
 }
-
-SimilarReference ThreadUtils::decorateResults(QVariantList input, ArrayDataModel* adm, QString const& mainSearch, QVariantList const& additional)
-{
-    int n = input.size();
-
-    QSet<QString> searches;
-    searches << mainSearch;
-
-    foreach (QVariant const& q, additional)
-    {
-        QString value = q.toString();
-
-        if ( !value.isEmpty() ) {
-            searches << value;
-        }
-    }
-
-    for (int i = 0; i < n; i++)
-    {
-        QVariantMap current = input[i].toMap();
-        QString textKey = current.contains("searchable") ? "searchable" : "translation";
-        QString text = current.value(textKey).toString();
-
-        foreach (QString const& searchText, searches) {
-            text.replace(searchText, "<span style='font-style:italic;font-weight:bold;color:lightgreen'>"+searchText+"</span>", Qt::CaseInsensitive);
-        }
-
-        current[textKey] = "<html>"+text+"</html>";
-        input[i] = current;
-    }
-
-    SimilarReference s;
-    s.adm = adm;
-    s.input = input;
-
-    return s;
-}
-
-
-SimilarReference ThreadUtils::decorateSimilar(QVariantList input, ArrayDataModel* adm, AbstractTextControl* atc, QString body)
-{
-    SimilarReference s;
-    s.adm = adm;
-    s.textControl = atc;
-
-    int n = input.size();
-
-    if (n > 0) {
-        QString common = longestCommonSubstring( body, input[0].toMap().value("content").toString() );
-        s.body = "<html>"+body.replace(common, "<span style='font-style:italic;color:lightgreen'>"+common+"</span>", Qt::CaseInsensitive)+"</html>";
-    }
-
-    for (int i = 0; i < n; i++)
-    {
-        QVariantMap current = input[i].toMap();
-        QString text = current.value("content").toString();
-        QString common = longestCommonSubstring(text, body);
-
-        text.replace(common, "<span style='font-style:italic;color:lightgreen'>"+common+"</span>", Qt::CaseInsensitive);
-
-        current["content"] = "<html>"+text+"</html>";
-        input[i] = current;
-    }
-
-    s.input = input;
-
-    return s;
-}
-
-
-QString ThreadUtils::longestCommonSubstring(QString const& s1, QString const& s2)
-{
-    string str1 = s1.toStdString();
-    string str2 = s2.toStdString();
-
-    set<char *> res;
-    string res_str;
-    int longest = 0;
-
-    int **n = (int **) calloc (str1.length() + 1,  sizeof(int *));
-    for(uint i = 0; i <= str1.length(); i++) {
-        n[i] = (int *) calloc (str2.length() + 1, sizeof(int));
-    }
-
-    for(uint i = 0; i < str1.length(); i ++) {
-        for(uint j = 0; j < str2.length(); j++) {
-            if( toupper(str1[i]) == toupper(str2[j]) )
-            {
-                n[i+1][j+1] = n[i][j] + 1;
-                if(n[i+1][j+1] > longest) {
-                    longest = n[i+1][j+1];
-                    res.clear();
-                }
-                if(n[i+1][j+1] == longest)
-                    for(uint it = i-longest+1; it <= i; it++){
-                        res.insert((char *) &str1[it]);
-                    }
-            }
-        }
-
-    }
-    for(set<char *>::const_iterator it = res.begin(); it != res.end(); it ++)
-    {
-        res_str.append(1,**it);
-    }
-    for(uint i = 0; i <= str1.length(); i++)
-        free(n[i]);
-    free(n);
-
-    return QString::fromStdString(res_str);
-}
-
 
 
 /**
@@ -277,9 +161,9 @@ QString ThreadUtils::buildSearchQuery(QVariantList& params, bool isArabic, int c
         if ( !queryValue.isEmpty() )
         {
             if (andMode) {
-                constraints << QString("AND %1").arg(LIKE_CLAUSE);
+                constraints << QString("AND %1").arg( LIKE_CLAUSE(textField) );
             } else {
-                constraints << QString("OR %1").arg(LIKE_CLAUSE);
+                constraints << QString("OR %1").arg( LIKE_CLAUSE(textField) );
             }
 
             params << queryValue;
@@ -287,9 +171,9 @@ QString ThreadUtils::buildSearchQuery(QVariantList& params, bool isArabic, int c
     }
 
     if (isArabic) {
-        query = QString("SELECT surah_id,verse_number AS verse_id,searchable,name FROM ayahs INNER JOIN surahs ON ayahs.surah_id=surahs.id WHERE (%1").arg(LIKE_CLAUSE);
+        query = QString("SELECT surah_id,verse_number AS verse_id,searchable,name FROM ayahs INNER JOIN surahs ON ayahs.surah_id=surahs.id WHERE (%1").arg( LIKE_CLAUSE(textField) );
     } else {
-        query = QString("SELECT ayahs.surah_id AS surah_id,ayahs.verse_number AS verse_id,verses.translation,transliteration AS name,%1 FROM verses INNER JOIN ayahs ON (verses.chapter_id=ayahs.surah_id AND verses.verse_id=ayahs.verse_number) INNER JOIN chapters ON ayahs.surah_id=chapters.id WHERE (%2").arg(textField).arg(LIKE_CLAUSE);
+        query = QString("SELECT ayahs.surah_id AS surah_id,ayahs.verse_number AS verse_id,verses.translation,transliteration AS name,%1 FROM verses INNER JOIN ayahs ON (verses.chapter_id=ayahs.surah_id AND verses.verse_id=ayahs.verse_number) INNER JOIN chapters ON ayahs.surah_id=chapters.id WHERE (%2").arg(textField).arg( LIKE_CLAUSE(textField) );
     }
 
     if ( !constraints.isEmpty() ) {
@@ -328,49 +212,6 @@ QString ThreadUtils::buildChaptersQuery(QVariantList& args, QString const& text,
     }
 
     return query;
-}
-
-
-void ThreadUtils::onResultsDecorated(SimilarReference const& result)
-{
-    QVariantList data = result.input;
-
-    if (result.adm)
-    {
-        ArrayDataModel* adm = result.adm;
-
-        for (int i = data.size()-1; i >= 0; i--) {
-            adm->replace(i, data[i]);
-        }
-    }
-
-    if (result.textControl) {
-        result.textControl->setText(result.body);
-    }
-}
-
-
-QVariantMap ThreadUtils::writePluginArchive(QVariantMap const& cookie, QByteArray const& data, QString const& pathKey)
-{
-    QVariantMap q = cookie;
-    QString filePath = q.value(pathKey).toString();
-    QString target = QString("%1/%2.zip").arg( QDir::tempPath() ).arg(filePath);
-    QString expectedMd5 = q.value(KEY_MD5).toString();
-
-    bool valid = IOUtils::writeIfValidMd5(target, expectedMd5, data);
-
-    if (valid)
-    {
-        QStringList files = JlCompress::extractDir( target, QDir::homePath(), q.value(KEY_ARCHIVE_PASSWORD).toString().toStdString().c_str() );
-
-        if ( !files.isEmpty() ) {
-            return q;
-        }
-    }
-
-    q[KEY_ERROR] = true;
-
-    return q;
 }
 
 
@@ -500,44 +341,6 @@ QVariantList ThreadUtils::captureAyatsInBody(QString body, QMap<QString, int> co
     }
 
     return result;
-}
-
-
-bool ThreadUtils::replaceDatabase(QString const& src)
-{
-    QFileInfo qfi(src);
-    QString dest = QString("%1/%2").arg( QDir::homePath() ).arg( qfi.fileName() );
-
-    if ( QFile::exists(dest) ) {
-        LOGGER("Removing" << dest);
-        LOGGER( QFile::remove(dest) );
-    }
-
-    LOGGER(src << dest);
-
-    return QFile::copy(src, dest);
-}
-
-
-void ThreadUtils::clearCachedDB(QString const& language)
-{
-    LOGGER(language);
-
-    QStringList all = QDir::home().entryList( QStringList() << "quran_*.db", QDir::Files | QDir::NoDot | QDir::NoDotDot );
-    LOGGER(all);
-
-    foreach (QString const& current, all)
-    {
-
-        if ( current.startsWith("quran_") ) // translation file
-        {
-            QString dbLang = current.split(".").first().split("_").last();
-
-            if (language != dbLang) {
-                QFile::remove( QString("%1/%2").arg( QDir::homePath() ).arg(current) );
-            }
-        }
-    }
 }
 
 

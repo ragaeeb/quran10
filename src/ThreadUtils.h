@@ -18,16 +18,6 @@ namespace quran {
 
 using namespace bb::cascades;
 
-struct SimilarReference
-{
-    ArrayDataModel* adm;
-    QVariantList input;
-    AbstractTextControl* textControl;
-    QString body;
-
-    SimilarReference();
-};
-
 struct ThreadUtils
 {
     static bool allAyatImagesExist(QVariantList const& surahData, QString const& outputDirectory);
@@ -37,17 +27,10 @@ struct ThreadUtils
     static QString compressBookmarks(QString const& destinationZip);
     static QVariantList normalizeJuzs(QVariantList const& source);
     static QVariantList removeOutOfRange(QVariantList input, int fromChapter, int fromVerse, int toChapter, int toVerse);
-    static QVariantMap writePluginArchive(QVariantMap const& cookie, QByteArray const& data, QString const& pathKey);
-    static SimilarReference decorateResults(QVariantList input, ArrayDataModel* adm, QString const& mainSearch, QVariantList const& additional);
-    static SimilarReference decorateSimilar(QVariantList input, ArrayDataModel* adm, AbstractTextControl* atc, QString body);
     static void cleanLegacyPics();
     static void compressFiles(canadainc::Report& r, QString const& zipPath, const char* password);
-    static void onResultsDecorated(SimilarReference const& result);
     static QVariantMap matchSurah(QVariantMap input, QVariantList const& allSurahs);
     static QVariantList captureAyatsInBody(QString body, QMap<QString, int> const& chapterToId);
-    static bool replaceDatabase(QString const& src);
-    static void clearCachedDB(QString const& language);
-    static QString longestCommonSubstring(QString const& str1, QString const& str2);
     static void preventIndexing(QString const& dirPath);
 };
 

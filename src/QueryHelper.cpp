@@ -8,19 +8,13 @@
 #include "TextUtils.h"
 #include "ThreadUtils.h"
 
-#define ATTACH_TAFSIR m_sql.attachIfNecessary( tafsirName(), true );
+#define TAFSIR_NAME(language) QString("quran_tafsir_%1").arg(language)
+#define ATTACH_TAFSIR m_sql.attachIfNecessary( TAFSIR_NAME(m_translation) );
 #define NAME_FIELD(var) QString("coalesce(%1.displayName, TRIM( replace( coalesce(%1.kunya,'') || ' ' || (coalesce(%1.prefix,'') || ' ' || %1.name), '  ', ' ' ) ) )").arg(var)
 #define TRANSLATION_NAME(language) QString("quran_%1").arg(language)
 #define TRANSLATION TRANSLATION_NAME(m_translation)
-#define TAFSIR_NAME(language) QString("quran_tafsir_%1").arg(language)
 
 namespace {
-
-bool tafsirFileExists(QString const& t)
-{
-    QFile q( QString("%1/%2.db").arg( QDir::homePath() ).arg(t) );
-    return q.exists() && q.size() > 0;
-}
 
 void patchFolder(QString const& folder)
 {
@@ -70,56 +64,11 @@ void QueryHelper::settingChanged(QString const& key)
             m_sql.detach(TRANSLATION);
         }
 
-        m_sql.detach( tafsirName() );
+        m_sql.detach( TAFSIR_NAME(m_translation) );
 
         m_translation = m_persist->getValueFor(KEY_TRANSLATION).toString();
-
-        QVariantMap params;
-        QStringList forcedUpdates;
-
-        if ( showTranslation() ) // if the user didn't set to Arabic only, since arabic is already attached
-        {
-            bool inHome = m_translation != ENGLISH_TRANSLATION;
-            QString translationDir = inHome ? QDir::homePath() : QString("%1/assets/dbase").arg( QCoreApplication::applicationDirPath() );
-            QFile translationFile( QString("%1/%2.db").arg(translationDir).arg(TRANSLATION) );
-
-            if ( !translationFile.exists() || translationFile.size() == 0 ) { // translation doesn't exist, download it
-                params[KEY_TRANSLATION] = TRANSLATION;
-                forcedUpdates << KEY_TRANSLATION;
-                LOGGER("Using english translation as fallback...");
-                m_sql.attachIfNecessary( TRANSLATION_NAME(ENGLISH_TRANSLATION) ); // fall back to English for the time being...
-            } else {
-                m_sql.attachIfNecessary(TRANSLATION, inHome); // since english translation is loaded by default
-            }
-        }
-
-        if ( !tafsirFileExists( tafsirName() ) ) { // tafsir doesn't exist, download it
-            params[KEY_TAFSIR] = tafsirName();
-            forcedUpdates << KEY_TAFSIR;
-
-            setupTables();
-        } else if ( m_persist->isUpdateNeeded(KEY_LAST_UPDATE, 60) ) {
-            params[KEY_TAFSIR] = tafsirName();
-            params[KEY_TRANSLATION] = TRANSLATION;
-        }
-
-        if ( !forcedUpdates.isEmpty() ) {
-            params[KEY_FORCED_UPDATE] = forcedUpdates;
-        }
-
-        if ( !params.isEmpty() ) // update check needed
-        {
-            bool suppress = m_persist->getFlag(KEY_UPDATE_CHECK_FLAG).toInt() == SUPPRESS_UPDATE_FLAG;
-
-            if ( params.contains(KEY_FORCED_UPDATE) || !suppress ) // if it's a forced update
-            {
-                params[KEY_LANGUAGE] = m_translation;
-                emit updateCheckNeeded(params);
-            }
-        } else {
-            ATTACH_TAFSIR;
-        }
-
+        m_sql.attachIfNecessary(TRANSLATION); // since english translation is loaded by default
+        ATTACH_TAFSIR;
         emit textualChange();
     } else if (key == KEY_TRANSLATION_SIZE || key == KEY_PRIMARY_SIZE) {
         emit fontSizeChanged();
@@ -381,15 +330,6 @@ void QueryHelper::fetchAyats(QObject* caller, QVariantList const& input)
 }
 
 
-void QueryHelper::fetchBio(QObject* caller, qint64 individualId)
-{
-    LOGGER(individualId);
-
-    ATTACH_TAFSIR;
-    m_sql.executeQuery(caller, QString("SELECT mentions.id,%1 AS author,heading,title,suite_page_id,suites.reference,suite_pages.reference AS suite_page_reference,points FROM mentions INNER JOIN suite_pages ON mentions.suite_page_id=suite_pages.id INNER JOIN suites ON suites.id=suite_pages.suite_id LEFT JOIN individuals i ON suites.author=i.id WHERE target=%2").arg( NAME_FIELD("i") ).arg(individualId), QueryId::FetchBio);
-}
-
-
 bool QueryHelper::searchQuery(QObject* caller, QString const& trimmedText, int chapterNumber, QVariantList const& additional, bool andMode)
 {
     LOGGER(trimmedText << additional << andMode << chapterNumber);
@@ -453,28 +393,6 @@ void QueryHelper::fetchAllOrigins(QObject* caller)
     m_sql.executeQuery(caller, QString("SELECT %1 AS name,i.id,city,i.is_companion,latitude+((RANDOM()%10)*0.0001) AS latitude,longitude+((RANDOM()%10)*0.0001) AS longitude FROM individuals i INNER JOIN locations ON i.location=locations.id WHERE i.hidden ISNULL").arg( NAME_FIELD("i") ), QueryId::FetchAllOrigins);
 }
 
-
-void QueryHelper::fetchTeachers(QObject* caller, qint64 individualId)
-{
-    LOGGER(individualId);
-    m_sql.executeQuery(caller, QString("SELECT i.id,%1 AS teacher FROM teachers INNER JOIN individuals i ON teachers.teacher=i.id WHERE teachers.individual=%2 AND i.hidden ISNULL").arg( NAME_FIELD("i") ).arg(individualId), QueryId::FetchTeachers);
-}
-
-
-void QueryHelper::fetchStudents(QObject* caller, qint64 individualId)
-{
-    LOGGER(individualId);
-    m_sql.executeQuery(caller, QString("SELECT i.id,%1 AS student FROM teachers INNER JOIN individuals i ON teachers.individual=i.id WHERE teachers.teacher=%2 AND i.hidden ISNULL").arg( NAME_FIELD("i") ).arg(individualId), QueryId::FetchStudents);
-}
-
-
-void QueryHelper::fetchAllWebsites(QObject* caller, qint64 individualId)
-{
-    LOGGER(individualId);
-    m_sql.executeQuery(caller, QString("SELECT id,uri FROM websites WHERE individual=%1 ORDER BY uri").arg(individualId), QueryId::FetchAllWebsites);
-}
-
-
 void QueryHelper::fetchAllTafsir(QObject* caller, qint64 individualId)
 {
     LOGGER(individualId);
@@ -500,75 +418,6 @@ void QueryHelper::fetchIndividualData(QObject* caller, qint64 individualId)
 }
 
 
-void QueryHelper::setupTables()
-{
-    LOGGER("RunningSetup");
-    QString srcLanguage = ENGLISH_TRANSLATION;
-    QString srcTafsir = TAFSIR_NAME(srcLanguage);
-    bool port = m_translation != srcLanguage && tafsirFileExists(srcTafsir) ;
-
-    if (port) {
-        m_sql.attachIfNecessary(srcTafsir, true);
-    }
-
-    ATTACH_TAFSIR;
-    const QString currentTafsir = tafsirName();
-    m_sql.startTransaction(NULL, QueryId::SettingUpTafsir);
-
-    QStringList statements;
-    statements << "CREATE TABLE IF NOT EXISTS %1.locations (id INTEGER PRIMARY KEY, city TEXT NOT NULL UNIQUE ON CONFLICT IGNORE, latitude REAL NOT NULL, longitude REAL NOT NULL);";
-    statements << "CREATE TABLE IF NOT EXISTS %1.individuals (id INTEGER PRIMARY KEY, prefix TEXT, name TEXT, kunya TEXT, hidden INTEGER, birth INTEGER, death INTEGER, female INTEGER, displayName TEXT, location INTEGER REFERENCES locations(id) ON DELETE SET NULL ON UPDATE CASCADE, current_location INTEGER REFERENCES locations(id) ON DELETE SET NULL ON UPDATE CASCADE, is_companion INTEGER, description TEXT, CHECK(female=1 AND hidden=1 AND name <> '' AND prefix <> '' AND kunya <> '' AND displayName <> '' AND description <> ''));";
-    statements << "CREATE TABLE IF NOT EXISTS %1.teachers (individual INTEGER NOT NULL REFERENCES individuals(id) ON DELETE CASCADE ON UPDATE CASCADE, teacher INTEGER NOT NULL REFERENCES individuals(id) ON DELETE CASCADE ON UPDATE CASCADE, UNIQUE(individual,teacher) ON CONFLICT IGNORE );";
-    statements << "CREATE TABLE IF NOT EXISTS %1.websites (id INTEGER PRIMARY KEY, individual INTEGER REFERENCES individuals(id) ON DELETE CASCADE ON UPDATE CASCADE, uri TEXT NOT NULL, UNIQUE(individual, uri) ON CONFLICT IGNORE CHECK(uri <> '') );";
-    statements << "CREATE TABLE IF NOT EXISTS %1.mentions (id INTEGER PRIMARY KEY, target INTEGER NOT NULL REFERENCES individuals(id) ON DELETE CASCADE ON UPDATE CASCADE, suite_page_id INTEGER NOT NULL REFERENCES suite_pages(id) ON DELETE CASCADE ON UPDATE CASCADE, points INTEGER, UNIQUE(target,suite_page_id) ON CONFLICT REPLACE);";
-    statements << "CREATE TABLE IF NOT EXISTS %1.parents (individual INTEGER NOT NULL REFERENCES individuals(id) ON DELETE CASCADE ON UPDATE CASCADE, parent_id INTEGER NOT NULL REFERENCES individuals(id) ON DELETE CASCADE ON UPDATE CASCADE, UNIQUE(individual,parent_id) ON CONFLICT IGNORE );";
-    statements << "CREATE TABLE IF NOT EXISTS %1.siblings (individual INTEGER NOT NULL REFERENCES individuals(id) ON DELETE CASCADE ON UPDATE CASCADE, sibling_id INTEGER NOT NULL REFERENCES individuals(id) ON DELETE CASCADE ON UPDATE CASCADE, UNIQUE(individual,sibling_id) ON CONFLICT IGNORE );";
-    statements << "CREATE TABLE IF NOT EXISTS %1.suites (id INTEGER PRIMARY KEY, author INTEGER REFERENCES individuals(id) ON DELETE CASCADE ON UPDATE CASCADE, translator INTEGER REFERENCES individuals(id) ON DELETE CASCADE ON UPDATE CASCADE, explainer INTEGER REFERENCES individuals(id) ON DELETE CASCADE ON UPDATE CASCADE, title TEXT NOT NULL, description TEXT, reference TEXT, CHECK(title <> '' AND description <> '' AND reference <> ''));";
-    statements << "CREATE TABLE IF NOT EXISTS %1.suite_pages (id INTEGER PRIMARY KEY, suite_id INTEGER NOT NULL REFERENCES suites(id) ON DELETE CASCADE ON UPDATE CASCADE, body TEXT NOT NULL, heading TEXT, reference TEXT, CHECK(body <> '' AND heading <> '' AND reference <> ''));";
-    statements << "CREATE TABLE IF NOT EXISTS %1.quotes (id INTEGER PRIMARY KEY, author INTEGER REFERENCES individuals(id) ON DELETE CASCADE ON UPDATE CASCADE, body TEXT NOT NULL, reference TEXT, uri TEXT, suite_id INTEGER REFERENCES suites(id) ON DELETE CASCADE ON UPDATE CASCADE, CHECK(body <> '' AND reference <> '' AND uri <> '' AND (reference NOT NULL OR suite_id NOT NULL)));";
-    statements << "CREATE TABLE IF NOT EXISTS %1.explanations (id INTEGER PRIMARY KEY, surah_id INTEGER NOT NULL, from_verse_number INTEGER, to_verse_number INTEGER, suite_page_id INTEGER NOT NULL REFERENCES suite_pages(id) ON DELETE CASCADE ON UPDATE CASCADE, UNIQUE(surah_id, from_verse_number, suite_page_id) ON CONFLICT REPLACE, CHECK(from_verse_number > 0 AND from_verse_number <= 286 AND to_verse_number >= from_verse_number AND to_verse_number <= 286 AND surah_id > 0 AND surah_id <= 114));";
-    executeAndClear(statements);
-
-    QStringList portStatements;
-    if (port)
-    {
-        LOGGER("PortingFromEnglishDB...");
-        portStatements << "INSERT INTO %1.locations SELECT * FROM %2.locations;";
-        portStatements << "INSERT INTO %1.individuals SELECT * FROM %2.individuals;";
-        portStatements << "INSERT INTO %1.teachers SELECT * FROM %2.teachers;";
-        portStatements << "INSERT INTO %1.parents SELECT * FROM %2.parents;";
-        portStatements << "INSERT INTO %1.siblings SELECT * FROM %2.siblings;";
-        portStatements << "INSERT INTO %1.websites SELECT * FROM %2.websites;";
-    }
-
-    foreach (QString const& q, portStatements) {
-        m_sql.executeInternal( q.arg(currentTafsir).arg(srcTafsir), QueryId::SettingUpTafsir);
-    }
-
-    m_sql.endTransaction(NULL, QueryId::SetupTafsir);
-    LOGGER("ClearingTafsirVersion...");
-    m_persist->setFlag( KEY_TAFSIR_VERSION(m_translation) );
-
-    if (port) {
-        m_sql.detach(srcTafsir);
-    }
-
-    LOGGER("SetupCompleted");
-}
-
-
-void QueryHelper::executeAndClear(QStringList& statements)
-{
-    const QString currentTafsir = tafsirName();
-
-    foreach (QString const& q, statements) {
-        m_sql.executeInternal( q.arg(currentTafsir), QueryId::SettingUpTafsir);
-    }
-
-    statements.clear();
-}
-
-
 bool QueryHelper::disableSpacing() const {
     return m_persist->getValueFor("disableSpacing").toInt() == 1;
 }
@@ -589,11 +438,6 @@ int QueryHelper::translationSize() const
 }
 
 
-QString QueryHelper::tafsirName() const {
-    return TAFSIR_NAME(m_translation);
-}
-
-
 QString QueryHelper::translation() const {
     return m_translation;
 }
@@ -611,21 +455,6 @@ QObject* QueryHelper::getExecutor() {
 
 QString QueryHelper::translationName() const {
     return TRANSLATION;
-}
-
-
-QString QueryHelper::tafsirVersion() const {
-    return m_persist->getFlag( KEY_TAFSIR_VERSION(m_translation) ).toString();
-}
-
-
-QString QueryHelper::translationVersion() const {
-    return m_persist->getFlag( KEY_TRANSLATION_VERSION(m_translation) ).toString();
-}
-
-
-void QueryHelper::disable() {
-    m_sql.setEnabled(false);
 }
 
 

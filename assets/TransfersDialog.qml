@@ -323,15 +323,6 @@ Delegate
                                         TransferListItem {
                                             successImageSource: "images/tabs/ic_transfers.png"
                                         }
-                                    },
-                                    
-                                    ListItemComponent
-                                    {
-                                        type: "updateCheck"
-                                        
-                                        TransferListItem {
-                                            successImageSource: "images/list/ic_update_check.png"
-                                        }
                                     }
                                 ]
                             }
