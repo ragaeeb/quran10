@@ -70,8 +70,7 @@ Page
     
     function showExplanation(id)
     {
-        definition.source = "AyatTafsirDialog.qml";
-        var htd = definition.createObject();
+        var htd = Qt.initQml("AyatTafsirDialog.qml");
         htd.suitePageId = id;
         htd.open();
     }
@@ -120,13 +119,13 @@ Page
     {
         helper.textualChange.disconnect(reload);
         app.lazyInitComplete.disconnect(showTutorials);
-        navigationPane.pushTransitionEnded.disconnect(showTutorials);
+        Qt.navigationPane.pushTransitionEnded.disconnect(showTutorials);
     }
     
     function showTutorials()
     {
         app.lazyInitComplete.disconnect(showTutorials);
-        navigationPane.pushTransitionEnded.disconnect(showTutorials);
+        Qt.navigationPane.pushTransitionEnded.disconnect(showTutorials);
         
         tutorial.execActionBar( "markFav", qsTr("To quickly access this verse again, tap on the '%1' action at the bottom to put it in the Favourites tab.").arg(markFav.title) );
         tutorial.execActionBar( "addShortcutHome", qsTr("To quickly access this verse again, tap on the '%1' action at the bottom to pin it to your homescreen.").arg(addHome.title), "l" );
@@ -157,7 +156,7 @@ Page
     onCreationCompleted: {
         helper.textualChange.connect(reload);
         app.lazyInitComplete.connect(showTutorials);
-        navigationPane.pushTransitionEnded.connect(showTutorials);
+        Qt.navigationPane.pushTransitionEnded.connect(showTutorials);
     }
     
     titleBar: TitleBar
@@ -670,10 +669,4 @@ Page
             asset: "images/progress/loading_ayat.png"
         }
     }
-    
-    attachedObjects: [
-        ComponentDefinition {
-            id: definition
-        }
-    ]
 }

@@ -14,17 +14,13 @@ NavigationPane
         id: searchPage
         
         onPicked: {
-            def.source = "AyatPage.qml";
-            var page = def.createObject();
-            
+            var page = Qt.launch("AyatPage.qml");
             page.surahId = surahId;
             page.verseId = verseId;
-
-            navigationPane.push(page);
         }
         
         onTotalResultsFound: {
-            navigationPane.parent.unreadContentCount = total;
+            Qt.navigationPane.parent.unreadContentCount = total;
         }
     }
 }

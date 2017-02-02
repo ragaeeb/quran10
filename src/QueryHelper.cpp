@@ -166,7 +166,7 @@ void QueryHelper::fetchRandomQuote(QObject* caller)
     LOGGER("fetchRandomQuote");
 
     ATTACH_TAFSIR;
-    m_sql.executeQuery(caller, QString("SELECT %1 AS author,i.hidden,body,TRIM( COALESCE(suites.title,'') || ' ' || COALESCE(quotes.reference,'') ) AS reference,birth,death,female,is_companion FROM quotes INNER JOIN individuals i ON i.id=quotes.author LEFT JOIN suites ON quotes.suite_id=suites.id WHERE quotes.id=( ABS( RANDOM() % (SELECT COUNT() AS total_quotes FROM quotes) )+1 )").arg( NAME_FIELD("i") ), QueryId::FetchRandomQuote);
+    m_sql.executeQuery(caller, QString("SELECT %1 AS author,body,TRIM( COALESCE(suites.title,'') || ' ' || COALESCE(quotes.reference,'') ) AS reference,birth,death,female,is_companion FROM quotes INNER JOIN individuals i ON i.id=quotes.author LEFT JOIN suites ON quotes.suite_id=suites.id WHERE quotes.id=( ABS( RANDOM() % (SELECT COUNT() AS total_quotes FROM quotes) )+1 )").arg( NAME_FIELD("i") ), QueryId::FetchRandomQuote);
 }
 
 
@@ -262,7 +262,7 @@ void QueryHelper::fetchTafsirContent(QObject* caller, qint64 suitePageId)
 {
     LOGGER(suitePageId);
     ATTACH_TAFSIR;
-    QString query = QString("SELECT %2 AS author,x.id AS author_id,x.hidden AS author_hidden,x.birth AS author_birth,x.death AS author_death,%3 AS translator,y.id AS translator_id,y.hidden AS translator_hidden,y.birth AS translator_birth,y.death AS translator_death,%4 AS explainer,z.id AS explainer_id,z.hidden AS explainer_hidden,z.birth AS explainer_birth,z.death AS explainer_death,title,description,suites.reference AS reference,suite_pages.reference AS suite_pages_reference,body,heading FROM suites INNER JOIN suite_pages ON suites.id=suite_pages.suite_id LEFT JOIN individuals x ON suites.author=x.id LEFT JOIN individuals y ON suites.translator=y.id LEFT JOIN individuals z ON suites.explainer=z.id WHERE suite_pages.id=%1").arg(suitePageId).arg( NAME_FIELD("x") ).arg( NAME_FIELD("y") ).arg( NAME_FIELD("z") );
+    QString query = QString("SELECT %2 AS author,x.id AS author_id,x.birth AS author_birth,x.death AS author_death,%3 AS translator,y.id AS translator_id,y.birth AS translator_birth,y.death AS translator_death,%4 AS explainer,z.id AS explainer_id,z.birth AS explainer_birth,z.death AS explainer_death,title,suites.reference AS reference,suite_pages.reference AS suite_pages_reference,body,heading FROM suites INNER JOIN suite_pages ON suites.id=suite_pages.suite_id LEFT JOIN individuals x ON suites.author=x.id LEFT JOIN individuals y ON suites.translator=y.id LEFT JOIN individuals z ON suites.explainer=z.id WHERE suite_pages.id=%1").arg(suitePageId).arg( NAME_FIELD("x") ).arg( NAME_FIELD("y") ).arg( NAME_FIELD("z") );
 
     m_sql.executeQuery(caller, query, QueryId::FetchTafsirContent);
 }
@@ -390,7 +390,7 @@ void QueryHelper::fetchAllQuotes(QObject* caller, qint64 individualId)
 
 void QueryHelper::fetchAllOrigins(QObject* caller)
 {
-    m_sql.executeQuery(caller, QString("SELECT %1 AS name,i.id,city,i.is_companion,latitude+((RANDOM()%10)*0.0001) AS latitude,longitude+((RANDOM()%10)*0.0001) AS longitude FROM individuals i INNER JOIN locations ON i.location=locations.id WHERE i.hidden ISNULL").arg( NAME_FIELD("i") ), QueryId::FetchAllOrigins);
+    m_sql.executeQuery(caller, QString("SELECT %1 AS name,i.id,city,i.is_companion,latitude+((RANDOM()%10)*0.0001) AS latitude,longitude+((RANDOM()%10)*0.0001) AS longitude FROM individuals i INNER JOIN locations ON i.location=locations.id").arg( NAME_FIELD("i") ), QueryId::FetchAllOrigins);
 }
 
 void QueryHelper::fetchAllTafsir(QObject* caller, qint64 individualId)

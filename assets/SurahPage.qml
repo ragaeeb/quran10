@@ -120,10 +120,6 @@ Page
     }
     
     attachedObjects: [
-        ComponentDefinition {
-            id: definition
-        },
-        
         Awaker
         {
             id: awaker

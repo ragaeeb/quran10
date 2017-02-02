@@ -195,7 +195,7 @@ NavigationPane
                     noElements.delegateActive = gdm.isEmpty();
                     listView.visible = !noElements.delegateActive;
                     
-                    navigationPane.parent.unreadContentCount = gdm.size();
+                    Qt.navigationPane.parent.unreadContentCount = gdm.size();
                 }
                 
                 function deleteBookmark(indexPath)
@@ -264,9 +264,7 @@ NavigationPane
                     console.log("UserEvent: FavouriteTriggered");
                     var data = dataModel.data(indexPath);
                     
-                    definition.source = "AyatPage.qml";
-                    var sp = definition.createObject();
-                    navigationPane.push(sp);
+                    var sp = Qt.launch("AyatPage.qml");
                     sp.surahId = data.surah_id;
                     sp.verseId = data.verse_id;
                     
@@ -284,10 +282,6 @@ NavigationPane
         {
             id: back
             imageSource: "images/backgrounds/background.png"
-        },
-        
-        ComponentDefinition {
-            id: definition
         },
         
         FilePicker {

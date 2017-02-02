@@ -5,10 +5,6 @@ TabbedPane
     id: root
     activeTab: quranTab
     
-    onActiveTabChanged: {
-        peekEnabled = activeTab != ummahTab;
-    }
-    
     function onSidebarVisualStateChanged()
     {
         sidebarStateChanged.disconnect(onSidebarVisualStateChanged);
@@ -17,9 +13,12 @@ TabbedPane
         tutorial.exec("tabsFavs", qsTr("In the Favourites tab: Any verses you mark as favourite will end up here."), HorizontalAlignment.Left, VerticalAlignment.Top, tutorial.du(1), 0, tutorial.du(10), 0, favs.imageSource.toString(), "d" );
         tutorial.exec("tabsSearch", qsTr("In the Search tab you can use this to quickly find a specific verse via keywords."), HorizontalAlignment.Left, VerticalAlignment.Top, tutorial.du(1), 0, tutorial.du(10), 0, search.imageSource.toString(), "d" );
         tutorial.exec("tabsDuaa", qsTr("In the Supplications tab you will find a collection of some of the many du'aa that are found across the Qu'ran."), HorizontalAlignment.Left, VerticalAlignment.Top, tutorial.du(1), 0, tutorial.du(10), 0, supplications.imageSource.toString(), "d" );
-        tutorial.exec("tabsUmmah", qsTr("In the Ummah tab you can browse the various callers, students of knowledge, and scholars of the past and present."), HorizontalAlignment.Left, VerticalAlignment.Top, tutorial.du(1), 0, tutorial.du(10), 0, ummahTab.imageSource.toString(), "d" );
         
         reporter.record( "TabbedPaneExpanded", root.sidebarVisualState.toString() );
+    }
+    
+    onActivePaneChanged: {
+        Qt.navigationPane = activePane;
     }
     
     Menu.definition: CanadaIncMenu
@@ -127,13 +126,10 @@ TabbedPane
     
     function onTutorialFinished(key)
     {
-        if (key == "tabsUmmah")
+        if ( persist.getFlag("settingsShown") != 1 )
         {
-            if ( persist.getFlag("settingsShown") != 1 )
-            {
-                menuDef.settings.triggered();
-                persist.setFlag("settingsShown", 1);
-            }
+            menuDef.settings.triggered();
+            persist.setFlag("settingsShown", 1);
         }
     }
 }

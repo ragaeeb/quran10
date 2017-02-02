@@ -31,43 +31,35 @@ QtObject
         
         var bodyText = "";
         
-        if (tafsir.author_hidden == 1 || tafsir.translator_hidden == 1 || tafsir.explainer_hidden == 1) {
-            bodyText = qsTr("[This tafsir is being intentionally suppressed. It may be released in a future update.]");
+        var authorText = "";
+        
+        if (tafsir.author.length > 0) {
+            authorText = qsTr("Author: <a href=\"%2\">%1</a>%3").arg(tafsir.author).arg( tafsir.author_id.toString() ).arg( global.getSuffix(tafsir.author_birth, tafsir.author_death) );
         } else {
-            var authorText = "";
-            
-            if (tafsir.author.length > 0) {
-                authorText = qsTr("Author: <a href=\"%2\">%1</a>%3").arg(tafsir.author).arg( tafsir.author_id.toString() ).arg( global.getSuffix(tafsir.author_birth, tafsir.author_death) );
-            } else {
-                authorText = qsTr("Author: Unknown");
-            }
-            
-            if (tafsir.translator.length > 0) {
-                authorText += qsTr("\nTranslator: <a href=\"%2\">%1</a>%3").arg(tafsir.translator).arg( tafsir.translator_id.toString() ).arg( global.getSuffix(tafsir.translator_birth, tafsir.translator_death) );
-            }
-            
-            if (tafsir.explainer.length > 0) {
-                authorText += qsTr("\nExplained by: <a href=\"%2\">%1</a>%3").arg(tafsir.explainer).arg( tafsir.explainer_id.toString() ).arg( global.getSuffix(tafsir.explainer_birth, tafsir.explainer_death) );
-            }
-            
-            if (tafsir.description.length > 0) {
-                bodyText = tafsir.description+"\n\n";
-            }
-            
-            bodyText += tafsir.body;
-            
-            var reference = tafsir.reference;
-            
-            if (tafsir.suite_pages_reference) {
-                reference = tafsir.suite_pages_reference;
-            }
-            
-            if (reference.length > 0) {
-                bodyText += "\n\n(%1)".arg(reference);
-            }
-            
-            authors.text = "<html>"+authorText+"</html>";
+            authorText = qsTr("Author: Unknown");
         }
+        
+        if (tafsir.translator.length > 0) {
+            authorText += qsTr("\nTranslator: <a href=\"%2\">%1</a>%3").arg(tafsir.translator).arg( tafsir.translator_id.toString() ).arg( global.getSuffix(tafsir.translator_birth, tafsir.translator_death) );
+        }
+        
+        if (tafsir.explainer.length > 0) {
+            authorText += qsTr("\nExplained by: <a href=\"%2\">%1</a>%3").arg(tafsir.explainer).arg( tafsir.explainer_id.toString() ).arg( global.getSuffix(tafsir.explainer_birth, tafsir.explainer_death) );
+        }
+        
+        bodyText += tafsir.body;
+        
+        var reference = tafsir.reference;
+        
+        if (tafsir.suite_pages_reference) {
+            reference = tafsir.suite_pages_reference;
+        }
+        
+        if (reference.length > 0) {
+            bodyText += "\n\n(%1)".arg(reference);
+        }
+        
+        authors.text = "<html>"+authorText+"</html>";
         
         body.text = bodyText+"\n";
     }

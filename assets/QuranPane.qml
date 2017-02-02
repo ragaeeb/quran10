@@ -5,6 +5,10 @@ NavigationPane
 {
     id: navigationPane
     
+    onCreationCompleted: {
+        Qt.navigationPane = navigationPane;
+    }
+    
     onPopTransitionEnded: {
         deviceUtils.cleanUpAndDestroy(page);
 
@@ -13,21 +17,15 @@ NavigationPane
     
     function onAyatPicked(surahId, verseId)
     {
-        definition.source = "AyatPage.qml";
-        var ayatPage = definition.createObject();
+        var ayatPage = Qt.launch("AyatPage.qml");
         ayatPage.surahId = surahId;
         ayatPage.verseId = verseId;
-        
-        navigationPane.push(ayatPage);
     }
     
     function onOpenChapter(surahId)
     {
-        definition.source = "ChapterTafsirPicker.qml";
-        var p = definition.createObject();
+        var p = Qt.launch("ChapterTafsirPicker.qml");
         p.chapterNumber = surahId;
-        
-        navigationPane.push(p);
     }
     
     SurahPickerPage
@@ -163,8 +161,7 @@ NavigationPane
                 
                 onTriggered: {
                     console.log("UserEvent: CompareSurahs");
-                    definition.source = "CompareSurahsPage.qml";
-                    var p = definition.createObject();
+                    var p = Qt.launch("CompareSurahsPage.qml");
                     
                     var all = pickerPage.pickerList.selectionList();
                     var surahIds = [];
@@ -174,7 +171,6 @@ NavigationPane
                     }
                     
                     p.surahIds = surahIds;
-                    navigationPane.push(p);
                     
                     reporter.record("CompareSurahs", surahIds.toString());
                 }
@@ -189,8 +185,7 @@ NavigationPane
                 
                 onTriggered: {
                     console.log("UserEvent: OpenSurahs");
-                    definition.source = "SurahPage.qml";
-                    var p = definition.createObject();
+                    var p = Qt.launch("SurahPage.qml");
                     p.picked.connect(onAyatPicked);
                     p.openChapterTafsir.connect(onOpenChapter);
                     
@@ -198,7 +193,6 @@ NavigationPane
                     p.fromSurahId = pickerPage.pickerList.dataModel.data(all[0]).surah_id;
                     p.toSurahId = pickerPage.pickerList.dataModel.data(all[all.length-1]).surah_id;
                     p.loadAyats();
-                    navigationPane.push(p);
                     
                     reporter.record("OpenSurahs", p.fromSurahId+"-"+p.toSurahId);
                 }
@@ -213,8 +207,7 @@ NavigationPane
                 
                 onTriggered: {
                     console.log("UserEvent: LaunchMushaf");
-                    definition.source = "MushafSheet.qml";
-                    var sheet = definition.createObject();
+                    var sheet = Qt.initQml("MushafSheet.qml");
                     sheet.open();
                     
                     reporter.record("LaunchMushaf");
@@ -253,12 +246,9 @@ NavigationPane
         
         function createAndAttach(p)
         {
-            definition.source = p;
-            var surahPage = definition.createObject();
+            var surahPage = Qt.launch(p);
             surahPage.picked.connect(onAyatPicked);
             surahPage.openChapterTafsir.connect(onOpenChapter);
-            
-            navigationPane.push(surahPage);
             
             return surahPage;
         }
@@ -280,14 +270,9 @@ NavigationPane
             {
                 var quote = data[0];
                 
-                if (quote.hidden != 1)
-                {
-                    var plainText = "“%1” - %2 [%3]".arg(quote.body).arg(quote.author).arg(quote.reference);
-                    var body = "<html><i>“%1”</i>\n\n- <b>%2%4</b>\n\n[%3]</html>".arg( quote.body.replace(/&/g,"&amp;") ).arg(quote.author).arg( quote.reference.replace(/&/g,"&amp;") ).arg( global.getSuffix(quote.birth, quote.death, quote.is_companion == 1, quote.female == 1) );
-                    notification.init(body, "images/list/ic_quote.png", plainText);
-                } else {
-                    console.log("QuoteSuppressed");
-                }
+                var plainText = "“%1” - %2 [%3]".arg(quote.body).arg(quote.author).arg(quote.reference);
+                var body = "<html><i>“%1”</i>\n\n- <b>%2%4</b>\n\n[%3]</html>".arg( quote.body.replace(/&/g,"&amp;") ).arg(quote.author).arg( quote.reference.replace(/&/g,"&amp;") ).arg( global.getSuffix(quote.birth, quote.death, quote.is_companion == 1, quote.female == 1) );
+                notification.init(body, "images/list/ic_quote.png", plainText);
             }
         }
     }
@@ -311,10 +296,4 @@ NavigationPane
             tutorial.execActionBar("selectAllDisabled", qsTr("The '%1' feature is not available for the Juz display mode.").arg(selectAll.title), "r");
         }
     }
-    
-    attachedObjects: [
-        ComponentDefinition {
-            id: definition
-        }
-    ]
 }

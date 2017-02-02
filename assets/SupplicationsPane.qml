@@ -63,12 +63,9 @@ NavigationPane
                 
                 function onPicked(surahId, verseId)
                 {
-                    definition.source = "AyatPage.qml";
-                    var ayatPage = definition.createObject();
+                    var ayatPage = Qt.launch("AyatPage.qml");
                     ayatPage.surahId = surahId;
                     ayatPage.verseId = verseId;
-
-                    navigationPane.push(ayatPage);
                 }
                 
                 onTriggered: {
@@ -78,10 +75,8 @@ NavigationPane
                     {
                         var data = dataModel.data(indexPath);
                         
-                        definition.source = "SurahPage.qml";
-                        var sp = definition.createObject();
+                        var sp = Qt.launch("SurahPage.qml");
                         sp.picked.connect(onPicked);
-                        navigationPane.push(sp);
                         sp.surahId = data.surah_id;
                         sp.verseId = data.verse_number_start;
                         
@@ -95,7 +90,7 @@ NavigationPane
                     {
                         theDataModel.clear();
                         theDataModel.insertList(data);
-                        navigationPane.parent.unreadContentCount = data.length;
+                        Qt.navigationPane.parent.unreadContentCount = data.length;
                         
                         deviceUtils.attachTopBottomKeys(mainPage, listView, true);
                         tutorial.exec( "tapSupplication", qsTr("These are some of the supplications found throughout the Qu'ran. Tap on any one of them to open it."), HorizontalAlignment.Center, VerticalAlignment.Center, 0, 0, 0, 0, undefined, "d" );
@@ -117,10 +112,4 @@ NavigationPane
         reload();
         helper.textualChange.connect(reload);
     }
-    
-    attachedObjects: [
-        ComponentDefinition {
-            id: definition
-        }
-    ]
 }

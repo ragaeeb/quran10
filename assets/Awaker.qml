@@ -131,7 +131,7 @@ QtObject
         }
         
         onBlockPeekChanged: {
-            navigationPane.peekEnabled = !blockPeek;
+            Qt.navigationPane.peekEnabled = !blockPeek;
         }
         
         attachedObjects: [
@@ -154,10 +154,10 @@ QtObject
     
     function onPushed(page)
     {
-        var isTopPage = deviceUtils.isEqual(navigationPane.top, parentPage);
+        var isTopPage = deviceUtils.isEqual(Qt.navigationPane.top, parentPage);
         
         if (!isTopPage) {
-            navigationPane.peekEnabled = true;
+            Qt.navigationPane.peekEnabled = true;
         }
         
         mushaf.isTopPage = isTopPage;
@@ -165,15 +165,15 @@ QtObject
     
     function cleanUp()
     {
-        navigationPane.pushTransitionEnded.disconnect(onPushed);
-        navigationPane.popTransitionEnded.disconnect(onPushed);
+        Qt.navigationPane.pushTransitionEnded.disconnect(onPushed);
+        Qt.navigationPane.popTransitionEnded.disconnect(onPushed);
         recitation.readyToPlay.disconnect(playAllAction.onReady);
         listView.cleanUp();
     }
     
     onCreationCompleted: {
-        navigationPane.pushTransitionEnded.connect(onPushed);
-        navigationPane.popTransitionEnded.connect(onPushed);
+        Qt.navigationPane.pushTransitionEnded.connect(onPushed);
+        Qt.navigationPane.popTransitionEnded.connect(onPushed);
         mushaf.registerPlayer(player);
     }
 }

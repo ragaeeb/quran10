@@ -48,6 +48,13 @@ ResizableContainer
                     Label {
                         content.flags: TextContentFlag.ActiveText | TextContentFlag.EmoticonsOff
                         text: "(%1 %2:%3)\n".arg(ListItemData.name).arg(ListItemData.surah_id).arg(ListItemData.verse_id)
+                        
+                        activeTextHandler: ActiveTextHandler
+                        {
+                            onTriggered: {
+                                
+                            }
+                        }
                     }
                     
                     ImageView {

@@ -83,11 +83,8 @@ Page
         }
         
         onTitleTapped: {
-            definition.source = "ChapterTafsirPicker.qml";
-            var p = definition.createObject();
+            var p = Qt.launch("ChapterTafsirPicker.qml")
             p.chapterNumber = chapterNumber;
-            
-            navigationPane.push(p);
         }
     }
 
@@ -113,10 +110,6 @@ Page
     }
     
     attachedObjects: [
-        ComponentDefinition {
-            id: definition
-        },
-        
         Awaker
         {
             id: awaker

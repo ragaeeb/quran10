@@ -294,18 +294,14 @@ Page
                                 function onPicked(chapter, verse)
                                 {
                                     included.surahId = chapter;
-                                    navigationPane.pop();
+                                    Qt.navigationPane.pop();
                                 }
                                 
                                 onClicked: {
                                     console.log("UserEvent: EditRestrictSurahSearch");
                                     
-                                    definition.source = "SurahPickerPage.qml";
-                                    var picker = definition.createObject();
-                                    
+                                    var picker = Qt.launch("SurahPickerPage.qml");
                                     picker.picked.connect(onPicked);
-                                    navigationPane.push(picker);
-                                    
                                     picker.ready();
                                     
                                     reporter.record("EditRestrictSurahSearch");
@@ -516,10 +512,6 @@ Page
         ImagePaintDefinition {
             id: bg
             imageSource: "images/backgrounds/background.png"
-        },
-        
-        ComponentDefinition {
-            id: definition
         }
     ]
 }
