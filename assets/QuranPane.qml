@@ -269,9 +269,20 @@ NavigationPane
             if (id == QueryId.FetchRandomQuote && data.length > 0)
             {
                 var quote = data[0];
-                
+                console.log("***", JSON.stringify(quote));
                 var plainText = "“%1” - %2 [%3]".arg(quote.body).arg(quote.author).arg(quote.reference);
-                var body = "<html><i>“%1”</i>\n\n- <b>%2%4</b>\n\n[%3]</html>".arg( quote.body.replace(/&/g,"&amp;") ).arg(quote.author).arg( quote.reference.replace(/&/g,"&amp;") ).arg( global.getSuffix(quote.birth, quote.death, quote.is_companion == 1, quote.female == 1) );
+                
+                var partQuote = "<i>“%1”</i>".arg( searchDecorator.toHtmlEscaped(quote.body) );
+                var partAuthor = "<b>%1%2</b>".arg( searchDecorator.toHtmlEscaped(quote.author) ).arg( global.getSuffix(quote.birth, quote.death, quote.is_companion == 1, quote.female == 1) );
+                var partSource = "[%1]".arg( searchDecorator.toHtmlEscaped(quote.reference) );
+                var parts = "%1\n\n- %2\n\n%3".arg(partQuote).arg(partAuthor).arg(partSource);
+                
+                if (quote.translator) {
+                    parts += "\n\nTranslated by <i>%1%2</i>".arg( searchDecorator.toHtmlEscaped(quote.translator) ).arg( global.getSuffix(quote.translator_birth, quote.translator_death, quote.translator_companion == 1, quote.translator_female == 1) );
+                }
+                
+                var body = "<html>"+parts+"</html>";
+                
                 notification.init(body, "images/list/ic_quote.png", plainText);
             }
         }
@@ -296,4 +307,10 @@ NavigationPane
             tutorial.execActionBar("selectAllDisabled", qsTr("The '%1' feature is not available for the Juz display mode.").arg(selectAll.title), "r");
         }
     }
+    
+    attachedObjects: [
+        SearchDecorator {
+            id: searchDecorator
+        }
+    ]
 }

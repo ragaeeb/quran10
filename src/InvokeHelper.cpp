@@ -10,6 +10,7 @@
 #include "Persistance.h"
 #include "QueryHelper.h"
 #include "QueryId.h"
+#include "SearchDecorator.h"
 #include "ThreadUtils.h"
 
 #define CHAPTER_OK(chapter) chapter > 0 && chapter <= 114
@@ -51,6 +52,8 @@ void InvokeHelper::init(QString const& qmlDoc, QMap<QString, QObject*> const& co
     qml = QmlDocument::create("asset:///NotificationToast.qml").parent(this);
     global = qml->createRootObject<QObject>();
     QmlDocument::defaultDeclarativeEngine()->rootContext()->setContextProperty("notification", global);
+
+    qmlRegisterType<canadainc::SearchDecorator>("com.canadainc.data", 1, 0, "SearchDecorator");
 
     DeviceUtils::registerTutorialTips(this);
 

@@ -165,8 +165,7 @@ void QueryHelper::fetchRandomQuote(QObject* caller)
 {
     LOGGER("fetchRandomQuote");
 
-    ATTACH_TAFSIR;
-    m_sql.executeQuery(caller, QString("SELECT %1 AS author,body,TRIM( COALESCE(suites.title,'') || ' ' || COALESCE(quotes.reference,'') ) AS reference,birth,death,female,is_companion FROM quotes INNER JOIN individuals i ON i.id=quotes.author LEFT JOIN suites ON quotes.suite_id=suites.id WHERE quotes.id=( ABS( RANDOM() % (SELECT COUNT() AS total_quotes FROM quotes) )+1 )").arg( NAME_FIELD("i") ), QueryId::FetchRandomQuote);
+    m_sql.executeQuery(caller, QString("SELECT %1 AS author,%2 AS translator,body,TRIM( COALESCE(suites.title,'') || ' ' || COALESCE(quotes.reference,'') ) AS reference,i.birth,i.death,i.female,i.is_companion,j.birth AS translator_birth,j.death AS translator_death,j.female AS translator_female,j.is_companion AS translator_companion FROM quotes INNER JOIN individuals i ON i.id=quotes.author LEFT JOIN individuals j ON j.id=quotes.translator LEFT JOIN suites ON quotes.suite_id=suites.id WHERE quotes.id=( SELECT ABS( RANDOM() % (SELECT COUNT() AS total_quotes FROM quotes) ) )").arg( NAME_FIELD("i") ).arg( NAME_FIELD("j") ), QueryId::FetchRandomQuote);
 }
 
 
@@ -226,7 +225,6 @@ void QueryHelper::fetchAllTafsirForAyat(QObject* caller, int chapterNumber, int 
 {
     LOGGER(chapterNumber << verseNumber);
 
-    ATTACH_TAFSIR;
     m_sql.executeQuery(caller, QString("SELECT suite_page_id AS id,%3 AS author,title,substr(body,-5) AS body,heading FROM explanations INNER JOIN suite_pages ON suite_pages.id=explanations.suite_page_id INNER JOIN suites ON suites.id=suite_pages.suite_id INNER JOIN individuals i ON i.id=suites.author WHERE explanations.surah_id=%1 AND (%2 BETWEEN from_verse_number AND to_verse_number) ORDER BY author,title,heading").arg(chapterNumber).arg(verseNumber).arg( NAME_FIELD("i") ), QueryId::FetchTafsirForAyat);
 }
 
@@ -235,7 +233,6 @@ void QueryHelper::fetchAllTafsirForChapter(QObject* caller, int chapterNumber)
 {
     LOGGER(chapterNumber);
 
-    ATTACH_TAFSIR;
     m_sql.executeQuery(caller, QString("SELECT suite_page_id AS id,%2 AS author,title,heading,substr(body,-5) AS body FROM explanations INNER JOIN suite_pages ON suite_pages.id=explanations.suite_page_id INNER JOIN suites ON suites.id=suite_pages.suite_id INNER JOIN individuals i ON i.id=suites.author WHERE explanations.surah_id=%1 AND from_verse_number ISNULL").arg(chapterNumber).arg( NAME_FIELD("i") ), QueryId::FetchTafsirForSurah);
 }
 
@@ -244,7 +241,6 @@ void QueryHelper::fetchTafsirCountForAyat(QObject* caller, int chapterNumber, in
 {
     LOGGER(chapterNumber << verseNumber);
 
-    ATTACH_TAFSIR;
     m_sql.executeQuery(caller, QString("SELECT COUNT() AS tafsir_count FROM explanations WHERE surah_id=%1 AND (%2 BETWEEN from_verse_number AND to_verse_number)").arg(chapterNumber).arg(verseNumber), QueryId::FetchTafsirCountForAyat);
 }
 
@@ -253,7 +249,6 @@ void QueryHelper::fetchAllTafsirForSuite(QObject* caller, qint64 suiteId)
 {
     LOGGER(suiteId);
 
-    ATTACH_TAFSIR;
     QString query = QString("SELECT id,body,heading,reference FROM suite_pages WHERE suite_id=%1 ORDER BY id DESC").arg(suiteId);
     m_sql.executeQuery(caller, query, QueryId::FetchAllTafsirForSuite);
 }
@@ -261,7 +256,6 @@ void QueryHelper::fetchAllTafsirForSuite(QObject* caller, qint64 suiteId)
 void QueryHelper::fetchTafsirContent(QObject* caller, qint64 suitePageId)
 {
     LOGGER(suitePageId);
-    ATTACH_TAFSIR;
     QString query = QString("SELECT %2 AS author,x.id AS author_id,x.birth AS author_birth,x.death AS author_death,%3 AS translator,y.id AS translator_id,y.birth AS translator_birth,y.death AS translator_death,%4 AS explainer,z.id AS explainer_id,z.birth AS explainer_birth,z.death AS explainer_death,title,suites.reference AS reference,suite_pages.reference AS suite_pages_reference,body,heading FROM suites INNER JOIN suite_pages ON suites.id=suite_pages.suite_id LEFT JOIN individuals x ON suites.author=x.id LEFT JOIN individuals y ON suites.translator=y.id LEFT JOIN individuals z ON suites.explainer=z.id WHERE suite_pages.id=%1").arg(suitePageId).arg( NAME_FIELD("x") ).arg( NAME_FIELD("y") ).arg( NAME_FIELD("z") );
 
     m_sql.executeQuery(caller, query, QueryId::FetchTafsirContent);
@@ -373,8 +367,6 @@ void QueryHelper::fetchAllQarees(QObject* caller, int minLevel)
 void QueryHelper::fetchAllQuotes(QObject* caller, qint64 individualId)
 {
     LOGGER(individualId);
-
-    ATTACH_TAFSIR;
 
     QStringList queryParams = QStringList() << QString("SELECT quotes.id AS id,%1 AS author,body,reference FROM quotes INNER JOIN individuals i ON i.id=quotes.author").arg( NAME_FIELD("i") );
 
