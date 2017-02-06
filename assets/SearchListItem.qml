@@ -17,7 +17,7 @@ Container
     Header {
         id: header
         title: ListItemData.name
-        subtitle: "%1:%2".arg(ListItemData.surah_id).arg(ListItemData.verse_id)
+        subtitle: "%1:%2".arg(ListItemData.surah_id).arg(ListItemData.verse_number)
     }
     
     Container

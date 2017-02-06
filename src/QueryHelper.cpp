@@ -13,6 +13,7 @@
 #define NAME_FIELD(var) QString("coalesce(%1.displayName, TRIM( replace( coalesce(%1.kunya,'') || ' ' || (coalesce(%1.prefix,'') || ' ' || %1.name), '  ', ' ' ) ) )").arg(var)
 #define TRANSLATION_NAME(language) QString("quran_%1").arg(language)
 #define TRANSLATION TRANSLATION_NAME(m_translation)
+#define LIKE_CLAUSE2(field,field2) QString("(%1 LIKE '%' || ? || '%' OR %2 LIKE '%' || ? || '%')").arg(field).arg(field2)
 
 namespace {
 
@@ -67,8 +68,12 @@ void QueryHelper::settingChanged(QString const& key)
         m_sql.detach( TAFSIR_NAME(m_translation) );
 
         m_translation = m_persist->getValueFor(KEY_TRANSLATION).toString();
-        m_sql.attachIfNecessary(TRANSLATION); // since english translation is loaded by default
-        ATTACH_TAFSIR;
+
+        if ( showTranslation() ) {
+            m_sql.attachIfNecessary(TRANSLATION); // since english translation is loaded by default
+            ATTACH_TAFSIR;
+        }
+
         emit textualChange();
     } else if (key == KEY_TRANSLATION_SIZE || key == KEY_PRIMARY_SIZE) {
         emit fontSizeChanged();
@@ -324,17 +329,55 @@ void QueryHelper::fetchAyats(QObject* caller, QVariantList const& input)
 }
 
 
-bool QueryHelper::searchQuery(QObject* caller, QString const& trimmedText, int chapterNumber, QVariantList const& additional, bool andMode)
+void QueryHelper::searchQuery(QObject* caller, QVariantList params, QVariantList const& chapters)
 {
-    LOGGER(trimmedText << additional << andMode << chapterNumber);
+    LOGGER(params << chapters);
 
-    QVariantList params = QVariantList() << trimmedText;
-    bool isArabic = trimmedText.isRightToLeft() || !showTranslation();
-    QString query = ThreadUtils::buildSearchQuery(params, isArabic, chapterNumber, additional, andMode);
+    int n = params.size();
+    bool isArabic = params.first().toString().isRightToLeft();
+    QStringList columns = QStringList() << "ayahs.surah_id" << "ayahs.verse_number";
+    QMap<QString,QString> joins;
+
+    if (isArabic) {
+        columns << "searchable" << "name" << "content";
+        joins["surahs"] = "ayahs.surah_id=surahs.id";
+        params.append(params);
+    } else {
+        columns << "verses.translation" << "transliteration AS name";
+        joins["verses"] = "(verses.chapter_id=ayahs.surah_id AND verses.verse_id=ayahs.verse_number)";
+        joins["chapters"] = "ayahs.surah_id=chapters.id";
+    }
+
+    QStringList innerJoins;
+    {
+        foreach (QString const& key, joins.keys()) {
+            innerJoins << QString("%1 ON %2").arg(key).arg( joins.value(key) );
+        }
+    }
+
+    QString likeClause = isArabic ? LIKE_CLAUSE2("searchable", "content") : LIKE_CLAUSE("verses.translation");
+    QString query = QString("SELECT %1 FROM ayahs INNER JOIN %2 WHERE (%3").arg( columns.join(",") ).arg( innerJoins.join(" INNER JOIN ") ).arg(likeClause);
+
+    if (n > 1) {
+        query += QString(" AND %1").arg(likeClause).repeated(n-1);
+    }
+
+    query += ")";
+
+    if ( !chapters.isEmpty() )
+    {
+        QStringList all;
+
+        foreach (QVariant const& q, chapters) {
+            all << QString::number( q.toInt() );
+        }
+
+        query += QString(" AND ayahs.surah_id IN (%1)").arg( all.join(",") );
+    }
+
+    LOGGER("*** PARSM" << params);
 
     m_sql.executeQuery(caller, query, QueryId::SearchAyats, params);
-
-    return isArabic;
 }
 
 

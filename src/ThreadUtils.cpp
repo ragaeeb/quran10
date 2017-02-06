@@ -171,9 +171,9 @@ QString ThreadUtils::buildSearchQuery(QVariantList& params, bool isArabic, int c
     }
 
     if (isArabic) {
-        query = QString("SELECT surah_id,verse_number AS verse_id,searchable,name FROM ayahs INNER JOIN surahs ON ayahs.surah_id=surahs.id WHERE (%1").arg( LIKE_CLAUSE(textField) );
+        query = QString("SELECT surah_id,verse_number,searchable,name FROM ayahs INNER JOIN surahs ON ayahs.surah_id=surahs.id WHERE (%1").arg( LIKE_CLAUSE(textField) );
     } else {
-        query = QString("SELECT ayahs.surah_id AS surah_id,ayahs.verse_number AS verse_id,verses.translation,transliteration AS name,%1 FROM verses INNER JOIN ayahs ON (verses.chapter_id=ayahs.surah_id AND verses.verse_id=ayahs.verse_number) INNER JOIN chapters ON ayahs.surah_id=chapters.id WHERE (%2").arg(textField).arg( LIKE_CLAUSE(textField) );
+        query = QString("SELECT ayahs.surah_id AS surah_id,ayahs.verse_number,verses.translation,transliteration AS name,%1 FROM verses INNER JOIN ayahs ON (verses.chapter_id=ayahs.surah_id AND verses.verse_id=ayahs.verse_number) INNER JOIN chapters ON ayahs.surah_id=chapters.id WHERE (%2").arg(textField).arg( LIKE_CLAUSE(textField) );
     }
 
     if ( !constraints.isEmpty() ) {
@@ -300,47 +300,6 @@ QVariantMap ThreadUtils::matchSurah(QVariantMap input, QVariantList const& allSu
     }
 
     return input;
-}
-
-
-QVariantList ThreadUtils::captureAyatsInBody(QString body, QMap<QString, int> const& chapterToId)
-{
-    body.remove( QChar(8217) ); // remove special apostrophe character
-    body = body.simplified();
-
-    QVariantList result;
-    analyzeAyats( QRegExp("[0-9]{1,3}:[0-9]{1,3}\\s{0,1}-\\s{0,1}[0-9]{1,3}[\\)\\]]|[0-9]{1,3}:[0-9]{1,3}[\\)\\]]|\\([0-9]{1,3}\\) {0,1}: {0,1}[0-9]{1,3}- {0,1}[0-9]{1,3}|\\([0-9]{1,3}\\) {0,1}: {0,1}[0-9]{1,3}"), result, body );
-
-    QRegExp nameRegex = QRegExp("[A-Za-z\\-']+\\s{0,1}:\\s{0,1}[0-9]{1,3}\\s{0,1}-\\s{0,1}[0-9]{1,3}[\\)\\]]|[A-Za-z\\-']+\\s{0,1}:\\s{0,1}[0-9]{1,3}[\\)\\]]");
-    int pos = 0;
-
-    while ( (pos = nameRegex.indexIn(body, pos) ) != -1)
-    {
-        QString current = nameRegex.capturedTexts().first();
-        LOGGER(current);
-        current.chop(1);
-        QStringList tokens = current.split(":");
-
-        QString chapterName = tokens.first().trimmed();
-        int chapter = 0;
-
-        QStringList chapters = chapterToId.keys();
-
-        for (int i = chapters.size()-1; i >= 0; i--)
-        {
-            if ( canadainc::TextUtils::isSimilar(chapters[i], chapterName, 70) )
-            {
-                chapter = chapterToId.value(chapters[i]);
-                break;
-            }
-        }
-
-        analyzeVerse(tokens, chapter, result);
-
-        pos += nameRegex.matchedLength();
-    }
-
-    return result;
 }
 
 

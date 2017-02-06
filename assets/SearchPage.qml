@@ -5,12 +5,9 @@ Page
 {
     id: searchRoot
     property string searchText
-    property variant queryFields: []
-    property bool andMode: true
     property alias listControl: listView
     property alias busyControl: busy
     property alias model: adm
-    property variant googleResults: []
     signal performSearch()
     signal picked(int surahId, int verseId);
     signal totalResultsFound(int total)
@@ -27,19 +24,6 @@ Page
         if (key == "tapSearchTitle") {
             titleBar.kindProperties.expandableArea.expanded = true;
             tutorial.execBelowTitleBar("searchOptions", qsTr("Tap on the '%1' button to restrict the search to only a specific surah.").arg(restrictButton.text) );
-        } if (key == "searchOptions") {
-            tutorial.execBelowTitleBar("searchGoogle", qsTr("Sometimes the translations are not the same depending on where you got your translated text from. Quran10 can also search Google to find a better match than the ones found in the app. Enable the '%1' check box to enable it.").arg(searchGoogleCheckBox.text), tutorial.du(8) );
-        } else if (key == "searchGoogle") {
-            titleBar.kindProperties.expandableArea.expanded = false;
-        }
-    }
-    
-    function onCaptured(all, cookie)
-    {
-        if (all && all.length > 0)
-        {
-            helper.fetchAyats(listView, all);
-            reporter.record("GoogleResults", all.length.toString());
         }
     }
     
@@ -50,28 +34,24 @@ Page
     function cleanUp()
     {
         tutorial.tutorialFinished.disconnect(onTutorialFinished);
-        app.ayatsCaptured.disconnect(onCaptured);
         helper.textualChange.disconnect(reload);
     }
     
     onCreationCompleted: {
         deviceUtils.attachTopBottomKeys(searchRoot, listView);
         tutorial.tutorialFinished.connect(onTutorialFinished);
-        app.ayatsCaptured.connect(onCaptured);
         helper.textualChange.connect(reload);
     }
     
-    function getAdditionalQueries()
+    function extractTokens(trimmed)
     {
-        var additional = [];
+        var elements = trimmed.match(/(?:[^\s"]+|"[^"]*")+/g);
         
-        for (var i = queryFields.length-1; i >= 0; i--)
-        {
-            var current = queryFields[i];
-            additional.push( current.queryValue.trim() );
+        for (var j = elements.length-1; j >= 0; j--) {
+            elements[j] = elements[j].replace(/^"(.*)"$/, '$1');
         }
         
-        return additional;
+        return elements;
     }
     
     onPerformSearch: {
@@ -82,15 +62,9 @@ Page
             titleBar.kindProperties.expandableArea.expanded = false;
             busy.delegateActive = true;
             noElements.delegateActive = false;
+            listView.hasTashkeel = trimmed.match(/[\u0617-\u061A\u064B-\u0652]/g) != null;
             
-            var additional = getAdditionalQueries();
-            
-            googleResults = [];
-            helper.searchQuery(listView, trimmed, included.surahId, additional, andMode);
-            
-            if ( additional.length == 0 && persist.getValueFor("searchGoogle") == 1 ) {
-                offloader.searchGoogle(trimmed);
-            }
+            helper.searchQuery(listView, extractTokens(trimmed), included.surahId > 0 ? [included.surahId] : []);
         }
     }
     
@@ -133,57 +107,6 @@ Page
                     type: SystemShortcuts.Search
                 }
             ]
-        },
-        
-        ActionItem {
-            imageSource: "images/menu/ic_add_search.png"
-            title: qsTr("Add") + Retranslate.onLanguageChanged
-            ActionBar.placement: ActionBarPlacement.OnBar
-            
-            onTriggered: {
-                console.log("UserEvent: AddSearchField");
-                
-                definition.source = "SearchConstraint.qml";
-                var additional = definition.createObject();
-                searchContainer.insert(1, additional);
-                
-                additional.textField.requestFocus();
-                
-                additional.startSearch.connect(performSearch);
-                var queryFieldsLocal = queryFields;
-                queryFieldsLocal.push(additional);
-                queryFields = queryFieldsLocal;
-                
-                reporter.record("AddSearchField");
-            }
-            
-            shortcuts: [
-                SystemShortcut {
-                    type: SystemShortcuts.CreateNew
-                }
-            ]
-        },
-        
-        DeleteActionItem
-        {
-            id: removeSearchAction
-            imageSource: "images/menu/ic_search_remove.png"
-            title: qsTr("Remove Constraints") + Retranslate.onLanguageChanged
-            
-            onTriggered: {
-                console.log("UserEvent: RemoveConstraints");
-                
-                for (var i = queryFields.length-1; i >= 0; i--) {
-                    searchContainer.remove(queryFields[i]);
-                }
-                
-                var newFields = [];
-                queryFields = newFields;
-                searchField.resetText();
-                searchField.requestFocus();
-                
-                reporter.record("RemoveConstraints");
-            }
         }
     ]
     
@@ -280,6 +203,15 @@ Page
                                         }
                                     }
                                 ]
+                                
+                                gestureHandlers: [
+                                    TapHandler {
+                                        onTapped: {
+                                            reporter.record("ChapterRestrictionTapped");
+                                            restrictButton.clicked();
+                                        }
+                                    }
+                                ]
                             }
                             
                             Button
@@ -309,19 +241,6 @@ Page
                                 layoutProperties: StackLayoutProperties {
                                     spaceQuota: 1
                                 }
-                            }
-                        }
-                        
-                        PersistCheckBox
-                        {
-                            id: searchGoogleCheckBox
-                            topMargin: 20
-                            enabled: helper.showTranslation
-                            key: "searchGoogle"
-                            text: qsTr("Use Google Assitance") + Retranslate.onLanguageChanged
-                            
-                            onValueChanged: {
-                                reporter.record("UseGoogle", checked.toString());
                             }
                         }
                     }
@@ -415,6 +334,7 @@ Page
                 opacity: 0
                 property int translationSize: helper.translationSize
                 property int primarySize: helper.primarySize
+                property bool hasTashkeel: false
                 scrollRole: ScrollRole.Main
 
                 layout: StackListLayout {
@@ -452,7 +372,7 @@ Page
                         
                         SearchListItem
                         {
-                            bodyText.text: ListItemData.searchable
+                            bodyText.text: ListItem.view.hasTashkeel ? ListItemData.content : ListItemData.searchable
                             bodyText.textStyle.fontSizeValue: ListItem.view.primarySize
                             
                             ListItem.onInitializedChanged: {
@@ -483,8 +403,7 @@ Page
                         busy.delegateActive = false;
                         
                         if (data.length > 0) {
-                            
-                            searchDecorator.decorateSearchResults(data, adm, [searchField.text.trim()], data[0].searchable ? "searchable" : "translation" );
+                            searchDecorator.decorateSearchResults(data, adm, extractTokens(searchField.text.trim()), data[0].searchable ? listView.hasTashkeel ? "content" : "searchable" : "translation" );
                         }
                     } else if (id == QueryId.FetchAyats) {
                         adm.append(data);
@@ -496,7 +415,7 @@ Page
                 onTriggered: {
                     console.log("UserEvent: AyatTriggeredFromSearch");
                     var d = dataModel.data(indexPath);
-                    picked(d.surah_id, d.verse_id);
+                    picked(d.surah_id, d.verse_number);
                     
                     reporter.record("AyatTriggeredFromSearch");
                 }

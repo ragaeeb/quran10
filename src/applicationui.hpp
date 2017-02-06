@@ -44,14 +44,11 @@ private slots:
     void childCardDone(bb::system::CardDoneMessage const& message=bb::system::CardDoneMessage());
 	void invoked(bb::system::InvokeRequest const& request);
 	void lazyInit();
-	void onCaptureCompleted();
 	void onDataLoaded(QVariant id, QVariant data);
 	void onMissingAyatImagesFinished();
-    void onRequestComplete(QVariant const& cookie, QByteArray const& data);
     void onDeflationDone(QVariantMap const& m);
 
 signals:
-    void ayatsCaptured(QVariantList const& result);
     void childCardFinished(QString const& message);
     void initialize();
     void lazyInitComplete();

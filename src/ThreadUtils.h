@@ -30,7 +30,6 @@ struct ThreadUtils
     static void cleanLegacyPics();
     static void compressFiles(canadainc::Report& r, QString const& zipPath, const char* password);
     static QVariantMap matchSurah(QVariantMap input, QVariantList const& allSurahs);
-    static QVariantList captureAyatsInBody(QString body, QMap<QString, int> const& chapterToId);
     static void preventIndexing(QString const& dirPath);
 };
 

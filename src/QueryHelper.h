@@ -50,7 +50,7 @@ public:
     int primarySize() const;
     int translationSize() const;
 
-    Q_INVOKABLE bool searchQuery(QObject* caller, QString const& trimmedText, int chapterNumber=0, QVariantList const& additional=QVariantList(), bool andMode=true);
+    Q_INVOKABLE void searchQuery(QObject* caller, QVariantList params, QVariantList const& chapters=QVariantList());
     Q_INVOKABLE void fetchAdjacentAyat(QObject* caller, int surahId, int verseId, int delta);
     Q_INVOKABLE void fetchAllAyats(QObject* caller, int fromChapter, int toChapter=0);
     Q_INVOKABLE void fetchAllChapterAyatCount(QObject* caller);

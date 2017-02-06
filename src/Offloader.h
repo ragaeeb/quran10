@@ -40,7 +40,6 @@ public:
     Q_INVOKABLE void addToHomeScreen(int chapter, int verse, QString const& label);
     Q_INVOKABLE void addToHomeScreen(qint64 suitePageId, QString const& label);
     Q_INVOKABLE void decorateTafsir(bb::cascades::ArrayDataModel* adm, QString const& defaultImage="images/list/ic_tafsir.png");
-    Q_INVOKABLE void searchGoogle(QString const& query);
 };
 
 } /* namespace quran */

@@ -132,33 +132,6 @@ QVariantList Offloader::normalizeJuzs(QVariantList const& source) {
     return ThreadUtils::normalizeJuzs(source);
 }
 
-
-void Offloader::searchGoogle(QString const& query)
-{
-    LOGGER(query);
-
-    if ( !query.isRightToLeft() )
-    {
-        QVariantMap q;
-        q[COOKIE_GOOGLE_SEARCH] = true;
-
-        QUrl url;
-        url.setScheme("https");
-        url.setHost("ajax.googleapis.com");
-        url.setPath("ajax/services/search/web");
-        url.addQueryItem("v", "1.0");
-        url.addQueryItem("q", query);
-
-        q[URI_KEY] = url;
-        q[KEY_TRANSFER_NAME] = tr("Google Search: %1").arg(query);
-
-        m_queue->process(q, true);
-    } else {
-        LOGGER("IgnoreRTL");
-    }
-}
-
-
 Offloader::~Offloader()
 {
 }
