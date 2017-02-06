@@ -9,7 +9,6 @@ Page
     property bool andMode: true
     property alias listControl: listView
     property alias busyControl: busy
-    property alias def: definition
     property alias model: adm
     property variant googleResults: []
     signal performSearch()
@@ -483,7 +482,10 @@ Page
                         adm.append(data);
                         busy.delegateActive = false;
                         
-                        offloader.decorateSearchResults(data, searchField.text, adm, getAdditionalQueries());
+                        if (data.length > 0) {
+                            
+                            searchDecorator.decorateSearchResults(data, adm, [searchField.text.trim()], data[0].searchable ? "searchable" : "translation" );
+                        }
                     } else if (id == QueryId.FetchAyats) {
                         adm.append(data);
                     }
@@ -512,6 +514,10 @@ Page
         ImagePaintDefinition {
             id: bg
             imageSource: "images/backgrounds/background.png"
+        },
+        
+        SearchDecorator {
+            id: searchDecorator
         }
     ]
 }

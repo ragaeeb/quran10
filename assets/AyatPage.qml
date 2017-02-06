@@ -46,6 +46,7 @@ Page
             titleControl.addOption(tafsirOption);
             tafsirOption.tafsirCount = data[0].tafsir_count;
         } else if (id == QueryId.FetchSimilarAyatContent && data.length > 0 && similarOption.selected) {
+            console.log("*** SXYDLK");
             pluginsDelegate.control.applyData(data, helper.showTranslation ? translation : body);
         } else if (id == QueryId.FetchSurahHeader && data.length > 0) {
             ayatOption.text = data[0].translation ? data[0].translation : data[0].name;
@@ -512,6 +513,7 @@ Page
                     {
                         id: body
                         property string value
+                        property string decorated
                         content.flags: TextContentFlag.ActiveTextOff | TextContentFlag.EmoticonsOff
                         textStyle.fontSize: FontSize.PointValue
                         textStyle.fontSizeValue: helper.primarySize
@@ -520,6 +522,11 @@ Page
                         horizontalAlignment: HorizontalAlignment.Fill
                         verticalAlignment: VerticalAlignment.Fill
                         multiline: true
+                        
+                        onDecoratedChanged: {
+                            console.log("**** DECORAT", decorated);
+                            text = decorated;
+                        }
                         
                         onValueChanged: {
                             text = value;
@@ -596,6 +603,7 @@ Page
                     {
                         id: translation
                         property string value
+                        property string decorated
                         multiline: true
                         content.flags: TextContentFlag.ActiveTextOff | TextContentFlag.EmoticonsOff
                         textStyle.fontSize: FontSize.PointValue
@@ -605,6 +613,11 @@ Page
                         
                         onValueChanged: {
                             text = value;
+                        }
+                        
+                        onDecoratedChanged: {
+                            console.log("**** DECORAT", decorated);
+                            text = decorated;
                         }
                         
                         contextActions: [

@@ -269,7 +269,6 @@ NavigationPane
             if (id == QueryId.FetchRandomQuote && data.length > 0)
             {
                 var quote = data[0];
-                console.log("***", JSON.stringify(quote));
                 var plainText = "“%1” - %2 [%3]".arg(quote.body).arg(quote.author).arg(quote.reference);
                 
                 var partQuote = "<i>“%1”</i>".arg( searchDecorator.toHtmlEscaped(quote.body) );
@@ -279,6 +278,7 @@ NavigationPane
                 
                 if (quote.translator) {
                     parts += "\n\nTranslated by <i>%1%2</i>".arg( searchDecorator.toHtmlEscaped(quote.translator) ).arg( global.getSuffix(quote.translator_birth, quote.translator_death, quote.translator_companion == 1, quote.translator_female == 1) );
+                    plainText += "\n\nTranslated by "+quote.translator;
                 }
                 
                 var body = "<html>"+parts+"</html>";

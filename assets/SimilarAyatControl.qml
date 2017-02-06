@@ -1,4 +1,5 @@
 import bb.cascades 1.2
+import com.canadainc.data 1.0
 
 ResizableContainer
 {
@@ -10,8 +11,9 @@ ResizableContainer
         adm.append(data);
         
         headerSubtitle = data.length;
-        
-        offloader.decorateSimilarResults(data, bodyControl.value, adm, bodyControl);
+        console.log("** DSKLFJKLSDFzzz");
+        searchDecorator.decorateSimilar(data, adm, bodyControl, "content");
+        console.log("** DSKLFJKLSDFffffzzz");
         
         tutorial.execBelowTitleBar( "relatedExpand", qsTr("You can expand this top section by tapping on the 'Related' header.") );
         tutorial.exec( "relatedExpand2", qsTr("To minimize it, tap on the ayat header on the bottom pane."), HorizontalAlignment.Center, VerticalAlignment.Center, 0, 0, tutorial.du(12) );
@@ -66,4 +68,10 @@ ResizableContainer
             }
         ]
     }
+    
+    attachedObjects: [
+        SearchDecorator {
+            id: searchDecorator
+        }
+    ]
 }
