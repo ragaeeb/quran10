@@ -275,6 +275,10 @@ void RecitationHelper::downloadAndPlayAll(bb::cascades::ArrayDataModel* adm, int
         int n = to >= from ? to : adm->size()-1;
         m_ayatToIndex.clear();
 
+        if ( from != 1 && from != 9 && m_persistance->getValueFor("playBismillah") == 1 ) { // if it's not Surah Al-Faatiha & at-Tawbah
+            all << qMakePair<int,int>(1,1);
+        }
+
         for (int i = from; i <= n; i++)
         {
             QVariantMap q = adm->value(i).toMap();
@@ -329,6 +333,11 @@ void RecitationHelper::downloadAndPlayTajweed(int chapter, int verse)
     }
 
     QDir q( QString("%1/tajweed").arg( m_persistance->getValueFor(KEY_OUTPUT_FOLDER).toString() ) );
+
+    if ( !q.exists() ) {
+        q.mkpath(".");
+    }
+
     QString absolutePath = QString("%1/%2").arg( q.path() ).arg( fileName.mid( fileName.lastIndexOf("/")+1 ) );
     m_playlistUrl = QUrl::fromLocalFile(absolutePath);
 

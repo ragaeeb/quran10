@@ -148,7 +148,7 @@ Page
                         if (selectedOption == none) {
                             infoText.text = qsTr("No translation will be displayed.") + Retranslate.onLanguageChanged
                         } else if (selectedOption == english) {
-                            infoText.text = qsTr("Translation will be provided in %1 by %2. Please see why this is the only English translation we support:\nhttp://canadainc.org/hosting/quran_10/english_translation.htm").arg(selectedOption.text).arg(selectedOption.description) + Retranslate.onLanguageChanged
+                            infoText.text = qsTr("Translation will be provided in %1 by %2. Please see why this is the only English translation we support:\nhttps://www.youtube.com/watch?v=8CKKIN3ltyY").arg(selectedOption.text).arg(selectedOption.description) + Retranslate.onLanguageChanged
                             infoText.content.flags = TextContentFlag.ActiveText | TextContentFlag.EmoticonsOff;
                         } else {
                             infoText.text = qsTr("Translation will be provided in %1 by %2.").arg(selectedOption.text).arg(selectedOption.description) + Retranslate.onLanguageChanged
@@ -398,6 +398,26 @@ Page
                             infoText.text = qsTr("Extra spacing between the arabic ayat will be disabled. Note that this may cause performance issues.") + Retranslate.onLanguageChanged
                         } else {
                             infoText.text = qsTr("Extra spacing between the arabic text will be added to improve performance.") + Retranslate.onLanguageChanged
+                        }
+                    }
+                }
+                
+                PersistCheckBox
+                {
+                    id: playBismillah
+                    topMargin: 20
+                    key: "playBismillah"
+                    text: qsTr("Play Basmalah Before Start of any Surah") + Retranslate.onLanguageChanged
+                    
+                    onValueChanged: {
+                        reporter.record("PlayBasmalah", checked.toString());
+                    }
+                    
+                    onCheckedChanged: {
+                        if (checked) {
+                            infoText.text = qsTr("The Basmalah will be played before the start of every surah.") + Retranslate.onLanguageChanged
+                        } else {
+                            infoText.text = qsTr("The Basmalah will only be played before the start of Surah al-Faatiha.") + Retranslate.onLanguageChanged
                         }
                     }
                 }
