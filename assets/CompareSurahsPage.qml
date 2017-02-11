@@ -30,10 +30,14 @@ Page
         
         for (var i = surahIds.length-1; i >= 0; i--)
         {
-            var surahId = surahIds[i];
+            var surahId = surahIds[i].surah_id;
             
             var l = listDelegate.createObject();
             l.list.chapterNumber = surahId;
+            
+            if (surahIds[i].verse_number > 0) {
+                l.list.verseNumber = surahIds[i].verse_number;
+            }
             
             if (i == 0) {
                 l.showSeparator = false;
@@ -112,6 +116,10 @@ Page
                         alv.theDataModel.clear();
                         alv.theDataModel.append(data);
                         busy.loaded = busy.loaded+1;
+                        
+                        if (alv.verseNumber > 0) {
+                            alv.scrollToItem([alv.verseNumber-1], ScrollAnimation.None);
+                        }
                     } else if (id == QueryId.FetchSurahHeader) {
                         var value = data[0].name;
                         
@@ -167,6 +175,7 @@ Page
                             id: alv
                             property alias theDataModel: verseModel
                             property int chapterNumber
+                            property int verseNumber
                             property int primarySize: helper.primarySize
                             property alias custom: customTextStyle
                             

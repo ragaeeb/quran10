@@ -167,7 +167,8 @@ NavigationPane
                     var surahIds = [];
                     
                     for (var i = all.length-1; i >= 0; i--) {
-                        surahIds.push( pickerPage.pickerList.dataModel.data(all[i]).surah_id );
+                        var element = pickerPage.pickerList.dataModel.data(all[i]);
+                        surahIds.push( {'surah_id': element.surah_id, 'verse_number': element.verse_number} );
                     }
                     
                     p.surahIds = surahIds;
