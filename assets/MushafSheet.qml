@@ -229,11 +229,17 @@ Sheet
                 id: downloadAll
                 title: qsTr("Download All") + Retranslate.onLanguageChanged
                 imageSource: "images/menu/ic_download_mushaf.png"
-                enabled: mushaf.enableDownloadAll
+                
+                function onFinished(confirmed)
+                {
+                    if (confirmed) {
+                        mushaf.requestEntireMushaf();
+                    }
+                }
                 
                 onTriggered: {
                     console.log("UserEvent: MushafDownloadAll");
-                    mushaf.fetchMushafSize();
+                    persist.showConfirmDialog( downloadAll, qsTr("This setting may require a download of the images of the pages. Would you like to download the images now? If you select no, they will be downloaded as you access each page manually.") );
                     
                     reporter.record("MushafDownloadAll");
                 }

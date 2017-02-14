@@ -1,5 +1,3 @@
-#include <bb/FileSystemInfo>
-
 #include <bb/platform/HomeScreen>
 
 #include <bb/cascades/AbstractTextControl>

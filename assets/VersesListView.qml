@@ -205,7 +205,7 @@ ListView
         if (key == "follow") {
             follow = newValue == 1;
         } else if (key == "overlayAyatImages") {
-            showImages = newValue == 1;
+            showImages = newValue > 0;
         } else if (key == "disableSpacing") {
             disableSpacing = newValue == 1;
         }

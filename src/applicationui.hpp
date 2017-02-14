@@ -46,7 +46,6 @@ private slots:
 	void lazyInit();
 	void onDataLoaded(QVariant id, QVariant data);
 	void onMissingAyatImagesFinished();
-    void onDeflationDone(QVariantMap const& m);
 
 signals:
     void childCardFinished(QString const& message);

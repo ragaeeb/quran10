@@ -215,49 +215,48 @@ QString ThreadUtils::buildChaptersQuery(QVariantList& args, QString const& text,
 }
 
 
-bool ThreadUtils::allAyatImagesExist(QVariantList const& surahData, QString const& outputDirectory)
+QVariantList ThreadUtils::allAyatImagesExist(QVariantList const& surahData, QString const& outputDirectory, QString const& ayatDirectory)
 {
     QDir q(outputDirectory);
-    q.cd(JOINED_LETTERS_DIRECTORY);
+    q.cd(ayatDirectory);
     QSet<QString> all = QSet<QString>::fromList( q.entryList(QDir::Files | QDir::NoDot | QDir::NoDotDot) );
+    QVariantList missing;
 
-    if ( all.size() >= surahData.size() )
+    foreach (QVariant const& surah, surahData)
     {
-        foreach (QVariant const& surah, surahData)
-        {
-            QVariantMap s = surah.toMap();
-            int id = s.value(KEY_CHAPTER_ID).toInt();
-            int n = s.value("verse_count").toInt();
+        QVariantMap s = surah.toMap();
+        int surahId = s.value(KEY_CHAPTER_ID).toInt();
+        int n = s.value("verse_count").toInt();
 
-            for (int i = 1; i <= n; i++)
+        for (int i = 1; i <= n; i++)
+        {
+            QString absolutePath = QString("%1_%2.png").arg(surahId).arg(i);
+
+            if ( !all.contains(absolutePath) )
             {
-                QString absolutePath = QString("%1_%2.png").arg(id).arg(i);
-
-                if ( !all.contains(absolutePath) ) {
-                    LOGGER("NotFound" << absolutePath);
-                    return false;
-                }
+                QVariantMap qvm;
+                qvm[KEY_CHAPTER_ID] = surahId;
+                qvm[KEY_VERSE_ID] = i;
+                missing << qvm;
             }
         }
+    }
 
-        QFile dirPath( q.path() );
+    QFile dirPath( q.path() );
 
-        if ( dirPath.permissions() != READ_WRITE_EXEC && NOT_APP_DIR(outputDirectory) )
-        {
-            LOGGER("WasNotModded!" << q.path() );
+    if ( dirPath.permissions() != READ_WRITE_EXEC && NOT_APP_DIR(outputDirectory) )
+    {
+        LOGGER("WasNotModded!" << q.path() );
 
-            bool modded = dirPath.setPermissions(READ_WRITE_EXEC);
+        bool modded = dirPath.setPermissions(READ_WRITE_EXEC);
 
-            if (!modded) {
-                LOGGER("CantBeModded!");
-            }
+        if (!modded) {
+            LOGGER("CantBeModded!");
         }
-
-        return true;
     }
 
     LOGGER( "SomethingMissing!" << all.size() << surahData.size() );
-    return false;
+    return missing;
 }
 
 

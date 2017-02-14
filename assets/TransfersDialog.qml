@@ -6,11 +6,17 @@ Delegate
     
     function onQueueChanged()
     {
+        console.log("*** QUEUED CHANGED");
         if (object) {
             object.preventExit();
         }
         
         active = true;
+        console.log("*** ACTIVE!");
+    }
+    
+    onActiveChanged: {
+        console.log("*** ACTIVEX", active);
     }
     
     onCreationCompleted: {

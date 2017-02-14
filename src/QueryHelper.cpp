@@ -198,17 +198,6 @@ void QueryHelper::fetchAllAyats(QObject* caller, int fromChapter, int toChapter)
     QString ayatImagePath = "";
     QVariantList params;
 
-    if ( m_persist->getValueFor(KEY_JOIN_LETTERS).toInt() == 1 )
-    {
-        QDir q( QString("%1/%2").arg( m_persist->getValueFor(KEY_OUTPUT_FOLDER).toString() ).arg(JOINED_LETTERS_DIRECTORY) );
-
-        if ( q.exists() )
-        {
-            ayatImagePath = QString(",? || ayahs.surah_id || '_' || ayahs.verse_number || '.png' AS imagePath");
-            params << q.path()+"/";
-        }
-    }
-
     if ( showTranslation() ) {
         query = QString("SELECT ayahs.surah_id,content AS arabic,ayahs.verse_number AS verse_id,translation%3 FROM ayahs INNER JOIN verses ON (ayahs.surah_id=verses.chapter_id AND ayahs.verse_number=verses.verse_id) WHERE ayahs.surah_id BETWEEN %1 AND %2").arg(fromChapter).arg(toChapter).arg(ayatImagePath);
     } else {

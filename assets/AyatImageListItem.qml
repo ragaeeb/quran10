@@ -5,7 +5,7 @@ AyatListItemBase
     id: itemRoot
     
     ListItem.onDataChanged: {
-        scroller.scrollToPoint(1440,0);
+        mushaf.requestAyat(itemRoot, ListItemData.surah_id, ListItemData.verse_id);
     }
     
     function updateState(selected) {
@@ -22,7 +22,6 @@ AyatListItemBase
         scrollViewProperties.minContentScale: 1
         property int startX
         property int startY
-        visible: ListItemData.imagePath ? true : false
         
         onTouch: {
             if ( event.isDown() )
@@ -51,8 +50,30 @@ AyatListItemBase
                 horizontalAlignment: HorizontalAlignment.Right
                 scalingMethod: ScalingMethod.AspectFit
                 loadEffect: ImageViewLoadEffect.FadeZoom
-                imageSource: "file://"+ListItemData.imagePath
+                
+                onImageChanged: {
+                    scroller.scrollToPoint(1440,0);
+                }
+                
+                attachedObjects: [
+                    ImageTracker {
+                        id: tracker
+                        
+                        onStateChanged: {
+                            if (tracker.state == 2) {
+                                iv.image = tracker.image;
+                            }
+                        }
+                    }
+                ]
             }
+        }
+    }
+    
+    function onDataLoaded(id, data)
+    {
+        if (ListItemData && data.surah_id == ListItemData.surah_id && data.verse_id == ListItemData.verse_id) {
+            tracker.imageSource = data.localUri;
         }
     }
 }

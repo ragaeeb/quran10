@@ -20,7 +20,7 @@ using namespace bb::cascades;
 
 struct ThreadUtils
 {
-    static bool allAyatImagesExist(QVariantList const& surahData, QString const& outputDirectory);
+    static QVariantList allAyatImagesExist(QVariantList const& surahData, QString const& outputDirectory, QString const& ayatDirectory);
     static bool performRestore(QString const& source);
     static QString buildChaptersQuery(QVariantList& args, QString const& text, bool showTranslation);
     static QString buildSearchQuery(QVariantList& params, bool isArabic, int chapterNumber, QVariantList additional, bool andMode);

@@ -12,7 +12,6 @@ namespace bb {
 
 namespace canadainc {
     class Persistance;
-    class QueueDownloader;
 }
 
 namespace quran {
@@ -24,14 +23,9 @@ class Offloader : public QObject
     Q_OBJECT
 
     Persistance* m_persist;
-    QueueDownloader* m_queue;
-
-signals:
-    void deflationDone(QVariantMap const& cookie);
-    void downloadPlugins(QVariantList const& queue);
 
 public:
-    Offloader(Persistance* persist, QueueDownloader* queue, QObject* parent=NULL);
+    Offloader(Persistance* persist);
     virtual ~Offloader();
 
     Q_INVOKABLE QString textualizeAyats(bb::cascades::DataModel* adm, QVariantList const& selectedIndices, QString const& chapterTitle, bool showTranslation);

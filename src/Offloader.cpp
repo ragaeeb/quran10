@@ -6,7 +6,6 @@
 #include "IOUtils.h"
 #include "Logger.h"
 #include "Persistance.h"
-#include "QueueDownloader.h"
 #include "QueryId.h"
 #include "TextUtils.h"
 #include "ThreadUtils.h"
@@ -17,8 +16,8 @@ namespace quran {
 
 using namespace canadainc;
 
-Offloader::Offloader(Persistance* persist, QueueDownloader* queue, QObject* parent) :
-        QObject(parent), m_persist(persist), m_queue(queue)
+Offloader::Offloader(Persistance* persist) :
+        m_persist(persist)
 {
 }
 

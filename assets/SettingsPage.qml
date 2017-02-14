@@ -250,6 +250,77 @@ Page
                     ]
                 }
                 
+                PersistDropDown
+                {
+                    id: ayatRender
+                    title: qsTr("Arabic Render") + Retranslate.onLanguageChanged
+                    horizontalAlignment: HorizontalAlignment.Fill
+                    key: "overlayAyatImages"
+                    
+                    Option {
+                        id: arabicText
+                        text: qsTr("Text (Fastest)") + Retranslate.onLanguageChanged
+                        description: qsTr("This is the recommended setting.") + Retranslate.onLanguageChanged
+                        value: 0
+                        imageSource: "images/dropdown/ic_delete.png"
+                    }
+                    
+                    Option {
+                        id: hqImages
+                        text: qsTr("Hi-Res Images") + Retranslate.onLanguageChanged
+                        description: qsTr("Hi quality images") + Retranslate.onLanguageChanged
+                        value: 2
+                        imageSource: "images/dropdown/flags/albanian.jpg"
+                    }
+                    
+                    Option {
+                        id: lqImages
+                        text: qsTr("Low-Res Images") + Retranslate.onLanguageChanged
+                        description: qsTr("Fair quality images") + Retranslate.onLanguageChanged
+                        value: 1
+                        imageSource: "images/dropdown/flags/bengali.jpg"
+                    }
+                    
+                    function onFinished(confirmed)
+                    {
+                        if (confirmed) {
+                            app.checkMissingAyatImages();
+                        }
+                    }
+                    
+                    onSelectedOptionChanged: {
+                        if (selectedOption == arabicText) {
+                            infoText.text = qsTr("Arabic verses will be rendered in text glyphs.") + Retranslate.onLanguageChanged
+                        } else if (selectedOption == hqImages) {
+                            infoText.text = qsTr("Arabic verses will be rendered with hi-quality images") + Retranslate.onLanguageChanged
+                        } else {
+                            infoText.text = qsTr("Arabic verses will be rendered with fair-quality images.") + Retranslate.onLanguageChanged
+                        }
+                    }
+                    
+                    onValueChanged: {
+                        if (diff) {
+                            reporter.record("AyatRender", ayatRender.selectedValue);
+                            
+                            if (ayatRender.selectedValue != 0) {
+                                persist.showConfirmDialog( ayatRender, qsTr("This setting may require a download of the images of the verses. Would you like to download the images now? If you select no, they will be downloaded as you access each surah.") );
+                            }
+                        }
+                    }
+                    
+                    onExpandedChanged: {
+                        if (expanded) {
+                            tutorial.execCentered( "arabicRender", qsTr("If you notice that some of the arabic letters are disconnected, then try switching to either the Hi-Res or Fair-quality image options."), "images/toast/ic_info.png" );
+                            
+                            if (false) {
+                                infoText.text = qsTr("Images will be placed on top of the arabic text to match the rules the Qu'ran was revealed in. Please note that this can cost you ~25 MB of space as well as have a performance impact.") + Retranslate.onLanguageChanged
+                            } else {
+                                infoText.text = qsTr("The app will render the original Arabic text of the Qu'ran, but the BlackBerry 10 OS may sometimes apply some rules to disconnect some of the letters. This should not change the sounds or the meaning but it should just be a visual difference. This will render the ayats really quickly.") + Retranslate.onLanguageChanged
+                            }
+                        }
+                    }
+                }
+                
                 Container
                 {
                     topPadding: 40;
@@ -317,31 +388,6 @@ Page
                     }
                     
                     bottomPadding: 50
-                }
-                
-                PersistCheckBox
-                {
-                    id: joinDisconnected
-                    topMargin: 20
-                    key: "overlayAyatImages"
-                    text: qsTr("Join Disconnected Letters") + Retranslate.onLanguageChanged
-                    enabled: mushaf.enableDownloadJoined
-                    
-                    onValueChanged: {
-                        if (checked) {
-                            app.checkMissingAyatImages();
-                        }
-                        
-                        reporter.record("JoinDisconnected", checked.toString());
-                    }
-                    
-                    onCheckedChanged: {
-                        if (checked) {
-                            infoText.text = qsTr("Images will be placed on top of the arabic text to match the rules the Qu'ran was revealed in. Please note that this can cost you ~25 MB of space as well as have a performance impact.") + Retranslate.onLanguageChanged
-                        } else {
-                            infoText.text = qsTr("The app will render the original Arabic text of the Qu'ran, but the BlackBerry 10 OS may sometimes apply some rules to disconnect some of the letters. This should not change the sounds or the meaning but it should just be a visual difference. This will render the ayats really quickly.") + Retranslate.onLanguageChanged
-                        }
-                    }
                 }
                 
                 CheckBox

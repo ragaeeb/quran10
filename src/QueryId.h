@@ -28,6 +28,7 @@ public:
         FetchAllTafsirForSuite,
         FetchAyat,
         FetchAyats,
+        FetchAyatImage,
         FetchChapters,
         FetchJuz,
         FetchLastProgress,
