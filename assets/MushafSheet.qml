@@ -12,7 +12,6 @@ Sheet
     
     onCurrentPageChanged: {
         mushaf.requestPage(currentPage);
-        
         reporter.record("CurrentMushafPage", currentPage);
     }
     
@@ -185,10 +184,52 @@ Sheet
             
             ActionItem
             {
+                id: bookmark
+                imageSource: "images/menu/ic_mark_favourite.png"
+                title: qsTr("Bookmark") + Retranslate.onLanguageChanged
+                ActionBar.placement: ActionBarPlacement.OnBar
+                
+                shortcuts: [
+                    SystemShortcut {
+                        type: SystemShortcuts.CreateNew
+                    }
+                ]
+                
+                function onDataLoaded(id, data)
+                {
+                    if (id == QueryId.SaveBookmark)
+                    {
+                        persist.showToast( qsTr("Favourite added for Page %1").arg(currentPage), "images/menu/ic_bookmark_add.png" );
+                        bookmarkHelper.bookmarksUpdated();
+                    }
+                }
+                
+                function onTagEntered(tag, name)
+                {
+                    bookmarkHelper.saveBookmark(bookmark, currentPage, 0, name, tag);
+                    reporter.record("BookmarkPage", currentPage);
+                    reporter.record("FavouriteTag", tag);
+                }
+                
+                function onFinished(name)
+                {
+                    if (name.length > 0) {
+                        persist.showPrompt( bookmark, qsTr("Enter tag"), qsTr("You can use this to categorize related pages together."), "", qsTr("Enter a tag for this bookmark (ie: ramadan). You can leave this blank if you don't want to use a tag."), 50, "onTagEntered", name );
+                    }
+                }
+                
+                onTriggered: {
+                    console.log("UserEvent: BookmarkPageTriggered");
+                    persist.showPrompt( bookmark, qsTr("Enter name"), qsTr("You can use this to quickly recognize this page in the favourites tab."), qsTr("Page #%1").arg(currentPage), qsTr("Name..."), 50 );
+                }
+            },
+            
+            ActionItem
+            {
                 id: stretchAction
                 imageSource: mushaf.stretchMushaf ? "images/menu/ic_aspect_fill.png" : "images/menu/ic_stretch.png"
                 title: mushaf.stretchMushaf ? qsTr("Aspect Fill") + Retranslate.onLanguageChanged : qsTr("Stretch") + Retranslate.onLanguageChanged
-                ActionBar.placement: ActionBarPlacement.OnBar
+                ActionBar.placement: ActionBarPlacement.InOverflow
                 
                 onTriggered: {
                     console.log("UserEvent: StretchTriggered");

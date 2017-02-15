@@ -80,8 +80,8 @@ void QueryBookmarkHelper::saveBookmark(QObject* caller, int surahId, int verseId
 
     initBookmarks(caller);
 
-    QString query = QString("INSERT INTO bookmarks (surah_id,verse_id,name,tag,timestamp) VALUES (%1,%2,?,?,%3)").arg(surahId).arg(verseId).arg( QDateTime::currentMSecsSinceEpoch() );
-    m_sql->executeQuery(caller, query, QueryId::SaveBookmark, QVariantList() << name << tag);
+    QString query = QString("INSERT INTO bookmarks (surah_id,verse_id,name,tag,timestamp) VALUES (?,?,?,?,%1)").arg( QDateTime::currentMSecsSinceEpoch() );
+    m_sql->executeQuery(caller, query, QueryId::SaveBookmark, QVariantList() << surahId << verseId << name << tag);
 }
 
 

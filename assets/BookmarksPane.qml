@@ -235,9 +235,9 @@ NavigationPane
                         {
                             id: sli
                             title: ListItemData.name
-                            status: ListItemData.verse_id
-                            description: ListItemData.surah_name
-                            imageSource: "images/list/ic_bookmark.png"
+                            status: ListItemData.verse_id ? ListItemData.verse_id : ""
+                            description: ListItemData.verse_id ? ListItemData.surah_name : qsTr("Page %1").arg(ListItemData.surah_id)
+                            imageSource: ListItemData.verse_id ? "images/list/ic_bookmark.png" : "images/list/ic_mushaf_page.png"
                             
                             contextActions: [
                                 ActionSet
@@ -264,11 +264,20 @@ NavigationPane
                     console.log("UserEvent: FavouriteTriggered");
                     var data = dataModel.data(indexPath);
                     
-                    var sp = Qt.launch("AyatPage.qml");
-                    sp.surahId = data.surah_id;
-                    sp.verseId = data.verse_id;
-                    
-                    reporter.record("FavouriteTriggered", sp.surahId+":"+sp.verseId);
+                    if (data.verse_id)
+                    {
+                        var sp = Qt.launch("AyatPage.qml");
+                        sp.surahId = data.surah_id;
+                        sp.verseId = data.verse_id;
+                        
+                        reporter.record("FavouriteTriggered", sp.surahId+":"+sp.verseId);
+                    } else {
+                        var sheet = Qt.initQml("MushafSheet.qml");
+                        sheet.currentPage = data.surah_id;
+                        sheet.open();
+                        
+                        reporter.record("FavMushafPage", data.surah_id.toString());
+                    }
                 }
                 
                 horizontalAlignment: HorizontalAlignment.Fill
