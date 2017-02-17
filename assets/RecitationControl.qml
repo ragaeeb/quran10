@@ -67,34 +67,8 @@ Container
         ]
     }
     
-    Slider
-    {
-        id: progress
-        enabled: player.playing
-        verticalAlignment: VerticalAlignment.Center
-        
-        function onPositionChanged(position) {
-            value = position;
-        }
-        
-        function onDurationChanged(duration) {
-            toValue = duration;
-        }
-        
-        onTouch: {
-            if ( event.isUp() ) {
-                player.seek(immediateValue);
-            }
-        }
-        
-        layoutProperties: StackLayoutProperties {
-            spaceQuota: 1
-        }
-        
+    SeekBar {
         onCreationCompleted: {
-            player.durationChanged.connect(progress.onDurationChanged);
-            player.positionChanged.connect(progress.onPositionChanged);
-            
             rotator.play();
         }
     }

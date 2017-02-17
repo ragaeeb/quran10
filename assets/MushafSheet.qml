@@ -112,6 +112,45 @@ Sheet
             
             ActionItem
             {
+                id: playAllAction
+                property int playingPage
+                title: player.playing && (playingPage == currentPage) ? qsTr("Pause") : qsTr("Play")
+                imageSource: player.playing && (playingPage == currentPage) ? "images/menu/ic_pause.png" : "images/menu/ic_play.png"
+                ActionBar.placement: ActionBarPlacement.OnBar
+                
+                onTriggered:
+                {
+                    console.log("UserEvent: PlayAll");
+                    
+                    timer.restart();
+
+                    if ( player.active && (playingPage == currentPage) ) {
+                        player.togglePlayback();
+                        reporter.record("TogglePlay");
+                    } else {
+                        recitation.downloadAndPlay(currentPage, 0);
+                        reporter.record("PlayPage", currentPage.toString());
+                    }
+                }
+            },
+            
+            ActionItem
+            {
+                id: stretchAction
+                imageSource: mushaf.stretchMushaf ? "images/menu/ic_aspect_fill.png" : "images/menu/ic_stretch.png"
+                title: mushaf.stretchMushaf ? qsTr("Aspect Fill") + Retranslate.onLanguageChanged : qsTr("Stretch") + Retranslate.onLanguageChanged
+                ActionBar.placement: ActionBarPlacement.InOverflow
+                
+                onTriggered: {
+                    console.log("UserEvent: StretchTriggered");
+                    mushaf.stretchMushaf = !mushaf.stretchMushaf;
+                    
+                    reporter.record("StretchMushaf", mushaf.stretchMushaf.toString());
+                }
+            },
+            
+            ActionItem
+            {
                 id: jumpSurah
                 property variant pageNumbers
                 title: qsTr("Surah") + Retranslate.onLanguageChanged
@@ -221,21 +260,6 @@ Sheet
                 onTriggered: {
                     console.log("UserEvent: BookmarkPageTriggered");
                     persist.showPrompt( bookmark, qsTr("Enter name"), qsTr("You can use this to quickly recognize this page in the favourites tab."), qsTr("Page #%1").arg(currentPage), qsTr("Name..."), 50 );
-                }
-            },
-            
-            ActionItem
-            {
-                id: stretchAction
-                imageSource: mushaf.stretchMushaf ? "images/menu/ic_aspect_fill.png" : "images/menu/ic_stretch.png"
-                title: mushaf.stretchMushaf ? qsTr("Aspect Fill") + Retranslate.onLanguageChanged : qsTr("Stretch") + Retranslate.onLanguageChanged
-                ActionBar.placement: ActionBarPlacement.InOverflow
-                
-                onTriggered: {
-                    console.log("UserEvent: StretchTriggered");
-                    mushaf.stretchMushaf = !mushaf.stretchMushaf;
-                    
-                    reporter.record("StretchMushaf", mushaf.stretchMushaf.toString());
                 }
             },
             
@@ -470,6 +494,20 @@ Sheet
                     }
                 }
                 
+                SeekBar {
+                    horizontalAlignment: HorizontalAlignment.Center
+                    preferredWidth: deviceUtils.pixelSize.width-tutorial.du(15)
+                    visible: mainPage.actionBarVisibility == ChromeVisibility.Overlay && player.active
+                    
+                    onTouch: {
+                        if ( event.isDown() ) {
+                            timer.stop();
+                        } else if ( event.isUp() || event.isCancel() ) {
+                            timer.restart();
+                        }
+                    }
+                }
+                
                 NavigationButton
                 {
                     id: nextPage
@@ -477,6 +515,7 @@ Sheet
                     disabledImageSource: "images/title/ic_prev_disabled.png"
                     verticalAlignment: VerticalAlignment.Center
                     enabled: currentPage < 604
+                    visible: mainPage.actionBarVisibility == ChromeVisibility.Overlay
                     
                     onClicked: {
                         console.log("UserEvent: NextPage");
@@ -493,6 +532,7 @@ Sheet
                     horizontalAlignment: HorizontalAlignment.Right
                     verticalAlignment: VerticalAlignment.Center
                     enabled: currentPage > 1
+                    visible: mainPage.actionBarVisibility == ChromeVisibility.Overlay
                     
                     onClicked: {
                         console.log("UserEvent: PrevPage");
@@ -528,6 +568,10 @@ Sheet
     }
     
     onClosed: {
+        player.stop();
+        
+        recitation.readyToPlay.disconnect(onReady);
+        player.metaDataChanged.disconnect(onMetaDataChanged);
         app.childCardFinished.disconnect(jumpSurah.onFinished);
         tutorial.tutorialStarted.disconnect(prevPage.onStarted);
         tutorial.tutorialFinished.disconnect(prevPage.onFinished);
@@ -535,7 +579,31 @@ Sheet
         destroy();
     }
     
+    function onReady(uri) {
+        player.play(uri);
+    }
+    
+    function onMetaDataChanged(metaData) {
+        playAllAction.playingPage = recitation.extractPage(metaData);
+    }
+    
     onOpened: {
         mushaf.requestPage(currentPage);
+        recitation.readyToPlay.connect(onReady);
+        player.metaDataChanged.connect(onMetaDataChanged);
     }
+    
+    attachedObjects: [
+        LazyMediaPlayer
+        {
+            id: player
+            
+            onError: {
+                console.log(message);
+                persist.showToast( message, "asset:///images/toast/yellow_delete.png" );
+                
+                reporter.record("PagePlayError", message);
+            }
+        }
+    ]
 }

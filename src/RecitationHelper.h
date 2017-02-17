@@ -49,6 +49,7 @@ public:
     virtual ~RecitationHelper();
 
     Q_INVOKABLE int extractIndex(QVariantMap const& m);
+    Q_INVOKABLE int extractPage(QVariantMap const& m);
     Q_INVOKABLE void downloadAndPlay(int chapter, int verse);
     Q_INVOKABLE void downloadAndPlayTajweed(int chapter, int verse);
     Q_INVOKABLE void downloadAndPlayAll(bb::cascades::ArrayDataModel* adm, int from=0, int to=-1);

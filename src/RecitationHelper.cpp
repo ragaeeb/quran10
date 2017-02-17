@@ -57,18 +57,23 @@ QVariantMap processPlaylist(QString const& reciter, QString const& outputDirecto
     for (int i = 0; i < n; i++)
     {
         QPair<int,int> track = playlist[i];
-        QString fileName = QString("%1%2.mp3").arg( normalize(track.first) ).arg( normalize(track.second) );
+        bool isPage = track.second == 0;
+        QString fileName = isPage ? QString("Page%1.mp3").arg( normalize(track.first) ) : QString("%1%2.mp3").arg( normalize(track.first) ).arg( normalize(track.second) );
         QString absolutePath = QString("%1/%2").arg( q.path() ).arg(fileName);
 
         if ( !QFile(absolutePath).exists() && !alreadyQueued.contains(absolutePath) )
         {
             QVariantMap q;
-            q[URI_KEY] = QString("http://www.everyayah.com/data/%1/%2").arg(reciter).arg(fileName);
+            q[URI_KEY] = QString(isPage ? "http://www.everyayah.com/data/%1/PageMp3s/%2" : "http://www.everyayah.com/data/%1/%2").arg(reciter).arg(fileName);
             q[LOCAL_PATH] = absolutePath;
-            q[KEY_TRANSFER_NAME] = QObject::tr("%1:%2 recitation").arg(track.first).arg(track.second);
+            q[KEY_TRANSFER_NAME] = isPage ? QObject::tr("Page %1 recitation").arg(track.first) : QObject::tr("%1:%2 recitation").arg(track.first).arg(track.second);
             q[COOKIE_RECITATION_MP3] = true;
-            q[KEY_CHAPTER] = track.first;
-            q[KEY_VERSE] = track.second;
+
+            if (track.second > 0)
+            {
+                q[KEY_CHAPTER] = track.first;
+                q[KEY_VERSE] = track.second;
+            }
 
             queue << q;
             alreadyQueued << absolutePath;
@@ -127,6 +132,15 @@ int RecitationHelper::extractIndex(QVariantMap const& m)
     int chapter = uri.left(3).toInt();
 
     return m_ayatToIndex.value( qMakePair<int,int>(chapter,verse) );
+}
+
+
+int RecitationHelper::extractPage(QVariantMap const& m)
+{
+    QString uri = m.value(URI_KEY).toString();
+    uri = uri.mid( uri.lastIndexOf("/")+1 );
+    uri = uri.left( uri.lastIndexOf(".") );
+    return uri.mid(4).toInt();
 }
 
 
