@@ -11,9 +11,7 @@ ResizableContainer
         adm.append(data);
         
         headerSubtitle = data.length;
-        console.log("** DSKLFJKLSDFzzz");
         searchDecorator.decorateSimilar(data, adm, bodyControl, "content");
-        console.log("** DSKLFJKLSDFffffzzz");
         
         tutorial.execBelowTitleBar( "relatedExpand", qsTr("You can expand this top section by tapping on the 'Related' header.") );
         tutorial.exec( "relatedExpand2", qsTr("To minimize it, tap on the ayat header on the bottom pane."), HorizontalAlignment.Center, VerticalAlignment.Center, 0, 0, tutorial.du(12) );
@@ -54,7 +52,11 @@ ResizableContainer
                         activeTextHandler: ActiveTextHandler
                         {
                             onTriggered: {
+                                var ayatPage = Qt.launch("AyatPage.qml");
+                                ayatPage.surahId = ListItemData.surah_id;
+                                ayatPage.verseId = ListItemData.verse_id;
                                 
+                                event.abort();
                             }
                         }
                     }
