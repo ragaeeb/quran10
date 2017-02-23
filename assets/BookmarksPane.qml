@@ -181,6 +181,8 @@ NavigationPane
                             tutorial.execActionBar( "backup", qsTr("Tap on the '%1' action to backup these favourites so you can restore them later if you ever switch devices.").arg(backup.title) );
                             tutorial.execActionBar( "restore", qsTr("Tap on the '%1' action to restore favourites that you have backed up before.").arg(restore.title), "r" );
                         }
+                        
+                        tutorial.expandOverflow("bookmarks");
                     } else if (id == QueryId.ClearAllBookmarks) {
                         persist.showToast( qsTr("Cleared all favourites!"), "images/menu/ic_favourite_remove.png" );
                         gdm.clear();

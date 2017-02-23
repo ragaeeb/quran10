@@ -8,11 +8,10 @@ TabbedPane
     function onSidebarVisualStateChanged()
     {
         sidebarStateChanged.disconnect(onSidebarVisualStateChanged);
-        tutorial.tutorialFinished.connect(onTutorialFinished);
         
-        tutorial.exec("tabsFavs", qsTr("In the Favourites tab: Any verses you mark as favourite will end up here."), HorizontalAlignment.Left, VerticalAlignment.Top, tutorial.du(1), 0, tutorial.du(10), 0, favs.imageSource.toString(), "d" );
-        tutorial.exec("tabsSearch", qsTr("In the Search tab you can use this to quickly find a specific verse via keywords."), HorizontalAlignment.Left, VerticalAlignment.Top, tutorial.du(1), 0, tutorial.du(10), 0, search.imageSource.toString(), "d" );
-        tutorial.exec("tabsDuaa", qsTr("In the Supplications tab you will find a collection of some of the many du'aa that are found across the Qu'ran."), HorizontalAlignment.Left, VerticalAlignment.Top, tutorial.du(1), 0, tutorial.du(10), 0, supplications.imageSource.toString(), "d" );
+        tutorial.execTabbedPane("favs", qsTr("In the %1 tab: Any verses you mark as favourite will end up here."), favs );
+        tutorial.execTabbedPane("search", qsTr("In the %1 tab you can use this to quickly find a specific verse via keywords."), search );
+        tutorial.execTabbedPane("duaa", qsTr("In the %1 tab you will find a collection of some of the many du'aa that are found across the Qu'ran."), supplications );
         
         reporter.record( "TabbedPaneExpanded", root.sidebarVisualState.toString() );
     }
@@ -38,10 +37,6 @@ TabbedPane
             
             if ( reporter.deferredCheck("checkedSalat10", 10) ) {
                 persist.findTarget("headless:", "com.canadainc.SalatTenService", root);
-            } else if ( reporter.deferredCheck("checkedMarkazTwitter", 8) ) {
-                persist.findTarget("twitter:connect", "com.twitter.urihandler", root);
-            } else if ( reporter.deferredCheck("checkedMarkazFB", 9) ) {
-                persist.findTarget("data://", "com.rim.bb.app.facebook", root);
             }
 
             quranTab.delegate.object.onLazyInitComplete();
@@ -102,6 +97,23 @@ TabbedPane
     }
     
     Tab {
+        id: articles
+        title: qsTr("Articles") + Retranslate.onLanguageChanged
+        description: qsTr("Benefits") + Retranslate.onLanguageChanged
+        imageSource: "images/list/ic_tafsir.png"
+        delegateActivationPolicy: TabDelegateActivationPolicy.ActivateWhenSelected
+        
+        onTriggered: {
+            console.log("UserEvent: ArticlesTab");
+            reporter.record("ArticlesTab");
+        }
+        
+        delegate: Delegate {
+            source: "ArticlesPane.qml"
+        }
+    }
+    
+    Tab {
         id: supplications
         title: qsTr("Supplications") + Retranslate.onLanguageChanged
         description: qsTr("Du'a from the Qu'ran") + Retranslate.onLanguageChanged
@@ -121,15 +133,6 @@ TabbedPane
                     object.cleanUp();
                 }
             }
-        }
-    }
-    
-    function onTutorialFinished(key)
-    {
-        if ( persist.getFlag("settingsShown") != 1 )
-        {
-            menuDef.settings.triggered();
-            persist.setFlag("settingsShown", 1);
         }
     }
 }

@@ -21,8 +21,8 @@ Sheet
         mainPage.actionBarVisibility = ChromeVisibility.Overlay;
         timer.restart();
         
+        tutorial.expandOverflow("mushaf");
         tutorial.execActionBar( "mushafBack", qsTr("To exit the mushaf mode, simply tap on the Back button at the bottom.") );
-        tutorial.execActionBar( "mushafMenu", qsTr("Tap in the bottom-right to open the menu."), "x" );
         tutorial.exec( "mushafPrevPage", qsTr("To go to the previous page, tap here."), HorizontalAlignment.Right, VerticalAlignment.Center );
         tutorial.exec( "mushafNextPage", qsTr("To go to the next page, tap here."), HorizontalAlignment.Left, VerticalAlignment.Center );
         

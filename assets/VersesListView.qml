@@ -73,9 +73,9 @@ ListView
     {
         onActiveChanged: {
             if (active) {
-                tutorial.exec("selectRangeCopy", qsTr("Use the '%1' action if you want to copy the ayats to the clipboard so you can later paste it somewhere.").arg(multiCopy.title), HorizontalAlignment.Center, VerticalAlignment.Bottom);
-                tutorial.exec("selectRangePlay", qsTr("Use the '%1' action if you want to play the recitation of the selected ayats.").arg(multiPlayAction.title), HorizontalAlignment.Left, VerticalAlignment.Bottom, tutorial.du(22));
-                tutorial.exec("selectRangeShare", qsTr("Use the '%1' action if you want to share the ayats with one of your contacts or somewhere else.").arg(multiShare.title), HorizontalAlignment.Right, VerticalAlignment.Bottom, 0, tutorial.du(22));
+                tutorial.execActionBar("selectRangeCopy", qsTr("Use the '%1' action if you want to copy the ayats to the clipboard so you can later paste it somewhere.").arg(multiCopy.title), undefined, true);
+                tutorial.execActionBar("selectRangePlay", qsTr("Use the '%1' action if you want to play the recitation of the selected ayats.").arg(multiPlayAction.title), "l", true);
+                tutorial.execActionBar("selectRangeShare", qsTr("Use the '%1' action if you want to share the ayats with one of your contacts or somewhere else.").arg(multiShare.title), "r", true);
             }
         }
         

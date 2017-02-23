@@ -81,10 +81,6 @@ Page
     }
     
     onActionMenuVisualStateChanged: {
-        if (actionMenuVisualState == ActionMenuVisualState.VisibleFull) {
-            tutorial.execActionBar( "removeConstraints", qsTr("Tap on the '%1' action to clear all the constraint fields.").arg(removeSearchAction.title), "x" );
-        }
-        
         reporter.record("SearchPageActionMenu", actionMenuVisualState.toString());
     }
     

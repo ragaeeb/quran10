@@ -70,6 +70,7 @@ Page
             }
             
             busy.delegateActive = false;
+            tutorial.expandOverflow("surah");
         }
     }
 

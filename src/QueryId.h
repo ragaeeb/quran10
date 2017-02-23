@@ -14,6 +14,7 @@ public:
     enum Type {
         ClearAllBookmarks,
         FetchAdjacentAyat,
+        FetchAllArticles,
         FetchAllAyats,
         FetchAllBookmarks,
         FetchAllChapterAyatCount,

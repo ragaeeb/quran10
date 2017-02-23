@@ -30,21 +30,20 @@ QtObject
         titleLabel.text = title;
         
         var bodyText = "";
-        
         var authorText = "";
         
         if (tafsir.author.length > 0) {
-            authorText = qsTr("Author: <a href=\"%2\">%1</a>%3").arg(tafsir.author).arg( tafsir.author_id.toString() ).arg( global.getSuffix(tafsir.author_birth, tafsir.author_death) );
+            authorText = qsTr("Author: %1%2").arg(tafsir.author).arg( global.getSuffix(tafsir.author_birth, tafsir.author_death) );
         } else {
             authorText = qsTr("Author: Unknown");
         }
         
         if (tafsir.translator.length > 0) {
-            authorText += qsTr("\nTranslator: <a href=\"%2\">%1</a>%3").arg(tafsir.translator).arg( tafsir.translator_id.toString() ).arg( global.getSuffix(tafsir.translator_birth, tafsir.translator_death) );
+            authorText += qsTr("\nTranslator: %1%2").arg(tafsir.translator).arg( global.getSuffix(tafsir.translator_birth, tafsir.translator_death) );
         }
         
         if (tafsir.explainer.length > 0) {
-            authorText += qsTr("\nExplained by: <a href=\"%2\">%1</a>%3").arg(tafsir.explainer).arg( tafsir.explainer_id.toString() ).arg( global.getSuffix(tafsir.explainer_birth, tafsir.explainer_death) );
+            authorText += qsTr("\nExplained by: %1%2").arg(tafsir.explainer).arg( global.getSuffix(tafsir.explainer_birth, tafsir.explainer_death) );
         }
         
         bodyText += tafsir.body;
@@ -52,11 +51,11 @@ QtObject
         var reference = tafsir.reference;
         
         if (tafsir.suite_pages_reference) {
-            reference = tafsir.suite_pages_reference;
+            reference += "\n"+tafsir.suite_pages_reference;
         }
         
         if (reference.length > 0) {
-            bodyText += "\n\n(%1)".arg(reference);
+            bodyText += "\n\n%1".arg(reference);
         }
         
         authors.text = "<html>"+authorText+"</html>";

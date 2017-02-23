@@ -83,6 +83,11 @@ void QueryHelper::settingChanged(QString const& key)
 }
 
 
+void QueryHelper::fetchAllArticles(QObject* caller) {
+    m_sql.executeQuery(caller, QString("SELECT suite_pages.id,%1 AS author,title,heading,substr(body,-5) AS body FROM suite_pages INNER JOIN suites ON suite_pages.suite_id=suites.id INNER JOIN individuals i ON suites.author=i.id WHERE suite_pages.id NOT IN (SELECT suite_page_id FROM explanations)").arg( NAME_FIELD("i") ), QueryId::FetchAllArticles);
+}
+
+
 void QueryHelper::fetchAllDuaa(QObject* caller)
 {
     if ( showTranslation() ) {
@@ -254,7 +259,7 @@ void QueryHelper::fetchAllTafsirForSuite(QObject* caller, qint64 suiteId)
 void QueryHelper::fetchTafsirContent(QObject* caller, qint64 suitePageId)
 {
     LOGGER(suitePageId);
-    QString query = QString("SELECT %2 AS author,x.id AS author_id,x.birth AS author_birth,x.death AS author_death,%3 AS translator,y.id AS translator_id,y.birth AS translator_birth,y.death AS translator_death,%4 AS explainer,z.id AS explainer_id,z.birth AS explainer_birth,z.death AS explainer_death,title,suites.reference AS reference,suite_pages.reference AS suite_pages_reference,body,heading FROM suites INNER JOIN suite_pages ON suites.id=suite_pages.suite_id LEFT JOIN individuals x ON suites.author=x.id LEFT JOIN individuals y ON suites.translator=y.id LEFT JOIN individuals z ON suites.explainer=z.id WHERE suite_pages.id=%1").arg(suitePageId).arg( NAME_FIELD("x") ).arg( NAME_FIELD("y") ).arg( NAME_FIELD("z") );
+    QString query = QString("SELECT %2 AS author,x.birth AS author_birth,x.death AS author_death,%3 AS translator,y.birth AS translator_birth,y.death AS translator_death,%4 AS explainer,z.birth AS explainer_birth,z.death AS explainer_death,title,suites.reference AS reference,suite_pages.reference AS suite_pages_reference,body,heading FROM suites INNER JOIN suite_pages ON suites.id=suite_pages.suite_id LEFT JOIN individuals x ON suites.author=x.id LEFT JOIN individuals y ON suites.translator=y.id LEFT JOIN individuals z ON suites.explainer=z.id WHERE suite_pages.id=%1").arg(suitePageId).arg( NAME_FIELD("x") ).arg( NAME_FIELD("y") ).arg( NAME_FIELD("z") );
 
     m_sql.executeQuery(caller, query, QueryId::FetchTafsirContent);
 }

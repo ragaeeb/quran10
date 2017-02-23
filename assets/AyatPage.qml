@@ -37,6 +37,7 @@ Page
                 helper.fetchTafsirCountForAyat(root, surahId, verseId);
                 helper.fetchSurahHeader(root, surahId);
                 busy.delegateActive = false;
+                tutorial.expandOverflow("ayat");
             } else { // erroneous ID entered
                 notFound.delegateActive = true;
                 busy.delegateActive = false;
@@ -46,7 +47,6 @@ Page
             titleControl.addOption(tafsirOption);
             tafsirOption.tafsirCount = data[0].tafsir_count;
         } else if (id == QueryId.FetchSimilarAyatContent && data.length > 0 && similarOption.selected) {
-            console.log("*** SXYDLK");
             pluginsDelegate.control.applyData(data, helper.showTranslation ? translation : body);
         } else if (id == QueryId.FetchSurahHeader && data.length > 0) {
             ayatOption.text = data[0].translation ? data[0].translation : data[0].name;
