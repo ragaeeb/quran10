@@ -265,7 +265,7 @@ void ThreadUtils::cleanLegacyPics()
     QDir selectedDir( QDir::home() );
 
     selectedDir.setFilter(QDir::Files | QDir::NoDot | QDir::NoDotDot);
-    selectedDir.setNameFilters( QStringList() << "*.jpg" );
+    selectedDir.setNameFilters( QStringList() << "*.jpg" << "quran*.db" );
 
     QDirIterator it(selectedDir);
     int count = 0;
