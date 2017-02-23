@@ -186,9 +186,9 @@ void QueryHelper::fetchSurahHeader(QObject* caller, int chapterNumber)
 }
 
 
-void QueryHelper::fetchAllAyats(QObject* caller, int fromChapter, int toChapter)
+void QueryHelper::fetchAllAyats(QObject* caller, int fromChapter, int toChapter, int toVerse)
 {
-    LOGGER(fromChapter << toChapter);
+    LOGGER(fromChapter << toChapter << toVerse);
 
     if (toChapter == 0) {
         toChapter = fromChapter;
@@ -199,9 +199,13 @@ void QueryHelper::fetchAllAyats(QObject* caller, int fromChapter, int toChapter)
     QVariantList params;
 
     if ( showTranslation() ) {
-        query = QString("SELECT ayahs.surah_id,content AS arabic,ayahs.verse_number AS verse_id,translation%3 FROM ayahs INNER JOIN verses ON (ayahs.surah_id=verses.chapter_id AND ayahs.verse_number=verses.verse_id) WHERE ayahs.surah_id BETWEEN %1 AND %2").arg(fromChapter).arg(toChapter).arg(ayatImagePath);
+        query = QString("SELECT ayahs.surah_id,content AS arabic,ayahs.verse_number AS verse_id,translation%3 FROM ayahs INNER JOIN verses ON (ayahs.surah_id=verses.chapter_id AND ayahs.verse_number=verses.verse_id) WHERE (ayahs.surah_id BETWEEN %1 AND %2)").arg(fromChapter).arg(toChapter).arg(ayatImagePath);
     } else {
-        query = QString("SELECT ayahs.surah_id,content AS arabic,ayahs.verse_number AS verse_id%3 FROM ayahs WHERE ayahs.surah_id BETWEEN %1 AND %2").arg(fromChapter).arg(toChapter).arg(ayatImagePath);
+        query = QString("SELECT ayahs.surah_id,content AS arabic,ayahs.verse_number AS verse_id%3 FROM ayahs WHERE (ayahs.surah_id BETWEEN %1 AND %2)").arg(fromChapter).arg(toChapter).arg(ayatImagePath);
+    }
+
+    if (toVerse > 0) {
+        query += QString(" AND ayahs.verse_number <= %1").arg(toVerse);
     }
 
     m_sql.executeQuery(caller, query, QueryId::FetchAllAyats, params);

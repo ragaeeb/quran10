@@ -6,6 +6,7 @@ Page
     id: surahPage
     property int fromSurahId
     property int toSurahId
+    property int toVerseId
     property int surahId
     property int verseId
     property alias showContextMenu: awaker.showContext
@@ -33,7 +34,7 @@ Page
         {
             ctb.chapterNumber = awaker.lv.chapterNumber = fromSurahId;
             busy.delegateActive = true;
-            helper.fetchAllAyats(surahPage, fromSurahId, toSurahId);
+            helper.fetchAllAyats(surahPage, fromSurahId, toSurahId, toVerseId);
         }
     }
     

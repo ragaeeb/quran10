@@ -52,7 +52,7 @@ public:
 
     Q_INVOKABLE void searchQuery(QObject* caller, QVariantList params, QVariantList const& chapters=QVariantList());
     Q_INVOKABLE void fetchAdjacentAyat(QObject* caller, int surahId, int verseId, int delta);
-    Q_INVOKABLE void fetchAllAyats(QObject* caller, int fromChapter, int toChapter=0);
+    Q_INVOKABLE void fetchAllAyats(QObject* caller, int fromChapter, int toChapter=0, int toVerse=0);
     Q_INVOKABLE void fetchAllChapterAyatCount(QObject* caller);
     Q_INVOKABLE void fetchAllChapters(QObject* caller);
     Q_INVOKABLE void fetchAllDuaa(QObject* caller);

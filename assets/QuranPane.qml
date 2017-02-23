@@ -191,8 +191,26 @@ NavigationPane
                     p.openChapterTafsir.connect(onOpenChapter);
                     
                     var all = pickerPage.pickerList.selectionList();
-                    p.fromSurahId = pickerPage.pickerList.dataModel.data(all[0]).surah_id;
-                    p.toSurahId = pickerPage.pickerList.dataModel.data(all[all.length-1]).surah_id;
+                    var lastSelection = all[all.length-1];
+                    var dm = pickerPage.pickerList.dataModel;
+                    
+                    p.fromSurahId = dm.data(all[0]).surah_id;
+                    p.toSurahId = dm.data(lastSelection).surah_id;
+                    
+                    if (pickerPage.sortValue == "juz")
+                    {
+                        var nextIndex = dm.after(lastSelection);
+
+                        if (nextIndex.length > 0)
+                        {
+                            var nextElement = dm.data(nextIndex);
+                            
+                            if (nextElement.surah_id == p.toSurahId) { // if it's the same surah spanning multiple juz
+                                p.toVerseId = nextElement.verse_number-1;
+                            }
+                        }
+                    }
+                    
                     p.loadAyats();
                     
                     reporter.record("OpenSurahs", p.fromSurahId+"-"+p.toSurahId);
