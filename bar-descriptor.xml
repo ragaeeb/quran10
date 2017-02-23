@@ -217,4 +217,9 @@
     <permission>run_when_backgrounded</permission>
     <env var="LD_LIBRARY_PATH" value="app/native/lib:/usr/lib/qt4/lib"/>
 	<env var="CASCADES_THEME" value="dark?primaryColor=0x019F1A"/>
+	<env var="HOST_HQ_AYATS" value="http://www.everyayah.com/data/quranpngs"/>
+	<env var="HOST_LQ_AYATS" value="http://c00022506.cdn1.cloudfiles.rackspacecloud.com"/>
+	<env var="HOST_MUSHAF" value="searchtruth.org"/>
+	<env var="HOST_RECITATION_STANDARD" value="http://www.everyayah.com/data"/>
+	<env var="HOST_TAJWEED" value="http://www.searchtruth.com/quran_teacher/audio/Surahs"/>
 </qnx>

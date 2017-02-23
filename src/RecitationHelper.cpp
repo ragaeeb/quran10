@@ -54,6 +54,8 @@ QVariantMap processPlaylist(QString const& reciter, QString const& outputDirecto
     QStringList toPlay;
     QSet<QString> alreadyQueued; // we maintain this to avoid putting duplicates in the queue (ie: during memorization mode)
 
+    QString standardHost = qgetenv("HOST_RECITATION_STANDARD");
+
     for (int i = 0; i < n; i++)
     {
         QPair<int,int> track = playlist[i];
@@ -64,7 +66,7 @@ QVariantMap processPlaylist(QString const& reciter, QString const& outputDirecto
         if ( !QFile(absolutePath).exists() && !alreadyQueued.contains(absolutePath) )
         {
             QVariantMap q;
-            q[URI_KEY] = QString(isPage ? "http://www.everyayah.com/data/%1/PageMp3s/%2" : "http://www.everyayah.com/data/%1/%2").arg(reciter).arg(fileName);
+            q[URI_KEY] = QString(isPage ? "%1/%2/PageMp3s/%3" : "%1/%2/%3").arg(standardHost).arg(reciter).arg(fileName);
             q[LOCAL_PATH] = absolutePath;
             q[KEY_TRANSFER_NAME] = isPage ? QObject::tr("Page %1 recitation").arg(track.first) : QObject::tr("%1:%2 recitation").arg(track.first).arg(track.second);
             q[COOKIE_RECITATION_MP3] = true;
@@ -360,7 +362,7 @@ void RecitationHelper::downloadAndPlayTajweed(int chapter, int verse)
     } else {
         QVariantMap q;
         q[COOKIE_RECITATION_MP3] = true;
-        q[URI_KEY] = QString("http://www.searchtruth.com/quran_teacher/audio/Surahs/%1").arg(fileName);
+        q[URI_KEY] = QString("%1/%2").arg( QString( qgetenv("HOST_TAJWEED") ) ).arg(fileName);
         q[LOCAL_PATH] = absolutePath;
         q[KEY_TRANSFER_NAME] = QObject::tr("%1:%2 tajweed").arg(chapter).arg(verse);
         q[KEY_CHAPTER] = chapter;
