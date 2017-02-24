@@ -249,11 +249,25 @@ NavigationPane
                                     
                                     DeleteActionItem
                                     {
+                                        id: removeFav
                                         imageSource: "images/menu/ic_favourite_remove.png"
                                         
                                         onTriggered: {
                                             console.log("UserEvent: RemoveFavourite");
                                             sli.ListItem.view.deleteBookmark(sli.ListItem.indexPath);
+                                        }
+                                    }
+                                }
+                            ]
+                            
+                            contextMenuHandler: [
+                                ContextMenuHandler
+                                {
+                                    id: cmh
+                                    
+                                    onVisualStateChanged: {
+                                        if (cmh.visualState == ContextMenuVisualState.VisibleCompact) {
+                                            tutorial.execOverFlow("clearFavs", qsTr("%1: Use this to remove this bookmark from your favourites."), removeFav);
                                         }
                                     }
                                 }

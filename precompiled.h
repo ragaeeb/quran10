@@ -9,6 +9,8 @@
 #include <bb/cascades/QmlDocument>
 #include <bb/cascades/Window>
 
+#include <bb/data/XmlDataAccess>
+
 #include <bb/system/CardDoneMessage>
 #include <bb/system/InvokeManager>
 

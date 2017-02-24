@@ -26,6 +26,8 @@ Page
             
             if (data.length == 1) {
                 listView.triggered([0]);
+            } else {
+                tutorial.execCentered("openChapterTafsir", qsTr("Tap on one of the list items to open the tafsir.") );
             }
         } else if (id == QueryId.FetchSurahHeader) {
             titleBar.title = qsTr("%1 Tafsir").arg(helper.showTranslation ? data[0].transliteration : data[0].name);

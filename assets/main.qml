@@ -12,12 +12,24 @@ TabbedPane
         tutorial.execTabbedPane("favs", qsTr("In the %1 tab: Any verses you mark as favourite will end up here."), favs );
         tutorial.execTabbedPane("search", qsTr("In the %1 tab you can use this to quickly find a specific verse via keywords."), search );
         tutorial.execTabbedPane("duaa", qsTr("In the %1 tab you will find a collection of some of the many du'aa that are found across the Qu'ran."), supplications );
+        tutorial.execTabbedPane("articles", qsTr("In the %1 tab you will find a collection of some of the sayings of the scholars regarding rules and regulations of the Qur'an."), articles );
         
         reporter.record( "TabbedPaneExpanded", root.sidebarVisualState.toString() );
     }
     
     onActivePaneChanged: {
         Qt.navigationPane = activePane;
+    }
+    
+    function showInitSettings()
+    {
+        tutorial.transactionFinished.disconnect(showInitSettings);
+        
+        if ( persist.getFlag("settingsShown") != 1 )
+        {
+            menuDef.settings.triggered();
+            persist.setFlag("settingsShown", 1);
+        }
     }
     
     Menu.definition: CanadaIncMenu
@@ -40,6 +52,12 @@ TabbedPane
             }
 
             quranTab.delegate.object.onLazyInitComplete();
+
+            if (tutorial.suppressTutorials) {
+                showInitSettings();
+            } else {
+                tutorial.transactionFinished.connect(showInitSettings);
+            }
         }
     }
 
@@ -101,7 +119,7 @@ TabbedPane
         title: qsTr("Articles") + Retranslate.onLanguageChanged
         description: qsTr("Benefits") + Retranslate.onLanguageChanged
         imageSource: "images/list/ic_tafsir.png"
-        delegateActivationPolicy: TabDelegateActivationPolicy.ActivateWhenSelected
+        delegateActivationPolicy: TabDelegateActivationPolicy.ActivatedWhileSelected
         
         onTriggered: {
             console.log("UserEvent: ArticlesTab");

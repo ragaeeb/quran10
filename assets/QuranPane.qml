@@ -313,17 +313,18 @@ NavigationPane
         
         tutorial.execActionBar( "openMushaf", qsTr("Tap here to open the mushaf!") );
         tutorial.execActionBar("selectAllSurahs", qsTr("Tap on the '%1' action to view the entire Qu'ran (all the surahs)!").arg(selectAll.title), "r");
-        var noMoreTutorialsLeft = tutorial.exec("lpSurahPicker", "Press and hold on a surah for a menu to select multiple chapters.", HorizontalAlignment.Center, VerticalAlignment.Center, tutorial.du(2), 0, 0, tutorial.du(2));
-        
-        if ( !noMoreTutorialsLeft && persist.getValueFor("hideRandomQuote") != 1 ) {
-            helper.fetchRandomQuote(pickerPage);
-        }
+        tutorial.exec("lpSurahPicker", "Press and hold on a surah for a menu to select multiple chapters.", HorizontalAlignment.Center, VerticalAlignment.Center, tutorial.du(2), 0, 0, tutorial.du(2));
+        tutorial.expandOverflow("quranPane");
         
         buttonControl.onLastPositionUpdated();
         global.lastPositionUpdated.connect(buttonControl.onLastPositionUpdated);
         
         if (!selectAll.enabled) {
             tutorial.execActionBar("selectAllDisabled", qsTr("The '%1' feature is not available for the Juz display mode.").arg(selectAll.title), "r");
+        }
+        
+        if ( !tutorial.active && persist.getValueFor("hideRandomQuote") != 1 ) {
+            helper.fetchRandomQuote(pickerPage);
         }
     }
     

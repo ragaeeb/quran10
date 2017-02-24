@@ -84,7 +84,7 @@ Page
                         text: qsTr("French") + Retranslate.onLanguageChanged
                         description: qsTr("Muhammad Hamidullah") + Retranslate.onLanguageChanged
                         value: "french"
-                        imageSource: "images/dropdown/ic_translation.png"
+                        imageSource: "images/list/ic_translation.png"
                     }
                     
                     Option {
@@ -215,9 +215,12 @@ Page
                             
                             tutorial.execBelowTitleBar( "translation", qsTr("If you want to show a specific translation for the Qu'ran, choose it here.") );
                             tutorial.execBelowTitleBar( "qaree", qsTr("If you want to use a specific qaree to recite the Qu'ran set it here."), tutorial.du(8) );
-                            tutorial.execBelowTitleBar( "dloadDir", qsTr("To change the directory where the mushaf pages, ayat images, and recitations are downloaded, set it here."), tutorial.du(21), "r" );
+                            tutorial.execBelowTitleBar( "arabicRender", qsTr("If you notice the arabic text is disconnected (due to a bug in BlackBerry 10), then use one of the image alternatives. It will slightly be a little impact on performance, but it will be the original text as it is supposed to be connected."), tutorial.du(21), "r" );
+                            tutorial.execBelowTitleBar( "dloadDir", qsTr("To change the directory where the mushaf pages, ayat images, and recitations are downloaded, set it here."), tutorial.du(30), "r" );
                             tutorial.exec( "keepAwake", qsTr("Use the '%1' feature if you want to keep the device screen lit up when the app is playing the recitation so you can follow along and not have to continually touch the screen.").arg(keepAwake.text), HorizontalAlignment.Right, VerticalAlignment.Center);
                             tutorial.execCentered( "hideBenefits", qsTr("Use the '%1' feature if you want to supress the random quotes that shows up in the start of the app.").arg(hideBenefits.text), "images/menu/ic_copy_from_english.png");
+                            tutorial.execCentered( "disableExtraSpace", qsTr("Use the '%1' feature if you want to disable the extra spacing that appears between the ayats in the list.").arg(disableSpacing.text) );
+                            tutorial.execCentered( "playBasmalah", qsTr("Use the '%1' feature if you want to play the Basmalah before the start of any surah during the recitation").arg(playBismillah.text), "images/menu/ic_play.png" );
                         }
                     }
                     
@@ -308,10 +311,11 @@ Page
                     }
                     
                     onExpandedChanged: {
-                        if (expanded) {
-                            tutorial.execCentered( "arabicRender", qsTr("If you notice that some of the arabic letters are disconnected, then try switching to either the Hi-Res or Fair-quality image options."), "images/toast/ic_info.png" );
+                        if (expanded)
+                        {
+                            tutorial.execCentered( "arabicRender", qsTr("If you notice that some of the arabic letters are disconnected, then try switching to either the %1 or %2 image options.").arg(hqImages.text).arg(lqImages.text), "images/toast/ic_info.png" );
                             
-                            if (false) {
+                            if (!arabicText.selected) {
                                 infoText.text = qsTr("Images will be placed on top of the arabic text to match the rules the Qu'ran was revealed in. Please note that this can cost you ~25 MB of space as well as have a performance impact.") + Retranslate.onLanguageChanged
                             } else {
                                 infoText.text = qsTr("The app will render the original Arabic text of the Qu'ran, but the BlackBerry 10 OS may sometimes apply some rules to disconnect some of the letters. This should not change the sounds or the meaning but it should just be a visual difference. This will render the ayats really quickly.") + Retranslate.onLanguageChanged

@@ -283,7 +283,7 @@ Page
                     
                     onCreationCompleted: {
                         play();
-                        tutorial.execBelowTitleBar("searchField", qsTr("Type your search query in the text field and press the Enter key on the keyboard.") );
+                        tutorial.execBelowTitleBar("searchField", qsTr("Type your search query in the text field and press the Enter key on the keyboard. You can surround your text with double-quotes to search for consecutive words.") );
                     }
                     
                     onStarted: {
@@ -293,7 +293,6 @@ Page
                     onEnded: {
                         tutorial.execActionBar("searchAction", qsTr("Tap here to perform the search or simply press the Enter key on the keyboard.") );
                         tutorial.execTitle("tapSearchTitle", qsTr("Tap on the title bar to expand it and see more search options.") );
-                        var isNew = tutorial.execActionBar("constraint", qsTr("Tap on the icon at the bottom of the action bar if you want to add additional constraints to the search."), "r" );
                         
                         if (!isNew) {
                             tutorial.execCentered("tipSearchHome", qsTr("Tip: You can start a search query directly from your home screen without even opening the app! Simply tap on the 'Search' icon on your home screen (or begin typing at the home screen on Q10/Q5/Passport devices) and choose 'Quran10' from the search results. That will launch the app and initiate the search.") );
@@ -400,6 +399,7 @@ Page
                         
                         if (data.length > 0) {
                             searchDecorator.decorateSearchResults(data, adm, extractTokens(searchField.text.trim()), data[0].searchable ? listView.hasTashkeel ? "content" : "searchable" : "translation" );
+                            tutorial.execCentered("openSearchResult", qsTr("You can tap on the list item to go to the ayat that this matches to.") );
                         }
                     } else if (id == QueryId.FetchAyats) {
                         adm.append(data);

@@ -92,7 +92,7 @@ QVariantMap processPlaylist(QString const& reciter, QString const& outputDirecto
 
     if ( toPlay.size() > 1 )
     {
-        bool written = !toPlay.isEmpty() ? IOUtils::writeTextFile( PLAYLIST_TARGET, toPlay.join("\n"), true, false ) : false;
+        bool written = !toPlay.isEmpty() ? IOUtils::writeTextFile( PLAYLIST_TARGET, toPlay.join("\n"),  true, true, "" ) : false;
         LOGGER(written);
 
         if (written) {

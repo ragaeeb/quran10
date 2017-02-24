@@ -312,15 +312,10 @@ void QueryHelper::fetchAyats(QObject* caller, QVariantList const& input)
 
     LOGGER(cleaned);
 
-    QStringList additional;
-    for (int i = cleaned.size()-1; i >= 0; i--) {
-        //additional << QString(" OR (surah_id=%1 AND verse_id=%2)").arg(cleaned[i].first).arg(cleaned[i].second);
-    }
-
     if ( showTranslation() ) {
-        query = QString("SELECT verses.chapter_id AS surah_id,verses.verse_id,verses.translation,transliteration AS name FROM verses INNER JOIN chapters ON verses.chapter_id=chapters.id WHERE (surah_id=%1 AND verse_id=%2)%3").arg(x.first).arg(x.second).arg( additional.join("") );
+        query = QString("SELECT verses.chapter_id AS surah_id,verses.verse_id,verses.translation,transliteration AS name FROM verses INNER JOIN chapters ON verses.chapter_id=chapters.id WHERE (surah_id=%1 AND verse_id=%2)").arg(x.first).arg(x.second);
     } else {
-        query = QString("SELECT surah_id,verse_number AS verse_id,searchable,name FROM ayahs INNER JOIN surahs ON ayahs.surah_id=surahs.id WHERE (surah_id=%1 AND verse_id=%2)%3").arg(x.first).arg(x.second).arg( additional.join("") );
+        query = QString("SELECT surah_id,verse_number AS verse_id,searchable,name FROM ayahs INNER JOIN surahs ON ayahs.surah_id=surahs.id WHERE (surah_id=%1 AND verse_id=%2)").arg(x.first).arg(x.second);
     }
 
     m_sql.executeQuery(caller, query, QueryId::FetchAyats);
@@ -372,8 +367,6 @@ void QueryHelper::searchQuery(QObject* caller, QVariantList params, QVariantList
 
         query += QString(" AND ayahs.surah_id IN (%1)").arg( all.join(",") );
     }
-
-    LOGGER("*** PARSM" << params);
 
     m_sql.executeQuery(caller, query, QueryId::SearchAyats, params);
 }

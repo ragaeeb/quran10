@@ -48,6 +48,8 @@ public:
     RecitationHelper(QueueDownloader* queue, Persistance* p, QObject* parent=NULL);
     virtual ~RecitationHelper();
 
+    void lazyInit();
+
     Q_INVOKABLE int extractIndex(QVariantMap const& m);
     Q_INVOKABLE int extractPage(QVariantMap const& m);
     Q_INVOKABLE void downloadAndPlay(int chapter, int verse);

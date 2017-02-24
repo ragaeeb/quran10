@@ -188,107 +188,18 @@ Delegate
                                 
                                 function itemType(data, indexPath)
                                 {
-                                    if (data.busy) {
-                                        return "busy";
-                                    } else if (data.tafsirPath) {
-                                        return "tafsir";
-                                    } else if (data.tafsirPath) {
-                                        return "translation";
-                                    } else if (data.mushaf || data.mushafSizeFetch) {
+                                    if (data.mushaf) {
                                         return "mushaf";
                                     } else if (data.recitation) {
                                         return "recitation";
-                                    } else if (data.updateCheck) {
-                                        return "updateCheck";
                                     } else if (data.localUri) {
                                         return "mushafPage";
-                                    } else if (data.joinDownload || data.ayatImages) {
-                                        return "overlay";
-                                    } else if (data.google_search) {
-                                        return "google_search";
                                     } else {
                                         return "transfer";
                                     }
                                 }
                                 
                                 listItemComponents: [
-                                    ListItemComponent
-                                    {
-                                        type: "busy"
-                                        
-                                        TransferListItem
-                                        {
-                                            imageSource: "images/list/ic_clock.png"
-                                            description: ListItemData.busy
-                                            
-                                            ListItem.onInitializedChanged: {
-                                                if (initialized) {
-                                                    ft.play();
-                                                }
-                                            }
-                                            
-                                            animations: [
-                                                SequentialAnimation
-                                                {
-                                                    id: ft
-                                                    repeatCount: AnimationRepeatCount.Forever
-                                                    
-                                                    FadeTransition
-                                                    {
-                                                        fromOpacity: 1
-                                                        toOpacity: 0.5
-                                                        easingCurve: StockCurve.SineIn
-                                                        duration: 500
-                                                    }
-                                                    
-                                                    FadeTransition
-                                                    {
-                                                        fromOpacity: 0.5
-                                                        toOpacity: 1
-                                                        easingCurve: StockCurve.SineOut
-                                                        duration: 500
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    
-                                    ListItemComponent
-                                    {
-                                        type: "google_search"
-                                        
-                                        TransferListItem {
-                                            successImageSource: "images/menu/ic_search.png"
-                                        }
-                                    },
-                                    
-                                    ListItemComponent
-                                    {
-                                        type: "tafsir"
-                                        
-                                        TransferListItem {
-                                            successImageSource: "images/list/ic_tafsir.png"
-                                        }
-                                    },
-                                    
-                                    ListItemComponent
-                                    {
-                                        type: "translation"
-                                        
-                                        TransferListItem {
-                                            successImageSource: "images/list/ic_translation.png"
-                                        }
-                                    },
-                                    
-                                    ListItemComponent
-                                    {
-                                        type: "overlay"
-                                        
-                                        TransferListItem {
-                                            successImageSource: "images/list/ic_overlay.png"
-                                        }
-                                    },
-                                    
                                     ListItemComponent
                                     {
                                         type: "mushaf"
