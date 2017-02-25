@@ -39,6 +39,12 @@ NavigationPane
                 }
             }
             
+            ProgressControl
+            {
+                id: busy
+                asset: "images/progress/loading_compare.png"
+            }
+            
             ListView
             {
                 id: listView
@@ -57,7 +63,8 @@ NavigationPane
                         var tab = Qt.navigationPane.parent;
                         tab.unreadContentCount = adm.size();
                         articlesPage.titleBar.title = tab.title;
-                        
+
+                        busy.delegateActive = false;
                         tutorial.execCentered("openArticle", qsTr("This is a list of some of the articles that contain rules and regulations on how to interact with the Qur'an. Tap on one of these list items to open it.") );
                     }
                 }
@@ -99,6 +106,7 @@ NavigationPane
     }
     
     function reload() {
+        busy.delegateActive = true;
         helper.fetchAllArticles(listView);
     }
     
