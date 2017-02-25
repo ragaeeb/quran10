@@ -221,7 +221,12 @@ Page
                                 function onPicked(chapter, verse)
                                 {
                                     included.surahId = chapter;
-                                    Qt.navigationPane.pop();
+                                    
+                                    if (Qt.navigationPane) {
+                                        Qt.navigationPane.pop();
+                                    } else {
+                                        navigationPane.pop();
+                                    }
                                 }
                                 
                                 onClicked: {

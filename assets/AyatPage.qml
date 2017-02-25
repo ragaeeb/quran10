@@ -157,7 +157,10 @@ Page
     onCreationCompleted: {
         helper.textualChange.connect(reload);
         app.lazyInitComplete.connect(showTutorials);
-        Qt.navigationPane.pushTransitionEnded.connect(showTutorials);
+        
+        if (Qt.navigationPane) {
+            Qt.navigationPane.pushTransitionEnded.connect(showTutorials);
+        }
     }
     
     titleBar: TitleBar

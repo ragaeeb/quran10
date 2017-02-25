@@ -47,6 +47,7 @@ Sheet
                 tutorial.execOverFlow( "mushafJumpSurah", qsTr("Use the '%1' action to select a specific surah in the mushaf you want to jump to."), jumpSurah );
                 tutorial.execOverFlow( "mushafJumpPage", qsTr("Use the '%1' action to jump to a specific page number in the mushaf."), jumpPage );
                 tutorial.execOverFlow( "mushafDownloadAll", qsTr("Quran10 does its best to minimize your data usage by lazily downloading the pages as you need them. However, if you want to download them all at once tap on the '%1' action."), downloadAll );
+                tutorial.execActionBar( "mushafPlay", qsTr("To play this page in the recitation, tap here."), "l" );
 
                 if (mushaf.stretchMushaf) {
                     tutorial.execOverFlow( "mushafAspectFill", qsTr("Use the '%1' action to resize the mushaf according to its original dimensions. In this mode you will have to do pinch-and-zoom and pan gestures with your fingers in order to view the different parts of the page."), stretchAction );
@@ -504,6 +505,12 @@ Sheet
                             timer.stop();
                         } else if ( event.isUp() || event.isCancel() ) {
                             timer.restart();
+                        }
+                    }
+                    
+                    onVisibleChanged: {
+                        if (visible) {
+                            tutorial.execSwipe("mushafSeek", qsTr("Swipe right and left to seek the recitation!"), HorizontalAlignment.Left, VerticalAlignment.Center, "r");
                         }
                     }
                 }

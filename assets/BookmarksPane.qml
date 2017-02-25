@@ -251,6 +251,7 @@ NavigationPane
                                     {
                                         id: removeFav
                                         imageSource: "images/menu/ic_favourite_remove.png"
+                                        title: qsTr("Delete") + Retranslate.onLanguageChanged
                                         
                                         onTriggered: {
                                             console.log("UserEvent: RemoveFavourite");

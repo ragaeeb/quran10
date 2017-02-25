@@ -4,6 +4,9 @@ QtObject
 {
     property alias textFont: customFontDef.style
     signal lastPositionUpdated();
+    property variant compoDef: ComponentDefinition {
+        id: definition
+    }
 
     property variant customFont: TextStyleDefinition
     {
@@ -62,5 +65,26 @@ QtObject
         }
         
         return "";
+    }
+    
+    function launch(qml)
+    {
+        var page = initQml(qml);
+        parent.activePane.push(page);
+        
+        return page;
+    }
+    
+    function initQml(qml, params)
+    {
+        definition.source = qml;
+        var x = definition.createObject();
+        
+        return x;
+    }
+    
+    onCreationCompleted: {
+        Qt.launch = launch;
+        Qt.initQml = initQml;
     }
 }
