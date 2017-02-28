@@ -28,17 +28,6 @@ NavigationPane
                 opacity: 0.4
             }
             
-            EmptyDelegate
-            {
-                id: emptyDelegate
-                graphic: "images/placeholders/empty_tafsir.png"
-                labelText: qsTr("No articles found.") + Retranslate.onLanguageChanged
-                
-                onImageTapped: {
-                    console.log("UserEvent: NoArticlesFoundTapped");
-                }
-            }
-            
             ProgressControl
             {
                 id: busy
@@ -56,9 +45,6 @@ NavigationPane
                     {
                         adm.append(data);
                         offloader.decorateTafsir(adm, "images/list/ic_chapter_tafsir.png");
-                        
-                        emptyDelegate.delegateActive = adm.isEmpty();
-                        listView.visible = !emptyDelegate.delegateActive;
                         
                         var tab = Qt.navigationPane.parent;
                         tab.unreadContentCount = adm.size();

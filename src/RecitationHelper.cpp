@@ -209,7 +209,7 @@ void RecitationHelper::memorize(bb::cascades::ArrayDataModel* adm, int from, int
             }
         }
 
-        QFuture<QVariantMap> future = QtConcurrent::run(processPlaylist, m_persistance->getValueFor(KEY_RECITER).toString(), m_persistance->getValueFor(KEY_OUTPUT_FOLDER).toString(), all);
+        QFuture<QVariantMap> future = QtConcurrent::run(processPlaylist, m_persistance->getValueFor(KEY_RECITER).toString(), Persistance::hasSharedFolderAccess() ? m_persistance->getValueFor(KEY_OUTPUT_FOLDER).toString() : QDir::homePath(), all);
         m_futureResult.setFuture(future);
     }
 }
@@ -224,7 +224,7 @@ void RecitationHelper::downloadAndPlay(int chapter, int verse)
         QList< QPair<int,int> > all;
         all << qMakePair<int,int>(chapter, verse);
 
-        QFuture<QVariantMap> future = QtConcurrent::run(processPlaylist, m_persistance->getValueFor(KEY_RECITER).toString(), m_persistance->getValueFor(KEY_OUTPUT_FOLDER).toString(), all);
+        QFuture<QVariantMap> future = QtConcurrent::run(processPlaylist, m_persistance->getValueFor(KEY_RECITER).toString(), Persistance::hasSharedFolderAccess() ? m_persistance->getValueFor(KEY_OUTPUT_FOLDER).toString() : QDir::homePath(), all);
         m_futureResult.setFuture(future);
     }
 }
@@ -303,7 +303,7 @@ void RecitationHelper::downloadAndPlayAll(bb::cascades::ArrayDataModel* adm, int
             m_ayatToIndex.insert(ayat, i);
         }
 
-        QFuture<QVariantMap> future = QtConcurrent::run(processPlaylist, m_persistance->getValueFor(KEY_RECITER).toString(), m_persistance->getValueFor(KEY_OUTPUT_FOLDER).toString(), all);
+        QFuture<QVariantMap> future = QtConcurrent::run(processPlaylist, m_persistance->getValueFor(KEY_RECITER).toString(), Persistance::hasSharedFolderAccess() ? m_persistance->getValueFor(KEY_OUTPUT_FOLDER).toString() : QDir::homePath(), all);
         m_futureResult.setFuture(future);
     }
 }
@@ -348,7 +348,7 @@ void RecitationHelper::downloadAndPlayTajweed(int chapter, int verse)
         fileName = QString("%1-ayah0%2.mp3").arg( chapterToPath.value(chapter) ).arg(verse+1);
     }
 
-    QDir q( QString("%1/tajweed").arg( m_persistance->getValueFor(KEY_OUTPUT_FOLDER).toString() ) );
+    QDir q( QString("%1/tajweed").arg( Persistance::hasSharedFolderAccess() ? m_persistance->getValueFor(KEY_OUTPUT_FOLDER).toString() : QDir::homePath() ) );
 
     if ( !q.exists() ) {
         q.mkpath(".");

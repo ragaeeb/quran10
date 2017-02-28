@@ -146,7 +146,7 @@ NavigationPane
                 tutorial.execActionBar("openRange", qsTr("Use the '%1' action to open all the surah between the first selection and the last selection.").arg(openAction.title), "r", true);
                 
                 if (!openAction.enabled) {
-                    tutorial.execActionBar("openRangeDisabled", qsTr("Note that the '%1' action is only available in the 'Normal' and 'Juz' display modes.").arg(openAction.title), "r", true);
+                    tutorial.execActionBar("openRangeDisabled", qsTr("Note that the '%1' action is only available in the '%2' and '%3' display modes.").arg(openAction.title).arg(pickerPage.normalMode).arg(pickerPage.juzMode), "r", true);
                 }
             }
         }

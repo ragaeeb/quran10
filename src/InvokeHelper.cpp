@@ -300,19 +300,6 @@ void InvokeHelper::onPicked(int chapter, int verse)
 }
 
 
-void InvokeHelper::onDatabasePorted()
-{
-    QFutureWatcher<bool>* qfw = static_cast< QFutureWatcher<bool>* >( sender() );
-    bool copied = qfw->result();
-
-    LOGGER(copied);
-
-    qfw->deleteLater();
-
-    finishWithToast( copied ? tr("Database ported successfully!") : tr("Database could not be copied!") );
-}
-
-
 void InvokeHelper::onSearchPicked(int chapter, int verse)
 {
     InvokeRequest request;

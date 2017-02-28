@@ -33,7 +33,6 @@ class InvokeHelper : public QObject
 private slots:
     void onChapterMatched();
     void onDataLoaded(QVariant id, QVariant data);
-    void onDatabasePorted();
     void onPicked(int chapter, int verse);
     void onSearchPicked(int chapter, int verse);
 

@@ -10,6 +10,8 @@ Page
     property alias pickerList: listView
     property bool showJuz: false
     property alias sortValue: sortOrder.selectedValue
+    property alias normalMode: normal.text
+    property alias juzMode: juzOption.text
     property bool focusOnSearchBar: false
     property alias titleBarSpace: button.controls
 

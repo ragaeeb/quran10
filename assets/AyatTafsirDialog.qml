@@ -27,7 +27,10 @@ FullScreenDialog
             TapHandler {
                 onTapped: {
                     console.log("UserEvent: AyatTafsirDialogTapped");
-                    finish();
+
+                    if (event.propagationPhase == PropagationPhase.AtTarget) {
+                        finish();
+                    }
                 }
             }
         ]
