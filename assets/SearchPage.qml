@@ -298,10 +298,7 @@ Page
                     onEnded: {
                         tutorial.execActionBar("searchAction", qsTr("Tap here to perform the search or simply press the Enter key on the keyboard.") );
                         tutorial.execTitle("tapSearchTitle", qsTr("Tap on the title bar to expand it and see more search options.") );
-                        
-                        if (!isNew) {
-                            tutorial.execCentered("tipSearchHome", qsTr("Tip: You can start a search query directly from your home screen without even opening the app! Simply tap on the 'Search' icon on your home screen (or begin typing at the home screen on Q10/Q5/Passport devices) and choose 'Quran10' from the search results. That will launch the app and initiate the search.") );
-                        }
+                        tutorial.execCentered("tipSearchHome", qsTr("Tip: You can start a search query directly from your home screen without even opening the app! Simply tap on the 'Search' icon on your home screen (or begin typing at the home screen on Q10/Q5/Passport devices) and choose 'Quran10' from the search results. That will launch the app and initiate the search.") );
                     }
                 }
             ]

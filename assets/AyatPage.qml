@@ -527,7 +527,6 @@ Page
                         multiline: true
                         
                         onDecoratedChanged: {
-                            console.log("**** DECORAT", decorated);
                             text = decorated;
                         }
                         
@@ -619,7 +618,6 @@ Page
                         }
                         
                         onDecoratedChanged: {
-                            console.log("**** DECORAT", decorated);
                             text = decorated;
                         }
                         

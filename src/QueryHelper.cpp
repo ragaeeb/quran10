@@ -8,7 +8,7 @@
 #include "TextUtils.h"
 #include "ThreadUtils.h"
 
-#define TAFSIR_NAME(language) QString("quran_tafsir_%1").arg(language)
+#define TAFSIR_NAME(language) QString("quran_tafsir_%1").arg(language != "arabic" ? "english" : language)
 #define ATTACH_TAFSIR m_sql.attachIfNecessary( TAFSIR_NAME(m_translation) );
 #define NAME_FIELD(var) QString("coalesce(%1.displayName, TRIM( replace( coalesce(%1.kunya,'') || ' ' || (coalesce(%1.prefix,'') || ' ' || %1.name), '  ', ' ' ) ) )").arg(var)
 #define TRANSLATION_NAME(language) QString("quran_%1").arg(language)
@@ -71,8 +71,9 @@ void QueryHelper::settingChanged(QString const& key)
 
         if ( showTranslation() ) {
             m_sql.attachIfNecessary(TRANSLATION); // since english translation is loaded by default
-            ATTACH_TAFSIR;
         }
+
+        ATTACH_TAFSIR;
 
         emit textualChange();
     } else if (key == KEY_TRANSLATION_SIZE || key == KEY_PRIMARY_SIZE) {
